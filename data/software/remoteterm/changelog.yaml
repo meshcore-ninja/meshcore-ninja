@@ -1,7 +1,21 @@
 source: github
 repo: jkingsman/Remote-Terminal-for-MeshCore
-updatedAt: '2026-07-09T03:32:52.149Z'
+updatedAt: '2026-07-10T21:08:54.617Z'
 releases:
+  - version: 3.16.1
+    name: 3.16.1
+    datetime: '2026-07-10T20:07:31Z'
+    url: https://github.com/jkingsman/Remote-Terminal-for-MeshCore/releases/tag/3.16.1
+    prerelease: false
+    notes: |-
+      ## [3.16.1] - 2026-07-10
+
+      * Feature: Try using direct admin-binary fetch for repeater owner
+      * Feature: Add packet search to raw feed
+      * Feature: Add repeater region display
+      * Bug: Misc bugs around dm region scope + scope display, and flood-scope leak
+      * Misc: Add clearer error on missing privkey export for community MQTT
+      * Misc: Fix flaky test
   - version: 3.16.0
     name: 3.16.0
     datetime: '2026-07-09T00:48:54Z'
@@ -355,38 +369,3 @@ releases:
       ## [3.7.1] - 2026-04-02
 
       * Feature: Redact Apprise URLs to prevent sensitive information disclosure
-  - version: 3.7.0
-    name: 3.7.0
-    datetime: '2026-04-03T00:33:53Z'
-    url: https://github.com/jkingsman/Remote-Terminal-for-MeshCore/releases/tag/3.7.0
-    prerelease: false
-    notes: >-
-      ## [3.7.0] - 2026-04-02
-
-
-      * Feature: Repeater battery tracking
-
-      * Feature: Repeater info pane just like contacts
-
-      * Feature: Make repeaters blockable
-
-      * Feature: Add new-node advert blocking
-
-      * Feature: Add bulk deletion interface
-
-      * Feature: Bulk room add on alt+click of new channel button
-
-      * Feature: More info in debug endpoint
-
-      * Bugfix: Be more conservative around radio load limits and don't exceed radio-reported
-      capacity
-
-      * Misc: Default auto-DM decrypt to true
-
-      * Misc: Reorganize some settings panes
-
-      * Misc: Enable FK pragma
-
-      * Misc: Various performance and correctness fixes
-
-      * Misc: Correct TCP default port
