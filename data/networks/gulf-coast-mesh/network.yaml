@@ -37,35 +37,35 @@ radio:
   public_channel: Public
 
 community:
-  website: https://louisianamesh.org/
+  website: https://gulfcoastmesh.org
   discord: https://discord.gulfcoastmesh.org
   contact: contact@louisianamesh.org
 
 maps:
   - name: Live map
-    url: https://analyzer.louisianamesh.org/#/live
+    url: https://analyzer.gulfcoastmesh.org/#/live
   - name: Network maps
-    url: https://louisianamesh.org/meshmap
+    url: https://gulfcoastmesh.org/meshmap
 
 analyzers:
-  - name: analyzer.louisianamesh.org
+  - name: analyzer.gulfcoastmesh.org
     url: https://analyzer.gulfcoastmesh.org/
   # Source: node-name scan of map.meshcore.io 2026-06-26 — CoreScope at live.ecmesh.us (1109 nodes, Louisiana)
   - name: ECMesh CoreScope
     url: https://live.ecmesh.us
 
 resources:
-  getting_started: https://louisianamesh.org/setup
+  getting_started: https://gulfcoastmesh.org/setup
   links:
     - name: Documentation
-      url: https://louisianamesh.org/docs
+      url: https://gulfcoastmesh.org/docs
     - name: Frequency settings
-      url: https://louisianamesh.org/docs/freq-settings
+      url: https://gulfcoastmesh.org/docs/freq-settings
     - name: MeshCore channels
-      url: https://louisianamesh.org/docs/channels
+      url: https://gulfcoastmesh.org/docs/channels
     - name: Mesh monitoring
-      url: https://louisianamesh.org/mesh-monitor
+      url: https://gulfcoastmesh.org/mesh-monitor
     - name: Meetings
-      url: https://louisianamesh.org/meetings
+      url: https://gulfcoastmesh.org/meetings
     - name: Website source
       url: https://github.com/GulfCoastMesh/Website
