@@ -1,7 +1,44 @@
 source: github
 repo: ALLFATHER-BV/wadamesh
-updatedAt: '2026-07-11T20:52:19.925Z'
+updatedAt: '2026-07-11T22:52:22.068Z'
 releases:
+  - version: beta_42
+    name: wadamesh beta_42
+    datetime: '2026-07-11T21:35:50Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_42
+    prerelease: true
+    notes: >-
+      ## wadamesh beta_42 (test build)
+
+
+      Fixes for the REMOTE mode introduced in beta_41.
+
+
+      Install from the web flasher at https://flasher.wadamesh.com (test channel), or grab a bin
+      below.
+
+
+      ### Fixed
+
+
+      - **REMOTE mode now works on the Heltec V4 TFT** (and other 2 MB-PSRAM boards) instead of
+      showing a black screen in the browser. Its off-screen renderer needed more free memory than
+      those boards had, so nothing streamed; the buffers are sized to fit now, and the render is a
+      bit smaller and faster as a result. VNC was never affected and already worked.
+
+      - **Keyboard-less touch boards (Heltec V4, RAK WisMesh Tap) can leave REMOTE mode** again:
+      touch and hold the device screen for about 3 seconds. Those boards have no SPACE key, which
+      used to be the only on-device way out.
+
+
+      ### New
+
+
+      - The web page has an **"Exit remote"** button (with a confirmation) that leaves REMOTE mode
+      from any browser, on any board.
+
+
+      Boards in this build: LilyGo T-Deck, Heltec V4 TFT, ThinkNode M9, RAK WisMesh Tap V2.
   - version: beta_41
     name: wadamesh beta_41
     datetime: '2026-07-11T20:33:02Z'
@@ -1004,30 +1041,3 @@ releases:
 
 
       Everything from the stable beta_21 is included.
-  - version: beta_22
-    name: wadamesh beta_22 (test)
-    datetime: '2026-07-01T06:49:26Z'
-    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_22
-    prerelease: true
-    notes: >-
-      **wadamesh beta_22 — test build.** Opt in on-device via **Settings → About → "Get test builds
-      (beta)"**, or the flasher's Beta toggle. Two fixes on top of the stable beta_21:
-
-
-      ## Fixed
-
-
-      - **The signal probe reads a real signal again.** beta_21 made the probe a zero-hop advert so
-      it could never be re-flooded across the mesh — but nothing answers a zero-hop advert, so the
-      reading stopped updating. It now sends a **directed trace "ping" to your nearest repeater**:
-      the repeater replies directly (it still never floods the mesh) and the device reads the link
-      signal from that reply. No flooding *and* a live signal. Thanks to **Tarmo** for spotting this
-      and suggesting the fix.
-
-      - **Contacts discovered while your phone is connected now show on the device too.** A node
-      heard while the T-Deck was Bluetooth-connected to the MeshCore phone app appeared on the phone
-      but not on the device's own screen, and the Contacts list didn't refresh. It now updates
-      either way. (#73, reported by @1nerdherder.)
-
-
-      Everything from beta_21, the first stable, is included.
