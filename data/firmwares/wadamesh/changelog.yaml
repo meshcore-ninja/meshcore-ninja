@@ -1,7 +1,53 @@
 source: github
 repo: ALLFATHER-BV/wadamesh
-updatedAt: '2026-07-11T11:08:12.116Z'
+updatedAt: '2026-07-11T20:52:19.925Z'
 releases:
+  - version: beta_41
+    name: wadamesh beta_41
+    datetime: '2026-07-11T20:33:02Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_41
+    prerelease: true
+    notes: >-
+      ## wadamesh beta_41 (test build)
+
+
+      Experimental web control: view and drive the wadamesh UI from a phone or desktop browser over
+      Wi-Fi. Two new apps, VNC and REMOTE.
+
+
+      Install from the web flasher at https://flasher.wadamesh.com (test channel), or grab a bin
+      below.
+
+
+      ### New
+
+
+      - **VNC app** (app drawer, between Advertise and Signal): mirrors the live device screen into
+      a web browser over Wi-Fi and lets you drive it. Taps and typing in the browser control the
+      device, and anything that changes on the device shows up in the browser. Turn it on, then open
+      `http://<device-ip>:8765/` from any browser on the same network. The app page itself is
+      scrollable.
+
+      - **REMOTE app**: a headless mode that renders the whole UI at a larger, browser-friendly
+      resolution and serves it over Wi-Fi, while the device's own screen drops to a placeholder
+      showing the address to open. Turning it on or off reboots the device. On the web page a Rotate
+      button flips between landscape (desktop) and portrait (phone); on the device, double-tap the
+      space bar to leave remote mode.
+
+      - Both are served by the device itself over plain Wi-Fi, no phone app, no account, no cloud.
+
+
+      ### Note
+
+
+      This is an experimental first cut, and an honest heads-up from Kaj: for me the remote UI still
+      feels too slow, and I will most likely move toward a dedicated, lighter remote client instead
+      of streaming the entire live UI. It is in this test build mainly because community feedback on
+      it would be genuinely useful. If you try it, let us know how it runs for you and what you
+      would actually want from a web or remote client.
+
+
+      Boards in this build: LilyGo T-Deck, Heltec V4 TFT, ThinkNode M9, RAK WisMesh Tap V2.
   - version: beta_40
     name: wadamesh beta_40 (stable)
     datetime: '2026-07-10T16:36:42Z'
@@ -985,77 +1031,3 @@ releases:
 
 
       Everything from beta_21, the first stable, is included.
-  - version: beta_21
-    name: wadamesh beta_21
-    datetime: '2026-06-30T15:39:05Z'
-    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_21
-    prerelease: false
-    notes: >-
-      **wadamesh beta_21 — the first stable build.**
-
-
-      This is the first release on the new two-channel system. **Stable** is what everyone gets by
-      default. If you want new features earlier, flip **Settings → About → "Get test builds
-      (beta)"** on a Wi-Fi-updatable device and you'll track the **test** channel instead — for both
-      the "update available" check and the firmware you install. Switch back any time.
-
-
-      Flash or update at **[flasher.wadamesh.com](https://flasher.wadamesh.com)**, or install over
-      Wi-Fi from **Settings → About → Install update**.
-
-
-      ## New
-
-
-      - **Stable and test update channels.** beta_21 is the first stable build. The new *Get test
-      builds (beta)* switch on the About screen lets OTA devices opt into test builds early — it
-      points both the update check and the installer at the test channel. Off by default.
-
-      - **MQTT bridge — highly experimental, off by default.** An opt-in bridge that forwards the
-      messages your node receives to an MQTT broker you choose, so you can log your mesh or wire it
-      into other tools. It is gated behind a privacy consent you must tick, direct messages are
-      excluded unless you deliberately turn them on, and the payload can be sealed with an
-      encryption key so only you can read it. Use a broker you control, never a public one.
-      Experimental — expect changes. *Contributed by @samuelcoustet (#71), reworked for privacy.*
-
-      - **Portugal (Narrow) region preset** — local defaults in one tap. (#74, requested by
-      @Salgueiron.)
-
-      - **Saved-contacts counter** in the Contacts overflow menu — how many contacts you have saved
-      out of the maximum it can hold, e.g. 42 / 2000. (#72, asked by @Buko84.)
-
-
-      ## Fixed
-
-
-      - **The signal probe is strictly zero-hop now.** The auto-discover pulse and the probe behind
-      the Signal popup can no longer be re-flooded across the mesh by a repeater — the probe only
-      measures the link to whatever hears it first, which is what it was always meant to do.
-
-      - **Your most relevant contacts show when you have a lot of them.** The on-screen list is
-      capped for performance but was trimming before sorting, so some contacts dropped out of view.
-      It now sorts first, shows the closest matches, and adds a "+N more — search to narrow the
-      list" line at the bottom. (#73, reported by @1nerdherder.)
-
-      - **The blocked-users list opened from Contacts** now shows the proper two-line title bar with
-      a back button, instead of an unlabelled screen.
-
-      - **The Contacts overflow popup** fits the screen again after the saved-contacts counter was
-      added.
-
-
-      ---
-
-
-      Everything from beta_20 is included. Big thanks to @samuelcoustet for the MQTT bridge (#71),
-      and to @Salgueiron, @Buko84 and @1nerdherder for the reports.
-
-
-      ### Files
-
-
-      - **T-Deck** — `wadamesh-tdeck-merged.bin` (full flash @ 0x0) · `wadamesh-tdeck.bin` (Launcher
-      / OTA app image)
-
-      - **Heltec V4 TFT** — `wadamesh-heltec-v4-tft-merged.bin` (full flash @ 0x0) ·
-      `wadamesh-heltec-v4-tft.bin` (OTA app image)
