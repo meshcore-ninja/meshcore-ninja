@@ -1,7 +1,99 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-07-06T23:11:48.761Z'
+updatedAt: '2026-07-11T13:25:08.838Z'
 releases:
+  - version: v4.13.0-rc1
+    name: v4.13.0-rc1
+    datetime: '2026-07-11T13:09:26Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.13.0-rc1
+    prerelease: true
+    notes: >-
+      ## What's Changed
+
+      * docs: remediation plan + epic status doc (#3962) by @Yeraze in
+      https://github.com/Yeraze/meshmonitor/pull/3966
+
+      * feat(server): process-level safety net for unhandledRejection/uncaughtException (#3962) by
+      @Yeraze in https://github.com/Yeraze/meshmonitor/pull/3967
+
+      * fix(security)!: default trust proxy to false when TRUST_PROXY is unset (#3962) by @Yeraze in
+      https://github.com/Yeraze/meshmonitor/pull/3968
+
+      * chore(deps): pin meshcore.js fork to commit SHA (#3962) by @Yeraze in
+      https://github.com/Yeraze/meshmonitor/pull/3969
+
+      * fix(security): strip hot-path console logging and CSRF token exposure in api.ts (#3962) by
+      @Yeraze in https://github.com/Yeraze/meshmonitor/pull/3970
+
+      * chore(lint): enable @typescript-eslint/no-floating-promises as error (#3962) by @Yeraze in
+      https://github.com/Yeraze/meshmonitor/pull/3972
+
+      * feat(db)!: withSourceScope fails closed — omitting sourceId throws, ALL_SOURCES sentinel for
+      intentional cross-source (#3962) by @Yeraze in https://github.com/Yeraze/meshmonitor/pull/3976
+
+      * feat(automations): multi-channel message trigger OR-list (#3974) by @Yeraze in
+      https://github.com/Yeraze/meshmonitor/pull/3982
+
+      * feat(map): add polar grid overlay to Map Analysis and Unified maps (#3971) by @Yeraze in
+      https://github.com/Yeraze/meshmonitor/pull/3983
+
+      * fix(meshcore): auto-retry DM via same-path + flood cadence on ack timeout by @Yeraze in
+      https://github.com/Yeraze/meshmonitor/pull/3980
+
+      * ci(types): type-check test files via tsconfig.tests.json, non-blocking first (#3962) by
+      @Yeraze in https://github.com/Yeraze/meshmonitor/pull/3985
+
+      * fix(meshcore): populate fromName on DM automation triggers, clarify trigger.from vs fromName
+      by @Yeraze in https://github.com/Yeraze/meshmonitor/pull/3978
+
+      * feat(meshcore): delete/purge messages — per-message, per-conversation, purge-all (#3981) by
+      @Yeraze in https://github.com/Yeraze/meshmonitor/pull/3984
+
+      * test(routes): integration-grade route-test harness with real auth middleware (#3962) by
+      @Yeraze in https://github.com/Yeraze/meshmonitor/pull/3986
+
+      * fix(meshcore): exact decrypt-and-match for channel 'repeaters relayed' echo (#3979 pt1) by
+      @Yeraze in https://github.com/Yeraze/meshmonitor/pull/3987
+
+      * feat(meshcore): opt-in auto-retry for automated channel sends (#3979 Part 2) by @Yeraze in
+      https://github.com/Yeraze/meshmonitor/pull/3988
+
+      * chore(lint): count-based lint ratchet — new violations block, existing debt baselined; CI
+      lint now blocking (#3962) by @Yeraze in https://github.com/Yeraze/meshmonitor/pull/3989
+
+      * feat(server): codify the { success, error, code } response envelope in ok()/fail() helpers
+      (#3962) by @Yeraze in https://github.com/Yeraze/meshmonitor/pull/3990
+
+      * feat(meshcore-vn): relay SendStatusReq(27) status requests to the physical node (#3904) by
+      @Yeraze in https://github.com/Yeraze/meshmonitor/pull/3991
+
+      * test(db): schema-drift tripwire — CI fails on createTables vs migration-replay divergence
+      (#3962) by @Yeraze in https://github.com/Yeraze/meshmonitor/pull/3992
+
+      * feat(meshcore-vn): relay GetNeighbours via SendBinaryReq(50) to the physical node (#3904) by
+      @Yeraze in https://github.com/Yeraze/meshmonitor/pull/3993
+
+      * chore(logging): trim default log volume — reclassify routine info→debug, add trace tier by
+      @Yeraze in https://github.com/Yeraze/meshmonitor/pull/3994
+
+      * refactor(registry)!: MeshCoreManager implements ISourceManager — one unified source registry
+      (#3962) by @Yeraze in https://github.com/Yeraze/meshmonitor/pull/4004
+
+      * Fix Virtual Node Server boot race and listen-error zombie state by @Yeraze in
+      https://github.com/Yeraze/meshmonitor/pull/4001
+
+      * feat(automation): add "Send via sources" selector to the tapback action by @Yeraze in
+      https://github.com/Yeraze/meshmonitor/pull/3997
+
+      * feat(automation): add scheduled device-reboot action (#3995) by @Yeraze in
+      https://github.com/Yeraze/meshmonitor/pull/4002
+
+      * fix(meshcore): match-scope replies unscoped for unnameable trigger scope (#3998) by @Yeraze
+      in https://github.com/Yeraze/meshmonitor/pull/4003
+
+      * 
+
+      …
   - version: v4.12.5
     name: v4.12.5
     datetime: '2026-07-06T21:37:24Z'
@@ -1680,138 +1772,6 @@ releases:
         -p 8080:3001 \
         -v meshmonitor-data:/data \
         ghcr.io/Yeraze/meshmonitor:4.10.2
-      ```
-
-
-      ### 🧪 Testing
-
-      ✅ All tests passed
-
-      ✅ TypeScript checks passed
-
-      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
-
-
-      ### 📋 Changes
-
-      See commit history for detailed changes.
-  - version: v4.10.1
-    name: v4.10.1
-    datetime: '2026-06-11T20:10:14Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.10.1
-    prerelease: false
-    notes: >-
-      # MeshMonitor v4.10.1
-
-
-      This release is headlined by **Automated Remote Favorites Management** — a new section on a
-      node's Remote Admin page that keeps the favorites list current on remote infrastructure nodes,
-      preserving Meshtastic's zero-hop cost between favorited routers as your mesh changes.
-      MeshMonitor discovers a target's direct neighbors from its NeighborInfo broadcasts and/or from
-      traceroutes that pass through it, filters them to configurable infrastructure roles, and sends
-      `set-favorite` admin commands on a schedule. Favorite commands are no longer blind:
-      MeshMonitor captures the firmware's routing ACK and surfaces the result (confirmed / no-ack /
-      rejected) on both the automatic ledger and the manual Set/Remove Favorite buttons, and the
-      re-favorite pass prioritizes un-confirmed assignments to recover any that didn't stick. A
-      configurable Maximum neighbor age reuses recent on-file NeighborInfo instead of re-requesting
-      it, saving airtime. Also in this release: a global toggle to disable link previews,
-      per-channel notification sounds, guided firmware half-flash recovery, and several MeshCore and
-      UI fixes.
-
-
-      ## Features
-
-
-      - **Automated Remote Favorites Management for infrastructure nodes** (#3420, #3424, #3426) —
-      discovery via NeighborInfo + traceroutes, role filtering, routing-ACK confirmation, and
-      on-file neighbor reuse. Closes #2608.
-
-      - **Global toggle to disable link previews** (#3418) — a Settings → Link Previews toggle plus
-      a `LINK_PREVIEWS_ENABLED=false` env override, enforced across all message surfaces
-      (Meshtastic, MQTT, MeshCore). Closes #3416.
-
-      - **Guided firmware half-flash recovery** (#3415) — a guided flow to clear a half-flashed flag
-      from a failed firmware upgrade, with an online check first. Closes #3413.
-
-      - **Per-channel notification sounds** (#3412) — selectable per-channel "new message" tones
-      from a bundled set of original, runtime-synthesized sounds (plus Silent and Preview), scoped
-      per source. Thanks @rancur!
-
-
-      ## Bug Fixes
-
-
-      - **DM notification sound row + per-source channel-sound scoping** (#3414)
-
-      - **MeshCore: decode packed `out_path_len`** to fix the hop count for 2-byte path hashes
-      (#3422, closes #3421)
-
-      - **MeshCore: persist `batteryMv`** to `meshcore_nodes` after a telemetry poll (#3419)
-
-      - **Auto-favorite checkboxes** now sit beside their labels instead of stacked (#3423)
-
-
-      ## Other
-
-
-      - Translations update from Hosted Weblate (#3340)
-
-
-      ## Issues Resolved
-
-
-      - #2608 — Automated Remote Favorites Management for Infrastructure Nodes
-
-      - #3413 — Button to remove half-flashed flag from a failed firmware upgrade
-
-      - #3416 — Disable link preview
-
-      - #3421 — Correct PATH readout
-
-
-      ## Upgrade
-
-
-      ```bash
-
-      # Docker
-
-      docker pull ghcr.io/yeraze/meshmonitor:4.10.1
-
-      docker compose down && docker compose up -d
-
-
-      # Helm
-
-      helm repo update
-
-      helm upgrade meshmonitor meshmonitor/meshmonitor --version 4.10.1
-
-      ```
-
-
-      No breaking changes. The database migrations (084–086) that back Automated Remote Favorites
-      Management run automatically on first boot.
-
-
-      **Full Changelog:** https://github.com/Yeraze/meshmonitor/compare/v4.10.0...v4.10.1
-
-
-      ## 🚀 MeshMonitor v4.10.1
-
-
-      ### 📦 Installation
-
-
-      **Docker (recommended):**
-
-      ```bash
-
-      docker run -d \
-        --name meshmonitor \
-        -p 8080:3001 \
-        -v meshmonitor-data:/data \
-        ghcr.io/Yeraze/meshmonitor:4.10.1
       ```
 
 

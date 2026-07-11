@@ -1,7 +1,27 @@
 source: github
 repo: andymux/meshos-releases
-updatedAt: '2026-07-10T19:37:08.584Z'
+updatedAt: '2026-07-11T13:25:09.186Z'
 releases:
+  - version: fw-v1.5.6
+    name: MeshOS firmware v1.5.6
+    datetime: '2026-07-11T12:03:47Z'
+    url: https://github.com/andymux/meshos-releases/releases/tag/fw-v1.5.6
+    prerelease: false
+    notes: >-
+      License key now backed up to SD and auto-restored after flash erase. WiFi scanner and connect
+      dialog fixes. Bluetooth-off persists across reboots.
+
+
+      Device firmware for LilyGo T-Deck and ThinkNode M9.
+
+      Install via SD card (firmware.bin) or the in-firmware updater.
+
+
+      SHA-256:
+
+      - TDeck: af26586a4d6f7c991c5390827d7d80d0b3479f1b86e02d6054a180a2fec7d78a
+
+      - M9: 6f80d53b4d7b7743096a40331aedd261a6efeff8887921b540cdb00778553876
   - version: fw-v1.5.5
     name: MeshOS firmware v1.5.5
     datetime: '2026-07-10T17:57:26Z'
