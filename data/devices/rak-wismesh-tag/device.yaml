@@ -60,7 +60,7 @@ hardware:
   power:
     batterySupported: true
     batteryBuiltIn: true
-    batteryCapacityMah: 3200
+    batteryCapacityMah: 1000
     batteryChemistry: li-po
     batteryConnector: JST1.25-2
     charging: true
