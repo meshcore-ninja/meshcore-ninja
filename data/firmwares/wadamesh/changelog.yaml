@@ -1,42 +1,89 @@
 source: github
 repo: ALLFATHER-BV/wadamesh
-updatedAt: '2026-07-10T17:49:44.187Z'
+updatedAt: '2026-07-11T11:08:12.116Z'
 releases:
   - version: beta_40
-    name: wadamesh beta_40
+    name: wadamesh beta_40 (stable)
     datetime: '2026-07-10T16:36:42Z'
     url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_40
-    prerelease: true
+    prerelease: false
     notes: >-
-      **wadamesh beta_40** (TEST channel), on top of beta_39.
+      **wadamesh beta_40 — new STABLE release.** The first stable since beta_35, rolling up
+      everything from beta_36 through beta_40.
 
 
       Flash from the web installer at **https://flasher.wadamesh.com**, install via Launcher / the
       Tanmatsu store, or grab a `.bin` below.
 
 
+      Huge thanks to the contributors who drove big parts of this release: **@scratchdiver**
+      (full-history chat scrolling, reliable SD storage, atomic history saves), **@Yazutsu** (GPS
+      quick-reply, keyboard-backlight fix), **ded** (complete ThinkNode M9 support), **Ethac.chen**
+      (RAK WisMesh Tap V2), and **jochentj** (Tanmatsu ALT accents). And to Leon P and MrWeavis for
+      the persistence bug reports that shaped the storage fixes.
+
+
+      ## New
+
+      - **Translations** — hundreds of previously-English strings across menus, settings, dialogs
+      and setup are now translated into all 11 non-English languages (NL, DE, FR, ES, IT, RU, UK,
+      BG, SR, EL, PT-BR), icon-prefixed rows included.
+
+      - **Full-history chat scrolling** (scratchdiver, #130) — scroll a chat through its ENTIRE
+      stored history (up to 5000 messages on SD devices), smooth in bubble and compact mode.
+
+      - **Message delete** — long-press a message to delete just that one; "Delete history" in
+      chat/channel settings wipes a whole conversation. Slim, auto-fading in-chat jump arrows.
+
+      - **Two new boards** — **ThinkNode M9** (ded, #138) and **RAK WisMesh Tap V2** (Ethac.chen,
+      #136), both installable from the web flasher.
+
+      - **Storage & setup** — "Store data on SD" is reliable (scratchdiver, #123); full-screen Wi-Fi
+      network pages; lock-screen unread-message count (#93); special-character password entry with a
+      Sym picker (#122); "Save update bin to SD" for Launcher installs.
+
+      - **Radio** — new "Australia (Mid)" region preset (#121).
+
+      - **Quick send** — GPS position is the first quick-reply row (Yazutsu, #125).
+
+      - **Tanmatsu** — ALT-accents and double-tap-space language switching (jochentj, #129); active
+      keyboard language shown in the chat top bar.
+
+
       ## Fixed
 
-      - **Heltec V4 freeze.** Card-less devices could freeze for several seconds at a time. The
-      contacts file was being rewritten to internal flash every time a known node re-advertised, and
-      that write can trigger a slow flash cleanup that stalls the whole device. Those refreshes are
-      now batched, so the file is rewritten far less often; a genuinely new or removed contact still
-      saves right away. SD-card devices were never affected.
+      - **Card-less devices (Heltec V4 etc.) no longer freeze** for seconds at a time —
+      advert-driven contact rewrites to internal flash are coalesced, so the flash
+      garbage-collection stalls stop.
 
-      - **Long text in other languages** no longer overlaps or gets cut off. Oversized labels now
-      shrink to fit on one line instead of clipping or wrapping. This covers the message long-press
-      menu (French "Supprimer" was being cut to "Supprime"), the confirmation dialogs, and the
-      app-drawer tiles.
+      - **Deletes stick and are fast** (Leon P, MrWeavis) — a deleted message / cleared chat
+      survives a reboot or hard reset, and history is written compactly so saves no longer pause the
+      screen.
 
-      - **Signal graph hint.** On the home screen, the "tap for details" hint no longer overlaps the
-      signal readout in longer languages; it moved to the bottom-right corner.
+      - **No more lost messages** on reboot from the phone app (Leon P); atomic, fallback-guarded SD
+      history saves (scratchdiver, #135).
+
+      - **Profile/identity migration** to SD is safe on upgrade, with a recovery button if you were
+      hit by the empty-card adoption bug.
+
+      - **Long translated labels fit** — the message menu, confirmation dialogs, and app-drawer
+      tiles shrink oversized text to one line instead of clipping/wrapping; the signal-card hint no
+      longer overlaps.
+
+      - **Emoji picker** — the food/object glyphs that showed as empty boxes now render.
+
+      - **Tanmatsu** — profile/identity persist reliably across reboots; full-size accents at
+      Large/Huge scales; About shows the correct firmware version.
+
+      - **T-Deck** — recovers automatically from the stuck "phantom finger" touch glitch; touch init
+      retries at boot. Keyboard-backlight "Off" preset actually turns it off (Yazutsu, #88).
 
 
       ## Boards
 
-      T-Deck / T-Deck Plus, Heltec V4 + TFT, ThinkNode M9, RAK WisMesh Tap V2 (bins below); Tanmatsu
-      ships via the Tanmatsu launcher store. For a Launcher side-load use the app-only `.bin` (not
-      `-merged`).
+      LilyGo T-Deck / T-Deck Plus, Heltec V4 + TFT, ThinkNode M9, RAK WisMesh Tap V2 (bins below);
+      Tanmatsu ships via the Tanmatsu launcher store. For a Launcher side-load use the app-only
+      `.bin` (not `-merged`).
   - version: beta_39
     name: wadamesh beta_39
     datetime: '2026-07-09T21:46:09Z'
