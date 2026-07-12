@@ -1,7 +1,128 @@
 source: github
 repo: hermes-gadget/SigurdOS-tdeck
-updatedAt: '2026-06-28T15:20:02.458Z'
+updatedAt: '2026-07-12T13:25:09.131Z'
 releases:
+  - version: beta-0.1.44-RC6
+    name: beta-0.1.44-RC6
+    datetime: '2026-07-12T12:37:19Z'
+    url: https://github.com/hermes-gadget/SigurdOS-tdeck/releases/tag/beta-0.1.44-RC6
+    prerelease: true
+    notes: >-
+      **SigurdOS T-Deck Firmware** — beta-0.1.44-RC6
+
+
+      ### Flash with esptool
+
+      ```bash
+
+      # Full flash (first install):
+
+      esptool.py --chip esp32s3 --port /dev/ttyACM0 write_flash 0x0 firmware-merged.bin
+
+
+      # App update (keep settings):
+
+      esptool.py --chip esp32s3 --port /dev/ttyACM0 \
+        write_flash 0x10000 firmware.bin
+      ```
+
+
+      ### Web Flasher
+
+      Use `manifest.json` with [esptool.js](https://espressif.github.io/esptool-js/).
+
+
+      | File | Use |
+
+      |------|-----|
+
+      | `firmware.bin` | App only (flash at 0x10000) |
+
+      | `firmware-merged.bin` | Full flash (flash at 0x0) |
+
+      | `SigurdOS-tdeck-launcher.bin` | For bmorcelli/Launcher install |
+
+      | `firmware-debug.bin` | Debug build with verbose logging |
+
+      | `manifest.json` | Web flasher manifest |
+
+      | `sigurdos-tdeck-bootloader.bin` | Bootloader (web flasher) |
+
+      | `sigurdos-tdeck-partitions.bin` | Partition table (web flasher) |
+
+      | `sigurdos-tdeck-boot_app0.bin` | Boot app0 (web flasher) |
+
+      | `sigurdos-tdeck-firmware.bin` | App firmware (web flasher) |
+
+      | `sigurdos-tdeck-full.bin` | Full image (web flasher) |
+
+
+
+      ## What's Changed
+
+      * fix: safe SPIFFS init with erased-partition auto-format (closes #750) by @hermes-gadget in
+      https://github.com/hermes-gadget/SigurdOS-tdeck/pull/751
+
+      * Phase 1: Switch keyboard to key mode for multi-model T-Deck compatibility (#752) by
+      @hermes-gadget in https://github.com/hermes-gadget/SigurdOS-tdeck/pull/753
+
+      * Phase 2: Multi-language keyboard layout system (12 layouts) — #752 by @hermes-gadget in
+      https://github.com/hermes-gadget/SigurdOS-tdeck/pull/754
+
+      * Phase 3: I2C robustness improvements — #752 by @hermes-gadget in
+      https://github.com/hermes-gadget/SigurdOS-tdeck/pull/755
+
+      * fix: keyboard doesn't work — I2C timeout kills cold boot (#752) by @hermes-gadget in
+      https://github.com/hermes-gadget/SigurdOS-tdeck/pull/756
+
+      * [codex] use C3 key mode for multi-model keyboards by @hermes-gadget in
+      https://github.com/hermes-gadget/SigurdOS-tdeck/pull/757
+
+      * [codex] Add persisted international keyboard layouts by @hermes-gadget in
+      https://github.com/hermes-gadget/SigurdOS-tdeck/pull/758
+
+      * [codex] Harden shared I2C initialization and recovery by @hermes-gadget in
+      https://github.com/hermes-gadget/SigurdOS-tdeck/pull/759
+
+      * Fork Merge: Radio profiles, diagnostics, RX-only mode, CI fixes by @hermes-gadget in
+      https://github.com/hermes-gadget/SigurdOS-tdeck/pull/760
+
+      * fix: battery -% on menu nav, cursor visibility, RSSI chart labels by @hermes-gadget in
+      https://github.com/hermes-gadget/SigurdOS-tdeck/pull/766
+
+      * fix(ci): exclude LauncherCompatibility.md from doc reference check by @hermes-gadget in
+      https://github.com/hermes-gadget/SigurdOS-tdeck/pull/767
+
+      * docs: comprehensive repository-wide audit (audit.md) by @hermes-gadget in
+      https://github.com/hermes-gadget/SigurdOS-tdeck/pull/770
+
+      * fix(gps): correct GPS-to-Unix-epoch conversion (BUG-001) by @hermes-gadget in
+      https://github.com/hermes-gadget/SigurdOS-tdeck/pull/771
+
+      * fix(ui): prevent dangling g_wifi_icon use-after-free (BUG-002) by @hermes-gadget in
+      https://github.com/hermes-gadget/SigurdOS-tdeck/pull/772
+
+      * fix(hw): guard deep-sleep RTC-GPIO calls on non-RTC DIO1 pin (HW-001) by @hermes-gadget in
+      https://github.com/hermes-gadget/SigurdOS-tdeck/pull/773
+
+      * fix(mesh): hoist sender_buf out of if-block to prevent use-after-scope (BUG-003) by
+      @hermes-gadget in https://github.com/hermes-gadget/SigurdOS-tdeck/pull/774
+
+      * fix(mesh): return correct contact in processAck instead of contact[0] (BUG-004) by
+      @hermes-gadget in https://github.com/hermes-gadget/SigurdOS-tdeck/pull/775
+
+      * fix: batch of low-severity fixes (HW-002, DEAD-002..004, DOC-001, BUILD-001) by
+      @hermes-gadget in https://github.com/hermes-gadget/SigurdOS-tdeck/pull/776
+
+      * fix(security): add OTA PIN brute-force rate limiting (SEC-001) by @hermes-gadget in
+      https://github.com/hermes-gadget/SigurdOS-tdeck/pull/777
+
+      * docs: add remediation status to audit.md (7 PRs submitted) by @hermes-gadget in
+      https://github.com/hermes-gadget/SigurdOS-tdeck/pull/778
+
+      * perf(display): lazy-allocate emergency buffer, reclaim 12.8KB DRAM (PERF-
+
+      …
   - version: beta-0.1.43-RC5
     name: beta-0.1.43-RC5
     datetime: '2026-06-28T13:56:23Z'
@@ -1691,24 +1812,3 @@ releases:
 
       **Full Changelog**:
       https://github.com/hermes-gadget/SlopOS-tdeck/compare/beta-0.1.25...beta-0.1.26
-  - version: beta-0.1.25
-    name: beta-0.1.25
-    datetime: '2026-05-19T02:53:06Z'
-    url: https://github.com/hermes-gadget/SigurdOS-tdeck/releases/tag/beta-0.1.25
-    prerelease: true
-    notes: >-
-      **SlopOS T-Deck Firmware** — beta-0.1.25
-
-
-      | File | Use |
-
-      |------|-----|
-
-      | `firmware.bin` | OTA update (app only, flash at 0x10000) |
-
-      | `firmware-merged.bin` | Full flash (bootloader + partitions + app, flash at 0x0) |
-
-
-
-      **Full Changelog**:
-      https://github.com/hermes-gadget/SlopOS-tdeck/compare/beta-0.1.24...beta-0.1.25
