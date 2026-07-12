@@ -1,7 +1,79 @@
 source: github
 repo: ALLFATHER-BV/wadamesh
-updatedAt: '2026-07-11T22:52:22.068Z'
+updatedAt: '2026-07-12T14:59:18.412Z'
 releases:
+  - version: beta_43
+    name: wadamesh beta_43
+    datetime: '2026-07-12T14:35:48Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_43
+    prerelease: true
+    notes: >-
+      **wadamesh beta_43** (test channel) turns the browser control panel into a full remote app and
+      fixes map tiles on the Heltec V4.
+
+
+      Flash it from **[flasher.wadamesh.com](https://flasher.wadamesh.com)**, or grab a
+      `-merged.bin` below (flash at `0x0`). Boards: LilyGo T-Deck and Heltec V4 TFT.
+
+
+      ## New - web control panel
+
+      The browser panel is now a full remote app, so you can run the device from a phone or laptop
+      without picking up the T-Deck. Proper **Chats**, **Contacts**, **Terminal** and **Settings**
+      tabs.
+
+
+      - **Contacts**: search, sort and filter; each contact shows distance, coordinates and
+      last-heard age; tap for the same actions as on the device (favourite, block, reset path,
+      remove).
+
+      - **Discovered nodes** appear in the browser with a one-tap **Add** to save them as contacts,
+      so you can build your whole contact list from the web app.
+
+      - **Chats**: pop-up notifications (with an optional beep) on a new message, and the open chat
+      refreshes on its own as replies come in.
+
+      - **Acknowledgements and repeats-heard** now show for messages sent from the web app.
+
+      - A **Settings** page for the everyday options that make sense remotely, including live radio
+      changes.
+
+      - A **quick-command** button in the Terminal that drops common commands into the input.
+
+
+      ## Fixed
+
+      - **Heltec V4 map tiles**: tiles downloaded but only the top of the map rendered (the rest
+      stayed black). The 2 MB-PSRAM V4 was running out of contiguous memory for the tile grid; tiles
+      now reuse a small fixed pool and only load what is on screen, so the whole map fills in
+      smoothly again.
+
+      - **Heltec V4 remote/VNC**: typing from a physical keyboard in the browser now works (it
+      previously only worked on the T-Deck).
+
+      - **Remote-access screen** on the device is clearer: the IP address is at the top, the
+      explanation is shorter and more accurate, the toggles sit above it, and the address box only
+      appears once remote access is on.
+
+      - **Terminal `help`** now lists every command, on both the device and the web terminal.
+
+
+      ## Changed
+
+      - The web app header shows the same signal, Wi-Fi, Bluetooth and battery icons as the device
+      status bar, and the title reads **WADAMESH**.
+
+      - Contact and chat sort/filter controls open a menu to pick an option instead of cycling on
+      each tap.
+
+      - New developer **Tile debug overlay** toggle in Map options (off by default) for diagnosing
+      map-tile issues.
+
+
+      ---
+
+      This is a **test-channel** (beta) build. Devices on the beta update feed will offer it; stable
+      stays on beta_40.
   - version: beta_42
     name: wadamesh beta_42
     datetime: '2026-07-11T21:35:50Z'
@@ -1010,34 +1082,3 @@ releases:
 
 
       Everything from the stable beta_21 and the earlier test builds is included.
-  - version: beta_23
-    name: wadamesh beta_23 (test)
-    datetime: '2026-07-01T08:17:34Z'
-    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_23
-    prerelease: true
-    notes: >-
-      **wadamesh beta_23 — test build.** Opt in via **Settings → About → "Get test builds (beta)"**,
-      or the flasher's Beta toggle.
-
-
-      ## Fixed
-
-
-      - **Bluetooth companion reliability — messages and repeater admin.** When a phone or Mac was
-      connected over Bluetooth, the device sent it a log entry for *every* LoRa packet it heard,
-      which on a busy mesh swamped the Bluetooth link and starved the frames that actually matter.
-      It no longer sends that packet log over Bluetooth (USB and Wi-Fi companions still get it), so
-      **incoming messages reach the app** and **repeater / room-server admin** (Manage Regions,
-      saving parameters) stops timing out and dropping the connection. (#46, #54.)
-
-
-      Also carried in this test line (from beta_22):
-
-      - **Signal probe** now sends a directed trace "ping" to your nearest repeater, which replies,
-      instead of a zero-hop advert nothing answers. Thanks to **Tarmo**.
-
-      - **Contacts discovered while your phone is connected** now also show on the device's own
-      screen, not just in the phone app. (#73.)
-
-
-      Everything from the stable beta_21 is included.
