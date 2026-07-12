@@ -1,0 +1,65 @@
+# Source: https://github.com/burakcan/MeshCore-mishmesh
+name: MeshCore mishmesh
+type: fork
+maintainer: burakcan
+description: >
+  Standalone companion firmware for MeshCore radios, adding mishmesh — a full
+  on-device UI that makes the radio useful without a paired phone. Features
+  messaging (DMs, channels, room servers), contacts management, repeater
+  configuration, clock utilities, airtime monitoring, and on-device settings.
+repository: https://github.com/burakcan/MeshCore-mishmesh
+license: MIT
+status: active
+scope: device-specific
+lifecycle: active
+maturity: beta
+distribution: community
+lineage:
+  kind: fork
+  upstreamRepository: meshcore-dev/MeshCore
+  upstreamFirmwareId: meshcore
+runtime:
+  framework: arduino
+  language: C++
+roles:
+  - companion
+  - repeater
+  - standalone-ui
+features:
+  - Full on-device messaging (direct, channels, room servers)
+  - Contacts with favorites, per-kind tabs, rename, ping, telemetry requests
+  - Repeater management (login, settings, access list, neighbours, region)
+  - Clock utilities (stopwatch, timer, alarm, world clock with DST-aware timezones)
+  - Live duty-cycle and airtime usage monitoring
+  - Adverts and sharing via QR codes
+  - First-boot onboarding wizard
+  - BLE and USB serial transports
+capabilities:
+  protocol:
+    meshcoreCompatible: true
+  transports:
+    ble: true
+    usbSerial: true
+  operations:
+    configurationBackup: true
+  networking:
+    repeater: true
+    roomServer: true
+  hardware:
+    gps: true
+    display: true
+    sensors: true
+devices:
+  - id: wio-tracker-l1-pro
+    status: supported
+    target: wio-tracker-l1
+    platformio_board: seeed-wio-tracker-l1
+    notes: Primary target; the project README names Wio Tracker L1 Pro as its hardware target.
+  - id: wio-tracker-l1
+    status: supported
+    target: wio-tracker-l1
+    platformio_board: seeed-wio-tracker-l1
+    notes: Also supported; E-ink support is planned for future versions.
+changelog:
+  source: github
+  repo: burakcan/MeshCore-mishmesh
