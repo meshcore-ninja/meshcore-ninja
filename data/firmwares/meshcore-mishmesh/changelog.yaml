@@ -1,4 +1,13 @@
 source: github
 repo: burakcan/MeshCore-mishmesh
-updatedAt: '2026-07-10T00:00:00Z'
-releases: []
+updatedAt: '2026-07-12T06:35:28.247Z'
+releases:
+  - version: mishmesh-v1.0.0
+    name: mishmesh Firmware v1.0.0
+    datetime: '2026-07-09T22:01:14Z'
+    url: https://github.com/burakcan/MeshCore-mishmesh/releases/tag/mishmesh-v1.0.0
+    prerelease: false
+    notes: |-
+      **Full Changelog**: https://github.com/burakcan/MeshCore-mishmesh/commits/mishmesh-v1.0.0
+
+      **Full Changelog**: https://github.com/burakcan/MeshCore-mishmesh/commits/mishmesh-v1.0.0

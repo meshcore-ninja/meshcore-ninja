@@ -1,7 +1,116 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-07-11T13:25:08.838Z'
+updatedAt: '2026-07-12T06:35:54.654Z'
 releases:
+  - version: v4.13.0-rc2
+    name: v4.13.0-rc2
+    datetime: '2026-07-12T04:36:21Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.13.0-rc2
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.13.0-rc2
+
+
+      > ⚠️ **Pre-release** — release candidate for testing; not recommended for production
+      deployments. Docker images are not tagged `:latest`.
+
+
+      ## Summary
+
+
+      This release candidate lands the **Map Consolidation epic (#4047)**: MeshMonitor's ten
+      independent Leaflet map implementations are now one shared `BaseMap` shell, one composable
+      layer library, one popup family, and one marker-icon factory. Traceroutes render identically
+      on every surface — one canonical 4-band SNR color scale (previously three different scales),
+      unified MQTT dashing and coloring, and the Dashboard finally renders return legs. Node
+      markers, popups, neighbor links, and accuracy regions are likewise single-sourced, so future
+      fixes apply to every map at once, and public embed maps now show the same canonical traceroute
+      visuals as the app. The epic also surfaced and fixed several latent bugs, including a
+      hidden-node position leak in the public embed traceroutes endpoint and Dashboard coloring
+      segments with unscaled SNR values. On top of the epic, this RC brings map interaction polish
+      (#4046): center-on-node never zooms out and its target zoom is user-configurable, pan/zoom
+      animations scale with distance, clicking a marker at low zoom now zooms in instead of
+      exploding a giant spiderfy fan, and open fans survive zoom changes. Live testing fixes include
+      restored wheel/double-click zoom, correct zoom-to-node for one-way traceroutes, loading
+      indicators on initial map data fetch, a polar grid for MeshCore maps, and a self-healing
+      reload when a stale cached page requests rotated asset chunks after an upgrade.
+
+
+      ## Map Consolidation Epic (#4047)
+
+
+      - #4068 — Epic integration: one shell, one layer library, one popup family (phases below)
+        - #4049 Phase 1 — shared `BaseMap` shell; pickers and editors migrated
+        - #4051 Phase 2 — Map Analysis legend/polar-grid/trails reconciliation
+        - #4057 Phase 3 — unified traceroute rendering across all app maps
+        - #4060 Phase 4 — unified node-marker factory + shared `NodeMarkersLayer`
+        - #4064 Phase 5 — one popup family with composable source-tech sections
+        - #4065 Phase 6 — public embeds adopt canonical traceroute rendering (includes a hidden-node position leak fix 🔒)
+        - #4066 / #4067 Phase 7 — shared neighbor-links/accuracy/waypoints layers; all maps on `BaseMap`
+
+      ## Features
+
+
+      - #4072 — Map interaction polish: zoom clamp with configurable target (default 17),
+      distance-scaled animations, zoom-gated spiderfy with zoom-in-first clicks, re-spiderfy after
+      zoom (#4046)
+
+      - #4071 — MeshCore map polar grid; map loading indicators during initial fetch
+
+
+      ## Bug Fixes
+
+
+      - #4071 — Wheel/double-click zoom restored on all maps; zoom-to-node no longer hijacked by
+      route-fit on one-way traceroutes; one-time reload on stale-chunk load failures after upgrades
+
+      - #4055 — Dashboard neighbor-info lines follow the merged node marker position (#4042) —
+      thanks @temalo!
+
+      - #4045 — Notifications: drop inline autoindex `UNIQUE(user_id)` missed by migration 079
+      (#4044)
+
+
+      ## Issues Resolved
+
+
+      - #4047 — Consolidate 10 independent Leaflet maps into a shared BaseMap shell + composable
+      layer library
+
+      - #4046 — Map UI: improve pan/zoom-to-center behavior and its interaction with marker spiderfy
+
+      - #4042 — Dashboard Unified map: neighbor-info lines don't follow merged node marker position
+
+      - #4044 — Can't configure Apprise Notifications for a second source
+
+
+      ## Upgrade Notes
+
+
+      - Map visuals converge to one canonical look: the per-source Nodes map moves from a 3-band to
+      the 4-band SNR color scale, no-data segments render dashed gray, the Dashboard gains
+      traceroute return legs, the traceroute widget's legs use the theme color, and embeds show
+      SNR-colored traceroutes instead of uniform mauve.
+
+      - New per-user setting: Settings → Map → center-on-node target zoom (default 17).
+
+
+      **Full Changelog**: https://github.com/Yeraze/meshmonitor/compare/v4.13.0-rc1...v4.13.0-rc2
+
+
+      ## 🚀 MeshMonitor v4.13.0-rc2
+
+
+      ### 📦 Installation
+
+
+      **Docker (recommended):**
+
+      ```bash
+
+      docker run
+
+      …
   - version: v4.13.0-rc1
     name: v4.13.0-rc1
     datetime: '2026-07-11T13:09:26Z'
@@ -1661,117 +1770,6 @@ releases:
         -p 8080:3001 \
         -v meshmonitor-data:/data \
         ghcr.io/Yeraze/meshmonitor:4.10.3
-      ```
-
-
-      ### 🧪 Testing
-
-      ✅ All tests passed
-
-      ✅ TypeScript checks passed
-
-      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
-
-
-      ### 📋 Changes
-
-      See commit history for detailed changes.
-  - version: v4.10.2
-    name: v4.10.2
-    datetime: '2026-06-14T01:59:11Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.10.2
-    prerelease: false
-    notes: >-
-      # MeshMonitor v4.10.2
-
-
-      MeshMonitor v4.10.2 is a feature-rich point release centered on **cross-source messaging** and
-      **extensibility**. It adds server-side **PKI direct-message decryption** so DMs relayed
-      still-encrypted through MQTT can be aggregated into the unified view, and brings **MeshCore
-      channel/DM traffic into Unified Messages** while fixing a long-standing ~50-message-per-source
-      cap with per-channel backlogs. **User scripts can now declare and install Python/Node package
-      dependencies.** Meshtastic **Traffic Management telemetry** (firmware v2.7.22+) now renders as
-      labelled graphs. **Auto Welcome** gained a configurable pre-send delay so first-contact
-      welcomes survive a nodeDB reset, and **malformed-key MeshCore contacts can finally be
-      removed**. The Map Features panel gained a **"maximum age" slider**, and the Helm chart now
-      publishes a proper **chart repository** plus an optional **Gateway API HTTPRoute**. Rounding
-      things out are a stable telemetry-graph order and an embed-map popup-padding fix.
-
-
-      ## Features
-
-      - **PKI direct-message decryption across sources** (#3445) — decrypt PKI DMs server-side
-      (incl. MQTT-relayed) and surface them in Unified Messages; off by default behind a global +
-      per-source opt-in, keys encrypted at rest.
-
-      - **MeshCore in Unified Messages + per-channel backlog** (#3442) — MeshCore channels/DMs join
-      the cross-source feed; each channel loads its own history.
-
-      - **User-script Python/Node dependencies** (#3448) — declare via
-      `requirements.txt`/`package.json`, install from an admin panel; persisted next to scripts.
-
-      - **Traffic Management telemetry graphs** (#3447) — the firmware module's stats now render as
-      labelled, integer series.
-
-      - **Map Features "maximum age" slider** (#3435).
-
-      - **Helm: optional Gateway API HTTPRoute** (#3434).
-
-      - **Helm: published chart repository** at `meshmonitor.org/charts` (#3433).
-
-
-      ## Bug Fixes
-
-      - **Auto Welcome pre-send delay** — fixes DM failures on first contact after a nodeDB reset
-      (#3440).
-
-      - **Remove MeshCore contacts with malformed/short public keys** (#3444).
-
-      - **Stable telemetry graph order** — graphs no longer reshuffle on every update (#3437).
-
-      - **Embed map GeoJSON popup padding** restored in dark theme (#3430).
-
-
-      ## Docs / CI
-
-      - Correct mislabeled `#3441` → `#3442` references in the MeshCore changelog/comments (#3446).
-
-
-      ## Dependencies / i18n
-
-      - Translations update from Hosted Weblate (#3427).
-
-
-      ## Issues Resolved
-
-      #3441, #3443, #3439, #3436, #3432, #3431, #3429
-
-
-      ## Upgrade Notes
-
-      No breaking changes. PKI direct-message decryption is **off by default** — it requires a
-      configured `SESSION_SECRET` plus a global (Settings → Security) and per-source opt-in.
-      Installing script dependencies is admin-gated and runs third-party code.
-
-
-      **Full changelog:** https://github.com/Yeraze/meshmonitor/compare/v4.10.1...v4.10.2
-
-
-      ## 🚀 MeshMonitor v4.10.2
-
-
-      ### 📦 Installation
-
-
-      **Docker (recommended):**
-
-      ```bash
-
-      docker run -d \
-        --name meshmonitor \
-        -p 8080:3001 \
-        -v meshmonitor-data:/data \
-        ghcr.io/Yeraze/meshmonitor:4.10.2
       ```
 
 
