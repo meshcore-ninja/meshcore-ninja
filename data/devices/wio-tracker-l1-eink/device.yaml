@@ -90,7 +90,7 @@ interfaces:
 prints:
   - name: Seeed Wio Tracker L1 E-ink Case 3000mAh
     type: enclosure
-    date: 2026-01-21
+    date: "2026-01-21"
     author: Frey
     url: https://www.printables.com/model/1565089-seeed-wio-tracker-l1-e-ink-case-3000mah-meshtastic
     image: https://media.printables.com/media/prints/0e220c3d-118d-4934-bf50-9b2c93f32b45/images/11794311_fdba05ee-469f-4820-bfbf-0b5e74c23433_0103caf3-689c-4cb4-8a28-f5cdfe50781b/thumbs/cover/1200x630/jpeg/img_9325.jpg
@@ -104,7 +104,7 @@ prints:
     likes: 95
   - name: Case for Wio Tracker L1 E-Ink + MakerFocus 3000mAh Battery
     type: enclosure
-    date: 2026-01-28
+    date: "2026-01-28"
     author: theonlytruebigmac
     url: https://www.printables.com/model/1574450-case-for-wio-tracker-l1-e-ink-makerfocus-3000mah-b
     image: https://media.printables.com/media/prints/1a25f193-3c70-4f70-baac-2d2eddf151c6/images/11858971_316fc92a-9dd8-481d-8166-39b1e5fccc13_88cedd98-9c0c-431a-af7c-9e1e3c60d263/thumbs/cover/800x800/jpeg/pxl_20260128_041657939raw-01cover_preview.jpg
@@ -112,7 +112,7 @@ prints:
 
   - name: Wio Tracker L1 E-Ink 3000mAh Case with Protected Screen
     type: enclosure
-    date: 2026-06-05
+    date: "2026-06-05"
     author: Matthew Carpenter
     url: https://www.printables.com/model/1745909-wio-tracker-l1-e-ink-3000mah-case-with-protected-s
     image: https://media.printables.com/media/prints/174de4ec-1072-4780-a3bf-f21bc3d5d816/images/13084100_0568c218-f38d-4194-8bd0-1ba8e1fd79ef_ac64c7d9-ad4c-4d14-8b57-3c3e1f07c3da/img_7947.jpg

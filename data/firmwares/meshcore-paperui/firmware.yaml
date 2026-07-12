@@ -2,9 +2,9 @@ name: MeshCore PaperUI
 type: fork
 maintainer: dz0ny
 description: >
-  E-paper-focused MeshCore handheld firmware for the LilyGo T5 ePaper S3 Pro,
-  with standalone messaging, contacts, discovery, GPS, maps and touch-optimized
-  device settings.
+  E-paper-focused MeshCore handheld firmware for LilyGo T5 ePaper S3 Pro and
+  Seeed Wio Tracker L1 E-ink, with standalone messaging, contacts, discovery,
+  GPS, maps and touch-optimized device settings.
 repository: https://github.com/dz0ny/meshcore-paperui
 website: https://dz0ny.github.io/meshcore-paperui/
 license_type: source-available
@@ -43,3 +43,6 @@ devices:
   - id: lilygo-t5-pro
     status: supported
     notes: Requires the LilyGo T5 ePaper S3 Pro and an SD card for normal use.
+  - id: wio-tracker-l1-eink
+    status: supported
+    notes: Seeed Wio Tracker L1 E-ink variant with 2.13-inch e-ink display.
