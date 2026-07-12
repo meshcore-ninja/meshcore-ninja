@@ -1,7 +1,59 @@
 source: github
 repo: venamartin/meshtrax
-updatedAt: '2026-07-07T23:04:55.187Z'
+updatedAt: '2026-07-12T02:58:33.087Z'
 releases:
+  - version: v1.6.3
+    name: Release v1.6.3
+    datetime: '2026-07-12T00:20:30Z'
+    url: https://github.com/venamartin/meshtrax/releases/tag/v1.6.3
+    prerelease: false
+    notes: >-
+      ## What's Changed
+
+      * Fixed bug on showing repeaters farther that 50 miles away as unknown. by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/24
+
+      * Bugfix: DM duplicate message by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/25
+
+      * Chore/flutter analyze cleanup by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/26
+
+      * Feature/auto connect last by @venamartin in https://github.com/venamartin/meshtrax/pull/27
+
+      * chore: add Google Play Store icon and feature graphic by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/28
+
+      * Feature/UI improvements by @venamartin in https://github.com/venamartin/meshtrax/pull/29
+
+      * chore: remove dead code files by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/30
+
+      * Play Store readiness: moderation, terms, notifications, and defaults by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/31
+
+      * Fix/notification tap and names by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/32
+
+      * Docs/readme screenshots by @venamartin in https://github.com/venamartin/meshtrax/pull/33
+
+      * chore: set Play Store package name to com.vena.meshtrax by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/34
+
+      * Lost ble notification by @venamartin in https://github.com/venamartin/meshtrax/pull/35
+
+      * fix: resolve ack-queue race that falsely marked USB channel sends as failed by @venamartin
+      in https://github.com/venamartin/meshtrax/pull/36
+
+      * chore: bump version to 1.6.2+2 by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/37
+
+      * Fix/channel reply wire format by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/38
+
+
+
+      **Full Changelog**: https://github.com/venamartin/meshtrax/compare/v1.5.5...v1.6.3
   - version: v1.5.5
     name: Release v1.5.5
     datetime: '2026-07-07T22:38:18Z'
