@@ -1,7 +1,13 @@
 source: github
 repo: PhilMo6/meshpunk
-updatedAt: '2026-07-10T03:34:19.494Z'
+updatedAt: '2026-07-12T17:01:42.941Z'
 releases:
+  - version: v0.2.5
+    name: v0.2.5 alpha App library update
+    datetime: '2026-07-12T16:13:08Z'
+    url: https://github.com/PhilMo6/meshpunk/releases/tag/v0.2.5
+    prerelease: false
+    notes: "This update focused on separating the app development from the firmware dev.\r\nOnly system apps live with the firmware now and other apps are found in the app library.\r\nhttps://github.com/PhilMo6/meshpunk-apps\r\nThe app library app can be used with wifi to download apps onto your tdeck or the sd card. the sd card is recommended since the filesystem gets erased on firmware flashing.\r\nOnly the system apps are pre installed so you will have to redownload any others you want.\r\nThemes are also downloadable from the themes settings but the preinstalled ones are all still included.\r\nThe BLE implementation was rewritten to better work with the android app.\r\nUSB keyboard and USB thumb drive support with the correct 2 in 1 powered OTG y splitter cable \r\nAlso includes a some error fixes and a security fix."
   - version: v0.2.4
     name: v0.2.4 alpha
     datetime: '2026-07-09T23:35:03Z'
