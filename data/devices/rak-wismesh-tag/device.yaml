@@ -47,14 +47,7 @@ hardware:
       txPowerDbm: 22
       antenna: RP-SMA
   display:
-    status: present
-    technology: display
-    size: 2.8
-    resolution:
-      width: 320
-      height: 240
-    colors: color
-    touch: true
+    status: none
   gnss:
     status: present
     chip: MIA-M10Q
@@ -67,7 +60,7 @@ hardware:
   power:
     batterySupported: true
     batteryBuiltIn: true
-    batteryCapacityMah: 3200
+    batteryCapacityMah: 1000
     batteryChemistry: li-po
     batteryConnector: JST1.25-2
     charging: true
@@ -87,12 +80,6 @@ hardware:
       min: -10
       max: 60
 interfaces:
-  usb:
-    connector: USB-C
-    capabilities:
-      - power
-      - serial
-      - flashing
   bluetooth:
     version: '5.0'
     ble: true
