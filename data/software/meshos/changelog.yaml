@@ -1,7 +1,28 @@
 source: github
 repo: andymux/meshos-releases
-updatedAt: '2026-07-11T13:25:09.186Z'
+updatedAt: '2026-07-12T19:09:25.385Z'
 releases:
+  - version: fw-v1.5.7
+    name: MeshOS firmware v1.5.7
+    datetime: '2026-07-12T17:40:58Z'
+    url: https://github.com/andymux/meshos-releases/releases/tag/fw-v1.5.7
+    prerelease: false
+    notes: >-
+      WiFi cold-scan reliability fix and connect-dialog improvements. New map tools: drop a pin to
+      navigate back to a saved spot, and show where the last mesh signal came from. JPG wallpaper
+      support with large images and faster boot. Room server bug fixes.
+
+
+      Device firmware for LilyGo T-Deck and ThinkNode M9.
+
+      Install via SD card (firmware.bin) or the in-firmware updater.
+
+
+      SHA-256:
+
+      - TDeck: a96356b479cce107d6359546592a49e88a61782e0407e42ade909513fb47c25a
+
+      - M9: 576925cf23254c60fa877a664116742302b4ca6d8f8474669124e1a3d5413a2d
   - version: fw-v1.5.6
     name: MeshOS firmware v1.5.6
     datetime: '2026-07-11T12:03:47Z'
