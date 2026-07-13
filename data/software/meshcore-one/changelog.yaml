@@ -1,7 +1,13 @@
 source: github
 repo: Avi0n/MeshCoreOne
-updatedAt: '2026-07-12T22:53:06.011Z'
+updatedAt: '2026-07-13T06:56:12.471Z'
 releases:
+  - version: v1.2.1
+    name: 1.2.1
+    datetime: '2026-07-13T06:10:08Z'
+    url: https://github.com/Avi0n/MeshCoreOne/releases/tag/v1.2.1
+    prerelease: false
+    notes: "## What's Changed\r\n- Debug logs are now kept locally for 7 days instead of 24 hours. Logs are kept on your device.\r\n\r\n## Bug Fixes\r\n- Fixed an issue where a momentary gap during automatic reconnect could silently drop the radio connection until the app returned to the foreground.\r\n- Reduced unnecessary re-pair prompts. A brief encryption hiccup at the edge of Bluetooth range no longer tells you to re-pair a radio whose pairing still works.\r\n\r\n\r\n**Full Changelog**: https://github.com/Avi0n/MeshCoreOne/compare/v1.2.0...v1.2.1"
   - version: v1.2.0
     name: 1.2.0
     datetime: '2026-07-12T22:28:15Z'
@@ -116,9 +122,3 @@ releases:
     url: https://github.com/Avi0n/MeshCoreOne/releases/tag/v0.4.0
     prerelease: false
     notes: "## What's Changed\r\n- **Revamped Contacts Tab**: Now rebranded as \"Nodes\", featuring category switching between Contacts and Network devices (repeaters & rooms). Also added sorting e.g. last heard advert.\r\n- **Updated Map**: Visualize clusters with numbered indicators and added map layers.\r\n- **Batch Trace Mode Introduced**: Trace Path tool has a new batch processing mode, including averaging for better trace insights.\r\n- **Refined SNR Attribution**: Transitioned from sender to receiver attribution in Trace Path SNR values. \r\n- **Unread Mentions**: A new button in chats scrolls you to your unread mentions.\r\n- **Mute Conversations Easily**: Swipe any conversation to mute it.\r\n- **Block Contacts**: Swipe a Contact in the Node list to block unwanted interactions. This will delete all chats with the Contact and prevent their messages from showing in channels.\r\n- **Mention Picker**: Type \"@\" to quickly select contacts to mention.\r\n- **Hashtag Channel Integration**: Tap hashtag channels in messages to join or create them on the fly.\r\n- **More Accurate Battery Percentage**: Automatically set OCV battery curve based on device manufacturer during first pair.\r\n- **Enhanced Pill Status Indicators**: Added more pill statuses including Connecting, Connected, and Disconnected.\r\n- **Quick Device Connection**: Tap the pill in Disconnected state to open the Connect Device sheet from anywhere in the app.\r\n- **Intelligent Connection Detection**: Detect and prevent connections if BLE device is connected to another app.\r\n- **Proactive Battery Alerts**: Receive low battery notifications at 20%, 10%, and 5% thresholds.\r\n- **New Repeater OCV Option**: Added Seeed Solar Node to the Repeater OCV menu in the repeater telemetry screen.\r\n- **Expanded Logging**: Added more detailed logging for Bluetooth connections and repeater commands.\r\n- **Extended Debug Logs**: Increased debug log retention from 1 hour to 24 hours to better capture Bluetooth issues.\r\n- **Offline Debug Export**: Now export debug logs even without a connected device.\r\n- **Polished UI/UX**: Refined interfaces for a smoother experience (thanks Mike!).\r\n\r\n## Bug Fixes\r\n- Fixed numpad positioning issues on iPad for WiFi connection sheets.\r\n- Attempt at improving reliability of repeater CLI command/response handling.\r\n- Fixed unresponsive Done button when editing Repeater Name field.\r\n- Addressed potential stuck \"Syncing\" pill that required force quit to resolve.\r\n\r\n\r\n**Full Changelog**: https://github.com/Avi0n/PocketMesh/compare/v0.3.3...v0.4.0"
-  - version: v0.3.3
-    name: 0.3.3
-    datetime: '2026-01-12T00:03:11Z'
-    url: https://github.com/Avi0n/MeshCoreOne/releases/tag/v0.3.3
-    prerelease: false
-    notes: "## What's Changed\r\n- Suppress new message push notifications when connecting to a device\r\n- New \"Connecting...\" pill appears when PocketMesh is trying to connect to a device\r\n- Add more debug logging. Now saves logs between app restarts\r\n- In repeater admin settings, changed Max Flood Hops from a stepper to an input field\r\n- In repeater admin settings, changed \"Force Advertisement\" text to \"Send Advert\"\r\n\r\n## Bug Fixes\r\n- Allow passwords longer than 15 chars in room/repeater logins with educational message about truncation. \r\n- Fix messages getting stuck in \"Sending...\" state\r\n- Fix iPad crash when presenting Share Sheet in the Trace Path tool\r\n\r\n\r\n**Full Changelog**: https://github.com/Avi0n/PocketMesh/compare/v0.3.2...v0.3.3"
