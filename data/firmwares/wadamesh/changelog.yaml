@@ -1,7 +1,59 @@
 source: github
 repo: ALLFATHER-BV/wadamesh
-updatedAt: '2026-07-12T14:59:18.412Z'
+updatedAt: '2026-07-13T17:57:11.524Z'
 releases:
+  - version: beta_44
+    name: wadamesh beta_44
+    datetime: '2026-07-13T15:30:35Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_44
+    prerelease: true
+    notes: >-
+      **wadamesh beta_44** (test channel) adds an on-device text web browser, makes links in chat
+      tappable, and fixes the French keyboard's missing spacebar.
+
+
+      Flash it from **[flasher.wadamesh.com](https://flasher.wadamesh.com)** (flip the **Beta**
+      toggle), or grab a `-merged.bin` below (flash at `0x0`). On the device, beta testers can also
+      enable **Settings → Get test builds (beta)**.
+
+
+      ## New - on-device web browser
+
+      A new **Web** app opens a URL and shows the page as plain, readable text - articles, wikis,
+      docs, plain sites - right on the device. No proxy, no tracking, no JavaScript or images: just
+      the words. Links are tappable, with back / forward / refresh.
+
+
+      The browser needs the RAM only the 8 MB boards have (T-Deck, Tanmatsu), so it is **hidden on
+      the 2 MB Heltec V4** - that board can't complete an on-device HTTPS handshake.
+
+
+      ## New - tappable links in chat
+
+      Links in a chat now render in blue. Tap one for a small menu:
+
+      - **Open in web** - loads the page in the on-device browser (8 MB boards).
+
+      - **Create QR** - shows a scannable QR code so you can open the link on your phone. This works
+      on **every** board, including the Heltec V4 - so even where the browser isn't available, you
+      can still bounce a link to your phone.
+
+
+      ## Fixed
+
+      - **French (AZERTY) on-screen keyboard**: the spacebar (and the OK / keyboard-switch keys) are
+      back in the normal letter view. You no longer have to switch to the symbols page just to type
+      a space. (A stray empty entry was cutting the keyboard map short.)
+
+      - **Heltec V4**: web page fetching and map tiles are more resilient when memory is tight.
+
+      - **Home signal & traffic box**: the "tap for details" cue is back at the top of the box.
+
+
+      ---
+
+      This is a **test-channel** (beta) build. Devices on the beta update feed will offer it; stable
+      stays on beta_40.
   - version: beta_43
     name: wadamesh beta_43
     datetime: '2026-07-12T14:35:48Z'
@@ -1062,23 +1114,3 @@ releases:
 
 
       Install the app-only `.bin` via the Launcher, or the `-merged.bin` at 0x0 with a flasher.
-  - version: beta_24
-    name: wadamesh beta_24
-    datetime: '2026-07-01T12:50:16Z'
-    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_24
-    prerelease: true
-    notes: >-
-      **wadamesh beta_24, test build.** Opt in via **Settings > About > "Get test builds (beta)"**,
-      or the flasher's Beta toggle.
-
-
-      ## Fixed
-
-
-      - **Signal probe now reads a real signal to your nearest repeater.** It sends the standard
-      mesh node-discovery request that repeaters actually answer, instead of the trace packet from
-      the previous test builds that they ignored, so the signal reading updates again. This is the
-      same request the Ultra and KiekR apps use. Thanks to **Tarmo** for decoding the exact packet.
-
-
-      Everything from the stable beta_21 and the earlier test builds is included.

@@ -1,7 +1,27 @@
 source: github
 repo: andymux/meshos-releases
-updatedAt: '2026-07-12T19:09:25.385Z'
+updatedAt: '2026-07-13T17:57:29.880Z'
 releases:
+  - version: fw-v1.5.8
+    name: MeshOS firmware v1.5.8
+    datetime: '2026-07-13T16:07:20Z'
+    url: https://github.com/andymux/meshos-releases/releases/tag/fw-v1.5.8
+    prerelease: false
+    notes: >-
+      New Control Centre: quick-settings panel with WiFi, Sound, Bluetooth and GPS toggles plus
+      brightness and volume sliders. Persistent WiFi switch. Software updater reliability fixes.
+
+
+      Device firmware for LilyGo T-Deck and ThinkNode M9.
+
+      Install via SD card (firmware.bin) or the in-firmware updater.
+
+
+      SHA-256:
+
+      - TDeck: 5a7da903153d2ba4790585b1a692ad443021f85c47798afe18015ac3a7115622
+
+      - M9: b44357a68874adc43e9b0d3a579006d8a5d7e726b61df39ce81510878dfe003b
   - version: fw-v1.5.7
     name: MeshOS firmware v1.5.7
     datetime: '2026-07-12T17:40:58Z'
@@ -482,28 +502,3 @@ releases:
       - **Telemetry Refresh** — Re-request telemetry without closing the dialog
 
       - **In-App Update Checker** — Automatic check on startup + manual check in Settings > Version
-  - version: v0.4.0
-    name: MeshOS v0.4.0
-    datetime: '2026-03-23T11:36:55Z'
-    url: https://github.com/andymux/meshos-releases/releases/tag/v0.4.0
-    prerelease: false
-    notes: >-
-      ## What's New
-
-      - **Repeater Settings Tab** — configure repeater settings through a clean UI instead of CLI
-      commands
-
-      - **Location Picker** — set repeater position on a map
-
-      - **CLI Fixes** — responses now display correctly under their commands
-
-      - **Theming** — dark, light, and tactical themes
-
-      - **QR Code** — share and scan contacts via QR
-
-      - **Trace Route** — visualize message paths through the mesh
-
-
-      ## Download
-
-      Download **MeshOS.apk** below and install on your Android device.
