@@ -1,7 +1,147 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-07-12T06:35:54.654Z'
+updatedAt: '2026-07-13T19:39:00.491Z'
 releases:
+  - version: v4.13.0-rc3
+    name: v4.13.0-rc3
+    datetime: '2026-07-13T18:11:37Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.13.0-rc3
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.13.0-rc3
+
+
+      > ⚠️ **Pre-release (Release Candidate).** This build is for testing the 4.13.0
+      map-consolidation and MeshCore work ahead of the stable release. Not recommended for
+      production; back up your database before upgrading.
+
+
+      This release candidate builds on rc2 with a focused round of map interaction fixes and a
+      MeshCore Virtual Node correctness fix. The map work resolves several regressions from the
+      map-consolidation epic: click-to-pan now targets the actual node marker instead of the raw
+      center, user gestures (zoom/pan) correctly cancel node-centering instead of snapping back and
+      freezing, and raster tile layers no longer remount and flicker when the tileset changes. Null
+      Island (0,0) coordinates are now filtered from both markers and line endpoints, and
+      out-of-range/invalid node positions are detected and trimmed. Pan/zoom/spiderfy behavior was
+      polished with a zoom clamp, scaled animations, and zoom-gated spiderfy. ROUTER_LATE nodes
+      again render as repeater-tower icons on the NodesTab and Dashboard maps. On MeshCore, the
+      Virtual Node login now relays the admin flag and firmware level, and the mobile node list is
+      collapsible so the map is reachable without selecting a node. This candidate also folds in a
+      large batch of dependency updates and a translations refresh.
+
+
+      ## Features
+
+      - **Map:** pan/zoom/spiderfy interaction polish — zoom clamp, scaled animations, zoom-gated
+      spiderfy, re-spiderfy on zoom (#4072, resolves #4046)
+
+      - **MeshCore:** collapsible node list — reach the map on mobile without selecting a node
+      (#4079)
+
+
+      ## Bug Fixes
+
+      ### Map
+
+      - Click pans to the node marker, not the raw center, for obscured nodes (#4082)
+
+      - User gesture cancels node-centering — zoom no longer snaps back (#4098)
+
+      - Fixed map snapping back to node on click and freezing interaction (#4080)
+
+      - Stopped raster tile layer remounting on tileset change (abort/flicker) (#4097)
+
+      - Detect and trim out-of-range (invalid) node positions (#4099)
+
+      - Widen Null Island radius + skip it in the unified merge (#4077)
+
+      - Null-island filter for line endpoints — routes + neighbors no longer run to 0,0 (#4078)
+
+      - ROUTER_LATE renders as a repeater-tower icon on NodesTab + Dashboard maps (#4076, resolves
+      #4075)
+
+      - Integrate `resolveMapEndpoint` into DashboardMap neighbor lines (#4055, resolves #4042)
+
+      - Post-epic fixes: wheel zoom, zoom-to-node, chunk-reload self-heal; MeshCore polar grid + map
+      loading states (#4071)
+
+
+      ### MeshCore
+
+      - Relay admin flag + firmware level in Virtual Node login (#4095, resolves #4094)
+
+
+      ## Translations
+
+      - Translations update from Hosted Weblate (#4006)
+
+
+      ## Dependencies
+
+      - Bump the production-dependencies group with 9 updates (#4084)
+
+      - Bump the development-dependencies group with 3 updates — @types/node, eslint, vitest (#4083)
+
+      - Bump protobufjs 8.6.6 → 8.7.0 (#4090)
+
+      - Bump helmet 8.2.0 → 8.3.0 (#4092)
+
+      - Bump lucide-react 1.22.0 → 1.24.0 (#4085)
+
+      - Bump re2 1.25.0 → 1.26.0 (#4088)
+
+      - Bump @typescript-eslint/eslint-plugin 8.62.1 → 8.63.0 (#4089)
+
+      - Bump @typescript-eslint/parser 8.62.1 → 8.63.0 (#4087)
+
+
+      ## Issues Resolved
+
+      - #4094 — MeshCore: Virtual Node functionality still does not work correctly
+
+      - #4093 — MeshCore: Channels no longer marked unread
+
+      - #4075 — ROUTER_LATE renders as generic pin (not repeater tower icon) on NodesTab and
+      Dashboard maps
+
+      - #4046 — Map UI: improve pan/zoom-to-center behavior and its interaction with marker spiderfy
+
+      - #4042 — Dashboard Unified map: neighbor-info lines don't follow merged node marker position
+
+
+      **Full changelog:** https://github.com/Yeraze/meshmonitor/compare/v4.13.0-rc2...v4.13.0-rc3
+
+
+      ## 🚀 MeshMonitor v4.13.0-rc3
+
+
+      ### 📦 Installation
+
+
+      **Docker (recommended):**
+
+      ```bash
+
+      docker run -d \
+        --name meshmonitor \
+        -p 8080:3001 \
+        -v meshmonitor-data:/data \
+        ghcr.io/Yeraze/meshmonitor:4.13.0-rc3
+      ```
+
+
+      ### 🧪 Testing
+
+      ✅ All tests passed
+
+      ✅ TypeScript checks passed
+
+      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
+
+
+      ### 📋 Changes
+
+      See commit history for detailed changes.
   - version: v4.13.0-rc2
     name: v4.13.0-rc2
     datetime: '2026-07-12T04:36:21Z'
@@ -1690,86 +1830,6 @@ releases:
         -p 8080:3001 \
         -v meshmonitor-data:/data \
         ghcr.io/Yeraze/meshmonitor:4.10.4
-      ```
-
-
-      ### 🧪 Testing
-
-      ✅ All tests passed
-
-      ✅ TypeScript checks passed
-
-      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
-
-
-      ### 📋 Changes
-
-      See commit history for detailed changes.
-  - version: v4.10.3
-    name: v4.10.3
-    datetime: '2026-06-14T19:59:47Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.10.3
-    prerelease: false
-    notes: >-
-      Maintenance release: Traffic Management detection fix and a round of bug fixes.
-
-
-      ## Bug Fixes
-
-      - **Traffic Management / Status Message shown "Unsupported" on capable firmware (#3457)** —
-      support is now gated on firmware version (Status Message ≥ 2.7.19, Traffic Management ≥
-      2.7.22) instead of an unreliable presence check, so the modules show correctly on e.g.
-      v2.7.24.
-
-      - **MQTT nodes appeared nameless (#3456)** — the per-packet "last heard" refresh no longer
-      clobbers saved NodeInfo with blanks; MQTT-sourced node names now persist.
-
-      - **Local-node module config refreshes were discarded (#3460)** — the response handler was
-      remote-node-only; local refreshes are now stored.
-
-      - **Phantom channel swaps when two channels share a PSK and name (#3453)** — ambiguous `(psk,
-      name)` pairs are skipped, preventing recurring message-attribution scrambling.
-
-      - **MeshCore auto-ack `{SNR}` always blank (#3454)** — RX SNR is now carried onto MeshCore
-      message events so `{SNR}` resolves.
-
-      - **MeshCore device name stripped parentheses and emoji on save (#3450)** — printable Unicode
-      is preserved (capped to the 32-byte field on a character boundary).
-
-
-      ## Features
-
-      - **Bridged-node detection disables OTA firmware update (#3455)** and **bridged-node
-      advisories on MQTT/Network configuration (#3458)** — MeshMonitor detects serial/BLE-only
-      radios fronted by a TCP proxy and guides operators accordingly.
-
-
-      ## Docs
-
-      - **LoRa Transmit Power help text clarified (#3459)** — 0 = hardware default max safe power;
-      negative values are permitted (signed field) but radio-dependent.
-
-
-      Full details in the [changelog](https://github.com/Yeraze/meshmonitor/blob/main/CHANGELOG.md).
-
-
-      🤖 Generated with [Claude Code](https://claude.com/claude-code)
-
-      ## 🚀 MeshMonitor v4.10.3
-
-
-      ### 📦 Installation
-
-
-      **Docker (recommended):**
-
-      ```bash
-
-      docker run -d \
-        --name meshmonitor \
-        -p 8080:3001 \
-        -v meshmonitor-data:/data \
-        ghcr.io/Yeraze/meshmonitor:4.10.3
       ```
 
 
