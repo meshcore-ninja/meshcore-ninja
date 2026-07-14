@@ -1,7 +1,13 @@
 source: github
 repo: MultiMote/meshcore-cardputer-adv
-updatedAt: '2026-07-06T20:01:51.300Z'
+updatedAt: '2026-07-14T17:16:58.083Z'
 releases:
+  - version: 2026.7.1
+    name: Firmware 2026.7.1
+    datetime: '2026-07-14T16:40:53Z'
+    url: https://github.com/MultiMote/meshcore-cardputer-adv/releases/tag/2026.7.1
+    prerelease: false
+    notes: "* Multiple direct message sending attempts\r\n* Press `Ctrl+T` to break resending\r\n* Press `Ctrl+Up` to insert last sent message into the text field\r\n* Add arrows to font\r\n* Fix screen not updated on new message"
   - version: 2026.7.0
     name: Firmware 2026.7.0
     datetime: '2026-07-06T19:10:46Z'
