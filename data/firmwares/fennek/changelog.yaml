@@ -1,7 +1,32 @@
 source: github
 repo: danst0/fennek
-updatedAt: '2026-06-24T16:32:31.635Z'
+updatedAt: '2026-07-14T10:00:42.271Z'
 releases:
+  - version: v2.6.4
+    name: Fennek v2.6.4
+    datetime: '2026-07-14T07:44:33Z'
+    url: https://github.com/danst0/fennek/releases/tag/v2.6.4
+    prerelease: false
+    notes: >-
+      Schutznetze gegen stille Akku-Tiefentladung im Standby:
+
+
+      - Schlaf-Diagnose im RTC-RAM (Phase-Breadcrumb + Wake-Historie, beim nächsten Vollboot ins
+      battlog)
+
+      - Task-Watchdog um Timer-Wake-Minimalpfad (30 s) und enterStandby (60 s),
+      Loslass-Warteschleife mit 10-s-Timeout
+
+      - Crash-Loop-Bremse: 3 abnormale Resets in Folge → Not-Standby (nur Knopf-Wake), Crash-Boots
+      flushen sofort auf SD
+
+      - Tiefentladeschutz: ≤5 % auf Akku → sofort Standby, im Schlaf keine Stunden-Wakes mehr
+      (Wecker bis 3 %)
+
+      - GPIO42 (Tastatur-Backlight-Gate) über Deep Sleep gehalten, E-Ink-Controller vor Deep Sleep
+      in hibernate()
+
+      - Launcher: Kachel-Icons links + Text-Label, Lage/Gyro-App deaktiviert
   - version: v2.6.3
     name: v2.6.3
     datetime: '2026-06-24T13:45:28Z'
@@ -344,24 +369,3 @@ releases:
 
 
       **Full changelog:** [`CHANGELOG.md`](https://github.com/danst0/fennek/blob/main/CHANGELOG.md)
-  - version: v1.8.0
-    name: Fennek v1.8.0
-    datetime: '2026-06-13T19:18:10Z'
-    url: https://github.com/danst0/fennek/releases/tag/v1.8.0
-    prerelease: false
-    notes: >-
-      ## Added
-
-      - **Notes app** (launcher tile 7): a daily-notes model — exactly one note per day, named after
-      the local date (`/notes/YYYY-MM-DD.md`). **"+ Today"** opens or appends to today's note; the
-      list shows every day newest-first with a first-line preview, and notes can be deleted with a
-      confirmation. The editor is append-style (type / Backspace / Enter) with its own word wrap and
-      a compact header.
-
-        Persistence is chunked under `spiLock` (never inside `draw()`), with a 30 s autosave and a save on leave; empty notes are removed. Without an SD card it shows "No SD card" + "Search again" like the other apps. The date comes from the local system clock (`timesync`). New console command `notes` runs an SD round-trip / scan self-check (in the style of `books`).
-
-      Localized in DE/IT/SV/EN/ES. Verified on device (clean boot, SD round-trip with UTF-8
-      preserved, scan/sort).
-
-
-      **Full changelog:** [CHANGELOG.md](https://github.com/danst0/fennek/blob/main/CHANGELOG.md)
