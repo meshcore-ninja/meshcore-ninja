@@ -1,7 +1,13 @@
 source: github
 repo: PhilMo6/meshpunk
-updatedAt: '2026-07-12T17:01:42.941Z'
+updatedAt: '2026-07-14T02:41:28.283Z'
 releases:
+  - version: v0.2.6
+    name: v0.2.6 alpha fonts update
+    datetime: '2026-07-14T02:01:18Z'
+    url: https://github.com/PhilMo6/meshpunk/releases/tag/v0.2.6
+    prerelease: false
+    notes: "you can now add your own fonts!\r\nthemes can have internal fonts as well.\r\nsmall gps improvements\r\nmap memory fragmentation fixes"
   - version: v0.2.5
     name: v0.2.5 alpha App library update
     datetime: '2026-07-12T16:13:08Z'
