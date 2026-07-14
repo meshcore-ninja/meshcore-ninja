@@ -1,7 +1,28 @@
 source: github
 repo: danst0/fennek
-updatedAt: '2026-07-14T10:00:42.271Z'
+updatedAt: '2026-07-14T13:49:14.183Z'
 releases:
+  - version: v2.6.5
+    name: v2.6.5
+    datetime: '2026-07-14T11:26:25Z'
+    url: https://github.com/danst0/fennek/releases/tag/v2.6.5
+    prerelease: false
+    notes: >-
+      feat(calibre): E-Book-Pull-Sync von Calibre-Web via OPDS
+
+
+      - Neuer Service services/calibre_books: zieht das Buecherregal "Fennek" (Shelf, Name oder ID)
+      von Calibre-Web via OPDS und laedt neue EPUBs nach /books (Basic-Auth, Dateiname aus
+      Content-Disposition)
+
+      - Nur-hinzufuegend: Manifest /.fennek/calibre.tsv, max. 8 Downloads/Lauf
+
+      - Auto-Sync vor dem Auto-Standby hoechstens alle 6 h + RTC-Back-off
+
+      - Konsole: calibre url/user/pass/shelf/on/off/sync + Status
+
+
+      🤖 Generated with [Claude Code](https://claude.com/claude-code)
   - version: v2.6.4
     name: Fennek v2.6.4
     datetime: '2026-07-14T07:44:33Z'
@@ -346,26 +367,6 @@ releases:
       contacts and their persistent mirrors (SPIFFS `/contacts`, SD `/meshcore/contacts.bin`); the
       contact table then rebuilds itself from incoming adverts. Handy when the 64-slot table fills
       up with stale nodes or you want a clean slate.
-
-
-      **Full changelog:** [`CHANGELOG.md`](https://github.com/danst0/fennek/blob/main/CHANGELOG.md)
-  - version: v1.8.1
-    name: Fennek v1.8.1
-    datetime: '2026-06-15T15:51:04Z'
-    url: https://github.com/danst0/fennek/releases/tag/v1.8.1
-    prerelease: false
-    notes: >-
-      ### Changed
-
-      - **Unified back/home navigation across all apps.** Home is now a visible affordance: the
-      status bar shows a house glyph (⌂) outside the launcher and the whole bar taps to Home. Lower
-      corner buttons are consistently labelled **"Back"** (exactly one level) —
-      audiobook/reader/notes lists and Settings now say "Back" instead of "Home", and the Settings
-      back button steps edit → category → root → launcher. Mesh sub-screens dropped their redundant
-      second "Home" button, the Files app gained a visible "Back" button, and the reader footer
-      tap-zone is labelled "◄ List". Games keep no on-screen back button (exit via the ⌂ glyph;
-      keyboard `Backspace`/`Q` still works). Keyboard conventions (`Q` = Home, `Backspace` = one
-      level back) unchanged.
 
 
       **Full changelog:** [`CHANGELOG.md`](https://github.com/danst0/fennek/blob/main/CHANGELOG.md)
