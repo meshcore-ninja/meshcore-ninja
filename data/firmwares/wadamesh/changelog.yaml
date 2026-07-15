@@ -1,7 +1,74 @@
 source: github
 repo: ALLFATHER-BV/wadamesh
-updatedAt: '2026-07-13T17:57:11.524Z'
+updatedAt: '2026-07-15T19:15:28.678Z'
 releases:
+  - version: beta_45
+    name: wadamesh beta_45
+    datetime: '2026-07-15T18:52:36Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_45
+    prerelease: true
+    notes: >-
+      **wadamesh beta_45** (test channel) brings **three new boards** and two notable fixes.
+
+
+      Huge thanks to **@codemonkeybr**, who contributed the entire **LilyGo T-LoRa Pager** port this
+      cycle ([#149](https://github.com/ALLFATHER-BV/wadamesh/pull/149)).
+
+
+      Flash it from **[flasher.wadamesh.com](https://flasher.wadamesh.com)** (flip the **Beta**
+      toggle), or grab a `-merged.bin` below (flash at `0x0`). On the device, beta testers can also
+      enable **Settings → Get test builds (beta)**.
+
+
+      ## New board — LilyGo T-LoRa Pager  (by @codemonkeybr, #149)
+
+      A QWERTY-keyboard handheld (ESP32-S3) with a rotary encoder and **no touchscreen** — the whole
+      UI is driven from the keyboard and the encoder. Both radio variants are supported (**LR1121**
+      and **SX1262**), and everything was verified on real hardware against a live mesh: the encoder
+      scrolls and its click opens menus, plus a universal back gesture, screen lock,
+      keyboard-backlight modes, an accent-character picker and an @-mention picker — all
+      keyboard/encoder driven. There's a full shortcut reference on the site.
+
+
+      ## New board — LilyGo T-Display P4
+
+      An ESP32-P4 AMOLED touchscreen handheld. Early port, **partially supported**: LoRa mesh, chat,
+      the map, GPS and the phone-app companion over Wi-Fi/USB all work; screen brightness and
+      notification sound have Control-Center sliders; the browser-based screen mirror / remote apps
+      work over Wi-Fi. **Bluetooth pairing is not available** on this board (a limitation of its
+      stock radio-coprocessor firmware) — pair over Wi-Fi or USB.
+
+
+      ## New board — Heltec V4-R8
+
+      The Heltec WiFi LoRa 32 V4-R8 (8 MB PSRAM) with the Expansion Kit V2 (microSD). **Partially
+      supported** while it finishes hardware testing.
+
+
+      ## Fixed
+
+      - **Heltec V4-R8**: fixed random hard-freezes needing a reset — the touch controller was on a
+      second I2C controller bound to the same pins as the clock/sensors, which could wedge the bus.
+      It now shares the one bus (the proven T-Deck pattern).
+
+      - **Tanmatsu (and other keyboard-only boards)**: you can now select and edit the Wi-Fi
+      **network-name and password fields** — the join screen's fields were unreachable with the
+      keyboard because that overlay wasn't a recognized navigation root.
+
+      - **T-Display P4**: the clock now sets itself over Wi-Fi even where NTP is blocked, and won't
+      stick on a bad date reported by the hardware clock.
+
+
+      ## Also
+
+      The flasher site now shows a **support badge** on every board (fully vs partially supported) —
+      hover it for what works.
+
+
+      ---
+
+      This is a **test-channel** (beta) build. Devices on the beta update feed will offer it; stable
+      stays on beta_40. The three new boards are beta-only until proven.
   - version: beta_44
     name: wadamesh beta_44
     datetime: '2026-07-13T15:30:35Z'
@@ -1056,61 +1123,3 @@ releases:
       **Already stuck in a reboot loop?** A normal update won't clear it — reinstall with the
       **Erase device** option checked in the web flasher (or erase the flash, then flash the merged
       image). Keeping a microSD card inserted is recommended.
-  - version: beta_25
-    name: wadamesh beta_25 (stable)
-    datetime: '2026-07-01T21:34:02Z'
-    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_25
-    prerelease: false
-    notes: >-
-      **wadamesh beta_25** is the new **stable** release. It rolls up the beta_22 through beta_25
-      test builds on top of the previous stable, beta_21.
-
-
-      Install from [flasher.wadamesh.com](https://flasher.wadamesh.com), the Launcher, or the
-      on-device update check.
-
-
-      ### Fixed
-
-      - **Signal probe reads a live signal again.** It sends the standard mesh node-discovery
-      request that repeaters actually answer (the same one the Ultra and KiekR apps use), so the
-      signal reading updates. Thanks to Tarmo for decoding the exact packet.
-
-      - **Bluetooth companion reliability**, especially messages and repeater / room-server admin.
-      The device no longer floods the Bluetooth link with a per-packet log (USB and Wi-Fi companions
-      still get it), so incoming messages reach the app and admin actions like Manage Regions stop
-      timing out (#46, #54).
-
-      - **Contacts show up right away.** A node you discover (even while on another screen, or one
-      the phone app adds over Bluetooth) now appears in your contact list immediately, instead of
-      only after changing the sort. Thanks to **@1nerdherder** for the report (#73).
-
-      - **Manual telemetry / status requests work first-try** (no more tapping "Request" twice).
-      Thanks to **@Vybo** (Dan Vybiral) for the fix (#81).
-
-      - Emoji picker and quick-chat replies: pressing **Esc or the red X closes the popup**, not the
-      whole chat.
-
-      - **Lock screen:** you can unlock again after the screen wakes from an incoming message.
-
-
-      ### New
-
-      - **"Advertise on boot"** toggle in the Advertise app (off by default): opt in to send one
-      advert at power-on so peers refresh your details after a reflash (#76).
-
-
-      ### Tanmatsu (ESP32-P4)
-
-      - **Wi-Fi map tiles now work:** they download and display, cached to the microSD card.
-
-      - **Contacts and message history survive a reboot:** moved to the microSD card, so keep a card
-      inserted. Identity and radio settings stay on internal storage.
-
-      - Fixed the crash that stopped the app from booting.
-
-      - Popups fit the screen and scroll; keyboard navigation stays inside an open popup; 2000
-      contacts; "Large" UI size by default.
-
-
-      Install the app-only `.bin` via the Launcher, or the `-merged.bin` at 0x0 with a flasher.

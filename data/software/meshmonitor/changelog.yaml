@@ -1,7 +1,117 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-07-13T19:39:00.491Z'
+updatedAt: '2026-07-15T19:15:49.618Z'
 releases:
+  - version: v4.13.0
+    name: v4.13.0
+    datetime: '2026-07-15T18:35:53Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.13.0
+    prerelease: false
+    notes: >-
+      # MeshMonitor v4.13.0
+
+
+      MeshMonitor 4.13.0 is the largest release of the 4.x line, stabilized through three release
+      candidates. The headline is the **Map Consolidation epic**: every map surface — Dashboard,
+      Nodes, Map Analysis, MeshCore, Unified, and embeds — now shares one rendering core, one layer
+      library, and one popup family, so features and fixes land everywhere at once. On top of that
+      come node selection and Follow mode, a distance-measurement tool, a polar grid overlay, and a
+      long list of map interaction fixes. MeshCore gains message delete/purge, automatic send
+      retries, Auto-Pathfinding target filtering, a configurable CLI timeout, and a completed
+      Virtual Node command surface. Automations pick up multi-channel triggers, a scheduled
+      device-reboot action, and per-source tapback routing. The long-standing "low-battery alerts
+      silently never fire" bug — reported five separate times — is fixed at its root. Under the
+      hood, a major architecture remediation unified the source-manager registry, moved fresh
+      installs to migration-replay bootstrap, and deleted the legacy synchronous database API. Three
+      deliberate breaking changes ship in this release: auto-upgrade is retired, `TRUST_PROXY`
+      defaults to `false`, and source-scoped API endpoints require an explicit `sourceId` — see
+      Upgrade Notes below. Docker users: `:latest` now only moves on stable releases like this one;
+      RCs publish to `:dev`.
+
+
+      📖 [Release
+      announcement](https://yeraze.github.io/meshmonitor/blog/2026-07-15-v4.13.0-release) · [Full
+      changelog](https://github.com/Yeraze/meshmonitor/blob/main/CHANGELOG.md)
+
+
+      ## Features
+
+
+      **Maps**
+
+      - Map Consolidation epic: shared BaseMap shell, layer library, unified node-marker factory,
+      one popup family, canonical traceroute rendering on all maps including embeds — #4049, #4051,
+      #4057, #4060, #4064, #4065, #4066, #4067, #4068 (epic #4047)
+
+      - Node selection, emphasis & Follow mode with auto-zoom on Map Analysis — #4010, #4012 (#3788)
+
+      - Node-to-node line-of-sight distance measurement tool on all maps — #4013 (#3636)
+
+      - Polar grid overlay (Map Analysis, Unified, MeshCore) — #3983, #4071 (#3971)
+
+      - Pan/zoom/spiderfy interaction polish: zoom clamp, scaled animations, zoom-gated spiderfy —
+      #4072 (#4046)
+
+
+      **MeshCore**
+
+      - Delete/purge messages: per-message, per-conversation, purge-all — #3984 (#3981)
+
+      - Automatic DM retry via same-path + flood cadence; opt-in auto-retry for automated channel
+      sends — #3980, #3988 (#3977, #3979)
+
+      - Auto-Pathfinding target filtering: allowlist, name regex, last-heard, hops, signal — #4039
+      (#4024)
+
+      - Configurable remote/local CLI reply timeout — #4033 (#4027), honored in VN relay via #4107
+
+      - Virtual Node: relay status requests & neighbour queries — #3991, #3993 (#3904)
+
+      - Collapsible node list for mobile map access — #4079
+
+
+      **Automation**
+
+      - Multi-channel message trigger OR-list — #3982 (#3974)
+
+      - Scheduled device-reboot action — #4002 (#3995)
+
+      - "Send via sources" selector on the tapback action — #3997 (#3996)
+
+
+      **Other**
+
+      - UDP Broadcast network setting (`enabled_protocols`) exposed — #4113 (#4112)
+
+      - Update-available notifications with per-deployment upgrade instructions (replaces
+      auto-upgrade) — #4108
+
+
+      ## Bug Fixes
+
+
+      - Low-battery/inactive-node alerts lost to split per-source notification preferences — #4035
+      (#3417, #3462, #3671, #3884, #4020); leftover `UNIQUE(user_id)` autoindex dropped — #4045
+      (#4044)
+
+      - Map: popup/spiderfy decoupling + obscured-marker declutter on all maps — #4022, #4028
+      (#4015, #4016)
+
+      - Map: click no longer snaps view back or freezes interaction; wheel zoom, zoom-to-node,
+      chunk-reload self-heal — #4071, #4080, #4082, #4098
+
+      - Map: Null Island / out-of-range positions filtered from markers and line endpoints — #4077,
+      #4078, #4099, #4101, #4103
+
+      - Map: ROUTER_LATE renders as repeater tower — #4076 (#4075); tileset switch no longer
+      remounts/flickers the raster layer — #4097
+
+      - Dashboard map: neighbor lines honor the configured map endpoint — #4055 (#4042), thanks
+      @temalo
+
+      - MeshCore: automation DM triggers populate
+
+      …
   - version: v4.13.0-rc3
     name: v4.13.0-rc3
     datetime: '2026-07-13T18:11:37Z'
@@ -1762,74 +1872,6 @@ releases:
         -p 8080:3001 \
         -v meshmonitor-data:/data \
         ghcr.io/Yeraze/meshmonitor:4.11.0-rc1
-      ```
-
-
-      ### 🧪 Testing
-
-      ✅ All tests passed
-
-      ✅ TypeScript checks passed
-
-      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
-
-
-      ### 📋 Changes
-
-      See commit history for detailed changes.
-  - version: v4.10.4
-    name: v4.10.4
-    datetime: '2026-06-15T18:12:39Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.10.4
-    prerelease: false
-    notes: >-
-      Patch release: bug fixes across automation, configuration, favorites, MeshCore, telemetry, and
-      messaging.
-
-
-      ## Bug Fixes
-
-      - **Timed Events fired across all sources (#3479)** — timer-trigger result writes are now
-      source-scoped, so a timed event only runs on the source it was configured for.
-
-      - **Saving Traffic Management / Status Message config failed (#3464)** — the generic
-      module-config save route now accepts both module types (previously rejected with "Invalid
-      module type").
-
-      - **Auto Favorites wrongly reported firmware as unsupported (#3482)** — the firmware-support
-      cache is keyed by version and no longer sticks on "unsupported" after a reconnect.
-
-      - **MeshCore Share Contact failed silently (#3481)** — the real failure reason now reaches the
-      user, with a faster 10s timeout instead of a silent ~30s hang.
-
-      - **Delivered icon missing on own replies in Firefox on Android (#3477)** — CSS flex-sizing
-      fix; desktop was unaffected.
-
-      - **Air-quality particle counts never collected or graphed (#3483)** — underscore-before-digit
-      protobuf fields are now read in their snake_case form, so all six particle bins are stored and
-      graphed.
-
-
-      Full details in the [changelog](https://github.com/Yeraze/meshmonitor/blob/main/CHANGELOG.md).
-
-
-      🤖 Generated with [Claude Code](https://claude.com/claude-code)
-
-      ## 🚀 MeshMonitor v4.10.4
-
-
-      ### 📦 Installation
-
-
-      **Docker (recommended):**
-
-      ```bash
-
-      docker run -d \
-        --name meshmonitor \
-        -p 8080:3001 \
-        -v meshmonitor-data:/data \
-        ghcr.io/Yeraze/meshmonitor:4.10.4
       ```
 
 
