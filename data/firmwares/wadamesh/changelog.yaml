@@ -1,6 +1,6 @@
 source: github
 repo: ALLFATHER-BV/wadamesh
-updatedAt: '2026-07-15T19:15:28.678Z'
+updatedAt: '2026-07-15T21:03:16.429Z'
 releases:
   - version: beta_45
     name: wadamesh beta_45
@@ -13,6 +13,12 @@ releases:
 
       Huge thanks to **@codemonkeybr**, who contributed the entire **LilyGo T-LoRa Pager** port this
       cycle ([#149](https://github.com/ALLFATHER-BV/wadamesh/pull/149)).
+
+
+      And a big thank-you to **@pelgraine**, whose
+      **[Meck-P4](https://github.com/pelgraine/Meck-P4)** (a sibling MeshCore-on-ESP32-P4 firmware)
+      was the reference that got the **T-Display P4** display and hardware bring-up working — much
+      respect. 🙏
 
 
       Flash it from **[flasher.wadamesh.com](https://flasher.wadamesh.com)** (flip the **Beta**
@@ -30,13 +36,15 @@ releases:
       keyboard/encoder driven. There's a full shortcut reference on the site.
 
 
-      ## New board — LilyGo T-Display P4
+      ## New board — LilyGo T-Display P4  (bring-up guided by @pelgraine's Meck-P4)
 
       An ESP32-P4 AMOLED touchscreen handheld. Early port, **partially supported**: LoRa mesh, chat,
       the map, GPS and the phone-app companion over Wi-Fi/USB all work; screen brightness and
       notification sound have Control-Center sliders; the browser-based screen mirror / remote apps
       work over Wi-Fi. **Bluetooth pairing is not available** on this board (a limitation of its
-      stock radio-coprocessor firmware) — pair over Wi-Fi or USB.
+      stock radio-coprocessor firmware) — pair over Wi-Fi or USB. The display + power-rail bring-up
+      was cracked by matching **@pelgraine**'s [Meck-P4](https://github.com/pelgraine/Meck-P4)
+      reference.
 
 
       ## New board — Heltec V4-R8
