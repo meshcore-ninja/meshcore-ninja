@@ -7,13 +7,13 @@
     "githubOpenIssues": 0,
     "githubContributors": 101,
     "releaseDownloads": 14,
-    "latestReleaseDownloads": 6,
-    "lastChecked": "2026-07-14"
+    "latestReleaseDownloads": 0,
+    "lastChecked": "2026-07-15"
   },
   "verification": {
     "sourceAvailable": true,
     "releasesAvailable": true,
     "ciBuilds": false,
-    "lastChecked": "2026-07-14"
+    "lastChecked": "2026-07-15"
   }
 }
