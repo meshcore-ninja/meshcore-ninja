@@ -1,6 +1,6 @@
 source: github
 repo: ALLFATHER-BV/wadamesh
-updatedAt: '2026-07-16T21:02:55.206Z'
+updatedAt: '2026-07-16T22:59:07.525Z'
 releases:
   - version: beta_46
     name: wadamesh beta_46
@@ -57,77 +57,81 @@ releases:
     name: wadamesh beta_45
     datetime: '2026-07-15T18:52:36Z'
     url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_45
-    prerelease: true
+    prerelease: false
     notes: >-
-      **wadamesh beta_45** (test channel) brings **three new boards** and two notable fixes.
+      **wadamesh beta_45 — now the stable release.** This promotes beta_45 to stable; below is
+      everything that landed since the previous stable (**beta_40**).
 
 
-      Huge thanks to **@codemonkeybr**, who contributed the entire **LilyGo T-LoRa Pager** port this
-      cycle ([#149](https://github.com/ALLFATHER-BV/wadamesh/pull/149)).
+      > ✅ Stable channel. Install via the [web flasher](https://flasher.wadamesh.com) (Stable), the
+      LauncherHub **WADAMESH** entry, or a `-merged.bin` below. Newer test builds live on the Beta
+      channel.
 
 
-      And a big thank-you to **@pelgraine**, whose
-      **[Meck-P4](https://github.com/pelgraine/Meck-P4)** (a sibling MeshCore-on-ESP32-P4 firmware)
-      was the reference that got the **T-Display P4** display and hardware bring-up working — much
-      respect. 🙏
+      🙏 **Community:** big thanks to **[@codemonkeybr](https://github.com/codemonkeybr)** for the
+      entire **LilyGo T-LoRa Pager** port
+      ([#149](https://github.com/ALLFATHER-BV/wadamesh/pull/149)).
 
 
-      Flash it from **[flasher.wadamesh.com](https://flasher.wadamesh.com)** (flip the **Beta**
-      toggle), or grab a `-merged.bin` below (flash at `0x0`). On the device, beta testers can also
-      enable **Settings → Get test builds (beta)**.
+      ## ✨ Control wadamesh from a browser (over Wi-Fi — no app, account or cloud)
+
+      - **Web control panel** — run the device from a phone or laptop browser: full **Chats,
+      Contacts, Discovered, Terminal and Settings** tabs, served by the device itself. Turn on the
+      **VNC** app, then open `http://<device-ip>:8765/` on the same network.
+
+      - **VNC** mirrors the live screen and lets you drive it; **REMOTE** renders the whole UI at a
+      larger, browser-friendly resolution with a Rotate button for desktop/phone layouts.
+
+      - Web **Contacts** (search/sort/filter, distance + last-heard, per-contact actions, one-tap
+      "Add" for Discovered nodes) and **Chats** (arrival pop-ups + beep, auto-refresh, acks +
+      repeats-heard on messages you send from the browser).
 
 
-      ## New board — LilyGo T-LoRa Pager  (by @codemonkeybr, #149)
+      ## 🌐 On-device web browser + links in chat
 
-      A QWERTY-keyboard handheld (ESP32-S3) with a rotary encoder and **no touchscreen** — the whole
-      UI is driven from the keyboard and the encoder. Both radio variants are supported (**LR1121**
-      and **SX1262**), and everything was verified on real hardware against a live mesh: the encoder
-      scrolls and its click opens menus, plus a universal back gesture, screen lock,
-      keyboard-backlight modes, an accent-character picker and an @-mention picker — all
-      keyboard/encoder driven. There's a full shortcut reference on the site.
+      - New **"Web" app** (8 MB boards — T-Deck, Tanmatsu): open a URL and read the page as plain
+      readable text — no proxy, tracking, JS or images — with tappable links and
+      back/forward/refresh.
 
-
-      ## New board — LilyGo T-Display P4  (bring-up guided by @pelgraine's Meck-P4)
-
-      An ESP32-P4 AMOLED touchscreen handheld. Early port, **partially supported**: LoRa mesh, chat,
-      the map, GPS and the phone-app companion over Wi-Fi/USB all work; screen brightness and
-      notification sound have Control-Center sliders; the browser-based screen mirror / remote apps
-      work over Wi-Fi. **Bluetooth pairing is not available** on this board (a limitation of its
-      stock radio-coprocessor firmware) — pair over Wi-Fi or USB. The display + power-rail bring-up
-      was cracked by matching **@pelgraine**'s [Meck-P4](https://github.com/pelgraine/Meck-P4)
-      reference.
+      - **Links in chat are tappable** — "Open in web", or "Create QR" to scan the link onto your
+      phone (works on every board, incl. the Heltec V4).
 
 
-      ## New board — Heltec V4-R8
+      ## 📟 New boards
 
-      The Heltec WiFi LoRa 32 V4-R8 (8 MB PSRAM) with the Expansion Kit V2 (microSD). **Partially
-      supported** while it finishes hardware testing.
+      - **LilyGo T-LoRa Pager** (ESP32-S3) — QWERTY + rotary-encoder handheld, no touchscreen; both
+      radio variants (LR1121 / SX1262). *(by @codemonkeybr, #149)*
 
+      - **LilyGo T-Display P4** (ESP32-P4) — AMOLED touchscreen handheld. Early port ("partially
+      supported"): mesh, chat, map, GPS, phone-app companion work; BT pairing unavailable (stock
+      coprocessor limit — use Wi-Fi/USB).
 
-      ## Fixed
-
-      - **Heltec V4-R8**: fixed random hard-freezes needing a reset — the touch controller was on a
-      second I2C controller bound to the same pins as the clock/sensors, which could wedge the bus.
-      It now shares the one bus (the proven T-Deck pattern).
-
-      - **Tanmatsu (and other keyboard-only boards)**: you can now select and edit the Wi-Fi
-      **network-name and password fields** — the join screen's fields were unreachable with the
-      keyboard because that overlay wasn't a recognized navigation root.
-
-      - **T-Display P4**: the clock now sets itself over Wi-Fi even where NTP is blocked, and won't
-      stick on a bad date reported by the hardware clock.
+      - **Heltec V4-R8** (8 MB PSRAM + Expansion Kit V2 microSD) — "partially supported" while
+      hardware testing finishes.
 
 
-      ## Also
+      ## 🛠 Fixed
 
-      The flasher site now shows a **support badge** on every board (fully vs partially supported) —
-      hover it for what works.
+      - **Heltec V4** map tiles now fill the whole map (2 MB-PSRAM tile-pool fix), and web/tile
+      fetching is more resilient under memory pressure.
+
+      - **Heltec V4-R8** random hard-freezes (shared-I2C bus wedge) fixed.
+
+      - **Tanmatsu / keyboard-only boards** — the Wi-Fi name + password fields are
+      selectable/editable again.
+
+      - **T-Display P4** clock sets over Wi-Fi even where NTP is blocked; no more stuck bad-date.
+
+      - **French (AZERTY)** on-screen keyboard spacebar restored in the normal letter view.
+
+      - **REMOTE** works on the Heltec V4 (and 2 MB boards); keyboard-less boards leave it by
+      holding the screen ~3 s, and the web page has an "Exit remote" button.
 
 
-      ---
+      ## 📦 Boards
 
-      This is a **test-channel** (beta) build. Devices on the beta update feed will offer it; stable
-      stays on beta_40. The three new boards are beta-only until proven.
+      T-Deck · Heltec V4 TFT · Heltec V4-R8 · ThinkNode M9 · RAK TAP v2 · T-LoRa Pager (LR1121 /
+      SX1262) · T-Display P4.
   - version: beta_44
     name: wadamesh beta_44
     datetime: '2026-07-13T15:30:35Z'
