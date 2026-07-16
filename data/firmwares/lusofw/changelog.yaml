@@ -1,7 +1,62 @@
 source: github
 repo: Meshcore-Portugal/lusofw
-updatedAt: '2026-07-14T17:16:53.277Z'
+updatedAt: '2026-07-16T21:02:37.188Z'
 releases:
+  - version: v2026.7.2-rc2-e56877e
+    name: v2026.7.2-rc2-e56877e
+    datetime: '2026-07-16T20:10:13Z'
+    url: https://github.com/Meshcore-Portugal/lusofw/releases/tag/v2026.7.2-rc2-e56877e
+    prerelease: true
+    notes: >-
+      Automated dev prerelease of dev@e56877e for v2026.7.2-rc2.
+
+
+
+      Based on MeshCore v1.16.0
+
+      main@e8d3c53ba1ea863937081cd0caad759b832f3028
+
+
+      ### Correções
+
+
+      - CLIENTE: A página inicial do GPS agora fica oculta no carrossel quando nenhum GPS é
+      detectado na porta série no arranque, em vez de aparecer sempre quando `ENV_INCLUDE_GPS` está
+      ativado.
+
+      - REPETIDOR: Corrigido envio de anúncios por inundação (flood adverts): agora respeita o
+      `default_scope` e o modo de hash de caminho (`path_hash_mode` nas preferências).
+
+      - REPETIDOR: Removida a redução probabilística de flood adverts.
+
+      - REPETIDOR: Corrigido um *buffer overflow* no acumulador de comandos série.
+
+
+      #### Melhorias
+
+
+      - CLI: Adicionada a leitura do motivo de arranque do ESP32 (`get pwrmgt.bootreason`).
+
+      - CLI: Reforçada a cópia segura de strings no tratamento de comandos.
+
+      - RÁDIO: Ajustado o atraso de retentativa CAD para intervalo entre 120 a 360 ms.
+
+
+      ####
+      Observabilidade                                                                                                                                                                                                                                                                                                                                                                    
+
+
+      - DISPATCHER: Adicionados logs de debug para conclusão de TX.
+
+      - ESTATÍSTICAS: Removidos parâmetros não usados na formatação de respostas.
+
+
+      #### Build e Configuração
+
+
+      - BUILD: Adicionada a variável `DISABLE_DEBUG` ao processo de build.
+
+      - BUILD: Reorganizadas as build flags no platformio.ini.
   - version: v2026.7.2-rc1-f22a2ba
     name: v2026.7.2-rc1-f22a2ba
     datetime: '2026-07-14T15:57:34Z'

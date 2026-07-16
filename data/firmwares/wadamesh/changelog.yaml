@@ -1,7 +1,58 @@
 source: github
 repo: ALLFATHER-BV/wadamesh
-updatedAt: '2026-07-15T21:03:16.429Z'
+updatedAt: '2026-07-16T21:02:55.206Z'
 releases:
+  - version: beta_46
+    name: wadamesh beta_46
+    datetime: '2026-07-16T20:42:03Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_46
+    prerelease: true
+    notes: >-
+      **wadamesh beta_46** — a control-center redesign, Do Not Disturb, contact-safety, and a batch
+      of board fixes.
+
+
+      > 🧪 Test build. Flip **Get test builds (beta)** on-device, use the **Beta** toggle on the
+      [web flasher](https://flasher.wadamesh.com), or grab a `-merged.bin` below. Stable stays on
+      beta_45.
+
+
+      🙏 **Community contribution:** huge thanks to
+      **[@codemonkeybr](https://github.com/codemonkeybr)** (Tesso Codemonkey) for the **Do Not
+      Disturb** feature (originally [#156](https://github.com/ALLFATHER-BV/wadamesh/pull/156)).
+
+
+      ## ✨ New
+
+      - **Redesigned control center** — round quick-toggle buttons that spread to fill the panel, a
+      frosted-glass look, real lock/bell glyphs, and a confirmation popup on every toggle.
+
+      - **Do Not Disturb** *(by @codemonkeybr, #156)* — set quiet hours in **Settings → Sound** to
+      silence the incoming-message chime during a daily window, with a bell in the status bar while
+      it's active. Plus a matching control-center quick-toggle (a bell that gains a slash while
+      quiet hours are on).
+
+
+      ## 🛠 Fixed
+
+      - **Contacts no longer go missing between reboots on microSD devices** — saves are now atomic
+      (written to a temp file then swapped in), and the card is mounted far more reliably at boot.
+
+      - **Heltec V4-R8** — the microSD card now mounts, and the freeze when waking the device from
+      sleep is fixed.
+
+      - **LilyGo T-Pager** — the map no longer shows a "storage error" under the launcher; it now
+      caches tiles to the microSD card (like the T-Deck).
+
+      - **Heltec V4 (portrait)** — the Bluetooth icon no longer overlaps the clock, and
+      control-center buttons no longer clip when tapped.
+
+
+      ## 📦 Boards
+
+      T-Deck · Heltec V4 TFT · Heltec V4-R8 · ThinkNode M9 · RAK TAP v2 · T-LoRa Pager (LR1121 /
+      SX1262) · T-Display P4. Flash `<board>-merged.bin` at 0x0 (full install) or `<board>.bin` for
+      an app-only/OTA update.
   - version: beta_45
     name: wadamesh beta_45
     datetime: '2026-07-15T18:52:36Z'
@@ -1092,42 +1143,3 @@ releases:
 
       **Note:** keep the card inserted afterwards — the contact list lives on it, and an older
       firmware won't look there if you ever downgrade.
-  - version: beta_26
-    name: wadamesh beta_26
-    datetime: '2026-07-02T19:14:43Z'
-    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_26
-    prerelease: true
-    notes: >-
-      Test build on top of the current stable (**beta_25**). One storage-reliability fix — worth
-      flashing if you've seen unexpected reboots.
-
-
-      Flash from the web flasher at **https://wadamesh.com** (Standalone install → Version →
-      beta_26), or grab a `-merged.bin` below.
-
-
-      ## Fixed
-
-      - **Reboot loop during contact saves.** On a busy device, internal-flash housekeeping while
-      saving the contact list could freeze the device long enough to trip the watchdog and restart
-      it — a reboot loop for some users. That save no longer trips it.
-
-
-      ## Improved
-
-      - **Contacts + channels now live on the microSD card when one is present** (chat history and
-      map tiles already did). This keeps the limited internal flash from filling up and puts the
-      frequently-rewritten files on the more reliable card. Existing contacts migrate to the card
-      automatically on first boot; your identity and settings stay in internal flash, so the node is
-      unchanged.
-
-
-      ---
-
-      This is a **test/beta** build (prerelease); stable stays **beta_25**. On-device, enable
-      **Settings → About → "Get test builds (beta)"** to update to test builds over Wi-Fi.
-
-
-      **Already stuck in a reboot loop?** A normal update won't clear it — reinstall with the
-      **Erase device** option checked in the web flasher (or erase the flash, then flash the merged
-      image). Keeping a microSD card inserted is recommended.
