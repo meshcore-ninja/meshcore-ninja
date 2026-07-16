@@ -1,7 +1,157 @@
 source: github
 repo: liquidraver/ZephCore
-updatedAt: '2026-07-14T13:49:33.107Z'
+updatedAt: '2026-07-16T19:15:38.634Z'
 releases:
+  - version: 1.16.5-zephcore
+    name: Firmware 1.16.5-zephcore
+    datetime: '2026-07-16T17:38:21Z'
+    url: https://github.com/liquidraver/ZephCore/releases/tag/1.16.5-zephcore
+    prerelease: false
+    notes: >-
+      # ZephCore 1.16.5-zephcore
+
+
+      > [!IMPORTANT]
+
+      > ## Before you upgrade
+
+      >
+
+      > **ESP32-S3 / ESP32-C boards — one-time serial reflash required; WiFi-OTA cannot bridge this
+      update.**
+
+      > This release moves the application to a new flash location (`0x10000`). A board on the old
+      layout can't
+
+      > update to this build over WiFi-OTA or the browser flasher — **flash the `-merged.bin` once
+      over USB/serial.**
+
+      > Affected boards: *Heltec V3 / V4 / V4.3, Station G2, Wireless Tracker / V2, XIAO ESP32-S3 /
+      C3 / C6, LilyGo T-Lora C6.*
+
+      > Your identity, contacts, channels, prefs, and BLE bonds are preserved. After this reflash,
+      OTA and
+
+      > app-updates work again.
+
+      >
+
+      > **nRF52, classic ESP32 (T-Beam / PICO-D4 / TTGO LoRa32), STM32WL, and native Linux are
+      unaffected** — upgrade as usual.
+
+      >
+
+      > **From v1.16.2 / v1.16.3 / v1.16.4** — clean flash, no re-bond, bonds and data survive.
+
+      >
+
+      > **From v1.16.1 or older** — flash it; on first boot it clears BLE bonds automatically
+      (identity, contacts, channels, prefs preserved). Re-bond your phone/desktop once.
+
+      >
+
+      > **Coming from Arduino MeshCore** — flash it; auto-formats on first boot (new identity, clean
+      storage).
+
+      >
+
+      > Take this with a grain of salt — try the formatters if anything anomalous happens with your
+      node.
+
+
+      ---
+
+
+      The headline of this release:
+
+      **Adaptive CAD**, a self-tuning listen-before-talk that calibrates itself to each site;
+
+      **V-Contact**, an in-app admin "channel" for companions; and a batch of LoRa-driver
+      reliability fixes.
+
+
+      ## Highlights
+
+
+      ### Fixed: ESP32 WiFi-OTA silently reverted — upload hit 100%, then booted the *old* firmware
+
+      On ESP32-S3 / ESP32-C boards, the app and MCUboot bootloader were using different flash
+      partition tables,
+
+      so each OTA update landed at an address the bootloader never checked. Every upload "succeeded"
+      and then
+
+      quietly did nothing. Both images now share one partition map, and OTA works correctly. (The
+      XIAO C3/C6 and
+
+      T-Lora C6 used the stock layout and were never affected.)
+
+
+      ### ESP32 app slot moved to `0x10000`
+
+      The ESP32 app slot moved from `0x20000` to `0x10000` — matching the Arduino / ESP-IDF offset.
+      This is the
+
+      change that fixes OTA above, and it also enables the configurator's fast **app-only update**
+      (rewrites just
+
+      the app, keeps your settings). Requires the one-time serial reflash (see *Before you
+      upgrade*).
+
+
+      ### New: Adaptive CAD — listen-before-talk that tunes itself to your site
+
+      Every transmission is preceded by a Channel Activity Detection (CAD) check that listens for
+      other LoRa
+
+      traffic and holds off if the channel is busy. How sensitive that check is has always been a
+      single
+
+      hardcoded number — but the right value depends on where the node lives. A quiet valley node
+      and a
+
+      50-network hilltop need very different thresholds: too sensitive and the node keeps deferring
+      for phantom
+
+      traffic (wasted airtime, latency); not sensitive enough and it transmits over real packets
+      (collisions).
+
+
+      Nodes now **measure their own RF environment and adjust automatically**. In the background,
+      between
+
+      transmissions, the radio runs short calibration probes, tracks how often each sensitivity
+      level produces a
+
+      false "busy", and settles on the lowest false-positive threshold for *that* site — responding
+      to a
+
+      changing environment within an hour or two. It runs on repeaters and companions, and it is
+      **on by
+
+      default**; there is nothing to configure.
+
+
+      - `get cad` — watch what it's doing: the current threshold and per-level false-positive
+      statistics.
+
+      - `set cad.auto off` — turn off the auto-adjust to observe or hand-tune with `set cad.offset`.
+
+
+      Quiet sites end up *more* sensitive than the old fixed default (fewer stomped packets); noisy
+      sites back
+
+      off until the false alarms stop. CAD also now uses 4 detection symbols everywhere, which
+      improves detection
+
+      of an in-progress packet's payload (not just its preamble). Full guide, including the honest
+      limitation
+
+      that the "missed detection" side isn't locally observable, is in
+
+      **[ADAPTIVE_CAD.md](https://github.com/liquidraver/ZephCore/blob/master/zephcore/ADAPTIVE
+
+      …
   - version: v20260714.095706
     name: Firmware v20260714.095706
     datetime: '2026-07-14T09:57:21Z'
@@ -116,9 +266,3 @@ releases:
     url: https://github.com/liquidraver/ZephCore/releases/tag/v20260430.112448
     prerelease: false
     notes: "- Added explicit \"none\" scope handling so companion sends stay unscoped even when a default scope exists.\r\n- Hardened packet and mesh security paths with multiple small fixes, including validation/handling updates in Packet.cpp and Mesh.cpp.\r\n- Fixed small BLE behavior issues in companion message handling.\r\n- Fixed an SX126x native driver race condition (via Zephyr patch update) to improve radio stability under concurrent events.\r\n- Increased LoRa preamble settings to align behavior with vanilla baseline. (increased to 32)"
-  - version: v20260429.104549
-    name: Firmware v20260429.104549
-    datetime: '2026-04-29T10:46:03Z'
-    url: https://github.com/liquidraver/ZephCore/releases/tag/v20260429.104549
-    prerelease: false
-    notes: "BLE\r\n- Major BLE improvements for companion connectivity, behavior, and reliability. (you can switch on Experimental Settings > Faster Channel Syncing in official app now)\r\n- Internal BLE stack refinements and protocol handling cleanups.\r\n\r\nRadio / LoRa (SX126x)\r\n- Fixed SX126x duty-cycle RX recovery to properly re-arm after BUSY timeout conditions.\r\n- Fixed SX126x TX-enable GPIO handling when dio2-tx-enable is active. (Heltecs were behaving badly because of this!)\r\n\r\nBoard / Hardware Fixes\r\n- Fixed rak4631 handling to avoid toggling SX1262 power-enable pin unexpectedly. (#18)\r\n- Added full display reset after splash screen to improve display bring-up stability. + stole vanilla's refresh algo"
