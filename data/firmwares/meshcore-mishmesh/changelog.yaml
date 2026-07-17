@@ -1,7 +1,42 @@
 source: github
 repo: burakcan/MeshCore-mishmesh
-updatedAt: '2026-07-12T06:35:28.247Z'
+updatedAt: '2026-07-17T20:58:42.128Z'
 releases:
+  - version: mishmesh-v1.1.0
+    name: mishmesh Firmware v1.1.0
+    datetime: '2026-07-17T20:44:45Z'
+    url: https://github.com/burakcan/MeshCore-mishmesh/releases/tag/mishmesh-v1.1.0
+    prerelease: false
+    notes: >-
+      - Configurable path hash size, in Experimental settings.
+
+      - System Info now shows the node's public key.
+
+      - Piezo buzzer tone tuning.
+
+      - Release firmware filenames now encode both versions:
+        `<env>_mm-<mm>_mc-<mc>-<hash>`.
+      - Fix: empty preference file no longer causes a load error.
+
+      - Fix: multibyte path hashes are now stored and displayed correctly.
+
+
+
+
+      ## What's Changed
+
+      * Fix multibyte path hash handling in MishMesh by @Bjorkan in
+      https://github.com/burakcan/MeshCore-mishmesh/pull/9
+
+
+      ## New Contributors
+
+      * @Bjorkan made their first contribution in
+      https://github.com/burakcan/MeshCore-mishmesh/pull/9
+
+
+      **Full Changelog**:
+      https://github.com/burakcan/MeshCore-mishmesh/compare/mishmesh-v1.0.0...mishmesh-v1.1.0
   - version: mishmesh-v1.0.0
     name: mishmesh Firmware v1.0.0
     datetime: '2026-07-09T22:01:14Z'

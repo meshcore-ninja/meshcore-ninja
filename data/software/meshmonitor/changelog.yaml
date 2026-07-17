@@ -1,7 +1,111 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-07-16T19:15:56.504Z'
+updatedAt: '2026-07-17T20:59:04.841Z'
 releases:
+  - version: v4.13.1-rc2
+    name: v4.13.1-rc2
+    datetime: '2026-07-17T20:04:07Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.13.1-rc2
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.13.1-rc2
+
+
+      > ⚠️ **Pre-release (release candidate).** For testing ahead of the 4.13.1 final. No `:latest`
+      Docker tags are published for RC builds.
+
+
+      This RC is a **Map Analysis release**: it lands the full **Terrain Link Profile** tool and a
+      wave of map-accuracy improvements on top of `v4.13.1-rc1`. Plan a link between two points and
+      MeshMonitor now profiles the terrain between them, draws the Fresnel zone, computes a link
+      budget, and colors a clear/marginal/obstructed verdict — with per-source auto-frequency and
+      RX-sensitivity defaults. As you scrub the elevation graph, a marker now tracks the matching
+      spot on the map so you can see exactly where a given point on the profile sits. Obscured-GPS
+      (reduced `precision_bits`) markers are now decluttered intelligently — a node alone in its
+      accuracy cell stays centered, and only nodes that actually share a cell are spread — applied
+      consistently across the Dashboard, Nodes, and Map Analysis maps from one shared
+      implementation. Position quality also got a hard look: Null Island (0,0) fixes are now
+      rejected on ingest across Meshtastic, MeshCore, and MQTT (including the precision-obscured
+      (0,0) fixes that used to slip through as ~0.013°), with a new **Discard invalid positions**
+      Map setting to control it. The Map Analysis toolbar was tidied into icons (labels move to
+      tooltips) to cut clutter, MQTT-sourced direct messages now render in the DM view instead of as
+      broadcasts, and several map layers stopped drawing artifacts for marker-less nodes.
+      Internally, the CI pipeline's Node-24 coverage hang was eliminated so future builds are faster
+      and don't wedge.
+
+
+      ## ✨ Features
+
+
+      - **Terrain Link Profile tool** — profile terrain, Fresnel clearance, and link budget between
+      two points, with clear/marginal/obstructed verdict coloring, per-source auto-frequency +
+      RX-sensitivity defaults, DEM-void handling, and a settings UI (#4147, #4151)
+
+      - **Link Profile graph → map hover marker** — moving the cursor over the elevation graph drops
+      a marker on the map at the corresponding geographic point along the link (#4170)
+
+      - **Smarter obscured-node decluttering** — the within-cell offset for low-`precision_bits`
+      markers now only spreads nodes that actually share an accuracy cell; a lone node stays at its
+      reported center (#4164, closes #4155)
+
+      - **Discard invalid positions** — a new global Map setting to control whether Null Island /
+      invalid GPS fixes are discarded on ingest (default on = current behavior) (#4158)
+
+      - **Icon toolbar for Map Analysis** — action and layer buttons are now icons with the text as
+      tooltip/aria-label, decluttering the top bar (#4171)
+
+
+      ## 🐛 Bug Fixes
+
+
+      - Reject **precision-obscured Null Island** fixes on Meshtastic ingest — a true-(0,0) node on
+      a reduced-precision channel arrives re-centered as ~(0.013°, 0.013°) and used to slip past the
+      filter (#4149, #4150, #3763)
+
+      - Route **MQTT-sourced direct messages** to the DM view instead of rendering them as
+      channel/broadcast messages (#4161, closes #4152)
+
+      - Stop drawing **route segments & heatmap density** for marker-less (position-stripped) nodes
+      (#4167, closes #4162 / #4163)
+
+      - Pin the **SNR overlay** dots to the merged marker position for multi-source nodes (#4169,
+      closes #4166)
+
+
+      ## ♻️ Refactoring
+
+
+      - Consolidate the obscured-GPS within-cell offset into **one shared occupancy-gated
+      implementation** used by every map surface — no more per-map "snowflake" behavior (#4168)
+
+
+      ## 🔧 CI / DevOps
+
+
+      - Remove the unused coverage/Codecov runner that **hung `@vitest/coverage-v8` for 30+ min on
+      Node 24**, repeatedly blocking merges — CI is now faster and hang-free (#4172)
+
+
+      ## 📝 Docs
+
+
+      - Link Profile documentation accuracy pass — multi-source auto-frequency, REST API reference,
+      anchor fixes (#4156)
+
+
+      ## Issues Resolved
+
+
+      #4111 (Terrain Link Profile epic — Phases 2 & 3) · #3763 (Null Island filtering) · #4152 (MQTT
+      directed-message rendering) · #4155 (lone-node offset) · #4162 · #4163 · #4166
+
+
+      ## Upgrade Notes
+
+
+      No breaking changes and no manual migration
+
+      …
   - version: v4.13.1-rc1
     name: v4.13.1-rc1
     datetime: '2026-07-16T17:43:14Z'
@@ -1872,71 +1976,3 @@ releases:
       - **Link previews failed to load on MeshCore / first page visited** (#3541) — swi
 
       …
-  - version: v4.11.0-rc2
-    name: v4.11.0-rc2
-    datetime: '2026-06-18T23:10:06Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.11.0-rc2
-    prerelease: true
-    notes: >-
-      ## What's Changed
-
-      * docs: restore Duplicate Encryption Keys page to the public site by @Yeraze in
-      https://github.com/Yeraze/meshmonitor/pull/3534
-
-      * fix(map): stop mobile Features panel from blocking sidebar connect button (#3532) by @Yeraze
-      in https://github.com/Yeraze/meshmonitor/pull/3536
-
-      * feat(nodes): add CSV/HTML export of the node list (#3499) by @Yeraze in
-      https://github.com/Yeraze/meshmonitor/pull/3537
-
-      * fix(meshcore): node list collapsing to a single node with multiple sources by @Yeraze in
-      https://github.com/Yeraze/meshmonitor/pull/3539
-
-      * feat(meshcore): virtual node — connect the MeshCore app to a node through MeshMonitor over
-      WiFi (#3535) by @Yeraze in https://github.com/Yeraze/meshmonitor/pull/3540
-
-      * fix(link-preview): use static api import so previews load under BASE_URL by @Yeraze in
-      https://github.com/Yeraze/meshmonitor/pull/3541
-
-      * fix(docker): entrypoint integrity check for 0-byte server.js (#3542) by @Yeraze in
-      https://github.com/Yeraze/meshmonitor/pull/3543
-
-      * fix(security): RE2 for user-supplied regexes; resolve 4 CodeQL alerts (#152/153/155/156) by
-      @Yeraze in https://github.com/Yeraze/meshmonitor/pull/3544
-
-      * release: v4.11.0-rc2 by @Yeraze in https://github.com/Yeraze/meshmonitor/pull/3545
-
-
-
-      **Full Changelog**: https://github.com/Yeraze/meshmonitor/compare/v4.11.0-rc1...v4.11.0-rc2
-
-      ## 🚀 MeshMonitor v4.11.0-rc2
-
-
-      ### 📦 Installation
-
-
-      **Docker (recommended):**
-
-      ```bash
-
-      docker run -d \
-        --name meshmonitor \
-        -p 8080:3001 \
-        -v meshmonitor-data:/data \
-        ghcr.io/Yeraze/meshmonitor:4.11.0-rc2
-      ```
-
-
-      ### 🧪 Testing
-
-      ✅ All tests passed
-
-      ✅ TypeScript checks passed
-
-      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
-
-
-      ### 📋 Changes
-
-      See commit history for detailed changes.
