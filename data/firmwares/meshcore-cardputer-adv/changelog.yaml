@@ -1,7 +1,13 @@
 source: github
 repo: MultiMote/meshcore-cardputer-adv
-updatedAt: '2026-07-14T17:16:58.083Z'
+updatedAt: '2026-07-18T20:52:41.510Z'
 releases:
+  - version: 2026.7.2
+    name: Firmware 2026.7.2
+    datetime: '2026-07-18T19:52:51Z'
+    url: https://github.com/MultiMote/meshcore-cardputer-adv/releases/tag/2026.7.2
+    prerelease: false
+    notes: "* Remove messages preview screen\r\n* Add \"New message\" screen that appears when a new message is received when screen is off or current page is main\r\n* Move unsynced messages count to the stats page\r\n* After selecting chat and pressing `Esc`, current page is restored to the previous one"
   - version: 2026.7.1
     name: Firmware 2026.7.1
     datetime: '2026-07-14T16:40:53Z'

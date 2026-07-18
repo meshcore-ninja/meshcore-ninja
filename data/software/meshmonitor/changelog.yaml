@@ -1,7 +1,104 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-07-17T20:59:04.841Z'
+updatedAt: '2026-07-18T20:53:09.931Z'
 releases:
+  - version: v4.13.1-rc3
+    name: v4.13.1-rc3
+    datetime: '2026-07-18T19:43:46Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.13.1-rc3
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.13.1-rc3
+
+
+      > ⚠️ **Pre-release (release candidate).** Rolls up 13 PRs merged since rc2 — position-quality
+      & Map Analysis refinements plus a cluster of messaging correctness fixes. Please test and
+      report issues before the stable 4.13.1.
+
+
+      ## Highlights
+
+
+      This RC sharpens **position quality and node identity**. Node popups now show position
+      accuracy and GPS location source; the "Discard invalid positions" toggle is honored on the
+      render side (not just ingest); and the obscured-node precision offset is occupancy-scaled and
+      distance-capped. On the messaging side it fixes several real correctness bugs: compose drafts
+      no longer leak across conversations (a message meant for one node could be sent to another),
+      MeshCore own-node messages show the node's name instead of a raw public key, and message
+      senders now display their short name alongside the long name. Rounding it out: automations can
+      now target a remote node for admin reboot, unmessageable nodes get a "Message anyway"
+      override, traceroute no longer fails with NO_CHANNEL on a disabled channel slot, and the v1
+      `default` source alias scopes correctly.
+
+
+      ## Features
+
+      - **#4188** — Position accuracy + location source in node popups (chat & map), migration 124
+
+      - **#4187** — "Message anyway" override for unmessageable-node DM banner
+
+      - **#4186** — Automation: remote-admin reboot target for the device-reboot action
+
+      - **#4196** — Show short name alongside long name on message senders (Unified Messages)
+
+      - **#4182** — Honor the "Discard invalid positions" toggle on the render side
+
+      - **#4181** — Occupancy-log-scaled, distance-capped precision offset for obscured nodes
+
+
+      ## Bug Fixes
+
+      - **#4197** — MeshCore: own node's messages show the name, not a public key
+
+      - **#4191** — v1 `default` source alias deep-scopes by the resolved id (mergeParams
+      re-derivation)
+
+      - **#4185** — Scope the compose draft per-conversation (prevents wrong-recipient sends)
+
+      - **#4184** — Keep router short-name visible in the Official pin style
+
+      - **#4180** — Traceroute no longer sends on a DISABLED channel slot (NO_CHANNEL)
+
+      - **#4175** — Drop heatmap/coverage density for deleted nodes
+
+
+      ## Docs
+
+      - **#4179** — Meshview Link Responder added to the User Scripts Gallery
+
+
+      **Full changelog:** https://github.com/Yeraze/meshmonitor/compare/v4.13.1-rc2...v4.13.1-rc3
+
+      ## 🚀 MeshMonitor v4.13.1-rc3
+
+
+      ### 📦 Installation
+
+
+      **Docker (recommended):**
+
+      ```bash
+
+      docker run -d \
+        --name meshmonitor \
+        -p 8080:3001 \
+        -v meshmonitor-data:/data \
+        ghcr.io/Yeraze/meshmonitor:4.13.1-rc3
+      ```
+
+
+      ### 🧪 Testing
+
+      ✅ All tests passed
+
+      ✅ TypeScript checks passed
+
+      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
+
+
+      ### 📋 Changes
+
+      See commit history for detailed changes.
   - version: v4.13.1-rc2
     name: v4.13.1-rc2
     datetime: '2026-07-17T20:04:07Z'
@@ -1887,92 +1984,3 @@ releases:
       ### 📋 Changes
 
       See commit history for detailed changes.
-  - version: v4.11.0
-    name: v4.11.0
-    datetime: '2026-06-19T22:45:47Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.11.0
-    prerelease: false
-    notes: >-
-      MeshMonitor 4.11.0 is the general-availability release of the 4.11 line (consolidating
-      `v4.11.0-rc1` and `v4.11.0-rc2`). The headline is the **MeshCore virtual node** — connect the
-      MeshCore mobile app to a MeshMonitor-managed MeshCore device over WiFi, the MeshCore
-      counterpart to the existing Meshtastic Virtual Node Server. MeshCore also gains name-aware
-      contact forwarding-path editing, role-based map icons, and a node-type map filter. Across both
-      protocols, the map picks up a per-node **Hide from Map** toggle, and Node Details gets a
-      15m–7d telemetry time-range selector. This release also wires up newer AirQualityMetrics
-      fields and lands a broad set of correctness fixes — most notably a replay guard that stops
-      powered-off nodes from appearing "recently heard" via replayed/retained MQTT frames, a
-      NodeInfo position-precision guard, RE2 hardening of user-supplied regexes, and per-source
-      scoping fixes for traceroute history and neighbor-info display. Under the hood, `server.ts`
-      was substantially decomposed into focused route modules and the test suite migrated onto a
-      shared `createTestDb` helper. Upgrading is drop-in — no manual migration or configuration
-      changes required.
-
-
-      ## ✨ Features
-
-
-      - **MeshCore virtual node — connect the MeshCore app over WiFi** (#3540, #3535) — expose a
-      managed MeshCore device as a virtual node the MeshCore app connects to over TCP/WiFi (default
-      port `5000`, per-source enablement, admin commands blocked by default, private-key export
-      always blocked).
-
-      - **MeshCore: define a contact's forwarding path by repeater name** (#3550) — first-class,
-      name-aware path editor, on by default.
-
-      - **MeshCore node-type icons + map filtering** (#3563, #3546) — role-based markers (repeater /
-      room server / sensor / companion) and a Node Types filter with legend.
-
-      - **Per-node "Hide from Map" toggle** (#3565, #3549) — suppress a node's map marker everywhere
-      while keeping it visible in lists, DMs, and the packet monitor.
-
-      - **Node list export — CSV / HTML** (#3537, #3499) — export the Nodes view (respecting current
-      filters/sort) for mesh upgrade planning.
-
-      - **Telemetry time-range selector in Node Details** (#3530) — 15m–7d range buttons on the Node
-      Details graphs, persisted and shared with Device Info.
-
-      - **Position-history map: a marker at every fix, points-only mode, hover tooltip** (#3495,
-      #3492).
-
-      - **Newer AirQualityMetrics fields wired up** (#3517, #3507) — `particles_40um`,
-      `pm40_standard`, formaldehyde trio, and PM-sensor extras now graphed.
-
-      - **Native OIDC group → role mapping** (#3489, #3485) — map IdP groups to admin/login via
-      `OIDC_GROUPS_CLAIM` / `OIDC_ADMIN_GROUPS` / `OIDC_ALLOWED_GROUPS`.
-
-      - **UI tweaks + map unification pass** (#3561, #3557) — "Messages" → "Node Details" nav,
-      clickable map-popup source rows, unified tile/legend/GeoJSON toggles, and more.
-
-
-      ## 🐛 Bug Fixes
-
-
-      - **Offline nodes kept appearing "recently heard" from replayed packets** (#3569) — new replay
-      guard ignores stale `lastHeard` refreshes from retained/replayed MQTT frames.
-
-      - **NodeInfo could overwrite high-precision positions with lower-precision ones** (#3516,
-      #3513) — precision-downgrade guard added.
-
-      - **User-supplied regexes hardened against ReDoS** (#3544) — all user/admin regexes now
-      compiled with RE2 (resolves 4 CodeQL alerts).
-
-      - **Traceroute History mixed in rows from every source** (#3566) — history now scoped to the
-      active source.
-
-      - **Map "Show Neighbor Info" disagreed with the Map Analysis Neighbors view** (#3560) —
-      freshness filters aligned.
-
-      - **Per-node position override ignored on the multi-source dashboard map** (#3559, #3551).
-
-      - **SaveBar only saved the active section** (#3558, #3552) — grouped sections now save
-      together via "Save All".
-
-      - **MeshCore DM contact list nearly empty while node/map view was full** (#3554) — in-memory
-      contacts seeded from the durable DB rows on connect.
-
-      - **MeshCore node list intermittently collapsed to a single node** (#3539).
-
-      - **Link previews failed to load on MeshCore / first page visited** (#3541) — swi
-
-      …
