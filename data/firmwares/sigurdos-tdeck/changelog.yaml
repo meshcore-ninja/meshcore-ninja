@@ -1,7 +1,145 @@
 source: github
 repo: hermes-gadget/SigurdOS-tdeck
-updatedAt: '2026-07-12T13:25:09.131Z'
+updatedAt: '2026-07-18T09:28:53.267Z'
 releases:
+  - version: beta-0.1.45-RC7
+    name: beta-0.1.45-RC7
+    datetime: '2026-07-18T09:27:15Z'
+    url: https://github.com/hermes-gadget/SigurdOS-tdeck/releases/tag/beta-0.1.45-RC7
+    prerelease: true
+    notes: >-
+      **SigurdOS T-Deck Firmware** — beta-0.1.45-RC7
+
+
+      Release candidate 7 for the beta-0.1.45 cycle. 181 commits since beta-0.1.44-RC6.
+
+
+      ### Flash with esptool
+
+      ```bash
+
+      # Full flash (first install):
+
+      esptool.py --chip esp32s3 --port /dev/ttyACM0 write_flash 0x0 firmware-merged.bin
+
+
+      # App update (keep settings):
+
+      esptool.py --chip esp32s3 --port /dev/ttyACM0 write_flash 0x10000 firmware.bin
+
+      ```
+
+
+      ### Web Flasher
+
+      Use `manifest.json` with [esptool.js](https://espressif.github.io/esptool-js/).
+
+
+      | File | Use |
+
+      |------|-----|
+
+      | `firmware.bin` | App only (flash at 0x10000) |
+
+      | `firmware-merged.bin` | Full flash (flash at 0x0) |
+
+      | `SigurdOS-tdeck-launcher.bin` | For bmorcelli/Launcher install |
+
+      | `manifest.json` | Web flasher manifest |
+
+      | `sigurdos-tdeck-bootloader.bin` | Bootloader (web flasher) |
+
+      | `sigurdos-tdeck-partitions.bin` | Partitions (web flasher) |
+
+      | `sigurdos-tdeck-boot_app0.bin` | Boot app0 (web flasher) |
+
+
+      ### Features
+
+      - Companion protocol: binary peer requests (CMD_SEND_BINARY_REQ), anonymous requests
+      (CMD_SEND_ANON_REQ), zero-hop control data (CMD_SEND_CONTROL_DATA), direct raw data
+      (CMD_SEND_RAW_DATA)
+
+      - UI: message detail sheet, contact list power tools, bounded field notifications, timestamped
+      repeater CLI transcripts
+
+      - GPS: demand-driven polling with time sync
+
+      - Mesh: surface repeater session failures
+
+      - CI: dependency scanning, CodeQL analysis gates, release evidence enforcement
+
+      - Performance: virtualized message/packet lists, bounded sparse tile loading
+
+      - Storage: unified message history store
+
+
+      ### Fixes
+
+      - Companion/BLE: install private flood-scope keys, synchronize BLE callback/app state, BLE RX
+      queue backpressure, time out unauthenticated connections, defer BLE init until enabled,
+      migrate stale prefs, update pairing PIN, preserve CLI data semantics, accept time
+      unconditionally, enable BLE by default, page full companion backlog, gate repeat by radio
+      profile, align async push IDs
+
+      - Mesh: clear login sessions on identity import, ACK drop counter, require durable mesh
+      mutation commits, scoped flood interop proof, update MeshCore for race-free ISR, reject
+      oversized hashtag names, preserve UTF-8 message boundaries
+
+      - UI: restore textarea date/time inputs, accumulate home grid offsets, bound textarea inputs,
+      route nested screens through nav history, free QR canvas on screen delete, always show
+      repeater login status
+
+      - System: clamp snprintf buffer (CodeQL), make deep sleep persistence-safe, OTA boot-health
+      rollback, fail closed for GitHub OTA channels, support unknown-size multipart OTA,
+      preflight/bound PNG tile decoding, handle HAL allocation failures
+
+      - Build/CI: add -Wall -Wextra, expand sanitizer suite, compile every firmware env, reject
+      stale warning budgets, pin transitive deps, consolidate PlatformIO cache, regenerate dep lock
+      file
+
+      - GPS: route RTC sync through tracked clock sources, preserve mesh clock handoff
+
+      - SD: de-assert non-SD CS pins before mount
+
+      - Various: encode advert path responses safely, validate NMEA semantics, complete message
+      store recovery, expire pending binary requests, update companion delivery state, reject
+      oversized companion pushes, wrap map tiles at antimeridian, propagate NVS write failures,
+      decode trace SNR correctly, validate encoded path lengths
+
+
+      ### Documentation
+
+      - Reconcile companion support and missing-features status with pinned MeshCore
+
+      - Refresh README, screen guides, ROADMAP, FEATURES_OVERVIEW, Launcher docs
+
+      - Add Noto Emoji license notice
+
+      - Document companion message visibility limitation
+
+
+      ### Hardware Tested (beta-0.1.45-RC7)
+
+      - Native tests: 1219/1220 passed
+
+      - Production build: RAM 39.3%, Flash 40.0%
+
+      - T-Deck boot verified: radio 869.525 MHz, noise floor -94 dBm
+
+      - All 12 screens navigate without crashes
+
+      - Soak: 420 seconds idle, zero crashes, heap stable at 146,808
+
+      - RF transmission confirmed on #testingslopos
+
+      - CI pre-existing: dep hash + golden frame pin fixed; remaining 2 test infra issues pre-date
+      this release
+
+
+      ### Evidence
+
+      Release evidence: `release-evidence/beta-0.1.45-RC7.json`
   - version: beta-0.1.44-RC6
     name: beta-0.1.44-RC6
     datetime: '2026-07-12T12:37:19Z'
@@ -1791,24 +1929,3 @@ releases:
 
       **Full Changelog**:
       https://github.com/hermes-gadget/SlopOS-tdeck/compare/beta-0.1.26...beta-0.1.27
-  - version: beta-0.1.26
-    name: beta-0.1.26
-    datetime: '2026-05-19T19:21:27Z'
-    url: https://github.com/hermes-gadget/SigurdOS-tdeck/releases/tag/beta-0.1.26
-    prerelease: true
-    notes: >-
-      **SlopOS T-Deck Firmware** — beta-0.1.26
-
-
-      | File | Use |
-
-      |------|-----|
-
-      | `firmware.bin` | OTA update (app only, flash at 0x10000) |
-
-      | `firmware-merged.bin` | Full flash (bootloader + partitions + app, flash at 0x0) |
-
-
-
-      **Full Changelog**:
-      https://github.com/hermes-gadget/SlopOS-tdeck/compare/beta-0.1.25...beta-0.1.26
