@@ -1,7 +1,16 @@
 source: github
 repo: danst0/fennek
-updatedAt: '2026-07-19T06:31:45.776Z'
+updatedAt: '2026-07-19T09:53:44.521Z'
 releases:
+  - version: v2.7.1
+    name: v2.7.1
+    datetime: '2026-07-19T07:33:31Z'
+    url: https://github.com/danst0/fennek/releases/tag/v2.7.1
+    prerelease: false
+    notes: >-
+      Schach-Trainer-Modus: neuer Gegner bewertet jeden Zug offline (Einstufung + Begründung +
+      Empfehlung). Zentraler WLAN-Multiprofil-Service (services/wifi.*) ersetzt die duplizierte
+      WiFi.begin-Sequenz in 9 Diensten und wählt per Scan das stärkste bekannte Netz.
   - version: v2.7.0
     name: v2.7.0
     datetime: '2026-07-19T06:29:18Z'
@@ -330,24 +339,3 @@ releases:
 
 
       🤖 Generated with [Claude Code](https://claude.com/claude-code)
-  - version: v1.9.2
-    name: Fennek v1.9.2
-    datetime: '2026-06-15T15:51:06Z'
-    url: https://github.com/danst0/fennek/releases/tag/v1.9.2
-    prerelease: false
-    notes: >-
-      ### Added
-
-      - **`BATTLOG` — opt-in battery & activity logger** (`services/battlog`). When the `BATTLOG`
-      build flag is set, the firmware writes one record per event (app switch, audio track, mesh
-      radio on, Wi-Fi on/off, standby/wake) **and** a battery probe every 60 s to
-      `/.fennek/battery.log` (timestamp + %/mV/charging? + Wi-Fi/mesh status). It's a throttled
-      PSRAM ring flushed to SD before standby, and downloadable via the Web file manager — useful
-      for diagnosing real-world battery drain. Deliberately zero-cost when the flag is off (all
-      `BATTLOG_*` calls compile to nothing).
-
-
-      🌐 Project page & screenshots: **https://fennek.dumke.me**
-
-
-      **Full changelog:** [`CHANGELOG.md`](https://github.com/danst0/fennek/blob/main/CHANGELOG.md)
