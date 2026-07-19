@@ -1,7 +1,13 @@
 source: github
 repo: venamartin/meshtrax
-updatedAt: '2026-07-12T02:58:33.087Z'
+updatedAt: '2026-07-19T20:54:00.915Z'
 releases:
+  - version: v1.7.0
+    name: Release v1.7.0
+    datetime: '2026-07-19T19:38:16Z'
+    url: https://github.com/venamartin/meshtrax/releases/tag/v1.7.0
+    prerelease: false
+    notes: "## What's New in 1.7.0\r\n\r\n### Room server\r\nIf you're an admin on a room server, you can now manage it right from the room\r\nchat — tap the manage icon to reach status, telemetry, settings, neighbors, and\r\nthe command line.\r\n\r\n### Replies that point at the right message\r\nReplying in a channel now quotes the exact message you picked, instead of the\r\nperson's most recent one. Mentioning someone with @ no longer accidentally turns\r\nyour message into a reply, and quoted replies now appear correctly in other\r\nMeshCore apps too.\r\n\r\n### Smarter contact list\r\nNodes with a broken clock no longer show nonsense ages like \"755 days ago\".\r\nMeshTrax corrects the time and marks the contact with a small clock icon so you\r\nknow why.\r\n\r\n### Notifications that go where you expect\r\nTapping a notification now opens the right conversation, even if the app was\r\nclosed.\r\n\r\n### Bug fixes\r\nChannel messages send more reliably over USB, message retries can be turned off,\r\na reconnecting status now shows in chat, notifications no longer appear for\r\nunused channel slots, duplicate device info entries removed, and various fixes\r\nfor improved compatibility with the latest device firmware.\r\n\r\n**Full Changelog**: https://github.com/venamartin/meshtrax/compare/v1.6.3...v1.7.0"
   - version: v1.6.3
     name: Release v1.6.3
     datetime: '2026-07-12T00:20:30Z'
