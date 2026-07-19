@@ -1,7 +1,66 @@
 source: github
 repo: ALLFATHER-BV/wadamesh
-updatedAt: '2026-07-19T14:58:28.342Z'
+updatedAt: '2026-07-19T17:00:36.922Z'
 releases:
+  - version: beta_47
+    name: wadamesh beta_47
+    datetime: '2026-07-19T16:02:03Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_47
+    prerelease: true
+    notes: >-
+      **wadamesh beta_47** — a new **Discover** app (find, list and map the nodes around you, plus
+      wardriving), a new board, and pager + T-Display P4 additions.
+
+
+      > 🧪 Test build. Flip **Get test builds (beta)** on-device, use the **Beta** toggle on the
+      [web flasher](https://flasher.wadamesh.com), or grab a `-merged.bin` below. Stable stays on
+      beta_46.
+
+
+      🙏 **Community contributions:** thanks to **[@attakygit](https://github.com/attakygit)** for
+      the **Attaky Core** board port ([#158](https://github.com/ALLFATHER-BV/wadamesh/pull/158)) and
+      **[@codemonkeybr](https://github.com/codemonkeybr)** (Tesso Codemonkey) for the **T-LoRa
+      Pager** navigation fix ([#162](https://github.com/ALLFATHER-BV/wadamesh/pull/162)).
+
+
+      ## ✨ Discover — find what's around you
+
+      - **Active discovery** — open the **Discover** app (app drawer → the ⟳ tile, next to Map): it
+      sweeps for nearby nodes and lists every repeater / companion / room server that answers,
+      **ranked by signal** — live RSSI/SNR, a green **direct** badge for anything in direct RF
+      range, and a last-heard age.
+
+      - **One-tap add** — tap a node to add it straight to your contacts (it keeps the right type:
+      repeater, companion or room).
+
+      - **Wardriving** — with a GPS fix it logs every node it hears against your position to a CSV
+      on the SD card as you move, and paints your **RF coverage on the map** as a signal-coloured
+      track (green = strong → red = weak). A standalone, on-device coverage mapper — no phone
+      tethered.
+
+
+      ## 📟 New boards
+
+      - **Attaky Core** (ESP32-S3, 16 MB flash / 8 MB PSRAM) — a new board *(by @attakygit, #158)*.
+      Experimental: beta channel only while hardware verification finishes.
+
+      - **LilyGo T-Display P4 — TFT-LCD variant** — early support for the LCD screen model (the
+      AMOLED variant was already supported). Experimental; the `wadamesh-tdisplay-p4-lcd-merged.bin`
+      asset below is for LCD-screen units (flash at `0x0`).
+
+
+      ## 🛠 Fixed
+
+      - **LilyGo T-LoRa Pager** — the rotary encoder now keeps its focus inside the chat message
+      list, and the composer navigation keys are remapped so moving around and typing a message no
+      longer collide *(by @codemonkeybr, #162)*.
+
+
+      ## 📦 Boards
+
+      T-Deck · Heltec V4 TFT · Heltec V4-R8 · ThinkNode M9 · RAK TAP v2 · T-LoRa Pager (LR1121 /
+      SX1262) · Attaky Core · T-Display P4. Flash `<board>-merged.bin` at `0x0` (full install) or
+      `<board>.bin` for an app-only/OTA update.
   - version: beta_46
     name: wadamesh beta_46
     datetime: '2026-07-16T20:42:03Z'
@@ -1104,49 +1163,3 @@ releases:
 
       This is a **test/beta** build (prerelease); stable stays **beta_27**. On-device, enable
       **Settings → About → "Get test builds (beta)"** to follow the test channel over Wi-Fi.
-  - version: beta_27
-    name: wadamesh beta_27 (stable)
-    datetime: '2026-07-03T06:07:22Z'
-    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_27
-    prerelease: false
-    notes: >-
-      The new **stable** build — promoted from the test channel, rolling up the **beta_26** and
-      **beta_27** test builds on top of beta_25.
-
-
-      Flash from the web flasher at **https://wadamesh.com**, update through bmorcelli's Launcher,
-      or grab a `-merged.bin` below. Already on wadamesh with a standalone flash? The on-device
-      update check will offer it over Wi-Fi.
-
-
-      ## Fixed
-
-      - **Reboot loop during contact saves** (from beta_26). Internal-flash housekeeping while
-      saving the contact list could freeze the device long enough to trip the watchdog and restart
-      it — a reboot loop for some users. That save no longer trips it. Thanks to the crash report
-      that pinned it down.
-
-      - **Launcher installs no longer offer a broken "Install update"** (from beta_27). Under
-      bmorcelli's Launcher the on-device update can't work (no spare slot large enough) and failed
-      with "won't fit: Bad Size Given". The button now hides there — the "update available" note
-      stays, and you update through the Launcher instead. Thanks to **Keith (KM1USR)** for the
-      report.
-
-
-      ## New — Keyboard backlight control (T-Deck), by @Yazutsu
-      ([#85](https://github.com/ALLFATHER-BV/wadamesh/pull/85))
-
-      Settings → Keyboard now has a **Keyboard backlight** slider plus Off / 25 / 50 / 75 / Max
-      one-tap presets. Smooth dimming with fine control at the low end, applies to the on and auto
-      modes and the new-message flash, and persists across reboots.
-
-
-      ## Improved — contacts + channels on the microSD card (from beta_26)
-
-      On devices with a microSD card, contacts and channels now live on the card (like chat history
-      and map tiles already do). Existing contacts migrate automatically on first boot; your
-      identity and settings stay in internal flash, so the node is unchanged.
-
-
-      **Note:** keep the card inserted afterwards — the contact list lives on it, and an older
-      firmware won't look there if you ever downgrade.
