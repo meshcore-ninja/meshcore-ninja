@@ -1,7 +1,19 @@
 source: github
 repo: ipnet-mesh/meshcore-hub
-updatedAt: '2026-07-07T23:04:46.427Z'
+updatedAt: '2026-07-19T22:56:01.504Z'
 releases:
+  - version: v0.16.1
+    name: v0.16.1
+    datetime: '2026-07-19T22:16:58Z'
+    url: https://github.com/ipnet-mesh/meshcore-hub/releases/tag/v0.16.1
+    prerelease: false
+    notes: "## What's Changed\r\n* fix(routes): clearing observers in the edit modal now persists by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/319\r\n\r\n\r\n**Full Changelog**: https://github.com/ipnet-mesh/meshcore-hub/compare/v0.16.0...v0.16.1"
+  - version: v0.16.0
+    name: v0.16.0
+    datetime: '2026-07-19T21:09:36Z'
+    url: https://github.com/ipnet-mesh/meshcore-hub/releases/tag/v0.16.0
+    prerelease: false
+    notes: "## What's Changed\r\n* chore(deps): update anomalyco/opencode action to v1.17.18 by @renovate[bot] in https://github.com/ipnet-mesh/meshcore-hub/pull/303\r\n* chore(deps): update dependency daisyui to v5.6.16 by @renovate[bot] in https://github.com/ipnet-mesh/meshcore-hub/pull/302\r\n* Add GitHub funding link to FUNDING.yml by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/304\r\n* chore(deps): update dependency daisyui to v5.6.18 by @renovate[bot] in https://github.com/ipnet-mesh/meshcore-hub/pull/305\r\n* chore(deps): update tailwindcss monorepo to v4.3.3 by @renovate[bot] in https://github.com/ipnet-mesh/meshcore-hub/pull/309\r\n* chore(deps): update anomalyco/opencode action to v1.18.3 by @renovate[bot] in https://github.com/ipnet-mesh/meshcore-hub/pull/307\r\n* feat: Route Health Monitoring by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/308\r\n* feat: HTTP Cache-Control, dashboard TTL bump, and route event-hash dedup by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/310\r\n* fix: route_result not refreshing after route edit (plus cache invalidation infra) by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/311\r\n* chore(deps): update fontsource monorepo to v5.3.0 by @renovate[bot] in https://github.com/ipnet-mesh/meshcore-hub/pull/312\r\n* feat: dashboard route widgets + cache TTL consolidation by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/313\r\n* feat: precompute route health + consolidated migration + observer badge fix by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/314\r\n* UI polish: modal save spinners + route list sort by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/315\r\n* chore(routes): default window_hours=48 and max_hop_span=8 by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/316\r\n* chore(routes): default packet_count_threshold=5 and 3× clear multiplier by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/317\r\n* feat(dashboard): limit Route Health widget to community routes by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/318\r\n\r\n\r\n**Full Changelog**: https://github.com/ipnet-mesh/meshcore-hub/compare/v0.15.10...v0.16.0"
   - version: v0.15.10
     name: v0.15.10
     datetime: '2026-07-07T21:31:59Z'
@@ -110,15 +122,3 @@ releases:
     url: https://github.com/ipnet-mesh/meshcore-hub/releases/tag/v0.12.1
     prerelease: false
     notes: "## What's Changed\r\n* perf(api): batch N+1 dashboard and message sender queries by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/229\r\n* feat(api): configurable worker processes via API_WORKERS by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/230\r\n\r\n\r\n**Full Changelog**: https://github.com/ipnet-mesh/meshcore-hub/compare/v0.12.0...v0.12.1"
-  - version: v0.12.0
-    name: v0.12.0
-    datetime: '2026-06-11T09:33:03Z'
-    url: https://github.com/ipnet-mesh/meshcore-hub/releases/tag/v0.12.0
-    prerelease: false
-    notes: "## What's Changed\r\n* feat: add optional Redis caching layer for API endpoints by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/226\r\n* perf(api): threadpool handlers, SQLite concurrency tuning, precomputed is_observer by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/228\r\n* Update redis Docker tag to v8 by @renovate[bot] in https://github.com/ipnet-mesh/meshcore-hub/pull/227\r\n\r\n\r\n**Full Changelog**: https://github.com/ipnet-mesh/meshcore-hub/compare/v0.11.1...v0.12.0"
-  - version: v0.11.1
-    name: v0.11.1
-    datetime: '2026-06-07T16:21:08Z'
-    url: https://github.com/ipnet-mesh/meshcore-hub/releases/tag/v0.11.1
-    prerelease: false
-    notes: "## What's Changed\r\n* Split NETWORK_RADIO_CONFIG into individual env vars and add FEATURE_R… by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/225\r\n* Update codecov/codecov-action action to v7 by @renovate[bot] in https://github.com/ipnet-mesh/meshcore-hub/pull/224\r\n* Update dependency daisyui to v5.5.23 by @renovate[bot] in https://github.com/ipnet-mesh/meshcore-hub/pull/223\r\n\r\n\r\n**Full Changelog**: https://github.com/ipnet-mesh/meshcore-hub/compare/v0.11.0...v0.11.1"
