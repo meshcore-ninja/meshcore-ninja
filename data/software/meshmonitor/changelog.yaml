@@ -1,7 +1,82 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-07-18T20:53:09.931Z'
+updatedAt: '2026-07-19T13:22:34.568Z'
 releases:
+  - version: v4.13.1-rc4
+    name: v4.13.1-rc4
+    datetime: '2026-07-19T13:15:34Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.13.1-rc4
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.13.1-rc4
+
+
+      > ⚠️ **Pre-release (release candidate).** This build is for testing ahead of the v4.13.1
+      stable release. Not recommended for production deployments.
+
+
+      This fourth release candidate continues the Meshtastic 2.8 readiness work and lands a mix of
+      node-detail and map improvements on top of rc3. It adds a `noIndexEnabled` privacy toggle so a
+      publicly-exposed dashboard can serve `X-Robots-Tag: noindex, nofollow` headers plus a
+      disallow-all `/robots.txt` (belt-and-suspenders for Cloudflare-tunnel setups that strip custom
+      headers). On the 2.8 front, it decodes `MESH_BEACON_APP` with firmware-verified preset channel
+      names, pins the 2.8-preview protobufs with a 2.7 TrafficManagement compat shim, adds an XEdDSA
+      signature shield in the Packet Monitor, and ships the MEDIUM_TURBO preset with 2.8 opt-in
+      docs. Node detail gains a derived signal-trend / link-attenuation badge and a Noise Floor
+      quick-stat. Two bug fixes round it out: chat from unsynced-clock nodes no longer renders at
+      ~1970, and cluster spiderfy no longer opens the popup for a nearby unrelated node.
+
+
+      ## Features
+
+      - **Privacy:** `noIndexEnabled` toggle serving `X-Robots-Tag: noindex, nofollow` +
+      disallow-all `/robots.txt` (#4212, closes #4202)
+
+      - **2.8 / Packet Monitor:** XEdDSA signature shield for firmware 2.8 packets (#4209)
+
+      - **2.8 / MeshBeacon:** decode `MESH_BEACON_APP` + firmware-verified preset channel names
+      (#4207)
+
+      - **2.8 / Protobufs:** pin 2.8-preview `develop@ba16bfc` with 2.7 TrafficManagement compat
+      shim (#4205)
+
+      - **Nodes:** derived signal-trend / link-attenuation badge per node (#4204, closes #4110)
+
+      - **Nodes:** show Noise Floor on the Node Detail quick-stats card (#4201, closes #4109)
+
+      - **2.8:** MEDIUM_TURBO preset, `MESH_BEACON_APP` portnum, traffic-management & 2.8 opt-in
+      docs (#4200)
+
+
+      ## Bug Fixes
+
+      - **Messages:** stop unsynced-RTC nodes rendering chat at ~1970 (rxTime now clamped to receipt
+      time) (#4208, closes #4206)
+
+      - **Map:** spiderfy no longer selects a nearby unrelated node instead of fanning the cluster
+      (#4203, closes #4199)
+
+
+      ## Issues Resolved
+
+      - #4202 — [FEAT] Robots.txt / X-Robots-Tag toggle to discourage crawlers/bots
+
+      - #4206 — [BUG] Chat from unsynced-clock nodes renders at ~1970
+
+      - #4199 — [BUG] Spiderfy click opens popup for wrong nearby node
+
+      - #4109 — [FEAT] Show Noise Floor on Node Detail quick-stats card
+
+      - #4110 — [FEAT] Derived signal-trend / link-attenuation indicator per node
+
+      - #4074 — Modem preset tables missing MEDIUM_TURBO (enum 16)
+
+      - #3999 — [2.8 tracking] Position & telemetry broadcast now opt-in by default
+
+      - #3547 — Docs: Traffic Management module documentation
+
+
+      **Full changelog:** https://github.com/Yeraze/meshmonitor/compare/v4.13.1-rc3...v4.13.1-rc4
   - version: v4.13.1-rc3
     name: v4.13.1-rc3
     datetime: '2026-07-18T19:43:46Z'
@@ -1888,87 +1963,6 @@ releases:
         -p 8080:3001 \
         -v meshmonitor-data:/data \
         ghcr.io/Yeraze/meshmonitor:4.11.2
-      ```
-
-
-      ### 🧪 Testing
-
-      ✅ All tests passed
-
-      ✅ TypeScript checks passed
-
-      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
-
-
-      ### 📋 Changes
-
-      See commit history for detailed changes.
-  - version: v4.11.1
-    name: v4.11.1
-    datetime: '2026-06-20T20:17:15Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.11.1
-    prerelease: false
-    notes: >-
-      ## [4.11.1] - 2026-06-20
-
-
-      ### Features
-
-
-      - **Device notifications surfaced as toasts + firmware 2.8 favorite/ignore cap handling
-      (#3548)**: MeshMonitor now shows `ClientNotification` messages the connected node emits about
-      its own operation — duplicate-key security warnings, invalid-config errors, duty-cycle limits,
-      and more — as top-right toasts. These were always sent by the node but previously decoded and
-      dropped. A server-side policy (`clientNotificationPolicy.ts`) suppresses the routine recurring
-      ones (e.g. the power-saving "sleeping for N interval" message) and dedupes identical messages
-      to at most once per minute per source, so the feed stays useful rather than noisy. On firmware
-      **2.8**, when a Set Favorite / Ignore is refused because the device's protected-node list is
-      full, MeshMonitor reverts its optimistic star/ignore toggle to match the device and surfaces
-      the refusal (this warning is only emitted for the locally-connected node, not remote-admin
-      targets). No protobuf changes were needed — the 2.8 NodeDB warm-tier restructure and the
-      `snr_q4` on-disk field do not affect the over-the-air wire MeshMonitor reads (SNR stays a
-      `float` in dB; a regression test guards this). See
-      `docs/internal/dev-notes/MT28_NODEDB_SUPPORT_PLAN.md`.
-
-
-      - **Auto-Acknowledge 2×2 matrix — message type × hop distance (discussion #3564)**:
-      Auto-Acknowledge previously tangled two concepts — its "Direct" toggles actually meant *0
-      hops* (not direct messages), tapback/reply were keyed only on hop distance (shared across
-      channel & DM), and a single global "Respond via DM" applied everywhere. It's now a clean
-      **{Channel, Direct} × {0-hop, Multi-hop}** matrix: each of the four cells independently
-      configures **Message** (reply), **Tapback** (emoji reaction), and **Respond via DM**. "Respond
-      via DM" applies to the reply only (tapback-via-DM is unreliable) and is disabled until Message
-      is enabled; for Direct cells, replies are inherently DMs. Existing configurations are migrated
-      automatically (migration 093) so behavior is preserved on upgrade. MeshCore auto-ack is
-      unchanged.
-
-
-      - **MeshCore node-type icons & filter on the source map (#3546, #3576)**: The per-source
-      MeshCore map now renders role-based marker glyphs by advert type — Repeater (tower), Room
-      Server (server rack), Sensor (broadcast), Companion (person) — instead of the generic "MC"
-      badge (kept as the fallback for standard/unknown nodes). The Map Features panel gains a **Node
-      Types** filter (per-category checkboxes, persisted) to show/hide markers by role, and the
-      legend gains a matching **Node Types** section when shown. This brings the MeshCore source map
-      to parity with the Map Analysis workspace. The shared map legend opts into the new section via
-      a `showNodeTypes` prop, so the Meshtastic maps are unchanged.
-
-
-
-      ## 🚀 MeshMonitor v4.11.1
-
-
-      ### 📦 Installation
-
-
-      **Docker (recommended):**
-
-      ```bash
-
-      docker run -d \
-        --name meshmonitor \
-        -p 8080:3001 \
-        -v meshmonitor-data:/data \
-        ghcr.io/Yeraze/meshmonitor:4.11.1
       ```
 
 
