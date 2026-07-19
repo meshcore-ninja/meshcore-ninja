@@ -1,7 +1,22 @@
 source: github
 repo: danst0/fennek
-updatedAt: '2026-07-14T13:49:14.183Z'
+updatedAt: '2026-07-19T06:31:45.776Z'
 releases:
+  - version: v2.7.0
+    name: v2.7.0
+    datetime: '2026-07-19T06:29:18Z'
+    url: https://github.com/danst0/fennek/releases/tag/v2.7.0
+    prerelease: false
+    notes: 'Schach: Stufenname im Serial-Log wird jetzt übersetzt (i18n::tr statt Enum-Wert an %s).'
+  - version: v2.6.9
+    name: v2.6.9
+    datetime: '2026-07-19T06:28:17Z'
+    url: https://github.com/danst0/fennek/releases/tag/v2.6.9
+    prerelease: false
+    notes: >-
+      Sperrbildschirm als Vollbild (große exakte Uhr, Datum, Akku, Now-Playing, Entsperr-Hinweis) +
+      informativeres Standby-Banner (grobe Uhr "Nach HH:xx", nächster Wecker, Akku-Ladeanzeige).
+      Wake-/Entsperr-Hinweise nennen den oberen Knopf.
   - version: v2.6.5
     name: v2.6.5
     datetime: '2026-07-14T11:26:25Z'
@@ -333,40 +348,6 @@ releases:
 
 
       🌐 Project page & screenshots: **https://fennek.dumke.me**
-
-
-      **Full changelog:** [`CHANGELOG.md`](https://github.com/danst0/fennek/blob/main/CHANGELOG.md)
-  - version: v1.9.1
-    name: Fennek v1.9.1
-    datetime: '2026-06-15T15:51:06Z'
-    url: https://github.com/danst0/fennek/releases/tag/v1.9.1
-    prerelease: false
-    notes: >-
-      ### Fixed
-
-      - **Notes never silently lost on a failed SD write.** The save path now clears its dirty flag
-      only on a *complete* success; if an SD write or remove fails, the note stays dirty and is
-      retried on the next autosave instead of being overwritten on the next editor open.
-
-      - **Just-played track now reaches the scrobble queue before standby.** `power::poll()` stops
-      audio (and lets the audio task drain the stop command) *before* the pre-standby Navidrome
-      flush, so the current track is enqueued via `noteTrackEnded()` rather than landing in the
-      PSRAM ring that deep sleep would otherwise discard.
-
-
-      **Full changelog:** [`CHANGELOG.md`](https://github.com/danst0/fennek/blob/main/CHANGELOG.md)
-  - version: v1.9.0
-    name: Fennek v1.9.0
-    datetime: '2026-06-15T15:51:05Z'
-    url: https://github.com/danst0/fennek/releases/tag/v1.9.0
-    prerelease: false
-    notes: >-
-      ### Added
-
-      - **Mesh: `contacts reset` console command** + `mesh_client::resetContacts()`. Clears all
-      contacts and their persistent mirrors (SPIFFS `/contacts`, SD `/meshcore/contacts.bin`); the
-      contact table then rebuilds itself from incoming adverts. Handy when the 64-slot table fills
-      up with stale nodes or you want a clean slate.
 
 
       **Full changelog:** [`CHANGELOG.md`](https://github.com/danst0/fennek/blob/main/CHANGELOG.md)
