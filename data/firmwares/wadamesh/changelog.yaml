@@ -1,20 +1,20 @@
 source: github
 repo: ALLFATHER-BV/wadamesh
-updatedAt: '2026-07-16T22:59:07.525Z'
+updatedAt: '2026-07-19T14:58:28.342Z'
 releases:
   - version: beta_46
     name: wadamesh beta_46
     datetime: '2026-07-16T20:42:03Z'
     url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_46
-    prerelease: true
+    prerelease: false
     notes: >-
-      **wadamesh beta_46** — a control-center redesign, Do Not Disturb, contact-safety, and a batch
-      of board fixes.
+      **wadamesh beta_46 — now the stable release.** This promotes beta_46 to stable; below is
+      everything since the previous stable (**beta_45**).
 
 
-      > 🧪 Test build. Flip **Get test builds (beta)** on-device, use the **Beta** toggle on the
-      [web flasher](https://flasher.wadamesh.com), or grab a `-merged.bin` below. Stable stays on
-      beta_45.
+      > ✅ Stable channel. Install via the [web flasher](https://flasher.wadamesh.com) (Stable), the
+      LauncherHub **WADAMESH** entry, or a `-merged.bin` below. Newer test builds live on the Beta
+      channel.
 
 
       🙏 **Community contribution:** huge thanks to
@@ -22,21 +22,12 @@ releases:
       Disturb** feature (originally [#156](https://github.com/ALLFATHER-BV/wadamesh/pull/156)).
 
 
-      ## ✨ New
-
-      - **Redesigned control center** — round quick-toggle buttons that spread to fill the panel, a
-      frosted-glass look, real lock/bell glyphs, and a confirmation popup on every toggle.
-
-      - **Do Not Disturb** *(by @codemonkeybr, #156)* — set quiet hours in **Settings → Sound** to
-      silence the incoming-message chime during a daily window, with a bell in the status bar while
-      it's active. Plus a matching control-center quick-toggle (a bell that gains a slash while
-      quiet hours are on).
-
-
       ## 🛠 Fixed
 
-      - **Contacts no longer go missing between reboots on microSD devices** — saves are now atomic
-      (written to a temp file then swapped in), and the card is mounted far more reliably at boot.
+      - **Contacts no longer go missing between reboots on microSD devices.** Saves are now
+      **atomic** — written to a temp file and swapped in only once fully written — so an interrupted
+      write can never truncate your contact list, and the card is mounted far more reliably at boot.
+      *(If you've ever lost repeaters/contacts overnight, this is the fix — update to it.)*
 
       - **Heltec V4-R8** — the microSD card now mounts, and the freeze when waking the device from
       sleep is fixed.
@@ -48,11 +39,23 @@ releases:
       control-center buttons no longer clip when tapped.
 
 
+      ## ✨ New
+
+      - **Redesigned control center** — round quick-toggle buttons that spread to fill the panel, a
+      frosted-glass look, real lock/bell glyphs, and a confirmation popup on every toggle.
+
+      - **Do Not Disturb** *(by @codemonkeybr,
+      [#156](https://github.com/ALLFATHER-BV/wadamesh/pull/156))* — set quiet hours in **Settings →
+      Sound** to silence the incoming-message chime during a daily window, with a bell in the status
+      bar while it's active. Plus a matching control-center quick-toggle (a bell that gains a slash
+      while quiet hours are on).
+
+
       ## 📦 Boards
 
       T-Deck · Heltec V4 TFT · Heltec V4-R8 · ThinkNode M9 · RAK TAP v2 · T-LoRa Pager (LR1121 /
-      SX1262) · T-Display P4. Flash `<board>-merged.bin` at 0x0 (full install) or `<board>.bin` for
-      an app-only/OTA update.
+      SX1262) · T-Display P4. Flash `<board>-merged.bin` at `0x0` (full install) or `<board>.bin`
+      for an app-only/OTA update.
   - version: beta_45
     name: wadamesh beta_45
     datetime: '2026-07-15T18:52:36Z'
