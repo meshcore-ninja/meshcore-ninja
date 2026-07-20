@@ -1,7 +1,13 @@
 source: github
 repo: ipnet-mesh/meshcore-hub
-updatedAt: '2026-07-19T22:56:01.504Z'
+updatedAt: '2026-07-20T18:07:03.007Z'
 releases:
+  - version: v0.16.2
+    name: v0.16.2
+    datetime: '2026-07-20T14:13:53Z'
+    url: https://github.com/ipnet-mesh/meshcore-hub/releases/tag/v0.16.2
+    prerelease: false
+    notes: "## What's Changed\r\n* feat(routes): add per-route max_path_length cap by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/321\r\n* chore(deps): update actions/setup-python action to v7 by @renovate[bot] in https://github.com/ipnet-mesh/meshcore-hub/pull/320\r\n\r\n\r\n**Full Changelog**: https://github.com/ipnet-mesh/meshcore-hub/compare/v0.16.1...v0.16.2"
   - version: v0.16.1
     name: v0.16.1
     datetime: '2026-07-19T22:16:58Z'
@@ -116,9 +122,3 @@ releases:
     url: https://github.com/ipnet-mesh/meshcore-hub/releases/tag/v0.12.2
     prerelease: false
     notes: "## What's Changed\r\n* perf(web): cancel in-flight requests on navigation; consolidate dashboard stats by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/231\r\n\r\n\r\n**Full Changelog**: https://github.com/ipnet-mesh/meshcore-hub/compare/v0.12.1...v0.12.2"
-  - version: v0.12.1
-    name: v0.12.1
-    datetime: '2026-06-11T11:33:50Z'
-    url: https://github.com/ipnet-mesh/meshcore-hub/releases/tag/v0.12.1
-    prerelease: false
-    notes: "## What's Changed\r\n* perf(api): batch N+1 dashboard and message sender queries by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/229\r\n* feat(api): configurable worker processes via API_WORKERS by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/230\r\n\r\n\r\n**Full Changelog**: https://github.com/ipnet-mesh/meshcore-hub/compare/v0.12.0...v0.12.1"

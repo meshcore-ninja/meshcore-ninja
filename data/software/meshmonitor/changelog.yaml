@@ -1,7 +1,126 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-07-19T14:58:44.218Z'
+updatedAt: '2026-07-20T18:07:11.271Z'
 releases:
+  - version: v4.13.1
+    name: v4.13.1
+    datetime: '2026-07-20T16:45:09Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.13.1
+    prerelease: false
+    notes: >-
+      # MeshMonitor v4.13.1
+
+
+      Building on 4.13's unified map core, this release adds a suite of **Link Quality** tools for
+      the RF-minded, an **early preview** of several Meshtastic 2.8 features, and a broad round of
+      map, MQTT, and messaging fixes.
+
+
+      Highlights: a **Terrain Link Profile** tool (elevation cross-section, Fresnel zone, and
+      link-budget verdict) on Map Analysis; a per-node **signal-trend / link-attenuation badge**;
+      **Noise Floor** on the Node Detail card; and **position accuracy + location source** surfaced
+      in node popups. The Map Analysis toolbar is now icon-based with **Show RF / UDP / MQTT**
+      transport toggles, and obscured markers offset intelligently by cell occupancy. On the 2.8
+      front (an **early preview** — 2.8 is not officially released yet, so this is built against the
+      firmware development branch and is subject to change), MeshMonitor now decodes the **XEdDSA
+      signing shield**, **MeshBeacon** packets, and the **MEDIUM_TURBO** preset. Also notable:
+      telemetry requests now auto-recover from an upstream firmware NeighborInfo-hijack, a new
+      noindex/robots.txt privacy toggle, and a gateway-aware **MQTT Packet Monitor**.
+
+
+      See the [release blog post](https://meshmonitor.org/blog/2026-07-20-v4-13-1-release) for the
+      narrative walkthrough.
+
+
+      ## Link Quality & Terrain Link Profile
+
+      - Terrain Link Profile tool: elevation cross-section + Fresnel zone + link-budget verdict,
+      auto-frequency by region, DEM-void handling, map-mirrored graph cursor (#4143, #4147, #4151,
+      #4170, #4156)
+
+      - Derived signal-trend / link-attenuation badge per node (#4204)
+
+      - Noise Floor on the Node Detail quick-stats card (#4201)
+
+      - Position accuracy + location source in node popups, map & chat (#4188)
+
+      - Latitude/longitude/elevation shown as text in Node Info / Node Details (#4134)
+
+
+      ## Map Analysis
+
+      - Icon-based toolbar with labels in tooltips (#4171)
+
+      - Show RF / UDP / MQTT transport toggles (#4135)
+
+      - Occupancy-scaled, distance-capped obscured-node precision offset (#4164, #4168, #4181)
+
+      - "Discard invalid positions" setting, honored on ingest and render (#4158, #4182)
+
+      - Per-theme (light/dark) tileset preferences (#4118)
+
+      - Keep router short-name visible in Official pin style (#4184)
+
+      - Honor Default Map Center on Unified/Dashboard maps (#4128)
+
+      - Fixes: spiderfy opens the correct node (#4203), SNR overlay pins to merged marker (#4169),
+      no route/heatmap render for marker-less or deleted nodes (#4167, #4175)
+
+
+      ## Meshtastic 2.8 — Early Preview
+
+      > ⚠️ Meshtastic 2.8 is not officially released. This support is built against the firmware
+      development branch and is subject to change as 2.8 evolves.
+
+      - Pin 2.8-preview protobufs (`develop@ba16bfc`) with a 2.7 TrafficManagement compat shim
+      (#4205)
+
+      - XEdDSA packet-signing shield in the Packet Monitor (#4209)
+
+      - MeshBeacon (`MESH_BEACON_APP`) decode + firmware-verified preset channel names (#4207)
+
+      - MEDIUM_TURBO modem preset + 2.8 opt-in FAQ (#4200)
+
+
+      ## MQTT
+
+      - Gateway-aware MQTT Packet Monitor — per-gateway reception capture + UI (#4127, #4138)
+
+      - Geo-ignore epic: fail-open geo filter, per-source ignore list, retroactive purge/sweep,
+      observability (#4123, #4131, #4132, #4136)
+
+      - Route directed MQTT messages to the DM view, not their channel (#4161)
+
+      - Guard MQTT POSITION ingestion against Null Island fixes (#4150)
+
+
+      ## Messages, Nodes & Automation
+
+      - Auto-retry telemetry requests hijacked by the firmware NeighborInfo behavior (#4214)
+
+      - Stop unsynced-clock nodes rendering chat at ~1970 (#4208)
+
+      - MeshCore own-node messages show name, not public key (#4197)
+
+      - Short name shown alongside long name on message senders (#4196)
+
+      - "Message anyway" override for unmessageable nodes (#4187), and clearer hidden-composer
+      messaging (#4140)
+
+      - Remote-admin (non-local) reboot target for the device-reboot automation (#4186)
+
+      - Compose draft scoped per-conversation (#4185)
+
+      - Reliably un-hide nodes from the map across sources (#4141)
+
+      - Traceroute no longer sends on a DISABLED channel slot (#4180)
+
+      - Reject precision-obscured Null Island fixes on ingest (#4149)
+
+
+      ## 
+
+      …
   - version: v4.13.1-rc4
     name: v4.13.1-rc4
     datetime: '2026-07-19T13:15:34Z'
@@ -1948,65 +2067,3 @@ releases:
       - #3588 — MeshCore node favoriting (pi
 
       …
-  - version: v4.11.2
-    name: v4.11.2
-    datetime: '2026-06-21T00:02:00Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.11.2
-    prerelease: false
-    notes: >-
-      ## Hotfix for 4.11.1 startup crash (PostgreSQL / MySQL)
-
-
-      4.11.1 fails to boot on PostgreSQL/MySQL backends that have an existing Auto-Acknowledge
-      configuration. Migration 093 (the Auto-Acknowledge 2×2 matrix backfill) inserted `settings`
-      rows without the table's NOT NULL `createdAt`/`updatedAt` columns, aborting database
-      initialization with `null value in column "createdAt" … violates not-null constraint` — a
-      restart loop. On SQLite the violation was silently swallowed, so the matrix settings were
-      never written.
-
-
-      ### Fixed
-
-      - Migration 093 now supplies `createdAt`/`updatedAt` in all three backends (SQLite /
-      PostgreSQL / MySQL). A regression test runs the migration against a real settings table.
-
-
-      ### Recovery
-
-      Affected instances recover automatically on upgrade to 4.11.2 — migration 093 was never marked
-      complete (it threw before committing), so it re-runs and now succeeds, correctly migrating
-      your auto-ack settings. No manual database changes are required.
-
-
-      **Full changelog:** see CHANGELOG.md → [4.11.2].
-
-      ## 🚀 MeshMonitor v4.11.2
-
-
-      ### 📦 Installation
-
-
-      **Docker (recommended):**
-
-      ```bash
-
-      docker run -d \
-        --name meshmonitor \
-        -p 8080:3001 \
-        -v meshmonitor-data:/data \
-        ghcr.io/Yeraze/meshmonitor:4.11.2
-      ```
-
-
-      ### 🧪 Testing
-
-      ✅ All tests passed
-
-      ✅ TypeScript checks passed
-
-      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
-
-
-      ### 📋 Changes
-
-      See commit history for detailed changes.
