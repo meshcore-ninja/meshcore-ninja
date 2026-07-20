@@ -1,7 +1,13 @@
 source: github
 repo: PhilMo6/meshpunk
-updatedAt: '2026-07-14T02:41:28.283Z'
+updatedAt: '2026-07-20T06:50:09.107Z'
 releases:
+  - version: v0.2.7
+    name: v0.2.7 usb drivers!
+    datetime: '2026-07-20T06:06:35Z'
+    url: https://github.com/PhilMo6/meshpunk/releases/tag/v0.2.7
+    prerelease: false
+    notes: "Usb drivers are now separate from the main firmware and apps that need that automatically download them when needed.\r\nGamepads and now supported and their drivers are downloaded with the Gamepad app found in the games category.\r\nThe Gameboy emulator now includes a tdeck driver to allow device to device usb connection.\r\nThe Gameboy emulator can now emulate a link cable connection via usb c cable to allow for 2 player link cable games!\r\nA readme app is now included that gives details on how to use the firmware."
   - version: v0.2.6
     name: v0.2.6 alpha fonts update
     datetime: '2026-07-14T02:01:18Z'
