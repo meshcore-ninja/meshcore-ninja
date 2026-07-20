@@ -1,7 +1,13 @@
 source: github
 repo: sosprz/Meshcore-Wio-Tracker-L1-Pro
-updatedAt: '2026-07-07T21:27:07.826Z'
+updatedAt: '2026-07-20T21:14:11.252Z'
 releases:
+  - version: v1.16.91
+    name: v1.16.91
+    datetime: '2026-07-20T18:42:07Z'
+    url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.16.91
+    prerelease: false
+    notes: "- **GPS home details** - The Home GPS page now shows fix status, satellite count, DMS latitude/longitude, and altitude when GPS data is available.\r\n- **GPS DMS format** - GPS data views now display coordinates in degrees, minutes, and seconds instead of decimal degrees.\r\n- **Wio Tracker L1 EINK input bounce fix** - Bounced GPIO interrupt edges are now coalesced into one UI press, preventing a single physical joystick or button press from triggering multiple actions.\r\n- **Region scope settings** - Added `System -> Radio -> Region scope` so companion-radio devices can view, set, and clear the persisted default flood scope name and 16-byte key without the companion app."
   - version: v1.16.90
     name: v1.16.90
     datetime: '2026-07-07T20:42:20Z'
@@ -132,12 +138,3 @@ releases:
     url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.14.0.69
     prerelease: false
     notes: "- **Mainstream sync (v1.14.0)** - Merged upstream \r\n- **Screen lock hardening (3x PREV bug fix)** - Triple-click `PREV` no longer cycles `Sound` levels while `Screen lock` is active."
-  - version: v1.13.0.68
-    name: v1.13.0.68
-    datetime: '2026-03-05T16:50:29Z'
-    url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.13.0.68
-    prerelease: false
-    notes: >-
-      - **Mobile favorites toggle fix** - Favorites can now be added/removed from the mobile app
-      again. External contact updates still keep overwrite protection by default, but explicit app
-      favorite changes are now accepted.
