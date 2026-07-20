@@ -1,7 +1,66 @@
 source: github
 repo: ALLFATHER-BV/wadamesh
-updatedAt: '2026-07-19T17:00:36.922Z'
+updatedAt: '2026-07-20T10:55:08.936Z'
 releases:
+  - version: beta_48
+    name: wadamesh beta_48
+    datetime: '2026-07-20T09:33:01Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_48
+    prerelease: true
+    notes: >-
+      **wadamesh beta_48** is a stability and bug-fix drop. A big batch of reported issues sorted.
+
+
+      > Test build. Turn on **Get test builds (beta)** on the device, use the **Beta** toggle on the
+      [web flasher](https://flasher.wadamesh.com), or grab a `-merged.bin` below. Stable stays on
+      beta_46.
+
+
+      ## Fixed
+
+      - Crash that could reboot the device while typing in a chat
+      ([#98](https://github.com/ALLFATHER-BV/wadamesh/issues/98)).
+
+      - Devices stuck on the boot screen after an update with a microSD card fitted. The boot-time
+      copy of your data to the card could hang on a slow or damaged card; it is now guarded so the
+      device always boots ([#142](https://github.com/ALLFATHER-BV/wadamesh/issues/142),
+      [#148](https://github.com/ALLFATHER-BV/wadamesh/issues/148)).
+
+      - MQTT bridge settings not saving. They were going to the wrong storage; now they stick across
+      reboots ([#128](https://github.com/ALLFATHER-BV/wadamesh/issues/128)).
+
+      - Message times showing 1910 or other wrong dates. They now match the clock at the top of the
+      screen ([#100](https://github.com/ALLFATHER-BV/wadamesh/issues/100),
+      [#152](https://github.com/ALLFATHER-BV/wadamesh/issues/152)).
+
+      - Dutch keyboard typing "ij" and "IJ" on the "1" and "!" keys
+      ([#144](https://github.com/ALLFATHER-BV/wadamesh/issues/144),
+      [#164](https://github.com/ALLFATHER-BV/wadamesh/issues/164)).
+
+      - Message box letting you type past the real send limit and silently dropping the end of a
+      long message ([#119](https://github.com/ALLFATHER-BV/wadamesh/issues/119)).
+
+      - Copy and paste cutting off long text
+      ([#120](https://github.com/ALLFATHER-BV/wadamesh/issues/120)).
+
+      - Quick messages list not scrolling when there were more entries than fit on screen
+      ([#151](https://github.com/ALLFATHER-BV/wadamesh/issues/151)).
+
+      - Room server names starting with an unusual character showing an empty box on the Join screen
+      ([#116](https://github.com/ALLFATHER-BV/wadamesh/issues/116)).
+
+      - Tanmatsu: only about half the emojis were reachable in the picker
+      ([#141](https://github.com/ALLFATHER-BV/wadamesh/issues/141)).
+
+      - Tanmatsu: the last settings item (About) being unreachable was already fixed in an earlier
+      build, so it is sorted here too ([#140](https://github.com/ALLFATHER-BV/wadamesh/issues/140)).
+
+
+      ## Boards
+
+      T-Deck · Heltec V4 TFT · Heltec V4-R8 · ThinkNode M9 · RAK TAP v2 · T-LoRa Pager (LR1121 /
+      SX1262) · Attaky Core · T-Display P4. Flash `<board>-merged.bin` at `0x0` for a full install,
+      or `<board>.bin` for an app-only update.
   - version: beta_47
     name: wadamesh beta_47
     datetime: '2026-07-19T16:02:03Z'
@@ -1100,63 +1159,6 @@ releases:
       instead of showing "couldn't reach the update server" for six hours.
 
       - Tanmatsu: the About page shows the real firmware version.
-
-
-      ---
-
-      This is a **test/beta** build (prerelease); stable stays **beta_27**. On-device, enable
-      **Settings → About → "Get test builds (beta)"** to follow the test channel over Wi-Fi.
-  - version: beta_28
-    name: wadamesh beta_28
-    datetime: '2026-07-04T11:41:57Z'
-    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_28
-    prerelease: true
-    notes: >-
-      Test build on top of the current stable (**beta_27**). A room-server fix, the real burn-in
-      fix, and a batch of beta-tester feedback.
-
-
-      Flash from the web flasher at **https://wadamesh.com** (Standalone install → Version →
-      beta_28), or grab a `-merged.bin` below.
-
-
-      ## Fixed — room servers going one-way "frozen" (#89)
-
-      A room server silently stops pushing messages to a client after a few missed deliveries, and
-      the device never sent the keep-alives that recover this — so rooms could end up logged-in but
-      dead in both directions, with no way to re-login. The device now keeps its room session alive
-      in the background, automatically logs back in when the session drops, adds a **"Log in
-      again"** option to the room chat's menu, and warns when the room only granted read-only
-      access. Thanks to **EricMW61** for the report.
-
-
-      ## Fixed — real screen-off (LCD burn-in / ghosting)
-
-      "Screen off" previously only turned the backlight off — the panel kept displaying the last
-      image in the dark, which is what burns it in. The panel itself now sleeps (wake is still
-      instant), a lit lock screen always dims on every board, a screen woken by a message re-darkens
-      after 10 s, and the lock clock drifts to avoid ghosting. Thanks to **wyvern.red** for pinning
-      down the cause.
-
-
-      ## New — from wyvern.red's feedback
-
-      - **Compact messages (IRC style)** — opt-in toggle in chat settings; one dense line per
-      message, 2–3× more history on screen.
-
-      - **Clearer delivery ticks** — ↑ sent (unconfirmed), ✓✓ confirmed; failed messages say **"tap
-      to resend"** and one tap resends.
-
-      - **Keyboard nav** — the scroll keys (F/C) zoom the map; backspace in an empty composer exits
-      typing mode.
-
-      - **"Reset path" in the chat menu** — force a fresh route without the detour through Contacts.
-
-
-      ## Also
-
-      - The on-device "Install update" now hides on mixed/older partition layouts where an update
-      could crash mid-flash (found via a user crash report).
 
 
       ---
