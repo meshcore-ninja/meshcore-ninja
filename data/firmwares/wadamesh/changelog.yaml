@@ -1,7 +1,57 @@
 source: github
 repo: ALLFATHER-BV/wadamesh
-updatedAt: '2026-07-20T10:55:08.936Z'
+updatedAt: '2026-07-21T19:27:07.082Z'
 releases:
+  - version: beta_49
+    name: wadamesh beta_49
+    datetime: '2026-07-21T18:46:49Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_49
+    prerelease: true
+    notes: >-
+      **wadamesh beta_49** is a **T-Display P4 only** drop.
+
+
+      > **Not on a P4? Skip this one.** It only has P4 fixes, there is nothing new for the other
+      boards. Stay on beta_48.
+
+
+      > Test build. Turn on **Get test builds (beta)** on the device, use the **Beta** toggle on the
+      [web flasher](https://flasher.wadamesh.com), or grab a `-merged.bin` below. Stable stays on
+      beta_46.
+
+
+      ## Fixed (T-Display P4)
+
+      - The **Snake game** no longer traps you. Tap the top bar to leave it. Before, the only way
+      out was a reset.
+
+      - The full-screen tools (**Monitor, Spectrum, Discover, Web mirror, Advert**) can now be left
+      by tapping the top bar, so they no longer trap you either.
+
+      - **Screen timeout** now works. The display turns off after your idle time and wakes on touch.
+      This also fixes standby and burn-in dimming.
+
+      - **Text overflow** fixed. The interface is pinned to the 100% size that fits the panel.
+
+      - **GPS**: the L76K is now found reliably and read at 9600 baud (a boot-time detect race plus
+      a stale 38400 setting kept it dead). You still need the GPS antenna connected and a clear view
+      of the sky to get a fix.
+
+      - The **control center dropdown** is taller, so the GPS status line sits below the buttons
+      instead of behind them.
+
+
+      ## P4 LCD model (HI8561)
+
+      - Fixed the **black screen** on the TFT-LCD SKU. The backlight now turns on. Please flash
+      `wadamesh-tdisplay-p4-lcd-merged.bin` at `0x0` and report back.
+
+
+      ## Boards
+
+      This drop rebuilds every board so the version stays in step, but only the **T-Display P4** has
+      changes. Other boards can stay on beta_48. Flash `<board>-merged.bin` at `0x0` for a full
+      install, or `<board>.bin` for an app-only update.
   - version: beta_48
     name: wadamesh beta_48
     datetime: '2026-07-20T09:33:01Z'
@@ -1081,84 +1131,6 @@ releases:
       - The **trace Y-axis now scales itself to the live signal**: it expands instantly when a
       strong signal appears (no more clipping flat against the top) and eases back once it's gone,
       never zooming tighter than 30 dB.
-
-
-      ---
-
-      This is a **test/beta** build (prerelease); stable stays **beta_27**. On-device, enable
-      **Settings → About → "Get test builds (beta)"** to follow the test channel over Wi-Fi.
-  - version: beta_29
-    name: wadamesh beta_29
-    datetime: '2026-07-05T08:10:02Z'
-    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_29
-    prerelease: true
-    notes: >-
-      Test build on top of the current stable (**beta_27**). Clock hardening for room servers, the
-      BLE "repeats heard" fix, much deeper chat history on SD, and a set of navigation and delete
-      fixes.
-
-
-      Flash from the web flasher at **https://wadamesh.com** (Standalone install → Version →
-      beta_29), or grab a `-merged.bin` below.
-
-
-      ## Fixed — room logins silently locked out by the device clock (#89 follow-up)
-
-      Room servers quietly reject anything older than the newest timestamp they have seen from you,
-      so a device clock that stepped backwards (a reboot without GPS or phone around, or a sync
-      correcting a fast clock) black-holed every Join with zero feedback — and beta_28's keep-alives
-      made that easier to hit. The device now remembers the newest timestamp it has used **across
-      reboots** so it can never fall behind itself, a Join that gets no reply shows a clear error
-      after 20 s (including what the device thinks the time is), and the device **warns when its
-      clock and the room server's clock disagree**. Thanks to **EricMW61** for the follow-up
-      testing.
-
-
-      ## Fixed — "Repeats heard" over Bluetooth (#94)
-
-      The app counts repeats from the per-packet RX log, which beta_23 stopped sending over BLE to
-      fix congestion (#46/#54). The firmware now recognises packets that are **repeats of your own
-      messages** and lets exactly those through to BLE — the counter works again and the congestion
-      fix stays. Thanks to **daryldakine** for the clean bisect and the analyzer capture.
-
-
-      ## Fixed — app-sent channel messages now show on the device
-
-      Messages sent from the phone app through the device now appear on the device itself as your
-      own outgoing message in that channel. This worked for DMs but never for channels.
-
-
-      ## Fixed — deleting chats sticks
-
-      Deleted messages could survive in storage and resurrect the chat later, and removing a channel
-      could miss the underlying channel entry so the thread came right back. Both closed.
-
-
-      ## New — deep chat history on SD (up to 5000 messages)
-
-      Devices with an SD card now keep up to **5000 messages** instead of 500, with **date
-      separators** (Today / Yesterday / day names) between messages from different days.
-
-      **Downgrade note for testers:** builds older than beta_29 will not read the larger history
-      file — downgrading starts with an empty history.
-
-
-      ## Also
-
-      - Chat/channel rows use the same compact style as Contacts — more conversations per screen.
-
-      - The chat/channel settings sheet fits on one screen (same grid as the contact menu) instead
-      of scrolling.
-
-      - Compact chat mode alternates two background tones for readability.
-
-      - Keyboard nav: settings pages no longer jump down on open, and the red update dot can't steal
-      the selection from the About button.
-
-      - The update check waits for Wi-Fi to actually have an address and retries within a minute
-      instead of showing "couldn't reach the update server" for six hours.
-
-      - Tanmatsu: the About page shows the real firmware version.
 
 
       ---
