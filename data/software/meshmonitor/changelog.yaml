@@ -1,7 +1,128 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-07-20T18:07:11.271Z'
+updatedAt: '2026-07-21T21:12:59.269Z'
 releases:
+  - version: v4.13.2-rc1
+    name: v4.13.2-rc1
+    datetime: '2026-07-21T20:59:22Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.13.2-rc1
+    prerelease: true
+    notes: >-
+      > ⚠️ **Pre-release (Release Candidate 1 for 4.13.2).** Not marked `latest`; no `:latest`
+      Docker tags are published. For testing ahead of the 4.13.2 release — please report issues.
+
+
+      ## Summary
+
+
+      Release candidate 1 for **4.13.2**. The headline is the completion of the **3D Map &
+      Elevation** effort (issue #3826): Map Analysis gains a real 2D/3D toggle backed by a
+      standalone MapLibre GL terrain view, a DEM tile proxy that hides the configured elevation
+      source, and neighbor-link/traceroute layers with full selection parity in 3D (#4235, #4239,
+      #4242). The Link Profile tool now seeds antenna heights from node-reported altitude, and
+      neighbor links are finally clickable with terrain analysis available on route segments (#4253,
+      #4254). Unified Messages shows sender short-names alongside long names, emoji reactions show
+      the reactor's short name, and Copy NodeInfo gains per-field selection with a MAC-address fix
+      (#4257, #4247, #4249). A security fix lets Bearer API tokens work on the legacy `/api/*`
+      endpoints instead of only `/api/v1/*` (#4262, closes #4259). This RC also lands a
+      PostgreSQL/MySQL migration ledger that stops migrations replaying on every boot (#4236), a
+      batch of MeshCore hardware system-tests (#4232, #4241, #4248), and a round of follow-up fixes
+      to the UI icon migration and map-visibility handling. Server routing was refactored out of the
+      monolithic `server.ts` as the first step of a larger cleanup (#4260).
+
+
+      ## Features
+
+
+      - 3D Map & Elevation epic (#3826): neighbor-link terrain integration (#4235), 3D terrain view
+      + DEM tile proxy (#4239), 3D neighbor/traceroute layers + selection parity (#4242)
+
+      - Link Profile antenna AGL seeded from node-reported altitude (#4254)
+
+      - Unified Messages: show short name alongside long name on sender labels (#4257)
+
+      - Channels: show reactor's short name next to emoji reactions (#4247)
+
+      - Per-field Copy NodeInfo with overwrite + MAC address display fix (#4249)
+
+      - Unified Messages: reply box shows "Unknown message" when the parent is missing (#4246)
+
+      - Consistent Lucide/emoji icon style across the full UI (#4217, @wilhel1812)
+
+
+      ## Bug Fixes
+
+
+      - Clickable neighbor links + terrain analysis on route segments (#4253)
+
+      - Restore compact glyphs in the channel dropdown options after the icon migration (#4258)
+
+      - Repair text spacing left behind by the icon migration (#4238)
+
+      - Close the status-glyph gap in the no-hardcoded-ui-glyph rule (#4255)
+
+      - Per-transport last-seen timestamps with decay + unstick visibility toggles (#4250, #4240)
+
+      - Stop discarding MeshCore favorites in the node projection (#4256)
+
+      - Fix MeshCore marker keying to prevent ghost markers across sources (#4237)
+
+      - PostgreSQL/MySQL migration ledger — stop replaying migrations (and rebuilding
+      `route_segments`) on every boot (#4236)
+
+
+      ## Security
+
+
+      - Accept Bearer API tokens on legacy `/api/*` endpoints, not just `/api/v1/*` (#4262, closes
+      #4259)
+
+
+      ## Refactoring
+
+
+      - Extract messages/poll/config/user routes from `server.ts` (#4260, first step of #3502)
+
+
+      ## Tests / CI
+
+
+      - MeshCore hardware system-tests — Phase 1 connect/handshake (#4232), Phase 2 companion
+      channel + repeater DM auto-ack (#4241), Phase 3 repeater remote-admin login + telemetry poll
+      (#4248)
+
+
+      ## Chore
+
+
+      - Version bump to 4.13.2-rc1 (#4261)
+
+
+      ## Issues Resolved
+
+
+      - #3826 — 3D map mode for elevation display
+
+      - #4259 — Bearer API tokens silently rejected on legacy endpoints
+
+      - #4245 — Unified Messages "Unknown message" reply indicator
+
+      - #4244 — Copy NodeInfo per-field selection + MAC address
+
+      - #4243 — reactor short name on reactions
+
+      - #4240 — favorited/freshly-heard node missing from map + stuck hide-from-map toggle
+
+      - #4234 — MeshCore nodes visible on every map
+
+      - #4233 — PostgreSQL/MySQL migrations replaying every boot
+
+      - #4215 — expand Lucide/emoji icon style across the UI
+
+      - #4193 — short name alongside long name for message senders
+
+
+      **Full changelog:** https://github.com/Yeraze/meshmonitor/compare/v4.13.1...v4.13.2-rc1
   - version: v4.13.1
     name: v4.13.1
     datetime: '2026-07-20T16:45:09Z'
@@ -1977,93 +2098,3 @@ releases:
       ### 📋 Changes
 
       See commit history for detailed changes.
-  - version: v4.11.3
-    name: v4.11.3
-    datetime: '2026-06-21T18:25:56Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.11.3
-    prerelease: false
-    notes: >-
-      # MeshMonitor v4.11.3
-
-
-      This release adds a **Dead Drop / Mailbox** auto-responder — asynchronous "mesh voicemail"
-      where a node can leave a message for another node that need not be online, retrieved later
-      with `inbox` commands — contributed by new contributor @TheWISPRer. It also brings **MeshCore
-      node favoriting** (pin any MeshCore node to the top of the list, stored server-side), **FEM
-      LNA Mode** LoRa configuration surfaced on both the Device Configuration and Remote Admin
-      panels for amplified hardware, and the **MeshCore CLI** bundled into the Docker image
-      alongside the Meshtastic CLI. On the fixes side, a PostgreSQL/MySQL crash in the MeshCore
-      neighbor query is resolved by widening the `neighbor_info` timestamp columns to `BIGINT` (they
-      overflowed signed int32 with millisecond-epoch values), and a proto3 boolean-elision bug that
-      silently re-enabled `uplinkEnabled`/`downlinkEnabled` after a container restart is fixed.
-      Position history now captures and displays SNR for directly-heard (0-hop) nodes, the
-      intermittently-blank MeshCore auto-ack `{SNR}`/`{ROUTE}` tokens are corrected, mesh-request
-      endpoints return a meaningful `503` (not a generic `500`) when the node is disconnected, and
-      the macOS x64 desktop build no longer ships an arm64 `re2.node` that crashed on Intel Macs.
-      Upgrades are automatic — three idempotent migrations (094–096) run on boot.
-
-
-      ## Features
-
-
-      - **Dead Drop / Mailbox auto-responder — async "mesh voicemail"** (#3538, @TheWISPRer) — a
-      fifth auto-responder type. DM `msg <name> <text>` to leave a message; retrieve with `inbox`,
-      `inbox play [name]`, `inbox delete <id>`, `inbox clear`. Per-source, configured entirely
-      through the Auto Responder UI, messages marked played only on delivery-success, expired rows
-      purged by the maintenance sweep.
-
-      - **MeshCore node favoriting — pin to top of list** (#3595) — favorite any MeshCore node
-      (Companion, Repeater, Room Server, …); stored server-side only (firmware has no native
-      favorite concept), consistent with Meshtastic favorites.
-
-      - **FEM LNA Mode LoRa configuration** (#3600) — surfaces `Config.LoRaConfig.fem_lna_mode`
-      (Disabled / Enabled / Not Present, firmware ≥ v2.7.20) on **both** the Device Configuration
-      and Remote Admin LoRa panels.
-
-      - **MeshCore CLI bundled in the Docker image** (#3591) — ships `meshcore-cli` / `meshcli`
-      alongside the Meshtastic Python CLI for a complete in-container toolkit.
-
-
-      ## Bug Fixes
-
-
-      - **MeshCore neighbor query crashed on PostgreSQL/MySQL** (#3602) —
-      `meshcore_neighbor_info.timestamp` / `.createdAt` were 32-bit `INTEGER`/`INT` but store
-      millisecond-epoch values that overflow int32; widened to `BIGINT` (migration 096).
-
-      - **`downlinkEnabled`/`uplinkEnabled: false` reverted to true after restart** (#3598) — proto3
-      elides boolean `false`, and a `?? true` fallback re-inflated user-disabled channel flags on
-      device reconnect; both now default to `false`.
-
-      - **Position history dropped SNR for directly-heard (0-hop) nodes** (#3593) — SNR is now
-      captured per-fix and shown in the tooltip; the same 0 dB-drop guard was fixed on the central
-      `snr_local` telemetry path.
-
-      - **MeshCore auto-ack `{SNR}` / `{ROUTE}` tokens intermittently blank** (#3592) — buffered
-      SNR/route data is now correlated to the matching packet (freshness + `pathLen`, consumed once)
-      instead of leaking across messages.
-
-      - **macOS x64 (Intel) desktop crashed on launch** (#3604) — the x64 DMG shipped an arm64
-      `re2.node` (`ERR_DLOPEN_FAILED`); the build now rebuilds `re2` from source as x86_64 and
-      backfills the missing CI arch flags.
-
-      - **Mesh-request endpoints return 503 (not 500) when disconnected** (#3597) —
-      `/api/traceroute`, `/api/position/request`, `/api/nodeinfo/request`,
-      `/api/neighborinfo/request`, `/api/telemetry/request` now return a meaningful `503` with the
-      v1-API error shape.
-
-
-      ## Internationalization
-
-
-      - **Translations update from Hosted Weblate** (#3579, @weblate)
-
-
-      ## Issues Resolved
-
-
-      - #3587 — Add MeshCore CLI Python application to Docker image
-
-      - #3588 — MeshCore node favoriting (pi
-
-      …
