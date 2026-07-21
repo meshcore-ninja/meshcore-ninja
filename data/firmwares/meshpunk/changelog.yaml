@@ -1,7 +1,13 @@
 source: github
 repo: PhilMo6/meshpunk
-updatedAt: '2026-07-20T06:50:09.107Z'
+updatedAt: '2026-07-21T02:51:53.726Z'
 releases:
+  - version: v0.2.8
+    name: v0.2.8 alpha USB drive emulation
+    datetime: '2026-07-21T01:58:13Z'
+    url: https://github.com/PhilMo6/meshpunk/releases/tag/v0.2.8
+    prerelease: false
+    notes: "added usb drive emulation so you can access your sd card by plugging the tdeck into a pc with a usb cable.\r\nalso renamed USB app to USB Host."
   - version: v0.2.7
     name: v0.2.7 usb drivers!
     datetime: '2026-07-20T06:06:35Z'
