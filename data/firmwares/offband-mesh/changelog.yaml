@@ -1,7 +1,76 @@
 source: github
 repo: OffbandMesh/meshcore-firmware
-updatedAt: '2026-07-03T03:31:14.735Z'
+updatedAt: '2026-07-21T10:27:08.464Z'
 releases:
+  - version: offband-v1.2.0
+    name: Offband offband-v1.2.0
+    datetime: '2026-07-21T06:48:44Z'
+    url: https://github.com/OffbandMesh/meshcore-firmware/releases/tag/offband-v1.2.0
+    prerelease: false
+    notes: >-
+      Adds **MeshSmith Photon‑1W support** (both MCU flavors) on the **MeshCore 1.16.0** base, and
+      **receive-sensitivity recovery on Heltec V4** (external FEM LNA control, which stock MeshCore
+      leaves bypassed),
+
+      plus the ESP32‑C6 I2C‑scan boot‑hang fix found bench‑validating it, a NimBLE build fix,
+
+      and flashing‑docs corrections.
+
+
+      ### Added
+
+      - **MeshSmith Photon‑1W support — ESP32‑C6 + nRF52 (#193, #194)** — vendors MeshSmith's MIT
+      Photon
+        variants (`meshsmith_photon_esp32c6`, `meshsmith_photon_nrf52`; Seeed XIAO ESP32‑C6 / XIAO nRF52840 +
+        Ebyte E22‑900M30S 1W radio) and wires all roles into CI + the release pipeline. ESP32‑C6 needed
+        minimal MeshCore‑consistent base edits (antenna‑switch virtuals, protected `_gps_serial`, NimBLE dep);
+        nRF52 needed none. The **ESP32‑C6 companion + repeater are bench‑verified** on hardware; the
+        **nRF52 variant is not yet bench‑verified** — review findings tracked as bench checkpoints on #193/#194.
+      - **External FEM LNA control on Heltec V4 companions (#298).** MeshCore leaves the Heltec V4
+        front-end module's LNA bypassed at boot, so V4 companions ran with degraded receive
+        sensitivity. Offband now enables it at companion boot from a persisted `radio_fem_rxgain`
+        preference (default on), on the boards whose FEM exposes an independent LNA line
+        (`heltec_v4`, `heltec_tracker_v2`, `heltec_t096`). A new companion-API command (`0xC3`,
+        SET/GET) plus a capability bit lets the client show a user toggle, gated on the
+        runtime-detected FEM chip. `FIRMWARE_VER_CODE` 15 -> 16. Verified end-to-end on a
+        KCT8103L (V4.3) board.
+      - **Model string names the detected FEM part (#327)** — reads `Heltec V4 OLED (KCT8103L)`
+        or `(GC1109)`, so a V4.3 (independent LNA control) is distinguishable from a V4.2 in the app.
+
+      ### Fixed
+
+      - **Photon‑1W ESP32‑C6 hung at boot, dead on the mesh (#294).** The C6 variant declares its
+      I2C bus,
+        but `EnvironmentSensorManager::begin()` ran the blind I2C scan regardless; on the C6 the scan wedges
+        the I2C peripheral (hangs at addr `0x0d`) and never returns, so `setup()` never reached `loop()`.
+        The scan is now skipped on boards that set `ENV_SKIP_I2C_SENSOR_SCAN` (guard vendored verbatim from
+        MeshSmith's fork); every other board is unchanged.
+      - **CLI accepted garbage after a valid key (#299).** `get radio foobar` returned the radio
+        settings, and `set radio 910.525,62.5,7,5,junk` silently applied the first four values and
+        dropped the rest. Keys now require a whole-token match; extra `set radio` parameters are rejected.
+      - **64 ESP32 BLE companion environments could not build (#199, #90).** The NimBLE dependency
+      was
+        declared per-variant with no shared source, and the greedy source filter pulled the BLE
+        interface into non-BLE (`usb`/`wifi`) builds too. Factored into a shared config; restores
+        boards silently absent from prior releases, including `Heltec_v2_companion_radio_usb` and
+        `Xiao_C3_companion_radio_usb`. A CI invariant now guards every ESP32 env. (The #89 fix below
+        is the first, single-env instance of this class.)
+      - **FEM auto-detect source comment corrected (#318, #321).** The Heltec V4 FEM type is set by
+      a
+        board strap, not chip-internal pulls as the code claimed; documented against schematics + the
+        GC1109 datasheet. A boot detection probe is available behind `-D FEM_DEBUG_PROBE` (off by default).
+      - **`pio-flash` identified devices by USB port-path, not identity (#336, #323).** Boards were
+        misidentified after any USB port or device swap, and a no-discriminator registry entry
+        wildcard-matched its whole chip family. Now keys on the device-unique USB serial and refuses
+        ambiguous matches; hardware-verified across colliding same-VID:PID boards. Bench tooling, not
+        shipped firmware.
+      - **`pio-flash` bootstrap parses the ESP32-C6/H2 base MAC and anchors its MAC regexes (#290,
+      #292).**
+        Bench tooling.
+      - **`Xiao_S3_WIO_companion_radio_usb` build (#89)** — exclude `SerialBLEInterface.cpp` from
+      the USB
+        companion env (it has no BLE), resolving the `NimBLEDe
+      …
   - version: offband-v1.1.2
     name: Offband offband-v1.1.2
     datetime: '2026-07-03T00:31:37Z'
