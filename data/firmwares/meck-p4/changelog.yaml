@@ -1,13 +1,13 @@
 source: github
 repo: pelgraine/Meck-P4
-updatedAt: '2026-07-19T09:53:47.190Z'
+updatedAt: '2026-07-21T13:56:55.249Z'
 releases:
   - version: v0.6.5
     name: 'Meck P4 v0.6.5: Same as v0.6.4, just without RX duty cycle bug'
     datetime: '2026-07-19T07:00:10Z'
     url: https://github.com/pelgraine/Meck-P4/releases/tag/v0.6.5
     prerelease: true
-    notes: "Short on time at the moment so no release notes for this one. Sorts out the rx duty cycle bug some users were having with v0.6.4.\r\n\r\nIf anyone needs the TFT version let me know via the discussions page, otherwise I'll add it as soon as I can."
+    notes: "Short on time at the moment so no release notes for this one. Sorts out the rx duty cycle bug some users were having with v0.6.4.\r\n\r\n21 July edit - TFT version now up!"
   - version: v0.6.4
     name: v0.6.4
     datetime: '2026-07-11T06:15:12Z'
