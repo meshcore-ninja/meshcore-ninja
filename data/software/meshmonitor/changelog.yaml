@@ -1,6 +1,6 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-07-21T21:12:59.269Z'
+updatedAt: '2026-07-21T23:00:17.427Z'
 releases:
   - version: v4.13.2-rc1
     name: v4.13.2-rc1
@@ -123,6 +123,19 @@ releases:
 
 
       **Full changelog:** https://github.com/Yeraze/meshmonitor/compare/v4.13.1...v4.13.2-rc1
+
+
+      ## 🚀 MeshMonitor v4.13.2-rc1
+
+
+      ### 📦 Installation
+
+
+      **Docker (recommended):**
+
+      ```
+
+      …
   - version: v4.13.1
     name: v4.13.1
     datetime: '2026-07-20T16:45:09Z'
