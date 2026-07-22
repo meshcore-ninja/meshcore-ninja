@@ -1,7 +1,15 @@
 source: github
 repo: danst0/fennek
-updatedAt: '2026-07-19T09:53:44.521Z'
+updatedAt: '2026-07-22T17:22:42.061Z'
 releases:
+  - version: v2.7.3
+    name: v2.7.3
+    datetime: '2026-07-22T15:50:34Z'
+    url: https://github.com/danst0/fennek/releases/tag/v2.7.3
+    prerelease: false
+    notes: >-
+      Sudoku: Ziffern ohne Alt-Taste (Numpad-Aufdruck W E R / S D F / Z X C = 1..9), Cursor auf IJKL
+      umgestellt.
   - version: v2.7.1
     name: v2.7.1
     datetime: '2026-07-19T07:33:31Z'
@@ -319,23 +327,6 @@ releases:
 
       - Images updated in `docs/screenshots/{de,en,sv}/` and on
       [fennek.dumke.me](https://fennek.dumke.me).
-
-
-      🤖 Generated with [Claude Code](https://claude.com/claude-code)
-  - version: v1.9.4
-    name: v1.9.4
-    datetime: '2026-06-17T06:53:30Z'
-    url: https://github.com/danst0/fennek/releases/tag/v1.9.4
-    prerelease: false
-    notes: >-
-      ## Änderungen
-
-
-      - **Web-Dateimanager**: Löschen ohne Rückfrage. Nur Ordner mit Unterordnern fragen kurz nach
-      und werden dann rekursiv gelöscht (`rmRecursive`); Dateien und flache Ordner verschwinden
-      sofort.
-
-      - **Notizen-App + Konsole**: weitere Verbesserungen.
 
 
       🤖 Generated with [Claude Code](https://claude.com/claude-code)
