@@ -1,7 +1,57 @@
 source: github
 repo: ALLFATHER-BV/wadamesh
-updatedAt: '2026-07-21T19:27:07.082Z'
+updatedAt: '2026-07-22T21:11:35.837Z'
 releases:
+  - version: beta_50
+    name: wadamesh beta_50
+    datetime: '2026-07-22T21:02:30Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_50
+    prerelease: true
+    notes: >-
+      **wadamesh beta_50** brings on-device updates to every board, plus community fixes for the
+      T-LoRa Pager and Attaky.
+
+
+      > Test build. Turn on **Get test builds (beta)** on the device, use the **Beta** toggle on the
+      [web flasher](https://flasher.wadamesh.com), or grab a `-merged.bin` below. Stable stays on
+      beta_46.
+
+
+      ## On-device updates
+
+      - Fixed the on-device updater pulling the **wrong firmware** on several boards. The **Heltec
+      V4-R8, ThinkNode M9, RAK Tap V2, T-LoRa Pager** and **Attaky** each downloaded the Heltec V4
+      TFT bin; each now pulls its own build.
+
+      - **T-Display P4**: the "Get test builds (beta)" toggle and the on-device update now show up.
+      They were hidden before, so the P4 was USB-only. Newly enabled, please test and report.
+
+
+      ## T-LoRa Pager — by @codemonkeybr ([#168](https://github.com/ALLFATHER-BV/wadamesh/pull/168))
+
+      - Lock screen fixed: tap **Backspace** to peek the screen without unlocking, hold
+      **Backspace** to unlock. Clock and text repositioned to fit the wide screen and stay readable.
+
+
+      ## Attaky Mesh Series — by @attakygit
+      ([#169](https://github.com/ALLFATHER-BV/wadamesh/pull/169))
+
+      - On-screen keyboard now works with the **detachable keyboard module**: keys stay down while
+      the module is attached, and the module's **#** key brings them back up for symbols. The
+      **POWER** button toggles the screen and wakes the board.
+
+      - Board fixes: correct LoRa clock (no false TCXO drive), GPS baud, and sensor probing that
+      collided with the touch controller and keyboard expander.
+
+
+      ## Boards
+
+      T-Deck · Heltec V4 TFT · Heltec V4-R8 · ThinkNode M9 · RAK TAP v2 · T-LoRa Pager (LR1121 /
+      SX1262) · Attaky Core · T-Display P4 (AMOLED + LCD). Flash `<board>-merged.bin` at `0x0` for a
+      full install, or `<board>.bin` for an app-only update.
+
+
+      Thanks to @codemonkeybr and @attakygit for the contributions.
   - version: beta_49
     name: wadamesh beta_49
     datetime: '2026-07-21T18:46:49Z'
@@ -1092,48 +1142,3 @@ releases:
     url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_32
     prerelease: true
     notes: "Test-channel build. Fixes the freeze some beta_31 users reported when Wi-Fi is on.\r\n\r\nInstall it with the on-device updater with \"Beta updates\" enabled in Settings > About, via Launcher, or flash a bin below (the `-merged` bin at 0x0 for a fresh install, the plain bin for Launcher/OTA).\r\n\r\n### Fixed\r\n\r\n- **Periodic 1-2 second freezes with Wi-Fi on.** When a phone app or web client was connected over Wi-Fi and that connection went stale (phone asleep, out of range), every received mesh packet made the device block on the dead connection before the UI could continue, which showed up as a freeze every ~10 seconds on busy meshes. The device now only writes to a connection when it can accept data immediately, and a connection that stays unresponsive for 10 seconds straight is dropped so the client can reconnect cleanly. Real messages are unaffected (they re-sync on reconnect).\r\n- **Chat-history saves could briefly hitch the UI on busy meshes.** The history file now writes in a few large chunks instead of thousands of tiny ones (the same treatment the contact list got in beta_30), and background saves are spaced further apart while messages stream in.\r\n\r\n### New\r\n\r\n- **Stall diagnostics in About.** Settings > About now lists recent main-loop stalls (anything over 0.2 seconds, newest first), so freeze reports can be confirmed or ruled out at a glance. If you still see freezes on this build, a photo of that list tells us exactly where the time went.\r\n\r\nBoards: LilyGo T-Deck, Heltec V4 TFT."
-  - version: beta_30
-    name: wadamesh beta_30
-    datetime: '2026-07-05T11:10:38Z'
-    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_30
-    prerelease: true
-    notes: >-
-      Test build on top of beta_29. This one is about speed: the big-mesh sluggishness is fixed, and
-      the Spectrum analyzer is now genuinely live.
-
-
-      Flash from the web flasher at **https://wadamesh.com** (Standalone install → Version →
-      beta_30), or grab a `-merged.bin` below.
-
-
-      ## Fixed — the periodic multi-second freezes on busy meshes (#82)
-
-      Saving the contact list took up to **3 seconds at ~570 contacts and ran on the UI thread**
-      every couple of minutes — exactly the trackball/touch hesitation reported since beta_25. The
-      save now packs the same data into a few large writes instead of thousands of tiny ones,
-      cutting it to a fraction of the time. On top of that, the Contacts tab no longer tears itself
-      down every 60 seconds just to refresh the "heard 2h ago" labels (they update in place now —
-      that rebuild cost over a second on large lists and could yank the list mid-scroll), and advert
-      bursts can no longer queue several rebuilds back to back.
-
-
-      Thanks to **guinnessbear** for the report and to **Yazutsu** for the first-rate timing
-      measurements that pinned down exactly where the stalls came from.
-
-
-      ## Improved — Spectrum analyzer
-
-      - The **waterfall gets a new line ~4x per second** instead of once per sweep, and the trace
-      advances across the band as it sweeps, like a bench analyzer.
-
-      - A full sweep is ~20% faster.
-
-      - The **trace Y-axis now scales itself to the live signal**: it expands instantly when a
-      strong signal appears (no more clipping flat against the top) and eases back once it's gone,
-      never zooming tighter than 30 dB.
-
-
-      ---
-
-      This is a **test/beta** build (prerelease); stable stays **beta_27**. On-device, enable
-      **Settings → About → "Get test builds (beta)"** to follow the test channel over Wi-Fi.
