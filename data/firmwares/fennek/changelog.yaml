@@ -1,7 +1,16 @@
 source: github
 repo: danst0/fennek
-updatedAt: '2026-07-22T17:22:42.061Z'
+updatedAt: '2026-07-22T19:24:23.874Z'
 releases:
+  - version: v2.7.4
+    name: v2.7.4
+    datetime: '2026-07-22T17:34:34Z'
+    url: https://github.com/danst0/fennek/releases/tag/v2.7.4
+    prerelease: false
+    notes: >-
+      IJKL geräteweit als Alias zu WASD: alle Apps akzeptieren zusätzlich I/J/K/L
+      (hoch/links/runter/rechts). Mesh- und Schach-Kollisionen sauber gelöst; mathquiz-Keypad und
+      Sudoku-Zifferneingabe unangetastet.
   - version: v2.7.3
     name: v2.7.3
     datetime: '2026-07-22T15:50:34Z'
@@ -310,23 +319,3 @@ releases:
 
 
       Enthält außerdem v2.3.0 (GPS-/WAV-Diagnose-Logs, Karten-Fallback, Notizen-Zeitlabel).
-  - version: v2.0.4
-    name: v2.0.4
-    datetime: '2026-06-17T17:30:26Z'
-    url: https://github.com/danst0/fennek/releases/tag/v2.0.4
-    prerelease: false
-    notes: >-
-      ## Changes
-
-
-      - **Regenerated README/website screenshots.** The home-screen mirror in the host renderer
-      (`tools/screenshot.cpp`) was stuck on an old layout (6 tiles, 2×3); it now matches the real
-      `launcher.cpp` — a 2×5 grid with all 10 slots
-      (Music/Listen/Read/Mesh/Settings/Games/Files/Notes/Alarm). The Settings screenshot now shows
-      the current version.
-
-      - Images updated in `docs/screenshots/{de,en,sv}/` and on
-      [fennek.dumke.me](https://fennek.dumke.me).
-
-
-      🤖 Generated with [Claude Code](https://claude.com/claude-code)
