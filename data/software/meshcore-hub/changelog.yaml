@@ -1,7 +1,19 @@
 source: github
 repo: ipnet-mesh/meshcore-hub
-updatedAt: '2026-07-20T18:07:03.007Z'
+updatedAt: '2026-07-22T23:07:11.819Z'
 releases:
+  - version: v0.17.1
+    name: v0.17.1
+    datetime: '2026-07-22T22:52:52Z'
+    url: https://github.com/ipnet-mesh/meshcore-hub/releases/tag/v0.17.1
+    prerelease: false
+    notes: "## What's Changed\r\n* fix: Channels page crash from query cache shape collision by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/327\r\n\r\n\r\n**Full Changelog**: https://github.com/ipnet-mesh/meshcore-hub/compare/v0.17.0...v0.17.1"
+  - version: v0.17.0
+    name: v0.17.0
+    datetime: '2026-07-22T22:29:25Z'
+    url: https://github.com/ipnet-mesh/meshcore-hub/releases/tag/v0.17.0
+    prerelease: false
+    notes: "## What's Changed\r\n* chore(deps): update dependency daisyui to v5.7.0 by @renovate[bot] in https://github.com/ipnet-mesh/meshcore-hub/pull/323\r\n* chore(deps): update anomalyco/opencode action to v1.18.4 by @renovate[bot] in https://github.com/ipnet-mesh/meshcore-hub/pull/322\r\n* feat(web): migrate SPA from lit-html to React 19 + TS + Vite by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/324\r\n* chore(deps): update dependency react-dom to v19.2.8 by @renovate[bot] in https://github.com/ipnet-mesh/meshcore-hub/pull/326\r\n\r\n\r\n**Full Changelog**: https://github.com/ipnet-mesh/meshcore-hub/compare/v0.16.2...v0.17.0"
   - version: v0.16.2
     name: v0.16.2
     datetime: '2026-07-20T14:13:53Z'
@@ -110,15 +122,3 @@ releases:
     url: https://github.com/ipnet-mesh/meshcore-hub/releases/tag/v0.13.0
     prerelease: false
     notes: "## What's Changed\r\n* feat: Raw Packets — capture, browse, classify, and link wire packets (v0.13.0) by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/237\r\n* Update tailwindcss monorepo to v4.3.1 by @renovate[bot] in https://github.com/ipnet-mesh/meshcore-hub/pull/236\r\n* chore(deps): update dependency esbuild to v0.28.1 by @renovate[bot] in https://github.com/ipnet-mesh/meshcore-hub/pull/235\r\n* Add packet-groups API endpoint for deduplicated packet list by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/238\r\n* Packet-detail page with path-hash node lookup by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/240\r\n* Updated Agent instructions by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/241\r\n* Fix observed_by filter to use event_observers junction table by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/242\r\n\r\n\r\n**Full Changelog**: https://github.com/ipnet-mesh/meshcore-hub/compare/v0.12.3...v0.13.0"
-  - version: v0.12.3
-    name: v0.12.3
-    datetime: '2026-06-11T22:26:37Z'
-    url: https://github.com/ipnet-mesh/meshcore-hub/releases/tag/v0.12.3
-    prerelease: false
-    notes: "## What's Changed\r\n* fix(web): show node last_seen instead of adopted_at on profile by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/232\r\n* fix(web): resolve TDZ error on profile page from shadowed signal var by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/234\r\n\r\n\r\n**Full Changelog**: https://github.com/ipnet-mesh/meshcore-hub/compare/v0.12.2...v0.12.3"
-  - version: v0.12.2
-    name: v0.12.2
-    datetime: '2026-06-11T12:40:56Z'
-    url: https://github.com/ipnet-mesh/meshcore-hub/releases/tag/v0.12.2
-    prerelease: false
-    notes: "## What's Changed\r\n* perf(web): cancel in-flight requests on navigation; consolidate dashboard stats by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/231\r\n\r\n\r\n**Full Changelog**: https://github.com/ipnet-mesh/meshcore-hub/compare/v0.12.1...v0.12.2"
