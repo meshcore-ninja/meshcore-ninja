@@ -1,7 +1,55 @@
 source: github
 repo: meshcore-dev/meshcore-ha
-updatedAt: '2026-06-23T19:22:18.102Z'
+updatedAt: '2026-07-22T06:31:32.070Z'
 releases:
+  - version: v2.9.0
+    name: v2.9.0
+    datetime: '2026-07-22T04:37:59Z'
+    url: https://github.com/meshcore-dev/meshcore-ha/releases/tag/v2.9.0
+    prerelease: false
+    notes: >-
+      ## Features
+
+
+      - **CLI Console** (#295, @drewmccal) — an opt-in dashboard console for the local companion
+      radio. Enable it in Configure → Global Settings:
+        - `execute_command` / `execute_command_ui` gain a `record_to_console` boolean; when set, the command and its response are recorded to a rolling transcript and a `meshcore_cli_response` event fires for automations.
+        - New `sensor.*_cli_console` transcript entity (last 50 command/response pairs, pre-rendered for a markdown card), plus compact **CLI Run Command** / **CLI Clear Console** button entities and a `meshcore.cli_console_clear` service.
+        - The transcript is excluded from the recorder database, and the sensor state is a neutral command counter, so command text (which can include credentials) is never written to history.
+        - Failed contact lookups in `execute_command` now return structured errors (`pubkey_prefix_too_short`, `contact_not_found`, `not_connected`) instead of a silent no-op.
+        - New [CLI Command Reference](https://meshcore-dev.github.io/meshcore-ha/docs/cli-commands) docs page and dashboard examples.
+
+      ## Fixes
+
+
+      - **Outgoing DM lost when `send_message` is called with `entry_id`** (#293) — the message was
+      delivered but never recorded: no conversation entity update, no logbook entry, no
+      `meshcore_message_sent` event. Now recorded the same as sends without `entry_id`.
+
+      - **Entity-less devices can be removed** (#297) — follow-up to #247: a device whose last
+      entity was already removed can now be deleted from the HA UI even while the contact is live,
+      and the telemetry dedup map is evicted on entity removal so re-added contacts recreate sensors
+      cleanly.
+
+      - **Slovak translation quoting** (#301).
+
+
+      ## Improvements
+
+
+      - **Repeater login uses `send_login_sync`** (#269) — login and path discovery now use the SDK
+      sync helpers with hop-aware timeouts, making logins to distant repeaters more reliable.
+
+
+      ## Notes
+
+
+      - No config migration in this release.
+
+      - Minimum Home Assistant version remains `2023.8.0`; `meshcore-py` floor unchanged
+      (`>=2.3.7`).
+
+      - Internal: CI now runs lint, unit, and integration test tiers on every PR (#270, #280, #281).
   - version: v2.8.0
     name: v2.8.0
     datetime: '2026-06-18T01:55:11Z'
@@ -396,9 +444,3 @@ releases:
     url: https://github.com/meshcore-dev/meshcore-ha/releases/tag/v2.1.7
     prerelease: false
     notes: "### Reliability Tracking Sensors\r\n  - **Request Success/Failure Counters**: New sensors track all over-the-wire communication attempts for\r\n  each monitored node\r\n  - **Complete Coverage**: Tracks login, status, and telemetry requests for comprehensive network health\r\n  monitoring\r\n  - **Troubleshooting**: Identify problematic nodes and routing issues with detailed success/failure\r\n  metrics\r\n\r\n  ### Flexible Update Intervals\r\n  - **Removed Maximum Limits**: Update intervals now support unlimited maximums \r\n  - **Unified Minimums**: Both repeaters and clients use consistent 300-second minimum intervals\r\n  - **Better Configuration**: Support for very long intervals (hours or days) for low-power scenarios\r\n\r\n  ### Enhanced Failure Handling\r\n  - **Smarter Backoff**: Dynamic base interval calculation ensures exactly 5 retries fit within configured\r\n   update windows\r\n  - **Faster Path Recovery**: Path reset now triggers after 3 failures (was 5) for quicker routing\r\n  recovery\r\n  - **Improved Login Logic**: Fixed bug where timeouts/unexpected responses were incorrectly counted as\r\n  successes\r\n\r\n  ## 🐛 Bug Fixes\r\n  - **Login Success Detection**: Now properly validates login responses instead of treating non-errors as\r\n  success\r\n- **path reset** - fixed an issue where path was not being set my the pubkey prefix arg"
-  - version: v2.1.6
-    name: v2.1.6
-    datetime: '2025-09-28T15:35:52Z'
-    url: https://github.com/meshcore-dev/meshcore-ha/releases/tag/v2.1.6
-    prerelease: false
-    notes: "## What's Changed\r\n* Fix byte conversion by @awolden in https://github.com/meshcore-dev/meshcore-ha/pull/65\r\n\r\n\r\n**Full Changelog**: https://github.com/meshcore-dev/meshcore-ha/compare/v2.1.5...v2.1.6"
