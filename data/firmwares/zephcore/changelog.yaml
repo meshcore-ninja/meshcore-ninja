@@ -1,7 +1,147 @@
 source: github
 repo: liquidraver/ZephCore
-updatedAt: '2026-07-16T19:15:38.634Z'
+updatedAt: '2026-07-23T10:25:53.728Z'
 releases:
+  - version: 1.16.6-zephcore
+    name: Firmware 1.16.6-zephcore
+    datetime: '2026-07-23T07:30:02Z'
+    url: https://github.com/liquidraver/ZephCore/releases/tag/1.16.6-zephcore
+    prerelease: false
+    notes: >-
+      # ZephCore 1.16.6-zephcore
+
+
+      > [!IMPORTANT]
+
+      > ## Before you upgrade
+
+      >
+
+      > **From v1.16.5** — clean flash, no re-bond, bonds and data survive.
+
+      >
+
+      > **From v1.16.2 / v1.16.3 / v1.16.4** — clean flash, bonds and data survive. If you are on an
+
+      > **ESP32-S3 / ESP32-C board** and have *not* yet taken the v1.16.5 update, you still owe the
+      one-time
+
+      > serial reflash described there: the app moved to flash offset `0x10000` in v1.16.5, and a
+      board on the
+
+      > old layout cannot cross that update over WiFi-OTA or the browser flasher — **flash the
+      `-merged.bin`
+
+      > once over USB/serial.** Affected boards: *Heltec V3 / V4 / V4.3, Station G2, Wireless
+      Tracker / V2,
+
+      > XIAO ESP32-S3 / C3 / C6, LilyGo T-Lora C6.* Identity, contacts, channels, prefs, and BLE
+      bonds are
+
+      > preserved. nRF52, classic ESP32 (T-Beam / PICO-D4 / TTGO LoRa32), STM32WL, and native Linux
+      are
+
+      > unaffected.
+
+      >
+
+      > **From v1.16.1 or older** — flash it; on first boot it clears BLE bonds automatically
+      (identity,
+
+      > contacts, channels, prefs preserved). Re-bond your phone/desktop once.
+
+      >
+
+      > **Coming from Arduino MeshCore** — flash it; auto-formats on first boot (new identity, clean
+      storage).
+
+      >
+
+      > Take this with a grain of salt — try the formatters if anything anomalous happens with your
+      node.
+
+
+      ---
+
+
+      A maintenance release: an important **admin-password fix**, a substantial **identity-key
+      randomness
+
+      hardening** on ESP32, **GPS standby power savings**, and the removal of **Adaptive Power
+      Control** —
+
+      plus two new boards, **muzi works R1 Neo** and an experimental first cut at the **ThinkNode
+      M9** in dev.
+
+
+      ## Highlights
+
+
+      ### Fixed: uppercase letters in an admin password were silently lowercased
+
+
+      **If you set or changed an admin password on v1.16.5 and can no longer log in, this is why.**
+      v1.16.5
+
+      introduced case-insensitive CLI keywords by lowercasing the first two words of every command
+      before
+
+      matching them. That is safe for `get cad` — but `password <value>` puts the *value* in the
+      second word,
+
+      so `password MyPass` was stored as `mypass`, and the password you typed afterwards never
+      matched.
+
+      (`set guest.password <value>` has three words and was never affected.)
+
+
+      The normalizer has been removed and CLI commands are case-sensitive again, matching upstream
+      Arduino
+
+      MeshCore. **If you are locked out, re-flash and reconfigure, or log in with the all-lowercase
+      form of the
+
+      password you set.**
+
+
+      The one place autocapitalization genuinely hurts — typing commands to the V-Contact from a
+      phone keyboard,
+
+      which capitalizes the first letter of every line — is handled narrowly instead: only character
+      0 of a
+
+      V-Contact chat line is folded. No command takes an argument at position 0, so no value can be
+      touched.
+
+
+      ### Identity keys are now generated with hardened, hardware-verified randomness
+
+
+      Your node's identity — the Ed25519 keypair that *is* your node on the mesh — is generated
+      once, on first
+
+      boot, and kept for life. An investigation into how the randomness behind that key is gathered
+      found that
+
+      **ESP32 boards were generating identities with far less entropy than intended.** Two
+      independent problems,
+
+      both fixed in this release:
+
+
+      - **The ESP32 hardware RNG was running unseeded.** It only produces true random numbers while
+      the radio
+        (WiFi/BT) is active — and identity generation runs before the radio comes up (on repeaters, the radio
+        never comes up at all). Key generation now feeds the RNG from the chip's ADC noise source for its
+        duration, Espressif's documented method for exactly this pre-radio situation. Verified on hardware:
+        the RNG's output went from a fixed pattern to statistically ideal.
+      - **The timing-jitter backup source measured nothing on ESP32.** It sampled the CPU's cycle
+      counter
+        against work paced by that same clock — deterministic, confirmed dead on hardware. It has been replaced
+        everywhere by a **two-clock beat** source: counting CPU cycles across fixed intervals of an
+        *independent* low-frequency oscillator, whose physical drift is genuinely random. The same mechanism
+        now runs uniformly on E
+      …
   - version: 1.16.5-zephcore
     name: Firmware 1.16.5-zephcore
     datetime: '2026-07-16T17:38:21Z'
@@ -260,9 +400,3 @@ releases:
     url: https://github.com/liquidraver/ZephCore/releases/tag/v20260501.191026
     prerelease: false
     notes: "- Fixed a freeze that could happen on startup or when changing channels\r\n- Fixed receive sensitivity boost not being applied (it was always off regardless of settings)\r\n- Fixed interference filtering not being recalibrated correctly on 868/433/779 MHz — improves range and reliability\r\n- Fixed a rare bug where packets could be missed or processed twice\r\n- After sending a message, the radio now stays in receive mode for 3 seconds before going back to sleep — reduces chance of missing a reply\r\n- Various tuning improvements to how the radio sleeps and wakes while listening"
-  - version: v20260430.112448
-    name: Firmware v20260430.112448
-    datetime: '2026-04-30T11:25:02Z'
-    url: https://github.com/liquidraver/ZephCore/releases/tag/v20260430.112448
-    prerelease: false
-    notes: "- Added explicit \"none\" scope handling so companion sends stay unscoped even when a default scope exists.\r\n- Hardened packet and mesh security paths with multiple small fixes, including validation/handling updates in Packet.cpp and Mesh.cpp.\r\n- Fixed small BLE behavior issues in companion message handling.\r\n- Fixed an SX126x native driver race condition (via Zephyr patch update) to improve radio stability under concurrent events.\r\n- Increased LoRa preamble settings to align behavior with vanilla baseline. (increased to 32)"
