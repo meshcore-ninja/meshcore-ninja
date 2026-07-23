@@ -1,7 +1,13 @@
 source: github
 repo: PhilMo6/meshpunk
-updatedAt: '2026-07-21T02:51:53.726Z'
+updatedAt: '2026-07-23T06:31:59.614Z'
 releases:
+  - version: v0.2.9
+    name: v0.2.9 alpha
+    datetime: '2026-07-23T03:43:11Z'
+    url: https://github.com/PhilMo6/meshpunk/releases/tag/v0.2.9
+    prerelease: false
+    notes: contains a load order fix to load user settings correctly on startup.
   - version: v0.2.8
     name: v0.2.8 alpha USB drive emulation
     datetime: '2026-07-21T01:58:13Z'
