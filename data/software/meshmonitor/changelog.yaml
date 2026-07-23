@@ -1,7 +1,153 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-07-21T23:00:17.427Z'
+updatedAt: '2026-07-23T17:26:02.296Z'
 releases:
+  - version: v4.13.2-rc2
+    name: v4.13.2-rc2
+    datetime: '2026-07-23T16:02:12Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.13.2-rc2
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.13.2-rc2
+
+
+      > ⚠️ **Pre-release (Release Candidate).** This build is for testing ahead of the v4.13.2
+      stable release. Docker `:latest` tags are **not** updated. Report any issues you hit.
+
+
+      This release candidate closes out the large multi-phase remediation epic (#3962) and the
+      server-route extraction effort (#3502), decomposing the monolithic `server.ts` into focused
+      route and service modules, migrating the frontend onto real routes + TanStack query hooks, and
+      driving raw `fetch()` usage to zero. On the feature side it adds cross-source **NodeInfo
+      Enrichment** (analysis report + apply API, #3837), a Portainer Stack export format in the
+      configurator (#3724), richer MeshCore route popups (packet-flow mini map,
+      `{ROUTE_NAMES}`/`{HASH_SIZE}` tokens, accessible detail modals), a per-trigger pre-send delay
+      for the MeshCore Auto-Responder (#3953), configurable Auto-Ack DM resend attempts (#4266), and
+      a map distinction between `ROUTER_LATE` and `ROUTER` with an unmessageable badge (#4295).
+      Security fixes suppress a false-positive duplicate-key warning on the Meshtastic 2.8 NodeNum
+      renumber (#4251) and add a self-service **Clear** action for stale security-risk warnings
+      (#4302). CI hardening pins all GitHub Actions to commit SHAs. This is a testing build ahead of
+      v4.13.2 stable.
+
+
+      ## ✨ Features
+
+
+      - **NodeInfo Enrichment** — cross-source analysis + apply API (#4287) and a report under
+      Analysis & Reports (#4289) — resolves #3837
+
+      - **Portainer Stack** export format in the configurator (#4282) — resolves #3724
+
+      - **Map:** distinguish `ROUTER_LATE` from `ROUTER`, add unmessageable badge (#4303) — resolves
+      #4295
+
+      - **MeshCore:** `{ROUTE_NAMES}` / `{HASH_SIZE}` tokens + clickable route-detail popup (#4276)
+
+      - **MeshCore:** packet-flow mini map in route popup + accessible detail modals (#4277)
+
+      - **MeshCore:** per-trigger pre-send delay for the Auto-Responder (#4281) — resolves #3953
+
+      - **Automation:** configurable Auto-Ack DM resend attempts (#4273) — resolves #4266
+
+
+      ## 🐛 Bug Fixes & Security
+
+
+      - **Security:** self-service **Clear** action for stale security-risk warnings (#4304) —
+      resolves #4302
+
+      - **Security:** suppress false-positive duplicate-key warning for the Meshtastic 2.8 NodeNum
+      renumber (#4272) — resolves #4251
+
+
+      ## ♻️ Refactoring
+
+
+      **server.ts route extraction (#3502):**
+
+      - Extract settings + admin routes (#4263)
+
+      - Extract nodes routes + composition-root teardown (#4265)
+
+
+      **Remediation epic — finish the half-migrated abstractions (#3962):**
+
+      - 4.2a — retire `meshcoreRegistry` shim + `meshtasticManager` Proxy alias, and extract
+      services: MQTT bridge/NodeDB, announce scheduler, admin-ack + favorites, device/remote-admin
+      (#4267, #4268, #4269, #4270, #4271)
+
+      - 4.2b — explicit connection state machine for `meshtasticManager` (#4274)
+
+      - 4.3 — split `meshcoreRoutes` into concern modules (#4275)
+
+      - 5.1–5.2 — memoize context providers + TanStack version-check (#4280)
+
+      - 5.3 — SettingsTab draft-object rewrite (#4284)
+
+      - 5.4 — router scaffold + full tab-to-route migration (#4285, #4286, #4288, #4290, #4291,
+      #4292, #4293, #4296)
+
+      - 5.5 — migrate raw `fetch()` sites to `ApiService`, baseline to zero (#4297, #4298)
+
+      - 5.6 — `nodes.css` cascade-order fix + CSS containment convention (#4299)
+
+
+      ## 🔧 CI / DevOps
+
+
+      - Pin all GitHub Actions to commit SHAs (#4283)
+
+
+      ## 📝 Docs
+
+
+      - Epic #3962 Phase 4+5 close-out (#4300)
+
+      - Add MeshEC to the Site Gallery (#4279)
+
+      - Record the two verification gaps from the session (#4264)
+
+
+      ## ✅ Issues Resolved
+
+
+      #3502, #3724, #3837, #3953, #3962, #4251, #4266, #4278, #4295, #4302
+
+
+      ## 🙏 New Contributors
+
+
+      - @mirkosalvato1-ctrl — first contribution in #4283 (pinning Actions to SHAs). Welcome!
+
+
+      **Full changelog:** https://github.com/Yeraze/meshmonitor/compare/v4.13.2-rc1...v4.13.2-rc2
+
+
+      ## 🚀 MeshMonitor v4.13.2-rc2
+
+
+      ### 📦 Installation
+
+
+      **Docker (recommended):**
+
+      ```bash
+
+      docker run -d \
+        --name meshmonitor \
+        -p 8080:3001 \
+        -v meshmonitor-data:/data \
+        ghcr.io/Yeraze/meshmonitor:4.13.2-rc2
+      ```
+
+
+      ### 🧪 Testing
+
+      ✅ All tests passed
+
+      ✅
+
+      …
   - version: v4.13.2-rc1
     name: v4.13.2-rc1
     datetime: '2026-07-21T20:59:22Z'
@@ -2000,102 +2146,6 @@ releases:
         -p 8080:3001 \
         -v meshmonitor-data:/data \
         ghcr.io/Yeraze/meshmonitor:4.11.6
-      ```
-
-
-      ### 🧪 Testing
-
-      ✅ All tests passed
-
-      ✅ TypeScript checks passed
-
-      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
-
-
-      ### 📋 Changes
-
-      See commit history for detailed changes.
-  - version: v4.11.5
-    name: v4.11.5
-    datetime: '2026-06-22T21:19:46Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.11.5
-    prerelease: false
-    notes: >-
-      ## 🚑 Hotfix release — supersedes v4.11.4 (retracted)
-
-
-      **v4.11.4 was pulled** because migration 033 crashed startup on PostgreSQL and on fresh
-      installs with `column "sourceId" does not exist` (#3657). v4.11.5 fixes that and carries
-      everything that was in v4.11.4.
-
-
-      > **If you ran v4.11.4**, update to v4.11.5. The boot crash is resolved.
-
-
-      ### 🔴 Hotfix (#3657)
-
-      - Migration 033's `channel_database` backfill is now guarded on the legacy `sourceId` column
-      existing (it's global-by-design — migration 021 no longer adds it and 063 drops it). Fixes the
-      PostgreSQL / fresh-install boot crash introduced in v4.11.4.
-
-
-      ### Also included (from the retracted v4.11.4)
-
-      **Critical**
-
-      - PostgreSQL boot-loop fix (`tables can have at most 1600 columns`) (#3639)
-
-
-      **Features**
-
-      - MeshCore role icons in the map + DM node lists (#3647)
-
-      - MeshCore favorites pinned to the top of the DM list (#3620)
-
-      - Marker spiderfying for overlapping nodes on Map Analysis + Unified maps (#3612)
-
-      - Channel "overshadow" warning for same-key/different-name Channel Database entries (#3644)
-
-      - Traceroute `packetId` for cross-source correlation (#3623)
-
-
-      **Fixes**
-
-      - Node disconnects / TX failures since 4.11.x (#3637)
-
-      - Custom-LoRa-config primary channel mislabeled "LongFast" (#3644)
-
-      - TCP reconnect shows the real per-source address (#3611)
-
-      - Fictitious traceroute segments removed; incoming traceroutes visible (#3622)
-
-      - MeshCore hashtag `#channel` secrets over plain HTTP-via-IP + at save time (#3606, #3607)
-
-      - MeshCore Last Heard preserved across reconnect (#3645)
-
-      - MeshCore new nodes populate fully when heard live (#3646)
-
-      - Unified-map neighbor lines follow the merged marker (#3642)
-
-      - Adaptive node-type filter per source protocol (#3610)
-
-      - Saner single-anchor position-estimate uncertainty (#3616)
-
-      ## 🚀 MeshMonitor v4.11.5
-
-
-      ### 📦 Installation
-
-
-      **Docker (recommended):**
-
-      ```bash
-
-      docker run -d \
-        --name meshmonitor \
-        -p 8080:3001 \
-        -v meshmonitor-data:/data \
-        ghcr.io/Yeraze/meshmonitor:4.11.5
       ```
 
 

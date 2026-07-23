@@ -1,7 +1,65 @@
 source: github
 repo: laserir/MCLite
-updatedAt: '2026-06-25T15:27:18.372Z'
+updatedAt: '2026-07-23T17:25:21.818Z'
 releases:
+  - version: v0.4.2
+    name: v0.4.2 — scope-from-repeater picker, channel repeater echoes, memory tooling
+    datetime: '2026-07-23T15:45:57Z'
+    url: https://github.com/laserir/MCLite/releases/tag/v0.4.2
+    prerelease: false
+    notes: >-
+      On-device **scope-from-repeater picker**, **"heard by N repeaters"** on channel messages,
+      received **hop-count** display, and a **memory-usage indicator**, plus a scoped-flood fix.
+      Update over WiFi (Admin → WiFi → Check for updates) or via the web flasher.
+
+
+
+      ### Added
+
+      - **Pick a scope from a nearby repeater.** When setting a region scope — global (**Settings →
+      Radio → Scope**) or
+        a per-channel/room override — a new **From repeater** button asks a heard repeater for the list of regions it
+        actually serves, so you don't have to know the exact names. Pick a repeater, then pick **one** region from the
+        reply; it fills the scope field for you to review and **Save**. The manual text entry is untouched — this just
+        adds a shortcut. The picker lists **direct-range (0-hop) repeaters** the device has heard (tap the flood-advert
+        button on the Heard Adverts screen to prompt discovery). Requires a repeater running firmware that answers the
+        region query. **Multi-hop repeaters are not supported** — the query needs a route-direct path, and an overheard
+        advert path isn't a reliable one; configure scopes from a repeater within direct range. (#45)
+      - **"Heard by N repeaters" on sent channel messages.** A channel message you send now shows `✓
+      ↻ N` once nearby
+        repeaters rebroadcast it — the `✓` means sent, and `↻ N` is how many distinct repeaters were heard echoing it
+        back (the count climbs as echoes arrive). It's deliberately different from a direct message's `✓✓` (which is a
+        real delivery ACK) — a channel echo only confirms a repeater relayed it. Always on; only meaningful where
+        repeaters are in range. Thanks @jason-s13r (#39).
+      - **Show received hop count.** Optionally show how many hops a received message took (`xN`
+      next to the time;
+        `x0` = heard directly). Off by default — enable in **Settings → Messaging → Show Hop Count**. (#39)
+      - **Memory usage indicator (debug).** Optionally show `P% R%` (PSRAM / internal-RAM used) in
+      the status bar, and
+        log internal-DRAM free / low-water / largest-free-block plus PSRAM over serial — handy for diagnosing memory
+        pressure. Off by default — enable in **Settings → Display → Show Memory Usage**. Thanks @jason-s13r (#38).
+
+      ### Changed
+
+      - **LVGL now allocates from PSRAM instead of internal DRAM.** This frees scarce internal RAM
+      for the things that
+        can only live there — notably BLE companion mode. Measured on the T-Deck with BLE companion *and* an app
+        connected: ~124 KB internal DRAM free with a ~111 KB largest contiguous block (negligible fragmentation); the
+        redirect is effectively what lets that combination fit. Validated on both T-Deck (octal PSRAM) and T-Watch Ultra
+        (quad PSRAM) with no perceptible UI slowdown. Falls back to DRAM if PSRAM is unavailable. Thanks @jason-s13r (#38).
+      - **Chat bubbles are freed when you leave a chat**, so a previously-viewed conversation no
+      longer keeps its
+        rendered bubbles in memory while you're on other screens (they're rebuilt from history on reopen). (#38)
+
+      ### Fixed
+
+      - **A scope/region field with spaces no longer silently kills scoped floods.** A scope holds a
+      *single* region
+        name; pasting a multi-region `region def` list (e.g. `west pnw or wv eug`) hashed the whole string into a
+        transport key that matched no repeater, so hashtag/private-channel traffic was dropped while Public kept
+        working. The config tool now rejects a scope containing a space, and the firmware keeps only the first token
+        (with a serial note) across every input path — `config.json`, the companion set-scope command, and the
+        on-device scope editor. (#36)
   - version: v0.4.1
     name: v0.4.1 — MeshCore 1.16, full companion command set, message-sync fixes
     datetime: '2026-06-25T11:41:04Z'
@@ -818,35 +876,5 @@ releases:
       ```
 
       esptool.py write_flash 0x0 mclite-v0.1.3.bin
-
-      ```
-  - version: v0.1.2
-    name: v0.1.2
-    datetime: '2026-03-30T12:01:18Z'
-    url: https://github.com/laserir/MCLite/releases/tag/v0.1.2
-    prerelease: false
-    notes: >-
-      ## What's New
-
-
-      - **Quick replies** — optional canned message picker in chat (OK, Copy, Where are you?, Need
-      help, etc.). Disabled by default, enable via config tool or `"canned_messages": true` in
-      config.json. Supports custom messages via JSON array.
-
-      - **Translations** — quick reply messages translated for German, French, and Italian
-
-      - **Config tool** — Quick Replies toggle in Messaging section; auto-detects base64 identity
-      keys from firmware-generated configs
-
-
-      ## Install
-
-
-      Flash via the [Web Flasher](https://laserir.github.io/MCLite/tools/web-flasher/) or download
-      the binary below and flash with esptool:
-
-      ```
-
-      esptool.py write_flash 0x0 mclite-v0.1.2.bin
 
       ```
