@@ -1,7 +1,77 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-07-23T17:26:02.296Z'
+updatedAt: '2026-07-24T13:49:57.409Z'
 releases:
+  - version: v4.13.2-rc3
+    name: v4.13.2-rc3
+    datetime: '2026-07-24T13:14:34Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.13.2-rc3
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.13.2-rc3
+
+
+      > ⚠️ **Pre-release** — this is a release candidate for testing. Docker images are not tagged
+      `:latest`.
+
+
+      This release candidate lands two major feature epics plus targeted fixes. The ATAK/CoT
+      integration epic (#3691) arrives in full: TAKPacket V1 decoding with Packet Monitor previews
+      and GeoChat messages, per-source ATAK contacts with a dedicated map layer, and a CoT TCP feed
+      that ATAK/WinTAK clients can connect to directly. The TX-disabled epic (#4294/#4308) makes
+      MeshMonitor a proper citizen on receive-only (listen-only) nodes: `lora.txEnabled=false` is
+      now honored by a central server-side TX guard, transmit-dependent UI controls are gated,
+      automations get a TX-disabled badge, and configuration import no longer silently forces TX
+      back on. MQTT ingest now applies auto-delete-by-distance inline at ingest time rather than
+      waiting for the periodic sweep (#3900). A touch-device layout bug that visually detached a
+      sender's long name from its message bubble is fixed (#4311).
+
+
+      ## Features
+
+      - #4307 feat(atak): TAKPacket V1 decode, Packet Monitor previews, GeoChat messages (#3691
+      Phase 1)
+
+      - #4310 feat(atak): per-source ATAK contacts + map layer (#3691 Phase 2)
+
+      - #4314 feat(atak): CoT TCP feed for ATAK/WinTAK clients (#3691 Phase 3)
+
+      - #4309 feat(server): honor lora.txEnabled with central TX-disabled guard (#4294)
+
+      - #4313 feat(ui): gate transmit-dependent controls when TX is disabled (#4294)
+
+      - #4316 docs+feat: TX-disabled polish — automations badge, API docs, receive-only guide
+      (#4294)
+
+      - #4306 feat(mqtt): apply auto-delete-by-distance inline at ingest (#3900)
+
+
+      ## Bug Fixes
+
+      - #4312 fix(channels): tie long name to its bubble on touch devices (#4311)
+
+
+      ## Chores
+
+      - #4318 chore: bump version to 4.13.2-rc3
+
+
+      ## Issues Resolved
+
+      - #3691 Feature: ATAK / CoT integration for Meshtastic ATAK plugin packets
+
+      - #4294 [BUG] Local Configuration tab silently forces LoRa txEnabled=true, breaking
+      intentional TX-off (listen-only) nodes
+
+      - #4308 Epic: Properly support LoRa tx_enabled=false (receive-only mode)
+
+      - #3900 [FEAT] Apply auto-delete-by-distance inline at MQTT ingest, not just on periodic
+      interval
+
+      - #4311 [BUG] Long name visually detached from its message bubble on touch devices
+
+
+      **Full Changelog**: https://github.com/Yeraze/meshmonitor/compare/v4.13.2-rc2...v4.13.2-rc3
   - version: v4.13.2-rc2
     name: v4.13.2-rc2
     datetime: '2026-07-23T16:02:12Z'
@@ -2031,121 +2101,6 @@ releases:
         -p 8080:3001 \
         -v meshmonitor-data:/data \
         ghcr.io/Yeraze/meshmonitor:4.12.0-rc1
-      ```
-
-
-      ### 🧪 Testing
-
-      ✅ All tests passed
-
-      ✅ TypeScript checks passed
-
-      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
-
-
-      ### 📋 Changes
-
-      See commit history for detailed changes.
-  - version: v4.11.6
-    name: v4.11.6
-    datetime: '2026-06-24T19:35:59Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.11.6
-    prerelease: false
-    notes: >-
-      ## MeshMonitor 4.11.6
-
-
-      Maintenance release on the 4.11.x line. Includes all fixes and features merged since 4.11.5
-      **except** the Automation Engine (#3653), which ships in 4.12.
-
-
-      ### MeshCore
-
-      - Region/scope support — phase 1: per-channel scope (#3667)
-
-      - Scope all originated flood traffic — phase 2 (#3667)
-
-      - Region discovery from nearby repeaters — phase 3 (#3667)
-
-      - Per-message scope/region override (#3701)
-
-      - Channel "heard repeaters" via self-echo correlation (#3700)
-
-      - Show unread message indicator on the Channels view (#3703)
-
-      - Manual telemetry poll buttons (#3674)
-
-      - 2/3-byte path hash support in the Define Path editor (#3670)
-
-      - Last Heard shows the date when a node was heard before today (#3656)
-
-      - Fix: honor Temperature Unit on the DM telemetry graph (#3659)
-
-      - Fix: reduce `set_out_path` timeout and improve the error message (#3664)
-
-      - Fix: low-battery and inactive-node notifications never fired (#3672)
-
-      - Fix: clarify LPP telemetry WARN and stop pubkey/nodeNum log spam (#3680)
-
-      - Fix: honor the packet-monitor Max-count setting in the live list (#3690)
-
-      - Fix: Discover Regions always timed out due to a missing Sent payload (#3682)
-
-      - Fix: stop the virtual node server during transport teardown (#3705)
-
-      - Fix: correlate LogRxData path by hop count so `{ROUTE}` resolves on routed messages (#3710)
-
-
-      ### MQTT
-
-      - Fix: consolidate channels by name instead of splitting by slot/hash (#3708)
-
-      - Fix: identify channels by name **and** key, and enumerate them on the Channels tab (#3712
-      follow-up)
-
-
-      ### Map
-
-      - Fix: make spiderfy work and stop auto-collapse on Map Analysis & Unified maps (#3685)
-
-      - Rich multi-source node popups matching the Unified map (#3692)
-
-
-      ### Meshtastic / general
-
-      - Fix: always send traceroutes on channel 0 (Primary) (#3696)
-
-      - Fix: resolve position-packet channel from decryption context, not the raw hash (#3682)
-
-      - Fix: persist & surface local node `isUnmessagable`/`isLicensed` (#3684)
-
-      - Fix: scope manual device backup to the selected source (#3711)
-
-      - Fix: scope channel queries, mark-read & message migration by `sourceId` (#3712)
-
-
-      ### Notes
-
-      - Database migrations 098–102 on this line correspond to the 100–104 migrations on the 4.12
-      (main) line; upgrading 4.11.6 → 4.12 re-runs them idempotently and applies the Automation
-      Engine migrations fresh — no data loss or manual steps.
-
-
-      ## 🚀 MeshMonitor v4.11.6
-
-
-      ### 📦 Installation
-
-
-      **Docker (recommended):**
-
-      ```bash
-
-      docker run -d \
-        --name meshmonitor \
-        -p 8080:3001 \
-        -v meshmonitor-data:/data \
-        ghcr.io/Yeraze/meshmonitor:4.11.6
       ```
 
 
