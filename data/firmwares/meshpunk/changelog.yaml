@@ -1,7 +1,15 @@
 source: github
 repo: PhilMo6/meshpunk
-updatedAt: '2026-07-23T06:31:59.614Z'
+updatedAt: '2026-07-24T06:28:19.871Z'
 releases:
+  - version: v0.3.0
+    name: v0.3.0 alpha
+    datetime: '2026-07-24T05:15:11Z'
+    url: https://github.com/PhilMo6/meshpunk/releases/tag/v0.3.0
+    prerelease: false
+    notes: >-
+      Messenger app update for smoother scrolling and infinite scrolling of all messages saved on
+      the device.
   - version: v0.2.9
     name: v0.2.9 alpha
     datetime: '2026-07-23T03:43:11Z'
