@@ -1,7 +1,53 @@
 source: github
 repo: andymux/meshos-releases
-updatedAt: '2026-07-16T15:43:15.370Z'
+updatedAt: '2026-07-25T13:39:49.468Z'
 releases:
+  - version: fw-v1.6.0
+    name: MeshOS firmware v1.6.0
+    datetime: '2026-07-25T13:28:21Z'
+    url: https://github.com/andymux/meshos-releases/releases/tag/fw-v1.6.0
+    prerelease: false
+    notes: >-
+      ## MeshOS 1.6.0
+
+
+      **🌐 Internet Messaging (new!)** — a global "MeshOS" chat channel over WiFi. Turn it on in
+      **Settings → Internet Messaging** and chat with MeshOS users anywhere, even with no LoRa mesh
+      around you. Sent messages show a tick once the server relays them. (T-Deck & M9, WiFi
+      required.)
+
+
+      **⚡ Much faster, more reliable maps & browser** — map tiles and CoreBrowser now load
+      dramatically faster and no longer stall or stop working after heavy use. Big memory-stability
+      fix under the hood; tiles now served from our own fast cache.
+
+
+      **Improvements & fixes**
+
+      - Fixed the T-Deck slowly running out of memory (maps/browser would eventually stop until a
+      reboot).
+
+      - WiFi and Bluetooth now switch cleanly — turning one on turns the other off (they can't run
+      together). Fixed: enabling Bluetooth then rebooting could leave it off if WiFi was on.
+
+      - New WiFi On/Off toggle right in WiFi settings.
+
+      - The map now prompts you to turn on WiFi when tiles need downloading.
+
+      - Added a live "largest free memory block" readout on the System screen.
+
+
+      ---
+
+      Device firmware for LilyGo T-Deck and ThinkNode M9. Install via the in-firmware updater, or SD
+      card / configurator.
+
+
+      **SHA-256**
+
+      - T-Deck: `bee44943f9de3f57f796f8ff26a5f6f5144a6d09d6b43b54f19e8d8276b963cd`
+
+      - M9: `6c7f5b0bea71274eeefd96b85a312c5234f0d830da58517198f03e8f81683d8e`
   - version: fw-v1.5.9
     name: MeshOS firmware v1.5.9
     datetime: '2026-07-16T15:09:53Z'
@@ -474,29 +520,3 @@ releases:
       - **Room Chat Controls** — Set path, reset path, and logout via popup menu
 
       - **iOS Update Handling** — Software update prompts removed on iOS (handled by App Store)
-  - version: v0.4.2
-    name: MeshOS v0.4.2
-    datetime: '2026-03-26T10:03:27Z'
-    url: https://github.com/andymux/meshos-releases/releases/tag/v0.4.2
-    prerelease: false
-    notes: >-
-      ## What's New
-
-      - **Scope System** — Create and manage scopes, set per-channel scope, scope indicator on
-      messages and app bar
-
-      - **Repeater Names in Resend Dialog** — Shows repeater names alongside IDs with signal bars
-      and SNR
-
-      - **Notification Navigation** — Tap a notification to jump directly to the relevant channel or
-      DM
-
-      - **Community Radio Presets** — Choose from predefined radio presets, with manual override
-      tracking
-
-      - **Room Path Controls** — Set path / reset path menu added to room chat screen
-
-      - **GPS Detection Improvements** — Better distinction between no-fix and no-hardware, toggle
-      reset support
-
-      - **Light Mode Map Fix** — Repeater finder signal info now visible in light mode
