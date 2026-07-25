@@ -1,7 +1,13 @@
 source: github
 repo: agessaman/meshcore-packet-capture
-updatedAt: '2026-07-05T17:14:30.883Z'
+updatedAt: '2026-07-25T22:57:54.718Z'
 releases:
+  - version: v2.1.0
+    name: MeshCore Packet Capture 2.1.0
+    datetime: '2026-07-25T22:20:00Z'
+    url: https://github.com/agessaman/meshcore-packet-capture/releases/tag/v2.1.0
+    prerelease: false
+    notes: "### Highlights\r\n- **Payload decoding** — Optional `decoded` object on packets (GRP_TXT channel decryption, ADVERT parsing). MQTT publish stays off by default; opt in with `include_decoded` (global or per broker).\r\n- **Owner identification** — Optional per-broker `owner_public_key` / `owner_email` for token-auth brokers (was only global); installer can prompt for these.\r\n- **Configurable BLE PIN** — Six-digit `ble_pin` for BLE connection auth (connection-only; no device PIN mutation).\r\n- **Packet log rotation** — Size- or time-based rotation; logs append compact JSONL when an output file is used.\r\n\r\n### Fixes & packaging\r\n- Installer correctly forwards pinned tags before the install subcommand.\r\n- `cryptography` declared as a dependency (Python + Nix).\r\n- Version consistency check across package/installer/docs surfaces.\r\n\r\n### Presets\r\n- Deprecated EU/US analyzer presets replaced; meshat-se and meshmapper updated.\r\n- New/updated community presets (e.g. bostonmesh, flmesh-us, coloradomesh, ctmesh, dutchmeshcore, meshcore-ca, inwmesh, nz-analyzer)."
   - version: v2.0.0
     name: v2.0.0
     datetime: '2026-06-22T21:21:15Z'
