@@ -1,7 +1,121 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-07-24T15:26:59.028Z'
+updatedAt: '2026-07-25T20:55:49.264Z'
 releases:
+  - version: v4.13.2-rc4
+    name: v4.13.2-rc4
+    datetime: '2026-07-25T19:47:27Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.13.2-rc4
+    prerelease: true
+    notes: >-
+      Pre-release. Rolls up the complete `ok_to_mqtt` violation-detection feature and its pagination
+      follow-up.
+
+
+      ## Detect MQTT gateways that ignore `ok_to_mqtt`
+
+
+      Meshtastic packets carry an `ok_to_mqtt` bit by which the originating node signals whether it
+      consents to its traffic being uplinked to MQTT. Firmware only enforces it when a gateway
+      relays *other* nodes' packets, and it skips the check entirely whenever the gateway believes
+      its broker address is private — a plain IP-range test with no awareness of NAT or port
+      forwarding. A gateway reaching its broker through a LAN-literal address that is *also*
+      port-forwarded gets misclassified as private and silently relays opted-out traffic to what is
+      effectively a public broker.
+
+
+      MeshMonitor now detects that. When a received packet's bit is **explicitly clear** and the
+      publishing gateway is not the originator, it is a provable violation — and it is recorded.
+
+
+      **Important:** a violation is almost certainly a gateway **misconfiguration**, not malice.
+      Treat it as something worth flagging to the gateway's operator.
+
+
+      ### Where you see it
+
+
+      - **Packet Monitor** — a `violation` badge on affected packets, and a per-gateway `ok_to_mqtt`
+      column in the packet detail view showing which gateway violated (a packet can be relayed by
+      many). Four states are distinguished: violation, allowed, opted out, and unknown (bit
+      unreadable).
+
+      - **Analysis & Reports → ok_to_mqtt Violations** — a cross-source report with a per-gateway
+      summary (violation count, distinct originators affected, sources, first/last seen), drill-down
+      to individual violating packets, window presets (24 h / 7 / 30 / 90 days) or an explicit date
+      range, CSV export, and an optional "include unproven" toggle.
+
+
+      ### Behaviour worth knowing
+
+
+      - **Recording is on by default.** Violation history is kept ~90 days in its own store,
+      independent of the MQTT Packet Monitor's much shorter window — so the report works out of the
+      box. The per-packet **badge**, however, reads the Packet Monitor's capture log, which is
+      **opt-in and off by default**; the Packet Monitor now says so explicitly when capture is off,
+      so an absence of badges is never mistaken for an absence of violations.
+
+      - **Forward-only.** Detection covers traffic received after upgrading. No backfill is possible
+      — the bit was never previously stored — so expect an empty history at first.
+
+      - **Confirmed vs. suspected.** Rows whose bit could not be read (undecryptable, or captured
+      before this feature existed) are reported as *unknown/suspected*, never as confirmed
+      violations, and they come from a much shorter retention window.
+
+
+      ## Included changes
+
+
+      - #4324 — Phase 1: backend detection, migration 128, durable history, cross-source endpoints
+
+      - #4328 — Phase 2: Packet Monitor badge + per-gateway attribution
+
+      - #4331 — Phase 3: the `ok_to_mqtt Violations` report
+
+      - #4332 — fixes #4330: SQL sorting/paging so large result sets page correctly and ascending
+      sorts are accurate
+
+
+      ## Upgrade notes
+
+
+      Migration **128** adds columns to `mqtt_packet_log` and creates the violation-history table.
+      It is idempotent and was verified against SQLite, PostgreSQL 16 and MySQL 8.4. The new table
+      is included in `migrate-db`, so backend-to-backend migrations carry violation history across.
+
+
+      No configuration is required.
+
+      ## 🚀 MeshMonitor v4.13.2-rc4
+
+
+      ### 📦 Installation
+
+
+      **Docker (recommended):**
+
+      ```bash
+
+      docker run -d \
+        --name meshmonitor \
+        -p 8080:3001 \
+        -v meshmonitor-data:/data \
+        ghcr.io/Yeraze/meshmonitor:4.13.2-rc4
+      ```
+
+
+      ### 🧪 Testing
+
+      ✅ All tests passed
+
+      ✅ TypeScript checks passed
+
+      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
+
+
+      ### 📋 Changes
+
+      See commit history for detailed changes.
   - version: v4.13.2-rc3
     name: v4.13.2-rc3
     datetime: '2026-07-24T13:14:34Z'
@@ -2019,132 +2133,3 @@ releases:
       - **Meshtastic: resolve position-packet channel from decr
 
       …
-  - version: v4.12.0-rc1
-    name: v4.12.0-rc1
-    datetime: '2026-06-24T02:46:10Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.12.0-rc1
-    prerelease: true
-    notes: >-
-      # MeshMonitor v4.12.0-rc1
-
-
-      > ⚠️ **Pre-release (Release Candidate).** Not tagged `latest`; intended for testing. Please
-      report issues before the stable v4.12.0.
-
-
-      ## Summary
-
-
-      This release brings major map improvements and a wave of MeshCore enhancements. Overlapping
-      markers now **spiderfy** consistently across every map — the per-source Nodes map, Map
-      Analysis, the Unified map, and the dedicated MeshCore source map — and the fan no longer
-      collapses on data refresh or node selection. Map Analysis node popups now match the Unified
-      map's rich card and list **every source** that reported a node, and a node stays visible if
-      *any* of its sources is enabled. On the MeshCore side: 2/3-byte forwarding-path hashes in the
-      Define Path editor, manual on-demand telemetry polling, region/scope support (phases 1–3), and
-      richer Last-Heard handling. The Automation Engine landed its Phase 1a foundation with a more
-      capable Test panel. Bug fixes include position packets on private secondary channels now
-      resolving to the correct channel (instead of a raw hash), the MeshCore Packet Monitor honoring
-      its Max-count setting, the local node's Unmessageable flag being persisted and surfaced,
-      low-battery/inactive-node notifications firing for MeshCore, and DM telemetry graphs honoring
-      the temperature-unit setting.
-
-
-      ## Features
-
-
-      - **Map Analysis: rich multi-source node popups** matching the Unified map, with a "Seen by N
-      sources" list (#3692, resolves #3689)
-
-      - **MeshCore: 2/3-byte path hash support** in the Define Path editor (#3686, resolves #3670)
-
-      - **MeshCore: manual telemetry poll buttons** (Status / Environment) (#3681, resolves #3674)
-
-      - **MeshCore: region/scope support** — phase 1 (#3669), phase 2 flood-traffic scoping (#3673),
-      phase 3 region discovery from nearby repeaters (#3679) (resolves #3667)
-
-      - **Automation Engine — Phase 1a** foundation (#3668) with richer Test-panel dry-run
-      inputs/output (#3675) (resolves #3653)
-
-      - **MeshCore: Last Heard** shows the date when a node was last heard before today (#3663,
-      resolves #3656)
-
-
-      ## Bug Fixes
-
-
-      - **Spiderfy works + no auto-collapse** on the Map Analysis, Unified, and MeshCore source
-      maps; markers register reliably and stay fanned through refreshes and selection (#3687,
-      resolves #3685; follow-up to #3612/#3615)
-
-      - **Position packets on private secondary channels** now resolve to the correct channel slot
-      instead of a raw hash (e.g. "channel 39") (#3694, resolves #3682)
-
-      - **MeshCore Packet Monitor** honors the configured Max-count setting instead of hard-capping
-      at ~200 (#3693, resolves #3690)
-
-      - **Local node Unmessageable flag** is now persisted and surfaced in the Config tab (#3688,
-      resolves #3684/#3683)
-
-      - **MeshCore low-battery & inactive-node notifications** now fire (#3672, resolves #3671)
-
-      - **DM telemetry graph** honors the user's Temperature Unit setting (#3662, resolves #3659)
-
-      - **MeshCore Define-Path**: shorter set_out_path timeout and clearer error (#3665, resolves
-      #3664)
-
-      - **MeshCore logging**: LPP telemetry WARN is labelled, and out-of-range nodeNum log-spam from
-      pubkey lookups is gone (#3680, resolves #3676/#3677)
-
-
-      ## Tests / CI / Chore
-
-
-      - Guard migrations against source-dependent crashes (#3661, resolves #3657)
-
-      - Default the bug-investigator agent to Opus + grounding contract (#3666)
-
-      - gitignore Python `__pycache__` (#3678)
-
-      - Version bump to 4.12.0-rc1 (#3695)
-
-
-      ## Issues Resolved
-
-
-      #3653, #3656, #3657, #3659, #3664, #3667, #3670, #3671, #3674, #3676, #3677, #3680, #3682,
-      #3683, #3684, #3685, #3689, #3690
-
-
-      **Full changelog:** https://github.com/Yeraze/meshmonitor/compare/v4.11.5...v4.12.0-rc1
-
-      ## 🚀 MeshMonitor v4.12.0-rc1
-
-
-      ### 📦 Installation
-
-
-      **Docker (recommended):**
-
-      ```bash
-
-      docker run -d \
-        --name meshmonitor \
-        -p 8080:3001 \
-        -v meshmonitor-data:/data \
-        ghcr.io/Yeraze/meshmonitor:4.12.0-rc1
-      ```
-
-
-      ### 🧪 Testing
-
-      ✅ All tests passed
-
-      ✅ TypeScript checks passed
-
-      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
-
-
-      ### 📋 Changes
-
-      See commit history for detailed changes.
