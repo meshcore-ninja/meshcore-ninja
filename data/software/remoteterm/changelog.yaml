@@ -1,7 +1,18 @@
 source: github
 repo: jkingsman/Remote-Terminal-for-MeshCore
-updatedAt: '2026-07-21T19:27:30.594Z'
+updatedAt: '2026-07-26T19:15:07.061Z'
 releases:
+  - version: 3.17.1
+    name: 3.17.1
+    datetime: '2026-07-26T18:22:23Z'
+    url: https://github.com/jkingsman/Remote-Terminal-for-MeshCore/releases/tag/3.17.1
+    prerelease: false
+    notes: |-
+      ## [3.17.1] - 2026-07-26
+
+      * Feature: Auto-retry with flood for no-response-heard repeater login
+      * Misc: Optimize frontend data handling for improved performance
+      * Misc: Doc drift, test improvements, and library updates
   - version: 3.17.0
     name: 3.17.0
     datetime: '2026-07-21T19:16:06Z'
@@ -336,29 +347,3 @@ releases:
       * Bufix: Bump Apprise to 1.9.9 to fix Matrix bug
       * Misc: More memory-conscious on recent contact fetch
       * Misc: Fix statistics pane e2e test
-  - version: 3.9.0
-    name: 3.9.0
-    datetime: '2026-04-07T05:13:53Z'
-    url: https://github.com/jkingsman/Remote-Terminal-for-MeshCore/releases/tag/3.9.0
-    prerelease: false
-    notes: |-
-      ## [3.9.0] - 2026-04-06
-
-      * Feature: Add hop counts to hop-width selection options
-      * Feature: Show cached repeater telemetry inline in settings
-      * Feature: Retain recent traces and make them click-to-re-run
-      * Feature: Autofocus channel/DM textbox on desktop
-      * Feature: Favorites on the radio are now imported as favorites
-      * Bugfix: Be clearer on issue identification for missing HTTPS context in channel finder
-      * Bugfix: Don't use sender timestamp for message sequence display
-      * Bugfix: Function on subdomains happily
-      * Misc: Be gentler, room s/cracker/finder/
-      * Misc: Test and frontend correctness & test fixes
-      * Misc: Don't repeat clock sync failure logs
-      * Misc: Make warning in readme clearer about taking over the radio
-      * Misc: Improve readme phrasings
-      * Misc: Better y-axis selection for battery read-out
-      * Misc: Provide clearer warning on docker setup without docker installed
-      * Misc: Default visualizer stale pruning to on/5 minutes
-      * Misc: Migrate favorites to better storage pattern
-      * Misc: Provide dumper script for API + WS interfaces for prep for HA integration
