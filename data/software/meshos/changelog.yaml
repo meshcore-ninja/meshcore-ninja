@@ -1,7 +1,27 @@
 source: github
 repo: andymux/meshos-releases
-updatedAt: '2026-07-25T13:39:49.468Z'
+updatedAt: '2026-07-26T17:05:00.516Z'
 releases:
+  - version: fw-v1.6.1
+    name: MeshOS firmware v1.6.1
+    datetime: '2026-07-26T15:43:03Z'
+    url: https://github.com/andymux/meshos-releases/releases/tag/fw-v1.6.1
+    prerelease: false
+    notes: >-
+      Map tiles now work on a fresh SD card (folder auto-created). Internet Messaging: fixed
+      connection drops when multiple users are online.
+
+
+      Device firmware for LilyGo T-Deck and ThinkNode M9.
+
+      Install via SD card (firmware.bin) or the in-firmware updater.
+
+
+      SHA-256:
+
+      - TDeck: 8d502ab43488484f74961c1ac22f9c2db77c18cb36a7f8db30342d1999cef1d5
+
+      - M9: 4ff8408e574538deb098d3808871f67c13a38efbd3a945aba80191bfda0506e8
   - version: fw-v1.6.0
     name: MeshOS firmware v1.6.0
     datetime: '2026-07-25T13:28:21Z'
@@ -495,28 +515,3 @@ releases:
     url: https://github.com/andymux/meshos-releases/releases/tag/v0.4.5
     prerelease: false
     notes: "## What's New\r\n\r\n- **Wide-Screen Map Overlay** — Floating channel/contacts panel over the map on tablets and desktops (toggleable)\r\n- **Resizable Panel** — Drag handle to resize the overlay panel\r\n- **Temporal Node Fade** — Map markers fade by age (today=bright, 7d=invisible), toggleable in settings\r\n- **Map Auto-Center** — Map centers to node activity area, adjusts for panel in overlay mode\r\n- **Desktop Zoom** — +/- zoom buttons and Magic Mouse scroll-to-zoom on macOS (coming soon)\r\n- **Path Analysis on Map** — View path analysis on the background map while keeping chat overlay open\r\n- **Heard List Persistence** — Deletions now persist correctly across app restarts\r\n- **Node Info** — Last heard time shown in map marker popups\r\n- **Cross-Platform Refactor** — Conditional imports for web/native compatibility"
-  - version: v0.4.3
-    name: MeshOS v0.4.3
-    datetime: '2026-03-27T11:39:54Z'
-    url: https://github.com/andymux/meshos-releases/releases/tag/v0.4.3
-    prerelease: false
-    notes: >-
-      ## What's New
-
-      - **Multi-Transport Support** — Connect via Bluetooth, WiFi TCP, or USB Serial
-
-      - **WiFi Network Scanner** — Auto-discover MeshCore devices on your network with protocol
-      verification
-
-      - **USB Serial** — Connect to companion USB firmware at 115200 baud (Android)
-
-      - **Transport-Aware UI** — Connection icon changes to Bluetooth/WiFi/USB based on active
-      transport
-
-      - **Disconnect Confirmation** — Prevents accidental disconnects with a confirmation dialog
-
-      - **WiFi Settings Persistence** — IP and port remembered across sessions
-
-      - **Room Chat Controls** — Set path, reset path, and logout via popup menu
-
-      - **iOS Update Handling** — Software update prompts removed on iOS (handled by App Store)
