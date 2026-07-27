@@ -1,7 +1,28 @@
 source: github
 repo: MarekWo/mc-webui
-updatedAt: '2026-07-26T19:14:50.652Z'
+updatedAt: '2026-07-27T11:26:58.109Z'
 releases:
+  - version: v2.2.0
+    name: mc-webui 2.2.0
+    datetime: '2026-07-27T10:12:52Z'
+    url: https://github.com/MarekWo/mc-webui/releases/tag/v2.2.0
+    prerelease: false
+    notes: >-
+      ### New features
+
+
+      - **Quotes now use the `>` convention everyone else already uses.** Quoting a message used to
+      wrap it in guillemets — `@[Daniel] »Hejka« Cześć!` — a shape mc-webui invented back when it
+      couldn't send multi-line messages. It now puts the quote on its own line behind a `>` and
+      drops the cursor underneath it, so a reply reads as a quote in the standard MeshCore app and
+      every other client too, not just here:
+
+        ```
+        @[Daniel] >Are we still on for tonight?
+        Yes, 8pm works.
+        ```
+
+        Quotes you type by hand get the same italic, tinted styling, so `>` written manually now looks like a proper quote as well. Nothing you received earlier changes: the old `»…«` form is still recognised and still displayed exactly as before.
   - version: v2.1.0
     name: mc-webui 2.1.0
     datetime: '2026-07-26T17:23:48Z'
