@@ -1,7 +1,34 @@
 source: github
 repo: burakcan/MeshCore-mishmesh
-updatedAt: '2026-07-17T20:58:42.128Z'
+updatedAt: '2026-07-27T17:44:31.756Z'
 releases:
+  - version: mishmesh-v1.2.0
+    name: mishmesh Firmware v1.2.0
+    datetime: '2026-07-27T16:37:02Z'
+    url: https://github.com/burakcan/MeshCore-mishmesh/releases/tag/mishmesh-v1.2.0
+    prerelease: false
+    notes: >-
+      - Pomodoro timer added to the Clock app.
+
+      - "Wake screen on message" configuration (global + per-chat override).
+
+      - Battery settings panel with battery display style (gauge, percentage, voltage) and ADC
+      calibration.
+
+      - Screen brightness control (thanks @Bjorkan).
+
+
+
+
+      ## What's Changed
+
+      * Add persistent screen brightness control to MishMesh by @Bjorkan in
+      https://github.com/burakcan/MeshCore-mishmesh/pull/10
+
+
+
+      **Full Changelog**:
+      https://github.com/burakcan/MeshCore-mishmesh/compare/mishmesh-v1.1.0...mishmesh-v1.2.0
   - version: mishmesh-v1.1.0
     name: mishmesh Firmware v1.1.0
     datetime: '2026-07-17T20:44:45Z'
