@@ -1,7 +1,111 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-07-25T20:55:49.264Z'
+updatedAt: '2026-07-27T23:04:53.620Z'
 releases:
+  - version: v4.13.2
+    name: v4.13.2
+    datetime: '2026-07-27T21:21:31Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.13.2
+    prerelease: false
+    notes: >-
+      # MeshMonitor v4.13.2
+
+
+      This release finishes the **ATAK / CoT** work, teaches MeshMonitor to respect a node that
+      cannot transmit, adds a **3D terrain view**, and catches gateways that uplink traffic their
+      senders asked to keep off MQTT.
+
+
+      **If you run PostgreSQL or MySQL, take this release.** Those two backends re-ran every
+      migration on each boot, and migration 030 rebuilds `route_segments` from scratch — 865k rows
+      deleted and reinserted on every restart for one reporting install. SQLite was never affected.
+
+
+      See the [release blog post](https://meshmonitor.org/blog/2026-07-27-v4.13.2-release) for the
+      narrative walkthrough, and the
+      [CHANGELOG](https://github.com/Yeraze/meshmonitor/blob/main/CHANGELOG.md) for all 49 entries.
+
+
+      ## Fix first: PostgreSQL / MySQL migration ledger
+
+
+      - The `settingsKey` idempotency guard was SQLite-only, so PostgreSQL and MySQL replayed all
+      128 migrations at every start. Both backends now record applied migrations in a ledger.
+      (#4233)
+
+
+      ## ATAK / CoT
+
+
+      - **Packet decoding** for ATAK plugin portnum 72 (`TAKPacket`) and portnum 78 (`TAKPacketV2`,
+      zstd-compressed against the vendored TAKPacket-SDK dictionaries) — position, GeoChat, markers,
+      routes, CASEVAC, emergency. GeoChat messages persist into Messages. (#3691 Phase 1, #4317)
+
+      - **ATAK contacts on every map** — team-colored callsign markers with a `Show ATAK Contacts`
+      toggle, STALE badge after 15 minutes, purge after 24 hours. (#3691 Phase 2)
+
+      - **CoT TCP feed** for ATAK / WinTAK — settings-gated, streams Cursor-on-Target XML covering
+      ATAK contacts plus every positioned Meshtastic and MeshCore node from every source. No
+      authentication or encryption; trusted-network only. (#3691 Phase 3)
+
+
+      ## Receive-only nodes
+
+
+      - MeshMonitor now honors `lora.tx_enabled`. A central server-side guard rejects every transmit
+      path, the UI disables transmit-dependent controls with an explanation instead of failing at
+      the radio, and config import reads live remote LoRa config so it cannot flip TX back on by
+      accident. New [Receive-only mode](https://meshmonitor.org/features/receive-only-mode) guide.
+      (#4294, #4315)
+
+
+      ## MQTT
+
+
+      - **ok_to_mqtt violation detection** — flags gateways that uplink packets from nodes that
+      opted out, with 90 days of history and an **ok_to_mqtt Violations** report (per-gateway and
+      per-packet views, node names, CSV export, SQL-side paging). (#4114, #4330, #4343)
+
+      - **Configurable downlink hop-limit override** (0–7) on the embedded broker, replacing the
+      zero-hop toggle. (#4081)
+
+      - **Auto-delete-by-distance applies at ingest**, so an out-of-radius node never reaches the
+      map. (#3900)
+
+
+      ## Maps
+
+
+      - **3D terrain view** on Map Analysis (MapLibre + server-side DEM proxy), with node markers,
+      neighbor links, and traceroute paths in 3D and a clean fallback without WebGL. (#3826)
+
+      - **Terrain Link Profile refinements** — antenna AGL seeded from node altitude, clickable thin
+      neighbor links, terrain analysis on route segments. (#4253, #4254)
+
+      - `ROUTER_LATE` is distinguishable from `ROUTER`, unmessageable nodes show a badge, and the
+      Nodes tab is now called **Map**. (#4295, #4325)
+
+
+      ## Also in this release
+
+
+      - **Share a node as a Meshtastic contact** — QR code plus a `meshtastic.org/v/#…` contact
+      link. (#4327)
+
+      - **NodeInfo Enrichment report** — finds fields one source could fill from another and applies
+      the fix; Copy NodeInfo gained per-field selection and overwrite. (#3837, #4244)
+
+      - **MeshCore Virtual Node "Allow PKI export"** — a separate, default-off gate serving
+      `ExportPrivateKey(23)` for tools that authenticate as the node itself. The VN port has no
+      client authentication and the private key lets a client permanently become your node, so this
+      is deliberately *not* folded into admin commands. See [Virtual Node
+      docs](https://meshmonitor.org/configuration/virtual-node#pki-private-key-export-meshcore).
+      (#3933, #4366)
+
+      - **Every PKI DM was favoriting its recipient** — `add_contact` was pushed before every PKI
+      direct message, and the firmware's `addFromContact()` sets `is_favorite` to sh
+
+      …
   - version: v4.13.2-rc4
     name: v4.13.2-rc4
     datetime: '2026-07-25T19:47:27Z'
@@ -2034,102 +2138,5 @@ releases:
 
       **Notifications / auto-favorite** — #3799 (new-node notification fires for direct Meshtastic
       nodes), #3786 (never auto-favorite CLIENT/CLIENT_MUTE on CLIENT_
-
-      …
-  - version: v4.12.0-rc2
-    name: v4.12.0-rc2
-    datetime: '2026-06-26T02:20:11Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.12.0-rc2
-    prerelease: true
-    notes: >-
-      # MeshMonitor v4.12.0-rc2
-
-
-      > ⚠️ **Pre-release / release candidate.** Built for testing the 4.12.0 line — not recommended
-      for production. Please report issues.
-
-
-      ## Summary
-
-
-      This second 4.12.0 release candidate rolls up a large body of multi-source, MeshCore, and
-      Automation work on top of rc1. MeshCore region discovery now actually works end-to-end: it
-      queries only nearby (0-hop) repeaters and routes the request directly so repeaters answer it,
-      and received messages now show the scope/region, hop count, and relay route they arrived on.
-      The Automation Engine gains a "Run a script" action with JSON result variables, cron-scheduled
-      triggers, a geofence map editor, multi-source/unified-channel sends, and `{{ }}` token
-      highlighting/validation. A cluster of multi-source correctness and security fixes landed —
-      cross-source permission and channel-scoping leaks closed, the "messages vanish after ~1
-      minute" dedup regression fixed, node identity hidden from unauthenticated users, and manual
-      backups scoped to the selected source. MQTT channel handling was consolidated to identify
-      channels by name + key (no more duplicate raw-slot entries), and a PostgreSQL
-      `channel_database` tombstone-exhaustion migration failure was fixed. Traceroutes now route
-      over the correct default-keyed channel, and the Map/Map-Analysis views got richer multi-source
-      popups plus a spiderfy auto-collapse fix. Also includes the unmessagable-node DM-UI fix and a
-      dashboard rate-limit (429) fix when toggling sources.
-
-
-      ## Features
-
-
-      - **MeshCore: query only 0-hop repeaters for region discovery + route the query direct**
-      (#3765, #3743)
-
-      - **MeshCore: show the scope/region a received message was sent with** (#3762) and **hop count
-      + relay route** below received messages (#3750) — #3742
-
-      - **MeshCore: per-message scope/region override** (#3704, #3701)
-
-      - **MeshCore: unread message indicator on the Channels view** (#3716, #3703)
-
-      - **MeshCore: channel "heard repeaters" via self-echo correlation** (#3707, #3700)
-
-      - **Automations: "Run a script" action + JSON result variables** (#3746, #3653)
-
-      - **Automations: fire `trigger.schedule` on a cron schedule** (#3726)
-
-      - **Automations: geofence map editor, multi-source/unified-channel send, builder/test-panel
-      UX** (#3721)
-
-      - **Automations: highlight `{{ }}` tokens + flag typos in builder text fields** (#3727)
-
-      - **Map: filter out Null Island (0,0) positions** (#3764, #3763)
-
-      - **Map Analysis: rich multi-source node popups** matching the Unified map (#3692)
-
-
-      ## Bug Fixes
-
-
-      - **Messaging: no DM UI for MeshCore repeaters & Meshtastic unmessagable nodes** (#3760,
-      #3766, #3755)
-
-      - **Unified feed: append-only message feed so windowing can't evict a seen message** (#3738)
-      and **prevent messages vanishing in multi-source feed** (#3736) — #3719, #3720
-
-      - **Security: scope channel-permission node filter by `sourceId`** (#3749, #3745); **scope
-      dashboard local-node injection lookup to the source** (#3757)
-
-      - **Channels: scope channel queries, mark-read & message migration by `sourceId`** (#3717,
-      #3712)
-
-      - **Auth: hide node identity from unauthenticated users in header and poll API** (#3730,
-      #3729)
-
-      - **MQTT: consolidate channels by name** (#3708, #3709); **identify channels by name AND key**
-      (#3713); **attribute same-key channels by packet hash** (#3754)
-
-      - **Migration: rebuild `channel_database` on PostgreSQL tombstone exhaustion** (#3753, #3751)
-
-      - **Traceroute: route over the default-keyed channel + channel dropdowns** (#3723); always
-      send on Primary (#3699) — #3696
-
-      - **MeshCore: keep CLI command-line focus after send** (#3761, #3752); **resolve room-server
-      author full public key** (#3733); **`{ROUTE}`/`{SNR}` resolve on routed channel messages**
-      (#3737, #3715, #3710); **unified radio-op lock** (#3728, #3725); **serialize 0x8C
-      binary-response consumers** (#3722); **Discover Regions Sent-payload fix** (#3702); **stop
-      virtual node server on teardown** (#3706); **honor packet-monitor Max count** (#3693, #3690)
-
-      - **Meshtastic: resolve position-packet channel from decr
 
       …
