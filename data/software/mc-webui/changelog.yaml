@@ -1,7 +1,34 @@
 source: github
 repo: MarekWo/mc-webui
-updatedAt: '2026-07-27T11:26:58.109Z'
+updatedAt: '2026-07-28T19:28:00.927Z'
 releases:
+  - version: v2.3.0
+    name: mc-webui 2.3.0
+    datetime: '2026-07-28T19:20:09Z'
+    url: https://github.com/MarekWo/mc-webui/releases/tag/v2.3.0
+    prerelease: false
+    notes: >-
+      ### New features
+
+
+      - **There is an Android app now.** A small companion app opens your own instance full screen —
+      no address bar, its own icon in the app drawer, and it looks like a proper Android app rather
+      than a page in a browser. It holds no mesh logic of its own: on first run it asks for the
+      address of your server (`http://192.168.1.100:5000` on the local network, or your `https://`
+      hostname behind a reverse proxy), remembers it, and from then on launches straight into
+      mc-webui. Everything still runs on your server and your MeshCore device. It is not on Google
+      Play, so you download the `.apk` from the repository and install it yourself — the new
+      [Android App guide](https://github.com/MarekWo/mc-webui/blob/main/docs/android-app.md) walks
+      through that, including the "unknown sources" permission and the Play Protect notice Android
+      shows for any app that didn't come from the Play Store. Scanning contact QR codes works (on
+      `https://` instances — over plain `http://` the camera is blocked by the same browser rule
+      that applies in Chrome), and database backups download to the phone's Downloads folder. One
+      thing stays with the browser: **notifications**, which the app has no access to — if you rely
+      on them, keep the Chrome "Add to Home Screen" install alongside it, the two work happily side
+      by side. The app's [source](https://github.com/MarekWo/mc-webui/tree/main/android/src) sits
+      next to the
+      [`.apk`](https://github.com/MarekWo/mc-webui/raw/main/android/mc-webui-wrapper.apk), so you
+      can read what you are installing or build it yourself.
   - version: v2.2.0
     name: mc-webui 2.2.0
     datetime: '2026-07-27T10:12:52Z'
