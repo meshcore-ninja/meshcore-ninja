@@ -1,7 +1,13 @@
 source: github
 repo: ipnet-mesh/meshcore-hub
-updatedAt: '2026-07-22T23:07:11.819Z'
+updatedAt: '2026-07-28T21:10:36.643Z'
 releases:
+  - version: v0.17.2
+    name: v0.17.2
+    datetime: '2026-07-28T20:04:56Z'
+    url: https://github.com/ipnet-mesh/meshcore-hub/releases/tag/v0.17.2
+    prerelease: false
+    notes: "## What's Changed\r\n* chore(deps): update actions/setup-node action to v7 by @renovate[bot] in https://github.com/ipnet-mesh/meshcore-hub/pull/328\r\n* fix(deps): update dependency react-router to v8 by @renovate[bot] in https://github.com/ipnet-mesh/meshcore-hub/pull/334\r\n* fix(deps): update dependency i18next to v26 by @renovate[bot] in https://github.com/ipnet-mesh/meshcore-hub/pull/332\r\n* fix(deps): update dependency react-i18next to v17 by @renovate[bot] in https://github.com/ipnet-mesh/meshcore-hub/pull/333\r\n* feat(routes): allow operators to manage routes by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/335\r\n* feat(routes): ownership-based edit/delete permissions by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/336\r\n* feat(routes): add 'my routes only' filter by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/337\r\n* fix(profiles): restore admin ability to edit other users' profiles by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/338\r\n* Show section icons in page headers across all pages by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/339\r\n* Fix horizontal overflow on Dashboard and Routes (mobile portrait) by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/341\r\n* Fix remaining Routes horizontal overflow (card content not clipped) by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/342\r\n* Compact Routes stats dash and chart 'Now' label by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/344\r\n* chore(deps): update dependency @playwright/test to v1.62.0 by @renovate[bot] in https://github.com/ipnet-mesh/meshcore-hub/pull/340\r\n* chore(deps): update anomalyco/opencode action to v1.18.5 by @renovate[bot] in https://github.com/ipnet-mesh/meshcore-hub/pull/343\r\n* chore(deps): upgrade TypeScript to v7 and migrate tsconfig by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/345\r\n* chore(deps): upgrade vite to v8 and @vitejs/plugin-react to v6 by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/346\r\n* fix(e2e): pin @playwright/test to 1.61.1 to match nixpkgs browsers by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/347\r\n* perf(routes): cut evaluator scan cost via window/retention/index/sweep by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/348\r\n* fix(dashboard): make packet displays retention-aware by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/350\r\n* chore(deps): update dependency daisyui to v5.7.3 by @renovate[bot] in https://github.com/ipnet-mesh/meshcore-hub/pull/349\r\n\r\n\r\n**Full Changelog**: https://github.com/ipnet-mesh/meshcore-hub/compare/v0.17.1...v0.17.2"
   - version: v0.17.1
     name: v0.17.1
     datetime: '2026-07-22T22:52:52Z'
@@ -116,9 +122,3 @@ releases:
     url: https://github.com/ipnet-mesh/meshcore-hub/releases/tag/v0.13.1
     prerelease: false
     notes: "## What's Changed\r\n* feat(web): observer filter as toggle badges on adverts/messages by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/244\r\n\r\n\r\n**Full Changelog**: https://github.com/ipnet-mesh/meshcore-hub/compare/v0.13.0...v0.13.1"
-  - version: v0.13.0
-    name: v0.13.0
-    datetime: '2026-06-14T09:27:31Z'
-    url: https://github.com/ipnet-mesh/meshcore-hub/releases/tag/v0.13.0
-    prerelease: false
-    notes: "## What's Changed\r\n* feat: Raw Packets — capture, browse, classify, and link wire packets (v0.13.0) by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/237\r\n* Update tailwindcss monorepo to v4.3.1 by @renovate[bot] in https://github.com/ipnet-mesh/meshcore-hub/pull/236\r\n* chore(deps): update dependency esbuild to v0.28.1 by @renovate[bot] in https://github.com/ipnet-mesh/meshcore-hub/pull/235\r\n* Add packet-groups API endpoint for deduplicated packet list by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/238\r\n* Packet-detail page with path-hash node lookup by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/240\r\n* Updated Agent instructions by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/241\r\n* Fix observed_by filter to use event_observers junction table by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/242\r\n\r\n\r\n**Full Changelog**: https://github.com/ipnet-mesh/meshcore-hub/compare/v0.12.3...v0.13.0"
