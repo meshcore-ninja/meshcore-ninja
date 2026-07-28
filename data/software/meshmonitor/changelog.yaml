@@ -1,7 +1,115 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-07-27T23:04:53.620Z'
+updatedAt: '2026-07-28T17:37:56.834Z'
 releases:
+  - version: v4.13.3-rc1
+    name: v4.13.3-rc1
+    datetime: '2026-07-28T14:52:22Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.13.3-rc1
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.13.3-rc1
+
+
+      > ⚠️ **Pre-release.** This is release candidate 1 for 4.13.3. It is published for testing and
+      does **not** update the `:latest` Docker tag. Use `:4.13.3-rc1` explicitly if you want to try
+      it.
+
+
+      A maintenance candidate focused on the map surfaces. The Map Analysis 3D view now has the
+      view-state, follow, and layer-switching plumbing that the 2D view already had, and its
+      basemaps actually load — the CSP was blocking several built-in tileset hosts. The tile
+      selector gets a real mobile bottom sheet instead of a popover that mobile users could never
+      reach, and the "Show ATAK Contacts" toggle finally survives a reload after being silently
+      dropped by `/map-preferences`. On the Nodes list, Node Details is now a distinct labeled
+      button on every row rather than an icon-click affordance people had to discover. Rounding it
+      out: news-feed links to meshmonitor.org are absolutized, stable releases publish to the `:dev`
+      tag alongside `:latest`, the unit suite runs roughly 2.5× faster, and a flaky packet-log test
+      is fixed. No migrations, no configuration changes, no breaking changes.
+
+
+      ## Bug Fixes
+
+
+      - #4373 — Map Analysis 3D view gets the view-state, follow, and layer plumbing 2D has; layer
+      gating keyed on the effective view mode; CSP `connect-src` widened so every built-in tileset
+      host loads 3D basemaps (#4371)
+
+      - #4383 — Tile selector renders as a mobile bottom sheet (#4380)
+
+      - #4384 — "Show ATAK Contacts" map toggle persists (#4378)
+
+      - #4385 — Every node row gets a distinct, labeled Node Details button (#4379)
+
+      - #4377 — News-feed links to meshmonitor.org are absolutized
+
+      - `activeStyleJson` wired into the MapAnalysis and MeshCore `BaseMap` consumers
+
+
+      ## CI / DevOps
+
+
+      - #4372 — Unit suite parallelized (~17.5 min → ~6.6 min) and the duplicate CI workflow retired
+
+      - #4382 — Stable releases publish to the `:dev` tag as well as `:latest`
+
+      - #4386 — De-flaked the packet-log since-timestamp filter test
+
+      - #4388 — Version bump to 4.13.3-rc1
+
+
+      ## Issues Resolved
+
+
+      - #4371 — Map Analysis 3D view missing view-state, follow, and layer-switching plumbing that
+      2D has
+
+      - #4378 — "Show ATAK Contacts" map toggle never persists
+
+      - #4379 — Replace icon-click affordance for Node Details with a distinct labeled button
+
+      - #4380 — Tile selector popover hidden on mobile with no fallback UI
+
+
+      ## Upgrade Notes
+
+
+      None. No database migrations and no configuration changes — upgrade in place from 4.13.2.
+
+
+      **Full changelog:** https://github.com/Yeraze/meshmonitor/compare/v4.13.2...v4.13.3-rc1
+
+
+      ## 🚀 MeshMonitor v4.13.3-rc1
+
+
+      ### 📦 Installation
+
+
+      **Docker (recommended):**
+
+      ```bash
+
+      docker run -d \
+        --name meshmonitor \
+        -p 8080:3001 \
+        -v meshmonitor-data:/data \
+        ghcr.io/Yeraze/meshmonitor:4.13.3-rc1
+      ```
+
+
+      ### 🧪 Testing
+
+      ✅ All tests passed
+
+      ✅ TypeScript checks passed
+
+      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
+
+
+      ### 📋 Changes
+
+      See commit history for detailed changes.
   - version: v4.13.2
     name: v4.13.2
     datetime: '2026-07-27T21:21:31Z'
@@ -2059,84 +2167,3 @@ releases:
       ### 📋 Changes
 
       See commit history for detailed changes.
-  - version: v4.12.0
-    name: v4.12.0
-    datetime: '2026-06-26T23:38:36Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.12.0
-    prerelease: false
-    notes: >-
-      # MeshMonitor v4.12.0
-
-
-      A large feature release headlined by two new capabilities: a node/builder-based **Automation
-      Engine** ("when this happens, do that" — triggers → conditions → actions, with variables, `{{
-      }}` token substitution, geofence/schedule/system triggers, an "Apprise notify"/"Run a script"
-      action set, and an in-app dry-run tester), and **MeshCore Regions/Scopes** (per-channel and
-      per-source scope tagging, a Discover Regions sweep, per-message scope overrides, a
-      saved-regions catalog, and received-message scope display). It also lands a deep round of
-      multi-source correctness work — channel/backup/permission queries are now consistently scoped
-      by `sourceId` (closing a cross-source permission leak), the unified message feed no longer
-      drops messages, and MQTT channels are identified by name **and** key. Position history was
-      substantially fixed: every fix now renders with full backward pagination, hover/click tooltips
-      with hop count and direct-heard SNR work, and `ground_speed` is correctly treated as km/h (it
-      was being inflated ~3.6×). MeshCore gains channel unread indicators, a "heard repeaters"
-      badge, per-message hop/route lines, a live byte-accurate character counter, on-demand
-      telemetry polling, and a manual Define-Path editor with 1/2/3-byte hash widths. Other
-      highlights: customizable login branding via env vars, Null-Island position filtering, richer
-      Map-Analysis node popups, git-native LXC templates with in-place updates, and a hardened
-      PostgreSQL `channel_database` rebuild path. The documentation site was brought current with
-      all of the above, including a new Automation Engine page. This release supersedes the
-      4.12.0-rc1/rc2 pre-releases.
-
-
-      ## ✨ Features
-
-
-      **Automation Engine** (#3653) — #3721, #3726, #3727, #3739, #3746 — visual builder, schedule
-      (cron)/geofence/system triggers, multi-source/unified-channel send, "Run a script" + JSON
-      result variables, and in-builder `{{ }}` token validation.
-
-
-      **MeshCore Regions / Scopes** (#3667) — #3704 (per-message scope override), #3762
-      (received-message scope display, Phase 2), #3765 (0-hop region discovery), #3783
-      (saved-regions catalog + pickers).
-
-
-      **MeshCore UI** — #3707 (channel "heard repeaters" badge), #3716 (channel unread indicators),
-      #3750 (hop count + relay route under received messages), #3790 (byte-accurate character
-      counter + readability).
-
-
-      **Other** — #3781 (custom login title/logo via env vars), #3764 (filter out Null Island 0,0
-      positions), #3692 (rich multi-source Map-Analysis node popups), #3779 (compact `{ROUTE}`
-      auto-ack variable), #3768 (git-native LXC templates with bundled in-place updater).
-
-
-      ## 🐛 Bug Fixes
-
-
-      **Position history & maps** — #3795 (render every fix + paginate full history), #3800
-      (`ground_speed` is km/h, not m/s — fixes ~3.6× speed inflation), #3801 (Analysis-Map
-      cross-source neighbor links: union not intersection), #3687 (spiderfy + auto-collapse), #3784
-      (neighbor-link dedup + MQTT transport class), #3694 (position-packet channel from decryption
-      context).
-
-
-      **Multi-source / MQTT** — #3736, #3738 (messages no longer vanish from the unified feed),
-      #3717 (channel queries scoped by `sourceId`), #3714 (manual backup scoped to source), #3757
-      (local-node lookup scoped to source), #3713/#3708/#3754 (MQTT channels identified by name
-      **and** key), #3748 (batch per-source reads — fixes source-toggle 429s).
-
-
-      **MeshCore** — #3794 (heartbeat/auto-reconnect + drop detection + reconnect-after-disconnect),
-      #3706 (stop virtual node server on transport teardown), #3702 (Discover Regions timeout),
-      #3722/#3728 (serialize binary-response/raw-frame ack handling), #3737/#3715 (`{ROUTE}`/`{SNR}`
-      resolve on routed messages), #3733 (room-server author pubkey), #3760/#3766 (no DM UI for
-      repeaters / unmessagable nodes), #3785 (preserve node name on empty advert), #3761/#3778 (CLI
-      focus + metadata readability).
-
-
-      **Notifications / auto-favorite** — #3799 (new-node notification fires for direct Meshtastic
-      nodes), #3786 (never auto-favorite CLIENT/CLIENT_MUTE on CLIENT_
-
-      …
