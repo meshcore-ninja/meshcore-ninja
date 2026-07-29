@@ -1,7 +1,79 @@
 source: github
 repo: ALLFATHER-BV/wadamesh
-updatedAt: '2026-07-29T14:14:31.788Z'
+updatedAt: '2026-07-29T17:17:48.428Z'
 releases:
+  - version: beta_52
+    name: wadamesh beta_52 (RISKY - storage rework, needs testing)
+    datetime: '2026-07-29T15:16:48Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_52
+    prerelease: true
+    notes: >-
+      # ⚠️ RISKY TEST BUILD — READ BEFORE FLASHING ⚠️
+
+
+      > **This beta reworks how chat history is stored on the SD card, and it has NOT been
+      soak-tested over long uptime yet. It may have data-loss bugs.**
+
+      >
+
+      > - 🧪 **It needs community testing.** Please run it for hours or days and report any SD
+      errors, "history not saving," or storage weirdness on the issues tracker.
+
+      > - 💾 **The chat-history format changes, and the change is ONE-WAY.** If you flash an older
+      firmware after running this, your saved chat history is lost. Back up anything you care about
+      first.
+
+      > - 🛑 **Do not run this as your only or daily device** unless you're OK risking your chat
+      history.
+
+      >
+
+      > If you just want a solid device, stay on **beta_50** (current stable) or **beta_51**.
+
+
+      ---
+
+
+      **wadamesh beta_52** lands a major community SD/storage rework for testing.
+
+
+      > Test build. Turn on **Get test builds (beta)** on the device, use the **Beta** toggle on the
+      [web flasher](https://flasher.wadamesh.com), or grab a `-merged.bin` below. Stable stays on
+      beta_50.
+
+
+      ## What's new — SD storage rework (by @Vybo,
+      [#179](https://github.com/ALLFATHER-BV/wadamesh/pull/179))
+
+      - **Runtime SD recovery**: the device now recovers from an SD card that wedges or is pulled at
+      runtime, instead of playing dead until a reboot.
+
+      - **Chat-store health** on the About page: resolved backend, last save time, and failure
+      details, so a sick store is visible.
+
+      - **Segmented message store**: chat history is written as small append-friendly segment files
+      instead of rewriting the whole file on every save — shorter write windows, per-segment
+      corruption isolation, crash-atomic migration.
+
+      - Plus a fix for the follow-on bug where SD writes started failing after a few hours of uptime
+      once the segment table filled.
+
+
+      Huge thanks to **@Vybo** (Dan Vybiral) for the deep root-cause work on the SD stack.
+
+
+      ## Also included (from beta_51)
+
+      Chat bubble timestamp on the top row (@scratchdiver), the Airtime channel-utilization tool
+      (@jacobpretorius), the lockscreen wallpaper corruption fix (@Yazutsu, #127), and the T-Display
+      P4 text-size fix.
+
+
+      ## Boards
+
+      T-Deck · Heltec V4 TFT · Heltec V4-R8 · ThinkNode M9 · RAK TAP v2 · T-LoRa Pager (LR1121 /
+      SX1262) · Attaky Core · T-Display P4 (AMOLED + LCD). Flash `<board>-merged.bin` at `0x0` for a
+      full install, or `<board>.bin` for an app-only update.
   - version: beta_51
     name: wadamesh beta_51
     datetime: '2026-07-29T12:41:34Z'
@@ -1122,92 +1194,3 @@ releases:
 
 
       Boards: LilyGo T-Deck, Heltec V4 TFT. Also ships to the Tanmatsu launcher store.
-  - version: beta_31
-    name: wadamesh beta_31
-    datetime: '2026-07-05T19:09:28Z'
-    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_31
-    prerelease: false
-    notes: >-
-      **This is the new stable release.** It replaces beta_27 and bundles everything from beta_28
-      through beta_31 — room-server reliability, the real burn-in fix, a redesigned chats tab,
-      big-mesh performance work and a live Spectrum analyzer.
-
-
-      Flash from the web flasher at **https://wadamesh.com**, update from the Launcher, or use the
-      on-device updater (Settings → About). Devices on the beta/test channel are already on this
-      exact build.
-
-
-      ## Rooms and reliability
-
-      - **Room servers no longer go one-way "frozen"** (#89). The device keeps its room session
-      alive with background keep-alives, logs back in automatically when the session drops, adds a
-      **"Log in again"** entry to the room chat's menu, and warns when a room only granted read-only
-      access. Thanks **EricMW61**.
-
-      - **Room logins can no longer be silently locked out by the device clock.** The device
-      remembers the newest timestamp it has used across reboots so it can never fall behind itself,
-      a Join with no reply shows a clear error after 20 s (including what the device thinks the time
-      is), and it **warns when the device clock and the room server's clock disagree**.
-
-      - The on-device "Install update" hides on mixed/older partition layouts where an update could
-      brick mid-flash, and the update check now waits for Wi-Fi to actually have an address and
-      retries within a minute instead of showing "couldn't reach the update server" for six hours.
-
-
-      ## Screen and burn-in
-
-      - **The screen now truly switches off in standby** — before, only the backlight went dark
-      while the panel kept displaying the last image, which is exactly what burns in the LCD. The
-      panel itself sleeps (wake is instant), a lit lock screen always dims, a screen woken by a
-      message re-darkens after 10 s, and the lock clock drifts to avoid ghosting. Thanks
-      **wyvern.red** and **richrd** (#86, #55).
-
-
-      ## Chats
-
-      - **The chats tab has a new look**: a round avatar in each chat's signature colour (the same
-      colour its bubbles use) with the first two letters of the name, the **last message previewed**
-      under the name, time top-right and the unread count below it.
-
-      - **Channels can have a custom icon**: channel settings → "Chat icon" picks any emoji as its
-      avatar (long-press resets). Remembered per channel.
-
-      - **Compact chat mode** (opt-in, chat settings): one dense line per message instead of
-      bubbles, with alternating background tones — 2–3× more history on screen; the chats list
-      switches to dense single-line rows to match.
-
-      - **Much deeper history on SD cards**: up to **5000 messages** (was 500) with **date
-      separators** (Today / Yesterday / day names). *Downgrade note: builds older than beta_29 can't
-      read the larger history file — downgrading starts with an empty history.*
-
-      - **Clearer delivery states**: ↑ sent, ✓✓ confirmed, and failed messages say "tap to resend" —
-      one tap resends.
-
-      - **Messages sent from the phone app now appear on the device too**, including channel
-      messages (DMs already did).
-
-      - **"Repeats heard" works again over Bluetooth** (#94) — the firmware passes repeats of your
-      own messages through to BLE without reintroducing the old congestion. Thanks **daryldakine**.
-
-      - Deleting a chat or channel now sticks (deleted messages could survive in storage and
-      resurrect the thread), and the chat/channel settings sheet fits on one screen.
-
-
-      ## Performance on busy meshes
-
-      - **The periodic multi-second freezes are gone** (#82). Saving ~570 contacts took up to 3
-      seconds on the UI thread every couple of minutes; it now writes the same data in a few large
-      chunks in a fraction of the time. The Contacts tab also stops rebuilding itself every 60
-      seconds just to refresh the "heard 2h ago" labels, and advert bursts can't queue rebuilds back
-      to back. Thanks **guinnessbear** for the report and **Yazutsu** for the measurements that
-      pinned it down.
-
-
-      ## Spectrum analyzer
-
-      - The waterfall gets a new line ~4× per second instead of once per sweep, the trace advances
-      across the band as it sweeps, a full sweep is ~20% faster, and the **Y-axis scales itself to
-      the l
-
-      …
