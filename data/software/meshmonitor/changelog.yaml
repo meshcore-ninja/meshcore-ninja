@@ -1,7 +1,132 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-07-28T17:37:56.834Z'
+updatedAt: '2026-07-29T06:34:10.286Z'
 releases:
+  - version: v4.13.3-rc2
+    name: v4.13.3-rc2
+    datetime: '2026-07-29T04:35:14Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.13.3-rc2
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.13.3-rc2
+
+
+      > ⚠️ **Pre-release.** This is release candidate 2 for 4.13.3. It is published for testing and
+      does **not** update the `:latest` Docker tag. Use `:4.13.3-rc2` explicitly if you want to try
+      it.
+
+
+      The headline is that **Auto-Acknowledge now lives in the Automation Engine**. A four-phase
+      epic gave the engine everything Auto-Ack could do — hop-count reactions, per-node cooldowns,
+      node-completeness and ignore-list conditions — and then added a converter that turns an
+      existing Auto-Ack config into a real, editable automation. That means per-channel
+      acknowledgement bodies, the thing #4340 asked for, are now just two rules rather than a second
+      configuration axis bolted onto Auto-Ack.
+
+
+      Alongside it: waypoints can pick their broadcast channel, MeshCore gains a zero-hop ping
+      action and a per-node ignore list for the auto-responder, TX-disabled nodes can still send
+      when UDP Broadcast can relay for them, and the Node Details panel gets a visual traceroute
+      strip. No migrations, no configuration changes, no breaking changes.
+
+
+      ## Auto-Acknowledge → Automation Engine (#4340)
+
+
+      Four phases, each independently shippable:
+
+
+      - #4390 — **Hop-count tapback.** `Send a tapback (reaction)` gained an *Emoji source* option:
+      a fixed emoji, or the message's hop count (`*️⃣` direct, `1️⃣`–`7️⃣` above), using the same
+      table Auto-Ack uses. Also adds the `{{ trigger.hopEmoji }}` token and a general `showIf`
+      mechanism for conditional builder fields.
+
+      - #4396 — **Per-node cooldown scope.** Triggers gained *Cooldown applies to*: the whole
+      automation (unchanged default), each node separately, or each node per source. Previously a
+      cooldown on a busy channel suppressed acks to every other sender.
+
+      - #4407 — **Auto-Ack parity conditions.** A `node.completeness` tri-state field, `is one of` /
+      `isn't one of` string operators, `isDM`/`viaMqtt` in the condition picker, and an optional DM
+      resend cap. A machine-enforced parity table now proves the engine can express every Auto-Ack
+      setting.
+
+      - #4408 — **The converter.** A *Convert to an Automation…* button previews exactly what will
+      be created, shows an honest report of what did and did not convert, and writes only on
+      confirmation. Turning off Auto-Ack afterwards is opt-in (checked by default) and touches only
+      the on/off switch — every other setting is preserved, so you can switch back.
+
+
+      **Upgrade note:** nothing changes unless you use the converter. Existing Auto-Acknowledge
+      configs keep working exactly as before, and existing automations are untouched — every new
+      option defaults to the previous behaviour.
+
+
+      ## Features
+
+
+      - #4341 — Waypoints: pick which channel the waypoint broadcasts on
+
+      - #4393 — MeshCore: zero-hop ping action
+
+      - #4391 — MeshCore: per-node ignore list for the auto-responder
+
+      - #4381 — Traceroute: visual node strip on the Node Details panel
+
+      - #4344 — Map: per-overlay toggle to disable the GeoJSON click popup
+
+      - TX guard: allow sends when UDP Broadcast can relay for a TX-disabled node
+
+
+      ## Bug Fixes
+
+
+      - MeshCore: sign-extend `traceContactPath` per-hop SNR bytes (negative SNR was being read as a
+      large positive value)
+
+      - #4389 — Map legend gets a usable mobile presentation
+
+      - #4395 — Every dashboard sidebar link gets an icon
+
+      - Traceroute: portal the strip hover popup and show the Map node card
+
+
+      ## Known follow-ups filed during this cycle
+
+
+      - #4399 — `geofenceState` and `autoAckCooldowns` are unbounded maps
+
+      - #4400 — an `ok_to_mqtt` fail-closed test that flakes *open* under different test ordering
+
+      ## 🚀 MeshMonitor v4.13.3-rc2
+
+
+      ### 📦 Installation
+
+
+      **Docker (recommended):**
+
+      ```bash
+
+      docker run -d \
+        --name meshmonitor \
+        -p 8080:3001 \
+        -v meshmonitor-data:/data \
+        ghcr.io/Yeraze/meshmonitor:4.13.3-rc2
+      ```
+
+
+      ### 🧪 Testing
+
+      ✅ All tests passed
+
+      ✅ TypeScript checks passed
+
+      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
+
+
+      ### 📋 Changes
+
+      See commit history for detailed changes.
   - version: v4.13.3-rc1
     name: v4.13.3-rc1
     datetime: '2026-07-28T14:52:22Z'
@@ -2100,70 +2225,3 @@ releases:
       receive time, so the fix applies to messages received after upgrading (already-stored
 
       …
-  - version: v4.12.1
-    name: v4.12.1
-    datetime: '2026-06-27T01:42:49Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.12.1
-    prerelease: false
-    notes: >-
-      # MeshMonitor v4.12.1
-
-
-      A hotfix for a startup-breaking regression in 4.12.0.
-
-
-      ## 🐛 Fixed
-
-
-      - **Startup crash when upgrading to 4.12.0**
-      ([#3804](https://github.com/Yeraze/meshmonitor/issues/3804),
-      [#3805](https://github.com/Yeraze/meshmonitor/pull/3805)) — On installs with MQTT channel
-      permissions, migration 103 could fail with `UNIQUE constraint failed:
-      channel_database_permissions.user_id, channel_database_permissions.channel_database_id` and
-      crash the app on every start, leaving it unbootable. When consolidating duplicate MQTT
-      channels, the migration now removes conflicting permission rows before reassigning them to the
-      keeper channel (SQLite, PostgreSQL, and MySQL — the latter via a derived-table subselect). A
-      regression test covers the collision case.
-
-
-      > **Anyone who hit the crash on 4.12.0** can upgrade straight to 4.12.1. (If you previously
-      hand-patched the compiled migration as a workaround, that's fine — the migration is
-      idempotent.)
-
-
-      Thanks to **@BeerMan81** for the detailed report and root-cause analysis.
-
-
-      **Full changelog:** https://github.com/Yeraze/meshmonitor/compare/v4.12.0...v4.12.1
-
-
-      ## 🚀 MeshMonitor v4.12.1
-
-
-      ### 📦 Installation
-
-
-      **Docker (recommended):**
-
-      ```bash
-
-      docker run -d \
-        --name meshmonitor \
-        -p 8080:3001 \
-        -v meshmonitor-data:/data \
-        ghcr.io/Yeraze/meshmonitor:4.12.1
-      ```
-
-
-      ### 🧪 Testing
-
-      ✅ All tests passed
-
-      ✅ TypeScript checks passed
-
-      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
-
-
-      ### 📋 Changes
-
-      See commit history for detailed changes.
