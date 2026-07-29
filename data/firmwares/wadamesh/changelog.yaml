@@ -1,15 +1,15 @@
 source: github
 repo: ALLFATHER-BV/wadamesh
-updatedAt: '2026-07-22T21:11:35.837Z'
+updatedAt: '2026-07-29T14:14:31.788Z'
 releases:
-  - version: beta_50
-    name: wadamesh beta_50
-    datetime: '2026-07-22T21:02:30Z'
-    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_50
+  - version: beta_51
+    name: wadamesh beta_51
+    datetime: '2026-07-29T12:41:34Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_51
     prerelease: true
     notes: >-
-      **wadamesh beta_50** brings on-device updates to every board, plus community fixes for the
-      T-LoRa Pager and Attaky.
+      **wadamesh beta_51** is a community drop — a chat layout change, a channel-airtime tool, and a
+      lockscreen fix. Thanks to @Yazutsu, @scratchdiver and @jacobpretorius.
 
 
       > Test build. Turn on **Get test builds (beta)** on the device, use the **Beta** toggle on the
@@ -17,31 +17,30 @@ releases:
       beta_46.
 
 
-      ## On-device updates
+      ## Chat — by @scratchdiver ([#182](https://github.com/ALLFATHER-BV/wadamesh/pull/182))
 
-      - Fixed the on-device updater pulling the **wrong firmware** on several boards. The **Heltec
-      V4-R8, ThinkNode M9, RAK Tap V2, T-LoRa Pager** and **Attaky** each downloaded the Heltec V4
-      TFT bin; each now pulls its own build.
-
-      - **T-Display P4**: the "Get test builds (beta)" toggle and the on-device update now show up.
-      They were hidden before, so the P4 was USB-only. Newly enabled, please test and report.
+      - Message bubbles now put the **time on the top row** next to the sender, so more messages fit
+      on screen. Applies to channels, DMs and room-server threads.
 
 
-      ## T-LoRa Pager — by @codemonkeybr ([#168](https://github.com/ALLFATHER-BV/wadamesh/pull/168))
+      ## New: Airtime tool — by @jacobpretorius
+      ([#176](https://github.com/ALLFATHER-BV/wadamesh/pull/176))
 
-      - Lock screen fixed: tap **Backspace** to peek the screen without unlocking, hold
-      **Backspace** to unlock. Clock and text repositioned to fit the wide screen and stay readable.
+      - A new **Airtime** app in the Apps drawer measures how busy the LoRa channel actually is, so
+      congestion can be checked against real data instead of assumed. It shows channel utilization
+      over time, packets lost at the radio (CRC errors, late reads, queue drops), live RSSI/noise,
+      the LoRa preset, and a plain verdict.
 
 
-      ## Attaky Mesh Series — by @attakygit
-      ([#169](https://github.com/ALLFATHER-BV/wadamesh/pull/169))
+      ## Fixed
 
-      - On-screen keyboard now works with the **detachable keyboard module**: keys stay down while
-      the module is attached, and the module's **#** key brings them back up for symbols. The
-      **POWER** button toggles the screen and wakes the board.
+      - **Lockscreen wallpaper** no longer corrupts into coloured noise after visiting the map — a
+      stale LVGL image-cache entry pointed at freed PSRAM the map had reused. By @Yazutsu
+      ([#181](https://github.com/ALLFATHER-BV/wadamesh/pull/181), fixes
+      [#127](https://github.com/ALLFATHER-BV/wadamesh/issues/127)).
 
-      - Board fixes: correct LoRa clock (no false TCXO drive), GPS baud, and sensor probing that
-      collided with the touch controller and keyboard expander.
+      - **T-Display P4**: the text-size setting works again — it was pinned to 100% and ignored your
+      choice.
 
 
       ## Boards
@@ -49,9 +48,85 @@ releases:
       T-Deck · Heltec V4 TFT · Heltec V4-R8 · ThinkNode M9 · RAK TAP v2 · T-LoRa Pager (LR1121 /
       SX1262) · Attaky Core · T-Display P4 (AMOLED + LCD). Flash `<board>-merged.bin` at `0x0` for a
       full install, or `<board>.bin` for an app-only update.
+  - version: beta_50
+    name: wadamesh beta_50
+    datetime: '2026-07-22T21:02:30Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_50
+    prerelease: false
+    notes: >-
+      **wadamesh beta_50 is the new stable build.** It rolls up everything since beta_46 (beta_47 →
+      beta_50). Flash it from the [web flasher](https://flasher.wadamesh.com), or grab a
+      `-merged.bin` below and flash at `0x0`.
 
 
-      Thanks to @codemonkeybr and @attakygit for the contributions.
+      Thanks to community contributors @attakygit and @codemonkeybr.
+
+
+      ## New
+
+      - **Discover app** — actively sweep for nearby nodes and list everything that answers
+      (repeaters, companions, room servers), ranked by signal, with live RSSI/SNR, a **direct**
+      badge for anything in RF range, and a last-heard age. Tap a node to add it straight to your
+      contacts.
+
+      - **Wardriving** — with a GPS fix, Discover logs every node it hears against your position to
+      a CSV on the SD card and plots your RF coverage on the map as a signal-coloured track (green =
+      strong, red = weak). A standalone on-device coverage mapper, no phone needed.
+
+      - **New board: Attaky Core** (ESP32-S3, 16 MB / 8 MB PSRAM), contributed by @attakygit
+      ([#158](https://github.com/ALLFATHER-BV/wadamesh/pull/158)).
+
+      - **T-Display P4 TFT-LCD** screen model now supported alongside the AMOLED.
+
+
+      ## On-device updates
+
+      - The updater was downloading the **wrong firmware** on the Heltec V4-R8, ThinkNode M9, RAK
+      Tap V2, T-LoRa Pager and Attaky (it pulled the V4 TFT build). Each board now installs its own
+      build.
+
+      - **T-Display P4**: the "Get test builds (beta)" toggle and on-device updates now appear — the
+      P4 was previously USB-only.
+
+
+      ## Fixes
+
+      - Crash that could reboot the device while typing in a chat.
+
+      - Devices stuck on the boot screen after an update with a microSD card fitted.
+
+      - Message times showing 1910 / wrong dates — they now match the clock.
+
+      - MQTT bridge settings not saving across reboots.
+
+      - Dutch keyboard typing "ij" / "IJ" on the "1" and "!" keys.
+
+      - The message box dropping the end of long messages; copy/paste cutting off long text.
+
+      - Quick messages list not scrolling; room-server names with an unusual first character showing
+      an empty box on Join.
+
+      - Tanmatsu: only about half the emoji were reachable in the picker.
+
+
+      ## Per-board
+
+      - **T-Display P4**: screen timeout works (plus standby / burn-in dimming); the full-screen
+      tools and the Snake game exit with a top-bar tap instead of trapping you; GPS (L76K) detected
+      reliably at 9600; taller control-center dropdown; LCD backlight fixed.
+
+      - **T-LoRa Pager** (@codemonkeybr, [#162](https://github.com/ALLFATHER-BV/wadamesh/pull/162)):
+      lock screen fixed (Backspace peek / hold-to-unlock, layout fits the wide screen); rotary
+      encoder keeps focus in the chat list with the composer keys remapped.
+
+      - **Attaky Core**: on-screen keyboard works with the detachable keyboard module; POWER button
+      toggles/wakes the screen; LoRa-clock, GPS-baud and sensor-probe fixes.
+
+
+      ## Boards
+
+      T-Deck · Heltec V4 TFT · Heltec V4-R8 · ThinkNode M9 · RAK TAP v2 · T-LoRa Pager (LR1121 /
+      SX1262) · Attaky Core · T-Display P4 (AMOLED + LCD).
   - version: beta_49
     name: wadamesh beta_49
     datetime: '2026-07-21T18:46:49Z'
@@ -1136,9 +1211,3 @@ releases:
       the l
 
       …
-  - version: beta_32
-    name: wadamesh beta_32
-    datetime: '2026-07-05T20:59:58Z'
-    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_32
-    prerelease: true
-    notes: "Test-channel build. Fixes the freeze some beta_31 users reported when Wi-Fi is on.\r\n\r\nInstall it with the on-device updater with \"Beta updates\" enabled in Settings > About, via Launcher, or flash a bin below (the `-merged` bin at 0x0 for a fresh install, the plain bin for Launcher/OTA).\r\n\r\n### Fixed\r\n\r\n- **Periodic 1-2 second freezes with Wi-Fi on.** When a phone app or web client was connected over Wi-Fi and that connection went stale (phone asleep, out of range), every received mesh packet made the device block on the dead connection before the UI could continue, which showed up as a freeze every ~10 seconds on busy meshes. The device now only writes to a connection when it can accept data immediately, and a connection that stays unresponsive for 10 seconds straight is dropped so the client can reconnect cleanly. Real messages are unaffected (they re-sync on reconnect).\r\n- **Chat-history saves could briefly hitch the UI on busy meshes.** The history file now writes in a few large chunks instead of thousands of tiny ones (the same treatment the contact list got in beta_30), and background saves are spaced further apart while messages stream in.\r\n\r\n### New\r\n\r\n- **Stall diagnostics in About.** Settings > About now lists recent main-loop stalls (anything over 0.2 seconds, newest first), so freeze reports can be confirmed or ruled out at a glance. If you still see freezes on this build, a photo of that list tells us exactly where the time went.\r\n\r\nBoards: LilyGo T-Deck, Heltec V4 TFT."
