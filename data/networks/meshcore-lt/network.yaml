@@ -4,9 +4,8 @@ also_known_as:
   - MeshCore Lithuania
 short_name: MeshCore LT
 description: >-
-  Emerging MeshCore network in Lithuania. No public community or coordination
-  information is available yet; an analyzer has been observed operating on the
-  standard EU/UK Narrow radio preset.
+  Lithuanian MeshCore community for off-grid messaging, coordinated through Telegram group, a local CoreScope analyzer and
+  EU/UK Narrow radio settings for the national 868 MHz mesh.
 scope: national
 status: active
 part_of:
@@ -23,13 +22,19 @@ regions:
     name: Lithuania
 
 analyzers:
+  - name: meshcore.atvirastinklas.lt
+    url: https://meshcore.atvirastinklas.lt
   - name: meshcore.packetstory.com
     url: https://meshcore.packetstory.com
 
+community:
+  website: https://atvirastinklas.lt
+  telegram: https://social.atvirastinklas.lt
+
 radio:
-  frequency: '868'
+  frequency: "868"
   frequency_mhz: 869.618
   bandwidth_khz: 62.5
   spreading_factor: 8
   coding_rate: 4/8
-  app_preset: 'EU/UK (Narrow)'
+  app_preset: "EU/UK (Narrow)"
