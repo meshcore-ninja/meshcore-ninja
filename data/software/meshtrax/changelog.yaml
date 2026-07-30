@@ -1,7 +1,13 @@
 source: github
 repo: venamartin/meshtrax
-updatedAt: '2026-07-25T22:58:16.470Z'
+updatedAt: '2026-07-30T21:13:50.050Z'
 releases:
+  - version: v1.7.10
+    name: Release v1.7.10
+    datetime: '2026-07-30T20:44:58Z'
+    url: https://github.com/venamartin/meshtrax/releases/tag/v1.7.10
+    prerelease: false
+    notes: "## What's Changed since v1.7.7\r\n\r\n### Interoperability with other MeshCore apps\r\n* **Reactions and replies from MeshCore One now display properly.** Their reactions (`❤️@[Name]` + hash) render as reaction pills on the target message, and their replies render as quote bubbles — in channels and DMs. Anything that can't be matched is shown as a normal message rather than dropped.\r\n* **Replies are now sent in a universally readable quote format** (`@[Name]` + `>quoted snippet..`). Clients that don't parse it still show a legible quote; MeshTrax keeps reading the old `re:` format from earlier versions. Reactions still use the compact 9-byte `r:` format (meshcore-open standard).\r\n\r\n### New\r\n* **Reactions show who reacted** — chips are larger, overlap the bubble like other messengers, and tapping one lists the people behind each emoji.\r\n* **Quick mentions** — swipe right on a message (reply stays swipe left) or long-press → *Mention* to insert `@[name]` at your cursor.\r\n* **Zoom level setting** — chat text scale is adjustable in App Settings below Theme (0.80x–1.80x, default now 1.20x). Pinch-to-zoom and double-tap-to-reset still work and stay in sync.\r\n* **Conversations sort by arrival** — chats and unread ordering now use when your radio actually received a message, so a sender with a wrong clock can no longer bury a conversation in the past (or pin it to the future).\r\n\r\n### Fixed\r\n* Repeated channel messages are deduplicated by their original wire time, closing a repeat-echo path that produced duplicates.\r\n* Buffered channel messages can no longer be delivered to a different channel after slots are re-mapped, and the channel map is re-verified after an unexpected disconnect.\r\n* Windows builds no longer ship without their native libraries (v1.7.7 broke USB serial on Windows)\r\n\r\n**Full Changelog**: https://github.com/venamartin/meshtrax/compare/v1.7.7...v1.7.10"
   - version: v1.7.7
     name: Release v1.7.7
     datetime: '2026-07-25T21:58:55Z'
