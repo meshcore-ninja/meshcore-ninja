@@ -1,7 +1,124 @@
 source: github
 repo: ALLFATHER-BV/wadamesh
-updatedAt: '2026-07-29T17:17:48.428Z'
+updatedAt: '2026-07-30T17:37:31.754Z'
 releases:
+  - version: beta_53
+    name: wadamesh beta_53
+    datetime: '2026-07-30T15:49:55Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_53
+    prerelease: true
+    notes: >-
+      Test build. Stable stays **beta_50**.
+
+
+      Flash it from **https://flasher.wadamesh.com** (flip the Beta toggle), or on-device via
+      Settings → Firmware with "Get test builds (beta)" enabled.
+
+
+      ---
+
+
+      ### ⚠️ Read this before updating
+
+
+      **Chats now keep the newest 250 messages each by default.** If a chat holds more than that,
+      the older messages are dropped the next time it receives one. Change it or turn it off under
+      **Settings → Chats → "Keep per chat (messages)"** first if you want to keep a deep backlog.
+
+
+      ---
+
+
+      ### Speed with a large chat history
+
+
+      This is the headline. A busy channel made the whole interface crawl, and the cause was the
+      chat list re-scanning the **entire** message store once **per chat**, every refresh — so the
+      more history you had, the slower everything became. One reporter had 3800 messages in a single
+      channel. That work now happens once instead of once per chat, and it is why the drag was
+      noticeable even at ~300 messages.
+
+
+      Alongside it, a new **per-chat history limit** (Settings → Chats): 100 / 250 / 500 / 1000 /
+      2000 / No limit, default **250**. Previously the message store was one shared pool with no
+      per-chat bound, so a single busy channel could occupy essentially all of it and starve your
+      other chats of history. Choosing **No limit** asks you to confirm, because an unlimited
+      history is exactly what caused the slowdown.
+
+
+      ### Blocking now actually works
+
+
+      Three separate bugs, all reported by **@D-Melhede** (#177):
+
+
+      - blocking a sender in a **channel** never saved properly, so it did not stick
+
+      - blocking a person inside a **room server** silenced the **entire room** instead of that one
+      person
+
+      - blocked names were only filtered in channels, so **room posts still came through**
+
+
+      Unblocking is also fixed: blocks were stored in two places and only one was cleared, so
+      someone could stay silently blocked after you unblocked them.
+
+
+      ### Chats
+
+
+      - **Chat list preview stuck on an old message.** It chose the "newest" message by timestamp,
+      which breaks on a device whose clock restarts each boot — a message from an earlier session
+      could outrank everything new, permanently. It now uses actual arrival order. Mostly seen on
+      the T-Display P4.
+
+      - **Notification sound works again.** A failed map-tile fetch left an internal counter stuck,
+      and that counter was silently muting every chime. Reported by **@ropafiro** (#184).
+
+
+      ### Stability and connection
+
+
+      - **Multi-second freezes on Heltec V4** in a busy mesh. Every advert heard triggered a
+      redundant write to internal flash, and contact saves were not rate-limited. Thanks to **Raph**
+      for the detailed report and video.
+
+      - **Wi-Fi scanning no longer gets stuck off** after a badly-timed disconnect (#171,
+      **@TrustYourTechnoLust**).
+
+      - **The phone app gets its replies again** — ping and telemetry responses could be swallowed
+      before reaching it (#124, **@nicocdu23-blip**).
+
+      - **The web control panel no longer drops typed characters.** Thanks to **VE2CCK**.
+
+
+      ### Apps
+
+
+      - **Airtime and Snake** now behave like the Spectrum app: a proper `‹ back` title bar, and you
+      can no longer tap or swipe through to the screen behind them. A crash-on-close path was fixed
+      at the same time.
+
+      - **Swiping inside any full-screen app** (Airtime, Spectrum, RF Monitor, Discover, Web, VNC,
+      Remote) no longer jumps you to another tab.
+
+      - Three older reports from **@dreirund**: crash-restart dialog text overlapping its buttons
+      (#97), the settings sheet from "Discovered" being cut off (#109), and room servers getting
+      their own icon in the contacts list (#106).
+
+
+      ### T-Display P4
+
+
+      - **The clock is fixed.** The P4 showed the wrong time on screen while sent messages carried
+      the correct one, and "Sync clock from system" then broke the good clock too. Its RTC chip was
+      being set but the system clock never was. (This also affects the ThinkNode M9, which has the
+      same chip.)
+
+      - **New LoRa antenna setting** (Settings → Radio). The on-board antenna is selected on **every
+      boot**, and switching to the external socket asks you to confirm an antenna
+
+      …
   - version: beta_52
     name: wadamesh beta_52 (RISKY - storage rework, needs testing)
     datetime: '2026-07-29T15:16:48Z'
@@ -1140,57 +1257,3 @@ releases:
       Install with "Beta updates" enabled in Settings > About, via Launcher, or flash a bin below
       (the merged bin at 0x0 for a fresh install, the plain bin for Launcher/OTA). Boards: LilyGo
       T-Deck, Heltec V4 TFT.
-  - version: beta_33
-    name: wadamesh beta_33
-    datetime: '2026-07-05T21:38:17Z'
-    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_33
-    prerelease: false
-    notes: >-
-      Stable release. Everything since the last stable (beta_31), headlined by the freeze fixes: the
-      periodic 1-2 second freezes with Wi-Fi on, and the freezes with MQTT enabled, are both gone.
-
-
-      A big thank you to **Half Live** for the patient testing behind this one: toggling MQTT and
-      Wi-Fi through every combination and photographing the on-device stall diagnostics is exactly
-      what pinned both root causes down.
-
-
-      Install via the [web flasher](https://flasher.wadamesh.com), the on-device updater (Settings >
-      About), or Launcher. Fresh install: flash the `-merged` bin at 0x0. Launcher/OTA: the plain
-      bin.
-
-
-      ### Fixed
-
-
-      - **Periodic 1-2 second freezes with Wi-Fi on.** When a phone app or web client was connected
-      over Wi-Fi and that connection went stale (phone asleep, out of range), every received mesh
-      packet made the device block on the dead connection. The device now only writes to a
-      connection that can accept data immediately, and a connection that stays unresponsive for 10
-      seconds is dropped so the client can reconnect cleanly. Real messages are unaffected; they
-      re-sync on reconnect.
-
-      - **Freezes with MQTT enabled.** Connecting to the broker (DNS lookup, TCP connect, login)
-      could block the device for 2-10 seconds and retried every 15 seconds while the broker was
-      unreachable, all on the UI thread. Connection attempts now run fully in the background, and
-      writes to an unresponsive broker are skipped instead of waited on. Tip: if your bridge keeps
-      reconnecting, check the broker address and credentials. A healthy connection does not retry.
-
-      - **Chat-history saves could hitch the UI on busy meshes.** The history file now writes in a
-      few large chunks instead of thousands of tiny ones (the same treatment the contact list got in
-      beta_30), and background saves are spaced further apart while messages stream in.
-
-      - **Wrong toast when the favorites list is full.** Favoriting a 17th contact now says
-      "Favorites full (max 16)" instead of the incorrect "Removed from favorites".
-
-
-      ### New
-
-
-      - **Stall diagnostics in About.** Settings > About lists recent main-loop stalls (over 0.2
-      seconds, newest first), so freeze reports can be confirmed or ruled out at a glance. The About
-      page also no longer causes a stall of its own while open (computing the firmware image size
-      used to checksum the whole app image every second).
-
-
-      Boards: LilyGo T-Deck, Heltec V4 TFT. Also ships to the Tanmatsu launcher store.

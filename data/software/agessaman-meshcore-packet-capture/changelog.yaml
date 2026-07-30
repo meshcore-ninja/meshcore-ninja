@@ -1,7 +1,13 @@
 source: github
 repo: agessaman/meshcore-packet-capture
-updatedAt: '2026-07-25T22:57:54.718Z'
+updatedAt: '2026-07-30T17:37:33.537Z'
 releases:
+  - version: v2.2.0
+    name: v2.2.0
+    datetime: '2026-07-30T15:12:08Z'
+    url: https://github.com/agessaman/meshcore-packet-capture/releases/tag/v2.2.0
+    prerelease: false
+    notes: "## What's Changed\r\n* Publish a periodic neighbors snapshot, and serialise device commands by @agessaman in https://github.com/agessaman/meshcore-packet-capture/pull/42\r\n* feat(presets): enable neighbors publishing for chimesh by @agessaman in https://github.com/agessaman/meshcore-packet-capture/pull/43\r\n* User service scripts by @jakee417 in https://github.com/agessaman/meshcore-packet-capture/pull/39\r\n* Update Colorado Mesh preset by @nwithan8 in https://github.com/agessaman/meshcore-packet-capture/pull/44\r\n\r\n## New Contributors\r\n* @jakee417 made their first contribution in https://github.com/agessaman/meshcore-packet-capture/pull/39\r\n* @nwithan8 made their first contribution in https://github.com/agessaman/meshcore-packet-capture/pull/44\r\n\r\n**Full Changelog**: https://github.com/agessaman/meshcore-packet-capture/compare/v2.1.0...v2.1.1"
   - version: v2.1.0
     name: MeshCore Packet Capture 2.1.0
     datetime: '2026-07-25T22:20:00Z'

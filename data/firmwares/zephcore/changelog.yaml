@@ -1,7 +1,168 @@
 source: github
 repo: liquidraver/ZephCore
-updatedAt: '2026-07-25T13:39:32.690Z'
+updatedAt: '2026-07-30T17:37:32.972Z'
 releases:
+  - version: 1.16.8-zephcore
+    name: Firmware 1.16.8-zephcore
+    datetime: '2026-07-30T15:49:00Z'
+    url: https://github.com/liquidraver/ZephCore/releases/tag/1.16.8-zephcore
+    prerelease: true
+    notes: >-
+      # ZephCore 1.16.8-zephcore
+
+
+      > [!CAUTION]
+
+      > **This is a pre-release.** ESP32 light sleep is enabled by default on Heltec repeaters and
+      has not
+
+      > been validated on hardware yet — see the light-sleep section for what to check and how to
+      build it
+
+      > out. It is deliberately **not published to the apps.meshamerica.com configurator**, which
+      keeps
+
+      > offering v1.16.7; flash this one manually from the assets below if you want to help test it.
+
+      > The nRF based boards should be fine.
+
+
+      > [!IMPORTANT]
+
+      > ## Before you upgrade
+
+      >
+
+      > **From v1.16.5 / v1.16.6 / v1.16.7** — clean flash, no re-bond, bonds and data survive.
+
+      >
+
+      > **From v1.16.2 / v1.16.3 / v1.16.4** — clean flash, bonds and data survive. If you are on an
+
+      > **ESP32-S3 / ESP32-C board** and have *not* yet taken the v1.16.5 update, you still owe the
+      one-time
+
+      > serial reflash: the app moved to flash offset `0x10000` in v1.16.5, and a board on the old
+      layout
+
+      > cannot cross that update over WiFi-OTA or the browser flasher — **flash the `-merged.bin`
+      once over
+
+      > USB/serial.** Affected boards: *Heltec V3 / V4 / V4.3, Station G2, Wireless Tracker / V2,
+      XIAO
+
+      > ESP32-S3 / C3 / C6, LilyGo T-Lora C6, ThinkNode M9.* Identity, contacts, channels, prefs,
+      and BLE
+
+      > bonds are preserved. nRF52, classic ESP32 (T-Beam / PICO-D4 / TTGO LoRa32), STM32WL, and
+      native
+
+      > Linux are unaffected.
+
+      >
+
+      > **From v1.16.1 or older** — flash it; on first boot it clears BLE bonds automatically
+      (identity,
+
+      > contacts, channels, prefs preserved). Re-bond your phone/desktop once.
+
+      >
+
+      > **Coming from Arduino MeshCore** — flash it; auto-formats on first boot (new identity, clean
+      storage).
+
+      >
+
+      > **Heltec ESP32 repeaters now light-sleep**, and their USB CLI stops answering 10 minutes
+      after boot
+
+      > as a result. Reconnecting your terminal normally resets the node and gives you another 10
+      minutes;
+
+      > if it doesn't, power-cycle. Details in the light-sleep section below.
+
+      >
+
+      > **One CLI rename:** `set/get cad.probe.interval` is now `set/get probe.interval` — the same
+      setting,
+
+      > renamed because one measurement now feeds both the noise floor and the CAD probe. Your
+      stored value
+
+      > carries over; only the command name changed. `set/get agc.reset.interval` is gone (see
+      below).
+
+      >
+
+      > Take this with a grain of salt — try the formatters if anything anomalous happens with your
+      node.
+
+
+      ---
+
+
+      A **power and radio-measurement release**. Repeaters no longer wake on a fixed 5 s tick — they
+      sleep
+
+      until their next real deadline. Every ESP32 build drops to 80 MHz, and Heltec repeaters now
+      light-sleep
+
+      between packets. The noise-floor sampler and CAD probe were unified into one measurement, the
+
+      SX126x RSSI/AGC calibration is now band-correct, and the observer role got a batch of fixes
+      for settings
+
+      that silently never reached the hardware.
+
+
+      ## Highlights
+
+
+      ### Repeaters are now deadline-driven — the periodic housekeeping tick is gone
+
+
+      Every repeater woke five times a second-and-a-bit forever: a fixed 5 s "housekeeping" timer
+      that ran the
+
+      noise-floor sample, the CAD probe, advert timers and the tempradio revert. None of that
+      actually needs a
+
+      poll — each item is either a deadline or a sampler with its own interval.
+
+
+      The new `mesh/Maintenance.h` contract lets the event loop ask *"when does maintenance next
+      have work?"*
+
+      and arm **one one-shot wake for exactly that moment**. An idle repeater now sleeps until its
+      soonest real
+
+      deadline instead of on a fixed cadence. A hard ceiling
+      (`CONFIG_ZEPHCORE_MAINTENANCE_BACKSTOP_MS`,
+
+      default **60 s**) clamps the wake as a safety net against a missed deadline — it should never
+      bind in
+
+      normal operation.
+
+
+      Companions and room servers keep their periodic tick deliberately: the companion block
+      contains genuine
+
+      pollers (contact-dump progress, BLE advertising watchdog) with no deadline to arm, and the
+      room server is
+
+      paced by its own 500 ms push timer regardless.
+
+
+      ### ESP32 power: 80 MHz everywhere, and light sleep on Heltec repeaters
+
+
+      Espressif parts have no equivalent of the nRF52's "idle at microamps in WFI" — `WAITI` gates
+      the core
+
+      clock but le
+
+      …
   - version: 1.16.7-zephcore
     name: Firmware 1.16.7-zephcore
     datetime: '2026-07-25T13:15:13Z'
@@ -405,9 +566,3 @@ releases:
     url: https://github.com/liquidraver/ZephCore/releases/tag/v20260505.131914
     prerelease: false
     notes: "Kistarcsa-edition\r\n\r\nTested in the depths of the tarcsa-cauldron with weak/noisy/who-knows-whats-the-problem-of-that-heltecv3 repeater, optimized for the aforementioned use-case.\r\n\r\n- Duty cycle is 13/3 now. Slightly more battery consumption, but better RX error margin. No use for extra battery time if packets are lost in noisy/weak link environments.\r\n- hwconfig now has a fail-safe so no more edge-case unsaved radio settings\r\n- SX TX Ramp time increased to 800µs from 200µs. expect very heavy latency increase if you can sense time in a different way normal humans do! \r\n  (also expect cleaner spectral mask at 22 dBm. nobody cares about it, doesn't change anything in a meaningful way, but it's a playground, we optimize even things that doesn't really need optimizing)\r\n  (ask your favourite AI what are the benefits of 800µs vs 200µs if interested)\r\n- Companions had too much initial jitter with zero benefit, so it was tuned down to RNG20-150msec\r\n- Claude noticed some line ending stuff by itself, without asking, so I gave him credit (heh)"
-  - version: v20260502.112307
-    name: Firmware v20260502.112307
-    datetime: '2026-05-02T11:23:18Z'
-    url: https://github.com/liquidraver/ZephCore/releases/tag/v20260502.112307
-    prerelease: false
-    notes: "This release only removes the \"hot path\" after finishing TX.\r\nIt was an attempt to eliminate \"Sent\" but not \"Heard X repeats\" messages.\r\nI re-did the math, we don't need to stay in full RX after TX for any reason, immediately back to duty cycling is fine until someone starts to use SF7/BW500.\r\nGetting back to duty cycling is in the ms range, no preamble can be missed, so \"Sent\" but not \"Heard\" packets are seems to be truly RF collision/repeater listening to other packets etc."
