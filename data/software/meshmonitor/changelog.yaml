@@ -1,7 +1,127 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-07-29T06:34:10.286Z'
+updatedAt: '2026-07-30T23:10:32.804Z'
 releases:
+  - version: v4.13.3-rc3
+    name: v4.13.3-rc3
+    datetime: '2026-07-30T21:27:47Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.13.3-rc3
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.13.3-rc3
+
+
+      > ⚠️ **Pre-release.** This is a release candidate for testing. It does not carry the `:latest`
+      Docker tag. Run it in production only if you are ready to report bugs.
+
+
+      ## Summary
+
+
+      This candidate closes out two epics and sweeps up the defects they exposed. The traceroute
+      epic gains a **statistical route view**: route segments now aggregate across many traceroutes,
+      a union layout engine draws the merged graph, and the result renders in the Node Details
+      strip. The strip also picks up interactive node popups, link tooltips, Copy
+      Forward/Return/Both text links, and a participation picker that finally brings the strip to
+      MQTT sources. The **per-source settings** epic (#4412) lands in three phases — backend
+      foundation, per-source reads, then the frontend — and ends with MeshCore node-age filtering
+      built on top of it.
+
+
+      That second epic uncovered a cluster of permission bugs worth calling out. Two divergent
+      source-scoped resource lists meant per-source scoping was silently ignored for `settings`,
+      `dashboard`, `info`, `audit`, and `security` (#4416), and new-user default grants were written
+      globally when four of six are per-source resources, leaving them inert (#4448). Both are
+      fixed. On the data side, Meshtastic 2.8's periodic rebroadcast of cached packets was inflating
+      node "Last Heard" (#4192), and nodes without a real fix were appearing on the map — position
+      estimates built from a single anchor are now excluded by default (#4450). MeshCore gets guards
+      against overlapping auto-pathfinding calls and a DM permission leak to anonymous users.
+
+
+      ## Features
+
+
+      - Statistical route aggregation + union layout engine (traceroute epic phase 1) — #4444
+
+      - Statistical route view in the Node Details strip (phase 2) — #4451
+
+      - Interactive strip: node popup More Details action + link tooltips — #4424
+
+      - Participation picker on all sources, bringing the strip to MQTT — #4427
+
+      - Copy Forward/Return/Both text links, with an insecure-context fallback — #4429
+
+      - Per-source settings foundation and guardrails (#4412 phase 1) — #4417
+
+      - Read Node Display settings per-source (phase 2) — #4425
+
+      - Per-source Node Display frontend (phase 3) — #4431
+
+      - MeshCore per-source node-age filtering and Node Display settings — #4433
+
+
+      ## Bug Fixes
+
+
+      - Guard `lastHeard` against replayed position/telemetry packets — #4446
+
+      - Exclude single-anchor position estimates by default — #4455
+
+      - Purging position history now also clears the global position estimate — #4452
+
+      - Make `settings` a per-source permission resource — #4443
+
+      - Close five defects the per-source epic uncovered (#4442, #4437, #4438, #4449, #4448) — #4453
+
+      - Close the per-source settings defects: global current-value compare, full-table scan — #4441
+
+      - Scope MeshCore `/snapshot` messages field to `messages:read` — #4423
+
+      - Guard MeshCore `startAutoPathfinding()` against overlapping calls — #4435
+
+      - Disable Convert-to-Automation button for MeshCore sources — #4421
+
+      - Route strip edges and labels around unrelated node glyphs — #4430
+
+      - Bound `geofenceState` and `autoAckCooldowns` growth — #4413
+
+      - Guard MQTT `handleUplink` against a client nulled mid-flight — #4414
+
+      - Virtual node: fall back to persisted modem preset for the slot-0 channel name — #4415
+
+      - Virtual node: stop duplicate MQTT client-proxy publishing — #4418
+
+      - Humanize the Dashboard uptime widget and align DM chart padding — #4439
+
+      - Unify the sidebar footer across dashboard and per-source views — #4440
+
+      - Pass `showList` from every back-to-dashboard button — #4454
+
+
+      ## Chores
+
+
+      - Bump version to 4.13.3-rc3 — #4456
+
+
+      ## Issues Resolved
+
+
+      #3261, #4037, #4192, #4399, #4411, #4412, #4416, #4419, #4420, #4422, #4426, #4428, #4434,
+      #4436, #4437, #4438, #4442, #4445, #4447, #4448, #4449, #4450
+
+
+      ## Upgrade Notes
+
+
+      No schema migrations and no breaking API changes in this candidate.
+
+
+      One behavior change worth watching: **map pins may thin out after upgrading.** Position
+      estimates derived from a single anchor are now excluded by default, so nodes that previously
+      showe
+
+      …
   - version: v4.13.3-rc2
     name: v4.13.3-rc2
     datetime: '2026-07-29T04:35:14Z'
@@ -2130,98 +2250,3 @@ releases:
       ### 📋 Changes
 
       See commit history for detailed changes.
-  - version: v4.12.2
-    name: v4.12.2
-    datetime: '2026-06-29T20:19:28Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.12.2
-    prerelease: false
-    notes: >-
-      # MeshMonitor v4.12.2
-
-
-      A focused follow-up to 4.12.1 that rounds out the MeshCore scope/region work and fixes a
-      subtle, long-standing correlation bug. The headline fix: on a busy mesh, a received MeshCore
-      message could lose its scope/region badge (and `{ROUTE}`/`{SNR}` tokens) because the raw OTA
-      bytes carrying that data were handed between firmware events through a single-slot buffer that
-      a second in-flight packet could clobber — the buffer is now a small FIFO matched by hop count,
-      so concurrent packets no longer evict each other. This release also adds scope/region control
-      to MeshCore automations (including "respond on the trigger's scope"), a unified "Request from
-      a node" automation action (telemetry/position/traceroute/node-info/neighbors/advert across
-      Meshtastic and MeshCore), a live per-rule trace ("view logs") for the Automation Engine, a
-      Reply button on MeshCore channel messages, and a scope badge on sent MeshCore messages.
-      Several smaller MeshCore reliability fixes are included (discovered-node names, remote-status
-      cross-talk, virtual-node handshake, saved-region resolution), the bundled Meshtastic protobufs
-      move to v2.7.26 with hardware models 132–140, and the feature documentation is brought
-      current. SQLite remains the default; PostgreSQL and MySQL are unchanged.
-
-
-      ## Features
-
-      - **MeshCore scope/region control for automations** — target a region on send, or respond on
-      the trigger message's scope, in both the Automations tab and the Automation Engine (#3834)
-
-      - **"Request from a node" Automation Engine action** — telemetry / position / traceroute /
-      node info / neighbors / advert, for Meshtastic and MeshCore (#3838)
-
-      - **Automation Engine live trace ("view logs")** — per-rule, real-time evaluation trace
-      (#3836)
-
-      - **MeshCore Reply button on channel messages** — prefills the `@[Sender]:` mention and
-      replies on the originating scope (#3855)
-
-      - **MeshCore scope/region on sent messages** — outgoing messages show the scope badge they
-      were sent on (#3818)
-
-      - **Restore focus to the message input after send** (MeshCore) (#3827)
-
-      - **Hardware models 132–140** — bundled protobufs bumped to v2.7.26 (#3849)
-
-
-      ## Bug Fixes
-
-      - **MeshCore received-message scope/region (and `{ROUTE}`/`{SNR}`) blank on busy meshes** —
-      single-slot `LogRxData` buffer replaced with a hop-count-matched FIFO so concurrent text
-      packets no longer clobber each other (#3859)
-
-      - **MeshCore re-discovered node showed "Unknown" until reload** — name backfilled from the
-      persisted node row; channel view opens at the bottom; no empty scope badge on unscoped
-      messages (#3858)
-
-      - **MeshCore discovered repeater names populate without admin login** — via ANON_REQ OWNER
-      (#3825)
-
-      - **MeshCore remote-status response cross-talk** — requests serialized (#3821)
-
-      - **MeshCore virtual-node DeviceInfo handshake** — pinned to companion protocol v1 (#3828)
-
-      - **MeshCore saved regions missing from scope resolution** (#3830)
-
-      - **Messages: request actions restored for unmessageable nodes** (#3832)
-
-      - **Messages: softened the "not in device DB" warning when the key is known** (#3856)
-
-      - **Remote Node Status: "Errors" relabeled to "Error Events"** (#3824)
-
-      - **Settings: auto-acknowledge save no longer sticks** on an RE2-incompatible regex (#3819)
-
-      - **MeshCore channel entry scroll** to first unread / bottom (#3817)
-
-      - **`heardBy` relay info persists** in the memory pool after a channel echo (#3816)
-
-      - **MeshCore message metadata readability on bright screens** (#3812)
-
-
-      ## Dependencies
-
-      - vite 8.1.0 (#3848), lucide-react 1.22.0 (#3847), @typescript-eslint/eslint-plugin 8.62.0
-      (#3846), @types/node 26.0.1 (#3845), puppeteer 25.2.1 (#3844), aedes 1.1.0 (#3843), recharts
-      3.9.0 (#3842), production-dependencies group ×6 (#3841), eslint 10.6.0 (#3840), actions/cache
-      v6 (#3839), @rollup/rollup-linux-arm-gnueabihf 4.62.2 (#3632)
-
-
-      ## Upgrade Notes
-
-      No breaking changes — upgrade in place. Received-message scope is resolved and stored at
-      receive time, so the fix applies to messages received after upgrading (already-stored
-
-      …
