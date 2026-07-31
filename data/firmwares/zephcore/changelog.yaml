@@ -1,10 +1,10 @@
 source: github
 repo: liquidraver/ZephCore
-updatedAt: '2026-07-30T17:37:32.972Z'
+updatedAt: '2026-07-31T14:12:23.384Z'
 releases:
   - version: 1.16.8-zephcore
     name: Firmware 1.16.8-zephcore
-    datetime: '2026-07-30T15:49:00Z'
+    datetime: '2026-07-31T13:38:41Z'
     url: https://github.com/liquidraver/ZephCore/releases/tag/1.16.8-zephcore
     prerelease: true
     notes: >-
