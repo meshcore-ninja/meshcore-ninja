@@ -1,7 +1,125 @@
 source: github
 repo: hermes-gadget/SigurdOS-tdeck
-updatedAt: '2026-07-18T09:28:53.267Z'
+updatedAt: '2026-07-31T17:41:24.850Z'
 releases:
+  - version: beta-0.1.46-RC8
+    name: beta-0.1.46-RC8
+    datetime: '2026-07-31T15:25:51Z'
+    url: https://github.com/hermes-gadget/SigurdOS-tdeck/releases/tag/beta-0.1.46-RC8
+    prerelease: true
+    notes: >-
+      **SigurdOS T-Deck Firmware** — beta-0.1.46-RC8
+
+
+      Release candidate 8. 116 commits since beta-0.1.45-RC7.
+
+
+      ### Flash with esptool
+
+      ```bash
+
+      # Full flash (first install):
+
+      esptool.py --chip esp32s3 --port /dev/ttyACM0 write_flash 0x0 firmware-merged.bin
+
+
+      # App update (keep settings):
+
+      esptool.py --chip esp32s3 --port /dev/ttyACM0 write_flash 0x10000 firmware.bin
+
+      ```
+
+
+      ### Web Flasher
+
+      Use `manifest.json` with [esptool.js](https://espressif.github.io/esptool-js/).
+
+
+      | File | Use |
+
+      |------|-----|
+
+      | `firmware.bin` | App only (flash at 0x10000) |
+
+      | `firmware-merged.bin` | Full flash (flash at 0x0) |
+
+      | `SigurdOS-tdeck-launcher.bin` | For bmorcelli/Launcher install |
+
+      | `manifest.json` | Web flasher manifest |
+
+      | `sigurdos-tdeck-bootloader.bin` | Bootloader (web flasher) |
+
+      | `sigurdos-tdeck-partitions.bin` | Partitions (web flasher) |
+
+      | `sigurdos-tdeck-boot_app0.bin` | Boot app0 (web flasher) |
+
+
+      ### Features
+
+      - UI: SD card file browser, mesh health dashboard, message search screen, GPS track log
+      breadcrumbs
+
+      - Navigation: pin-locked screen gate enforcement, unified nav state validation
+
+
+      ### Security
+
+      - Remove all efuse-burning risk from build and CI paths
+
+      - P1 OTA authenticity enforcement + orderly sleep hardware path
+
+      - Protect persisted credentials in NVS
+
+      - PIN lockout persistence and identity key guarding
+
+      - Reject security epoch downgrades in OTA
+
+      - Harden mesh input validation and proximity scopes
+
+      - Revoke BLE bonds on PIN rotation and factory reset
+
+
+      ### Fixes
+
+      - Mesh: durable transactional mutations (#1428), transactional radio config (#1427),
+      transactionally persist flood scopes (#1429), reclaim timed-out operations (#1425), stable
+      contact IDs (#1443), parse complete node status (#1413), harden message store recovery (#1430)
+
+      - OTA: keep transfers off loop watchdog (#1436), enforce boot health and safe sleep failure
+      (#1213), gate every firmware environment (#1392)
+
+      - WiFi: make scans async and cancellable (#1435), arbitrate radio ownership (#1414)
+
+      - Map: move tile loading off LVGL task (#1434), incremental tile discovery (#1422), refresh
+      sparse tile media safely (#1373)
+
+      - Companion/BLE: MTU-safe delivery (#1217), ownership revocation on factory reset (#1415), USB
+      CDC data stream binding (#1219), close dependency gaps (#1172)
+
+      - GPS: independent UART drain from publication (#1216), expire fixes and resync clock (#1361)
+
+      - UI: terminal and system action hardening (#1409), persist named chat scopes (#1380),
+      preserve DM conversations (#1225), generation-safe lifecycle (#1214)
+
+      - Storage: preserve SPIFFS unless fully erased (#1215), bound diagnostic telemetry (#1386)
+
+      - Build/CI: harden firmware supply chain gates (#1390), bound warning budgets, validate
+      HAL/NVS/UI allocations (#1371), resolve all doc drift
+
+      - Crash telemetry core dump enforcement (#1220), hardware entropy for mesh identities (#1176)
+
+
+      ### Tests
+
+      - WiFi icon lifetime reuse (#1423), behavior-to-production linking (#1417), native coverage
+      policy enforcement (#1431), T-Deck sleep orchestration (#1426), OTA partial-write unwind
+      (#1424), production mesh integration (#1421), remote delivery truthfulness (#1419), UI screen
+      load lifecycle (#1412)
+
+
+      ### Evidence
+
+      Release evidence: `release-evidence/beta-0.1.46-RC8.json`
   - version: beta-0.1.45-RC7
     name: beta-0.1.45-RC7
     datetime: '2026-07-18T09:27:15Z'
@@ -1908,24 +2026,3 @@ releases:
 
       **Full Changelog**:
       https://github.com/hermes-gadget/SlopOS-tdeck/compare/beta-0.1.27...beta-0.1.28
-  - version: beta-0.1.27
-    name: beta-0.1.27
-    datetime: '2026-05-19T19:54:39Z'
-    url: https://github.com/hermes-gadget/SigurdOS-tdeck/releases/tag/beta-0.1.27
-    prerelease: true
-    notes: >-
-      **SlopOS T-Deck Firmware** — beta-0.1.27
-
-
-      | File | Use |
-
-      |------|-----|
-
-      | `firmware.bin` | OTA update (app only, flash at 0x10000) |
-
-      | `firmware-merged.bin` | Full flash (bootloader + partitions + app, flash at 0x0) |
-
-
-
-      **Full Changelog**:
-      https://github.com/hermes-gadget/SlopOS-tdeck/compare/beta-0.1.26...beta-0.1.27

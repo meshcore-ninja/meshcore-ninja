@@ -1,7 +1,13 @@
 source: github
 repo: MultiMote/meshcore-cardputer-adv
-updatedAt: '2026-07-18T20:52:41.510Z'
+updatedAt: '2026-07-31T17:41:16.591Z'
 releases:
+  - version: 2026.7.3
+    name: Firmware 2026.7.3
+    datetime: '2026-07-31T16:37:32Z'
+    url: https://github.com/MultiMote/meshcore-cardputer-adv/releases/tag/2026.7.3
+    prerelease: false
+    notes: "* Add default scope (region) option to the settings\r\n* Add search box to the contacts page\r\n* Move layout icon to the status bar"
   - version: 2026.7.2
     name: Firmware 2026.7.2
     datetime: '2026-07-18T19:52:51Z'

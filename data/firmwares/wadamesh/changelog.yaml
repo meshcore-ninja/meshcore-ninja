@@ -1,7 +1,69 @@
 source: github
 repo: ALLFATHER-BV/wadamesh
-updatedAt: '2026-07-30T17:37:31.754Z'
+updatedAt: '2026-07-31T17:41:26.013Z'
 releases:
+  - version: beta_54
+    name: wadamesh beta_54
+    datetime: '2026-07-31T15:54:59Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_54
+    prerelease: true
+    notes: >-
+      ## wadamesh beta_54 — test build
+
+
+      **T-Display P4 owners: this is the one.** The whole-screen blue flash (#167) is fixed, and GPS
+      actually works now.
+
+
+      Flash or update via **[flasher.wadamesh.com](https://flasher.wadamesh.com)** (Beta toggle),
+      the on-device updater ("Get test builds"), or the LauncherHub WADAMESH BETA entry.
+
+
+      ### T-Display P4
+
+      - **Screen flash fixed (#167).** Root cause, established by on-device measurement: SD-card
+      write bursts delay the interrupt that re-arms the display's frame DMA — the panel shows the
+      late frame as a blue flash (35–39 ms gaps against a 20 ms cadence, one-for-one with card
+      transactions). The hot store (contacts, channels, chat history) now lives on fast internal
+      storage; the SD carries map tiles, backups and exports. Your data migrates automatically on
+      first boot — the card is left untouched as a rollback.
+
+      - **Card independence:** the SD card no longer holds your identity — swapping or removing it
+      can never change your node or lose contacts.
+
+      - **GPS fixed for real.** The sensor loop was never serviced on this board, so the firmware
+      never read the GPS module at all. Confirmed fixing outdoors.
+
+      - **Live satellite page:** in view / in use / signal strength, updating while open.
+
+      - Storage writes run on a dedicated worker task — no more UI stutter on big saves.
+
+
+      ### Romanian — by @jcyrio (#188, #189)
+
+      Romanian is the 13th UI language, with a proper keyboard layout: **ă** on the home row,
+      **ş/ţ** on the deck, **â/î** via the accent popups. Mulţumim!
+
+
+      ### Heltec V4-R8
+
+      - **Landscape touch fixed** (was point-mirrored — the R8's panel baseline differs from the
+      V4's, and the touch mapping assumed the V4). If you got stuck in landscape: this build boots
+      back to portrait automatically.
+
+      - For safety the R8 returns to portrait on every boot until a tester confirms the corrected
+      mapping — please try landscape and report.
+
+
+      ### General
+
+      - Airtime + Snake apps: crash fix on close.
+
+
+      Full changelog: `beta_53...beta_54`
+
+
+      🤖 Generated with [Claude Code](https://claude.com/claude-code)
   - version: beta_53
     name: wadamesh beta_53
     datetime: '2026-07-30T15:49:55Z'
@@ -1198,62 +1260,3 @@ releases:
       are now collected by a dedicated background task instead of the UI loop, fixing the "my device
       missed a message a device next to it heard" problem. A safety switch lives in Settings > Radio
       & Mesh ("Buffered receive").
-  - version: beta_34
-    name: wadamesh beta_34
-    datetime: '2026-07-06T09:18:43Z'
-    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_34
-    prerelease: true
-    notes: >-
-      Test-channel build. This one is significant: it changes how the device collects packets from
-      the LoRa radio, and the new path is ON by default so the test channel can prove it before it
-      goes anywhere near stable.
-
-
-      ### The missed-messages fix, explained
-
-
-      The radio chip holds only one received packet at a time. Until now the firmware collected that
-      packet when the main loop got around to it, and that is the same loop that draws the entire
-      touch interface. If the screen kept the loop busy while two packets arrived back to back, the
-      first packet was silently overwritten. No error, no log entry, just a message your device
-      heard but never showed you. That is the "my device missed a message another device right next
-      to it heard" report, and it explains why it affected this firmware but not stock MeshCore,
-      which has no screen to draw.
-
-
-      From this build a small dedicated background task collects every packet within about a
-      millisecond of it arriving, no matter what the interface is doing. Scrolling the map,
-      rebuilding a big chat, saving contacts: none of it can cost you a packet anymore.
-
-
-      ### Why default ON, and why there is still a toggle
-
-
-      The receive path is the heart of the device, so this is exactly the kind of change that needs
-      real-world hours across different meshes before it can be called done, and it only gets those
-      hours if testers actually run it. That is why it ships enabled on the test channel. The safety
-      hatch: if you see anything odd with receiving, sending, or the Spectrum analyzer, switch off
-      "Buffered receive (experimental)" in Settings > Radio & Mesh. It applies instantly, no reboot,
-      and puts you back on the old path. Please report what you saw either way, that is what this
-      channel is for.
-
-
-      You can also watch it work: Settings > About now shows LoRa receive counters. "late-lost"
-      counts packets the radio heard but the firmware failed to collect in time. With buffered
-      receive on it should stay at zero. Turn the toggle off on a busy mesh and you may watch it
-      creep up, which is the old bug happening live.
-
-
-      ### Also fixed
-
-
-      - Messages sent by wadamesh no longer carry stray bytes that stock MeshCore devices and some
-      companion apps showed as garbage characters after the text (issue #13).
-
-      - A GPS module reporting a bogus date can no longer drag the device clock back to the year
-      1902.
-
-
-      Install with "Beta updates" enabled in Settings > About, via Launcher, or flash a bin below
-      (the merged bin at 0x0 for a fresh install, the plain bin for Launcher/OTA). Boards: LilyGo
-      T-Deck, Heltec V4 TFT.

@@ -1,7 +1,58 @@
 source: github
 repo: andymux/meshos-releases
-updatedAt: '2026-07-30T10:27:10.561Z'
+updatedAt: '2026-07-31T17:41:43.439Z'
 releases:
+  - version: v1.0.10
+    name: MeshOS v1.0.10
+    datetime: '2026-07-31T17:31:29Z'
+    url: https://github.com/andymux/meshos-releases/releases/tag/v1.0.10
+    prerelease: false
+    notes: >-
+      **Internet Messaging (new)**
+
+      Chat over the internet, with no radio needed. Turn it on in Settings and join the MeshOS
+      channel: a global room shared with MeshOS users and devices anywhere, over WiFi or mobile
+      data. The channel shows a live green/red connection dot. Works alongside your LoRa radio, and
+      when a node is connected you appear under its name.
+
+
+      **The app is now completely free**
+
+      No licence, no activation, no restrictions. Every feature is unlocked for everyone, with any
+      MeshCore radio. MeshOS device owners keep their "Activated" badge.
+
+
+      **New setup experience**
+
+      A proper first-run flow: choose whether to set up a MeshCore radio or go straight to internet
+      and phone-to-phone messaging. Setting up a new radio walks you through region settings and
+      your username, then offers the MeshOS channel.
+
+
+      **Send your location**
+
+      A pin button in every chat sends your current position to that channel or contact, in the same
+      format T-Deck and M9 devices use, so it shows on everyone's map.
+
+
+      **Redesigned message box**
+
+      Grows as you type, keeps the pin, emoji and voice buttons inside it, and sends on Enter with
+      hardware keyboards (Shift+Enter for a new line).
+
+
+      **Also in this release**
+
+      - New MeshOS app icon
+
+      - Cleaner chats screen
+
+      - Fixes: missing Public channel and a stuck refresh spinner after setting up a radio
+
+
+      ---
+
+      APK SHA-256: `13c3690607139ad40a540f59e8801469b6227e112d89f54d42e9b72013e10a59`
   - version: fw-v1.6.2
     name: MeshOS firmware v1.6.2
     datetime: '2026-07-30T07:17:29Z'
@@ -513,19 +564,3 @@ releases:
       General bug fixes and stability improvements
       Improvements to licensing and platform consistency
       Added copy to BLE messaging for easier device-to-device clipboard use
-  - version: v1.0.0
-    name: MeshOS v1.0.0
-    datetime: '2026-04-12T16:17:15Z'
-    url: https://github.com/andymux/meshos-releases/releases/tag/v1.0.0
-    prerelease: false
-    notes: |-
-      v1.0.0 - Major release
-
-      - Phone-to-phone BLE mesh messaging
-      - What's New screen on app updates
-      - Redesigned license screen with in-app purchase flow
-      - Tactical mode color fixes
-      - Voice message UI improvements
-      - Timestamp sanitization for corrupted packets
-      - Message preview toggle now functional
-      - LoRa setup hints trigger on first node connect only
