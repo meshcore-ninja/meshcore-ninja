@@ -1,7 +1,13 @@
 source: github
 repo: vicliu624/trail-mate
-updatedAt: '2026-07-30T02:34:17.133Z'
+updatedAt: '2026-07-31T10:42:09.325Z'
 releases:
+  - version: v0.1.39-alpha
+    name: v0.1.39-alpha
+    datetime: '2026-07-31T09:33:02Z'
+    url: https://github.com/vicliu624/trail-mate/releases/tag/v0.1.39-alpha
+    prerelease: true
+    notes: "## [0.1.39-alpha] - 2026-07-31\r\n### Fixed / 修复\r\n- Stabilized the ESP Meshtastic MQTT session so connection, subscription, and keepalive progress are tracked explicitly through CONNACK, SUBACK, and PINGRESP deadlines; reconnects use bounded exponential backoff, control-plane replies cannot be starved by ordinary Wi-Fi traffic budgets, and inbound QoS 1 publishes are acknowledged with PUBACK. Transient publish failures now retain the in-flight uplink for retry, while a full bounded uplink queue rejects low-priority NodeInfo, position, telemetry, and traceroute reports before they can displace text, control, or encrypted traffic. / 稳定 ESP 端 Meshtastic MQTT 会话：显式跟踪 CONNACK、SUBACK 与 PINGRESP 的连接、订阅和保活时限；重连采用有界指数退避，控制面响应不会再被普通 Wi-Fi 流量预算饿死，入站 QoS 1 发布会正确回复 PUBACK。临时发布失败会保留正在发送的上行消息以便重试；有界上行队列满时，NodeInfo、位置、遥测和 traceroute 等低优先级上报会先被拒绝，不再挤掉文本、控制或加密流量。\r\n\r\n\n\n**Full Changelog**: https://github.com/vicliu624/trail-mate/compare/v0.1.38-alpha...v0.1.39-alpha"
   - version: v0.1.38-alpha
     name: v0.1.38-alpha
     datetime: '2026-07-30T02:27:17Z'
@@ -476,71 +482,3 @@ releases:
 
       **Full Changelog**:
       https://github.com/vicliu624/trail-mate/compare/v0.1.19-alpha...v0.1.20-alpha
-  - version: v0.1.19-alpha
-    name: v0.1.19-alpha
-    datetime: '2026-04-20T19:47:30Z'
-    url: https://github.com/vicliu624/trail-mate/releases/tag/v0.1.19-alpha
-    prerelease: true
-    notes: >-
-      ## [0.1.19-alpha] - 2026-04-21
-
-      ### Added / 新增
-
-      - Installable multilingual language bundles delivered through the new Extensions flow, with
-      initial external locale/font packages for European Latin Extended, Simplified Chinese,
-      Traditional Chinese, Japanese, and Korean / 新增通过 Extensions 流程分发的可安装多语言包，首批提供 European Latin
-      Extended、简体中文、繁体中文、日语与韩语等外部 locale/font 套件
-
-      - A Pages-side pack catalog and build pipeline that publishes SD-installable locale bundles
-      from `packs/` into `site/data/packs.json` and packaged zip assets / 新增 Pages 侧语言包目录与构建流水线，可将
-      `packs/` 下的资源发布为 `site/data/packs.json` 与可安装 zip 包
-
-      - Shared Wi-Fi runtime support for the ESP targets, plus Extensions app entry points and
-      top-bar/status exposure needed for on-device package downloads / 新增 ESP 目标共用的 Wi-Fi
-      运行时能力，以及为设备侧下载语言包准备的 Extensions 入口和顶部状态显示
-
-
-      ### Changed / 变更
-
-      - Localization is now pack-driven instead of being limited to a small built-in language set,
-      with runtime locale/font/IME registration, SD discovery, and memory-profile-aware gating for
-      constrained devices / 本地化体系现已从少量内建语言收敛为 pack 驱动模式，支持运行时 locale/font/IME 注册、SD
-      扫描，以及面向受限设备的内存画像门控
-
-      - GitHub Pages now presents Trail Mate as a multilingual firmware project and surfaces the
-      installable language-pack catalog alongside the existing firmware download path / GitHub Pages
-      现将 Trail Mate 明确展示为支持多语言的固件项目，并在原有固件下载路径之外呈现可安装语言包目录
-
-      - Meshtastic direct-message handling and send-status flow were unified around upstream
-      PKI-style behavior, while outdated settings-side PKI toggle/plumbing was removed and
-      Chat/Contacts compose handling now stays on one path / Meshtastic 私聊与发送状态流程现已围绕上游 PKI
-      语义统一收敛，移除过时的设置页 PKI toggle/plumbing，并让 Chat/Contacts 共用同一条 compose 发送路径
-
-
-      ### Fixed / 修复
-
-      - Fixed false `No response` send results after valid Meshtastic acknowledgements or response
-      packets had already arrived, so UI send state now follows the actual protocol outcome more
-      closely / 修复在 Meshtastic 已收到有效 ACK 或响应包后界面仍错误显示 `No response` 的问题，使发送状态与真实协议结果更一致
-
-      - Fixed blind spots in Meshtastic diagnostics by logging decode, key verification, routing,
-      and drop reasons more explicitly, making packet handling failures and dedup behavior easier to
-      trace / 修复 Meshtastic 诊断日志盲区，现会更明确地记录 decode、key verification、routing 与 drop 原因，使包处理失败和 dedup
-      行为更易追踪
-
-      - Fixed Extensions/package-download reliability under tight internal-RAM conditions by
-      steering large TLS allocations toward PSRAM and tightening Wi-Fi/runtime state reporting in
-      the UI / 修复内存紧张条件下 Extensions/语言包下载的稳定性问题，通过将较大的 TLS 分配导向 PSRAM 并收紧 UI 中的
-      Wi-Fi/运行时状态显示，提高下载可靠性
-
-
-
-
-      ## What's Changed
-
-      * Tdeck by @vicliu624 in https://github.com/vicliu624/trail-mate/pull/24
-
-
-
-      **Full Changelog**:
-      https://github.com/vicliu624/trail-mate/compare/v0.1.18-alpha...v0.1.19-alpha
