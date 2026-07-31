@@ -1,7 +1,111 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-07-30T23:10:32.804Z'
+updatedAt: '2026-07-31T23:03:46.308Z'
 releases:
+  - version: v4.13.3-rc4
+    name: v4.13.3-rc4
+    datetime: '2026-07-31T22:43:05Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.13.3-rc4
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.13.3-rc4
+
+
+      > ⚠️ **Pre-release.** This is a release candidate for testing. It does not carry the `:latest`
+      Docker tag. Run it in production only if you are ready to report bugs.
+
+
+      ## Summary
+
+
+      This candidate is built around two threads: the **MeshCore Analyzer Observer** epic (#4457)
+      landing in full across three phases, and a chain of **position-trust** fixes that started with
+      a protobuf refresh and ended up closing a security hole plus a long-standing data bug.
+
+
+      The position thread is worth reading in order. Refreshing the Meshtastic protobufs picked up
+      `MeshPacket.rx_rssi` gaining *explicit presence* — which turned a latent ambiguity into a live
+      defect. Every `rx_rssi != 0` guard had been treating a genuine 0 dBm reception as "no data",
+      and in the local-node spoof detector that meant a 2.8 node transmitting at point-blank range
+      was classified as **our own outgoing message**. Fixed, with a regression test on that exact
+      case.
+
+
+      Next, estimated positions were made honest. A trilaterated estimate used to be
+      indistinguishable from a device GPS fix once it reached the client, because only one of the
+      three position sources set a flag. Node Details now carries a **GPS / Estimated / Override
+      pill and a ± accuracy radius**. On a typical install that relabels several hundred nodes that
+      were quietly presenting guesses as fixes.
+
+
+      That pill immediately exposed a real bug it had been hiding. Migration 107 once cleared bogus
+      `(0,0)` fixes from `nodes`, but never swept `estimated_positions` — so a node whose Null
+      Island fix had been cleared fell through to a Null Island *estimate*, re-substituting the
+      exact coordinates the migration removed. **Migration 134** purges those rows, the estimator no
+      longer generates them, and the display gate now accepts a genuine equator or prime-meridian
+      coordinate instead of reading a zero as "unpositioned".
+
+
+      ## Features
+
+
+      - MeshCore Analyzer Observer — backend foundation (#4457 phase 1) — #4464
+
+      - MeshCore Analyzer Observer — publisher service (phase 2) — #4468
+
+      - MeshCore Analyzer Observer — UI and docs (phase 3, final) — #4471
+
+      - Position provenance in Node Details: GPS / Estimated / Override pill plus a ± accuracy
+      radius (#4432) — #4467
+
+      - `DeviceMetadata.has_xeddsa` surfaced in Admin Commands, distinguishing "cannot sign" from
+      "did not sign" (#3923) — #4466
+
+
+      ## Bug Fixes
+
+
+      - **Local-node spoof detection failed open on a 0 dBm reception.** With firmware 2.8's
+      explicit `rx_rssi` presence, a spoofed packet at point-blank range was classified as a genuine
+      local transmission — #4466
+
+      - Null Island estimates presented as real positions; migration 134 purges the stored rows, the
+      estimator stops producing them, and a genuine equator / prime-meridian fix is no longer
+      overwritten by an estimate — #4469
+
+      - PWA notification clicks now deep-link to the source route (#4463) — #4465
+
+      - MeshCore channel message history: infinite-scroll pagination — #4461
+
+      - Traceroute node picker: relayed participation is MQTT-only — #4459
+
+      - Per-node uptime graphs humanized (#3261); sidebar controls no longer overlap the shared
+      footer (#4436) — #4458
+
+
+      ## Protocol / Internals
+
+
+      - Protobufs refreshed to `develop@6ceceae` (61 upstream commits). HardwareModel 141–143
+      (`HELTEC_RC32` / `RC52` / `RCC6`), `PortNum.LORA_OTA_APP = 79`, `UA_868` marked deprecated —
+      #4466
+
+      - CI/release watcher scripts retry transient GitHub API errors — #4462
+
+
+      Still no upstream 2.8 protobufs tag (newest remains `v2.7.26`), so the pin is a `develop`
+      preview and the 2.8 tracking issues stay open.
+
+
+      ## Upgrade Notes
+
+
+      - **Migration 134** runs automatically on first boot and deletes Null Island rows from
+      `estimated_positions`. Any affected node loses its bogus estimate; the scheduled recompute
+      recreates a row if a legitimate solve still exists.
+
+      - Nodes that were displaying an estimated position will now show an `ESTIMATED` pill. That is
+      the estimate becoming visible, not a new estimate.
   - version: v4.13.3-rc3
     name: v4.13.3-rc3
     datetime: '2026-07-30T21:27:47Z'
@@ -2143,110 +2247,3 @@ releases:
       unscoped); the same fix 
 
       …
-  - version: v4.12.3
-    name: v4.12.3
-    datetime: '2026-07-01T18:03:20Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.12.3
-    prerelease: false
-    notes: >-
-      # MeshMonitor v4.12.3
-
-
-      MeshMonitor 4.12.3 adds two new capabilities: a reusable **Pause** action for the Automation
-      Engine (build custom delayed sequences like "message trigger → pause → send message"), plus a
-      dedicated configurable pre-send delay on Auto-Acknowledge for both Meshtastic and MeshCore. It
-      also brings the Meshtastic **Position History** map feature to MeshCore — per-node movement
-      trails with a configurable retention window. On the reliability side, this release closes out
-      a batch of MeshCore fixes: deleted contacts no longer get resurrected by the next sync, the
-      saved-regions/default-scope view no longer spams background requests and throws a spurious
-      error banner, GPS position from a telemetry poll now updates Contact Details, and the Virtual
-      Node bridge now correctly forwards delivery ACKs and real hop counts to a connected companion.
-      The MeshCore "Direct Messages" tab and its permission are renamed to "Node Details" to reflect
-      that they also gate node-detail info, not just DMs. Traceroute's "last traced" age can no
-      longer go negative when a node's device clock is ahead of real time — an ingest-time clamp
-      plus a migration repair existing rows. A sticky section-nav bug that scrolled
-      configuration-page navigation behind the fixed header is fixed, and duplicate WARN-level log
-      spam from security/telemetry checks on large meshes has been quieted.
-
-
-      ## Features
-
-      - **Automation Engine "Pause" action + configurable Auto-Ack pre-send delay** — #3879, closes
-      #3876
-
-      - **MeshCore node position-history movement trails on the map** — #3877, closes #3852
-
-      - **MeshCore auto-acknowledge `{SCOPE}` token** — #3866, closes #3865
-
-
-      ## Bug Fixes
-
-      - **MeshCore: deleted contact resurrected on the next sync** — #3882, closes #3878
-
-      - **MeshCore: intermittent "Failed to load saved regions" banner** — #3881, closes #3880
-
-      - **MeshCore Virtual Node: DM ack + inbound hop count bridging** — #3875, closes #3869, #3871
-
-      - **Sticky section-nav scrolled behind the fixed header** — #3873, closes #3872
-
-      - **MeshCore: "Direct Messages" tab/permission renamed to "Node Details"** — #3870, closes
-      #3867
-
-      - **Duplicate WARN log spam from security/telemetry checks** — #3864, closes #3863
-
-      - **MeshCore: GPS position from a telemetry poll now persists to Contact Details** — #3862,
-      closes #3861
-
-      - **Traceroute "last traced" could show a negative age** — #3860, closes #2768
-
-
-      ## Testing
-
-      - **Happy-path tests for channel reorder + MeshCore delete** — #3857 (thanks @temalo!)
-
-
-      ## Documentation
-
-      - **release: 4.12.3 — version bump + docs catch-up** — #3883
-
-
-      ## Issues Resolved
-
-      #2768, #3852, #3861, #3863, #3865, #3867, #3869, #3871, #3872, #3876, #3880, #3697
-
-
-      ## Full Changelog
-
-      https://github.com/Yeraze/meshmonitor/compare/v4.12.2...v4.12.3
-
-
-      ## 🚀 MeshMonitor v4.12.3
-
-
-      ### 📦 Installation
-
-
-      **Docker (recommended):**
-
-      ```bash
-
-      docker run -d \
-        --name meshmonitor \
-        -p 8080:3001 \
-        -v meshmonitor-data:/data \
-        ghcr.io/Yeraze/meshmonitor:4.12.3
-      ```
-
-
-      ### 🧪 Testing
-
-      ✅ All tests passed
-
-      ✅ TypeScript checks passed
-
-      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
-
-
-      ### 📋 Changes
-
-      See commit history for detailed changes.
