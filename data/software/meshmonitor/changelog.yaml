@@ -1,6 +1,6 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-07-31T23:03:46.308Z'
+updatedAt: '2026-08-01T03:13:23.789Z'
 releases:
   - version: v4.13.3-rc4
     name: v4.13.3-rc4
@@ -106,6 +106,19 @@ releases:
 
       - Nodes that were displaying an estimated position will now show an `ESTIMATED` pill. That is
       the estimate becoming visible, not a new estimate.
+
+
+      ## 🚀 MeshMonitor v4.13.3-rc4
+
+
+      ### 📦 Installation
+
+
+      **Docker (recommended):**
+
+      ```bash
+
+      …
   - version: v4.13.3-rc3
     name: v4.13.3-rc3
     datetime: '2026-07-30T21:27:47Z'

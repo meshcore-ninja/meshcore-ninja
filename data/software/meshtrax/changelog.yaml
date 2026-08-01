@@ -1,7 +1,13 @@
 source: github
 repo: venamartin/meshtrax
-updatedAt: '2026-07-30T21:13:50.050Z'
+updatedAt: '2026-08-01T03:13:25.149Z'
 releases:
+  - version: v1.7.12
+    name: Release v1.7.12
+    datetime: '2026-07-31T23:56:26Z'
+    url: https://github.com/venamartin/meshtrax/releases/tag/v1.7.12
+    prerelease: false
+    notes: "## What's new\r\n\r\n### Mention notifications\r\nWhen someone @mentions you or replies to you in a channel, you now get a\r\nnotification titled **\"Mention in <channel>\"** — even if that channel is muted.\r\nTapping it opens the channel anchored on the exact message. Enabled by default;\r\ntoggle it in App Settings → Notifications. Mentioning yourself stays silent,\r\nand you never get a double notification — on unmuted channels the mention\r\nreplaces the regular channel notification.\r\n\r\n### Debug log upgrades\r\nFilter the App Debug Log by All / Warnings / Errors, save it to a text file\r\nvia the system save dialog, and every entry now shows a full date + time.\r\n\r\n### Fixes\r\n- Messages your companion collected while the app was away now keep their real\r\n  send times instead of all being stamped with the connection time. Ordering\r\n  remains by arrival, so nothing shuffles.\r\n- Offline-queued messages no longer claim they arrived \"Direct\" — they show\r\n  their true hop count, including a fix for 2-byte path-hash networks where\r\n  hop counts displayed halved.\r\n- Contacts discovered from over-the-air adverts now decode their path header\r\n  correctly (paths were stored corrupted on 2-byte-hash networks).\r\n- The Add Channel dialog's Create/Add button is pinned next to Close, where the\r\n  keyboard can't cover it — and the keyboard's ✓ key submits.\r\n- The @ mention picker no longer truncates the contact list; emoji-named\r\n  contacts appear at the top (they drop out as soon as you type a letter).\r\n\r\n**Full Changelog**: https://github.com/venamartin/meshtrax/compare/v1.7.10...v1.7.12"
   - version: v1.7.10
     name: Release v1.7.10
     datetime: '2026-07-30T20:44:58Z'
