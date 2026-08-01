@@ -1,7 +1,57 @@
 source: github
 repo: ALLFATHER-BV/wadamesh
-updatedAt: '2026-08-01T10:02:02.897Z'
+updatedAt: '2026-08-01T13:25:48.634Z'
 releases:
+  - version: beta_56
+    name: wadamesh beta_56
+    datetime: '2026-08-01T10:38:29Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_56
+    prerelease: true
+    notes: >-
+      ## wadamesh beta_56 — test build
+
+
+      **Update recommended for everyone who ever picked a region preset.**
+
+
+      Flash via **[flasher.wadamesh.com](https://flasher.wadamesh.com)** (Beta toggle), the
+      on-device updater, or LauncherHub WADAMESH BETA.
+
+
+      ### ⚠️ Duty-cycle fix (#161)
+
+      The region presets set the airtime limit **10× too loose**: a 10% preset actually allowed ~91%
+      duty — the home-screen meter reading "91% max duty cycle" was correctly reporting your radio's
+      real budget. This build fixes the preset math **and self-heals affected devices**: if your
+      radio parameters exactly match a preset and carry the old faulty limit, the correct one is
+      written automatically at boot. Hand-tuned airtime factors are never touched. Thanks
+      @Lankyalong for the report.
+
+
+      ### T-Pager
+
+      - **The SD card is used now (#193).** It mounted and browsed but nothing stored to it — the
+      storage feature was never switched on for this board. The Pager now has the same "Store data
+      on SD", boot storage selection and migration as the T-Deck. Thanks @AtomAlex12.
+
+
+      ### Fixes
+
+      - Message details show the region scope for scoped **direct** messages, and no longer show
+      `Scope 0000` when the sender carries the region in the alternate slot (#157, thanks
+      @D-Melhede).
+
+      - Discover app: long node names no longer push the last-heard time off screen (#191, thanks
+      @4nuts). Note: companions don't answer discover pings yet — only repeaters implement the
+      responder — so only repeaters appear, that's expected for now.
+
+      - The unlock animation says WADAMESH (#165 — the last MESHCOMOD leftover, thanks @D-Melhede).
+
+
+      Full changelog: `beta_55...beta_56`
+
+
+      🤖 Generated with [Claude Code](https://claude.com/claude-code)
   - version: beta_55
     name: wadamesh beta_55
     datetime: '2026-08-01T09:49:20Z'
@@ -1200,69 +1250,3 @@ releases:
 
       - T-Deck: touch init at boot retries for a few seconds instead of giving up after one attempt,
       which could cost the session both touch and keyboard.
-  - version: beta_36
-    name: wadamesh beta_36
-    datetime: '2026-07-07T09:21:51Z'
-    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_36
-    prerelease: true
-    notes: >-
-      Test-channel build. Install with the web flasher at https://flasher.wadamesh.com (pick the
-      beta channel), via the Launcher, or on-device with the "Get test builds (beta)" toggle in
-      Settings > About.
-
-
-      ## Community fixes and requests
-
-
-      This beta ships a contributed fix and three community requests. Thank you all.
-
-
-      ### Store data on SD really works now, by @scratchdiver (#123)
-
-
-      The "Store data on SD" toggle was silently ignored at boot on Launcher installs: the setting
-      was saved to a file the boot code never read, so devices kept using slow internal flash no
-      matter what the switch said. @scratchdiver tracked it down and fixed the boot path. A
-      follow-up commit on top makes the toggle work in both directions on those installs. If you run
-      wadamesh under the Launcher on a busy mesh, flip the toggle once: contacts and settings now
-      genuinely move to the SD card, which removes a whole class of slow internal-flash writes.
-
-
-      ### Symbol passwords everywhere (#122, reported by @smhawkes)
-
-
-      Long-press any settings field, including the Wi-Fi password, for the Cut / Copy / Paste / All
-      / Sym menu. Sym opens a special-character picker with everything the on-screen keyboard does
-      not have. Double-tap selects a word.
-
-
-      ### Lock-screen unread count (#93, requested by @Buko84)
-
-
-      The lock screen shows an envelope with the number of unread messages under the clock. It
-      disappears when there is nothing unread, and it will not burn into the panel (it drifts along
-      with the clock).
-
-
-      ### Australia (Mid) preset (#121, requested by @zindello)
-
-
-      915.075 MHz, 125 kHz, SF9, CR5, in the region list for both the settings page and the
-      first-run wizard.
-
-
-      ## Also new
-
-
-      - The Wi-Fi network screens (join, hidden network, saved-network details) are full-screen
-      settings pages now instead of cramped popups: title in the top bar, tap the bar to go back,
-      proper scrolling with the keyboard open.
-
-      - For Launcher installs: "Save update bin to SD" on the About page downloads the latest
-      firmware of your selected channel into a BINS folder on the SD card, named with version and
-      channel, ready to flash from the Launcher. The test-builds toggle is now visible on Launcher
-      installs too.
-
-      - Groundwork for a new supported device, the Elecrow ThinkNode M9, is in the tree (bring-up by
-      ded of SalishMesh, remote-tested on a preproduction unit). Not part of this release's
-      binaries.
