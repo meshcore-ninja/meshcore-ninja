@@ -1,7 +1,66 @@
 source: github
 repo: ALLFATHER-BV/wadamesh
-updatedAt: '2026-07-31T17:41:26.013Z'
+updatedAt: '2026-08-01T10:02:02.897Z'
 releases:
+  - version: beta_55
+    name: wadamesh beta_55
+    datetime: '2026-08-01T09:49:20Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_55
+    prerelease: true
+    notes: >-
+      ## wadamesh beta_55 — test build
+
+
+      **The reliability release** — with two community contributions by @PixPMusic. Flash via
+      **[flasher.wadamesh.com](https://flasher.wadamesh.com)** (Beta toggle), the on-device updater,
+      or LauncherHub WADAMESH BETA.
+
+
+      ### Settings that stay put — by @PixPMusic (#195, #196)
+
+      An interrupted settings write could truncate the settings file: sound toggles reverting, the
+      setup wizard reappearing, phantom `#unknown` channels. Settings now persist through paired
+      CRC-checked snapshots written in the background — a torn write can only lose the newest
+      change, never your configuration. Saves also no longer hitch the UI.
+
+      *Downgrade note: older firmware reads the settings file, which can be one save behind after
+      running this build.*
+
+
+      ### 3-minute boots with an SD card fixed (#194)
+
+      A card that woke at a low clock kept that clock all session — contacts and history loading at
+      ~25 KB/s, the file manager showing an inserted card as 0 KB/empty, backups wedging. The mount
+      now raises the clock to full speed after a slow wake. Mostly hit T-Deck Launcher installs.
+      Thanks @scsirob for the decisive testing.
+
+
+      ### T-Pager UI size presets — by @PixPMusic (#197)
+
+      Small (current, default), Medium, Large — bigger text tuned for the 480×222 screen, encoder
+      scrolling for tall content. **Pager testers: please try Medium/Large and report anything that
+      clips.**
+
+
+      ### Heltec V4-R8
+
+      - **The buzzer works** — it shipped disabled because the Expansion Kit V2's driver-chip wiring
+      was unconfirmed; Heltec's schematic settled it (DIN = GPIO4, driver hardware-enabled). Still
+      silent? The small **SW1** switch on the expansion board is a hardware mute.
+
+      - Landscape touch fix from beta_54 confirmed by testers — thank you.
+
+
+      ### General
+
+      - Long-pressing the GPS tile in the control centre opens the GPS settings page (was: radio
+      page).
+
+
+      Full changelog: `beta_54...beta_55`
+
+
+      🤖 Generated with [Claude Code](https://claude.com/claude-code)
   - version: beta_54
     name: wadamesh beta_54
     datetime: '2026-07-31T15:54:59Z'
@@ -1207,56 +1266,3 @@ releases:
       - Groundwork for a new supported device, the Elecrow ThinkNode M9, is in the tree (bring-up by
       ded of SalishMesh, remote-tested on a preproduction unit). Not part of this release's
       binaries.
-  - version: beta_35
-    name: wadamesh beta_35
-    datetime: '2026-07-06T11:38:08Z'
-    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_35
-    prerelease: false
-    notes: >-
-      Test-channel build focused on the Heltec V4, though every fix applies to both boards.
-
-
-      ### Fixed
-
-
-      - **V4: multi-second freezes after receiving messages, including the screen refusing to wake
-      from dark mode.** Saving chat history to the internal flash could stall the device up to 6
-      seconds (the V4 has no SD card, and internal flash pauses for housekeeping). That save now
-      runs on a background task, so the screen and touch stay responsive no matter what storage is
-      doing.
-
-      - **Reboot when turning Bluetooth on with Wi-Fi running.** With memory tight, starting
-      Bluetooth used to crash the device mid-init. The switch now checks free memory first and
-      refuses with a clear message instead. The same protection covers the other direction: turning
-      Wi-Fi on with Bluetooth active used to claim "Wi-Fi on" while the radio silently never
-      started.
-
-      - **Settings vanishing for one boot after an unlucky reboot.** Settings writes are now
-      crash-safe (staged write, then swap), the loader self-heals from the staged copy if a reboot
-      lands mid-save, and a genuinely failed save now reports "Couldn't save the name to storage"
-      instead of pretending it worked.
-
-
-      ### Improved
-
-
-      - **About 30 KB of internal RAM freed** by moving buffers to external PSRAM and dropping
-      unused USB components from the build. Internal RAM is what Wi-Fi and Bluetooth both feed on,
-      so this is the headroom that makes running both together comfortable again, especially on the
-      V4.
-
-
-      Install with "Beta updates" enabled in Settings > About, via Launcher, or flash a bin below
-      (merged bin at 0x0 for a fresh install, plain bin for Launcher/OTA). Boards: LilyGo T-Deck,
-      Heltec V4 TFT.
-
-
-
-      ---
-
-
-      **Promoted to stable on 2026-07-06.** If you are updating from beta_33 (the previous stable),
-      this release also includes everything from beta_34, most importantly buffered receive: packets
-      are now collected by a dedicated background task instead of the UI loop, fixing the "my device
-      missed a message a device next to it heard" problem. A safety switch lives in Settings > Radio
-      & Mesh ("Buffered receive").
