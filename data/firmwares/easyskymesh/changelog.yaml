@@ -1,7 +1,13 @@
 source: github
 repo: IoTThinks/EasySkyMesh
-updatedAt: '2026-07-31T10:41:53.732Z'
+updatedAt: '2026-08-02T09:59:31.530Z'
 releases:
+  - version: PowerSaving17
+    name: 'PowerSaving 17: Breaking the 6 mA Barrier — Down to 1 mA'
+    datetime: '2026-08-02T08:56:53Z'
+    url: https://github.com/IoTThinks/EasySkyMesh/releases/tag/PowerSaving17
+    prerelease: true
+    notes: "# Internal testing in progress\r\nDo **NOT** use for production devices\r\n\r\n## Features\r\n* Implemented RX DutyCycle to keep power consumption of repeater down to 2mA. All other features would work as normal.\r\n* TODO: To set `set radio.rxps balanced` automatically when `powersaving on`\r\n\r\n<img height=\"512\" alt=\"image\" src=\"https://github.com/user-attachments/assets/a5a8246e-23a6-4a14-b251-e8631411b88b\" /> \r\n<img height=\"512\" alt=\"image\" src=\"https://github.com/user-attachments/assets/834f39a7-b420-479f-ad19-14b93ebcdff0\" />\r\n\r\n\r\n## Test Results\r\nConfiguration:  \r\n* powersaving on\r\n* gps off\r\n* set radio.fem.rxgain off\r\n* **set radio.rxps off** vs. **set radio.rxps balanced** vs. **set radio.rxps level 10 preamble 16**\r\n* get radio.rxps\r\n* get rxps.wd\r\n\r\nTest results are measured by Uni-T 890C 6000 counts:\r\n* T096 repeater: 9.1A => 4.6-8.8mA => 2.7-8.8mA\r\n* T114 repeater: 7.9mA => 3.4-7.5mA => 1.6-7.3mA"
   - version: PowerSaving16.1
     name: 'PowerSaving 16.1: Added GPS PowerSaving'
     datetime: '2026-06-29T14:20:27Z'
