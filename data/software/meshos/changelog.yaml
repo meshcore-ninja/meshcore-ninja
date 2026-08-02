@@ -1,7 +1,51 @@
 source: github
 repo: andymux/meshos-releases
-updatedAt: '2026-07-31T17:41:43.439Z'
+updatedAt: '2026-08-02T20:58:32.953Z'
 releases:
+  - version: v1.0.11
+    name: MeshOS v1.0.11
+    datetime: '2026-08-02T20:42:48Z'
+    url: https://github.com/andymux/meshos-releases/releases/tag/v1.0.11
+    prerelease: false
+    notes: >-
+      ## Internet for your channels
+
+      - Turn on Internet Link for any LoRa channel from its menu. Your messages travel over LoRa and
+      the internet at the same time and arrive as one message, never duplicates.
+
+      - Create Internet Channels with the + button. They work anywhere with no radio needed, and
+      anyone with the same channel key joins the same room.
+
+      - Channels with Internet Link enabled keep working when your radio is disconnected.
+
+
+      ## Clearer delivery info
+
+      - Two delivery ticks: blue with a globe means delivered over the internet, green means your
+      message was heard back over LoRa. Repeat counts still show next to them.
+
+      - Received messages show a globe when they arrived via the internet, and "LoRa 2 hops" when
+      the radio copy lands too.
+
+
+      ## Maps in chat
+
+      - Shared locations now show a mini map right in the chat bubble. Tap it to open the full map
+      view.
+
+
+      ## Fixes and polish
+
+      - Fixed chat history disappearing from MeshOS and AirLink chats when connecting a LoRa radio.
+
+      - Internet Messaging now stays connected when using a WiFi or Ethernet radio.
+
+      - Settings screens reorganised with clear section dividers.
+
+      - Cleaner chat input styling.
+
+
+      APK SHA-256: `dc080d474c152db8ada2a004317e8ea84d4b00e3e89dfaf4aa3c0223564bdaf7`
   - version: v1.0.10
     name: MeshOS v1.0.10
     datetime: '2026-07-31T17:31:29Z'
@@ -555,12 +599,3 @@ releases:
       - Improved: Light mode metadata legibility on sent/received bubbles
 
       - Hidden: BLE trace hash size selector (hardcoded to 1B for now)
-  - version: v1.0.1
-    name: MeshOS v1.0.1
-    datetime: '2026-04-29T15:39:42Z'
-    url: https://github.com/andymux/meshos-releases/releases/tag/v1.0.1
-    prerelease: false
-    notes: |-
-      General bug fixes and stability improvements
-      Improvements to licensing and platform consistency
-      Added copy to BLE messaging for easier device-to-device clipboard use
