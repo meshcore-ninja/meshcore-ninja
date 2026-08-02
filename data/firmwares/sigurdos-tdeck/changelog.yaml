@@ -1,7 +1,56 @@
 source: github
 repo: hermes-gadget/SigurdOS-tdeck
-updatedAt: '2026-07-31T17:41:24.850Z'
+updatedAt: '2026-08-02T17:02:22.940Z'
 releases:
+  - version: beta-0.1.47-RC9
+    name: beta-0.1.47-RC9
+    datetime: '2026-08-02T16:49:32Z'
+    url: https://github.com/hermes-gadget/SigurdOS-tdeck/releases/tag/beta-0.1.47-RC9
+    prerelease: true
+    notes: >-
+      **SigurdOS T-Deck Firmware** — beta-0.1.47-RC9
+
+
+      Release candidate 9. 25 audit fixes + review follow-ups + CI fix.
+
+
+      ### Flash with esptool
+
+      ```bash
+
+      esptool.py --chip esp32s3 --port /dev/ttyACM0 write_flash 0x0 firmware-merged.bin
+
+      esptool.py --chip esp32s3 --port /dev/ttyACM0 write_flash 0x10000 firmware.bin
+
+      ```
+
+
+      ### Changes since beta-0.1.46-RC8
+
+      - 25 audit fixes (#1466–#1490): security, data integrity, concurrency, radio/map, build infra
+
+      - #1468: Diagnostic writer Serial I/O moved outside ESP32 critical section
+
+      - #1466: SPIFFS remount on factory reset failure
+
+      - #1470: Capped OTA saveState retries
+
+      - #1474: Non-Home PIN cancellation test
+
+      - #1483: SBOM captures URL-based PIO requirements
+
+      - Dependabot: gcovr 8.4→8.6, 9 GitHub Actions pins
+
+
+      ### Verification
+
+      - Native tests: 1,587 passed, 1 skipped
+
+      - CI: green
+
+
+      **Full Changelog**:
+      https://github.com/hermes-gadget/SigurdOS-tdeck/compare/beta-0.1.46-RC8...beta-0.1.47-RC9
   - version: beta-0.1.46-RC8
     name: beta-0.1.46-RC8
     datetime: '2026-07-31T15:25:51Z'
@@ -1973,56 +2022,3 @@ releases:
 
       **Full Changelog**:
       https://github.com/hermes-gadget/SlopOS-tdeck/compare/beta-0.1.28...beta-0.1.29
-  - version: beta-0.1.28
-    name: beta-0.1.28
-    datetime: '2026-05-23T15:57:47Z'
-    url: https://github.com/hermes-gadget/SigurdOS-tdeck/releases/tag/beta-0.1.28
-    prerelease: true
-    notes: >-
-      **SlopOS T-Deck Firmware** — beta-0.1.28
-
-
-      ### Flash with esptool
-
-      ```bash
-
-      # Full flash (first install):
-
-      esptool.py --chip esp32s3 --port /dev/ttyACM0 write_flash 0x0 firmware-merged.bin
-
-
-      # App update (keep settings):
-
-      esptool.py --chip esp32s3 --port /dev/ttyACM0 \\
-        write_flash 0x10000 firmware.bin
-      ```
-
-
-      ### Web Flasher
-
-      Use the manifest at `webflasher/manifest.json` with
-      [esptool.js](https://espressif.github.io/esptool-js/).
-
-
-      | File | Use |
-
-      |------|-----|
-
-      | `firmware.bin` | App only (flash at 0x10000) |
-
-      | `firmware-merged.bin` | Full flash (flash at 0x0) |
-
-      | `webflasher/slopos-tdeck-firmware.bin` | App update |
-
-      | `webflasher/slopos-tdeck-full.bin` | Full flash |
-
-      | `webflasher/slopos-tdeck-bootloader.bin` | Bootloader |
-
-      | `webflasher/slopos-tdeck-partitions.bin` | Partition table |
-
-      | `webflasher/manifest.json` | Web flasher manifest |
-
-
-
-      **Full Changelog**:
-      https://github.com/hermes-gadget/SlopOS-tdeck/compare/beta-0.1.27...beta-0.1.28
