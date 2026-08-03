@@ -1,7 +1,125 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-08-01T19:12:05.468Z'
+updatedAt: '2026-08-03T19:40:51.836Z'
 releases:
+  - version: v4.14.0
+    name: v4.14.0
+    datetime: '2026-08-03T18:26:58Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.14.0
+    prerelease: false
+    notes: >-
+      # MeshMonitor v4.14.0
+
+
+      The first stable release since **v4.13.2** — the 4.13.3 release candidates were folded into
+      this minor instead, because the work that landed is a minor's worth, not a patch's. The
+      headline is the **MeshCore Analyzer Observer**: publish what your Companion hears to a
+      regional analyzer without a second app fighting for the serial port, observation-only by
+      design. Meshtastic and MeshCore sources now share **one navigation system**, which on phones
+      means a bottom bar that scrolls sideways with readable labels instead of eleven crushed icons.
+      Remote admin gained **distinct ACK outcomes** — rejected reads differently from timed out —
+      plus opt-in auto-retry, and commands no longer die when the browser navigates away. MeshCore
+      messages carry **SNR and RSSI** when heard directly, "Discover Nodes" now lists who answered
+      with signal in both directions, and per-channel permissions finally do what they say. Node
+      Details shows **where a position came from and how precise it is**, and Null Island estimates
+      are no longer passed off as real fixes. The Packet Monitor's node filters became searchable
+      comboboxes, which matters most on a phone and on a large mesh. Under the hood, the database
+      driver moved to **better-sqlite3 13** (N-API), verified at runtime on amd64, arm64 and armv7
+      before shipping.
+
+
+      ## ⚠️ Breaking Change: v1 API root paths removed
+
+
+      4.13 moved the v1 mesh-data endpoints under `/api/v1/sources/{sourceId}/…` and kept the old
+      root paths alive for one release behind a `Warning: 299` header. **That grace period ends
+      here** — these paths now return **404**:
+
+
+      ```
+
+      /api/v1/nodes      /api/v1/telemetry     /api/v1/network
+
+      /api/v1/messages   /api/v1/traceroutes   /api/v1/status
+
+      /api/v1/channels   /api/v1/packets       /api/v1/position-history
+
+      ```
+
+
+      Migrate by moving the source into the path:
+
+
+      ```bash
+
+      # Before (4.13, deprecated)
+
+      curl -H "Authorization: Bearer mm_v1_…" "https://host/api/v1/nodes?sourceId=abc123"
+
+
+      # After (4.14)
+
+      curl -H "Authorization: Bearer mm_v1_…" "https://host/api/v1/sources/abc123/nodes"
+
+      ```
+
+
+      `GET /api/v1/sources` lists your source ids, or use the literal `default` to target the
+      primary source. The `/api/upgrade/*` endpoints, returning `410 Gone` since 4.13, are also
+      removed.
+
+
+      **If you script against the REST API, check for these paths before upgrading.** Everything
+      else is drop-in; the database schema migrates automatically on first boot.
+
+
+      Full details in the [release
+      announcement](https://meshmonitor.org/blog/2026-08-03-v4.14.0-release).
+
+
+      ### Features
+
+
+      - feat(analysis): show node names in the ok_to_mqtt violations report (#4343)
+
+      - feat(i18n): localize the MapStyleManager settings component (#4363)
+
+      - feat(meshcore): serve ExportPrivateKey over the Virtual Node behind an "Allow PKI export"
+      gate (#4366)
+
+      - feat(automations): hop-count tapback + {{ trigger.hopEmoji }} (#4340 phase 1) (#4390)
+
+      - feat(traceroute): visual node strip on the Node Details panel (#4392)
+
+      - feat(automations): per-node cooldown scope (#4340 phase 2) (#4396)
+
+      - feat(meshcore): add per-node ignore list to the auto-responder (#4402)
+
+      - feat(map): per-overlay toggle to disable the GeoJSON click popup (#4403)
+
+      - feat(meshcore): add zero-hop ping action (#4404)
+
+      - feat(tx-guard): allow sends when UDP Broadcast can relay for a TX-disabled node (#4405)
+
+      - feat(waypoints): let the user pick the broadcast channel (#4406)
+
+      - feat(automations): Auto-Ack parity conditions (#4340 phase 3) (#4407)
+
+      - feat(automations): Auto-Acknowledge → Automation converter (#4340 phase 4) (#4408)
+
+      - feat(settings): per-source settings foundation and guardrails (#4412 Phase 1) (#4417)
+
+      - feat(traceroute): interactive strip — node popup More Details action + link tooltips (epic
+      phase 1) (#4424)
+
+      - feat(settings): read Node Display settings per-source (#4412 Phase 2) (#4425)
+
+      - feat(traceroute): participation picker on all sources — brings the strip to MQTT (epic phase
+      2) (#4427)
+
+      - feat(traceroute): Copy Forward/Return/Both text links with insecure-context fallback (#4429)
+
+      …
   - version: v4.13.3-rc5
     name: v4.13.3-rc5
     datetime: '2026-08-01T18:42:51Z'
@@ -2175,126 +2293,5 @@ releases:
       in https://github.com/Yeraze/meshmonitor/pull/4003
 
       * 
-
-      …
-  - version: v4.12.5
-    name: v4.12.5
-    datetime: '2026-07-06T21:37:24Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.12.5
-    prerelease: false
-    notes: >-
-      # MeshMonitor v4.12.5
-
-
-      This release completes the **MeshCore Virtual Node** command surface: a companion app
-      (`meshcore-flutter`) connected to a MeshMonitor Virtual Node can now do nearly everything it
-      could against a physically-attached node. Building on 4.12.4's config forwarding, the app can
-      now send self-adverts, log in to remote nodes, trace paths, and request LPP telemetry — each
-      relayed to the real node with the correct `Sent`→async-push handshake and correlated the way
-      the app expects — and the node's raw RX feed is bridged to apps as a `LogRxData` push so
-      channel-finder and packet-inspection tools work through the VN. All of this was validated
-      end-to-end against live hardware. On the LoRa side, the modem-preset picker now filters
-      presets that would be illegal for the selected region and warns when picking a licensed
-      amateur-radio region, with RegionCode values 33–37 added. A batch of MeshCore fixes lands too:
-      `clock sync` now sets the repeater to the real current time, repeater SNR is scaled correctly
-      (quarter-dB /4), a saved static position no longer clobbers live GNSS fixes, and initial
-      auto-connect retries with backoff. Rounding it out: per-node free-text notes, conversation
-      content search, an automation MeshCore scope condition, a guard against a bad saved regex
-      bricking automations, plus dependency and translation updates.
-
-
-      ## Features
-
-      - **MeshCore Virtual Node — app can send adverts, log in, trace paths, and request telemetry**
-      (#3904): `SendSelfAdvert` (#3959); `SendLogin`→`LoginSuccess`, `SendTracePath`→`TraceData`,
-      `SendTelemetryReq`→`TelemetryResponse` (#3961). Hardware-validated.
-
-      - **MeshCore Virtual Node — raw RX feed bridged to apps** as a `LogRxData`(0x88) push (#3964,
-      closes #3963).
-
-      - **LoRa region legality** — filter modem presets by region legality (#3936) and warn on
-      licensed amateur-radio regions (#3930) (#3924).
-
-      - **Nodes — per-node free-text notes field** (#3932, closes #3921).
-
-      - **Messages — search conversations by content**, extended to MeshCore DMs (#3931, #3935,
-      closes #3922).
-
-      - **MeshCore packet-log export — decode unencrypted packet data** (#3939, closes #3937).
-
-      - **Automation — MeshCore scope condition + self-origin guard** (#3920, closes #3914).
-
-
-      ## Bug Fixes
-
-      - **MeshCore: `clock sync` now sets the repeater to the real current time** (#3957, closes
-      #3954).
-
-      - **MeshCore: repeater SNR was reported 4× too high** — now scaled by /4 (#3956, closes
-      #3955).
-
-      - **MeshCore: static contact position no longer clobbers live GNSS telemetry fixes** (#3909).
-
-      - **MeshCore: initial auto-connect now retries with backoff** (#3919).
-
-      - **Automation: a stored bad `filterNameRegex` can no longer brick automations** (#3938,
-      closes #3934).
-
-      - **Automation: send/request actions can now reach MeshCore sources** (#3917, closes #3915).
-
-      - **Config: add RegionCode values 33–37 + fix ITU2_2M label** (#3928, closes #3927).
-
-      - **Map: show direct-heard SNR in the node hover tooltip** (#3929, closes #3925).
-
-      - **Dashboard map: collapse toggle for the Features panel** (#3913, closes #3912).
-
-      - **Hardware: rename hwModel 128 to `MESH_TRACKER_X1`** (#3958, closes #3952).
-
-      - **PirateWeatherADV example script: "read operation timed out" under Timed Events** —
-      timeouts bumped, 30s kill-timeout docs corrected (#3942).
-
-
-      ## Dependencies
-
-      - Bumped the production-dependencies group (8 updates) plus `@types/node`, `globals`,
-      `@typescript-eslint/parser`, `puppeteer`, and `tsx` (#3945, #3946, #3948, #3949, #3950,
-      #3951).
-
-
-      ## Translations
-
-      - Updated from Hosted Weblate (#3601). Thanks to the translators. 🌍
-
-
-      ## Issues Resolved
-
-      #3904, #3963, #3954, #3955, #3952, #3934, #3927, #3924, #3925, #3922, #3921, #3937, #3915,
-      #3914, #3912
-
-
-      **Full Changelog:** https://github.com/Yeraze/meshmonitor/compare/v4.12.4...v4.12.5
-
-
-      ## 🚀 MeshMonitor v4.12.5
-
-
-      ### 📦 Installation
-
-
-      **Docker (recommended):**
-
-      ```bash
-
-      docker run -d \
-        --name meshmonitor \
-        -p 8080:3001 \
-        -v meshmonitor-data:/data \
-        ghcr.io/Yeraze/meshmonitor:4.12.5
-      ```
-
-
-      ### 🧪 Testing
-
-      ✅ All tests pa
 
       …
