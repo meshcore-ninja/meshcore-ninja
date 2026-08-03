@@ -1,7 +1,90 @@
 source: github
 repo: ALLFATHER-BV/wadamesh
-updatedAt: '2026-08-01T13:25:48.634Z'
+updatedAt: '2026-08-03T17:53:31.957Z'
 releases:
+  - version: beta_57
+    name: wadamesh beta_57
+    datetime: '2026-08-03T15:18:09Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_57
+    prerelease: true
+    notes: >-
+      Test build. Stable stays **beta_50**.
+
+
+      Flash it from **https://flasher.wadamesh.com** (flip the Beta toggle), or on-device via
+      Settings → Firmware with "Get test builds (beta)" enabled.
+
+
+      Most of this beta is contributed work: **@PixPMusic** (storage and Pager fixes) and
+      **@mikecarper** (the new send retry). Thank you both.
+
+
+      ---
+
+
+      ### Sends retry until the mesh has heard them
+
+
+      Until now a message was transmitted exactly once. If that single transmission collided with
+      other traffic or a repeater was mid-hop, it was simply gone — the app showed it as sent, the
+      mesh never saw it. Built by **@mikecarper** (#207): the device now listens for evidence its
+      message went out (a repeater echoing it, or the delivery ACK) and retransmits on a growing
+      backoff until something confirms it was heard — direct and flood sends alike, including sends
+      from the phone app. If you prefer the old single-shot behaviour, there is a new toggle under
+      **Settings → Radio & Mesh → "Retry sends until heard"** (on by default).
+
+
+      ### Saving settings on SD storage was broken
+
+
+      If your device stores data on the SD card (T-Deck, V4-R8, Pager, Launcher installs), every
+      settings save has been failing with "Couldn't save name to storage" and quietly surviving only
+      through a recovery file. The commit step renamed a file onto itself because both rename
+      arguments shared one path buffer, so it could never succeed. Found and fixed by **@PixPMusic**
+      (#211).
+
+
+      Two more storage fixes from the same series: watchdog state is now preserved around long
+      SD/flash work instead of being blindly re-armed afterwards, which removes a cause of spurious
+      watchdog reboots (#213), and preference reads no longer hand out pointers into a shared cache
+      that another task could invalidate mid-read (#212).
+
+
+      ### Pager radio: the oscillator voltage was wrong
+
+
+      The SX1262 T-Lora Pager drove its radio oscillator at a generic 1.6 V fallback; LilyGo's own
+      reference code uses 3.0 V for this exact board. The result was a weak link — transmissions
+      nearby nodes missed, ACKs that never arrived. **@PixPMusic** confirmed on hardware that the
+      voltage was the difference (#209).
+
+
+      ### Fixes
+
+
+      - **Discover froze when a node name contains an emoji or a `#`.** The scanner list colours
+      each row with text markup, and a name cut mid-emoji (or a stray hash) broke that markup for
+      every row after it — the list looked frozen from that point on. Names are now cleaned and
+      escaped before display, here and in the message-info repeat list. Reported by **@4nuts** with
+      the exact culprit name, "Ouderkerk☀️" (#223).
+
+      - **Formatting an SD card on the V4-R8 or ThinkNode M9 hung forever.** The Format button
+      exists on both boards, but the code that performs the format was only compiled for the T-Deck
+      — the "this can take up to a minute" notice stayed up with nothing running behind it, and the
+      card stayed unusable until a reboot. Reported by **@TrustYourTechnoLust** (#172).
+
+      - **Files-app Copy/Paste silently did nothing except on the T-Deck** — same root cause as the
+      format hang, fixed the same way.
+
+
+      ---
+
+
+      Both P4 panel variants are built fresh for this tag: `wadamesh-tdisplay-p4*` (AMOLED) and
+      `wadamesh-tdisplay-p4-lcd*` (TFT-LCD).
+
+
+      Full notes: `release-notes/beta_57.txt`.
   - version: beta_56
     name: wadamesh beta_56
     datetime: '2026-08-01T10:38:29Z'
@@ -1192,61 +1275,3 @@ releases:
 
       - Tanmatsu: the app builds size-optimized now, roughly 300 KB smaller, with real headroom
       under the launcher's app-size limit.
-  - version: beta_37
-    name: wadamesh beta_37
-    datetime: '2026-07-08T20:13:21Z'
-    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_37
-    prerelease: true
-    notes: >-
-      Test-channel build. Flash it from [flasher.wadamesh.com](https://flasher.wadamesh.com) (enable
-      test builds), or grab the bins below. On-device: About page, with the test-builds toggle on.
-
-
-      This drop ships two community contributions by @Yazutsu and one by @scratchdiver. Thanks to
-      both, and to @jochentj for the detailed report that drove the Tanmatsu accent work.
-
-
-      ## New
-
-
-      ### Tanmatsu: ALT accents and language switching (#129, reported by @jochentj)
-
-      - Hold ALT and press a letter to open the accent picker. Keep ALT held and press the letter
-      again to cycle through the options; release ALT to insert the highlighted one. Same idea as
-      long-press on the touch boards, fully keyboard driven.
-
-      - Double-tap the space bar to switch between your enabled keyboard languages, matching the
-      T-Deck.
-
-      - Accented letters now render at full size at the Large and Huge UI scales instead of
-      noticeably smaller. All boards moved to compressed UI fonts to make room for this.
-
-
-      ### GPS quick reply, by @Yazutsu (#125)
-
-      Your GPS position is the first row in the quick-reply picker, so you can send your current
-      coordinates with one tap.
-
-
-      ### Keyboard language in the chat bar
-
-      While in a chat or channel, the top bar shows the active keyboard language next to the clock
-      (only when more than one layout is enabled).
-
-
-      ## Fixed
-
-
-      - Keyboard-backlight "Off" preset now actually switches the backlight off and keeps it off, by
-      @Yazutsu (#88).
-
-      - Chat history saves to SD are atomic, with a fallback save path when the background worker is
-      not armed, so a badly timed reboot can no longer truncate message history, by @scratchdiver
-      (#135).
-
-      - T-Deck: a touch controller wedged into a stuck "phantom finger" state (input dead, screen
-      never timing out) is now detected and cleared by the driver within seconds. Previously only a
-      full power cycle recovered it.
-
-      - T-Deck: touch init at boot retries for a few seconds instead of giving up after one attempt,
-      which could cost the session both touch and keyboard.
