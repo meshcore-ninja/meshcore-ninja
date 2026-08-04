@@ -1,7 +1,113 @@
 source: github
 repo: ALLFATHER-BV/wadamesh
-updatedAt: '2026-08-04T10:42:00.234Z'
+updatedAt: '2026-08-04T23:05:33.106Z'
 releases:
+  - version: beta_59
+    name: wadamesh beta_59
+    datetime: '2026-08-04T22:50:01Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_59
+    prerelease: true
+    notes: >-
+      Test build. Stable stays **beta_50**.
+
+
+      The big one: **WADAMESH runs apps written in Lua now**, installed from a Store on the device
+      and updated over the air without reflashing. The runtime, the API, the Store and the first
+      converted apps all ship together in this tag.
+
+
+      Flash it from **https://flasher.wadamesh.com** (flip the Beta toggle), or on-device via
+      Settings → Firmware with "Get test builds (beta)" enabled.
+
+
+      ---
+
+
+      ### Lua apps
+
+
+      An app is a single `.lua` file. It installs from the Store, appears in the app drawer beside
+      the built-ins, and updates when a newer version lands in the catalog — no firmware flash
+      involved.
+
+
+      **Store** lives in the app drawer, with three tabs:
+
+
+      - **Apps** — install, update or remove what the catalog offers.
+
+      - **Built-in** — hide the stock apps you never open, so the drawer holds what you actually
+      reach for. The MQTT bridge is hidden by default now.
+
+      - **Languages** — download translations (see below).
+
+
+      **RF Monitor** and **Airtime** are Lua apps rather than firmware pages, and they gained things
+      the native versions never had: RF Monitor scrolls the full packet list, Airtime has proper
+      Y-axis labels and a Reset button. **Snake** is a Lua app too. Removing one really removes it;
+      reinstalling brings it back with your scores intact.
+
+
+      **Write your own.** Drop a bare `.lua` file into `/apps/` on the card and it appears in the
+      drawer — no manifest needed. The API is about thirty functions covering the screen, input,
+      read-only mesh data, an HTTP fetch and a little per-app storage.
+
+
+      📖 **API reference: https://wadamesh.com/sdk.html**
+
+
+      Two constraints worth knowing up front. The mesh is **read-only** in v1 — an app can read
+      contacts, the packet log and radio statistics, but cannot transmit; a buggy or hostile app
+      must not be able to put packets on the air in your name. And `http_get` is plain HTTP, because
+      after Wi-Fi associates there is not enough internal heap left for a TLS handshake on the
+      smaller boards.
+
+
+      ### Languages are files now
+
+
+      Translations are no longer baked into the firmware. They download from the Store's Languages
+      tab as versioned files, so a translation can be fixed and shipped without waiting for a
+      firmware release — the device offers **Update** when a newer one exists.
+
+
+      Every language got a full sweep: roughly 150 strings that had quietly stayed English for
+      months — the channel settings sheets, the message menus, most buttons — are translated across
+      all 13 languages. Settings → Language opens the Languages tab directly, and switching one now
+      tells you it is restarting before it does, instead of rebooting under your finger.
+
+
+      ### Heltec V4
+
+
+      The V4 has 2 MB of PSRAM and very little free internal memory, which made the Store unreliable
+      there. It now ships **every language and every catalog app inside the firmware image** — the
+      apps are in the drawer on first boot and all 13 languages are already installed. Its Store is
+      a picker rather than a shop.
+
+
+      Around **17 KB of internal memory reclaimed** on the V4, measured step by step: the store and
+      Discover tables moved out of static memory, and the allocator now places ordinary allocations
+      in PSRAM instead of forcing everything under 4 KB into internal RAM.
+
+
+      ### Fixes
+
+
+      - **"Save update bin to SD" works again.** It failed with "SD write failed" at 1–7% on every
+      T-Deck and had been broken since the feature shipped in beta_36. The download buffer sat in
+      PSRAM, which the SD card cannot reliably DMA from, so the write died partway through at a
+      point that moved with the network. Nothing to do with card size or formatting. Reported by
+      **Marshal W7TER**, **df2080** and **Dennis**.
+
+      - The same defect is fixed in two places nobody had hit yet: copying any file to the SD card
+      from the Files app, and exporting a crash dump.
+
+      - **The Store fits narrow and high-DPI screens.** Cards measure their own text instead of
+      assuming two lines, so nothing is cut off and a long title no longer lands on top of the
+      description. This also fixes every board for languages whose tex
+
+      …
   - version: beta_58
     name: wadamesh beta_58
     datetime: '2026-08-04T09:08:26Z'
@@ -1240,48 +1346,3 @@ releases:
       LilyGo T-Deck / T-Deck Plus, Heltec V4 + TFT, ThinkNode M9, RAK WisMesh Tap V2 (bins below);
       Tanmatsu ships via the Tanmatsu launcher store. For a Launcher side-load use the app-only
       `.bin` (not `-merged`).
-  - version: beta_39
-    name: wadamesh beta_39
-    datetime: '2026-07-09T21:46:09Z'
-    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_39
-    prerelease: true
-    notes: >-
-      **wadamesh beta_39** (TEST channel) — on top of beta_38.
-
-
-      Flash from the web installer at **https://flasher.wadamesh.com**, install via Launcher / the
-      Tanmatsu store, or grab a `.bin` below.
-
-
-      ## New
-
-      - **Big translation pass.** Hundreds of strings that were still English — across menus,
-      settings, dialogs and the setup flow — are now translated into all 11 non-English languages
-      (Dutch, German, French, Spanish, Italian, Russian, Ukrainian, Bulgarian, Serbian, Greek,
-      Brazilian Portuguese). Menu rows that carry an icon now translate too, instead of silently
-      falling back to English. Pick a language under Settings.
-
-      - **ThinkNode M9** and **RAK WisMesh Tap V2** can now be installed straight from the web
-      flasher.
-
-
-      ## Fixed
-
-      - **Deletes stick now.** Deleting a message, or clearing a whole chat, survives a reboot or a
-      hardware reset instead of coming back (reported by Leon P and MrWeavis). The delete used to
-      sit in a save that was batched up to 30 seconds later, so a reset in that window undid it.
-
-      - **Deleting is fast.** Chat history is now written compactly — only the messages you actually
-      have, instead of the full 5000-slot ring every time — so a delete, a history wipe, or a reboot
-      no longer pauses the screen while it saves. Normal message saving is lighter too.
-
-      - **Emoji picker:** the food/object emoji that showed as empty boxes (umbrella, coffee, pizza,
-      cake, rocket, camera, phone, laptop, calendar, antenna, e-mail, house, car, watch) now render
-      — they were listed but never baked into the font.
-
-
-      ## Boards
-
-      T-Deck / T-Deck Plus, Heltec V4 + TFT, ThinkNode M9, RAK WisMesh Tap V2 (bins below); Tanmatsu
-      ships via the Tanmatsu launcher store. For a Launcher side-load use the app-only `.bin` (not
-      `-merged`).
