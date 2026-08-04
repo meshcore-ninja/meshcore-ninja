@@ -1,7 +1,16 @@
 source: github
 repo: andymux/meshos-releases
-updatedAt: '2026-08-02T20:58:32.953Z'
+updatedAt: '2026-08-04T19:40:43.972Z'
 releases:
+  - version: v1.0.12
+    name: MeshOS v1.0.12
+    datetime: '2026-08-04T19:25:11Z'
+    url: https://github.com/andymux/meshos-releases/releases/tag/v1.0.12
+    prerelease: false
+    notes: |-
+      Stability and reliability improvements for messaging and internet connections.
+
+      APK SHA-256: `005a4116b01723f8c9ae666119804cd6fbd4bd71a7651201eef9bc8d1f4c56bc`
   - version: v1.0.11
     name: MeshOS v1.0.11
     datetime: '2026-08-02T20:42:48Z'
@@ -564,38 +573,3 @@ releases:
 
       Sideload the APK below over your existing install — contacts, messages, and license are
       preserved.
-  - version: v1.0.2
-    name: MeshOS v1.0.2
-    datetime: '2026-05-01T10:47:52Z'
-    url: https://github.com/andymux/meshos-releases/releases/tag/v1.0.2
-    prerelease: false
-    notes: >-
-      v1.0.2 - Patch release
-
-
-      - Fix: BLE mesh received messages now persist channelIdx (so they survive app restarts and
-      reinstalls)
-
-      - Fix: WiFi network scan on Android (was blocked by cleartext traffic restrictions)
-
-      - Fix: Channel name double-hashtag in participants screen
-
-      - Fix: Discord-app dispose crash (ref.read after widget disposed)
-
-      - Fix: Tablet map crashes (LateInitializationError on pinch-zoom)
-
-      - Fix: License panel hidden on iOS (App Store handles licensing)
-
-      - New: Channel hash shown in participants screen (e.g. 'Channel Hash: 1B')
-
-      - New: Block (from map) menu option in heard list
-
-      - Improved: Region Scope rename (was 'Scope'), 'Set Region Scope' dialog
-
-      - Improved: Voice message bubble layout (wider, better progress bar, padding)
-
-      - Improved: Tactical mode color coverage across the app
-
-      - Improved: Light mode metadata legibility on sent/received bubbles
-
-      - Hidden: BLE trace hash size selector (hardcoded to 1B for now)
