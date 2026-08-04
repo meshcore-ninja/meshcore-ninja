@@ -1,7 +1,87 @@
 source: github
 repo: ALLFATHER-BV/wadamesh
-updatedAt: '2026-08-03T17:53:31.957Z'
+updatedAt: '2026-08-04T10:42:00.234Z'
 releases:
+  - version: beta_58
+    name: wadamesh beta_58
+    datetime: '2026-08-04T09:08:26Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_58
+    prerelease: true
+    notes: >-
+      Test build. Stable stays **beta_50**.
+
+
+      **Update strongly recommended if you ran beta_57** — this fixes the upgrade bug that left
+      devices booting into remote mode with the screen frozen on the boot logo.
+
+
+      Flash it from **https://flasher.wadamesh.com** (flip the Beta toggle), or on-device via
+      Settings → Firmware with "Get test builds (beta)" enabled.
+
+
+      ---
+
+
+      ### The beta_57 upgrade bug
+
+
+      Updating from beta_56 to beta_57 corrupted part of the stored settings. beta_57's new retry
+      preference was inserted into the middle of the persisted settings layout instead of appended
+      at the end; the settings blob is a raw byte copy, so every later value shifted by one on
+      upgrade. The worst casualty: the remote-mode flag inherited a neighbouring value that an old
+      migration forces to 1 on every install — so upgraded devices enabled Remote Mode without
+      consent, which renders the interface off-screen for a browser and stops drawing to the
+      physical panel. From the outside that looked like a device frozen on a half-drawn boot logo,
+      on the T-Display P4 as much as the Pager. The map's developer debug overlay switched on the
+      same way, and a chat-history safety flush was silently disabled.
+
+
+      Independently found, byte-for-byte analysed, and fixed by **@PixPMusic** (#229, #230) —
+      including compile-time guards that make this class of mistake a build error from now on, and a
+      test suite over the migration paths. Affected devices repair themselves on this update: a
+      normal install, no erase. On devices that ran beta_57, the repaired settings (web control
+      panel, remote mode and its orientation, web terminal, map debug overlay, history-flush tuning)
+      return to their defaults — the pre-beta_57 values were overwritten and cannot be recovered.
+      Everything else, including your language, radio settings and per-chat history limits, is
+      preserved. Devices coming straight from beta_56 or older upgrade losslessly.
+
+
+      ### Auto-retry is now opt-in
+
+
+      beta_57 turned "retry sends until heard" on for everyone. That choice should be yours: it now
+      defaults **off**, and the toggle lives in **Settings → Radio & Mesh** if you want your sends
+      retransmitted until the mesh confirms them.
+
+
+      ### Magyar
+
+
+      Hungarian translation across the full interface, contributed by **@pisti87** (#227). Existing
+      language choices are preserved across the update. Köszönjük!
+
+
+      ### Fixes
+
+
+      - **The lock screen finally says WADAMESH.** The old MESHCOMOD was baked into the wallpaper
+      image itself rather than drawn as text, so the earlier branding fix missed it — both the
+      built-in wallpaper and the copy seeded to storage are replaced. Reported by **@smhawkes**
+      (#228).
+
+      - **T-Display P4: profile export and backups work again.** The backup writer still pointed at
+      the storage system beta_54 retired, so every save failed with "can't open file" — the backup
+      list and restore were equally affected. Reported by **@D-Melhede** (#231).
+
+
+      ---
+
+
+      Both P4 panel variants are built fresh for this tag: `wadamesh-tdisplay-p4*` (AMOLED) and
+      `wadamesh-tdisplay-p4-lcd*` (TFT-LCD).
+
+
+      Full notes: `release-notes/beta_58.txt`.
   - version: beta_57
     name: wadamesh beta_57
     datetime: '2026-08-03T15:18:09Z'
@@ -1205,73 +1285,3 @@ releases:
       T-Deck / T-Deck Plus, Heltec V4 + TFT, ThinkNode M9, RAK WisMesh Tap V2 (bins below); Tanmatsu
       ships via the Tanmatsu launcher store. For a Launcher side-load use the app-only `.bin` (not
       `-merged`).
-  - version: beta_38
-    name: wadamesh beta_38
-    datetime: '2026-07-09T11:22:29Z'
-    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_38
-    prerelease: true
-    notes: >-
-      Test-channel build. Flash it from [flasher.wadamesh.com](https://flasher.wadamesh.com) (enable
-      test builds) or grab the bins below; on-device via About with the test-builds toggle on.
-
-
-      Big community drop: the headline chat rework is by @scratchdiver, the ThinkNode M9 reaches
-      hardware-complete thanks to @446564, and the RAK WisMesh Tap V2 port lands from
-      @Ethan-chen1234-zy. Thanks also to Leon P for the report that pinned down the reboot message
-      loss.
-
-
-      ## Full-history chat scrolling, by @scratchdiver (#130)
-
-
-      Chats now scroll through the ENTIRE stored history, up to 5000 messages on SD-card devices,
-      smoothly in both bubble and compact mode, instead of only the newest rows. Several LVGL crash
-      fixes came along for the ride. On top of it:
-
-
-      - Long-press any message for a new Delete option; the message menu lays out two buttons per
-      row so it always fits on one screen.
-
-      - Chat and channel settings gain "Delete history" (confirmation, keeps the channel or
-      contact).
-
-      - The jump buttons are now slim arrows at the right edge: fully visible while scrolling,
-      fading to half opacity a second after you stop.
-
-
-      ## ThinkNode M9 hardware-complete, by @446564 (#138)
-
-
-      GPS, microSD, buzzer, backlight control, lock screen, long-press context menus and a
-      d-pad-driven setup wizard. Two of the fixes (nested-page focus scrolling and the lock-screen
-      paint order) improve every keyboard-nav board.
-
-
-      ## RAK WisMesh Tap V2, by @Ethan-chen1234-zy (#136)
-
-
-      New board support in the source tree with a 30+ fps LovyanGFX display driver. Prebuilt images
-      follow once web-flasher integration lands.
-
-
-      ## Fixed
-
-
-      - Messages no longer vanish when rebooting the device from the phone app (reported by Leon P):
-      the history writer batches saves up to 30 seconds apart and the app's reboot command skipped
-      the final save that the on-device power menu performs. It saves first now.
-
-      - T-Deck: enabling "Store data on SD" migrates your existing profile, settings and identity to
-      the card FIRST. Upgrading to beta_36/37 with the toggle already on could adopt an empty card
-      and boot as a brand-new node while the real profile sat orphaned on internal flash.
-
-      - T-Deck: already hit by that? Set -> General -> "Copy internal data to SD" restores the
-      profile from internal flash (confirmation, then automatic reboot). Until then, toggling "Store
-      data on SD" OFF and rebooting brings the old profile back.
-
-      - Tanmatsu: profile name, settings and node identity now persist reliably across reboots
-      (moved to the SD card; the internal flash metadata layer on this board is unreliable).
-      Existing data is rescued automatically on first boot.
-
-      - Tanmatsu: the app builds size-optimized now, roughly 300 KB smaller, with real headroom
-      under the launcher's app-size limit.
