@@ -1,7 +1,118 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-08-03T19:40:51.836Z'
+updatedAt: '2026-08-05T19:38:29.264Z'
 releases:
+  - version: v4.14.1-rc1
+    name: v4.14.1-rc1
+    datetime: '2026-08-05T18:02:54Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.14.1-rc1
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.14.1-rc1
+
+
+      > ⚠️ **Pre-release.** This is a release candidate for 4.14.1. It ships on the `:dev` Docker
+      tag, not `:latest`. Run it if you want the fixes early and can tolerate rough edges; report
+      anything you hit.
+
+
+      ## Summary
+
+
+      This candidate is mostly MeshCore work plus two map-interaction fixes. The headline feature is
+      **strict receive-only mode** for MeshCore Companion sources — a per-source switch that holds
+      every transmitting command, scheduler and automation while leaving receive, the packet log,
+      the Analyzer Observer and local serial configuration fully working. Because MeshCore firmware
+      has no radio-level transmit switch, this is enforced in software; link-layer acknowledgements
+      and any advert schedule configured outside MeshMonitor are unaffected, and the UI says so
+      plainly. The Analyzer Observer gained battery, uptime and noise-floor reporting, and it now
+      hot-swaps its publisher when you import a signing key instead of demanding a source
+      disable/re-enable cycle. On the permissions side, **MeshCore contact positions now honor
+      `canViewOnMap`**, matching how Meshtastic nodes have always behaved — a migration backfills
+      the flag so no existing user loses map access on upgrade. Two map fixes: clicking a marker now
+      zooms in first only when the marker is genuinely crowded (isolated markers open their popup
+      immediately at any zoom), and the threshold that governs it is configurable rather than
+      hardcoded at z13. The zoom-to-fit button also stopped wearing a crosshair icon, which everyone
+      reasonably read as "center on my GPS location."
+
+
+      ## Features
+
+
+      - **MeshCore strict receive-only mode** — per-source enforcement (#4550), UI (#4552), and
+      Virtual Node gating plus docs (#4555). Closes #4547.
+
+      - **Analyzer Observer publishes battery, uptime and noise floor** in its status payload
+      (#4557). Closes #4556.
+
+
+      ## Bug Fixes
+
+
+      - **MeshCore map positions now require `canViewOnMap`** instead of only `nodes:read`, so a
+      read-only user can see the contact list without learning where those nodes are (#4560). Closes
+      #4559.
+
+      - **Marker clicks gate on density, not zoom alone** — an isolated marker opens its popup on
+      the first click at any zoom, and the crowding threshold is now a setting (#4563). Closes
+      #4551.
+
+      - **Zoom-to-fit no longer uses the locate-me crosshair icon** (#4564). Closes #4562.
+
+      - **MeshCore contact Last Heard updates on incoming direct messages** (#4554). Closes #4553.
+
+      - **Analyzer Observer hot-swaps its publisher on a signing-key change** — no more
+      disable/re-enable dance after importing a key (#4544). Closes #4543.
+
+      - **DeviceMetadata arriving before MyNodeInfo is buffered** rather than dropped (#4548).
+
+      - **Remote admin stops implying it knows a remote node's favorite/ignored state** — the admin
+      protocol has no readback for those flags, so the UI no longer pretends otherwise (#4542).
+      Closes #4511.
+
+
+      ## Documentation
+
+
+      - Documented the new **Map Click Zoom Gate** setting and the MeshCore `canViewOnMap` change,
+      including the upgrade backfill (#4565).
+
+      - Site gallery: added **Norway Østlandet Mesh** (#4546). Closes #4545.
+
+
+      ## Tests / CI
+
+
+      - **System tests moved off the v1 API root paths removed in 4.14** (#4565). The
+      `/api/v1/nodes`-style root paths were deleted in 4.14 (#4117); because a 404 body isn't JSON,
+      every assertion was dying inside `jq` with an opaque parse error. The same change corrects
+      `/api/upgrade/*` from the transitional `410` to its post-removal `404`. Nothing user-facing —
+      but the suite is honest again.
+
+
+      ## Translations
+
+
+      - Weblate updates (#4541, #4252) — thank you to everyone translating.
+
+
+      ## Upgrade Notes
+
+
+      - **Migration 135** backfills `canViewOnMap` on existing `nodes` grants for MeshCore sources
+      that already had read access, so current users keep map visibility across the upgrade. New
+      grants must set the flag explicitly.
+
+      - Receive-only mode is **per source** and defaults to off. Nothing changes unless you turn it
+      on.
+
+
+      ## Thanks
+
+
+      - **@wilhel1812** for reporting the zoom-to-fit icon confusion in Discord (#45
+
+      …
   - version: v4.14.0
     name: v4.14.0
     datetime: '2026-08-03T18:26:58Z'
@@ -2201,97 +2312,5 @@ releases:
       ```bash
 
       docker run
-
-      …
-  - version: v4.13.0-rc1
-    name: v4.13.0-rc1
-    datetime: '2026-07-11T13:09:26Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.13.0-rc1
-    prerelease: true
-    notes: >-
-      ## What's Changed
-
-      * docs: remediation plan + epic status doc (#3962) by @Yeraze in
-      https://github.com/Yeraze/meshmonitor/pull/3966
-
-      * feat(server): process-level safety net for unhandledRejection/uncaughtException (#3962) by
-      @Yeraze in https://github.com/Yeraze/meshmonitor/pull/3967
-
-      * fix(security)!: default trust proxy to false when TRUST_PROXY is unset (#3962) by @Yeraze in
-      https://github.com/Yeraze/meshmonitor/pull/3968
-
-      * chore(deps): pin meshcore.js fork to commit SHA (#3962) by @Yeraze in
-      https://github.com/Yeraze/meshmonitor/pull/3969
-
-      * fix(security): strip hot-path console logging and CSRF token exposure in api.ts (#3962) by
-      @Yeraze in https://github.com/Yeraze/meshmonitor/pull/3970
-
-      * chore(lint): enable @typescript-eslint/no-floating-promises as error (#3962) by @Yeraze in
-      https://github.com/Yeraze/meshmonitor/pull/3972
-
-      * feat(db)!: withSourceScope fails closed — omitting sourceId throws, ALL_SOURCES sentinel for
-      intentional cross-source (#3962) by @Yeraze in https://github.com/Yeraze/meshmonitor/pull/3976
-
-      * feat(automations): multi-channel message trigger OR-list (#3974) by @Yeraze in
-      https://github.com/Yeraze/meshmonitor/pull/3982
-
-      * feat(map): add polar grid overlay to Map Analysis and Unified maps (#3971) by @Yeraze in
-      https://github.com/Yeraze/meshmonitor/pull/3983
-
-      * fix(meshcore): auto-retry DM via same-path + flood cadence on ack timeout by @Yeraze in
-      https://github.com/Yeraze/meshmonitor/pull/3980
-
-      * ci(types): type-check test files via tsconfig.tests.json, non-blocking first (#3962) by
-      @Yeraze in https://github.com/Yeraze/meshmonitor/pull/3985
-
-      * fix(meshcore): populate fromName on DM automation triggers, clarify trigger.from vs fromName
-      by @Yeraze in https://github.com/Yeraze/meshmonitor/pull/3978
-
-      * feat(meshcore): delete/purge messages — per-message, per-conversation, purge-all (#3981) by
-      @Yeraze in https://github.com/Yeraze/meshmonitor/pull/3984
-
-      * test(routes): integration-grade route-test harness with real auth middleware (#3962) by
-      @Yeraze in https://github.com/Yeraze/meshmonitor/pull/3986
-
-      * fix(meshcore): exact decrypt-and-match for channel 'repeaters relayed' echo (#3979 pt1) by
-      @Yeraze in https://github.com/Yeraze/meshmonitor/pull/3987
-
-      * feat(meshcore): opt-in auto-retry for automated channel sends (#3979 Part 2) by @Yeraze in
-      https://github.com/Yeraze/meshmonitor/pull/3988
-
-      * chore(lint): count-based lint ratchet — new violations block, existing debt baselined; CI
-      lint now blocking (#3962) by @Yeraze in https://github.com/Yeraze/meshmonitor/pull/3989
-
-      * feat(server): codify the { success, error, code } response envelope in ok()/fail() helpers
-      (#3962) by @Yeraze in https://github.com/Yeraze/meshmonitor/pull/3990
-
-      * feat(meshcore-vn): relay SendStatusReq(27) status requests to the physical node (#3904) by
-      @Yeraze in https://github.com/Yeraze/meshmonitor/pull/3991
-
-      * test(db): schema-drift tripwire — CI fails on createTables vs migration-replay divergence
-      (#3962) by @Yeraze in https://github.com/Yeraze/meshmonitor/pull/3992
-
-      * feat(meshcore-vn): relay GetNeighbours via SendBinaryReq(50) to the physical node (#3904) by
-      @Yeraze in https://github.com/Yeraze/meshmonitor/pull/3993
-
-      * chore(logging): trim default log volume — reclassify routine info→debug, add trace tier by
-      @Yeraze in https://github.com/Yeraze/meshmonitor/pull/3994
-
-      * refactor(registry)!: MeshCoreManager implements ISourceManager — one unified source registry
-      (#3962) by @Yeraze in https://github.com/Yeraze/meshmonitor/pull/4004
-
-      * Fix Virtual Node Server boot race and listen-error zombie state by @Yeraze in
-      https://github.com/Yeraze/meshmonitor/pull/4001
-
-      * feat(automation): add "Send via sources" selector to the tapback action by @Yeraze in
-      https://github.com/Yeraze/meshmonitor/pull/3997
-
-      * feat(automation): add scheduled device-reboot action (#3995) by @Yeraze in
-      https://github.com/Yeraze/meshmonitor/pull/4002
-
-      * fix(meshcore): match-scope replies unscoped for unnameable trigger scope (#3998) by @Yeraze
-      in https://github.com/Yeraze/meshmonitor/pull/4003
-
-      * 
 
       …
