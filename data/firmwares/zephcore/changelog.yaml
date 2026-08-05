@@ -1,12 +1,12 @@
 source: github
 repo: liquidraver/ZephCore
-updatedAt: '2026-07-31T17:41:27.266Z'
+updatedAt: '2026-08-05T14:13:22.949Z'
 releases:
   - version: 1.16.8-zephcore
     name: Firmware 1.16.8-zephcore
-    datetime: '2026-07-31T15:45:30Z'
+    datetime: '2026-08-05T14:06:17Z'
     url: https://github.com/liquidraver/ZephCore/releases/tag/1.16.8-zephcore
-    prerelease: true
+    prerelease: false
     notes: >-
       # ZephCore 1.16.8-zephcore
 
@@ -83,6 +83,17 @@ releases:
 
       >
 
+      > **If your node's GPS went quiet after its first fix, this release fixes it.** A wrong bit in
+      the
+
+      > sleep command put u-blox modules into permanent backup mode on boards without hardware GPS
+      power
+
+      > control. Recovery needed a physical power cycle — a reboot was not enough. See the GPS
+      section.
+
+      >
+
       > **One CLI rename:** `set/get cad.probe.interval` is now `set/get probe.interval` — the same
       setting,
 
@@ -148,19 +159,7 @@ releases:
       Companions and room servers keep their periodic tick deliberately: the companion block
       contains genuine
 
-      pollers (contact-dump progress, BLE advertising watchdog) with no deadline to arm, and the
-      room server is
-
-      paced by its own 500 ms push timer regardless.
-
-
-      ### ESP32 power: 80 MHz everywhere, and light sleep on Heltec repeaters
-
-
-      Espressif parts have no equivalent of the nRF52's "idle at microamps in WFI" — `WAITI` gates
-      the core
-
-      clock but le
+      pollers (contact-dump progress, BLE adverti
 
       …
   - version: 1.16.7-zephcore
