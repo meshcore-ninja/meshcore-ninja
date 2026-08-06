@@ -1,7 +1,94 @@
 source: github
 repo: OffbandMesh/meshcore-firmware
-updatedAt: '2026-07-21T10:27:08.464Z'
+updatedAt: '2026-08-06T10:42:02.528Z'
 releases:
+  - version: offband-v1.3.0
+    name: Offband offband-v1.3.0
+    datetime: '2026-08-06T08:16:55Z'
+    url: https://github.com/OffbandMesh/meshcore-firmware/releases/tag/offband-v1.3.0
+    prerelease: false
+    notes: |-
+      # Offband v1.3.0 — the field-diagnostics release
+
+      This release is about **seeing what a node is doing in the field** — especially a
+      headless repeater on a roof or a solar node you can't easily reach with a cable.
+      It adds a full crash/observability stack (persistent crash logs, live log capture
+      and off-device forwarding, a runtime watchdog, and a way to drive a node
+      remotely), plus a batch of user-facing quality-of-life controls (turn the LEDs and
+      screen off, choose which notifications you get, map button presses). Under the
+      hood it also lands the shared multi-broker MQTT engine the next release builds on.
+
+      Most of this is **additive** — existing nodes keep working. The one thing to know
+      up front: the biggest under-the-hood piece (repeater multi-broker) is **foundation
+      only** this release — see *Known limitations* before you rely on it.
+
+      ---
+
+      ## What's in it
+
+      ### Field diagnostics — find out why a node misbehaves
+      - **caplog** — the node tees its own log into a small in-memory ring. Levels:
+        `boot` / `error` / `debug` / `packet` (packet = every LoRa RX/TX). **How you read
+        it depends on the role** (see the matrix below): **Companion** nodes download it
+        to the companion app over BLE; **Repeater** nodes on WiFi-telemetry builds stream
+        it live off-device to a syslog receiver you run; **Room Server / Sensor** dump it
+        over serial.
+      - **Live forward (Repeater, WiFi-telemetry builds)** exists because the in-memory
+        ring is wiped on reboot — a crash destroys exactly the evidence you want. Arm a
+        forward window and the lines land on your receiver as they happen, surviving the
+        reboot.
+      - **CrashLog** — a persistent record of the *last* crash (reason + context) that
+        now survives a reboot on **every** role, including nRF52. It re-dumps if you
+        connect a serial console a moment too late.
+      - **Watchdog** — both ESP32 and nRF52 now auto-recover a hung main loop and report
+        *why* they reset, so a wedged node reboots itself instead of going dark.
+      - **Command surface (`offband-cmd`)** — queue a command to a node, check the queue,
+        and pull the result from your workstation over HTTP — no SSH, no serial cable.
+
+      ### Turn off the light show (user-controllable indicators)
+      - New `led on|off|status` and `display auto|always-on|always-off` controls, over
+        the CLI **or** the companion app. Persisted across reboots. Good for battery,
+        dark bedrooms, and stealth deployments.
+
+      ### Headless device control
+      - **Notification scope** — choose ALL / SELF / NONE so a headless node isn't
+        chattering on every channel message.
+      - **Button-action matrix** — map button presses to actions, with reliable
+        edge-capture (no more dropped fast presses) on the T1000-E.
+
+      ### Under the hood
+      - **Repeater multi-broker engine** — the shared MQTT broker pool + TLS rotation
+        scheduler now runs on the repeater, with a measured heap-safe concurrency ceiling.
+        *(Foundation — see limitations.)*
+      - Per-message RSSI is now populated in the v3 message frames; role-agnostic config
+        dispatch; a pile of flash-tooling robustness fixes.
+
+      ---
+
+      ## Which features apply to which role
+
+      | Feature | Companion | Repeater | Room Server | Sensor |
+      |---|:--:|:--:|:--:|:--:|
+      | caplog capture (log ring) | ● | ● | ● | ● |
+      | caplog read-out | app (BLE) | live syslog forward | serial | serial |
+      | CrashLog (persistent, survives reboot) | ● | ● | ● | ● |
+      | Runtime watchdog (auto-recover hangs) | ● | ● | — | ● |
+      | Command surface (`offband-cmd`) | — | ● | — | — |
+      | Indicators — turn LED / display off | ● (app) | ● (CLI) | ● (CLI) | ● (CLI) |
+      | Notification scope (ALL/SELF/NONE) | ● | — | — | — |
+      | Button-action matrix | ● (T1000-E) | — | — | — |
+
+      ● = in this release · — = not this role. **Companion** is driven through the app;
+      **Repeater** through the command surface / CLI; **Room Server & Sensor** are
+      serial/CLI only for now (no app download, no live forward). *Observer* is a WiFi
+      build of the companion/repeater and inherits that role's row.
+
+      ---
+
+      ## How to use it
+
+      - **Pull a log from a node (a
+      …
   - version: offband-v1.2.0
     name: Offband offband-v1.2.0
     datetime: '2026-07-21T06:48:44Z'
