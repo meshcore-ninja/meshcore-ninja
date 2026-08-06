@@ -1,13 +1,65 @@
 source: github
 repo: Meshcore-Portugal/lusofw
-updatedAt: '2026-07-20T10:54:51.166Z'
+updatedAt: '2026-08-06T14:16:13.750Z'
 releases:
-  - version: v2026.7.2-rc3-d164f95
-    name: v2026.7.2-rc3-d164f95
-    datetime: '2026-07-20T03:21:50Z'
-    url: https://github.com/Meshcore-Portugal/lusofw/releases/tag/v2026.7.2-rc3-d164f95
+  - version: v2026.7.2-rc3-bdd8e64
+    name: v2026.7.2-rc3-bdd8e64
+    datetime: '2026-08-06T13:05:47Z'
+    url: https://github.com/Meshcore-Portugal/lusofw/releases/tag/v2026.7.2-rc3-bdd8e64
     prerelease: true
-    notes: "Automated dev prerelease of dev@d164f95 for v2026.7.2-rc3.\r\n\r\n\r\nBased on MeshCore v1.16.0\r\nmain@e8d3c53ba1ea863937081cd0caad759b832f3028\r\n\r\n### Correções\r\n\r\n- CLIENTE: A página inicial do GPS agora fica oculta no carrossel quando nenhum GPS é detectado na porta série no arranque, em vez de aparecer sempre quando `ENV_INCLUDE_GPS` está ativado.\r\n- REPETIDOR: Corrigido envio de anúncios por inundação (flood adverts): agora respeita o `default_scope` e o modo de hash de caminho (`path_hash_mode` nas preferências).\r\n- REPETIDOR: Removida a redução probabilística de flood adverts.\r\n- REPETIDOR: Corrigido um *buffer overflow* no acumulador de comandos série.\r\n\r\n#### Melhorias\r\n\r\n- CLI: Adicionada a leitura do motivo de arranque do ESP32 (`get pwrmgt.bootreason`).\r\n- CLI: Reforçada a cópia segura de strings no tratamento de comandos.\r\n- RÁDIO: Ajustado o atraso de retentativa CAD para intervalo entre 120 a 360 ms.\r\n\r\n#### Observabilidade                                                                                                                                                                                                                                                                                                                                                                    \r\n\r\n- DISPATCHER: Adicionados logs de debug para conclusão de TX.\r\n- ESTATÍSTICAS: Removidos parâmetros não usados na formatação de respostas.\r\n\r\n#### Build e Configuração\r\n\r\n- BUILD: Adicionada a variável `DISABLE_DEBUG` ao processo de build.\r\n- BUILD: Reorganizadas as build flags no platformio.ini."
+    notes: >-
+      Automated dev prerelease of dev@bdd8e64 for v2026.7.2-rc3.
+
+
+
+      Based on MeshCore v1.16.0
+
+      main@e8d3c53ba1ea863937081cd0caad759b832f3028
+
+
+      ### Correções
+
+
+      - CLIENTE: A página inicial do GPS agora fica oculta no carrossel quando nenhum GPS é
+      detectado na porta série no arranque, em vez de aparecer sempre quando `ENV_INCLUDE_GPS` está
+      ativado.
+
+      - REPETIDOR: Corrigido envio de anúncios por inundação (flood adverts): agora respeita o
+      `default_scope` e o modo de hash de caminho (`path_hash_mode` nas preferências).
+
+      - REPETIDOR: Removida a redução probabilística de flood adverts.
+
+      - REPETIDOR: Corrigido um *buffer overflow* no acumulador de comandos série.
+
+
+      #### Melhorias
+
+
+      - CLI: Adicionada a leitura do motivo de arranque do ESP32 (`get pwrmgt.bootreason`).
+
+      - CLI: Reforçada a cópia segura de strings no tratamento de comandos.
+
+      - RÁDIO: Ajustado o atraso de retentativa CAD para intervalo entre 120 a 360 ms.
+
+
+      ####
+      Observabilidade                                                                                                                                                                                                                                                                                                                                                                    
+
+
+      - DISPATCHER: Adicionados logs de debug para conclusão de TX.
+
+      - ESTATÍSTICAS: Removidos parâmetros não usados na formatação de respostas.
+
+
+      #### Build e Configuração
+
+
+      - BUILD: Adicionada a variável `DISABLE_DEBUG` ao processo de build.
+
+      - BUILD: Reorganizadas as build flags no platformio.ini.
+
+      - BUILD: Adicionado o ambiente de build da ponte RS232 (`heltec_v4_repeater_bridge_rs232`)
+      para o Heltec v4.
   - version: v2026.7.2-rc2-e56877e
     name: v2026.7.2-rc2-e56877e
     datetime: '2026-07-16T20:10:13Z'
