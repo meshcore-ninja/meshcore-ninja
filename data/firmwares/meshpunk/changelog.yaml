@@ -1,7 +1,13 @@
 source: github
 repo: PhilMo6/meshpunk
-updatedAt: '2026-07-31T06:46:24.700Z'
+updatedAt: '2026-08-07T00:04:18.385Z'
 releases:
+  - version: v0.3.3
+    name: v0.3.3
+    datetime: '2026-08-06T22:43:15Z'
+    url: https://github.com/PhilMo6/meshpunk/releases/tag/v0.3.3
+    prerelease: false
+    notes: "Raw packet capture as well as packet ability to save a file of of packets logged.\r\nnew Packet app in tools\r\nall module apps now use a single key binding lib\r\nlua wifi, ble shutdown bindings"
   - version: v0.3.2
     name: v0.3.2 alpha - legacy keyboard support
     datetime: '2026-07-31T04:47:24Z'
