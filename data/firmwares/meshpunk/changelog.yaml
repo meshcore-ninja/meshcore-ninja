@@ -1,7 +1,13 @@
 source: github
 repo: PhilMo6/meshpunk
-updatedAt: '2026-08-07T00:04:18.385Z'
+updatedAt: '2026-08-08T03:28:08.520Z'
 releases:
+  - version: v0.3.4
+    name: v0.3.4 launcher fix
+    datetime: '2026-08-08T02:10:27Z'
+    url: https://github.com/PhilMo6/meshpunk/releases/tag/v0.3.4
+    prerelease: false
+    notes: "this release has 2 major components.\r\nthe launcher fix renamed the file partition to assets from spiffs.\r\nthe other is that all the device specific code has been moved to there own modules. modules are built together per device type."
   - version: v0.3.3
     name: v0.3.3
     datetime: '2026-08-06T22:43:15Z'
