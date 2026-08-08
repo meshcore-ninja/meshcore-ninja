@@ -1,7 +1,29 @@
 source: github
 repo: andymux/meshos-releases
-updatedAt: '2026-08-08T12:53:06.710Z'
+updatedAt: '2026-08-08T16:36:41.762Z'
 releases:
+  - version: fw-v1.6.4
+    name: MeshOS firmware v1.6.4
+    datetime: '2026-08-08T16:19:38Z'
+    url: https://github.com/andymux/meshos-releases/releases/tag/fw-v1.6.4
+    prerelease: false
+    notes: >-
+      Fixed touch not registering on the Delete and Clear confirm buttons at larger text sizes, new
+      Hide option for the MeshOS channel (works alongside Mute while per-channel internet keeps
+      running), clearer Internet Messaging description, and the internet globe icon now scales with
+      the chat text size.
+
+
+      Device firmware for LilyGo T-Deck and ThinkNode M9.
+
+      Install via SD card (firmware.bin) or the in-firmware updater.
+
+
+      SHA-256:
+
+      - TDeck: a5557389b81d3622966045cdcf1238a9acd8c207225dca05974509fe304710f7
+
+      - M9: 3aaaae2b30820e92d6f88d275c3f5b97f1fc6802af70e9cab28b59ffc6c077b9
   - version: fw-v1.6.3
     name: MeshOS firmware v1.6.3
     datetime: '2026-08-08T12:08:04Z'
@@ -548,27 +570,3 @@ releases:
       **Verify your download** (SHA-256):
 
       `aedccc2bbec4d7c82374390a93ed114cd81d2310c479981046a4bf9b2cdc0cf0`
-  - version: v1.0.4
-    name: MeshOS v1.0.4
-    datetime: '2026-05-12T14:14:09Z'
-    url: https://github.com/andymux/meshos-releases/releases/tag/v1.0.4
-    prerelease: false
-    notes: >-
-      **What's new**
-
-
-      - Bug fixes
-
-      - Map path markers and message-path legend now readable in light mode (text colour fixed, chip
-      borders removed)
-
-      - Set Path / Reset Path GUI improvements
-
-      - DM Improvements
-
-
-      **Install**
-
-
-      Sideload the APK below over your existing install — contacts, messages, and license are
-      preserved.
