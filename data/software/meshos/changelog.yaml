@@ -1,7 +1,28 @@
 source: github
 repo: andymux/meshos-releases
-updatedAt: '2026-08-04T19:40:43.972Z'
+updatedAt: '2026-08-08T12:53:06.710Z'
 releases:
+  - version: fw-v1.6.3
+    name: MeshOS firmware v1.6.3
+    datetime: '2026-08-08T12:08:04Z'
+    url: https://github.com/andymux/meshos-releases/releases/tag/fw-v1.6.3
+    prerelease: false
+    notes: >-
+      Longer messages, smoother typing on busy meshes, open web links from chat in CoreBrowser,
+      shared photos now display correctly (Google Photos, meshpic and more), globe icon on internet
+      messages, plus stability fixes.
+
+
+      Device firmware for LilyGo T-Deck and ThinkNode M9.
+
+      Install via SD card (firmware.bin) or the in-firmware updater.
+
+
+      SHA-256:
+
+      - TDeck: d762b38b1ac57dd6f1d5d22ae2eb01237ade4887e731b401a015dc89f274b594
+
+      - M9: eb41a6f92663fdaa98735fd4e636ab3f348aeae279815b716c606154a14fb01b
   - version: v1.0.12
     name: MeshOS v1.0.12
     datetime: '2026-08-04T19:25:11Z'
@@ -544,28 +565,6 @@ releases:
       - Set Path / Reset Path GUI improvements
 
       - DM Improvements
-
-
-      **Install**
-
-
-      Sideload the APK below over your existing install — contacts, messages, and license are
-      preserved.
-  - version: v1.0.3
-    name: MeshOS v1.0.3
-    datetime: '2026-05-10T19:05:22Z'
-    url: https://github.com/andymux/meshos-releases/releases/tag/v1.0.3
-    prerelease: false
-    notes: >-
-      **What's new**
-
-
-      - Signal Info dialog (tap the signal bars on the home screen) now shows when the last signal
-      was heard — "12s ago" / "5m ago" for recent signals, time-of-day or date for older ones
-
-      - Repeater Login improvements
-
-      - New region settings in repeater admin
 
 
       **Install**
