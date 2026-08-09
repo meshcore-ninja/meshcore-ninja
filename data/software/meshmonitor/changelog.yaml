@@ -1,7 +1,110 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-08-05T19:38:29.264Z'
+updatedAt: '2026-08-09T18:43:56.319Z'
 releases:
+  - version: v4.14.1-rc2
+    name: Theme Color Schemas
+    datetime: '2026-08-09T18:41:08Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.14.1-rc2
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.14.1-rc2 — Theme Color Schemas
+
+
+      > ⚠️ **Pre-release.** This is a release candidate for 4.14.1. It ships on the `:dev` Docker
+      tag, not `:latest`. Run it if you want the changes early and can tolerate rough edges; report
+      anything you hit.
+
+
+      ## Summary
+
+
+      This candidate is one piece of work: **custom themes are now defined by what a colour is
+      _for_, not which Catppuccin swatch it happens to be.**
+
+
+      Before, a theme was 26 palette names — `base`, `blue`, `mauve`, `peach`. To make the accent
+      red you had to write `blue: "#ff0000"`, and anyone reading that theme afterwards had to know
+      `blue` meant "the accent". A theme is now 26 roles:
+
+
+      ```jsonc
+
+      { "accent": "#ff0000", "bg": "#1e1e2e", "textFaint": "#6c7086", "error": "#f38ba8" }
+
+      ```
+
+
+      **Existing custom themes keep working.** Definitions stored in the old format are translated
+      when they're read — nothing is rewritten on disk, so downgrading is safe.
+
+
+      Getting there also fixed a family of bugs where colours were pinned to Catppuccin Mocha
+      regardless of the theme you'd selected. Tinted panel backgrounds, warning banners, badge fills
+      and drop shadows all rendered Mocha's palette on Nord, Gruvbox, Solarized and every other
+      theme. If you use a non-Catppuccin theme, this is the release where those surfaces finally
+      match it.
+
+
+      Two smaller wins fell out of the same work. Roles that used to share one swatch — faint text,
+      subtle borders and the inactive-element fill were all `overlay0` — can now be themed apart, so
+      a theme can lighten its chrome without also washing out timestamps. And chart colours are
+      drawn from a dedicated categorical scale chosen to stay mutually distinguishable in every
+      built-in theme, instead of borrowing role colours that could collide.
+
+
+      ## Features
+
+
+      - **Themes are authored by role** (`accent`, `bg`, `textFaint`, `error`) instead of by
+      Catppuccin swatch name, with the theme editor grouped and labelled to match (#4623). Closes
+      #4567.
+
+      - **Categorical colour scale** for charts and per-source tagging, kept distinct from the role
+      vocabulary so a theme's accent colour can never collide with a data series (#4605, #4606).
+
+      - **Sequential colour scale** for magnitude — distance histograms and hop-density ramps now
+      read as ordered rather than as a set of unrelated hues (#4611).
+
+
+      ## Bug Fixes
+
+
+      - **Tinted backgrounds ignored the active theme** — the variables behind them were never
+      defined, so every tint silently fell back to hardcoded Catppuccin Mocha in all 15 themes
+      (#4617).
+
+      - **87 hardcoded palette colours** written directly as `rgba()` values now follow the theme.
+      The worst of these put a Mocha-green background behind theme-coloured text on the same badge,
+      so the two halves disagreed on any other theme (#4620).
+
+      - **Chart backgrounds, gridlines and labels** read theme colours correctly (#4622).
+
+      - **Remaining hardcoded colours in components** — hover shades that shifted hue instead of
+      brightness, and status colours that had no theme-aware definition (#4619).
+
+      - **Estimated-position anchors** are written atomically, with the empty-input contract
+      documented (#4621). Closes #4614.
+
+
+      ## Documentation
+
+
+      - Theme gallery regenerated against the new stylesheet, so the screenshots come from code that
+      still exists (#4624).
+
+
+      ## Upgrade notes
+
+
+      - **Custom themes**: no action needed. Old swatch-keyed definitions are translated on read. If
+      you re-save a theme in the editor it will be written in the new role format; before that, the
+      stored row is untouched.
+
+      - **Built-in themes are visually unchanged.** This was verified rather than eyeballed — both
+      stylesheets were resolved through a real browser across 15 themes × 39 colour tokens, giving
+      585 comparisons and zero differences. The deliberate exceptions are two rules (timestamps and
+      small field labels) that moved to the faint-text role, which had no correct home before.
   - version: v4.14.1-rc1
     name: v4.14.1-rc1
     datetime: '2026-08-05T18:02:54Z'
@@ -2205,112 +2308,3 @@ releases:
       ### 📋 Changes
 
       See commit history for detailed changes.
-  - version: v4.13.0-rc2
-    name: v4.13.0-rc2
-    datetime: '2026-07-12T04:36:21Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.13.0-rc2
-    prerelease: true
-    notes: >-
-      # MeshMonitor v4.13.0-rc2
-
-
-      > ⚠️ **Pre-release** — release candidate for testing; not recommended for production
-      deployments. Docker images are not tagged `:latest`.
-
-
-      ## Summary
-
-
-      This release candidate lands the **Map Consolidation epic (#4047)**: MeshMonitor's ten
-      independent Leaflet map implementations are now one shared `BaseMap` shell, one composable
-      layer library, one popup family, and one marker-icon factory. Traceroutes render identically
-      on every surface — one canonical 4-band SNR color scale (previously three different scales),
-      unified MQTT dashing and coloring, and the Dashboard finally renders return legs. Node
-      markers, popups, neighbor links, and accuracy regions are likewise single-sourced, so future
-      fixes apply to every map at once, and public embed maps now show the same canonical traceroute
-      visuals as the app. The epic also surfaced and fixed several latent bugs, including a
-      hidden-node position leak in the public embed traceroutes endpoint and Dashboard coloring
-      segments with unscaled SNR values. On top of the epic, this RC brings map interaction polish
-      (#4046): center-on-node never zooms out and its target zoom is user-configurable, pan/zoom
-      animations scale with distance, clicking a marker at low zoom now zooms in instead of
-      exploding a giant spiderfy fan, and open fans survive zoom changes. Live testing fixes include
-      restored wheel/double-click zoom, correct zoom-to-node for one-way traceroutes, loading
-      indicators on initial map data fetch, a polar grid for MeshCore maps, and a self-healing
-      reload when a stale cached page requests rotated asset chunks after an upgrade.
-
-
-      ## Map Consolidation Epic (#4047)
-
-
-      - #4068 — Epic integration: one shell, one layer library, one popup family (phases below)
-        - #4049 Phase 1 — shared `BaseMap` shell; pickers and editors migrated
-        - #4051 Phase 2 — Map Analysis legend/polar-grid/trails reconciliation
-        - #4057 Phase 3 — unified traceroute rendering across all app maps
-        - #4060 Phase 4 — unified node-marker factory + shared `NodeMarkersLayer`
-        - #4064 Phase 5 — one popup family with composable source-tech sections
-        - #4065 Phase 6 — public embeds adopt canonical traceroute rendering (includes a hidden-node position leak fix 🔒)
-        - #4066 / #4067 Phase 7 — shared neighbor-links/accuracy/waypoints layers; all maps on `BaseMap`
-
-      ## Features
-
-
-      - #4072 — Map interaction polish: zoom clamp with configurable target (default 17),
-      distance-scaled animations, zoom-gated spiderfy with zoom-in-first clicks, re-spiderfy after
-      zoom (#4046)
-
-      - #4071 — MeshCore map polar grid; map loading indicators during initial fetch
-
-
-      ## Bug Fixes
-
-
-      - #4071 — Wheel/double-click zoom restored on all maps; zoom-to-node no longer hijacked by
-      route-fit on one-way traceroutes; one-time reload on stale-chunk load failures after upgrades
-
-      - #4055 — Dashboard neighbor-info lines follow the merged node marker position (#4042) —
-      thanks @temalo!
-
-      - #4045 — Notifications: drop inline autoindex `UNIQUE(user_id)` missed by migration 079
-      (#4044)
-
-
-      ## Issues Resolved
-
-
-      - #4047 — Consolidate 10 independent Leaflet maps into a shared BaseMap shell + composable
-      layer library
-
-      - #4046 — Map UI: improve pan/zoom-to-center behavior and its interaction with marker spiderfy
-
-      - #4042 — Dashboard Unified map: neighbor-info lines don't follow merged node marker position
-
-      - #4044 — Can't configure Apprise Notifications for a second source
-
-
-      ## Upgrade Notes
-
-
-      - Map visuals converge to one canonical look: the per-source Nodes map moves from a 3-band to
-      the 4-band SNR color scale, no-data segments render dashed gray, the Dashboard gains
-      traceroute return legs, the traceroute widget's legs use the theme color, and embeds show
-      SNR-colored traceroutes instead of uniform mauve.
-
-      - New per-user setting: Settings → Map → center-on-node target zoom (default 17).
-
-
-      **Full Changelog**: https://github.com/Yeraze/meshmonitor/compare/v4.13.0-rc1...v4.13.0-rc2
-
-
-      ## 🚀 MeshMonitor v4.13.0-rc2
-
-
-      ### 📦 Installation
-
-
-      **Docker (recommended):**
-
-      ```bash
-
-      docker run
-
-      …

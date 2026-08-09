@@ -1,7 +1,18 @@
 source: github
 repo: andymux/meshos-releases
-updatedAt: '2026-08-08T16:36:41.762Z'
+updatedAt: '2026-08-09T18:43:56.574Z'
 releases:
+  - version: v1.0.13
+    name: MeshOS v1.0.13
+    datetime: '2026-08-09T17:17:50Z'
+    url: https://github.com/andymux/meshos-releases/releases/tag/v1.0.13
+    prerelease: false
+    notes: >-
+      Notification fixes for muted channels, plus a new switch to turn the MeshOS Global channel off
+      while keeping per-channel internet running (Settings > Messaging).
+
+
+      APK SHA-256: `03b3d39041af723d39f1562348e8816c421253a9eb4ad840603ea7e49b6a7e76`
   - version: fw-v1.6.4
     name: MeshOS firmware v1.6.4
     datetime: '2026-08-08T16:19:38Z'
@@ -498,75 +509,3 @@ releases:
       **Verify your download** (SHA-256):
 
       `37318e42adbb411daf31aa0fc09bf710c5782f988eb6ca9f3d8496f9cb08477a`
-  - version: v1.0.7
-    name: MeshOS v1.0.7
-    datetime: '2026-06-08T11:18:37Z'
-    url: https://github.com/andymux/meshos-releases/releases/tag/v1.0.7
-    prerelease: false
-    notes: >-
-      ## MeshOS v1.0.7
-
-
-      ### AirLink ↔ LoRa Bridge
-
-      - Bridge your local Bluetooth **AirLink** mesh to the **LoRa (MeshCore)** network — messages
-      now relay both ways automatically.
-
-      - **Direct messages** bridge across AirLink and LoRa too, not just channel chat.
-
-      - When your phone is acting as the bridge, your **own** messages go out on **both**
-      transports.
-
-      - New **"Bridged" indicators**: actively-bridged channels show green icons in the chat list
-      and a green badge in the conversation header.
-
-      - Each message now shows which network it travelled on (**AirLink / LoRa** tags), and on the
-      MeshCore side you'll see the **LoRa repeat count** (✓ x1) as repeaters carry it.
-
-      - **Store-and-forward** now replays missed **DMs** as well as channel messages when you walk
-      back into range.
-
-
-      ### MeshOS Unified Companion Firmware Support
-
-      - One firmware now runs **BLE, Wi-Fi and USB** companions — no more flashing a different
-      variant for each connection type.
-
-      - **Configure Wi-Fi companions right in the MeshOS app** — pick the network and connect over
-      Wi-Fi.
-
-      - Download the MeshCore unified firmware to your device from
-      https://www.meshcore.co.uk/configurator
-
-
-      ### Fixes
-
-      - Fixed AirLink occasionally needing a manual **off/on toggle to start** after a fresh
-      install.
-
-      - Fixed **duplicate messages** appearing when returning to AirLink range.
-
-      - Fixed old channel history showing after deleting a channel and re-adding one by QR.
-
-      - An AirLink channel and a LoRa channel sharing the same key now always appear as **one
-      chat**.
-
-
-      ### Other
-
-      - Add a contact by **QR code now works on macOS**.
-
-      - **"Start on boot"** option for always-on nodes (Android).
-
-      - Settings tidy-up.
-
-
-      ---
-
-      **T-Deck / T-Pager owners:** MeshOS firmware **1.3.7+** is AirLink-enabled, so those devices
-      can act as an AirLink ↔ MeshCore bridge with this app.
-
-
-      **Verify your download** (SHA-256):
-
-      `aedccc2bbec4d7c82374390a93ed114cd81d2310c479981046a4bf9b2cdc0cf0`
