@@ -1,7 +1,34 @@
 source: github
 repo: ALLFATHER-BV/meshcomod
-updatedAt: '2026-06-21T09:55:32.127Z'
+updatedAt: '2026-08-09T14:36:25.802Z'
 releases:
+  - version: companion-v1.17.0
+    name: Companion Firmware v1.17.0
+    datetime: '2026-08-09T13:37:00Z'
+    url: https://github.com/ALLFATHER-BV/meshcomod/releases/tag/companion-v1.17.0
+    prerelease: false
+    notes: >-
+      ## What's Changed
+
+      * Reject all-blank client_id from CMD_APP_START by @pfmos in
+      https://github.com/ALLFATHER-BV/meshcomod/pull/44
+
+      * Treat associated-but-address-less as a dead WiFi link by @pfmos in
+      https://github.com/ALLFATHER-BV/meshcomod/pull/45
+
+      * Integrate MeshCore v1.17.0 into meshcomod by @B0N3-GD in
+      https://github.com/ALLFATHER-BV/meshcomod/pull/46
+
+
+      ## New Contributors
+
+      * @pfmos made their first contribution in https://github.com/ALLFATHER-BV/meshcomod/pull/44
+
+      * @B0N3-GD made their first contribution in https://github.com/ALLFATHER-BV/meshcomod/pull/46
+
+
+      **Full Changelog**:
+      https://github.com/ALLFATHER-BV/meshcomod/compare/companion-v1.16.0.4...companion-v1.17.0
   - version: companion-v1.16.0.4
     name: Companion Firmware v1.16.0.4
     datetime: '2026-06-16T19:39:49Z'
