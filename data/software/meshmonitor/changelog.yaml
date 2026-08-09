@@ -1,6 +1,6 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-08-09T18:43:56.319Z'
+updatedAt: '2026-08-09T20:35:32.909Z'
 releases:
   - version: v4.14.1-rc2
     name: Theme Color Schemas
@@ -105,6 +105,24 @@ releases:
       stylesheets were resolved through a real browser across 15 themes × 39 colour tokens, giving
       585 comparisons and zero differences. The deliberate exceptions are two rules (timestamps and
       small field labels) that moved to the faint-text role, which had no correct home before.
+
+
+      ## 🚀 MeshMonitor v4.14.1-rc2
+
+
+      ### 📦 Installation
+
+
+      **Docker (recommended):**
+
+      ```bash
+
+      docker run -d \
+        --name meshmonitor \
+        -p 8080:3001 \
+        -v meshmonitor-data:/data \
+        
+      …
   - version: v4.14.1-rc1
     name: v4.14.1-rc1
     datetime: '2026-08-05T18:02:54Z'
