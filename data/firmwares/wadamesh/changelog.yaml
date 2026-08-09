@@ -1,7 +1,104 @@
 source: github
 repo: ALLFATHER-BV/wadamesh
-updatedAt: '2026-08-04T23:05:33.106Z'
+updatedAt: '2026-08-09T16:37:42.661Z'
 releases:
+  - version: beta_60
+    name: wadamesh beta_60
+    datetime: '2026-08-09T16:19:17Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_60
+    prerelease: true
+    notes: >-
+      Test build. Stable stays **beta_50** — but this one is different: **beta_60 is the build we
+      want to promote to stable as soon as it proves itself**, so tester feedback matters more than
+      for any beta before it.
+
+
+      The reason: **the MeshCore core under wadamesh moved from 1.16 to 1.17.** Every board in this
+      release is rebased on the new core — mesh routing, the seen-packet tables, radio drivers and
+      the companion protocol are all the current upstream generation, with our buffered LoRa receive
+      path carried over on top.
+
+
+      **If you run betas, please run this one as your daily build** and report anything that behaves
+      differently from beta_59 — radio range, message delivery, room servers, battery life, phone
+      pairing. Nothing you can send helps more right now than "ran it for two days, here is what
+      changed". Once feedback clears it, beta_60 becomes the new stable so every new user starts on
+      the 1.17 core.
+
+
+      Flash it from **https://flasher.wadamesh.com** (flip the Beta toggle), or on-device via
+      Settings → Firmware with "Get test builds (beta)" enabled.
+
+
+      ---
+
+
+      ### MeshCore 1.17
+
+
+      The whole core is the current upstream generation. Two things are worth knowing beyond
+      "everything underneath is newer":
+
+
+      - **Channel activity detection (listen-before-talk) groundwork is in.** The radio can check
+      the channel is clear before transmitting. It ships **disabled** in this build while upstream
+      finishes making it configurable — a Radio & Mesh toggle follows in a later beta.
+
+      - **Our local core additions survived the rebase** — buffered LoRa receive (the drain task and
+      the heard/read/late counters in About) is intact on 1.17.
+
+
+      About now reports **v1.17.0-touch**.
+
+
+      ### Fixes
+
+
+      - A white frame around the boot logo in the first seconds after power-on — a 1.17 side effect
+      caught on the bench: the early boot screen let the new core pick its background instead of
+      forcing black.
+
+      - A LoRa radio that fails to start now says so on screen — "LoRa radio not detected", with a
+      hint to check the module — instead of a silent boot with the only clue on serial (#244).
+
+      - Messages retried from the failed state appear in the open chat immediately, not after
+      reopening it (#248).
+
+      - **Favorites survive the contact-table cleanup.** The star only lived in the touch UI's
+      records, so the core's eviction could silently drop a starred contact when the table filled;
+      the star is now written through to the core's contact flags, which skip favorites (#178).
+
+      - Settings saves skip writes when nothing changed, ending bursts of identical snapshot writes
+      to flash (#246).
+
+      - The Files app shows each file's modified date and time (#185).
+
+      - Discover rows show the distance to a node when both sides have a position fix (#239).
+
+      - The Store no longer offers a language "update" that is older than the installed one (#247,
+      #232).
+
+      - The long-press accent picker gained æ/Æ on the A key for Danish and Norwegian (#237).
+
+
+      ### Community
+
+
+      The T-Pager stack in this release is by **@PixPMusic** — four merged PRs:
+
+
+      - **Wi-Fi/BLE coexistence** (#210): enabling Wi-Fi no longer reboots the board, BLE bonds
+      survive the handoff so the phone re-pairs without deleting the device, and BLE returns
+      automatically when Wi-Fi is unavailable.
+
+      - **SD arbitration + map tiles** (#206, #221): SD access from different parts of the firmware
+      no longer collides on the shared bus, and map tiles load reliably from the card.
+
+      - **Lock-screen brand mark** (#235).
+
+
+      Hungarian is at **v9** — a full sweep by **@pisti87**, with the one punctuation glyph our
+      fonts lack swapped for its typographic twin.
   - version: beta_59
     name: wadamesh beta_59
     datetime: '2026-08-04T22:50:01Z'
@@ -1264,85 +1361,3 @@ releases:
 
 
       Boards in this build: LilyGo T-Deck, Heltec V4 TFT, ThinkNode M9, RAK WisMesh Tap V2.
-  - version: beta_40
-    name: wadamesh beta_40 (stable)
-    datetime: '2026-07-10T16:36:42Z'
-    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_40
-    prerelease: false
-    notes: >-
-      **wadamesh beta_40 — new STABLE release.** The first stable since beta_35, rolling up
-      everything from beta_36 through beta_40.
-
-
-      Flash from the web installer at **https://flasher.wadamesh.com**, install via Launcher / the
-      Tanmatsu store, or grab a `.bin` below.
-
-
-      Huge thanks to the contributors who drove big parts of this release: **@scratchdiver**
-      (full-history chat scrolling, reliable SD storage, atomic history saves), **@Yazutsu** (GPS
-      quick-reply, keyboard-backlight fix), **ded** (complete ThinkNode M9 support), **Ethac.chen**
-      (RAK WisMesh Tap V2), and **jochentj** (Tanmatsu ALT accents). And to Leon P and MrWeavis for
-      the persistence bug reports that shaped the storage fixes.
-
-
-      ## New
-
-      - **Translations** — hundreds of previously-English strings across menus, settings, dialogs
-      and setup are now translated into all 11 non-English languages (NL, DE, FR, ES, IT, RU, UK,
-      BG, SR, EL, PT-BR), icon-prefixed rows included.
-
-      - **Full-history chat scrolling** (scratchdiver, #130) — scroll a chat through its ENTIRE
-      stored history (up to 5000 messages on SD devices), smooth in bubble and compact mode.
-
-      - **Message delete** — long-press a message to delete just that one; "Delete history" in
-      chat/channel settings wipes a whole conversation. Slim, auto-fading in-chat jump arrows.
-
-      - **Two new boards** — **ThinkNode M9** (ded, #138) and **RAK WisMesh Tap V2** (Ethac.chen,
-      #136), both installable from the web flasher.
-
-      - **Storage & setup** — "Store data on SD" is reliable (scratchdiver, #123); full-screen Wi-Fi
-      network pages; lock-screen unread-message count (#93); special-character password entry with a
-      Sym picker (#122); "Save update bin to SD" for Launcher installs.
-
-      - **Radio** — new "Australia (Mid)" region preset (#121).
-
-      - **Quick send** — GPS position is the first quick-reply row (Yazutsu, #125).
-
-      - **Tanmatsu** — ALT-accents and double-tap-space language switching (jochentj, #129); active
-      keyboard language shown in the chat top bar.
-
-
-      ## Fixed
-
-      - **Card-less devices (Heltec V4 etc.) no longer freeze** for seconds at a time —
-      advert-driven contact rewrites to internal flash are coalesced, so the flash
-      garbage-collection stalls stop.
-
-      - **Deletes stick and are fast** (Leon P, MrWeavis) — a deleted message / cleared chat
-      survives a reboot or hard reset, and history is written compactly so saves no longer pause the
-      screen.
-
-      - **No more lost messages** on reboot from the phone app (Leon P); atomic, fallback-guarded SD
-      history saves (scratchdiver, #135).
-
-      - **Profile/identity migration** to SD is safe on upgrade, with a recovery button if you were
-      hit by the empty-card adoption bug.
-
-      - **Long translated labels fit** — the message menu, confirmation dialogs, and app-drawer
-      tiles shrink oversized text to one line instead of clipping/wrapping; the signal-card hint no
-      longer overlaps.
-
-      - **Emoji picker** — the food/object glyphs that showed as empty boxes now render.
-
-      - **Tanmatsu** — profile/identity persist reliably across reboots; full-size accents at
-      Large/Huge scales; About shows the correct firmware version.
-
-      - **T-Deck** — recovers automatically from the stuck "phantom finger" touch glitch; touch init
-      retries at boot. Keyboard-backlight "Off" preset actually turns it off (Yazutsu, #88).
-
-
-      ## Boards
-
-      LilyGo T-Deck / T-Deck Plus, Heltec V4 + TFT, ThinkNode M9, RAK WisMesh Tap V2 (bins below);
-      Tanmatsu ships via the Tanmatsu launcher store. For a Launcher side-load use the app-only
-      `.bin` (not `-merged`).
