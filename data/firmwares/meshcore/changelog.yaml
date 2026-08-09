@@ -1,7 +1,598 @@
 source: script
 repo: meshcore-dev/MeshCore
-updatedAt: '2026-06-21T09:55:37.699Z'
+updatedAt: '2026-08-09T06:59:53.032Z'
 releases:
+  - version: room-server-v1.17.0
+    name: Room Server Firmware v1.17.0
+    datetime: '2026-08-09T06:16:15Z'
+    url: https://github.com/meshcore-dev/MeshCore/releases/tag/room-server-v1.17.0
+    prerelease: false
+    notes: >-
+      ## Download
+
+
+      Latest firmwares are in the [flasher.meshcore.io](https://flasher.meshcore.io/)
+
+
+      ## Change Log
+
+
+      ### New Features
+
+
+      -   [#2987](https://github.com/meshcore-dev/MeshCore/pull/2987) companion, MCU temperature
+      added to sensor telemetry
+
+      -   [#3115](https://github.com/meshcore-dev/MeshCore/pull/3115) LR2021 radio support added.
+      (Also Meshnology W12 added)
+
+      -   [#2688](https://github.com/meshcore-dev/MeshCore/pull/2688) new room server ‘room.post’
+      CLI command (for server orig posts)
+
+      -   [#2883](https://github.com/meshcore-dev/MeshCore/pull/2883) repeater power off on long
+      button press
+
+      -   [#1727](https://github.com/meshcore-dev/MeshCore/pull/1727) new ‘set cad on/off’ CLI
+      command
+
+      -   [#2765](https://github.com/meshcore-dev/MeshCore/pull/2765) ESP targets now support the
+      ‘get pwrmgt.bootreason’ CLI command
+
+      -   [#2140](https://github.com/meshcore-dev/MeshCore/pull/2140) new ‘get/set radio.fem.rxgain’
+      CLI command (some Heltec boards)
+
+
+      ### Enhancements
+
+
+      -   [#3036](https://github.com/meshcore-dev/MeshCore/pull/3036) fix for missing preamble
+      detect IRQ bit
+
+      -   [#2977](https://github.com/meshcore-dev/MeshCore/pull/2977) preamble and header IRQ rx
+      timeout logic
+
+      -   [#2824](https://github.com/meshcore-dev/MeshCore/pull/2824) nrf52 targets now use CC310
+      hardware crypto functions
+
+      -   [#2982](https://github.com/meshcore-dev/MeshCore/pull/2982) config now stored in JSON
+      format (all firmwares)
+
+      -   [#3034](https://github.com/meshcore-dev/MeshCore/pull/3034) new color scheme on companion
+      UI
+
+      -   [#3023](https://github.com/meshcore-dev/MeshCore/pull/3023) room server now supports rx
+      boosted gain
+
+      -   [#2951](https://github.com/meshcore-dev/MeshCore/pull/2951) Fast ST7735 disply driver
+      (Heltec T096, Wireless Tracker, etc)
+
+      -   [#2895](https://github.com/meshcore-dev/MeshCore/pull/2895) hibernate/poweroff power draw
+      savings
+
+
+      ### New device support
+
+
+      -   [#3139](https://github.com/meshcore-dev/MeshCore/pull/3139) Sensecap X1, QSPI Flash
+      support
+
+      -   [#3122](https://github.com/meshcore-dev/MeshCore/pull/3122) Sensecap X1, LED and haptic
+      feedback
+
+      -   [#3112](https://github.com/meshcore-dev/MeshCore/pull/3112) added Sensecap MeshTracker X1
+      support
+
+      -   [#3049](https://github.com/meshcore-dev/MeshCore/pull/3049) Thinknode M7 support, plus
+      architecture for universal companion
+
+      -   [#2966](https://github.com/meshcore-dev/MeshCore/pull/2966) added Heltec RC32 board
+      support
+
+      -   [#2560](https://github.com/meshcore-dev/MeshCore/pull/2560) added Heltec V4 R8 board
+      support
+
+      -   [#1983](https://github.com/meshcore-dev/MeshCore/pull/1983) support for RAK ethernet
+      modules
+
+      -   [#2942](https://github.com/meshcore-dev/MeshCore/pull/2942) added Elecrow Thinknode M9
+      support
+
+      -   [#2839](https://github.com/meshcore-dev/MeshCore/pull/2839) added Elecrow Thinknode M7
+      support
+
+      -   [#1194](https://github.com/meshcore-dev/MeshCore/pull/1194) added Nibble Zero Connect
+      support
+
+      -   [#2752](https://github.com/meshcore-dev/MeshCore/pull/2752) added Heltec tower V2 support
+
+
+      ### Bug fixes and Other
+
+
+      -   [#3121](https://github.com/meshcore-dev/MeshCore/pull/3121) companion, hardware CAD
+      disabled
+
+      -   [#3107](https://github.com/meshcore-dev/MeshCore/pull/3107) ANON\_REQ reply path\_len
+      check
+
+      -   [#2863](https://github.com/meshcore-dev/MeshCore/pull/2863) Thinknode M6 GPS re-init fix
+
+      -   [#3048](https://github.com/meshcore-dev/MeshCore/pull/3048) ‘start ota’ failure now
+      reported on nRF devices
+
+      -   [#2819](https://github.com/meshcore-dev/MeshCore/pull/2819) kiss modem fixes for stalls
+      under USB backpressure
+
+      -   [#3005](https://github.com/meshcore-dev/MeshCore/pull/3005) ESP32, BLE bonded reconnects
+      fix
+
+      -   [#3007](https://github.com/meshcore-dev/MeshCore/pull/3007) ESP32, BLE receive queue
+      synchronization
+
+      -   [#3006](https://github.com/meshcore-dev/MeshCore/pull/3006) Heltec V4 hardware USB serial
+
+      -   [#2815](https://github.com/meshcore-dev/MeshCore/pull/2815) T-Beam Supreme OLED fixes
+
+      -   [#2887](https://github.com/meshcore-dev/MeshCore/pull/2887) Thinknode M3, GPS LED fixes
+
+      -   [#2990](https://github.com/meshcore-dev/MeshCore/pull/2990) Xiao nrf52 repeater build fix
+
+      -   [#2899](https://github.com/meshcore-dev/MeshCore/pull/2899) T-Echo Lite DC-DC regulator
+      fix
+
+      -   [#2905](https://github.com/meshcore-dev/MeshCore/pull/2905) Heltec T114 DC-DC regulator
+      fix
+
+      -   [#2937](https://github.com/meshcore-dev/MeshCore/pull/2937) fix for GPS time sync stall on
+      long uptime nodes
+
+      -   [#2936](https://github.com/meshcore-dev/MeshCore/pull/2936) external watchdog timer for
+      Heltec Tower V2
+
+      -   [#2867](https://github.com/meshcore-dev/MeshCore/pull/2867) sx1262 LDO support fix
+
+      -   [#2844](https://github.com/meshcore-dev/MeshCore/pull/2844) fixed rx boosted gain on
+      LR1110
+
+      -   GPS time sync fix for Heltec T114
+
+      -   [#2763](https://github.com/meshcore-dev/MeshCore/pull/2763) companion fix when anon
+      contacts full
+
+      -   bad path\_len now rejected, in PAYLOAD\_TYPE\_PATH and ANON\_REQ
+
+
+      ## Packet Collision Improvements
+
+
+      The ‘listen-before-talk’ code has had some pretty big changes, thanks to Taco. He has spent
+      weeks doing diagnostics, and even simulations, testing an improved scheme which involves
+      handling cases where the LoRa radio’s IRQ flags get ‘stuck’, and also the big one being proper
+      preamble detection. This one could be the most significant performance improvement for all
+      meshes.
+
+
+      Also, he found that the new scheme performs on par with hardware CAD, but without the 4 second
+      lock-up glitches that CAD still suffers from. So, we are still leaving hardware CAD off by
+      default.
+
+
+      ## Companion UI
+
+
+      Various color displays will now sport a new look, and be much more responsive.
+
+
+      ## JSON Config
+
+
+      The node config should be automatically migrated to a new JSON format upon upgrading to
+      v1.17.0. The old binary-blob config is left intact, however, in case some people need to
+      revert to old firmware.
+
+
+      ## Steps Toward Universal Companion
+
+
+      With [#3049](https://github.com/meshcore-dev/MeshCore/pull/3049) Liam has paved the way for
+      companions to support multiple serial interfaces, eg. BLE + USB. Up to 4 can now be supported.
+      There are no official multi-interface companion builds _yet_, but all the ‘plumbing’ for this
+      is now there.
+    notesUrl: https://blog.meshcore.io/2026/08/09/release-1-17-0
+  - version: repeater-v1.17.0
+    name: Repeater Firmware v1.17.0
+    datetime: '2026-08-09T06:15:56Z'
+    url: https://github.com/meshcore-dev/MeshCore/releases/tag/repeater-v1.17.0
+    prerelease: false
+    notes: >-
+      ## Download
+
+
+      Latest firmwares are in the [flasher.meshcore.io](https://flasher.meshcore.io/)
+
+
+      ## Change Log
+
+
+      ### New Features
+
+
+      -   [#2987](https://github.com/meshcore-dev/MeshCore/pull/2987) companion, MCU temperature
+      added to sensor telemetry
+
+      -   [#3115](https://github.com/meshcore-dev/MeshCore/pull/3115) LR2021 radio support added.
+      (Also Meshnology W12 added)
+
+      -   [#2688](https://github.com/meshcore-dev/MeshCore/pull/2688) new room server ‘room.post’
+      CLI command (for server orig posts)
+
+      -   [#2883](https://github.com/meshcore-dev/MeshCore/pull/2883) repeater power off on long
+      button press
+
+      -   [#1727](https://github.com/meshcore-dev/MeshCore/pull/1727) new ‘set cad on/off’ CLI
+      command
+
+      -   [#2765](https://github.com/meshcore-dev/MeshCore/pull/2765) ESP targets now support the
+      ‘get pwrmgt.bootreason’ CLI command
+
+      -   [#2140](https://github.com/meshcore-dev/MeshCore/pull/2140) new ‘get/set radio.fem.rxgain’
+      CLI command (some Heltec boards)
+
+
+      ### Enhancements
+
+
+      -   [#3036](https://github.com/meshcore-dev/MeshCore/pull/3036) fix for missing preamble
+      detect IRQ bit
+
+      -   [#2977](https://github.com/meshcore-dev/MeshCore/pull/2977) preamble and header IRQ rx
+      timeout logic
+
+      -   [#2824](https://github.com/meshcore-dev/MeshCore/pull/2824) nrf52 targets now use CC310
+      hardware crypto functions
+
+      -   [#2982](https://github.com/meshcore-dev/MeshCore/pull/2982) config now stored in JSON
+      format (all firmwares)
+
+      -   [#3034](https://github.com/meshcore-dev/MeshCore/pull/3034) new color scheme on companion
+      UI
+
+      -   [#3023](https://github.com/meshcore-dev/MeshCore/pull/3023) room server now supports rx
+      boosted gain
+
+      -   [#2951](https://github.com/meshcore-dev/MeshCore/pull/2951) Fast ST7735 disply driver
+      (Heltec T096, Wireless Tracker, etc)
+
+      -   [#2895](https://github.com/meshcore-dev/MeshCore/pull/2895) hibernate/poweroff power draw
+      savings
+
+
+      ### New device support
+
+
+      -   [#3139](https://github.com/meshcore-dev/MeshCore/pull/3139) Sensecap X1, QSPI Flash
+      support
+
+      -   [#3122](https://github.com/meshcore-dev/MeshCore/pull/3122) Sensecap X1, LED and haptic
+      feedback
+
+      -   [#3112](https://github.com/meshcore-dev/MeshCore/pull/3112) added Sensecap MeshTracker X1
+      support
+
+      -   [#3049](https://github.com/meshcore-dev/MeshCore/pull/3049) Thinknode M7 support, plus
+      architecture for universal companion
+
+      -   [#2966](https://github.com/meshcore-dev/MeshCore/pull/2966) added Heltec RC32 board
+      support
+
+      -   [#2560](https://github.com/meshcore-dev/MeshCore/pull/2560) added Heltec V4 R8 board
+      support
+
+      -   [#1983](https://github.com/meshcore-dev/MeshCore/pull/1983) support for RAK ethernet
+      modules
+
+      -   [#2942](https://github.com/meshcore-dev/MeshCore/pull/2942) added Elecrow Thinknode M9
+      support
+
+      -   [#2839](https://github.com/meshcore-dev/MeshCore/pull/2839) added Elecrow Thinknode M7
+      support
+
+      -   [#1194](https://github.com/meshcore-dev/MeshCore/pull/1194) added Nibble Zero Connect
+      support
+
+      -   [#2752](https://github.com/meshcore-dev/MeshCore/pull/2752) added Heltec tower V2 support
+
+
+      ### Bug fixes and Other
+
+
+      -   [#3121](https://github.com/meshcore-dev/MeshCore/pull/3121) companion, hardware CAD
+      disabled
+
+      -   [#3107](https://github.com/meshcore-dev/MeshCore/pull/3107) ANON\_REQ reply path\_len
+      check
+
+      -   [#2863](https://github.com/meshcore-dev/MeshCore/pull/2863) Thinknode M6 GPS re-init fix
+
+      -   [#3048](https://github.com/meshcore-dev/MeshCore/pull/3048) ‘start ota’ failure now
+      reported on nRF devices
+
+      -   [#2819](https://github.com/meshcore-dev/MeshCore/pull/2819) kiss modem fixes for stalls
+      under USB backpressure
+
+      -   [#3005](https://github.com/meshcore-dev/MeshCore/pull/3005) ESP32, BLE bonded reconnects
+      fix
+
+      -   [#3007](https://github.com/meshcore-dev/MeshCore/pull/3007) ESP32, BLE receive queue
+      synchronization
+
+      -   [#3006](https://github.com/meshcore-dev/MeshCore/pull/3006) Heltec V4 hardware USB serial
+
+      -   [#2815](https://github.com/meshcore-dev/MeshCore/pull/2815) T-Beam Supreme OLED fixes
+
+      -   [#2887](https://github.com/meshcore-dev/MeshCore/pull/2887) Thinknode M3, GPS LED fixes
+
+      -   [#2990](https://github.com/meshcore-dev/MeshCore/pull/2990) Xiao nrf52 repeater build fix
+
+      -   [#2899](https://github.com/meshcore-dev/MeshCore/pull/2899) T-Echo Lite DC-DC regulator
+      fix
+
+      -   [#2905](https://github.com/meshcore-dev/MeshCore/pull/2905) Heltec T114 DC-DC regulator
+      fix
+
+      -   [#2937](https://github.com/meshcore-dev/MeshCore/pull/2937) fix for GPS time sync stall on
+      long uptime nodes
+
+      -   [#2936](https://github.com/meshcore-dev/MeshCore/pull/2936) external watchdog timer for
+      Heltec Tower V2
+
+      -   [#2867](https://github.com/meshcore-dev/MeshCore/pull/2867) sx1262 LDO support fix
+
+      -   [#2844](https://github.com/meshcore-dev/MeshCore/pull/2844) fixed rx boosted gain on
+      LR1110
+
+      -   GPS time sync fix for Heltec T114
+
+      -   [#2763](https://github.com/meshcore-dev/MeshCore/pull/2763) companion fix when anon
+      contacts full
+
+      -   bad path\_len now rejected, in PAYLOAD\_TYPE\_PATH and ANON\_REQ
+
+
+      ## Packet Collision Improvements
+
+
+      The ‘listen-before-talk’ code has had some pretty big changes, thanks to Taco. He has spent
+      weeks doing diagnostics, and even simulations, testing an improved scheme which involves
+      handling cases where the LoRa radio’s IRQ flags get ‘stuck’, and also the big one being proper
+      preamble detection. This one could be the most significant performance improvement for all
+      meshes.
+
+
+      Also, he found that the new scheme performs on par with hardware CAD, but without the 4 second
+      lock-up glitches that CAD still suffers from. So, we are still leaving hardware CAD off by
+      default.
+
+
+      ## Companion UI
+
+
+      Various color displays will now sport a new look, and be much more responsive.
+
+
+      ## JSON Config
+
+
+      The node config should be automatically migrated to a new JSON format upon upgrading to
+      v1.17.0. The old binary-blob config is left intact, however, in case some people need to
+      revert to old firmware.
+
+
+      ## Steps Toward Universal Companion
+
+
+      With [#3049](https://github.com/meshcore-dev/MeshCore/pull/3049) Liam has paved the way for
+      companions to support multiple serial interfaces, eg. BLE + USB. Up to 4 can now be supported.
+      There are no official multi-interface companion builds _yet_, but all the ‘plumbing’ for this
+      is now there.
+    notesUrl: https://blog.meshcore.io/2026/08/09/release-1-17-0
+  - version: companion-v1.17.0
+    name: Companion Firmware v1.17.0
+    datetime: '2026-08-09T06:16:37Z'
+    url: https://github.com/meshcore-dev/MeshCore/releases/tag/companion-v1.17.0
+    prerelease: false
+    notes: >-
+      ## Download
+
+
+      Latest firmwares are in the [flasher.meshcore.io](https://flasher.meshcore.io/)
+
+
+      ## Change Log
+
+
+      ### New Features
+
+
+      -   [#2987](https://github.com/meshcore-dev/MeshCore/pull/2987) companion, MCU temperature
+      added to sensor telemetry
+
+      -   [#3115](https://github.com/meshcore-dev/MeshCore/pull/3115) LR2021 radio support added.
+      (Also Meshnology W12 added)
+
+      -   [#2688](https://github.com/meshcore-dev/MeshCore/pull/2688) new room server ‘room.post’
+      CLI command (for server orig posts)
+
+      -   [#2883](https://github.com/meshcore-dev/MeshCore/pull/2883) repeater power off on long
+      button press
+
+      -   [#1727](https://github.com/meshcore-dev/MeshCore/pull/1727) new ‘set cad on/off’ CLI
+      command
+
+      -   [#2765](https://github.com/meshcore-dev/MeshCore/pull/2765) ESP targets now support the
+      ‘get pwrmgt.bootreason’ CLI command
+
+      -   [#2140](https://github.com/meshcore-dev/MeshCore/pull/2140) new ‘get/set radio.fem.rxgain’
+      CLI command (some Heltec boards)
+
+
+      ### Enhancements
+
+
+      -   [#3036](https://github.com/meshcore-dev/MeshCore/pull/3036) fix for missing preamble
+      detect IRQ bit
+
+      -   [#2977](https://github.com/meshcore-dev/MeshCore/pull/2977) preamble and header IRQ rx
+      timeout logic
+
+      -   [#2824](https://github.com/meshcore-dev/MeshCore/pull/2824) nrf52 targets now use CC310
+      hardware crypto functions
+
+      -   [#2982](https://github.com/meshcore-dev/MeshCore/pull/2982) config now stored in JSON
+      format (all firmwares)
+
+      -   [#3034](https://github.com/meshcore-dev/MeshCore/pull/3034) new color scheme on companion
+      UI
+
+      -   [#3023](https://github.com/meshcore-dev/MeshCore/pull/3023) room server now supports rx
+      boosted gain
+
+      -   [#2951](https://github.com/meshcore-dev/MeshCore/pull/2951) Fast ST7735 disply driver
+      (Heltec T096, Wireless Tracker, etc)
+
+      -   [#2895](https://github.com/meshcore-dev/MeshCore/pull/2895) hibernate/poweroff power draw
+      savings
+
+
+      ### New device support
+
+
+      -   [#3139](https://github.com/meshcore-dev/MeshCore/pull/3139) Sensecap X1, QSPI Flash
+      support
+
+      -   [#3122](https://github.com/meshcore-dev/MeshCore/pull/3122) Sensecap X1, LED and haptic
+      feedback
+
+      -   [#3112](https://github.com/meshcore-dev/MeshCore/pull/3112) added Sensecap MeshTracker X1
+      support
+
+      -   [#3049](https://github.com/meshcore-dev/MeshCore/pull/3049) Thinknode M7 support, plus
+      architecture for universal companion
+
+      -   [#2966](https://github.com/meshcore-dev/MeshCore/pull/2966) added Heltec RC32 board
+      support
+
+      -   [#2560](https://github.com/meshcore-dev/MeshCore/pull/2560) added Heltec V4 R8 board
+      support
+
+      -   [#1983](https://github.com/meshcore-dev/MeshCore/pull/1983) support for RAK ethernet
+      modules
+
+      -   [#2942](https://github.com/meshcore-dev/MeshCore/pull/2942) added Elecrow Thinknode M9
+      support
+
+      -   [#2839](https://github.com/meshcore-dev/MeshCore/pull/2839) added Elecrow Thinknode M7
+      support
+
+      -   [#1194](https://github.com/meshcore-dev/MeshCore/pull/1194) added Nibble Zero Connect
+      support
+
+      -   [#2752](https://github.com/meshcore-dev/MeshCore/pull/2752) added Heltec tower V2 support
+
+
+      ### Bug fixes and Other
+
+
+      -   [#3121](https://github.com/meshcore-dev/MeshCore/pull/3121) companion, hardware CAD
+      disabled
+
+      -   [#3107](https://github.com/meshcore-dev/MeshCore/pull/3107) ANON\_REQ reply path\_len
+      check
+
+      -   [#2863](https://github.com/meshcore-dev/MeshCore/pull/2863) Thinknode M6 GPS re-init fix
+
+      -   [#3048](https://github.com/meshcore-dev/MeshCore/pull/3048) ‘start ota’ failure now
+      reported on nRF devices
+
+      -   [#2819](https://github.com/meshcore-dev/MeshCore/pull/2819) kiss modem fixes for stalls
+      under USB backpressure
+
+      -   [#3005](https://github.com/meshcore-dev/MeshCore/pull/3005) ESP32, BLE bonded reconnects
+      fix
+
+      -   [#3007](https://github.com/meshcore-dev/MeshCore/pull/3007) ESP32, BLE receive queue
+      synchronization
+
+      -   [#3006](https://github.com/meshcore-dev/MeshCore/pull/3006) Heltec V4 hardware USB serial
+
+      -   [#2815](https://github.com/meshcore-dev/MeshCore/pull/2815) T-Beam Supreme OLED fixes
+
+      -   [#2887](https://github.com/meshcore-dev/MeshCore/pull/2887) Thinknode M3, GPS LED fixes
+
+      -   [#2990](https://github.com/meshcore-dev/MeshCore/pull/2990) Xiao nrf52 repeater build fix
+
+      -   [#2899](https://github.com/meshcore-dev/MeshCore/pull/2899) T-Echo Lite DC-DC regulator
+      fix
+
+      -   [#2905](https://github.com/meshcore-dev/MeshCore/pull/2905) Heltec T114 DC-DC regulator
+      fix
+
+      -   [#2937](https://github.com/meshcore-dev/MeshCore/pull/2937) fix for GPS time sync stall on
+      long uptime nodes
+
+      -   [#2936](https://github.com/meshcore-dev/MeshCore/pull/2936) external watchdog timer for
+      Heltec Tower V2
+
+      -   [#2867](https://github.com/meshcore-dev/MeshCore/pull/2867) sx1262 LDO support fix
+
+      -   [#2844](https://github.com/meshcore-dev/MeshCore/pull/2844) fixed rx boosted gain on
+      LR1110
+
+      -   GPS time sync fix for Heltec T114
+
+      -   [#2763](https://github.com/meshcore-dev/MeshCore/pull/2763) companion fix when anon
+      contacts full
+
+      -   bad path\_len now rejected, in PAYLOAD\_TYPE\_PATH and ANON\_REQ
+
+
+      ## Packet Collision Improvements
+
+
+      The ‘listen-before-talk’ code has had some pretty big changes, thanks to Taco. He has spent
+      weeks doing diagnostics, and even simulations, testing an improved scheme which involves
+      handling cases where the LoRa radio’s IRQ flags get ‘stuck’, and also the big one being proper
+      preamble detection. This one could be the most significant performance improvement for all
+      meshes.
+
+
+      Also, he found that the new scheme performs on par with hardware CAD, but without the 4 second
+      lock-up glitches that CAD still suffers from. So, we are still leaving hardware CAD off by
+      default.
+
+
+      ## Companion UI
+
+
+      Various color displays will now sport a new look, and be much more responsive.
+
+
+      ## JSON Config
+
+
+      The node config should be automatically migrated to a new JSON format upon upgrading to
+      v1.17.0. The old binary-blob config is left intact, however, in case some people need to
+      revert to old firmware.
+
+
+      ## Steps Toward Universal Companion
+
+
+      With [#3049](https://github.com/meshcore-dev/MeshCore/pull/3049) Liam has paved the way for
+      companions to support multiple serial interfaces, eg. BLE + USB. Up to 4 can now be supported.
+      There are no official multi-interface companion builds _yet_, but all the ‘plumbing’ for this
+      is now there.
+    notesUrl: https://blog.meshcore.io/2026/08/09/release-1-17-0
   - version: room-server-v1.16.0
     name: Room Server Firmware v1.16.0
     datetime: '2026-06-06T15:54:36Z'
@@ -965,21 +1556,3 @@ releases:
     url: https://github.com/meshcore-dev/MeshCore/releases/tag/repeater-v1.12.0
     prerelease: false
     notes: "Change log:\r\n* new boards: Thinknode M6, M3, RAK3401, RAK11310, Meshtiny\r\n* nRF low power recovery manager (CLI ‘pwrmgt’)\r\n* Stats: new recv errors counter\r\n* region names now without ‘#’, new ‘region list’ CLI\r\n* ESP32: new “powersaving on/off” CLI\r\n* new “clkreboot” CLI\r\n* on-boot adverts now zero-hop\r\n* new “get/set owner.info” CLI\r\n* flood.advert.interval range now 3..168 hours\r\n* remote “set prv.key” CLI \r\n* new zero-hop anonReq types (Region discovery, owner info, clock sync)\r\n* MCU temperature now in telemetry responses"
-  - version: companion-v1.12.0
-    name: Companion Firmware v1.12.0
-    datetime: '2026-01-29T12:10:45Z'
-    url: https://github.com/meshcore-dev/MeshCore/releases/tag/companion-v1.12.0
-    prerelease: false
-    notes: "Change log:\r\n* new boards: Thinknode M6, M3, RAK3401, RAK11310, Meshtiny\r\n* nRF low power recovery manager\r\n* BLE code rewritten\r\n* WiFi serial fixes\r\n* contacts db can now overwrite old entries\r\n* new prefs: buzzer quiet, gps enabled, gps interval"
-  - version: room-server-v1.11.0
-    name: Room Server Firmware v1.11.0
-    datetime: '2025-11-30T08:34:45Z'
-    url: https://github.com/meshcore-dev/MeshCore/releases/tag/room-server-v1.11.0
-    prerelease: false
-    notes: "Change log:\r\n* remote login bug fix (no responses after login)\r\n* Extended Trace support\r\n* get/set adc,multiplier support\r\n* New boards: Ikoka handheld, Keepteen LT1"
-  - version: repeater-v1.11.0
-    name: Repeater Firmware v1.11.0
-    datetime: '2025-11-30T08:33:44Z'
-    url: https://github.com/meshcore-dev/MeshCore/releases/tag/repeater-v1.11.0
-    prerelease: false
-    notes: "Change log:\r\n* remote login bug fix (no responses after login)\r\n* Extended Trace support\r\n* get/set adc,multiplier support\r\n* RAK4631: Uart bridge support\r\n* New boards: Ikoka handheld, Keepteen LT1"
