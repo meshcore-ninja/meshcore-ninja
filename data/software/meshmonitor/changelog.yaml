@@ -1,7 +1,116 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-08-09T20:35:32.909Z'
+updatedAt: '2026-08-10T19:00:34.338Z'
 releases:
+  - version: v4.14.1-rc3
+    name: MeshMonitor v4.14.1-rc3 — Movement Triggers
+    datetime: '2026-08-10T16:57:03Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.14.1-rc3
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.14.1-rc3 — Movement Triggers
+
+
+      > ⚠️ **Pre-release.** This is a release candidate for 4.14.1. It ships on the `:dev` Docker
+      tag, not `:latest`. Run it if you want the changes early and can tolerate rough edges; report
+      anything you hit.
+
+
+      ## Summary
+
+
+      This candidate adds two Automation Engine triggers built for **stationary GPS fleets** —
+      rooftops, towers, and gateways you want to hear about the moment they move. Pair either with a
+      Send-message or Notify action for a tamper / theft alert.
+
+
+      - **Left home** is the primary theft detector. It fires when a watched node drifts farther
+      than a threshold (default **300 m**) from a home anchor MeshMonitor learns per node and stores
+      in the database — so a restart never silently re-homes a node that was carried off. The anchor
+      is seeded from position-history inliers (dropping GPS spider-lines), gently self-corrects
+      while the node sits still, and can be reset from history at any time.
+
+      - **Became mobile** is a coarser companion: it fires when a hand-selected node's mobility flag
+      flips from stationary to moving.
+
+
+      Also in this candidate: you can now **set a node's private key from Device Configuration** —
+      for restoring an identity from backup or moving it to replacement hardware — and node purges
+      now clean up the automation bookkeeping they used to leave behind.
+
+
+      ## Features
+
+
+      - **Left-home / tamper trigger** — per-(automation, node) home anchors persisted across
+      restarts, history-inlier seeding, EMA self-correction near home, a **Reset homes from
+      history** action, a stationary-first node picker, and `{{ node.longName }}` / `{{ node.nodeId
+      }}` message tokens. (#4648)
+
+      - **Became-mobile trigger** — fires on a stationary → mobile flip (MeshMonitor's >100 m
+      position-history heuristic) for hand-selected nodes. (#4648)
+
+      - **Set a node's private key from Device Configuration** — local device only, X25519; on a
+      change MeshMonitor derives the matching public key and writes both, so the node can never be
+      left advertising a key that no longer matches its secret. Guarded behind a confirmation that
+      spells out the impersonation / duplicate-key risk. (#4632, #4654)
+
+
+      ## Fixes
+
+
+      - **Node purge now clears its automation bookkeeping** — auto-favorite targets and assignments
+      (#4633), and auto-traceroute / auto-time-sync allowlists (#4630), so a re-added node no longer
+      inherits stale state.
+
+      - **MeshCore:** a lost `out_path` acknowledgement is treated as success, not failure. (#4625)
+
+
+      ## Docs
+
+
+      The [CHANGELOG](https://github.com/Yeraze/meshmonitor/blob/main/CHANGELOG.md) now covers the
+      full 4.14.1 rc1 → rc3 history, and the feature guides were reconciled with what shipped across
+      the candidates (Analyzer Observer static MQTT auth, the new Device Configuration security
+      section, position-estimation anchors, and the theme chart color scales).
+
+
+      ## Upgrade
+
+
+      Docker `:dev` users receive this automatically.
+
+
+      ## 🚀 MeshMonitor v4.14.1-rc3
+
+
+      ### 📦 Installation
+
+
+      **Docker (recommended):**
+
+      ```bash
+
+      docker run -d \
+        --name meshmonitor \
+        -p 8080:3001 \
+        -v meshmonitor-data:/data \
+        ghcr.io/Yeraze/meshmonitor:4.14.1-rc3
+      ```
+
+
+      ### 🧪 Testing
+
+      ✅ All tests passed
+
+      ✅ TypeScript checks passed
+
+      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
+
+
+      ### 📋 Changes
+
+      See commit history for detailed changes.
   - version: v4.14.1-rc2
     name: Theme Color Schemas
     datetime: '2026-08-09T18:41:08Z'
@@ -2186,143 +2295,3 @@ releases:
       - MeshCore: automation DM triggers populate
 
       …
-  - version: v4.13.0-rc3
-    name: v4.13.0-rc3
-    datetime: '2026-07-13T18:11:37Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.13.0-rc3
-    prerelease: true
-    notes: >-
-      # MeshMonitor v4.13.0-rc3
-
-
-      > ⚠️ **Pre-release (Release Candidate).** This build is for testing the 4.13.0
-      map-consolidation and MeshCore work ahead of the stable release. Not recommended for
-      production; back up your database before upgrading.
-
-
-      This release candidate builds on rc2 with a focused round of map interaction fixes and a
-      MeshCore Virtual Node correctness fix. The map work resolves several regressions from the
-      map-consolidation epic: click-to-pan now targets the actual node marker instead of the raw
-      center, user gestures (zoom/pan) correctly cancel node-centering instead of snapping back and
-      freezing, and raster tile layers no longer remount and flicker when the tileset changes. Null
-      Island (0,0) coordinates are now filtered from both markers and line endpoints, and
-      out-of-range/invalid node positions are detected and trimmed. Pan/zoom/spiderfy behavior was
-      polished with a zoom clamp, scaled animations, and zoom-gated spiderfy. ROUTER_LATE nodes
-      again render as repeater-tower icons on the NodesTab and Dashboard maps. On MeshCore, the
-      Virtual Node login now relays the admin flag and firmware level, and the mobile node list is
-      collapsible so the map is reachable without selecting a node. This candidate also folds in a
-      large batch of dependency updates and a translations refresh.
-
-
-      ## Features
-
-      - **Map:** pan/zoom/spiderfy interaction polish — zoom clamp, scaled animations, zoom-gated
-      spiderfy, re-spiderfy on zoom (#4072, resolves #4046)
-
-      - **MeshCore:** collapsible node list — reach the map on mobile without selecting a node
-      (#4079)
-
-
-      ## Bug Fixes
-
-      ### Map
-
-      - Click pans to the node marker, not the raw center, for obscured nodes (#4082)
-
-      - User gesture cancels node-centering — zoom no longer snaps back (#4098)
-
-      - Fixed map snapping back to node on click and freezing interaction (#4080)
-
-      - Stopped raster tile layer remounting on tileset change (abort/flicker) (#4097)
-
-      - Detect and trim out-of-range (invalid) node positions (#4099)
-
-      - Widen Null Island radius + skip it in the unified merge (#4077)
-
-      - Null-island filter for line endpoints — routes + neighbors no longer run to 0,0 (#4078)
-
-      - ROUTER_LATE renders as a repeater-tower icon on NodesTab + Dashboard maps (#4076, resolves
-      #4075)
-
-      - Integrate `resolveMapEndpoint` into DashboardMap neighbor lines (#4055, resolves #4042)
-
-      - Post-epic fixes: wheel zoom, zoom-to-node, chunk-reload self-heal; MeshCore polar grid + map
-      loading states (#4071)
-
-
-      ### MeshCore
-
-      - Relay admin flag + firmware level in Virtual Node login (#4095, resolves #4094)
-
-
-      ## Translations
-
-      - Translations update from Hosted Weblate (#4006)
-
-
-      ## Dependencies
-
-      - Bump the production-dependencies group with 9 updates (#4084)
-
-      - Bump the development-dependencies group with 3 updates — @types/node, eslint, vitest (#4083)
-
-      - Bump protobufjs 8.6.6 → 8.7.0 (#4090)
-
-      - Bump helmet 8.2.0 → 8.3.0 (#4092)
-
-      - Bump lucide-react 1.22.0 → 1.24.0 (#4085)
-
-      - Bump re2 1.25.0 → 1.26.0 (#4088)
-
-      - Bump @typescript-eslint/eslint-plugin 8.62.1 → 8.63.0 (#4089)
-
-      - Bump @typescript-eslint/parser 8.62.1 → 8.63.0 (#4087)
-
-
-      ## Issues Resolved
-
-      - #4094 — MeshCore: Virtual Node functionality still does not work correctly
-
-      - #4093 — MeshCore: Channels no longer marked unread
-
-      - #4075 — ROUTER_LATE renders as generic pin (not repeater tower icon) on NodesTab and
-      Dashboard maps
-
-      - #4046 — Map UI: improve pan/zoom-to-center behavior and its interaction with marker spiderfy
-
-      - #4042 — Dashboard Unified map: neighbor-info lines don't follow merged node marker position
-
-
-      **Full changelog:** https://github.com/Yeraze/meshmonitor/compare/v4.13.0-rc2...v4.13.0-rc3
-
-
-      ## 🚀 MeshMonitor v4.13.0-rc3
-
-
-      ### 📦 Installation
-
-
-      **Docker (recommended):**
-
-      ```bash
-
-      docker run -d \
-        --name meshmonitor \
-        -p 8080:3001 \
-        -v meshmonitor-data:/data \
-        ghcr.io/Yeraze/meshmonitor:4.13.0-rc3
-      ```
-
-
-      ### 🧪 Testing
-
-      ✅ All tests passed
-
-      ✅ TypeScript checks passed
-
-      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
-
-
-      ### 📋 Changes
-
-      See commit history for detailed changes.
