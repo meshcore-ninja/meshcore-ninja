@@ -1,7 +1,80 @@
 source: github
 repo: ALLFATHER-BV/wadamesh
-updatedAt: '2026-08-09T16:37:42.661Z'
+updatedAt: '2026-08-10T13:13:39.495Z'
 releases:
+  - version: beta_61
+    name: wadamesh beta_61
+    datetime: '2026-08-10T11:15:20Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_61
+    prerelease: true
+    notes: >-
+      Test build. Stable stays **beta_50**.
+
+
+      **If you are on beta_60, update.** It shipped with three regressions from the MeshCore 1.17
+      rebase, all fixed here. Flashing beta_61 over the top is enough — nothing needs erasing, and
+      no data was lost in any of them.
+
+
+      Flash it from **https://flasher.wadamesh.com** (flip the Beta toggle), or on-device via
+      Settings → Firmware with "Get test builds (beta)" enabled.
+
+
+      ---
+
+
+      ### The beta_60 regressions
+
+
+      **Boot loop on an empty contact list** (#249). A device with no contacts saved — a fresh
+      install, an erase-and-flash, or a card that had not mounted yet — crashed during startup and
+      rebooted forever. 1.17 reserved eight slots at the head of the contact table and claimed them
+      before the table was allocated, so a new startup routine walked a null pointer. Every board on
+      our bench had contacts on it, which is exactly why this got past testing; the release process
+      now checks that case. Reported by @Pierre747 and @rustinmyeye, whose boot log is what cracked
+      it.
+
+
+      **The newest contacts were unreachable** (#252). Same reserved slots, different consequence:
+      the contact list, the action sheets and the phone-app sync were still counting from the old
+      start of the table, so the eight most recently added contacts could not be shown or acted on.
+      A contact you had just added was invisible, and a room server's **Log in** silently did
+      nothing because it resolved to an empty reserved slot. Nothing was lost — those contacts were
+      in the table the whole time. Reported by myshoeisonfire.
+
+
+      **The T-Display P4 could send but never receive** (#253). No channel messages, no delivery
+      confirmations, no adverts, RX counters flat at zero — while the Monitor app still showed
+      signal, because it talks to the radio directly. The P4 is the one board whose radio interrupt
+      is not wired to the processor, so it has to ask the radio over SPI whether a packet arrived.
+      That polling code was never in the repository — it lived only in a generated directory that
+      gets rebuilt — so the 1.17 rebase erased it. It is rewritten and now version-controlled, with
+      a build-time check so it cannot vanish again. Reported by @D-Melhede.
+
+
+      ### Also fixed
+
+
+      - A contact that changes its node name no longer leaves two chat threads behind. The thread is
+      matched by key, but its title was never updated, while incoming messages are filed by sender
+      name — so the first message after a rename started a second thread. Reported by
+      myshoeisonfire.
+
+      - Release builds now derive the firmware version, build date and core version from the release
+      itself, and a release **aborts** if any board's image does not carry its own tag. beta_60
+      reported `v1.16.0-touch` in About because that value was maintained by hand.
+
+      - All 13 language files gained the 48 UI strings none of them had, so those stop being
+      permanently English and translators can see the gaps. New tool `scripts/build/audit-lang.py`
+      reports drift in both directions.
+
+
+      ### Known, not fixed here
+
+
+      The intermittent T-Lora Pager crash (#233, #251) is still open. Both dumps decode to a freed
+      LVGL callback — the same underlying fault seen from two angles — and @PixPMusic's #234
+      restructures exactly that teardown. It is not a 1.17 regression and predates beta_60.
   - version: beta_60
     name: wadamesh beta_60
     datetime: '2026-08-09T16:19:17Z'
@@ -1312,52 +1385,6 @@ releases:
 
       - The web page has an **"Exit remote"** button (with a confirmation) that leaves REMOTE mode
       from any browser, on any board.
-
-
-      Boards in this build: LilyGo T-Deck, Heltec V4 TFT, ThinkNode M9, RAK WisMesh Tap V2.
-  - version: beta_41
-    name: wadamesh beta_41
-    datetime: '2026-07-11T20:33:02Z'
-    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_41
-    prerelease: true
-    notes: >-
-      ## wadamesh beta_41 (test build)
-
-
-      Experimental web control: view and drive the wadamesh UI from a phone or desktop browser over
-      Wi-Fi. Two new apps, VNC and REMOTE.
-
-
-      Install from the web flasher at https://flasher.wadamesh.com (test channel), or grab a bin
-      below.
-
-
-      ### New
-
-
-      - **VNC app** (app drawer, between Advertise and Signal): mirrors the live device screen into
-      a web browser over Wi-Fi and lets you drive it. Taps and typing in the browser control the
-      device, and anything that changes on the device shows up in the browser. Turn it on, then open
-      `http://<device-ip>:8765/` from any browser on the same network. The app page itself is
-      scrollable.
-
-      - **REMOTE app**: a headless mode that renders the whole UI at a larger, browser-friendly
-      resolution and serves it over Wi-Fi, while the device's own screen drops to a placeholder
-      showing the address to open. Turning it on or off reboots the device. On the web page a Rotate
-      button flips between landscape (desktop) and portrait (phone); on the device, double-tap the
-      space bar to leave remote mode.
-
-      - Both are served by the device itself over plain Wi-Fi, no phone app, no account, no cloud.
-
-
-      ### Note
-
-
-      This is an experimental first cut, and an honest heads-up from Kaj: for me the remote UI still
-      feels too slow, and I will most likely move toward a dedicated, lighter remote client instead
-      of streaming the entire live UI. It is in this test build mainly because community feedback on
-      it would be genuinely useful. If you try it, let us know how it runs for you and what you
-      would actually want from a web or remote client.
 
 
       Boards in this build: LilyGo T-Deck, Heltec V4 TFT, ThinkNode M9, RAK WisMesh Tap V2.
