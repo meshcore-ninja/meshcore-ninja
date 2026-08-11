@@ -1,7 +1,99 @@
 source: github
 repo: ALLFATHER-BV/wadamesh
-updatedAt: '2026-08-10T13:13:39.495Z'
+updatedAt: '2026-08-11T08:59:57.092Z'
 releases:
+  - version: beta_62
+    name: wadamesh beta_62
+    datetime: '2026-08-11T08:32:44Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_62
+    prerelease: true
+    notes: >-
+      Test build. Stable stays **beta_50**.
+
+
+      Most of this release is community work — **@PixPMusic** wrote 22 of its 30 changes, and the
+      German, Dutch and Hungarian translations are **@pisti87**'s.
+
+
+      Flash it from **https://flasher.wadamesh.com** (flip the Beta toggle), or on-device via
+      Settings → Firmware with "Get test builds (beta)" enabled.
+
+
+      ---
+
+
+      ### The enlarged UI, by @PixPMusic (#198)
+
+
+      The large font presets are usable across the whole interface now, not just in chat.
+
+
+      Chat rows, the composer and the Pager's line spacing size themselves from the font's real
+      metrics instead of fixed pixel heights, so nothing clips or overlaps at the bigger presets.
+      Contact detail menus, the contact share panel, mentions, the overview header and its action
+      buttons, and the QR panel all scale with the preset instead of overflowing it. The
+      discovered-count badge is centred, the close button and the signal poll no longer strand a
+      focus outline, and app pages close from the back gesture.
+
+
+      New in the same pass: a full-width traffic detail chart, Jumbo chat text properly distinct
+      from Large, and the preset names kept as the ones you already know.
+
+
+      ### Open-licensed fonts, by @PixPMusic (#198)
+
+
+      The bundled fonts are rebuilt from their OFL sources. The set shipped before this was
+      generated from a proprietary system font, which was never ours to redistribute — the firmware
+      is GPL, so that needed correcting whether or not anyone had noticed. Glyph shapes shift very
+      slightly; nothing else about the text changes.
+
+
+      ### Accented and non-Latin characters render everywhere again
+
+
+      The rebuilt fonts carry their extended coverage in a fallback chain, and roughly eighty labels
+      across the interface pinned a base font directly rather than the chained one. On those, an ä,
+      a Hungarian ő or a Cyrillic character came out as an empty box while the identical string
+      rendered fine one screen over. Every label now takes the chained font, verified by a static
+      sweep of the UI source rather than by eye. Surfaced while checking @pisti87's Hungarian
+      translation.
+
+
+      ### The Heltec V4 no longer locks up when its contact list is full (#222)
+
+
+      Once the contact table is full, every advert from an unknown node evicts the oldest contact —
+      and the firmware deleted that contact's stored record on the spot, on the receive path. On the
+      V4 that store is internal flash, where a delete can trigger a garbage-collection pass, and
+      such a pass suspends the flash cache and stalls **both** processor cores: the whole device
+      goes dead, Bluetooth and TCP drop, the screen will not wake, and it comes back on its own a
+      moment later. It got steadily worse the fuller the list was — degrading around 350 contacts,
+      locking hard by 600, constant at 2000.
+
+
+      The delete is now queued and performed between packets, at most one every half second, so a
+      stream of adverts can no longer chain those pauses together. Reported by @Yoss101 and
+      @pisti87.
+
+
+      ### Also
+
+
+      - Downloading a firmware image to the SD card checks the card's free space first and says so,
+      instead of failing partway through the write with a bare "SD write failed".
+
+      - German, Dutch and Hungarian now translate all 48 interface strings that had been left
+      English in every language (@pisti87). The other ten have the strings listed and still fall
+      back to English — the files are in `deploy/apps/lang` and contributions are welcome.
+
+
+      ### Known, not fixed here
+
+
+      The intermittent T-Lora Pager crash (#233, #251) is still open. Both dumps decode to a freed
+      LVGL callback — the same fault from two angles — and @PixPMusic's #234 restructures that
+      teardown. It predates beta_60 and is not a 1.17 regression.
   - version: beta_61
     name: wadamesh beta_61
     datetime: '2026-08-10T11:15:20Z'
@@ -1351,40 +1443,3 @@ releases:
 
       This is a **test-channel** (beta) build. Devices on the beta update feed will offer it; stable
       stays on beta_40.
-  - version: beta_42
-    name: wadamesh beta_42
-    datetime: '2026-07-11T21:35:50Z'
-    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_42
-    prerelease: true
-    notes: >-
-      ## wadamesh beta_42 (test build)
-
-
-      Fixes for the REMOTE mode introduced in beta_41.
-
-
-      Install from the web flasher at https://flasher.wadamesh.com (test channel), or grab a bin
-      below.
-
-
-      ### Fixed
-
-
-      - **REMOTE mode now works on the Heltec V4 TFT** (and other 2 MB-PSRAM boards) instead of
-      showing a black screen in the browser. Its off-screen renderer needed more free memory than
-      those boards had, so nothing streamed; the buffers are sized to fit now, and the render is a
-      bit smaller and faster as a result. VNC was never affected and already worked.
-
-      - **Keyboard-less touch boards (Heltec V4, RAK WisMesh Tap) can leave REMOTE mode** again:
-      touch and hold the device screen for about 3 seconds. Those boards have no SPACE key, which
-      used to be the only on-device way out.
-
-
-      ### New
-
-
-      - The web page has an **"Exit remote"** button (with a confirmation) that leaves REMOTE mode
-      from any browser, on any board.
-
-
-      Boards in this build: LilyGo T-Deck, Heltec V4 TFT, ThinkNode M9, RAK WisMesh Tap V2.
