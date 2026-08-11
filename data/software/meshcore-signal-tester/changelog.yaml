@@ -1,7 +1,13 @@
 source: github
 repo: kybl/meshcore-signal-tester
-updatedAt: '2026-08-01T19:12:01.139Z'
+updatedAt: '2026-08-11T13:10:35.956Z'
 releases:
+  - version: v1.3.1
+    name: v1.3.1
+    datetime: '2026-08-11T12:20:59Z'
+    url: https://github.com/kybl/meshcore-signal-tester/releases/tag/v1.3.1
+    prerelease: false
+    notes: "* The online radio-preset list is now consulted only when the connected\r\n  radio reports settings the built-in table doesn't recognise (and then at\r\n  most once a day). Previously the app refreshed the list up to once a day on\r\n  every start — now most installs never make that network request at all."
   - version: v1.3.0
     name: v1.3.0
     datetime: '2026-08-01T17:37:56Z'
