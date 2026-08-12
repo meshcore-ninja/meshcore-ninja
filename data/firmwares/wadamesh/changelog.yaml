@@ -1,7 +1,114 @@
 source: github
 repo: ALLFATHER-BV/wadamesh
-updatedAt: '2026-08-11T08:59:57.092Z'
+updatedAt: '2026-08-12T13:14:38.766Z'
 releases:
+  - version: beta_63
+    name: wadamesh beta_63
+    datetime: '2026-08-12T11:15:20Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_63
+    prerelease: true
+    notes: >-
+      Test build. Stable stays **beta_50**.
+
+
+      **Two crash fixes.** If you are on a T-Lora Pager, or you use the firmware in Hungarian,
+      update.
+
+
+      Flash it from **https://flasher.wadamesh.com** (flip the Beta toggle), or on-device via
+      Settings → Firmware with "Get test builds (beta)" enabled.
+
+
+      ---
+
+
+      ### Hungarian devices rebooted on every repeater login (#258)
+
+
+      The warning shown when your clock disagrees with a server is assembled from a translated
+      sentence. The Hungarian translation had reordered the two values inside it, so the firmware
+      read the contact name as a number, then read a number — the minute count — as a memory address
+      and followed it. Instant reboot, every login, Hungarian only, because English happened to
+      match the order the code expected.
+
+
+      Fixing the four Hungarian lines was not enough, so this is fixed at the root: a translation
+      whose value placeholders do not match the original is now **ignored**, and the English is
+      shown instead. Language files are downloaded, and some people write their own — none of them
+      can crash a device any more. The corrected Hungarian is already published, and the release
+      tooling now refuses to ship a mismatched line.
+
+
+      Reported by @pisti87.
+
+
+      ### The T-Lora Pager crashed while scrolling chat history (#233, #251)
+
+
+      The chat list rebuilds itself as you scroll, and the timer driving that rebuild was destroyed
+      and recreated at every window boundary — a fast scroll could reach it after it was gone. It is
+      now kept alive and paused instead, and keyboard focus is detached before the old rows are torn
+      down rather than during.
+
+
+      By **@PixPMusic** (#234). Both crash reports decoded to the same underlying fault. Reported by
+      @AtomAlex12 and @PixPMusic.
+
+
+      ### Messages arrived in a nameless "#unknown" thread (#260)
+
+
+      A channel slot that was never configured holds an all-zero key, and the firmware treated it as
+      a real channel. An app asking to send on a channel index the device did not have would
+      transmit a message **encrypted with that all-zero key** — and every other device in range
+      could decrypt it against its own unused slots, then resolve the channel name to nothing. That
+      is why the same messages landed on unrelated people's devices, and why some were empty.
+
+
+      Both halves are fixed: a device will no longer send on an unconfigured slot, and will no
+      longer decrypt anything against one. The same change fixes a rarer fault where unused slots
+      could crowd a real channel out of the decryption attempt entirely and the message was silently
+      dropped.
+
+
+      Reported by @D-Melhede, and seen by Marshal W7TER and @PixPMusic.
+
+
+      ### The right arrow was an empty box (#261)
+
+
+      It was never in the bundled fonts. The font build asked Noto Sans for it, Noto Sans does not
+      contain it, and the tool omits a missing character rather than complaining — so it has been
+      absent for as long as these fonts have shipped, in **every language**, in around 137 places in
+      the interface. It now comes from Montserrat, which has it and is already the interface
+      typeface.
+
+
+      Reported by @pisti87.
+
+
+      ### "Scope" in a message's Info panel was mislabelled (#259)
+
+
+      That four-digit number is a checksum computed from the message itself under the sender's
+      region key, so it differs for every message and cannot be read as a region identifier — which
+      is how it was being read, reasonably. It now names your region when the value verifies against
+      your own region key, says "another region" when it does not, and keeps the raw number in
+      brackets.
+
+
+      Reported by @D-Melhede.
+
+
+      ### Also
+
+
+      - There is now a written procedure for **submitting your own app** to the store — file layout,
+      versioning, and what the review checks for. Every submission is read before it is added. See
+      [`deploy/apps/README.md`](https://github.com/ALLFATHER-BV/wadamesh/blob/main/deploy/apps/README.md).
+
+      - The user guide now explains the floppy-disk chip on the command centre: it is the time your
+      chat history last saved, not a clock.
   - version: beta_62
     name: wadamesh beta_62
     datetime: '2026-08-11T08:32:44Z'
@@ -1365,78 +1472,6 @@ releases:
       - **Heltec V4**: web page fetching and map tiles are more resilient when memory is tight.
 
       - **Home signal & traffic box**: the "tap for details" cue is back at the top of the box.
-
-
-      ---
-
-      This is a **test-channel** (beta) build. Devices on the beta update feed will offer it; stable
-      stays on beta_40.
-  - version: beta_43
-    name: wadamesh beta_43
-    datetime: '2026-07-12T14:35:48Z'
-    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_43
-    prerelease: true
-    notes: >-
-      **wadamesh beta_43** (test channel) turns the browser control panel into a full remote app and
-      fixes map tiles on the Heltec V4.
-
-
-      Flash it from **[flasher.wadamesh.com](https://flasher.wadamesh.com)**, or grab a
-      `-merged.bin` below (flash at `0x0`). Boards: LilyGo T-Deck and Heltec V4 TFT.
-
-
-      ## New - web control panel
-
-      The browser panel is now a full remote app, so you can run the device from a phone or laptop
-      without picking up the T-Deck. Proper **Chats**, **Contacts**, **Terminal** and **Settings**
-      tabs.
-
-
-      - **Contacts**: search, sort and filter; each contact shows distance, coordinates and
-      last-heard age; tap for the same actions as on the device (favourite, block, reset path,
-      remove).
-
-      - **Discovered nodes** appear in the browser with a one-tap **Add** to save them as contacts,
-      so you can build your whole contact list from the web app.
-
-      - **Chats**: pop-up notifications (with an optional beep) on a new message, and the open chat
-      refreshes on its own as replies come in.
-
-      - **Acknowledgements and repeats-heard** now show for messages sent from the web app.
-
-      - A **Settings** page for the everyday options that make sense remotely, including live radio
-      changes.
-
-      - A **quick-command** button in the Terminal that drops common commands into the input.
-
-
-      ## Fixed
-
-      - **Heltec V4 map tiles**: tiles downloaded but only the top of the map rendered (the rest
-      stayed black). The 2 MB-PSRAM V4 was running out of contiguous memory for the tile grid; tiles
-      now reuse a small fixed pool and only load what is on screen, so the whole map fills in
-      smoothly again.
-
-      - **Heltec V4 remote/VNC**: typing from a physical keyboard in the browser now works (it
-      previously only worked on the T-Deck).
-
-      - **Remote-access screen** on the device is clearer: the IP address is at the top, the
-      explanation is shorter and more accurate, the toggles sit above it, and the address box only
-      appears once remote access is on.
-
-      - **Terminal `help`** now lists every command, on both the device and the web terminal.
-
-
-      ## Changed
-
-      - The web app header shows the same signal, Wi-Fi, Bluetooth and battery icons as the device
-      status bar, and the title reads **WADAMESH**.
-
-      - Contact and chat sort/filter controls open a menu to pick an option instead of cycling on
-      each tap.
-
-      - New developer **Tile debug overlay** toggle in Map options (off by default) for diagnosing
-      map-tile issues.
 
 
       ---
