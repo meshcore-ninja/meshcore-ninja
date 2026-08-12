@@ -1,7 +1,87 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-08-12T05:39:23.461Z'
+updatedAt: '2026-08-12T16:58:48.132Z'
 releases:
+  - version: v4.14.1-rc5
+    name: v4.14.1-rc5
+    datetime: '2026-08-12T15:30:02Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.14.1-rc5
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.14.1-rc5
+
+
+      > ⚠️ **Pre-release** — release candidate for testing. Do not use in production.
+
+
+      Small focused bump over rc4 to get the proxy-auth session-fixation fix out to Windows desktop
+      users, plus one MeshCore Virtual Node delivery fix.
+
+
+      ### Security fixes
+
+
+      - **Regenerate session on proxy-auth identity binding** (#4672) — the proxy-auth path in
+      `authMiddleware` used to write user identity into whatever session came in with the request,
+      without rotating the session ID. On deployments with `PROXY_AUTH_ENABLED=true` (Authelia,
+      oauth2-proxy, Cloudflare Access, Authentik, etc.) this let an attacker who could plant a
+      `meshmonitor.sid` cookie on a victim's browser ride the post-authentication session. Now
+      regenerates the session ID on the first identity bind, mirroring what local/MFA/OIDC login
+      already did. CSRF token is preserved across regeneration. If `PROXY_AUTH_ENABLED=false` (the
+      default), no impact.
+
+
+      ### Bug fixes
+
+
+      - **MeshCore-VN: deliver MeshMonitor-originated channel messages to VN clients** (#4668,
+      external contribution from @pfmos) — closes #4535. When a MeshCore Virtual Node was running,
+      channel messages sent from MeshMonitor's web UI (or from another connected MeshCore app
+      client) were silently dropped for every other connected client. Per-client attribution now
+      delivers each message to every client *except* the one that originated it, so all connected
+      apps see the same conversation. DMs stay suppressed with an in-docs explanation of the
+      companion-protocol constraint.
+
+
+      ### Issues resolved
+
+
+      - #4535 [BUG] Messages sent to MeshCore Virtual Node app only work in one direction
+
+
+      **Full changelog:** https://github.com/Yeraze/meshmonitor/compare/v4.14.1-rc4...v4.14.1-rc5
+
+
+      ## 🚀 MeshMonitor v4.14.1-rc5
+
+
+      ### 📦 Installation
+
+
+      **Docker (recommended):**
+
+      ```bash
+
+      docker run -d \
+        --name meshmonitor \
+        -p 8080:3001 \
+        -v meshmonitor-data:/data \
+        ghcr.io/Yeraze/meshmonitor:4.14.1-rc5
+      ```
+
+
+      ### 🧪 Testing
+
+      ✅ All tests passed
+
+      ✅ TypeScript checks passed
+
+      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
+
+
+      ### 📋 Changes
+
+      See commit history for detailed changes.
   - version: v4.14.1-rc4
     name: v4.14.1-rc4
     datetime: '2026-08-12T03:35:00Z'
@@ -2163,122 +2243,3 @@ releases:
       No breaking changes and no manual migration
 
       …
-  - version: v4.13.1-rc1
-    name: v4.13.1-rc1
-    datetime: '2026-07-16T17:43:14Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.13.1-rc1
-    prerelease: true
-    notes: >-
-      # MeshMonitor v4.13.1-rc1
-
-
-      > ⚠️ **Pre-release / Release Candidate.** This build is for testing. It ships no `:latest`
-      Docker tags. Please report any issues before the final 4.13.1 release.
-
-
-      ## Summary
-
-
-      This release resolves the long-running #4115 investigation where specific nodes produced zero
-      data over MQTT: the geo filter is rearchitected from a fail-closed membership gate (which
-      permanently blackholed GPS-less nodes and froze on encrypted feeds) to a fail-open, per-source
-      ignore-list model with retroactive purge, automatic reappearance when a node comes back
-      in-bounds, and a start/config-change sweep — shipped across four phases (#4123, #4131, #4132,
-      #4136). A new MQTT Packet Monitor lands (per-gateway reception capture backend #4127 plus a
-      gateway-aware UI #4138). Map and node UX improvements include lat/lon/elevation shown as text
-      in Node Info/Details (#4134), Show RF/UDP/MQTT transport toggles in Map Analysis (#4135),
-      per-theme light/dark map tilesets (#4118), and a backend elevation service for upcoming
-      terrain link profiles (#4143). Two reported bugs are fixed: nodes can now be reliably
-      un-hidden from the map across sources (#4141), and the Conversation page explains why the DM
-      composer is hidden for unmessageable nodes (#4140). Also fixed: a Default Map Center
-      regression on the Unified/Dashboard map (#4128), MeshCore-only installs whose global
-      schedulers never started (#4146), and a stale-config Docker armv7 build (#4122). Finally, two
-      latent cross-platform bugs surfaced during release validation were fixed: a directory
-      case-collision that broke the macOS/Windows desktop build (#4144), and a MySQL 8 collation
-      mismatch that aborted a migration on MySQL deployments (#4145).
-
-
-      ## Features
-
-
-      - **MQTT geo-ignore rearchitecture (fixes #4115):** fail-open ingestion with a per-source
-      ignore list, retroactive purge, and auto-reappearance — #4123 (data layer), #4131 (fail-open
-      gating), #4132 (retroactive sweep), #4136 (observability + docs)
-
-      - **MQTT Packet Monitor:** per-gateway packet reception capture — #4127 (backend), #4138
-      (gateway-aware UI)
-
-      - Show latitude/longitude/elevation as text in Node Info & Node Details — #4134
-
-      - Map Analysis: Show RF / UDP / MQTT transport toggles — #4135
-
-      - Per-theme (light/dark) map tileset preferences, including custom tiles — #4118
-
-      - Backend elevation service for terrain link profiles (Phase 1) — #4143
-
-
-      ## Bug Fixes
-
-
-      - Reliably un-hide nodes from the map across sources; consolidate orphaned rows from removed
-      sources — #4141
-
-      - Explain the hidden DM composer for unmessageable nodes — #4140
-
-      - Honor the Default Map Center setting on the Unified/Dashboard map — #4128
-
-      - Keep global schedulers alive on MeshCore-only installs — #4146
-
-      - Migration 122: fix illegal collation mix on MySQL 8 — #4145
-
-      - Consolidate `Mqtt/` into `MQTT/` to fix the desktop-build case-collision on macOS/Windows —
-      #4144
-
-      - Drop deleted watchdog scripts from the armv7 Dockerfile — #4122
-
-
-      ## Chore
-
-
-      - Bump version to 4.13.1-rc1 — #4142
-
-
-      ## Issues Resolved
-
-
-      #4115, #4137, #4139, #4130, #4129, #4125, #4124, #4096, #4020
-
-
-      **Full changelog:** https://github.com/Yeraze/meshmonitor/compare/v4.13.0...v4.13.1-rc1
-
-
-      ## 🚀 MeshMonitor v4.13.1-rc1
-
-
-      ### 📦 Installation
-
-
-      **Docker (recommended):**
-
-      ```bash
-
-      docker run -d \
-        --name meshmonitor \
-        -p 8080:3001 \
-        -v meshmonitor-data:/data \
-        ghcr.io/Yeraze/meshmonitor:4.13.1-rc1
-      ```
-
-
-      ### 🧪 Testing
-
-      ✅ All tests passed
-
-      ✅ TypeScript checks passed
-
-      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
-
-
-      ### 📋 Changes
-
-      See commit history for detailed changes.

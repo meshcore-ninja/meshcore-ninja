@@ -1,7 +1,40 @@
 source: github
 repo: andymux/meshos-releases
-updatedAt: '2026-08-09T18:43:56.574Z'
+updatedAt: '2026-08-12T16:58:48.474Z'
 releases:
+  - version: fw-v1.6.5
+    name: MeshOS firmware v1.6.5
+    datetime: '2026-08-12T15:38:00Z'
+    url: https://github.com/andymux/meshos-releases/releases/tag/fw-v1.6.5
+    prerelease: false
+    notes: >-
+      Picture messages: photos show right in the chat with thumbnails when WiFi is on. WiFi status
+      shows the connected network. Back button clears notifications. Fixes.
+
+
+      Device firmware for LilyGo T-Deck and ThinkNode M9.
+
+      Install via SD card (firmware.bin) or the in-firmware updater.
+
+
+      SHA-256:
+
+      - TDeck: 2331383412fe6558564970449ff60fdea3c2e88632bff1e13a6b013f9223e361
+
+      - M9: e257e7569be1f74c9594c23b0b901c6246ed34c73a9bdda197beef03b0bfcbbb
+  - version: v1.0.14
+    name: MeshOS v1.0.14
+    datetime: '2026-08-12T15:34:59Z'
+    url: https://github.com/andymux/meshos-releases/releases/tag/v1.0.14
+    prerelease: false
+    notes: >-
+      Picture messaging is here: send end to end encrypted photos on internet channels and the
+      MeshOS room. Photos appear right in the chat, with pinch to zoom, save to gallery and share.
+      T-Deck and M9 users can view them too (v1.6.4 or later). Also adds QR code sharing for
+      internet channels and assorted fixes.
+
+
+      APK SHA-256: `3832817fb0ea2a81d67f043cd36ef0d89f7518c4edb2cd5aca46c4e9620f636e`
   - version: v1.0.13
     name: MeshOS v1.0.13
     datetime: '2026-08-09T17:17:50Z'
@@ -432,80 +465,3 @@ releases:
       - TDeck: 33df19a56529e5f39df692d379238403d91071ef756e1c098a7d34bd4e4482db
 
       - M9: 414aef61ce870bca2340b93e5af6529418de2c2abcac2e4072d2ae850bfe9705
-  - version: v1.0.9
-    name: MeshOS v1.0.9
-    datetime: '2026-06-25T14:00:26Z'
-    url: https://github.com/andymux/meshos-releases/releases/tag/v1.0.9
-    prerelease: false
-    notes: >-
-      ## MeshOS Companion v1.0.9
-
-
-      Pairs with the new **MeshOS 2.0 — "Unified Companion + Repeater"** firmware.
-
-
-      ### Repeater & mesh control
-
-      - **Configurable repeater** — turn your radio into a repeater and choose what it relays:
-      everything, selected regions, or nothing — with hop limits and loop detection, all from the
-      app.
-
-      - **Spam control** — block noisy channels by `#hashtag` or hash, view live per-channel mesh
-      statistics to spot rogue channels, and toggle whether the public channel is repeated.
-
-      - **Stronger user blocking** — blocked users are no longer repeated on channels you hold the
-      key for, enforced on the device even while your phone is disconnected.
-
-
-      ### Firmware updates
-
-      - **Wi-Fi (OTA) firmware updates** straight from the app — no cable required (Wi-Fi-capable
-      radios).
-
-
-      ### Chat & UI
-
-      - **Clear All Messages** from a channel's menu.
-
-      - **Colourful map** option (layers button on the map screen).
-
-      - Tidied sent-message popup — clearer LoRa vs AirLink repeat labels.
-
-      - Settings reorganised under a **Repeater** section.
-
-
-      ---
-
-      Download **MeshOS-v1.0.9.apk** and open it to install. Existing users upgrade in place — your
-      contacts, chats and licence are preserved.
-  - version: v1.0.8
-    name: MeshOS v1.0.8
-    datetime: '2026-06-13T12:44:10Z'
-    url: https://github.com/andymux/meshos-releases/releases/tag/v1.0.8
-    prerelease: false
-    notes: >-
-      ## MeshOS v1.0.8
-
-
-      ### Block users by name — now with wildcards
-
-      - New **Blocked Users** screen (Settings → Messaging) — block an exact username, or use a
-      **wildcard pattern** to catch several at once:
-        - `*` matches any text · `?` matches a single character
-        - e.g. `*bot`   `spam*`   `*casino*`
-      - Great for spammers who append changing text (like a timestamp) to their name — one pattern
-      such as `*meshcore*spammer*` blocks every variant.
-
-      - Blocking is now **complete** — a blocked sender is hidden from:
-        - the channel conversation,
-        - the chat-list preview (no more last-message leak),
-        - the unread badge, and
-        - notifications.
-
-        Their messages are still stored, so unblocking brings them straight back.
-
-      ---
-
-      **Verify your download** (SHA-256):
-
-      `37318e42adbb411daf31aa0fc09bf710c5782f988eb6ca9f3d8496f9cb08477a`
