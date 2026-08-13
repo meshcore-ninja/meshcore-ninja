@@ -1,114 +1,92 @@
 source: github
 repo: ALLFATHER-BV/wadamesh
-updatedAt: '2026-08-12T13:14:38.766Z'
+updatedAt: '2026-08-13T11:02:18.369Z'
 releases:
   - version: beta_63
-    name: wadamesh beta_63
+    name: wadamesh beta_63 (stable)
     datetime: '2026-08-12T11:15:20Z'
     url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_63
-    prerelease: true
+    prerelease: false
     notes: >-
-      Test build. Stable stays **beta_50**.
+      **beta_63 is the new stable**, replacing beta_50 — thirteen betas, 310 commits and ten
+      contributors of work.
 
 
-      **Two crash fixes.** If you are on a T-Lora Pager, or you use the firmware in Hungarian,
-      update.
-
-
-      Flash it from **https://flasher.wadamesh.com** (flip the Beta toggle), or on-device via
-      Settings → Firmware with "Get test builds (beta)" enabled.
+      Flash it from **https://flasher.wadamesh.com** (Stable), or on-device via Settings → Firmware.
 
 
       ---
 
 
-      ### Hungarian devices rebooted on every repeater login (#258)
+      - Read this one first if you are coming from beta_50: the chat-history format on the SD card
+      changed during this run, and the change is ONE-WAY. Updating is safe and your history is
+      converted for you, but if you later flash a firmware older than beta_52 it will not be able to
+      read that history. Back up first if that matters to you.
 
+      - Chats now keep the newest 250 messages each by default. If you had a chat with more than
+      that, the extra is trimmed on first run. The limit is yours to change under Settings > Chats >
+      "Keep per chat (messages)" - 100, 250, 500, 1000 or off.
 
-      The warning shown when your clock disagrees with a server is assembled from a translated
-      sentence. The Hungarian translation had reordered the two values inside it, so the firmware
-      read the contact name as a number, then read a number — the minute count — as a memory address
-      and followed it. Instant reboot, every login, Hungarian only, because English happened to
-      match the order the code expected.
+      - If you ever picked a region preset, your radio was transmitting at roughly 9x less power
+      than it should have been. That is fixed. Expect noticeably better range, and re-check your
+      power setting if you had raised it to compensate.
 
+      - Your identity no longer lives on the SD card, so swapping or removing the card can never
+      cost you your node identity again.
 
-      Fixing the four Hungarian lines was not enough, so this is fixed at the root: a translation
-      whose value placeholders do not match the original is now **ignored**, and the English is
-      shown instead. Language files are downloaded, and some people write their own — none of them
-      can crash a device any more. The corrected Hungarian is already published, and the release
-      tooling now refuses to ship a mismatched line.
+      - The MeshCore core moved from 1.16 to 1.17. Every board is rebased on it. This is the largest
+      under-the-hood change since 1.16, and it lays the groundwork for listen-before-talk: the radio
+      can check whether the channel is busy before transmitting. About reports v1.17.4-touch.
 
+      - WADAMESH runs apps written in Lua. They install from a Store on the device, appear in the
+      app drawer, and can be updated or removed from there. RF Monitor and Airtime are now Lua apps
+      rather than firmware pages, and both gained features as a result. You can write your own: drop
+      a bare .lua file into /apps/ on the card and it shows up.
 
-      Reported by @pisti87.
+      - Translations are no longer baked into the firmware - they download from the Store's
+      Languages tab, so a language can be fixed or completed without a new firmware release. Every
+      language got a full sweep of around 150 strings that had quietly stayed English, and Romanian
+      and Hungarian joined as full interface languages.
 
+      - Major SD storage rework, contributed by the community: the device recovers from a wedged or
+      removed card at runtime instead of playing dead until reboot, and chat history is stored in
+      append-friendly segments. A large chat history no longer slows the whole interface down.
 
-      ### The T-Lora Pager crashed while scrolling chat history (#233, #251)
+      - Storage writes run on a dedicated background worker, so a big save can no longer make the
+      interface stutter or the device freeze.
 
+      - Hungarian devices no longer reboot when logging in to a repeater. A translated sentence had
+      its two values in the wrong order, and the firmware followed a number as if it were a memory
+      address. Beyond fixing the text, a translation that does not match the original is now ignored
+      rather than trusted - no language file can crash a device, including one you write yourself.
 
-      The chat list rebuilds itself as you scroll, and the timer driving that rebuild was destroyed
-      and recreated at every window boundary — a fast scroll could reach it after it was gone. It is
-      now kept alive and paused instead, and keyboard focus is detached before the old rows are torn
-      down rather than during.
+      - The T-Lora Pager no longer crashes while scrolling back through chat history.
 
+      - Heltec V4 units no longer freeze in a busy mesh. Two separate causes: every advert heard
+      used to trigger a storage write, and later, a full contact list made every new contact delete
+      a stored record on the receive path. Both are off the packet path now.
 
-      By **@PixPMusic** (#234). Both crash reports decoded to the same underlying fault. Reported by
-      @AtomAlex12 and @PixPMusic.
+      - Settings can no longer silently reset themselves. An interrupted settings write could
+      truncate the file and lose everything in it.
 
+      - Messages no longer arrive in a nameless "#unknown" thread, and channel messages can no
+      longer be silently dropped by an unused channel slot.
 
-      ### Messages arrived in a nameless "#unknown" thread (#260)
+      - Fixed the 3-minute boot with an SD card inserted, and formatting a card on the V4-R8 or
+      ThinkNode M9 no longer hangs forever.
 
+      - Blocking someone now actually works - three separate bugs, and unblocking now fully clears
+      the block.
 
-      A channel slot that was never configured holds an all-zero key, and the firmware treated it as
-      a real channel. An app asking to send on a channel index the device did not have would
-      transmit a message **encrypted with that all-zero key** — and every other device in range
-      could decrypt it against its own unused slots, then resolve the channel name to nothing. That
-      is why the same messages landed on unrelated people's devices, and why some were empty.
+      - Sends retry until the mesh has actually heard them, under Settings > Radio & Mesh > "Retry
+      sends until heard" (off by default).
 
+      - Message bubbles show the time on the top row next to the sender, so more messages fit on
+      screen.
 
-      Both halves are fixed: a device will no longer send on an unconfigured slot, and will no
-      longer decrypt anything against one. The same change fixes a rarer fault where unused slots
-      could crowd a real channel out of the decryption attempt entirely and the message was silently
-      dropped.
+      - The chat list preview no longer shows an old message and 
 
-
-      Reported by @D-Melhede, and seen by Marshal W7TER and @PixPMusic.
-
-
-      ### The right arrow was an empty box (#261)
-
-
-      It was never in the bundled fonts. The font build asked Noto Sans for it, Noto Sans does not
-      contain it, and the tool omits a missing character rather than complaining — so it has been
-      absent for as long as these fonts have shipped, in **every language**, in around 137 places in
-      the interface. It now comes from Montserrat, which has it and is already the interface
-      typeface.
-
-
-      Reported by @pisti87.
-
-
-      ### "Scope" in a message's Info panel was mislabelled (#259)
-
-
-      That four-digit number is a checksum computed from the message itself under the sender's
-      region key, so it differs for every message and cannot be read as a region identifier — which
-      is how it was being read, reasonably. It now names your region when the value verifies against
-      your own region key, says "another region" when it does not, and keeps the raw number in
-      brackets.
-
-
-      Reported by @D-Melhede.
-
-
-      ### Also
-
-
-      - There is now a written procedure for **submitting your own app** to the store — file layout,
-      versioning, and what the review checks for. Every submission is read before it is added. See
-      [`deploy/apps/README.md`](https://github.com/ALLFATHER-BV/wadamesh/blob/main/deploy/apps/README.md).
-
-      - The user guide now explains the floppy-disk chip on the command centre: it is the time your
-      chat history last saved, not a clock.
+      …
   - version: beta_62
     name: wadamesh beta_62
     datetime: '2026-08-11T08:32:44Z'

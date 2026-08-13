@@ -1,7 +1,26 @@
 source: github
 repo: ALLFATHER-BV/meshcomod
-updatedAt: '2026-08-09T14:36:25.802Z'
+updatedAt: '2026-08-13T11:02:05.894Z'
 releases:
+  - version: companion-v1.17.0.1
+    name: Companion Firmware v1.17.0.1
+    datetime: '2026-08-13T09:38:04Z'
+    url: https://github.com/ALLFATHER-BV/meshcomod/releases/tag/companion-v1.17.0.1
+    prerelease: false
+    notes: >-
+      ## What's Changed
+
+      * fix: ThinkNode M7 support + three 1.17.0 merge regressions by @ptr727 in
+      https://github.com/ALLFATHER-BV/meshcomod/pull/47
+
+
+      ## New Contributors
+
+      * @ptr727 made their first contribution in https://github.com/ALLFATHER-BV/meshcomod/pull/47
+
+
+      **Full Changelog**:
+      https://github.com/ALLFATHER-BV/meshcomod/compare/companion-v1.17.0...companion-v1.17.0.1
   - version: companion-v1.17.0
     name: Companion Firmware v1.17.0
     datetime: '2026-08-09T13:37:00Z'
@@ -53,25 +72,3 @@ releases:
     notes: >-
       **Full Changelog**:
       https://github.com/ALLFATHER-BV/meshcomod/compare/companion-v1.16.0.1...companion-v1.16.0.2
-  - version: companion-v1.16.0.1
-    name: Companion Firmware v1.16.0.1
-    datetime: '2026-06-13T21:10:09Z'
-    url: https://github.com/ALLFATHER-BV/meshcomod/releases/tag/companion-v1.16.0.1
-    prerelease: false
-    notes: >-
-      **meshcomod companion v1.16.0.1** (on MeshCore 1.16).
-
-
-      Boards: Heltec V4 (OLED), Heltec V3, Heltec Wireless Paper (E213), Seeed Xiao S3 WIO —
-      multi-transport USB + BLE + TCP.
-
-
-      **Fixes**
-
-      - **BLE no longer fails to start when Wi-Fi credentials are set** (issue #32). On the V4/OLED
-      companions, BLE and Wi-Fi now co-init correctly at boot instead of BLE being deferred and
-      unable to come up later.
-
-
-      Flash the `-merged.bin` at 0x0 for a first-time/recovery flash, or the app-only `.bin` at
-      0x10000 over a matching partition table.
