@@ -1,7 +1,30 @@
 source: github
 repo: ALLFATHER-BV/meshcomod
-updatedAt: '2026-08-13T11:02:05.894Z'
+updatedAt: '2026-08-13T16:57:53.030Z'
 releases:
+  - version: companion-v1.17.0.3
+    name: Companion Firmware v1.17.0.3
+    datetime: '2026-08-13T15:53:45Z'
+    url: https://github.com/ALLFATHER-BV/meshcomod/releases/tag/companion-v1.17.0.3
+    prerelease: false
+    notes: >-
+      **Full Changelog**:
+      https://github.com/ALLFATHER-BV/meshcomod/compare/companion-v1.17.0.2...companion-v1.17.0.3
+  - version: companion-v1.17.0.2
+    name: Companion Firmware v1.17.0.2
+    datetime: '2026-08-13T15:26:31Z'
+    url: https://github.com/ALLFATHER-BV/meshcomod/releases/tag/companion-v1.17.0.2
+    prerelease: false
+    notes: >-
+      ## What's Changed
+
+      * Escalate Wi-Fi recovery and reboot a node whose link stays dead by @pfmos in
+      https://github.com/ALLFATHER-BV/meshcomod/pull/48
+
+
+
+      **Full Changelog**:
+      https://github.com/ALLFATHER-BV/meshcomod/compare/companion-v1.17.0.1...companion-v1.17.0.2
   - version: companion-v1.17.0.1
     name: Companion Firmware v1.17.0.1
     datetime: '2026-08-13T09:38:04Z'
@@ -56,19 +79,3 @@ releases:
     notes: >-
       **Full Changelog**:
       https://github.com/ALLFATHER-BV/meshcomod/compare/companion-v1.16.0.3...companion-v1.16.0.4
-  - version: companion-v1.16.0.3
-    name: Companion Firmware v1.16.0.3
-    datetime: '2026-06-15T10:44:19Z'
-    url: https://github.com/ALLFATHER-BV/meshcomod/releases/tag/companion-v1.16.0.3
-    prerelease: false
-    notes: >-
-      **Full Changelog**:
-      https://github.com/ALLFATHER-BV/meshcomod/compare/companion-v1.16.0.2...companion-v1.16.0.3
-  - version: companion-v1.16.0.2
-    name: Companion Firmware v1.16.0.2
-    datetime: '2026-06-14T06:32:51Z'
-    url: https://github.com/ALLFATHER-BV/meshcomod/releases/tag/companion-v1.16.0.2
-    prerelease: false
-    notes: >-
-      **Full Changelog**:
-      https://github.com/ALLFATHER-BV/meshcomod/compare/companion-v1.16.0.1...companion-v1.16.0.2

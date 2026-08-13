@@ -1,7 +1,101 @@
 source: github
 repo: ALLFATHER-BV/wadamesh
-updatedAt: '2026-08-13T11:02:18.369Z'
+updatedAt: '2026-08-13T16:58:05.297Z'
 releases:
+  - version: beta_64
+    name: wadamesh beta_64
+    datetime: '2026-08-13T15:21:45Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_64
+    prerelease: true
+    notes: >-
+      **Test build.** Stable stays
+      [beta_63](https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_63).
+
+
+      Flash it at **[flasher.wadamesh.com](https://flasher.wadamesh.com)** with the Beta toggle on,
+      or on-device via **Settings → Firmware** with "Get test builds (beta)" enabled.
+
+
+      ---
+
+
+      ## The Heltec V4 freeze — the rest of it
+
+
+      beta_62 took one storage delete off the packet path and that genuinely helped. Then @Yoss101
+      came back with the detail that mattered: the freezes had got **rarer and longer**. Rarer was
+      the fix working. Longer was the half nobody had measured.
+
+
+      Here is what was actually costing the time. A contact record is **152 bytes** and the table
+      holds up to **2000** of them, so saving contacts rewrote the whole **304 KB** file on *every*
+      change — and the crash-safe write keeps a second copy of the same size beside it while it
+      swaps. Roughly **600 KB of flash churn because one contact changed**. On a board with no card
+      that lands on internal flash, whose garbage collection suspends the flash cache and stalls
+      **both CPU cores**. That is why the entire device went away instead of dropping a packet.
+
+
+      But the table never changes in bulk. Replacing the oldest contact overwrites **one slot** —
+      the array is unsorted and never shifts — and hearing from a node you already know touches
+      **one entry**. So each record is now compared against what is already stored and only the
+      differing ones are written back.
+
+
+      **A new contact replacing an old one writes 152 bytes instead of 304,000.** A save with
+      nothing to change writes nothing at all.
+
+
+      Because that is a new way of writing the file, and because the data at stake is your contact
+      list, it checks its own work: every patched record is **read back and compared**, and on any
+      disagreement it falls through to the old whole-file write. A filesystem that accepts a
+      positioned write and quietly drops it cannot leave you with a half-written contact list.
+
+
+      Also: contact deletes that overflowed the queue used to leak their stored record permanently —
+      fixed, and the queue is 4× deeper. **About → System info** gained a **Contact store** panel
+      (contacts, space used, how full internal flash is, and what the last save cost). If you report
+      a freeze, that panel is the useful photograph.
+
+
+      @Yoss101 and @pisti87 — this is the one to test. Thank you both, and particularly @Yoss101 for
+      coming back to say a fix had only half worked; that report is what found the rest of it.
+
+
+      ## Apps got a lot more capable
+
+
+      Lua apps gained the real date and time, the buzzer, battery state, GPS position, a scoped and
+      rate-limited private folder each, hardware key presses, and the ability to send mesh messages
+      and receive replies (#245).
+
+
+      Anything reaching outside an app **asks you first, per app, once**. Sending and receiving are
+      separate permissions, so granting one does not grant the other, and a refusal is remembered
+      rather than nagged. New page: **Settings → App permissions** — every installed app, exactly
+      what it may do, and a switch to take any of it back.
+
+
+      The extended toolkit is limited to boards with the memory to carry it, so the Heltec V4 keeps
+      its resources for the mesh; apps can see which features exist and adapt. An **SDK Test** app
+      is in the Store — it exercises every new call and reports pass/fail per line.
+
+
+      ## Fixes
+
+
+      - Accented and non-Latin characters showed as **empty boxes in the grey hint text** inside
+      empty fields — the Wi-Fi password box, the MQTT bridge fields, and ~two dozen others. Fixed
+      everywhere, in every language. (Thanks @pisti87, and to istvan for finding the last one.)
+
+      - A translated line whose placeholders **do not match the English original** is now ignored
+      rather than used. Since language files download from the Store, this closes off a whole class
+      of crash — including in files you write yourself.
+
+      - Channel messages could be **silently dropped** when an unused channel slot matched first.
+      Sends also match by name at the moment of transmission, so a message can no longer go out
+      encrypted to th
+
+      …
   - version: beta_63
     name: wadamesh beta_63 (stable)
     datetime: '2026-08-12T11:15:20Z'
@@ -1404,55 +1498,3 @@ releases:
 
       T-Deck · Heltec V4 TFT · Heltec V4-R8 · ThinkNode M9 · RAK TAP v2 · T-LoRa Pager (LR1121 /
       SX1262) · T-Display P4.
-  - version: beta_44
-    name: wadamesh beta_44
-    datetime: '2026-07-13T15:30:35Z'
-    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_44
-    prerelease: true
-    notes: >-
-      **wadamesh beta_44** (test channel) adds an on-device text web browser, makes links in chat
-      tappable, and fixes the French keyboard's missing spacebar.
-
-
-      Flash it from **[flasher.wadamesh.com](https://flasher.wadamesh.com)** (flip the **Beta**
-      toggle), or grab a `-merged.bin` below (flash at `0x0`). On the device, beta testers can also
-      enable **Settings → Get test builds (beta)**.
-
-
-      ## New - on-device web browser
-
-      A new **Web** app opens a URL and shows the page as plain, readable text - articles, wikis,
-      docs, plain sites - right on the device. No proxy, no tracking, no JavaScript or images: just
-      the words. Links are tappable, with back / forward / refresh.
-
-
-      The browser needs the RAM only the 8 MB boards have (T-Deck, Tanmatsu), so it is **hidden on
-      the 2 MB Heltec V4** - that board can't complete an on-device HTTPS handshake.
-
-
-      ## New - tappable links in chat
-
-      Links in a chat now render in blue. Tap one for a small menu:
-
-      - **Open in web** - loads the page in the on-device browser (8 MB boards).
-
-      - **Create QR** - shows a scannable QR code so you can open the link on your phone. This works
-      on **every** board, including the Heltec V4 - so even where the browser isn't available, you
-      can still bounce a link to your phone.
-
-
-      ## Fixed
-
-      - **French (AZERTY) on-screen keyboard**: the spacebar (and the OK / keyboard-switch keys) are
-      back in the normal letter view. You no longer have to switch to the symbols page just to type
-      a space. (A stray empty entry was cutting the keyboard map short.)
-
-      - **Heltec V4**: web page fetching and map tiles are more resilient when memory is tight.
-
-      - **Home signal & traffic box**: the "tap for details" cue is back at the top of the box.
-
-
-      ---
-
-      This is a **test-channel** (beta) build. Devices on the beta update feed will offer it; stable
-      stays on beta_40.
