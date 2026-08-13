@@ -1,6 +1,6 @@
 source: github
 repo: ipnet-mesh/meshcore-hub
-updatedAt: '2026-07-28T21:10:36.643Z'
+updatedAt: '2026-08-13T09:15:00.756Z'
 releases:
   - version: v0.17.2
     name: v0.17.2
@@ -44,6 +44,12 @@ releases:
     url: https://github.com/ipnet-mesh/meshcore-hub/releases/tag/v0.15.10
     prerelease: false
     notes: "## What's Changed\r\n* chore(deps): update dependency daisyui to v5.6.14 by @renovate[bot] in https://github.com/ipnet-mesh/meshcore-hub/pull/300\r\n* chore(deps): update anomalyco/opencode action to v1.17.15 by @renovate[bot] in https://github.com/ipnet-mesh/meshcore-hub/pull/299\r\n* feat(web): group observer filter badges by area tag by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/301\r\n\r\n\r\n**Full Changelog**: https://github.com/ipnet-mesh/meshcore-hub/compare/v0.15.9...v0.15.10"
+  - version: v0.15.9
+    name: v0.15.9
+    datetime: '2026-07-04T19:28:34Z'
+    url: https://github.com/ipnet-mesh/meshcore-hub/releases/tag/v0.15.9
+    prerelease: false
+    notes: "## What's Changed\r\n* fix(web): sanitize X-User-Name header to prevent 502 on registration by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/298\r\n\r\n\r\n**Full Changelog**: https://github.com/ipnet-mesh/meshcore-hub/compare/v0.15.8...v0.15.9"
   - version: v0.15.8
     name: v0.15.8
     datetime: '2026-07-04T14:21:41Z'
@@ -80,6 +86,12 @@ releases:
     url: https://github.com/ipnet-mesh/meshcore-hub/releases/tag/v0.15.3
     prerelease: false
     notes: "## What's Changed\r\n* feat(dashboard): enrich recent adverts card and add packets widget by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/290\r\n\r\n\r\n**Full Changelog**: https://github.com/ipnet-mesh/meshcore-hub/compare/v0.15.2...v0.15.3"
+  - version: v0.15.2
+    name: v0.15.2
+    datetime: '2026-07-03T07:59:18Z'
+    url: https://github.com/ipnet-mesh/meshcore-hub/releases/tag/v0.15.2
+    prerelease: false
+    notes: "## What's Changed\r\n* fix(web): stop closed mobile nav from intercepting page clicks by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/289\r\n\r\n\r\n**Full Changelog**: https://github.com/ipnet-mesh/meshcore-hub/compare/v0.15.1...v0.15.2"
   - version: v0.15.1
     name: v0.15.1
     datetime: '2026-07-02T22:35:19Z'
@@ -110,15 +122,3 @@ releases:
     url: https://github.com/ipnet-mesh/meshcore-hub/releases/tag/v0.13.3
     prerelease: false
     notes: "## What's Changed\r\n* fix(web): collapse newlines in rendered message text by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/249\r\n\r\n\r\n**Full Changelog**: https://github.com/ipnet-mesh/meshcore-hub/compare/v0.13.2...v0.13.3"
-  - version: v0.13.2
-    name: v0.13.2
-    datetime: '2026-06-14T18:14:14Z'
-    url: https://github.com/ipnet-mesh/meshcore-hub/releases/tag/v0.13.2
-    prerelease: false
-    notes: "## What's Changed\r\n* feat(web): system announcement banner and maintenance mode by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/245\r\n* Updated Python Requirements by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/247\r\n\r\n\r\n**Full Changelog**: https://github.com/ipnet-mesh/meshcore-hub/compare/v0.13.1...v0.13.2"
-  - version: v0.13.1
-    name: v0.13.1
-    datetime: '2026-06-14T12:11:45Z'
-    url: https://github.com/ipnet-mesh/meshcore-hub/releases/tag/v0.13.1
-    prerelease: false
-    notes: "## What's Changed\r\n* feat(web): observer filter as toggle badges on adverts/messages by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/244\r\n\r\n\r\n**Full Changelog**: https://github.com/ipnet-mesh/meshcore-hub/compare/v0.13.0...v0.13.1"

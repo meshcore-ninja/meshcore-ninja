@@ -1,7 +1,13 @@
 source: github
 repo: RikoDEV/litescope
-updatedAt: '2026-07-05T17:14:32.619Z'
+updatedAt: '2026-08-13T09:14:54.228Z'
 releases:
+  - version: v1.0.3
+    name: liteScope v1.0.3
+    datetime: '2026-07-26T16:53:05Z'
+    url: https://github.com/RikoDEV/litescope/releases/tag/v1.0.3
+    prerelease: false
+    notes: "## What's Changed\r\n* Show packet direction in packet list by @MultiMote in https://github.com/RikoDEV/litescope/pull/10\r\n* Display trace path in packets list by @MultiMote in https://github.com/RikoDEV/litescope/pull/16\r\n* Use asterisk as \"starts with\" filter in node list search by @MultiMote in https://github.com/RikoDEV/litescope/pull/17\r\n* Bump node from 24-alpine to 26-alpine in /frontend by @dependabot[bot] in https://github.com/RikoDEV/litescope/pull/18\r\n* Bump pnpm/action-setup from 4 to 6 by @dependabot[bot] in https://github.com/RikoDEV/litescope/pull/19\r\n* Bump docker/build-push-action from 6 to 7 by @dependabot[bot] in https://github.com/RikoDEV/litescope/pull/20\r\n* Bump alpine from 3.23 to 3.24 in /backend by @dependabot[bot] in https://github.com/RikoDEV/litescope/pull/22\r\n* Bump docker/login-action from 3 to 4 by @dependabot[bot] in https://github.com/RikoDEV/litescope/pull/21\r\n* Bump actions/setup-node from 4 to 7 by @dependabot[bot] in https://github.com/RikoDEV/litescope/pull/23\r\n* Bump actions/upload-artifact from 4 to 7 by @dependabot[bot] in https://github.com/RikoDEV/litescope/pull/24\r\n* Bump @types/node from 25.9.5 to 26.1.1 in /frontend by @dependabot[bot] in https://github.com/RikoDEV/litescope/pull/25\r\n* Bump typescript from 6.0.3 to 7.0.2 in /frontend by @dependabot[bot] in https://github.com/RikoDEV/litescope/pull/26\r\n* Bump docker/setup-buildx-action from 3 to 4 by @dependabot[bot] in https://github.com/RikoDEV/litescope/pull/27\r\n* Bump actions/checkout from 4 to 7 by @dependabot[bot] in https://github.com/RikoDEV/litescope/pull/28\r\n* Bump actions/setup-go from 5 to 7 by @dependabot[bot] in https://github.com/RikoDEV/litescope/pull/29\r\n* Bump docker/metadata-action from 5 to 6 by @dependabot[bot] in https://github.com/RikoDEV/litescope/pull/30\r\n* Use percentage for neighbor threshold value by @MultiMote in https://github.com/RikoDEV/litescope/pull/31\r\n\r\n## New Contributors\r\n* @MultiMote made their first contribution in https://github.com/RikoDEV/litescope/pull/10\r\n* @dependabot[bot] made their first contribution in https://github.com/RikoDEV/litescope/pull/18\r\n\r\n**Full Changelog**: https://github.com/RikoDEV/litescope/compare/v1.0.2...v1.0.3"
   - version: v1.0.2
     name: liteScope v1.0.2
     datetime: '2026-06-20T21:31:11Z'
