@@ -1,7 +1,105 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-08-12T16:58:48.132Z'
+updatedAt: '2026-08-13T13:16:19.143Z'
 releases:
+  - version: v4.14.1
+    name: v4.14.1
+    datetime: '2026-08-13T12:27:59Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.14.1
+    prerelease: false
+    notes: >-
+      # MeshMonitor v4.14.1
+
+
+      The headline of this release is the **Meshtastic ↔ MeshCore Automation Bridge**, you can now
+      relay text between a Meshtastic channel and a MeshCore channel with a single click, built
+      entirely on the Automation Engine rather than a native bridge. A new in-app **Automation
+      Template Gallery** ships click-to-install templates (an **MT↔MC Bridge** and an **Auto-Ack**),
+      a new `{{ trigger.protocolShort }}` token tags relayed messages `MT@`/`MC@`, and layered
+      loop/flood safeguards (a per-automation rate limit, a MeshCore cross-source self-guard, and a
+      content guard) protect against the amplifying-loop failure mode. The release also completes a
+      large **theme-system overhaul**: colors are now named by *role* rather than by swatch, with
+      new categorical and sequential color scales and a full migration off hardcoded palette values.
+      MeshCore gains a **strict receive-only mode**, Analyzer Observer battery/uptime/noise
+      reporting, static MQTT auth, and several delivery/pathing fixes. Messaging picks up an unread
+      divider with jump-to-first-unread and channel-list unread badges. Rounding it out: position
+      "last updated" display and estimate-anchor rationale, a fistful of map and MQTT fixes, a
+      Windows startup fix, ESM/build hardening, and the usual dependency and translation updates.
+
+
+      ## 🌉 Meshtastic ↔ MeshCore Automation Bridge (#4577)
+
+      - In-app **Automation Template Gallery**, click-to-install templates that land disabled for
+      review (#4679)
+
+      - **MT↔MC Bridge** template, scaffolds a matched automation pair with a built-in loop guard
+      (#4681); wizard pickers scoped per-protocol (#4683)
+
+      - **Auto-Ack** template, acknowledge direct/zero-hop messages with a tapback or reply (#4679)
+
+      - `{{ trigger.protocolShort }}` token → `MT` / `MC` (#4675)
+
+      - Loop & flood safety: per-automation rate limit + MeshCore cross-source self-guard + content
+      guard (#4676)
+
+      - User docs & recipe with flood-safety guidance (#4682)
+
+
+      ## ✨ Features
+
+      - Automation Engine: **became-mobile** & **left-home** triggers for tamper/theft monitoring
+      (#4648, thanks @gztproject)
+
+      - Automation Engine: distinct reaction emoji for MQTT-sourced pings (#4601)
+
+      - MeshCore: **strict receive-only mode**, backend enforcement, frontend UX, and Virtual Node
+      gating (#4550, #4552, #4555)
+
+      - MeshCore: Analyzer Observer publishes battery / uptime / noise floor (#4557); static MQTT
+      username/password auth (#4602)
+
+      - Messages: unread divider + jump-to-first-unread for both protocols (#4615); channel-list
+      unread bell badge (#4669)
+
+      - Packet inspection detail view on message hop-count click (#4664)
+
+      - Show when a node's position was last updated (#4663); record & expose the anchors behind an
+      estimated position (#4613)
+
+      - Security: set a node's private key from Device Configuration (#4654)
+
+      - Themes: categorical color scale (#4605) and sequential scale (#4611)
+
+      - Ko-fi support links in the sidebar and site nav (#4666, #4665); User Scripts Gallery, Border
+      Wait Times (#4686)
+
+
+      ## 🐛 Bug Fixes
+
+      - MeshCore: deliver MeshMonitor-originated channel messages to app clients (#4668); preserve
+      newlines in message bodies (#4661); update contact Last Heard on incoming DM (#4554); treat a
+      lost out_path ack as success (#4628); hot-swap Analyzer Observer publisher on signing-key
+      change (#4544)
+
+      - MQTT: fire message events & alerts for MQTT-sourced messages so the Automation Engine and
+      alerts trigger (#4600)
+
+      - Map: single card shell for node popups (#4680); reduce statistical-route edge overlap
+      (#4678); gate marker clicks on density, not zoom alone (#4563); stop shading
+      pending-traceroute nodes as 0-hop/local (#4576); fit-bounds icon fix (#4564)
+
+      - Nodes: stop dropping distinct nodes with a non-numeric nodeNum in the unified view (#4578);
+      clear auto-favorite, auto-traceroute, and auto-time-sync allowlists on node purge (#4651,
+      #4630)
+
+      - Auto-ack: stop acknowledging tapbacks (#4574); key the tapback guard on the emoji flag, not
+      its presence (#4589)
+
+      - Neighbor Info: surface why a request was rejected (403/429) (#4575)
+
+      - Position
+
+      …
   - version: v4.14.1-rc5
     name: v4.14.1-rc5
     datetime: '2026-08-12T15:30:02Z'
@@ -2139,107 +2237,3 @@ releases:
       ### 📋 Changes
 
       See commit history for detailed changes.
-  - version: v4.13.1-rc2
-    name: v4.13.1-rc2
-    datetime: '2026-07-17T20:04:07Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.13.1-rc2
-    prerelease: true
-    notes: >-
-      # MeshMonitor v4.13.1-rc2
-
-
-      > ⚠️ **Pre-release (release candidate).** For testing ahead of the 4.13.1 final. No `:latest`
-      Docker tags are published for RC builds.
-
-
-      This RC is a **Map Analysis release**: it lands the full **Terrain Link Profile** tool and a
-      wave of map-accuracy improvements on top of `v4.13.1-rc1`. Plan a link between two points and
-      MeshMonitor now profiles the terrain between them, draws the Fresnel zone, computes a link
-      budget, and colors a clear/marginal/obstructed verdict — with per-source auto-frequency and
-      RX-sensitivity defaults. As you scrub the elevation graph, a marker now tracks the matching
-      spot on the map so you can see exactly where a given point on the profile sits. Obscured-GPS
-      (reduced `precision_bits`) markers are now decluttered intelligently — a node alone in its
-      accuracy cell stays centered, and only nodes that actually share a cell are spread — applied
-      consistently across the Dashboard, Nodes, and Map Analysis maps from one shared
-      implementation. Position quality also got a hard look: Null Island (0,0) fixes are now
-      rejected on ingest across Meshtastic, MeshCore, and MQTT (including the precision-obscured
-      (0,0) fixes that used to slip through as ~0.013°), with a new **Discard invalid positions**
-      Map setting to control it. The Map Analysis toolbar was tidied into icons (labels move to
-      tooltips) to cut clutter, MQTT-sourced direct messages now render in the DM view instead of as
-      broadcasts, and several map layers stopped drawing artifacts for marker-less nodes.
-      Internally, the CI pipeline's Node-24 coverage hang was eliminated so future builds are faster
-      and don't wedge.
-
-
-      ## ✨ Features
-
-
-      - **Terrain Link Profile tool** — profile terrain, Fresnel clearance, and link budget between
-      two points, with clear/marginal/obstructed verdict coloring, per-source auto-frequency +
-      RX-sensitivity defaults, DEM-void handling, and a settings UI (#4147, #4151)
-
-      - **Link Profile graph → map hover marker** — moving the cursor over the elevation graph drops
-      a marker on the map at the corresponding geographic point along the link (#4170)
-
-      - **Smarter obscured-node decluttering** — the within-cell offset for low-`precision_bits`
-      markers now only spreads nodes that actually share an accuracy cell; a lone node stays at its
-      reported center (#4164, closes #4155)
-
-      - **Discard invalid positions** — a new global Map setting to control whether Null Island /
-      invalid GPS fixes are discarded on ingest (default on = current behavior) (#4158)
-
-      - **Icon toolbar for Map Analysis** — action and layer buttons are now icons with the text as
-      tooltip/aria-label, decluttering the top bar (#4171)
-
-
-      ## 🐛 Bug Fixes
-
-
-      - Reject **precision-obscured Null Island** fixes on Meshtastic ingest — a true-(0,0) node on
-      a reduced-precision channel arrives re-centered as ~(0.013°, 0.013°) and used to slip past the
-      filter (#4149, #4150, #3763)
-
-      - Route **MQTT-sourced direct messages** to the DM view instead of rendering them as
-      channel/broadcast messages (#4161, closes #4152)
-
-      - Stop drawing **route segments & heatmap density** for marker-less (position-stripped) nodes
-      (#4167, closes #4162 / #4163)
-
-      - Pin the **SNR overlay** dots to the merged marker position for multi-source nodes (#4169,
-      closes #4166)
-
-
-      ## ♻️ Refactoring
-
-
-      - Consolidate the obscured-GPS within-cell offset into **one shared occupancy-gated
-      implementation** used by every map surface — no more per-map "snowflake" behavior (#4168)
-
-
-      ## 🔧 CI / DevOps
-
-
-      - Remove the unused coverage/Codecov runner that **hung `@vitest/coverage-v8` for 30+ min on
-      Node 24**, repeatedly blocking merges — CI is now faster and hang-free (#4172)
-
-
-      ## 📝 Docs
-
-
-      - Link Profile documentation accuracy pass — multi-source auto-frequency, REST API reference,
-      anchor fixes (#4156)
-
-
-      ## Issues Resolved
-
-
-      #4111 (Terrain Link Profile epic — Phases 2 & 3) · #3763 (Null Island filtering) · #4152 (MQTT
-      directed-message rendering) · #4155 (lone-node offset) · #4162 · #4163 · #4166
-
-
-      ## Upgrade Notes
-
-
-      No breaking changes and no manual migration
-
-      …
