@@ -1,7 +1,128 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-08-13T13:16:19.143Z'
+updatedAt: '2026-08-13T19:05:38.398Z'
 releases:
+  - version: v4.14.2-rc1
+    name: v4.14.2-rc1
+    datetime: '2026-08-13T18:33:48Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.14.2-rc1
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.14.2-rc1
+
+
+      > ⚠️ **Pre-release**, release candidate for testing. Do not use in production.
+
+
+      First release candidate of the 4.14.2 cycle. Two feature efforts landed: the
+
+      groundwork for **Reticulum** as a third protocol source, and the completion of
+
+      **Meshtastic 2.8** support, which closed the last three 2.8 tracking issues.
+
+
+      ### New features
+
+
+      - **Reticulum (RNS) source, Phase 1a: bridge + backend** (#4690, part of #3960), first phase
+      of adding Reticulum as a third first-class protocol source alongside Meshtastic and MeshCore.
+      Ships a `meshmonitor-rns-bridge` Python sidecar (its own `python:3.12-alpine` image; the main
+      `node:24` image is untouched) speaking versioned JSON over a loopback WebSocket to a Node
+      `ReticulumManager` implementing `ISourceManager`. Two connection modes, `attach` (client of a
+      running `rnsd`) and `tcp_peer`. Migrations 141/142 add `reticulum_destinations` and
+      `reticulum_interfaces`. Interface throughput history rides the shared `telemetry` table, so
+      Dashboard reuse comes for free. A Reticulum source is creatable via the API and fully
+      functional at the backend/bridge layer, **the source-creation UI lands in Phase 1b**, so there
+      is no frontend for it in this RC.
+
+
+      - **MeshBeacon is now configurable, not just decodable** (#4689, closes #3854), firmware 2.8's
+      `MESH_BEACON_APP` broadcast already decoded into the Packet Monitor; this adds a
+      `MeshBeaconConfig` editor on both surfaces that edit module configs (the Configuration page
+      and the Admin Commands tab). Listen/broadcast/legacy-split toggles, the beacon text, and what
+      network to advertise. Gated at firmware 2.8.0, so older devices show the section greyed out
+      rather than accepting a save the device silently drops.
+
+
+      - **MeshBeacon automation trigger** (#4689), a `trigger.meshBeacon` block, filterable by
+      beacon text or narrowed to beacons that actually advertise a network. Beacons are never stored
+      as messages, so they were previously invisible to the Automation Engine.
+
+
+      - **XEdDSA signing status on messages** (#4689, closes #3923), the signed-broadcast shield now
+      appears on messages, alongside the existing MQTT and store-and-forward indicators, completing
+      the packet-level shield that shipped in 4.14.1. Migration 140 persists the flag so it survives
+      a reload. MeshMonitor does not verify the signature itself; it surfaces what the node already
+      checked.
+
+
+      ### Under the hood
+
+
+      - **Firmware 2.8 NodeDB warm tier reviewed** (closes #3548), no code changes needed, verified
+      rather than assumed: MeshMonitor never parses `deviceonly.proto`, so the new `snr_q4` on-disk
+      encoding cannot affect it; a refused `set_favorite` already surfaces through the admin ACK
+      path without retrying; and the node-count drop on nRF52 plus blocked-node persistence were
+      already documented.
+
+
+      - Translations update from Hosted Weblate (#4684).
+
+
+      ### Issues resolved
+
+
+      - #3854 Track: MeshBeacon support (MESH_BEACON_APP, Meshtastic 2.8)
+
+      - #3923 Feature: display packet signing status (XEdDSA, firmware 2.8+)
+
+      - #3548 [2.8 tracking] NodeDB warm tier, node count changes, snr_q4 protobuf field, blocked
+      node persistence
+
+
+      ### Upgrade notes
+
+
+      Three new migrations (140, 141, 142) run automatically on first boot across
+
+      SQLite, PostgreSQL, and MySQL. All three are additive, a new nullable column on
+
+      `messages` and two new Reticulum tables, so no existing data is rewritten.
+
+
+      **Full changelog:** https://github.com/Yeraze/meshmonitor/compare/v4.14.1...v4.14.2-rc1
+
+
+      ## 🚀 MeshMonitor v4.14.2-rc1
+
+
+      ### 📦 Installation
+
+
+      **Docker (recommended):**
+
+      ```bash
+
+      docker run -d \
+        --name meshmonitor \
+        -p 8080:3001 \
+        -v meshmonitor-data:/data \
+        ghcr.io/Yeraze/meshmonitor:4.14.2-rc1
+      ```
+
+
+      ### 🧪 Testing
+
+      ✅ All tests passed
+
+      ✅ TypeScript checks passed
+
+      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
+
+
+      ### 📋 Changes
+
+      See commit history for detailed changes.
   - version: v4.14.1
     name: v4.14.1
     datetime: '2026-08-13T12:27:59Z'
@@ -2125,103 +2246,6 @@ releases:
         -p 8080:3001 \
         -v meshmonitor-data:/data \
         ghcr.io/Yeraze/meshmonitor:4.13.1-rc4
-      ```
-
-
-      ### 🧪 Testing
-
-      ✅ All tests passed
-
-      ✅ TypeScript checks passed
-
-      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
-
-
-      ### 📋 Changes
-
-      See commit history for detailed changes.
-  - version: v4.13.1-rc3
-    name: v4.13.1-rc3
-    datetime: '2026-07-18T19:43:46Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.13.1-rc3
-    prerelease: true
-    notes: >-
-      # MeshMonitor v4.13.1-rc3
-
-
-      > ⚠️ **Pre-release (release candidate).** Rolls up 13 PRs merged since rc2 — position-quality
-      & Map Analysis refinements plus a cluster of messaging correctness fixes. Please test and
-      report issues before the stable 4.13.1.
-
-
-      ## Highlights
-
-
-      This RC sharpens **position quality and node identity**. Node popups now show position
-      accuracy and GPS location source; the "Discard invalid positions" toggle is honored on the
-      render side (not just ingest); and the obscured-node precision offset is occupancy-scaled and
-      distance-capped. On the messaging side it fixes several real correctness bugs: compose drafts
-      no longer leak across conversations (a message meant for one node could be sent to another),
-      MeshCore own-node messages show the node's name instead of a raw public key, and message
-      senders now display their short name alongside the long name. Rounding it out: automations can
-      now target a remote node for admin reboot, unmessageable nodes get a "Message anyway"
-      override, traceroute no longer fails with NO_CHANNEL on a disabled channel slot, and the v1
-      `default` source alias scopes correctly.
-
-
-      ## Features
-
-      - **#4188** — Position accuracy + location source in node popups (chat & map), migration 124
-
-      - **#4187** — "Message anyway" override for unmessageable-node DM banner
-
-      - **#4186** — Automation: remote-admin reboot target for the device-reboot action
-
-      - **#4196** — Show short name alongside long name on message senders (Unified Messages)
-
-      - **#4182** — Honor the "Discard invalid positions" toggle on the render side
-
-      - **#4181** — Occupancy-log-scaled, distance-capped precision offset for obscured nodes
-
-
-      ## Bug Fixes
-
-      - **#4197** — MeshCore: own node's messages show the name, not a public key
-
-      - **#4191** — v1 `default` source alias deep-scopes by the resolved id (mergeParams
-      re-derivation)
-
-      - **#4185** — Scope the compose draft per-conversation (prevents wrong-recipient sends)
-
-      - **#4184** — Keep router short-name visible in the Official pin style
-
-      - **#4180** — Traceroute no longer sends on a DISABLED channel slot (NO_CHANNEL)
-
-      - **#4175** — Drop heatmap/coverage density for deleted nodes
-
-
-      ## Docs
-
-      - **#4179** — Meshview Link Responder added to the User Scripts Gallery
-
-
-      **Full changelog:** https://github.com/Yeraze/meshmonitor/compare/v4.13.1-rc2...v4.13.1-rc3
-
-      ## 🚀 MeshMonitor v4.13.1-rc3
-
-
-      ### 📦 Installation
-
-
-      **Docker (recommended):**
-
-      ```bash
-
-      docker run -d \
-        --name meshmonitor \
-        -p 8080:3001 \
-        -v meshmonitor-data:/data \
-        ghcr.io/Yeraze/meshmonitor:4.13.1-rc3
       ```
 
 
