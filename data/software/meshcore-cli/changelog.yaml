@@ -1,7 +1,13 @@
 source: github
 repo: meshcore-dev/meshcore-cli
-updatedAt: '2026-07-05T17:14:35.988Z'
+updatedAt: '2026-08-13T02:08:19.945Z'
 releases:
+  - version: v1.6.0
+    name: v1.6.0
+    datetime: '2026-08-12T23:24:20Z'
+    url: https://github.com/meshcore-dev/meshcore-cli/releases/tag/v1.6.0
+    prerelease: false
+    notes: "This release has seen a big refactoring of the command processing to permit redirection of output. It is now possible to redirect the output of a command to a file or a unix process. Some mechanisms have been introduced to follow this change such as an alias mechanism.\r\n\r\nHere is a non exhaustive list of the new features:\r\n- redirections and pipes\r\n- aliases\r\n- process handlers\r\n- force unscope (and more generally better scope management)\r\n- better json output\r\n- better terminal use"
   - version: v1.5.0
     name: v1.5.0
     datetime: '2026-03-10T20:52:57Z'
