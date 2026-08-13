@@ -1,7 +1,95 @@
 source: github
 repo: OffbandMesh/meshcore-firmware
-updatedAt: '2026-08-06T10:42:02.528Z'
+updatedAt: '2026-08-13T22:44:48.192Z'
 releases:
+  - version: offband-v1.4.0
+    name: Offband offband-v1.4.0
+    datetime: '2026-08-13T21:13:03Z'
+    url: https://github.com/OffbandMesh/meshcore-firmware/releases/tag/offband-v1.4.0
+    prerelease: false
+    notes: "# Offband v1.4.0 — MeshCore 1.17.0 base\n\nThis is the first Offband release built on the MeshCore **1.17.0** base (previous releases were on 1.16.0). Your app's device screen will show `1.4.0-1.17.0` after upgrading.\n\n## Upgrading — what happens to your settings\n\nNothing you need to do. 1.17.0 changed how device preferences are stored, and this release migrates your existing settings across automatically on first boot — name, radio config, channels, everything. The migration runs once and leaves a persistent record of what it did. It was hardware-verified across 7 device/architecture combinations before release.\n\n**If a device ever comes up with factory defaults after this upgrade, that's the migration refusing a record it couldn't safely read — please report it** (with device model + previous firmware version) rather than reconfiguring silently.\n\n## Fixed: clocks stuck in the future\n\nIf a node's clock ever got poisoned (GPS glitch, bad sync) and stuck years ahead, older firmware refused to set it backwards — the node was effectively unrecoverable without a wipe. Now a normal **clock sync from the client fixes it**, automated clock sources (GPS, mesh bootstrap) are bounded so they can't poison the clock in the first place, and contact timestamps written under a bad clock self-heal on boot. One heads-up: after recovering a node, peers that heard its future-dated messages may ignore it briefly — re-adding the contact on the peer clears that immediately.\n\n## Broker rename: Eastme.sh → CoreComms.net (WiFi observer builds)\n\nThe Eastme.sh public MQTT service rebranded to CoreComms.net; fresh flashes now seed `wss://mqtt.corecomms.net:443/mqtt` with the correct TLS root. **Existing devices keep their stored broker config** — if you use the seeded slot 3 (or the Eastmesh.au slot 4, whose old TLS pin no longer validates), run `mqtt clear 3` (and/or `4`) then reboot to pick up the new seeds. The old hostname still works for now.\n\nThanks to **@EldoonNemar** for submitting the rename (PR #282) and the heads-up on the rebrand — the landed change carries their credit.\n\n## CoreScope observer counts (Experimental, with client v1.5.0-beta.1)\n\nThis firmware is the half the client was waiting for. Client v1.5.0-beta.1 added an Experimental **OKIMesh CoreScope** badge — how many CoreScope observers heard each packet — that stays inert until the firmware can return the on-air packet hash when confirming a send. This release adds that (#611), so with both installed the badge goes live. On the client side it is experimental and lives in the Experimental section in settings.\n\nBecause the mesh/internet boundary matters here: nothing new leaves your radio, and nothing from the internet reaches the mesh. Observer nodes already publish receive statistics over MQTT — the accepted statistical-monitoring exception, the same feeds behind the community maps — and this lets your own phone read those statistics back for your own messages. No internet-to-mesh path, no bridge. It is tied specifically to OKIMesh's CoreScope service, not a generic or self-hosted backend.\n\n## Also fixed\n\n- nRF52 BLE companions (RAK4631, T1000-E) crash-looped on early 1.17.0 bench builds — fixed before release, listed for bench testers.\n- Log retrieval now applies identical credential redaction on both download paths.\n- Wio Tracker L1: removed a stale SafeBoot battery-gate that didn't match the board's wiring.\n- A smaller log-capture buffer on Heltec V2 boards to fit the new base in RAM.\n\nFull detail in the [CHANGELOG](https://github.com/OffbandMesh/meshcore-firmware/blob/firmware-base/CHANGELOG.md). Flash over USB or OTA as usual — grab the image for your board below.\n\r\n---\r\n\r\n### Which file do I download?\r\n\r\n| File | What it is | When to use it |\r\n|---|---|---|\r\n| `*-merged.bin` (ESP32 — Heltec V3/V4, XIAO) | **Full image** — bootloader + partition table + app in one, flashed at `0x0` after a chip erase. Self-contained, works on a blank chip. | **First install / clean setup.** |\r\n| \n…"
+  - version: offband-v1.4.0-rc1
+    name: Offband offband-v1.4.0-rc1
+    datetime: '2026-08-13T21:10:06Z'
+    url: https://github.com/OffbandMesh/meshcore-firmware/releases/tag/offband-v1.4.0-rc1
+    prerelease: true
+    notes: >-
+      ### Added
+
+      - **Settings survive the 1.16 → 1.17 upgrade** (#627/#659/#665): a legacy-prefs layout
+        detector with Offband-aware offsets migrates existing device preferences across the
+        upstream prefs-layout change; cross-family records are refused rather than mis-read;
+        caplog settings now apply on the 1.17 `/prefs.json` path; and every migration outcome
+        leaves a persistent event record that survives reboot. Hardware-verified across 7
+        device/architecture cells.
+      - **On-air packet hash returned on channel-send confirmation** (#611, capability-gated):
+        lets the client correlate an outgoing channel message with CoreScope observer counts
+        by packet hash.
+
+      ### Fixed
+
+      - **Future-poisoned clocks are now recoverable** (#607, PRs #612): owner-authenticated
+        time sets (client sync, CLI `time`/`clock sync`) are accepted in **both directions** —
+        "clock cannot go backwards" refusals are gone. Automated clock sources (GPS decode,
+        boot-time contacts bootstrap) are bounded by a plausibility window (firmware build
+        date → +20 y), so a GPS week-rollover mis-decode can no longer poison the clock, and
+        contact `lastmod` values written under a poisoned clock are clamped on load — stores
+        self-heal at first boot. Every accepted clock set (and boot-capped rejections) emits a
+        `[clock]` audit line on serial/caplog. **Note for recovered nodes:** peers that heard a
+        node's poisoned (future) timestamps may ignore its messages until their per-contact
+        recency view catches up; re-adding the contact on the peer resolves it immediately.
+      - **nRF52 BLE companions crash-boot loop on the 1.17.0 base** (#668): RAK4631 and
+        T1000-E BLE companions double-initialized BLE and crash-looped ~4 s after boot;
+        never in a tagged release, listed for bench-build testers.
+      - **Caplog retrieval uses one shared redaction pass on both paths** (#667): closes a
+        gap where one retrieval path could return lines the other would have redacted.
+      - **Wio Tracker L1: stale SafeBoot battery-divider gate removed** (#620).
+
+
+      ### Changed
+
+      - **MeshCore base updated 1.16.0 → 1.17.0** (#628/#643): full upstream refresh of the
+        fork base, bringing upstream 1.17.0 fixes and board support forward under the
+        Offband feature set.
+      - **Eastme.sh broker seed renamed to CoreComms.net** (#677) — the seeded slot-3 broker
+        follows the service's rebrand: `wss://mqtt.corecomms.net:443/mqtt`, JWT audience
+        `mqtt.corecomms.net`, CA anchor `gts-r4` (endpoint + full TLS chain verified live
+        2026-08-13). Slot 4 (Eastmesh.au) also repinned `letsencrypt` → `gts-r4`: its live
+        chain moved to GTS Root R4, so the old anchor no longer validates at all. Fresh-NVS
+        only (#262 semantics); existing devices keep their stored config — operators with an
+        old seeded slot can `mqtt clear <N>` + reboot to reseed. Re-implements external
+        PR #282; thanks to **EldoonNemar** for the original contribution and the rebrand
+        heads-up.
+
+      - **OKIMesh broker slots 0-1 moved to wss/TLS** — the two seeded OKIMesh brokers now use
+        `wss://mqtt{1,2}.okimesh.org:9002/mqtt` over TLS (`letsencrypt` CA) instead of plaintext
+        `mqtt://…:1883`. Auth stays anonymous (TLS secures the transport; no MQTT credential).
+        Both remain disabled by default (#262). Note: as wss/TLS, these slots now wait for a
+        valid wall clock — `mqtt status` shows `held(no-clock)` until NTP/GPS, then connects.
+        Fresh-NVS only; existing devices keep their stored config. (#592)
+
+
+      ---
+
+
+      ### Which file do I download?
+
+
+      | File | What it is | When to use it |
+
+      |---|---|---|
+
+      | `*-merged.bin` (ESP32 — Heltec V3/V4, XIAO) | **Full image** — bootloader + partition table
+      + app in one, flashed at `0x0` after a chip erase. Self-contained, works on a blank chip. |
+      **First install / clean setup.** |
+
+      | `*.bin` (ESP32) | **App only** — flashed at the app offset (`0x10000`); the bootloader must
+      already be on the chip. | **Updating** an existing node — OTA. Keeps the device identity +
+      WiFi/MQTT config. |
+
+      | `*.uf2` (nRF52 — RAK, T-Echo, XIAO nRF52) | Complete self-contai
+
+      …
   - version: offband-v1.3.0
     name: Offband offband-v1.3.0
     datetime: '2026-08-06T08:16:55Z'
