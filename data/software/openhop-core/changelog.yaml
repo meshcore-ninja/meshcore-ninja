@@ -1,4 +1,9 @@
-source: github
+source: script
 repo: openhop-dev/openhop_core
-updatedAt: '2026-07-05T17:14:48.947Z'
-releases: []
+updatedAt: '2026-08-14T00:13:52.164Z'
+releases:
+  - version: 1.1.1
+    name: openhop-core 1.1.1
+    datetime: '2026-06-24T21:26:17.232121Z'
+    url: https://pypi.org/project/openhop-core/1.1.1/
+    prerelease: false

@@ -1,0 +1,73 @@
+name: MeshCore MQTT Dashboard
+kind: monitoring
+status: active
+maturity: stable
+description: >-
+  Lightweight self-hosted dashboard for MQTT brokers that tracks live MeshCore
+  node presence, roles, retained traffic, packet rates, broker telemetry and
+  optional decoded battery information through a web interface and API.
+
+screenshots:
+  - file: dashboard.png
+    caption: Live node presence, roles and MQTT broker telemetry
+
+maintainers:
+  - name: yellowcooln
+    url: https://github.com/yellowcooln
+
+repository: https://github.com/yellowcooln/meshcore-mqtt-dashboard
+website: https://mcmqttdashboard.bostonme.sh/
+documentation: https://github.com/yellowcooln/meshcore-mqtt-dashboard/blob/main/docs.md
+
+languages:
+  - python
+  - javascript
+
+platforms:
+  - docker
+  - web
+interfaces:
+  - web
+  - api
+  - headless
+connections:
+  - mqtt
+  - websocket
+  - http
+capabilities:
+  - monitoring
+  - telemetry
+  - packet-analysis
+
+install:
+  - type: docker
+    package: yellowcooln/meshcore-mqtt-dashboard:latest
+    url: https://hub.docker.com/r/yellowcooln/meshcore-mqtt-dashboard
+    command: docker pull yellowcooln/meshcore-mqtt-dashboard:latest
+  - type: docker-compose
+    package: yellowcooln/meshcore-mqtt-dashboard:latest
+    url: https://github.com/yellowcooln/meshcore-mqtt-dashboard#quick-start-docker
+    command: docker compose up -d --build
+  - type: source
+    url: https://github.com/yellowcooln/meshcore-mqtt-dashboard
+
+verification:
+  sourceAvailable: true
+  releasesAvailable: true
+  signedReleases: false
+  ciBuilds: true
+  hasDocumentation: true
+  lastChecked: 2026-08-13
+  notes:
+    - The published Docker image supports Linux amd64 and arm64.
+    - MQTT supports TCP or WebSockets with optional TLS and token-protected APIs.
+    - Packet history is retained in SQLite for traffic analysis across restarts.
+
+tags:
+  - mqtt
+  - dashboard
+  - monitoring
+  - self-hosted
+  - docker
+
+last_reviewed: 2026-08-13

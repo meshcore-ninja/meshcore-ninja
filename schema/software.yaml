@@ -129,6 +129,26 @@ properties:
     description: Documentation or getting-started page.
     type: string
 
+  changelog:
+    description: >-
+      Release-history source used by scripts/update-changelogs.js. GitHub is
+      inferred from repository when omitted; set repo to use a separate release
+      repository, or source: script for a record-local custom fetcher.
+    type: object
+    additionalProperties: false
+    properties:
+      source:
+        enum:
+          - github
+          - manual
+          - script
+      repo:
+        type: string
+        pattern: ^[^/]+/[^/]+$
+      script:
+        type: string
+        minLength: 1
+
   license:
     description: SPDX license identifier where possible, such as MIT or GPL-3.0-only.
     type: string

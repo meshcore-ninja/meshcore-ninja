@@ -1,5 +1,5 @@
 # Source: https://shop.meshsmith.net/products/photon-1w
-name: MeshSmith Photon-1W nRF52840
+name: MeshSmith Photon-1W ESP32-C6
 vendorId: meshsmith
 kind: kit
 category: development-board
@@ -12,15 +12,14 @@ price:
   asOf: 2026-08
   url: https://shop.meshsmith.net/products/photon-1w
 description: >-
-  nRF52840 version of MeshSmith's 1-watt Photon-1W LoRa board, pairing a Seeed
-  XIAO nRF52840 with an Ebyte E22P/SX1262 radio and built-in ATGM336H GPS.
+  ESP32-C6 version of MeshSmith's 1-watt Photon-1W LoRa board, pairing a Seeed
+  XIAO ESP32-C6 with an Ebyte E22P/SX1262 radio and built-in ATGM336H GPS.
 image: photon-1w.svg
 roles:
-  - companion
-  - repeater
-  - room-server
+  - kiss-modem
 transports:
   - ble
+  - wifi
 variants:
   - name: 915 MHz
     bands:
@@ -30,7 +29,8 @@ variants:
       - "868"
 hardware:
   mcu:
-    model: nrf52840
+    model: esp32-c6
+    flashMb: 4
   radios:
     - technology: lora
       chip: sx1262
@@ -58,4 +58,5 @@ interfaces:
   bluetooth:
     ble: true
   wifi:
-    status: none
+    status: present
+    standard: 802.11 b/g/n/ax

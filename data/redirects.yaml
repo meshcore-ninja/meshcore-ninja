@@ -24,8 +24,9 @@ firmwares: {}
 devices: {}
 networks: {}
 software:
-  # pyMC → openHop rebrand (2026-07): repos/names became openhop_core &
-  # openhop_repeater; pymc-console keeps its slug (still named "pyMC Console").
+  # pyMC → openHop rebrand (2026-07): repos/names became openhop_core,
+  # openhop_repeater, and openHop Console.
   pymc-core: openhop-core
   pymc-repeater: openhop-repeater
+  pymc-console: openhop-console
 vendors: {}

@@ -1,0 +1,108 @@
+name: openHop Modem
+type: custom
+maintainer: openhop-dev
+maintainers:
+  - name: openhop-dev
+    url: https://github.com/openhop-dev
+description: >-
+  Dedicated SX1262/E22P radio modem firmware for connecting supported ESP32 and
+  nRF52840 devices to openHop Repeater over native TCP, Ethernet, USB CDC or UART.
+  Includes browser flashing, board-specific radio and display support, and web or
+  DFU update paths where the target hardware supports them.
+repository: https://github.com/openhop-dev/openhop_modem
+website: https://flasher.openhop.dev/
+changelog:
+  source: github
+  repo: openhop-dev/openhop_modem
+license: MIT
+status: active
+scope: function-specific
+scopeCategory: Modem
+lifecycle: active
+maturity: stable
+distribution: community
+runtime:
+  framework: arduino
+  language: C++
+roles:
+  - kiss-modem
+features:
+  - Native TCP, Ethernet, USB CDC and UART modem transports
+  - Board-specific SX1262 and E22P radio support
+  - Browser flasher and board-specific update paths
+  - Status, configuration and diagnostics UI on web-enabled targets
+capabilities:
+  protocol:
+    meshcoreCompatible: true
+    rawPacketSend: true
+    rawPacketObserve: true
+  transports:
+    usbSerial: true
+    nativeTcp: true
+    wifiAp: true
+    ethernet: true
+  operations:
+    webFlasher: true
+    ota: true
+    bleDfu: true
+    configurationBackup: true
+  networking:
+    kissModem: true
+  hardware:
+    gps: true
+    display: true
+    sensors: true
+devices:
+  - id: heltec-v3
+    status: supported
+    target: heltec_v3
+  - id: heltec-v4
+    status: supported
+    target: heltec_v4
+    notes: Includes dedicated V4.2 and V4.3 build environments for revision-specific FEM control.
+  - id: heltec-wt2
+    status: supported
+    target: heltec_tracker_v2
+  - id: ikoka-stick
+    status: supported
+    target: ikoka_stick
+  - id: xiao-esp32s3
+    status: supported
+    target: xiao_wio_sx1262
+  - id: meshsmith-photon-1w-esp32-c6
+    status: supported
+    target: photon_1w_xiao_esp32c6
+  - id: lilygo-t3-s3-sx126x
+    status: supported
+    target: lilygo_t3s3
+  - id: lilygo-tbeam-supreme
+    status: supported
+    target: lilygo_tbeam_s3_supreme
+  - id: rak-3112
+    status: supported
+    target: rak3112_wismesh
+  - id: station-g2
+    status: supported
+    target: station_g2
+  - id: meshsmith-ethermesh-1w
+    status: supported
+    target: ethermesh_1w
+  - id: heltec-t114
+    status: supported
+    target: heltec_t114
+  - id: rak-4631
+    status: supported
+    target: rak4631_wismesh_eth
+  - id: xiao-nrf52
+    status: supported
+    target: xiao_nrf52_wio
+verification:
+  sourceAvailable: true
+  releasesAvailable: true
+  signedReleases: false
+  ciBuilds: true
+  webFlasher: true
+  hasDocumentation: true
+  lastChecked: 2026-08-13
+  notes:
+    - ESP32-P4 Nano is also built upstream but has no matching device record in this catalogue.
