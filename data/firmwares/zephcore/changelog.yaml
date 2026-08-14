@@ -1,7 +1,157 @@
 source: github
 repo: liquidraver/ZephCore
-updatedAt: '2026-08-05T19:38:11.053Z'
+updatedAt: '2026-08-14T16:56:20.169Z'
 releases:
+  - version: 1.17.1-zephcore
+    name: Firmware 1.17.1-zephcore
+    datetime: '2026-08-14T16:47:43Z'
+    url: https://github.com/liquidraver/ZephCore/releases/tag/1.17.1-zephcore
+    prerelease: false
+    notes: >-
+      # ZephCore 1.17.1-zephcore
+
+
+      A **hardware release**. A new tracker board lands — the Seeed SenseCAP MeshTracker X1 — and
+      with it the
+
+      LR2021 radio becomes a real, on-air-validated option instead of bring-up code. Plus GPS
+      diagnostics, an
+
+      LED master switch, and a batch of receive- and transmit-path hardening.
+
+
+      > [!NOTE]
+
+      > **1.17.0 was never published**, so this release carries everything that was written up for
+      it. If you
+
+      > are coming from 1.16.8, everything below is new to you.
+
+
+      ---
+
+
+      > [!IMPORTANT]
+
+      > ## Before you upgrade
+
+      >
+
+      > **From v1.16.5 – v1.16.8** — just flash it. Bonds and data survive, no re-pairing.
+
+      >
+
+      > **From v1.16.2 – v1.16.4 on an ESP32-S3 / ESP32-C board** — you still owe a one-time
+      **USB/serial
+
+      > reflash of `-merged.bin`**. The app moved to flash offset `0x10000` in v1.16.5, and a board
+      on the old
+
+      > layout cannot cross that gap over WiFi-OTA or the browser flasher. Affected: *Heltec V3 / V4
+      / V4.3,
+
+      > Station G2, Wireless Tracker / V2, XIAO ESP32-S3 / C3 / C6, LilyGo T-Lora C6, ThinkNode M9.*
+      Your
+
+      > identity, contacts, channels, prefs and bonds are preserved. Everything else (nRF52, classic
+      ESP32,
+
+      > STM32WL) upgrades normally.
+
+      >
+
+      > **From v1.16.1 or older** — flash it; BLE bonds are cleared on first boot, so re-pair your
+      phone once.
+
+      > Identity, contacts, channels and prefs are kept.
+
+      >
+
+      > **Coming from Arduino MeshCore** — flash it; storage auto-formats and you get a new
+      identity.
+
+      >
+
+      > **ThinkNode M6 owners** — this release stops using the external flash chip, because the
+      board doesn't
+
+      > actually have one. Contacts, channels and prefs move to internal flash on first boot.
+
+      >
+
+      > **Repeater / room-server telemetry no longer shares GPS position with non-admins.** If you
+      were
+
+      > relying on that, set the location in prefs and advertise it instead.
+
+      >
+
+      > **ESP32 light sleep** stays on by default for Heltec repeaters. It has now been confirmed
+      working on a
+
+      > Heltec V4 — but only that one board so far. Side effect: the USB CLI stops answering ~10
+      minutes after
+
+      > boot; reconnect the terminal to get another window. Rebuild with `-DCONFIG_PM=n` to remove
+      it.
+
+
+      ---
+
+
+      ## Slow presets no longer lose long packets
+
+
+      The biggest fix in this release, and it is invisible until you run a narrow bandwidth.
+      Transmission was
+
+      bounded by two fixed deadlines that are shorter than the airtime of many perfectly legal
+      presets:
+
+
+      - The **chip's own transmit timer** was pinned at 10 s. The SX126x datasheet is explicit that
+      when this
+        timer fires the transmission is *stopped* — so on slow presets it was not a safeguard, it was a
+        truncation. A full-size packet is 17.7 s at SF10/BW31.25 and 28.6 s at SF12/BW62.5; those presets
+        were cutting every packet from ~136 bytes and ~76 bytes up, mid-air.
+      - The **host's wait for "transmit finished"** was a fixed 5 s, after which the radio was
+      yanked back
+        into receive — killing a transmission that was going perfectly well.
+
+      Both now scale from the driver's own airtime calculation, floored at the old values so nothing
+      that
+
+      works today gets a tighter deadline. Only slow presets move. There was nothing in the log
+      connecting
+
+      the loss to either line, so if you have ever run SF10–SF12 at 31.25 or 62.5 kHz and seen
+      packets simply
+
+      not arrive, this is likely why.
+
+
+      Alongside it: a driver that **reports a failed transmit** is now believed. Previously such a
+      packet was
+
+      counted as sent, so the statistics disagreed with reality.
+
+
+      ## Replies no longer dropped when `flood.max.unscoped` is low
+
+
+      Only affects operators who have lowered `flood.max.unscoped` from its default of 64 — but on
+      those
+
+      meshes it looked like repeaters and room servers were ignoring requests. Two separate causes:
+
+
+      - A reply to a **DIRECT** request went out **un-scoped**, because a direct request carries no
+      transport
+        codes and there was no fallback. Any repeater on the return path running `flood.max.unscoped=0` then
+        dropped it at hop 0. Replies now fall back to the node's own default region scope.
+      - A repeater answering a **direct login** flooded the reply even
+
+      …
   - version: 1.16.8-zephcore
     name: Firmware 1.16.8-zephcore
     datetime: '2026-08-05T14:06:17Z'
@@ -405,9 +555,3 @@ releases:
     url: https://github.com/liquidraver/ZephCore/releases/tag/v20260506.102120
     prerelease: false
     notes: "- Duty cycling is now disabled by default. \r\n  Further research showed that preamble 16 is NOT enough for a reliable duty cycle in noisy environments, so we'll wait for most of the mesh switching to preamble 32 to test it further\r\n\r\n- SX driver had some serious issues with CAD so it is recommended to update to this version as soon as possible\r\n\r\n- GPS will not be disabled if no GNSS message comes in (on repeaters), that was a test-code that stuck"
-  - version: v20260505.131914
-    name: Firmware v20260505.131914
-    datetime: '2026-05-05T13:19:23Z'
-    url: https://github.com/liquidraver/ZephCore/releases/tag/v20260505.131914
-    prerelease: false
-    notes: "Kistarcsa-edition\r\n\r\nTested in the depths of the tarcsa-cauldron with weak/noisy/who-knows-whats-the-problem-of-that-heltecv3 repeater, optimized for the aforementioned use-case.\r\n\r\n- Duty cycle is 13/3 now. Slightly more battery consumption, but better RX error margin. No use for extra battery time if packets are lost in noisy/weak link environments.\r\n- hwconfig now has a fail-safe so no more edge-case unsaved radio settings\r\n- SX TX Ramp time increased to 800µs from 200µs. expect very heavy latency increase if you can sense time in a different way normal humans do! \r\n  (also expect cleaner spectral mask at 22 dBm. nobody cares about it, doesn't change anything in a meaningful way, but it's a playground, we optimize even things that doesn't really need optimizing)\r\n  (ask your favourite AI what are the benefits of 800µs vs 200µs if interested)\r\n- Companions had too much initial jitter with zero benefit, so it was tuned down to RNG20-150msec\r\n- Claude noticed some line ending stuff by itself, without asking, so I gave him credit (heh)"
