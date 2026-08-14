@@ -8,12 +8,12 @@
     "githubContributors": 1,
     "releaseDownloads": 42,
     "latestReleaseDownloads": 42,
-    "lastChecked": "2026-08-13"
+    "lastChecked": "2026-08-14"
   },
   "verification": {
     "sourceAvailable": true,
     "releasesAvailable": true,
     "ciBuilds": false,
-    "lastChecked": "2026-08-13"
+    "lastChecked": "2026-08-14"
   }
 }
