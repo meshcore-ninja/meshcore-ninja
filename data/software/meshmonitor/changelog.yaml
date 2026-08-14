@@ -1,7 +1,106 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-08-13T19:05:38.398Z'
+updatedAt: '2026-08-14T20:33:52.657Z'
 releases:
+  - version: v4.14.2-rc2
+    name: v4.14.2-rc2
+    datetime: '2026-08-14T19:33:20Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.14.2-rc2
+    prerelease: true
+    notes: >-
+      ## What's Changed
+
+      * feat(reticulum): Phase 1b — frontend + deployment (#3960) by @Yeraze in
+      https://github.com/Yeraze/meshmonitor/pull/4698
+
+      * fix(automation): let MT↔MC bridge relay the operator's own messages by @Yeraze in
+      https://github.com/Yeraze/meshmonitor/pull/4695
+
+      * fix(unified): gate telemetry on nodes:read, fetch MeshCore nodes by publicKey by @Yeraze in
+      https://github.com/Yeraze/meshmonitor/pull/4701
+
+      * fix(docker): skip puppeteer's Chrome download in the main image by @Yeraze in
+      https://github.com/Yeraze/meshmonitor/pull/4707
+
+      * chore(deps-dev): bump @types/better-sqlite3 from 7.6.13 to 9.6.0 by @dependabot[bot] in
+      https://github.com/Yeraze/meshmonitor/pull/4652
+
+      * chore(deps): bump lucide-react from 1.29.0 to 1.30.0 by @dependabot[bot] in
+      https://github.com/Yeraze/meshmonitor/pull/4653
+
+      * feat(reticulum): Phase 2 — LXMF messaging (#3960) by @Yeraze in
+      https://github.com/Yeraze/meshmonitor/pull/4706
+
+      * fix(automation): mark tapback/reply text on the MT→MC bridge by @Yeraze in
+      https://github.com/Yeraze/meshmonitor/pull/4699
+
+      * Translations update from Hosted Weblate by @weblate in
+      https://github.com/Yeraze/meshmonitor/pull/4688
+
+      * docs(add-ons): list CardMesh and document the REST API integration path by @Yeraze in
+      https://github.com/Yeraze/meshmonitor/pull/4708
+
+      * feat(reticulum): Phase 3 — position, telemetry & own-mode radio (#3960) by @Yeraze in
+      https://github.com/Yeraze/meshmonitor/pull/4713
+
+      * feat(admin): warn when position precision exceeds the public-channel clamp (#4705) by
+      @Yeraze in https://github.com/Yeraze/meshmonitor/pull/4710
+
+      * fix(tcp): propagate asynchronous socket write failures by @gdiciocco in
+      https://github.com/Yeraze/meshmonitor/pull/4692
+
+      * fix(pkg): declare the supported Node range in engines (#4703) by @Yeraze in
+      https://github.com/Yeraze/meshmonitor/pull/4714
+
+      * Fix traceroute channel resolution: 3 bypassing paths + PSK/name gaps by @Yeraze in
+      https://github.com/Yeraze/meshmonitor/pull/4712
+
+      * feat(reticulum): Phase 4 — topology & remote monitoring (#3960) by @Yeraze in
+      https://github.com/Yeraze/meshmonitor/pull/4715
+
+      * docs(reticulum): close out epic — Phase 4 done, Phase 5 (desktop parity) descoped (#3960) by
+      @Yeraze in https://github.com/Yeraze/meshmonitor/pull/4717
+
+      * chore(release): 4.14.2-rc2 by @Yeraze in https://github.com/Yeraze/meshmonitor/pull/4719
+
+
+      ## New Contributors
+
+      * @gdiciocco made their first contribution in https://github.com/Yeraze/meshmonitor/pull/4692
+
+
+      **Full Changelog**: https://github.com/Yeraze/meshmonitor/compare/v4.14.2-rc1...v4.14.2-rc2
+
+      ## 🚀 MeshMonitor v4.14.2-rc2
+
+
+      ### 📦 Installation
+
+
+      **Docker (recommended):**
+
+      ```bash
+
+      docker run -d \
+        --name meshmonitor \
+        -p 8080:3001 \
+        -v meshmonitor-data:/data \
+        ghcr.io/Yeraze/meshmonitor:4.14.2-rc2
+      ```
+
+
+      ### 🧪 Testing
+
+      ✅ All tests passed
+
+      ✅ TypeScript checks passed
+
+      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
+
+
+      ### 📋 Changes
+
+      See commit history for detailed changes.
   - version: v4.14.2-rc1
     name: v4.14.2-rc1
     datetime: '2026-08-13T18:33:48Z'
@@ -2154,110 +2253,3 @@ releases:
       ## 
 
       …
-  - version: v4.13.1-rc4
-    name: v4.13.1-rc4
-    datetime: '2026-07-19T13:15:34Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.13.1-rc4
-    prerelease: true
-    notes: >-
-      # MeshMonitor v4.13.1-rc4
-
-
-      > ⚠️ **Pre-release (release candidate).** This build is for testing ahead of the v4.13.1
-      stable release. Not recommended for production deployments.
-
-
-      This fourth release candidate continues the Meshtastic 2.8 readiness work and lands a mix of
-      node-detail and map improvements on top of rc3. It adds a `noIndexEnabled` privacy toggle so a
-      publicly-exposed dashboard can serve `X-Robots-Tag: noindex, nofollow` headers plus a
-      disallow-all `/robots.txt` (belt-and-suspenders for Cloudflare-tunnel setups that strip custom
-      headers). On the 2.8 front, it decodes `MESH_BEACON_APP` with firmware-verified preset channel
-      names, pins the 2.8-preview protobufs with a 2.7 TrafficManagement compat shim, adds an XEdDSA
-      signature shield in the Packet Monitor, and ships the MEDIUM_TURBO preset with 2.8 opt-in
-      docs. Node detail gains a derived signal-trend / link-attenuation badge and a Noise Floor
-      quick-stat. Two bug fixes round it out: chat from unsynced-clock nodes no longer renders at
-      ~1970, and cluster spiderfy no longer opens the popup for a nearby unrelated node.
-
-
-      ## Features
-
-      - **Privacy:** `noIndexEnabled` toggle serving `X-Robots-Tag: noindex, nofollow` +
-      disallow-all `/robots.txt` (#4212, closes #4202)
-
-      - **2.8 / Packet Monitor:** XEdDSA signature shield for firmware 2.8 packets (#4209)
-
-      - **2.8 / MeshBeacon:** decode `MESH_BEACON_APP` + firmware-verified preset channel names
-      (#4207)
-
-      - **2.8 / Protobufs:** pin 2.8-preview `develop@ba16bfc` with 2.7 TrafficManagement compat
-      shim (#4205)
-
-      - **Nodes:** derived signal-trend / link-attenuation badge per node (#4204, closes #4110)
-
-      - **Nodes:** show Noise Floor on the Node Detail quick-stats card (#4201, closes #4109)
-
-      - **2.8:** MEDIUM_TURBO preset, `MESH_BEACON_APP` portnum, traffic-management & 2.8 opt-in
-      docs (#4200)
-
-
-      ## Bug Fixes
-
-      - **Messages:** stop unsynced-RTC nodes rendering chat at ~1970 (rxTime now clamped to receipt
-      time) (#4208, closes #4206)
-
-      - **Map:** spiderfy no longer selects a nearby unrelated node instead of fanning the cluster
-      (#4203, closes #4199)
-
-
-      ## Issues Resolved
-
-      - #4202 — [FEAT] Robots.txt / X-Robots-Tag toggle to discourage crawlers/bots
-
-      - #4206 — [BUG] Chat from unsynced-clock nodes renders at ~1970
-
-      - #4199 — [BUG] Spiderfy click opens popup for wrong nearby node
-
-      - #4109 — [FEAT] Show Noise Floor on Node Detail quick-stats card
-
-      - #4110 — [FEAT] Derived signal-trend / link-attenuation indicator per node
-
-      - #4074 — Modem preset tables missing MEDIUM_TURBO (enum 16)
-
-      - #3999 — [2.8 tracking] Position & telemetry broadcast now opt-in by default
-
-      - #3547 — Docs: Traffic Management module documentation
-
-
-      **Full changelog:** https://github.com/Yeraze/meshmonitor/compare/v4.13.1-rc3...v4.13.1-rc4
-
-
-      ## 🚀 MeshMonitor v4.13.1-rc4
-
-
-      ### 📦 Installation
-
-
-      **Docker (recommended):**
-
-      ```bash
-
-      docker run -d \
-        --name meshmonitor \
-        -p 8080:3001 \
-        -v meshmonitor-data:/data \
-        ghcr.io/Yeraze/meshmonitor:4.13.1-rc4
-      ```
-
-
-      ### 🧪 Testing
-
-      ✅ All tests passed
-
-      ✅ TypeScript checks passed
-
-      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
-
-
-      ### 📋 Changes
-
-      See commit history for detailed changes.
