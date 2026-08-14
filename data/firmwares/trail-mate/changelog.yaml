@@ -1,7 +1,13 @@
 source: github
 repo: vicliu624/trail-mate
-updatedAt: '2026-07-31T10:42:09.325Z'
+updatedAt: '2026-08-14T09:09:32.750Z'
 releases:
+  - version: v0.1.40-alpha
+    name: v0.1.40-alpha
+    datetime: '2026-08-14T08:37:42Z'
+    url: https://github.com/vicliu624/trail-mate/releases/tag/v0.1.40-alpha
+    prerelease: true
+    notes: "## [0.1.40-alpha] - 2026-08-14\r\n### Added / 新增\r\n- Added bounded VMP voice messages for T-LoRa Pager chat. The compose microphone records up to five seconds of Codec2 audio; LR1121 uses the active Sub-GHz settings only for private control/receiver-ready negotiation, then sends the compact voice train over its 2.4 GHz radio. Private voice is end-to-end encrypted, while broadcast voice is intentionally public. Received VMP objects are never flooded, relayed, retransmitted, or injected into a radio mesh. / 为 T-LoRa Pager 聊天新增有界 VMP 语音消息：聊天输入框麦克风最多录制五秒 Codec2 音频；LR1121 仅使用当前 Sub-GHz 参数完成私聊控制与接收方就绪协商，随后通过 2.4 GHz 无线发送紧凑语音分片。私聊语音端到端加密，广播语音明确为公开内容；接收到的 VMP 对象绝不会被洪泛、转发、重传或注入无线网状网络。\r\n- Added carrier and storage safeguards for VMP voice: SX1262 Pager can record/send only through an enabled MT MQTT uplink and never enters VMP RF, 2.4 GHz, or LXMF paths; received voice is stored in a bounded PSRAM/SD attachment inbox with integrity checks and backup recovery, appears in the conversation after durable storage succeeds, and can be tapped to play. / 为 VMP 语音新增承载与存储保护：SX1262 Pager 仅在 MT MQTT 上行已启用时才能录制和发送，且绝不会进入 VMP RF、2.4 GHz 或 LXMF 路径；收到的语音保存在带完整性校验和备份恢复的有界 PSRAM/SD 附件收件箱中，持久化成功后才显示在会话里，用户可点击播放。\r\n\r\n- Replaced generic Energy Sweep with Protocol Probe, which uses protocol-specific evidence to discover and verify complete LoRa profiles instead of treating RSSI or a quiet spectrum as a usable channel. / 以协议包探测（Protocol Probe）取代通用 Energy Sweep，使用协议专属证据发现并验证完整 LoRa 配置，而不是将 RSSI 或安静频谱视为可用信道。\r\n- Added the T-Deck Pro-only 240×320 monochrome text UI and A7682E cellular workflow. / 新增仅限 T-Deck Pro 的 240×320 黑白文本界面与 A7682E 蜂窝工作流。\r\n\r\n### Changed / 变更\r\n- Reduced T-LoRa Pager /T-Deck internal static RAM from 140,592 B to 106,544 B (33.25 KiB reclaimed) by making external locale/font resources lazy and PSRAM-only, moving non-real-time UI/page state and cold Reticulum configuration scratch storage to strict PSRAM allocation, and removing permanent static worker-stack baselines. Wi-Fi/DNS state, DMA/I²S audio buffers, and other real-time synchronization state remain in internal RAM by design. / 通过将外部语言/字体资源改为按需加载且仅使用 PSRAM、将非实时 UI/页面状态和冷路径 Reticulum 配置暂存区迁移为严格 PSRAM 分配，并移除永久静态工作任务栈基线，T-LoRa Pager /T-Deck的内部静态 RAM 从 140,592 B 降至 106,544 B（释放 33.25 KiB）。Wi-Fi/DNS 状态、DMA/I²S 音频缓冲以及其他实时同步状态按设计继续保留在内部 RAM。\r\n\r\n- Split T-Deck and T-LoRa Pager USB maintenance profiles: release builds remove application USB CDC, DFU Runtime, and full TinyUSB DFU (use BOOT + RESET for flashing), while `*_debug` builds retain CDC logs and full DFU. Reticulum Call audio queues now allocate only when media starts and prefer PSRAM, reclaiming 4,436 B of always-resident internal RAM without moving Wi-Fi/DNS state. / 拆分 T-Deck 与 T-LoRa Pager 的 USB 维护配置：正式版移除应用 USB CDC、DFU Runtime 与完整 TinyUSB DFU（通过 BOOT + RESET 刷机），`*_debug` 保留 CDC 日志与完整 DFU。Reticulum Call 音频队列仅在媒体启动时申请并优先使用 PSRAM，回收 4,436 B 常驻内部 RAM，且不迁移 Wi-Fi/DNS 状态。\n\n### Fixed / 修复\n- Fixed ESP Team and normal Wi-Fi from each attempting to create the same default Wi-Fi STA netif. Both startup paths now adopt the existing ESP-IDF netif, and active ESP-NOW pairing reserves the radio so Settings cannot start normal Wi-Fi until pairing ends. / 修复 ESP Team 与普通 Wi-Fi 分别重复创建同一个默认 Wi-Fi STA netif 的问题。两个启动路径现都会接管已有的 ESP-IDF netif；ESP-NOW 配对进行中会预留无线电，设置页无法在配对结束前启动普通 Wi-Fi。\r\n- Fixed saved Wi-Fi profile cycling: up to ten SSID/password pairs are retained and the Wi-Fi runtime now schedules the next saved profile after a failed connection instead of depending on an external network client to retry. / 修复已保存 Wi-Fi 配置的轮询连接：最多保留十组 SSID/password；连接失败后由 Wi-Fi 运行时自行调度下一组配置重试，不再依赖外部网络客户端再次发起连接。\r\n\r\n\n\n## What's Changed\n* Codex/spi by @vicliu624 in https://github.com/vicliu624/trail-mate/pull/81\n\n\n**Full Changelog**: https://github.com/vicliu624/trail-mate/compare/v0.1.39-alpha...v0.1.40-alpha"
   - version: v0.1.39-alpha
     name: v0.1.39-alpha
     datetime: '2026-07-31T09:33:02Z'
@@ -422,63 +428,3 @@ releases:
     url: https://github.com/vicliu624/trail-mate/releases/tag/v0.1.21-alpha
     prerelease: true
     notes: "## [0.1.21-alpha] - 2026-04-21\r\n### Changed / 变更\r\n- Extensions app surfaces now participate fully in the shared localization pipeline, covering the menu label/description, top bar title, package list/detail headings, and install/uninstall status copy across the supported language packs / Extensions 相关界面现已完整接入共享本地化链路，覆盖菜单名称与描述、顶部标题、语言包列表/详情标题，以及安装/卸载状态文案，并同步补齐各已支持语言包的词条\r\n- Pager home footer layout now uses a split alignment model, keeping node ID anchored on the left while RAM and PSRAM usage stay grouped on the right, with the app description lifted above the footer to preserve readability / Pager 主界面底栏现改为分离对齐布局，节点 ID 固定左对齐，RAM 与 PSRAM 使用情况固定右对齐，同时将应用描述抬升到底栏上方，避免被遮挡\r\n\r\n### Fixed / 修复\r\n- Fixed localized menu refresh paths that were still using raw text updates, which left the Extensions icon label and focused description untranslated after language changes / 修复菜单本地化刷新路径中仍使用 raw text 更新的问题，解决切换语言后 Extensions 图标标签与焦点描述未正确翻译的问题\r\n- Fixed untranslated and inconsistent copy throughout the Extensions runtime, including compatibility badges, package action states, Wi-Fi status text, and package install/uninstall progress notifications / 修复 Extensions 运行时中多处未本地化或不一致的文案，包括兼容性标记、包操作状态、Wi-Fi 状态文字，以及安装/卸载过程通知\r\n- Fixed pager footer overlap where the bottom bar could cover icon descriptions, especially on the focused-card layout / 修复 pager 焦点卡片布局下底栏遮挡应用描述的问题\r\n\r\n\n\n**Full Changelog**: https://github.com/vicliu624/trail-mate/compare/v0.1.20-alpha...v0.1.21-alpha"
-  - version: v0.1.20-alpha
-    name: v0.1.20-alpha
-    datetime: '2026-04-21T06:48:37Z'
-    url: https://github.com/vicliu624/trail-mate/releases/tag/v0.1.20-alpha
-    prerelease: true
-    notes: >-
-      ## [0.1.20-alpha] - 2026-04-21
-
-      ### Added / 新增
-
-      - On-device firmware update controls under Settings > Advanced, including update check/install
-      actions, progress overlays, and release metadata sourced from GitHub Pages / 新增 Settings >
-      Advanced 中的设备侧固件更新能力，包含检查更新、安装更新、进度遮罩，以及来自 GitHub Pages 的发布元数据
-
-      - Pages/release packaging now publishes OTA-ready binaries, Web Flasher images, and
-      language-pack assets together so the project site can drive both browser flashing and
-      in-device updates / 新增 Pages/Release 打包链路，同时发布 OTA 二进制、Web Flasher
-      镜像与语言包资源，使项目站点既能浏览器刷机也能驱动设备内更新
-
-      - Flash-backed language-pack storage on ESP, allowing installed locale/font packages to load
-      from internal flash without depending on SD card presence / 新增 ESP 上基于内部 Flash 的语言包存储，使已安装
-      locale/font 包可直接从内部 Flash 加载，不再依赖 SD 卡存在
-
-
-      ### Changed / 变更
-
-      - Startup flow now surfaces UI earlier, shows boot progress/log feedback, and keeps
-      long-running locale/package operations behind a shared busy overlay that blocks input and
-      suppresses sleep while work is active / 启动流程现会更早显示 UI，并提供 boot 进度/日志反馈；耗时的语言包与资源操作也会通过统一 busy
-      overlay 承载，在进行中阻止输入并抑制息屏
-
-      - Firmware version reporting now prefers the injected Trail Mate version from the build
-      pipeline instead of exposing the raw ESP-IDF app version, and CI validates OTA slot size
-      before publishing artifacts / 固件版本展示现优先使用构建流水线注入的 Trail Mate 版本号，而不是直接暴露 ESP-IDF app
-      version；CI 也会在发布前校验 OTA 分区大小
-
-      - Chinese locale/font handling was reworked around tiered packs, IME availability controls,
-      and flash-first discovery so startup and runtime font loads are faster and more predictable /
-      中文 locale/font 处理围绕分层字体包、输入法启用控制与 flash-first 发现机制进行了重构，使启动与运行时字体加载更快且更可控
-
-
-      ### Fixed / 修复
-
-      - Fixed low-memory Wi-Fi bring-up for settings/package/update flows by adding heap
-      diagnostics, BLE pause-and-retry fallback, and lighter initialization settings when needed /
-      修复设置页、语言包下载与固件更新流程中 Wi-Fi 在低内存条件下难以启动的问题，通过增加 heap 诊断、BLE 暂停后重试，以及更轻量的初始化参数提升成功率
-
-      - Fixed incorrect esp-idf:v4.4.7 ... version strings in the UI, and kept update/version
-      surfaces aligned with the actual firmware release being built / 修复界面中错误显示 esp-idf:v4.4.7 ...
-      作为版本号的问题，使更新与版本展示统一对齐到真实固件版本
-
-      - Fixed several UX regressions around locale install/load and multilingual input, including
-      missing loading feedback, sleep during blocking tasks, and Chinese IME/candidate layout issues
-      / 修复语言包安装/加载与多语言输入过程中的多项体验回退，包括缺少 loading 反馈、阻塞任务期间误触发息屏，以及中文输入法/候选栏布局问题
-
-
-
-
-      **Full Changelog**:
-      https://github.com/vicliu624/trail-mate/compare/v0.1.19-alpha...v0.1.20-alpha
