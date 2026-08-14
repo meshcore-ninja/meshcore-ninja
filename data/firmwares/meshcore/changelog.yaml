@@ -1,7 +1,283 @@
 source: script
 repo: meshcore-dev/MeshCore
-updatedAt: '2026-08-09T06:59:53.032Z'
+updatedAt: '2026-08-14T14:53:30.589Z'
 releases:
+  - version: room-server-v1.17.1
+    name: Room Server Firmware v1.17.1
+    datetime: '2026-08-14T13:31:40Z'
+    url: https://github.com/meshcore-dev/MeshCore/releases/tag/room-server-v1.17.1
+    prerelease: false
+    notes: >-
+      ## Download
+
+
+      Latest firmwares are in the [flasher.meshcore.io](https://flasher.meshcore.io/)
+
+
+      ## Change Log
+
+
+      ### New Features
+
+
+      -   [#3137](https://github.com/meshcore-dev/MeshCore/pull/3137) new ‘get/set
+      radio.fem.rxgain/txgain’ CLI commands (txgain is Station G3 only), fixed pref mapping for
+      radio.fem.rxgain
+
+      -   [#3148](https://github.com/meshcore-dev/MeshCore/pull/3148) added missing kiss radio
+      roles, kiss radio build added to build.sh
+
+
+      ### Enhancements
+
+
+      -   [#3106](https://github.com/meshcore-dev/MeshCore/pull/3106) login response no longer sent
+      as flood on direct login, fix for unscoped flood login
+
+      -   [#3146](https://github.com/meshcore-dev/MeshCore/pull/3146) LR2021: PREAMBLE\_DETECTED bit
+      and IRQ rx timeout logic
+
+      -   [#3154](https://github.com/meshcore-dev/MeshCore/pull/3154) NRF52 CC310:
+      nRFCrypto.begin()/end() now called only once
+
+      -   [#3166](https://github.com/meshcore-dev/MeshCore/pull/3166) RadioLibWrapper noise floor
+      debug print moved behind new `MESH_DEBUG_NOISE_FLOOR` flag
+
+      -   [#3206](https://github.com/meshcore-dev/MeshCore/pull/3206) nRF RadioNoiseListener RNG now
+      combines entropy from radio and CC310
+
+
+      ### Bug fixes and Other
+
+
+      -   [#3140](https://github.com/meshcore-dev/MeshCore/pull/3140) T-Echo Lite pins aligned to
+      updated Lilygo schematic, TCXO voltage set to 3.0V
+
+      -   [#3142](https://github.com/meshcore-dev/MeshCore/pull/3142) build fix for R1 Neo and
+      Minewsemi repeater
+
+      -   [#3158](https://github.com/meshcore-dev/MeshCore/pull/3158) Rx boosted gain no longer
+      reset to compiled value after AGC reset
+
+      -   [#3164](https://github.com/meshcore-dev/MeshCore/pull/3164) T-Beam Supreme S3 display fix
+
+      -   [#3170](https://github.com/meshcore-dev/MeshCore/pull/3170) ProMicro pinmap tidy up, LoRa
+      pins moved to variant.h
+
+      -   [#3185](https://github.com/meshcore-dev/MeshCore/pull/3185) T-Echo Card TCXO voltage set
+      to 3.0V as per [#3140](https://github.com/meshcore-dev/MeshCore/pull/3140)
+
+      -   [#3188](https://github.com/meshcore-dev/MeshCore/pull/3188) Heltec T096 Tx failure fixed
+      (out of bounds PIN\_SPI1\_MISO)
+
+      -   [#3189](https://github.com/meshcore-dev/MeshCore/pull/3189) Heltec T1 / MeshPocket /
+      T-Echo Lite: unused pin fix ([root
+      cause](https://github.com/meshcore-dev/MeshCore/issues/3151#issuecomment-5268905160))
+
+      -   [#3203](https://github.com/meshcore-dev/MeshCore/pull/3203) Companion:
+      fem\_radio\_rx/txgain pref disabled until settable.
+
+
+      ## Fixes and enhancements for devices with FEM
+
+
+      The `radio.fem.rxgain` setting was not being persisted properly in v1.17.1, this is now fixed.
+      Repeater admins will want to check that `radio.fem.rxgain` and `radio.rxgain` are configured
+      to their liking after updating. Companion firmware currently has no way to configure these
+      settings, so they they will use the default values only for now.
+
+
+      ## Heltec T096 Transmit issue fix
+
+
+      The Heltec T096 transmit issue was found to be an out of bounds read of the pin map due to
+      `PIN_SPI1_MISO` being set to -1. It was causing the FEM’s Tx enable pin to stop working. This
+      has been fixed and other NRF52 boards have had their unused pins corrected.
+    notesUrl: https://blog.meshcore.io/2026/08/14/release-1-17-1
+  - version: repeater-v1.17.1
+    name: Repeater Firmware v1.17.1
+    datetime: '2026-08-14T13:32:04Z'
+    url: https://github.com/meshcore-dev/MeshCore/releases/tag/repeater-v1.17.1
+    prerelease: false
+    notes: >-
+      ## Download
+
+
+      Latest firmwares are in the [flasher.meshcore.io](https://flasher.meshcore.io/)
+
+
+      ## Change Log
+
+
+      ### New Features
+
+
+      -   [#3137](https://github.com/meshcore-dev/MeshCore/pull/3137) new ‘get/set
+      radio.fem.rxgain/txgain’ CLI commands (txgain is Station G3 only), fixed pref mapping for
+      radio.fem.rxgain
+
+      -   [#3148](https://github.com/meshcore-dev/MeshCore/pull/3148) added missing kiss radio
+      roles, kiss radio build added to build.sh
+
+
+      ### Enhancements
+
+
+      -   [#3106](https://github.com/meshcore-dev/MeshCore/pull/3106) login response no longer sent
+      as flood on direct login, fix for unscoped flood login
+
+      -   [#3146](https://github.com/meshcore-dev/MeshCore/pull/3146) LR2021: PREAMBLE\_DETECTED bit
+      and IRQ rx timeout logic
+
+      -   [#3154](https://github.com/meshcore-dev/MeshCore/pull/3154) NRF52 CC310:
+      nRFCrypto.begin()/end() now called only once
+
+      -   [#3166](https://github.com/meshcore-dev/MeshCore/pull/3166) RadioLibWrapper noise floor
+      debug print moved behind new `MESH_DEBUG_NOISE_FLOOR` flag
+
+      -   [#3206](https://github.com/meshcore-dev/MeshCore/pull/3206) nRF RadioNoiseListener RNG now
+      combines entropy from radio and CC310
+
+
+      ### Bug fixes and Other
+
+
+      -   [#3140](https://github.com/meshcore-dev/MeshCore/pull/3140) T-Echo Lite pins aligned to
+      updated Lilygo schematic, TCXO voltage set to 3.0V
+
+      -   [#3142](https://github.com/meshcore-dev/MeshCore/pull/3142) build fix for R1 Neo and
+      Minewsemi repeater
+
+      -   [#3158](https://github.com/meshcore-dev/MeshCore/pull/3158) Rx boosted gain no longer
+      reset to compiled value after AGC reset
+
+      -   [#3164](https://github.com/meshcore-dev/MeshCore/pull/3164) T-Beam Supreme S3 display fix
+
+      -   [#3170](https://github.com/meshcore-dev/MeshCore/pull/3170) ProMicro pinmap tidy up, LoRa
+      pins moved to variant.h
+
+      -   [#3185](https://github.com/meshcore-dev/MeshCore/pull/3185) T-Echo Card TCXO voltage set
+      to 3.0V as per [#3140](https://github.com/meshcore-dev/MeshCore/pull/3140)
+
+      -   [#3188](https://github.com/meshcore-dev/MeshCore/pull/3188) Heltec T096 Tx failure fixed
+      (out of bounds PIN\_SPI1\_MISO)
+
+      -   [#3189](https://github.com/meshcore-dev/MeshCore/pull/3189) Heltec T1 / MeshPocket /
+      T-Echo Lite: unused pin fix ([root
+      cause](https://github.com/meshcore-dev/MeshCore/issues/3151#issuecomment-5268905160))
+
+      -   [#3203](https://github.com/meshcore-dev/MeshCore/pull/3203) Companion:
+      fem\_radio\_rx/txgain pref disabled until settable.
+
+
+      ## Fixes and enhancements for devices with FEM
+
+
+      The `radio.fem.rxgain` setting was not being persisted properly in v1.17.1, this is now fixed.
+      Repeater admins will want to check that `radio.fem.rxgain` and `radio.rxgain` are configured
+      to their liking after updating. Companion firmware currently has no way to configure these
+      settings, so they they will use the default values only for now.
+
+
+      ## Heltec T096 Transmit issue fix
+
+
+      The Heltec T096 transmit issue was found to be an out of bounds read of the pin map due to
+      `PIN_SPI1_MISO` being set to -1. It was causing the FEM’s Tx enable pin to stop working. This
+      has been fixed and other NRF52 boards have had their unused pins corrected.
+    notesUrl: https://blog.meshcore.io/2026/08/14/release-1-17-1
+  - version: companion-v1.17.1
+    name: Companion Firmware v1.17.1
+    datetime: '2026-08-14T13:32:31Z'
+    url: https://github.com/meshcore-dev/MeshCore/releases/tag/companion-v1.17.1
+    prerelease: false
+    notes: >-
+      ## Download
+
+
+      Latest firmwares are in the [flasher.meshcore.io](https://flasher.meshcore.io/)
+
+
+      ## Change Log
+
+
+      ### New Features
+
+
+      -   [#3137](https://github.com/meshcore-dev/MeshCore/pull/3137) new ‘get/set
+      radio.fem.rxgain/txgain’ CLI commands (txgain is Station G3 only), fixed pref mapping for
+      radio.fem.rxgain
+
+      -   [#3148](https://github.com/meshcore-dev/MeshCore/pull/3148) added missing kiss radio
+      roles, kiss radio build added to build.sh
+
+
+      ### Enhancements
+
+
+      -   [#3106](https://github.com/meshcore-dev/MeshCore/pull/3106) login response no longer sent
+      as flood on direct login, fix for unscoped flood login
+
+      -   [#3146](https://github.com/meshcore-dev/MeshCore/pull/3146) LR2021: PREAMBLE\_DETECTED bit
+      and IRQ rx timeout logic
+
+      -   [#3154](https://github.com/meshcore-dev/MeshCore/pull/3154) NRF52 CC310:
+      nRFCrypto.begin()/end() now called only once
+
+      -   [#3166](https://github.com/meshcore-dev/MeshCore/pull/3166) RadioLibWrapper noise floor
+      debug print moved behind new `MESH_DEBUG_NOISE_FLOOR` flag
+
+      -   [#3206](https://github.com/meshcore-dev/MeshCore/pull/3206) nRF RadioNoiseListener RNG now
+      combines entropy from radio and CC310
+
+
+      ### Bug fixes and Other
+
+
+      -   [#3140](https://github.com/meshcore-dev/MeshCore/pull/3140) T-Echo Lite pins aligned to
+      updated Lilygo schematic, TCXO voltage set to 3.0V
+
+      -   [#3142](https://github.com/meshcore-dev/MeshCore/pull/3142) build fix for R1 Neo and
+      Minewsemi repeater
+
+      -   [#3158](https://github.com/meshcore-dev/MeshCore/pull/3158) Rx boosted gain no longer
+      reset to compiled value after AGC reset
+
+      -   [#3164](https://github.com/meshcore-dev/MeshCore/pull/3164) T-Beam Supreme S3 display fix
+
+      -   [#3170](https://github.com/meshcore-dev/MeshCore/pull/3170) ProMicro pinmap tidy up, LoRa
+      pins moved to variant.h
+
+      -   [#3185](https://github.com/meshcore-dev/MeshCore/pull/3185) T-Echo Card TCXO voltage set
+      to 3.0V as per [#3140](https://github.com/meshcore-dev/MeshCore/pull/3140)
+
+      -   [#3188](https://github.com/meshcore-dev/MeshCore/pull/3188) Heltec T096 Tx failure fixed
+      (out of bounds PIN\_SPI1\_MISO)
+
+      -   [#3189](https://github.com/meshcore-dev/MeshCore/pull/3189) Heltec T1 / MeshPocket /
+      T-Echo Lite: unused pin fix ([root
+      cause](https://github.com/meshcore-dev/MeshCore/issues/3151#issuecomment-5268905160))
+
+      -   [#3203](https://github.com/meshcore-dev/MeshCore/pull/3203) Companion:
+      fem\_radio\_rx/txgain pref disabled until settable.
+
+
+      ## Fixes and enhancements for devices with FEM
+
+
+      The `radio.fem.rxgain` setting was not being persisted properly in v1.17.1, this is now fixed.
+      Repeater admins will want to check that `radio.fem.rxgain` and `radio.rxgain` are configured
+      to their liking after updating. Companion firmware currently has no way to configure these
+      settings, so they they will use the default values only for now.
+
+
+      ## Heltec T096 Transmit issue fix
+
+
+      The Heltec T096 transmit issue was found to be an out of bounds read of the pin map due to
+      `PIN_SPI1_MISO` being set to -1. It was causing the FEM’s Tx enable pin to stop working. This
+      has been fixed and other NRF52 boards have had their unused pins corrected.
+    notesUrl: https://blog.meshcore.io/2026/08/14/release-1-17-1
   - version: room-server-v1.17.0
     name: Room Server Firmware v1.17.0
     datetime: '2026-08-09T06:16:15Z'
@@ -1538,21 +1814,3 @@ releases:
     url: https://github.com/meshcore-dev/MeshCore/releases/tag/repeater-v1.13.0
     prerelease: false
     notes: "Change log:\r\n* Thinknode M3 fixes\r\n* new boards: T-Beam 1W, M5 Stack C6\r\n* new stats field: receive errors\r\n* nRF board sleep optimisations\r\n* Heltec V4: improved RX sensitivity, low power fixes\r\n* WIO Tracker L1 Grove sensor support"
-  - version: companion-v1.13.0
-    name: Companion Firmware v1.13.0
-    datetime: '2026-02-15T08:49:34Z'
-    url: https://github.com/meshcore-dev/MeshCore/releases/tag/companion-v1.13.0
-    prerelease: false
-    notes: "Change log:\r\n* off-grid (client repeat) mode support\r\n* buzzer sound logic reverted\r\n* new boards: T-Beam 1W, M5 Stack C6\r\n* some UI fixes, mute icon\r\n* blob file cleanup added\r\n* Heltec V4: improved RX sensitivity, low power fixes\r\n* WIO Tracker L1 Grove sensor support"
-  - version: room-server-v1.12.0
-    name: Room Server Firmware v1.12.0
-    datetime: '2026-01-29T11:18:49Z'
-    url: https://github.com/meshcore-dev/MeshCore/releases/tag/room-server-v1.12.0
-    prerelease: false
-    notes: "Change log:\r\n* new boards: Thinknode M6, M3, RAK3401, RAK11310, Meshtiny\r\n* nRF low power recovery manager\r\n* sensor fixes: BMP280, LPS22HB, SHTC3\r\n* new “clkreboot” CLI\r\n* on-boot adverts now zero-hop\r\n* remote “set prv.key” CLI \r\n* new “get/set owner.info” CLI\r\n* flood.advert.interval range now 3..168 hours\r\n* MCU temperature now in telemetry responses"
-  - version: repeater-v1.12.0
-    name: Repeater Firmware v1.12.0
-    datetime: '2026-01-29T11:26:04Z'
-    url: https://github.com/meshcore-dev/MeshCore/releases/tag/repeater-v1.12.0
-    prerelease: false
-    notes: "Change log:\r\n* new boards: Thinknode M6, M3, RAK3401, RAK11310, Meshtiny\r\n* nRF low power recovery manager (CLI ‘pwrmgt’)\r\n* Stats: new recv errors counter\r\n* region names now without ‘#’, new ‘region list’ CLI\r\n* ESP32: new “powersaving on/off” CLI\r\n* new “clkreboot” CLI\r\n* on-boot adverts now zero-hop\r\n* new “get/set owner.info” CLI\r\n* flood.advert.interval range now 3..168 hours\r\n* remote “set prv.key” CLI \r\n* new zero-hop anonReq types (Region discovery, owner info, clock sync)\r\n* MCU temperature now in telemetry responses"
