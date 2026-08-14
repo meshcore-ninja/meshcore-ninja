@@ -15,7 +15,8 @@
     nodeRoleLabel,
     softwareCapabilityLabel,
     groupReleases,
-    descriptionToPlain
+    descriptionToPlain,
+    getDevice
   } from '$lib/data.js';
   import { clampDescription, ogImageFor } from '$lib/seo.js';
   import Seo from '$lib/Seo.svelte';
@@ -117,6 +118,7 @@
   );
 
   let screenshots = $derived((s.screenshotUrls ?? []).filter((shot) => shot.url));
+  let supportedDevices = $derived((s.refs?.devices ?? []).map((id) => getDevice(id)).filter(Boolean));
 
   let popularityEntries = $derived(
     Object.entries(POPULARITY_LABELS)
@@ -232,6 +234,22 @@
   <section class="mb-7">
     <h2 class="mb-3 border-b border-edge pb-1.5 text-[1.1rem] font-semibold">{m.spec_screenshots()}</h2>
     <ScreenshotGallery shots={screenshots} alt={s.name} />
+  </section>
+{/if}
+
+{#if supportedDevices.length}
+  <section class="mb-7">
+    <h2 class="mb-3 border-b border-edge pb-1.5 text-[1.1rem] font-semibold">
+      {m.nd_compatible_devices({ count: supportedDevices.length })}
+    </h2>
+    <div class="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+      {#each supportedDevices as device (device.id)}
+        <a
+          href={href(`/device/${device.id}/`)}
+          class="rounded-lg border border-edge bg-elev px-3 py-2 text-[0.9rem] hover:border-accent hover:text-accent"
+        >{device.name}</a>
+      {/each}
+    </div>
   </section>
 {/if}
 

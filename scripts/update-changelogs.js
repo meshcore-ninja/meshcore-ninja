@@ -11,6 +11,7 @@
 //       data folder (changelog.script, default "fetch-changelog.js"). The script
 //       default-exports `async ({ githubReleases, mapRelease, fetch }) => releases`.
 //   changelog.repo: "owner/name" override (else parsed from `repository`).
+//   changelog.script: record-local script filename used with source: script.
 //
 // Usage: node scripts/update-changelogs.js
 // Honors GITHUB_TOKEN (raises the API rate limit in CI).

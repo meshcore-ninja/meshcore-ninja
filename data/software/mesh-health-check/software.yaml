@@ -1,0 +1,84 @@
+# Source: https://github.com/yellowcooln/meshcore-health-check (verified 2026-08-13)
+name: Mesh Health Check
+kind: monitoring
+status: active
+maturity: stable
+description: >-
+  Self-hosted MeshCore observer coverage checker that generates short-lived test
+  codes, watches an MQTT-connected group channel, and scores message reachability
+  across selected observers. Reports receipt timing, paths, RF metrics, repeaters,
+  packet distance and map coverage without transmitting from the service.
+
+maintainers:
+  - name: yellowcooln
+    url: https://github.com/yellowcooln
+
+repository: https://github.com/yellowcooln/meshcore-health-check
+documentation: https://github.com/yellowcooln/meshcore-health-check/blob/main/HOWTO.md
+
+languages:
+  - javascript
+
+latest_version: v1.3.7
+released: 2026-08-07
+
+platforms:
+  - docker
+  - web
+interfaces:
+  - web
+  - api
+  - headless
+connections:
+  - mqtt
+  - websocket
+  - http
+node_roles:
+  - observer
+  - repeater
+capabilities:
+  - monitoring
+  - telemetry
+  - packet-analysis
+  - mapping
+
+install:
+  - type: docker
+    package: yellowcooln/meshcore-health-check:latest
+    url: https://github.com/yellowcooln/meshcore-health-check/blob/main/HOWTO.md#run-the-published-image
+  - type: docker-compose
+    package: yellowcooln/meshcore-health-check
+    url: https://github.com/yellowcooln/meshcore-health-check#quick-start
+    command: docker compose up -d --build
+  - type: source
+    url: https://github.com/yellowcooln/meshcore-health-check
+
+popularity:
+  githubStars: 17
+  githubForks: 4
+  githubWatchers: 3
+  githubOpenIssues: 1
+  githubContributors: 4
+  latestReleaseDownloads: 0
+  lastChecked: 2026-08-13
+
+verification:
+  sourceAvailable: true
+  releasesAvailable: true
+  signedReleases: false
+  ciBuilds: true
+  hasDocumentation: true
+  lastChecked: 2026-08-13
+  notes:
+    - The service measures observer coverage for its configured MeshCore test channel and observer set.
+    - The service is receive-only; users transmit the generated code through their normal MeshCore client.
+    - Supports fixed, recent-activity and browser-selected observer targets, plus optional GeoJSON region filters.
+
+tags:
+  - health-check
+  - coverage
+  - mqtt
+  - observer
+  - self-hosted
+
+last_reviewed: 2026-08-13

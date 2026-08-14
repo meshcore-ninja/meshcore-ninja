@@ -1,12 +1,8 @@
 name: New England Mesh
-also_known_as:
-  - NHMesh
 short_name: NE Mesh
 description: >-
-  New England-wide MeshCore community spanning Connecticut, Massachusetts, New
-  Hampshire, and Maine, coordinated through nhmesh.com with a custom live map
-  at nhmesh.live and a CoreScope analyzer. 50+ nodes spread across the
-  region from Stamford CT to Topsham ME.
+  Regional MeshCore services covering the New England area, including a live
+  network map, CoreScope analyzer, and public health check.
 scope: regional
 status: active
 visibility: public
@@ -20,12 +16,9 @@ radio:
   frequency: '915'
   public_channel: Public
 
-community:
-  website: https://nhmesh.com/
-
 maps:
-  - name: NHMesh Live
-    url: https://nhmesh.live
+  - name: New England MeshCore Live Map
+    url: https://map.newenglandme.sh/
 
 analyzers:
   # Source: community website scan 2026-06-26 — CoreScope at analyzer.newenglandme.sh (1,017 nodes, New England)
@@ -33,7 +26,6 @@ analyzers:
     url: https://analyzer.newenglandme.sh
 
 resources:
-  getting_started: https://nhmesh.com/guides
   links:
-    - name: Channel setup guide
-      url: https://nhmesh.com/guides/channel-setup
+    - name: New England MeshCore Health Check
+      url: https://healthcheck.newenglandme.sh/

@@ -1,5 +1,4 @@
-# Source: https://github.com/openhop-dev/openhop_repeater (verified 2026-07-03)
-# Source: formerly github.com/rightup/pyMC_Repeater, renamed to openhop_repeater
+# Source: https://github.com/openhop-dev/openhop_repeater (verified 2026-08-13)
 name: openHop Repeater
 also_known_as:
   - pyMC Repeater
@@ -12,9 +11,9 @@ description: >-
   CH341 USB-to-SPI adapters, pyMC TCP/USB modems and KISS serial modems.
   Forwards LoRa packets, exposes a web dashboard, and provides configuration
   tools for radio setup, policy management, monitoring and integrations.
-  Server for [[software:pymc-console|pyMC Console]].
+  Server for [[software:openhop-console|openHop Console]].
 
-image: logo.png
+image: openhop-logo.svg
 screenshots:
   - file: dashboard.png
     caption: Repeater status and packet monitoring dashboard
@@ -22,9 +21,7 @@ screenshots:
     caption: Repeater traffic and performance statistics
 
 maintainers:
-  - name: Treehouse-00
-    url: https://github.com/Treehouse-00
-  - name: openHop
+  - name: openhop-dev
     url: https://github.com/openhop-dev
 
 repository: https://github.com/openhop-dev/openhop_repeater
@@ -59,21 +56,18 @@ install:
     package: Python / systemd
     url: https://github.com/openhop-dev/openhop_repeater#installation
     command: sudo bash ./manage.sh install
+  - type: docker
+    package: openhop/openhop-repeater:main
+    url: https://hub.docker.com/r/openhop/openhop-repeater
+    command: docker pull openhop/openhop-repeater:main
   - type: docker-compose
+    package: openhop/openhop-repeater:main
     url: https://github.com/openhop-dev/openhop_repeater#docker-compose
-    command: docker compose up -d --force-recreate --build
+    command: docker compose up -d
   - type: proxmox-lxc
     url: https://github.com/openhop-dev/openhop_repeater#proxmox-lxc-installation
   - type: source
     url: https://github.com/openhop-dev/openhop_repeater
-
-popularity:
-  githubStars: 220
-  githubForks: 59
-  githubWatchers: 13
-  githubOpenIssues: 22
-  githubContributors: 22
-  lastChecked: 2026-07-03
 
 verification:
   sourceAvailable: true
@@ -81,11 +75,28 @@ verification:
   signedReleases: false
   ciBuilds: true
   hasDocumentation: true
-  lastChecked: 2026-07-03
+  lastChecked: 2026-08-13
   notes:
     - Formerly pyMC_Repeater; renamed to openhop_repeater as part of the openHop rebrand.
     - Supports native SPI SX1262 radios, CH341 USB-to-SPI adapters, pyMC TCP/USB modems and KISS serial modems; SX1302/SX1303 concentrators are not supported.
-    - Web dashboard at http://<repeater-ip>:8000 with setup, monitoring, logs, configuration and update tools.
+    - The bundled web dashboard provides setup, monitoring, logs, configuration and update tools.
+
+refs:
+  devices:
+    - heltec-v3
+    - heltec-v4
+    - heltec-wt2
+    - ikoka-stick
+    - xiao-esp32s3
+    - meshsmith-photon-1w-esp32-c6
+    - lilygo-t3-s3-sx126x
+    - lilygo-tbeam-supreme
+    - rak-3112
+    - station-g2
+    - meshsmith-ethermesh-1w
+    - heltec-t114
+    - rak-4631
+    - xiao-nrf52
 
 tags:
   - repeater
@@ -94,4 +105,4 @@ tags:
   - kiss
   - self-hosted
 
-last_reviewed: 2026-07-03
+last_reviewed: 2026-08-13

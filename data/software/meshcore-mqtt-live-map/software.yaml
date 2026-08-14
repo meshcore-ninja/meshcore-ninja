@@ -18,7 +18,6 @@ maintainers:
     url: https://github.com/yellowcooln
 
 repository: https://github.com/yellowcooln/meshcore-mqtt-live-map
-website: https://live.bostonme.sh/
 documentation: https://github.com/yellowcooln/meshcore-mqtt-live-map/blob/main/howto.md
 license: GPL-3.0-only
 
@@ -26,8 +25,8 @@ languages:
   - python
   - javascript
 
-latest_version: v1.9.3
-released: 2026-06-09
+latest_version: v1.9.4
+released: 2026-07-08
 
 platforms:
   - docker
@@ -47,8 +46,6 @@ capabilities:
   - mapping
 
 install:
-  - type: web
-    url: https://live.bostonme.sh/
   - type: docker-compose
     package: yellowcooln/meshcore-mqtt-live-map
     url: https://github.com/yellowcooln/meshcore-mqtt-live-map#quick-start
@@ -57,13 +54,13 @@ install:
     url: https://github.com/yellowcooln/meshcore-mqtt-live-map
 
 popularity:
-  githubStars: 74
-  githubForks: 13
+  githubStars: 80
+  githubForks: 14
   githubWatchers: 1
-  githubOpenIssues: 0
+  githubOpenIssues: 1
   githubContributors: 8
   latestReleaseDownloads: 0
-  lastChecked: 2026-06-23
+  lastChecked: 2026-08-13
 
 verification:
   sourceAvailable: true
@@ -71,10 +68,10 @@ verification:
   signedReleases: false
   ciBuilds: true
   hasDocumentation: true
-  lastChecked: 2026-06-23
+  lastChecked: 2026-08-13
   notes:
     - Supports MQTT over TCP or WebSockets with optional TLS and production token protection.
-    - The Greater Boston deployment is the reference instance; several community meshes operate independent deployments.
+    - Several community meshes operate independent deployments.
 
 tags:
   - live-map
@@ -83,4 +80,4 @@ tags:
   - pwa
   - propagation
 
-last_reviewed: 2026-06-23
+last_reviewed: 2026-08-13

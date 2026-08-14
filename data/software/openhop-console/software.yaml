@@ -1,4 +1,6 @@
-name: pyMC Console
+name: openHop Console
+also_known_as:
+  - pyMC Console
 kind: monitoring
 status: active
 maturity: beta
@@ -7,7 +9,7 @@ description: >-
   path analysis, RF statistics, terrain mapping, link-quality radar, system
   monitoring and an interactive repeater terminal.
 
-image: logo.svg
+image: openhop-logo.svg
 screenshots:
   - file: topology.png
     caption: Deep topology analysis and terrain mapping
@@ -21,22 +23,19 @@ screenshots:
 maintainers:
   - name: Treehouse-00
     url: https://github.com/Treehouse-00
-  # Source: repo transferred from dmduran12 to Treehouse-00
-  - name: openHop
-    url: https://github.com/openhop-dev
 
-# Source: repo transferred from dmduran12/pymc_console-dist to Treehouse-00/pymc_console-dist
+# Public distribution repository (verified 2026-08-13).
 repository: https://github.com/Treehouse-00/pymc_console-dist
-documentation: https://docs.pymc.dev/
+documentation: https://github.com/Treehouse-00/pymc_console-dist#readme
+changelog:
+  source: github
+  repo: Treehouse-00/pymc_console-dist
 license: MIT
 
 languages:
   - javascript
   - typescript
   - shell
-
-latest_version: v0.9.329
-released: 2026-05-07
 
 platforms:
   - linux
@@ -62,21 +61,8 @@ install:
     package: pymc-ui-latest.tar.gz
     url: https://github.com/Treehouse-00/pymc_console-dist/releases
   - type: manual
-    url: https://github.com/Treehouse-00/pymc_console-dist#install-the-console
+    url: https://github.com/Treehouse-00/pymc_console-dist#install
     command: sudo bash manage.sh install
-  - type: source
-    url: https://github.com/Treehouse-00/pymc_console-dist
-
-popularity:
-  githubStars: 54
-  githubForks: 8
-  githubWatchers: 3
-  githubOpenIssues: 16
-  githubContributors: 3
-  releaseDownloads: 2609
-  latestReleaseDownloads: 535
-  lastChecked: 2026-07-03
-
 verification:
   sourceAvailable: true
   releasesAvailable: true
@@ -87,7 +73,8 @@ verification:
   notes:
     - "Requires an existing openHop Repeater installation and replaces only its web dashboard assets."
     - "Repeater service lifecycle and radio configuration remain owned by openHop Repeater."
-    - "Repo transferred from dmduran12 to Treehouse-00; still named pyMC Console."
+    - "Developed and maintained by Treehouse-00 as the Console application for openHop Repeater."
+    - "Public release assets and installation information are published from Treehouse-00/pymc_console-dist."
 
 tags:
   - repeater

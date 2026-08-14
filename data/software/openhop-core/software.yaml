@@ -1,4 +1,5 @@
 # Source: https://github.com/openhop-dev/openhop_core (verified 2026-07-03)
+# Source: https://pypi.org/project/openhop-core/ (verified 2026-08-13)
 # Source: formerly github.com/pyMC-dev/pyMC_core, renamed to openhop_core
 name: openHop Core
 also_known_as:
@@ -10,23 +11,23 @@ description: >-
   Python reimplementation of the MeshCore protocol and routing stack for building
   mesh nodes and applications, with encrypted messaging, identity management,
   event handling and optional direct SX1262 radio support over SPI. Compatible
-  with the original MeshCore protocol. Available on PyPI as pymc-core.
+  with the original MeshCore protocol. Available on PyPI as openhop-core.
 
-image: pymc.png
+image: openhop-logo.svg
 
 maintainers:
-  - name: openHop
+  - name: openhop-dev
     url: https://github.com/openhop-dev
 
 repository: https://github.com/openhop-dev/openhop_core
 documentation: https://openhop-dev.github.io/openhop_core/
+changelog:
+  source: script
+  script: fetch-changelog.js
 license: MIT
 
 languages:
   - python
-
-latest_version: 1.0.12
-released: 2026-05-22
 
 platforms:
   - linux
@@ -53,23 +54,15 @@ capabilities:
 
 install:
   - type: pypi
-    package: pymc-core
-    url: https://pypi.org/project/pymc-core/
-    command: pip install pymc-core
+    package: openhop-core
+    url: https://pypi.org/project/openhop-core/
+    command: pip install openhop-core
   - type: pypi
-    package: pymc-core[hardware]
-    url: https://pypi.org/project/pymc-core/
-    command: pip install "pymc-core[hardware]"
+    package: openhop-core[hardware]
+    url: https://pypi.org/project/openhop-core/
+    command: pip install "openhop-core[hardware]"
   - type: source
     url: https://github.com/openhop-dev/openhop_core
-
-popularity:
-  githubStars: 82
-  githubForks: 34
-  githubWatchers: 6
-  githubOpenIssues: 7
-  githubContributors: 10
-  lastChecked: 2026-07-03
 
 verification:
   sourceAvailable: true
@@ -80,7 +73,7 @@ verification:
   lastChecked: 2026-07-03
   notes:
     - Formerly pyMC_Core; renamed to openhop_core as part of the openHop rebrand.
-    - Releases are published to PyPI as pymc-core rather than GitHub Releases.
+    - Releases are published to PyPI as openhop-core rather than GitHub Releases.
     - Direct hardware support targets Raspberry Pi-class systems with SX1262 SPI radios; protocol components can be used without radio extras.
     - The project describes itself as protocol-compatible but not yet as optimized as the original MeshCore C++ implementation.
 

@@ -165,35 +165,58 @@ if (existsSync(globalsPath)) {
 }
 const refIds = new Set(Object.keys(globalsData?.refs ?? {}));
 
-// Optional changelog.yaml alongside each firmware.
-for (const f of firmwares) {
-  const path = join(root, 'data', 'firmwares', f.id, 'changelog.yaml');
-  if (!existsSync(path)) continue;
-  let cl;
-  try {
-    cl = load(readFileSync(path, 'utf8'));
-  } catch (e) {
-    err(`firmwares/${f.id}/changelog`, `YAML parse error: ${e.message}`);
-    continue;
-  }
-  if (!changelogSchema(cl)) {
-    for (const e of changelogSchema.errors) {
-      err(`firmwares/${f.id}/changelog`, `${e.instancePath || '/'} ${e.message}`);
+// Optional changelog.yaml alongside each firmware or software record.
+for (const [kind, records] of [
+  ['firmwares', firmwares],
+  ['software', software]
+]) {
+  for (const f of records) {
+    const path = join(root, 'data', kind, f.id, 'changelog.yaml');
+    if (!existsSync(path)) continue;
+    let cl;
+    try {
+      cl = load(readFileSync(path, 'utf8'));
+    } catch (e) {
+      err(`${kind}/${f.id}/changelog`, `YAML parse error: ${e.message}`);
+      continue;
     }
-  }
-  if (f.data.latest_version) {
-    err(f.where, 'latest_version must not be set when changelog.yaml exists — it is computed at build time');
-  }
-  if (f.data.released) {
-    err(f.where, 'released must not be set when changelog.yaml exists — it is computed at build time');
+    if (!changelogSchema(cl)) {
+      for (const e of changelogSchema.errors) {
+        err(`${kind}/${f.id}/changelog`, `${e.instancePath || '/'} ${e.message}`);
+      }
+    }
+    const derivesVersion = kind === 'firmwares' || f.data.changelog;
+    if (derivesVersion && f.data.latest_version) {
+      err(f.where, 'latest_version must not be set with configured changelog automation — it is computed at build time');
+    }
+    if (derivesVersion && f.data.released) {
+      err(f.where, 'released must not be set with configured changelog automation — it is computed at build time');
+    }
   }
 }
 
-// Every `refs` key must name a ref database registered in globals.refs.
-for (const r of [...vendors, ...devices, ...firmwares, ...networks, ...software]) {
+// External-reference maps use keys registered in globals.refs. Software `refs`
+// are instead internal catalog relationships defined by schema/software.yaml.
+for (const r of [...vendors, ...devices, ...firmwares, ...networks]) {
   for (const key of Object.keys(r.data.refs ?? {})) {
     if (!refIds.has(key)) {
       err(r.where, `refs key "${key}" is not defined in data/globals.yaml refs`);
+    }
+  }
+}
+
+const internalCollections = {
+  devices: new Set(devices.map((r) => r.id)),
+  firmwares: new Set(firmwares.map((r) => r.id)),
+  networks: new Set(networks.map((r) => r.id)),
+  software: new Set(software.map((r) => r.id))
+};
+for (const r of software) {
+  for (const [collection, ids] of Object.entries(r.data.refs ?? {})) {
+    for (const id of ids) {
+      if (!internalCollections[collection]?.has(id)) {
+        err(r.where, `refs.${collection} id "${id}" has no data/${collection}/ entry`);
+      }
     }
   }
 }

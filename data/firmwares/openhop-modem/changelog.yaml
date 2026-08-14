@@ -1,0 +1,292 @@
+source: github
+repo: openhop-dev/openhop_modem
+updatedAt: '2026-08-14T00:13:31.615Z'
+releases:
+  - version: v1.0.1
+    name: v1.0.1 - Factory Images, Release Packages, and Radio Reliability Improvements
+    datetime: '2026-07-23T00:23:58Z'
+    url: https://github.com/openhop-dev/openhop_modem/releases/tag/v1.0.1
+    prerelease: false
+    notes: "This release improves radio diagnostics and reliability, corrects board-specific display and bootloader configurations, and expands firmware distribution with complete factory images and per-variant GitHub Release packages.\r\n\r\n## Highlights\r\n\r\n* Updated all 16 firmware variants to `v1.0.1`.\r\n* Added complete `firmware.factory.bin` images for all 13 ESP32-family targets.\r\n* Added UF2 firmware files for all three nRF52 targets.\r\n* Added automatic GitHub Release packaging with one ZIP per firmware variant.\r\n* Corrected the Station G2/G3 OLED controller and driver.\r\n* Corrected the XIAO nRF52 Wio SoftDevice and application layout.\r\n* Improved Heltec SX126x current-limit handling and TX-power diagnostics.\r\n* No wire-protocol changes were introduced.\r\n\r\n## Radio and TX-Power Improvements\r\n\r\nThe SX126x current limit is now set to **140 mA** on:\r\n\r\n* Heltec V3\r\n* Heltec V4\r\n* Heltec V4.2\r\n* Heltec V4.3\r\n\r\nAdditional diagnostic logging now reports:\r\n\r\n* Requested TX power\r\n* Applied TX power\r\n* Board power ceiling\r\n* `setOutputPower()` result\r\n* SX126x over-current protection values before and after configuration\r\n\r\nReceived `SET_CONFIG` commands also log the requested:\r\n\r\n* Frequency\r\n* Bandwidth\r\n* Spreading factor\r\n* Coding rate\r\n* TX power\r\n* Sync word\r\n* Preamble length\r\n\r\n## Station G2/G3 Display Fix\r\n\r\nThe Station G2/G3 onboard display was incorrectly configured as an SH1107.\r\n\r\nThis release:\r\n\r\n* Corrects the controller to **SH1106**\r\n* Switches the implementation to `Adafruit_SH1106G`\r\n* Restores accurate display documentation\r\n\r\n## XIAO nRF52 Wio Bootloader Compatibility\r\n\r\nThe XIAO nRF52 Wio firmware now uses the correct **S140 7.3.0** bootloader layout.\r\n\r\nChanges include:\r\n\r\n* SoftDevice updated from S140 6.1.1 to S140 7.3.0\r\n* SoftDevice FWID updated from `0x00B6` to `0x0123`\r\n* Added a dedicated S140 v7 linker script\r\n* Application origin moved to `0x27000`\r\n* Maximum application size updated for the new layout\r\n* Regenerated HEX, DFU ZIP, and UF2 artifacts\r\n\r\n> **Important:** XIAO nRF52 Wio users must install a compatible Adafruit nRF52 bootloader using S140 7.3.0 before flashing this firmware.\r\n\r\n## Complete ESP32 Factory Images\r\n\r\nEvery ESP32-family firmware directory now includes:\r\n\r\n* `firmware.factory.bin`\r\n* `firmware.bin`\r\n* `bootloader.bin`\r\n* `partitions.bin`\r\n* `SHA256SUMS.txt`\r\n* `manifest.json` where supported\r\n\r\n### Which File Should I Use?\r\n\r\nUse `firmware.factory.bin` at address `0x0` for:\r\n\r\n* First-time installation\r\n* Recovery\r\n* Replacing a damaged or incompatible bootloader/partition layout\r\n\r\nUse `firmware.bin` at address `0x10000` for:\r\n\r\n* Compatible app-only USB updates\r\n* Web UI OTA updates\r\n* `curl` OTA updates\r\n\r\nThe factory image contains the bootloader, partition table, OTA initialization data, and application at the correct offsets for each board.\r\n\r\nESP32-P4 targets retain their required layout:\r\n\r\n```text\r\nBootloader:       0x2000\r\nPartition table:  0x8000\r\nOTA initialization: 0xe000\r\nApplication:      0x10000\r\n```\r\n\r\nThe asset builder now removes stale factory output before incremental builds, preventing an older `firmware.factory.bin` from being packaged with a newer application.\r\n\r\n## nRF52 Firmware Formats\r\n\r\nAll three nRF52 targets now include:\r\n\r\n* `firmware.hex`\r\n* `firmware.zip` for Adafruit serial DFU\r\n* `firmware.uf2`\r\n* `SHA256SUMS.txt`\r\n\r\nAffected targets:\r\n\r\n* Heltec T114\r\n* XIAO nRF52 Wio\r\n* RAK4631 WisMesh Ethernet\r\n\r\n## Build and Asset Tooling\r\n\r\n* Added deterministic per-variant ZIP generation.\r\n* Added validation of tracked firmware checksums before packaging.\r\n* Added release-level checksums for all variant ZIPs.\r\n* Added UF2 generation to the canonical nRF52 asset builder.\r\n* Consolidated the legacy all-environment release script around the canonical asset builder.\r\n* Marked BIN and Intel HEX files as binary in Git.\r\n* Updated installation and flashing documentation.\r\n\r\n## Updating an Existing ESP32 Device\r\n\r\nDownload the correct `firmware.bin` for your board from:\r\n\r\n\n…"
+  - version: v1.0.0
+    name: v1.0.0 – New Hardware, Automated Firmware, and openHop Rebrand
+    datetime: '2026-06-26T16:12:43Z'
+    url: https://github.com/openhop-dev/openhop_modem/releases/tag/v1.0.0
+    prerelease: false
+    notes: "This is the first major release of **openHop Modem**, bringing expanded hardware support, automated firmware distribution, improved board-specific features, and the completion of the openHop rebrand.\r\n\r\nBuilding on the v0.8.x modem platform, v1.0.0 doubles the number of supported firmware targets, introduces automated firmware asset generation, expands Ethernet deployments, and adds GPS, battery, RF front-end, and board-specific management features—all while maintaining wire-protocol compatibility with existing Repeater deployments.\r\n\r\n## Highlights\r\n\r\n* Rebranded from **pyMC Modem** to **openHop Modem**.\r\n* Expanded support from **8 to 16** firmware targets.\r\n* Added browser-flasher-ready firmware assets and automated firmware publishing.\r\n* Added Ethernet-capable modem targets.\r\n* Added board-specific GPS, battery, RF, and Wi-Fi controls.\r\n* Maintained compatibility with existing v0.8.x serial and TCP modem clients.\r\n\r\n## New Hardware Support\r\n\r\nNew supported targets include:\r\n\r\n* Heltec WiFi LoRa 32 V4\r\n* Heltec WiFi LoRa 32 V4.2\r\n* Heltec WiFi LoRa 32 V4.3\r\n* Heltec Wireless Tracker V2\r\n* MeshSmith Photon-1W XIAO ESP32-C6\r\n* B&Q Consulting Station G2\r\n* RAK4631 WisMesh Ethernet\r\n* MeshSmith EtherMesh-1W\r\n\r\nThe project now supports **16** firmware environments spanning ESP32, ESP32-P4, and nRF52 platforms.\r\n\r\n## Firmware Asset Automation\r\n\r\nv1.0 introduces a fully automated firmware publishing pipeline.\r\n\r\nNew features include:\r\n\r\n* Automatic firmware builds from `main`\r\n* Browser-flasher-ready firmware packages\r\n* ESP32 manifests, bootloaders, partitions, and firmware images\r\n* nRF52 HEX and DFU packages\r\n* SHA256 checksum generation\r\n* Manual and selective firmware builds\r\n* Automatic asset-update pull requests\r\n\r\n## Ethernet Support\r\n\r\nEthernet deployments have been significantly expanded.\r\n\r\nNew support includes:\r\n\r\n* RAK4631 WisMesh Ethernet (W5100S)\r\n* MeshSmith EtherMesh-1W\r\n* Improved ESP32-P4 Ethernet support\r\n* Updated documentation for wired modem deployments\r\n\r\n## Board Improvements\r\n\r\n### Photon-1W\r\n\r\n* GPS support\r\n* Battery fuel-gauge telemetry\r\n* Wi-Fi antenna switching\r\n* Persistent GPS enable/disable\r\n* TCP modem diagnostics\r\n* Improved recovery when radio initialization fails\r\n\r\n### Heltec V4 Family\r\n\r\n* Dedicated V4, V4.2, and V4.3 support\r\n* Battery monitoring\r\n* GPS connector support\r\n* RF front-end controls\r\n* External FEM/LNA controls\r\n* AGC reset configuration\r\n* Improved transmit behavior\r\n\r\n### Additional Boards\r\n\r\n* Heltec Wireless Tracker V2 support\r\n* Station G2 support with SH1107 display\r\n* Updated RAK4631 Ethernet implementation\r\n* Improved nRF52 compatibility\r\n* Updated T114 GPS configuration\r\n\r\n## Web UI Improvements\r\n\r\n* Generic Wi-Fi setup reset controls\r\n* Additional board-specific configuration options\r\n* Improved recovery when radio initialization fails\r\n* Continued HTTP Basic Authentication support\r\n* Updated configuration portal experience\r\n\r\n## Documentation & Branding\r\n\r\n* Completed the openHop rebrand throughout the project.\r\n* Updated installation and deployment documentation.\r\n* Added browser flashing guidance.\r\n* Removed legacy modem side-loading instructions.\r\n* Clarified built-in Repeater modem support.\r\n* Updated networking and board documentation.\r\n\r\n## Fixes\r\n\r\n* Improved TCP CRC handling\r\n* Fixed RAK4631 Ethernet configuration\r\n* Fixed Photon radio pin mapping\r\n* Fixed Photon fuel-gauge I²C handling\r\n* Fixed Heltec V4 GPS configuration\r\n* Fixed RSSI sampling\r\n* Fixed firmware asset workflow permissions\r\n* Numerous board-specific compatibility improvements\r\n\r\n## Upgrade Notes\r\n\r\n* Existing v0.8.x Repeater deployments remain compatible.\r\n* The modem wire protocol is unchanged.\r\n* ESP32 boards continue to support Web UI and OTA where available.\r\n* Ethernet-only targets may not provide the Web UI and should be configured as documented.\r\n* Fresh network firmware continues to default to an empty TCP token until configured.\r\n\r\nThis release establishes **openHop Modem** as the p\n…"
+  - version: v0.8.0
+    name: v0.8.0 — HTTP management surface + JSON API
+    datetime: '2026-05-20T19:02:15Z'
+    url: https://github.com/openhop-dev/openhop_modem/releases/tag/v0.8.0
+    prerelease: false
+    notes: >-
+      ## What's new in v0.8.0
+
+
+      ### HTTP management surface + JSON API
+
+
+      PR #1 (yellowcooln) lands a usable web management UI on top of the
+
+      existing OTA endpoint, plus a machine-readable JSON API. **Wire
+
+      protocol unchanged** (still v0.7) — drivers and pymc_core/pymc_Repeater
+
+      clients work against v0.8 firmware without changes.
+
+
+      - **HTTP Basic Auth** on every web/API/OTA path. Default `admin` / `password`, changeable from
+      the UI, persisted in NVS under `http_pass`.
+
+      - **Persistent configurable hostname** (blank = MAC-derived fallback).
+
+      - **DHCP / static IP UI** with live lease values shown next to the form.
+
+      - **pyMC token management UI** (replaces the older "TCP password" label).
+
+      - **Reboot button** from the UI.
+
+      - **`/stats` page** — uptime, radio config, RX/TX/error counters, RSSI/SNR/noise floor, die
+      temperature, network mode.
+
+      - **JSON API endpoints** for headless integration.
+
+
+      See README "Default web UI / OTA / API credentials" for the credential
+
+      matrix and how to change them.
+
+
+      ### New board (8th variant)
+
+
+      **Seeed XIAO nRF52840 + Wio-SX1262 carrier (SKU 102010710)** — nRF52840
+
+      paired with Seeed's Wio-SX1262 Meshtastic carrier.
+
+
+      - USB-CDC transport only (no Wi-Fi/Ethernet/HTTP — same constraints as T114)
+
+      - No onboard display
+
+      - DIO2-as-RF-switch + external LNA gate on D5 (RXEN)
+
+      - TCXO 1.8 V via DIO3, max 22 dBm chip TX (no PA)
+
+      - OTA: Adafruit nRF52 DFU (UF2 disk on double-click reset) **or** in-app `CMD_OTA_*` over
+      USB-CDC
+
+
+      `fw_suffix`: `xiao_nrf52_wio` (auto-detected by pymc_sector_array's OTA scanner).
+
+
+      ### Boards (8 binaries below)
+
+
+      | Board | Binary | Notes |
+
+      |---|---|---|
+
+      | Heltec WiFi LoRa 32 V3 | `pymc_usb-v0.8.0-heltec_v3.bin` | ESP32-S3 + SX1262 |
+
+      | Ikoka Stick | `pymc_usb-v0.8.0-ikoka_stick.bin` | ESP32-S3 + SX1262 |
+
+      | Seeed XIAO Wio-SX1262 | `pymc_usb-v0.8.0-xiao_wio_sx1262.bin` | ESP32-S3 |
+
+      | RAK3112 WisMesh | `pymc_usb-v0.8.0-rak3112_wismesh.bin` | ESP32-S3 + BLE + Wi-Fi |
+
+      | WaveShare ESP32-P4-Nano | `pymc_usb-v0.8.0-esp32_p4_nano.bin` | ESP32-P4 + E22 (SX1262);
+      Ethernet preferred over Wi-Fi |
+
+      | Lilygo T3-S3 | `pymc_usb-v0.8.0-lilygo_t3s3.bin` | ESP32-S3 + SX1262 + OLED |
+
+      | Heltec T114 | `pymc_usb-v0.8.0-heltec_t114.hex` + `-dfu.zip` | nRF52840 + SX1262 + TFT
+      135×240; **no Wi-Fi/TCP** |
+
+      | **Seeed XIAO nRF52840 + Wio-SX1262** *(new)* | `pymc_usb-v0.8.0-xiao_nrf52_wio.hex` +
+      `-dfu.zip` | nRF52840 + SX1262; **no Wi-Fi/TCP**, no display |
+
+
+      ### Flashing
+
+
+      **ESP32 boards** (USB CDC):
+
+
+      ```bash
+
+      esptool.py --port /dev/ttyACM0 write_flash 0x10000 pymc_usb-v0.8.0-<board>.bin
+
+      # or, with PlatformIO source checkout:
+
+      cd firmware && pio run -e <env> -t upload
+
+      ```
+
+
+      **nRF52 boards** (T114, XIAO nRF52840 + Wio) — Adafruit bootloader:
+
+      double-tap reset to enter DFU, then either drag the `.uf2` (if you
+
+      build one from the hex) or use `adafruit-nrfutil`:
+
+
+      ```bash
+
+      adafruit-nrfutil dfu serial -pkg pymc_usb-v0.8.0-<board>-dfu.zip -p /dev/ttyACM0 -b 115200
+
+      ```
+
+
+      ### Default credentials (v0.8)
+
+
+      | Surface | User | Default password | Where to change |
+
+      |---|---|---|---|
+
+      | Web UI / OTA / JSON API | `admin` | `password` | UI ▸ Admin password (persisted in NVS) |
+
+      | pyMC token (TCP transport) | n/a | empty | UI ▸ pyMC token, or `CMD_SET_WIFI` |
+
+
+      **Change both before exposing the modem outside a trusted LAN.**
+
+
+      ### Upgrading from v0.7
+
+
+      - **OTA recommended** for ESP32 boards: web UI ▸ Update firmware. First
+        set an admin password — the default `admin/password` won't gate
+        anything if left as-is.
+      - **No driver changes needed** — wire protocol unchanged.
+
+      - **First-boot HTTP credentials:** `admin` / `password` (set
+        intentionally to be obvious; rotate before exposing to LAN).
+  - version: v0.7.0
+    name: v0.7.0 — sector-array integration set
+    datetime: '2026-05-12T19:54:04Z'
+    url: https://github.com/openhop-dev/openhop_modem/releases/tag/v0.7.0
+    prerelease: false
+    notes: >-
+      ## What's new in v0.7.0
+
+
+      ### Wire-protocol additions (sector-array integration set)
+
+
+      Backwards-compatible — pre-v0.7 hosts work against v0.7 firmware and vice
+
+      versa; the new commands are simply skipped if unknown.
+
+
+      - `CMD_RADIO_STANDBY` (0x40) / `CMD_RADIO_RESUME` (0x42) — host-driven radio gating
+
+      - `CMD_SET_DISPLAY_NAME` (0x48) — sector name banner on the T114 TFT
+
+      - `CMD_SET_AUTO_CAD` (0x4A) — auto-CAD before every TX, persisted in NVS on T114
+
+      - `CMD_ENTER_BOOTLOADER` (0x74) — drop nRF52 into Adafruit DFU mode
+
+      - `CMD_LOG_MSG` (0x80) — async log line (modem → host)
+
+      - In-app OTA over the transport: `CMD_OTA_BEGIN` / `CHUNK` / `VERIFY` / `APPLY` / `ABORT`
+      (0x90 / 0x92 / 0x94 / 0x96 / 0x98) — required path for T114 since it has no Wi-Fi
+
+
+      ### `fw_suffix` rename (aligns with pymc_sector_array OTA scanner)
+
+
+      `CMD_GET_VERSION` / `VERSION_RESP` now report:
+
+
+      - Heltec T114: **`v0.7.0-heltec_t114`** (renamed from `t114`)
+
+      - ESP32-P4-Nano: **`v0.7.0-esp32_p4`** (renamed from `esp32p4`)
+
+
+      This lets pymc_sector_array auto-detect the board from an uploaded `.bin`
+
+      during OTA — previously these two boards fell through the matcher.
+
+
+      ### Boards (7 binaries below)
+
+
+      | Board | Binary | Notes |
+
+      |---|---|---|
+
+      | Heltec WiFi LoRa 32 V3 | `pymc_usb-v0.7.0-heltec_v3.bin` | ESP32-S3 + SX1262 |
+
+      | Ikoka Stick | `pymc_usb-v0.7.0-ikoka_stick.bin` | ESP32-S3 + SX1262 |
+
+      | Seeed XIAO Wio-SX1262 | `pymc_usb-v0.7.0-xiao_wio_sx1262.bin` | ESP32-S3 |
+
+      | RAK3112 WisMesh | `pymc_usb-v0.7.0-rak3112_wismesh.bin` | ESP32-S3 + BLE + Wi-Fi |
+
+      | WaveShare ESP32-P4-Nano | `pymc_usb-v0.7.0-esp32_p4_nano.bin` | ESP32-P4 + E22 (SX1262);
+      Ethernet preferred over Wi-Fi |
+
+      | Lilygo T3-S3 | `pymc_usb-v0.7.0-lilygo_t3s3.bin` | ESP32-S3 + SX1262 + OLED |
+
+      | Heltec T114 | `pymc_usb-v0.7.0-heltec_t114.hex` + `-dfu.zip` | nRF52840 + SX1262 + TFT
+      135×240; **no Wi-Fi/TCP** — USB-CDC + UART only |
+
+
+      ### Flashing
+
+
+      **ESP32 boards** (USB CDC):
+
+
+      ```bash
+
+      esptool.py --port /dev/ttyACM0 write_flash 0x10000 pymc_usb-v0.7.0-<board>.bin
+
+      # or, with PlatformIO source checkout:
+
+      cd firmware && pio run -e <env> -t upload
+
+      ```
+
+
+      **Heltec T114** (nRF52840 with Adafruit bootloader): double-tap reset to
+
+      enter DFU, then either drag the `.uf2` (if you build one from the hex)
+
+      or use `adafruit-nrfutil`:
+
+
+      ```bash
+
+      adafruit-nrfutil dfu serial -pkg pymc_usb-v0.7.0-heltec_t114-dfu.zip -p /dev/ttyACM0 -b 115200
+
+      ```
+
+
+      ### Memory footprint
+
+
+      | Board | Flash used | Flash partition | RAM used |
+
+      |---|---|---|---|
+
+      | heltec_v3 | 1.06 MB | 3.19 MB (33%) | 53 KB |
+
+      | ikoka_stick | 1.06 MB | 3.19 MB (33%) | 54 KB |
+
+      | xiao_wio_sx1262 | 1.06 MB | 3.19 MB (33%) | 54 KB |
+
+      | rak3112_wismesh | 1.07 MB | 3.19 MB (34%) | 53 KB |
+
+      | esp32_p4_nano | 1.02 MB | 6.25 MB (16%) | 40 KB |
+
+      | lilygo_t3s3 | 1.08 MB | 1.25 MB (86%) | 53 KB |
+
+      | heltec_t114 | 147 KB | 796 KB (19%) | 16 KB |
+
+
+      Lilygo T3-S3 is the tightest (86% flash used); consider partition table
+
+      adjustments before adding ~150 KB more features on that target.
