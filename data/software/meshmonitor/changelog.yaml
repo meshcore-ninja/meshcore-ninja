@@ -1,7 +1,129 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-08-14T20:33:52.657Z'
+updatedAt: '2026-08-15T20:25:46.063Z'
 releases:
+  - version: v4.14.2-rc3
+    name: v4.14.2-rc3
+    datetime: '2026-08-15T19:42:23Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.14.2-rc3
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.14.2-rc3
+
+
+      > ⚠️ **Pre-release.** This is a release candidate for testing. It is not tagged `:latest` and
+      is not recommended for unattended production use.
+
+
+      Nine changes since rc2, dominated by a mobile-freeze fix and two new terrain/RF surfaces.
+      Opening a node with a large estimated-position history could lock the UI for about a minute on
+      mobile — that is fixed, and the fix bounds both halves of the cause rather than the one that
+      was reported. Predictive RF coverage arrives as a Fresnel + path-loss model with a radial
+      terrain sweep and a map layer, deliberately drawn to look unlike measured coverage so a
+      prediction is never mistaken for a measurement; note its control surface is not wired up yet,
+      so the layer is present but not reachable from the UI in this build. A passive network survey
+      now reports what a radio can actually hear — direct neighbours, signal, and reach by hop count
+      — generating no radio traffic to do it. MeshBeacon offers (firmware 2.8+) become actionable
+      invitation cards, with an explicit confirmation before any channel is written to a radio. Two
+      protocol-level bugs are fixed: MeshCore's implicit Public channel was being displaced when
+      adding a channel, and MeshBeacon module config failed to load with "Unknown config type".
+      Traditional Chinese joins the language selector — it was already the most complete translation
+      in the repository and simply had never been offered.
+
+
+      ## Features
+
+
+      - **Predictive RF coverage** — Fresnel + path-loss model, radial terrain sweep, API and map
+      layer (#4741, refs #4727)
+
+      - **Passive network survey** — reach, direct neighbours and hop distribution (#4737, closes
+      #4726)
+
+      - **Actionable MeshBeacon invitation card** — add / dismiss, with confirmation before any
+      device write (#4735, closes #4723)
+
+      - **Waypoint-anchored geofences** for enter/exit alerts (#4732, closes #4722)
+
+      - **Incomplete-NodeInfo badge** on nodes missing name or hardware info (#4730, closes #4720)
+
+      - **Traditional Chinese** in the language selector (#4742)
+
+
+      ## Bug Fixes
+
+
+      - **Map froze for ~1 minute** when opening a node with a large estimated-position history
+      (#4744, closes #4743)
+
+      - **MeshBeacon config load failed** with "Unknown config type: meshbeacon" (#4740, closes
+      #4739)
+
+      - **MeshCore Public channel displaced** when adding a new channel (#4734, closes #4733)
+
+      - **Automation Runs log** now shows the captured triggering message (#4716, closes #4711)
+
+
+      ## Issues Resolved
+
+
+      #4743, #4739, #4733, #4726, #4723, #4722, #4720, #4711
+
+
+      ## New Contributors
+
+
+      - @rncchen made their first contribution in #4742 — Traditional Chinese language support
+
+
+      ## Notes
+
+
+      - **Predictive RF coverage has no UI entry point in this build.** The model, sweep, API and
+      map layer are complete and tested; the site-planner control panel that drives them is still to
+      come, so #4727 stays open.
+
+      - Coverage predictions are modelled from terrain only — they account for free-space loss,
+      earth curvature and diffraction, but not buildings, foliage or multipath. Treat them as
+      planning aids, not measurements.
+
+      - Very dense position histories are now drawn simplified; the trail's reported time span
+      remains exact.
+
+
+      **Full changelog:** https://github.com/Yeraze/meshmonitor/compare/v4.14.2-rc2...v4.14.2-rc3
+
+
+      ## 🚀 MeshMonitor v4.14.2-rc3
+
+
+      ### 📦 Installation
+
+
+      **Docker (recommended):**
+
+      ```bash
+
+      docker run -d \
+        --name meshmonitor \
+        -p 8080:3001 \
+        -v meshmonitor-data:/data \
+        ghcr.io/Yeraze/meshmonitor:4.14.2-rc3
+      ```
+
+
+      ### 🧪 Testing
+
+      ✅ All tests passed
+
+      ✅ TypeScript checks passed
+
+      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
+
+
+      ### 📋 Changes
+
+      See commit history for detailed changes.
   - version: v4.14.2-rc2
     name: v4.14.2-rc2
     datetime: '2026-08-14T19:33:20Z'
@@ -2132,124 +2254,5 @@ releases:
       **Docker (recommended):**
 
       ```
-
-      …
-  - version: v4.13.1
-    name: v4.13.1
-    datetime: '2026-07-20T16:45:09Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.13.1
-    prerelease: false
-    notes: >-
-      # MeshMonitor v4.13.1
-
-
-      Building on 4.13's unified map core, this release adds a suite of **Link Quality** tools for
-      the RF-minded, an **early preview** of several Meshtastic 2.8 features, and a broad round of
-      map, MQTT, and messaging fixes.
-
-
-      Highlights: a **Terrain Link Profile** tool (elevation cross-section, Fresnel zone, and
-      link-budget verdict) on Map Analysis; a per-node **signal-trend / link-attenuation badge**;
-      **Noise Floor** on the Node Detail card; and **position accuracy + location source** surfaced
-      in node popups. The Map Analysis toolbar is now icon-based with **Show RF / UDP / MQTT**
-      transport toggles, and obscured markers offset intelligently by cell occupancy. On the 2.8
-      front (an **early preview** — 2.8 is not officially released yet, so this is built against the
-      firmware development branch and is subject to change), MeshMonitor now decodes the **XEdDSA
-      signing shield**, **MeshBeacon** packets, and the **MEDIUM_TURBO** preset. Also notable:
-      telemetry requests now auto-recover from an upstream firmware NeighborInfo-hijack, a new
-      noindex/robots.txt privacy toggle, and a gateway-aware **MQTT Packet Monitor**.
-
-
-      See the [release blog post](https://meshmonitor.org/blog/2026-07-20-v4-13-1-release) for the
-      narrative walkthrough.
-
-
-      ## Link Quality & Terrain Link Profile
-
-      - Terrain Link Profile tool: elevation cross-section + Fresnel zone + link-budget verdict,
-      auto-frequency by region, DEM-void handling, map-mirrored graph cursor (#4143, #4147, #4151,
-      #4170, #4156)
-
-      - Derived signal-trend / link-attenuation badge per node (#4204)
-
-      - Noise Floor on the Node Detail quick-stats card (#4201)
-
-      - Position accuracy + location source in node popups, map & chat (#4188)
-
-      - Latitude/longitude/elevation shown as text in Node Info / Node Details (#4134)
-
-
-      ## Map Analysis
-
-      - Icon-based toolbar with labels in tooltips (#4171)
-
-      - Show RF / UDP / MQTT transport toggles (#4135)
-
-      - Occupancy-scaled, distance-capped obscured-node precision offset (#4164, #4168, #4181)
-
-      - "Discard invalid positions" setting, honored on ingest and render (#4158, #4182)
-
-      - Per-theme (light/dark) tileset preferences (#4118)
-
-      - Keep router short-name visible in Official pin style (#4184)
-
-      - Honor Default Map Center on Unified/Dashboard maps (#4128)
-
-      - Fixes: spiderfy opens the correct node (#4203), SNR overlay pins to merged marker (#4169),
-      no route/heatmap render for marker-less or deleted nodes (#4167, #4175)
-
-
-      ## Meshtastic 2.8 — Early Preview
-
-      > ⚠️ Meshtastic 2.8 is not officially released. This support is built against the firmware
-      development branch and is subject to change as 2.8 evolves.
-
-      - Pin 2.8-preview protobufs (`develop@ba16bfc`) with a 2.7 TrafficManagement compat shim
-      (#4205)
-
-      - XEdDSA packet-signing shield in the Packet Monitor (#4209)
-
-      - MeshBeacon (`MESH_BEACON_APP`) decode + firmware-verified preset channel names (#4207)
-
-      - MEDIUM_TURBO modem preset + 2.8 opt-in FAQ (#4200)
-
-
-      ## MQTT
-
-      - Gateway-aware MQTT Packet Monitor — per-gateway reception capture + UI (#4127, #4138)
-
-      - Geo-ignore epic: fail-open geo filter, per-source ignore list, retroactive purge/sweep,
-      observability (#4123, #4131, #4132, #4136)
-
-      - Route directed MQTT messages to the DM view, not their channel (#4161)
-
-      - Guard MQTT POSITION ingestion against Null Island fixes (#4150)
-
-
-      ## Messages, Nodes & Automation
-
-      - Auto-retry telemetry requests hijacked by the firmware NeighborInfo behavior (#4214)
-
-      - Stop unsynced-clock nodes rendering chat at ~1970 (#4208)
-
-      - MeshCore own-node messages show name, not public key (#4197)
-
-      - Short name shown alongside long name on message senders (#4196)
-
-      - "Message anyway" override for unmessageable nodes (#4187), and clearer hidden-composer
-      messaging (#4140)
-
-      - Remote-admin (non-local) reboot target for the device-reboot automation (#4186)
-
-      - Compose draft scoped per-conversation (#4185)
-
-      - Reliably un-hide nodes from the map across sources (#4141)
-
-      - Traceroute no longer sends on a DISABLED channel slot (#4180)
-
-      - Reject precision-obscured Null Island fixes on ingest (#4149)
-
-
-      ## 
 
       …
