@@ -1,16 +1,4 @@
 source: github
 repo: recrof/nrf_dfu_py
-updatedAt: '2026-06-25T18:55:16.647Z'
-releases:
-  - version: v1.1
-    name: v1.1
-    datetime: '2026-02-26T12:47:50Z'
-    url: https://github.com/recrof/nrf_dfu_py/releases/tag/v1.1
-    prerelease: false
-    notes: "## What's Changed\r\n* Support variable chunk_size for turbo ota bootloader by @oltaco in https://github.com/recrof/nrf_dfu_py/pull/1\r\n* Fix for MTU error by @lucidnx in https://github.com/recrof/nrf_dfu_py/pull/2\r\n* Better progress tracking by @oltaco in https://github.com/recrof/nrf_dfu_py/pull/4\r\n* Add variable PRN timeouts by @oltaco in https://github.com/recrof/nrf_dfu_py/pull/3\r\n\r\n## New Contributors\r\n* @oltaco made their first contribution in https://github.com/recrof/nrf_dfu_py/pull/1\r\n* @lucidnx made their first contribution in https://github.com/recrof/nrf_dfu_py/pull/2\r\n\r\n**Full Changelog**: https://github.com/recrof/nrf_dfu_py/compare/v1.0...v1.1"
-  - version: v1.0
-    name: v1.0
-    datetime: '2025-12-08T17:16:59Z'
-    url: https://github.com/recrof/nrf_dfu_py/releases/tag/v1.0
-    prerelease: false
-    notes: '**Full Changelog**: https://github.com/recrof/nrf_dfu_py/commits/v1.0'
+updatedAt: '2026-08-17T14:32:23.966Z'
+releases: []

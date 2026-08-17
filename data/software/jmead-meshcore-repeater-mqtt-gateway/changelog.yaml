@@ -1,25 +1,4 @@
 source: github
 repo: jmead/Meshcore-Repeater-MQTT-Gateway
-updatedAt: '2026-07-05T17:14:32.322Z'
-releases:
-  - version: v1.0.5
-    name: v1.0.5
-    datetime: '2025-10-10T12:02:50Z'
-    url: https://github.com/jmead/Meshcore-Repeater-MQTT-Gateway/releases/tag/v1.0.5
-    prerelease: false
-  - version: v1.0.4
-    name: v1.0.4
-    datetime: '2025-10-10T11:55:46Z'
-    url: https://github.com/jmead/Meshcore-Repeater-MQTT-Gateway/releases/tag/v1.0.4
-    prerelease: false
-  - version: v1.0.3
-    name: v1.0.3
-    datetime: '2025-10-10T11:53:50Z'
-    url: https://github.com/jmead/Meshcore-Repeater-MQTT-Gateway/releases/tag/v1.0.3
-    prerelease: false
-  - version: v1.0.2
-    name: Meshcore-Repeater-MQTT-Gateway v1.0.2
-    datetime: '2025-10-10T11:47:51Z'
-    url: https://github.com/jmead/Meshcore-Repeater-MQTT-Gateway/releases/tag/v1.0.2
-    prerelease: false
-    notes: "First release!!!\r\n\r\n## 🌟 Features\r\n\r\n- **Full MeshCore Repeater Functionality** - Acts as a mesh network repeater, extending network range\r\n- **MQTT Bridging** - Forward LoRa mesh messages to MQTT broker and vice versa\r\n- **Serial Configuration** - Easy-to-use serial menu for configuring all settings\r\n- **WiFi Connectivity** - Connect to your local network\r\n- **Persistent Configuration** - Settings stored in ESP32 NVS (non-volatile storage)\r\n- **Real-time Statistics** - Monitor packets, uptime, and connection status\r\n- **Multiple Publishing Modes** - Publish raw hex packets and/or decoded messages\r\n- **Remote Commands** - Send commands from MQTT to the gateway\r\n- **Gateway Status Reporting** - Automatic online/offline status with last will\r\n- **NTP Clock Sync** - Automatic time sync (NTP) with timezone support; required for TLS certificate validation"
+updatedAt: '2026-08-17T14:30:50.184Z'
+releases: []

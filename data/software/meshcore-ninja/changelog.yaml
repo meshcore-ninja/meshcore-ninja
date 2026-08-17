@@ -1,24 +1,4 @@
 source: github
 repo: meshcore-cz/meshcore-ninja
-updatedAt: '2026-07-03T22:14:04.970Z'
-releases:
-  - version: v2026.6.1
-    name: v2026.6.1
-    datetime: '2026-06-28T05:40:35Z'
-    url: https://github.com/meshcore-ninja/meshcore-ninja/releases/tag/v2026.6.1
-    prerelease: false
-    notes: >-
-      **Full Changelog**:
-      https://github.com/meshcore-ninja/meshcore-ninja/compare/v2026.6.0...v2026.6.1
-  - version: v2026.6.0
-    name: v2026.6.0
-    datetime: '2026-06-24T04:10:12Z'
-    url: https://github.com/meshcore-ninja/meshcore-ninja/releases/tag/v2026.6.0
-    prerelease: false
-    notes: '**Full Changelog**: https://github.com/meshcore-cz/meshcore-ninja/compare/v0.2.0...v2026.6.0'
-  - version: v0.2.0
-    name: v0.2.0
-    datetime: '2026-06-22T17:39:22Z'
-    url: https://github.com/meshcore-ninja/meshcore-ninja/releases/tag/v0.2.0
-    prerelease: false
-    notes: '**Full Changelog**: https://github.com/meshcore-cz/meshcore-ninja/commits/v0.2.0'
+updatedAt: '2026-08-17T14:31:39.355Z'
+releases: []

@@ -1,32 +1,4 @@
 source: github
 repo: eliahreeves/mesh-loader
-updatedAt: '2026-06-24T03:22:53.181Z'
-releases:
-  - version: v0.1.1
-    name: v0.1.1
-    datetime: '2026-05-13T03:56:42Z'
-    url: https://github.com/eliahreeves/mesh-loader/releases/tag/v0.1.1
-    prerelease: false
-    notes: '**Full Changelog**: https://github.com/eliahreeves/mesh-loader/compare/v0.1.0...v0.1.1'
-  - version: v0.1.0
-    name: v0.1.0
-    datetime: '2026-04-27T21:06:10Z'
-    url: https://github.com/eliahreeves/mesh-loader/releases/tag/v0.1.0
-    prerelease: false
-    notes: '**Full Changelog**: https://github.com/eliahreeves/mesh-loader/compare/0.0.3...v0.1.0'
-  - version: 0.0.3
-    name: 0.0.3
-    datetime: '2026-03-13T07:04:34Z'
-    url: https://github.com/eliahreeves/mesh-loader/releases/tag/0.0.3
-    prerelease: false
-  - version: 0.0.2
-    name: 0.0.2
-    datetime: '2026-02-21T22:15:19Z'
-    url: https://github.com/eliahreeves/mesh-loader/releases/tag/0.0.2
-    prerelease: false
-    notes: "- Added heltec_v3 (@ericbreh ).\r\n- Simplified patching a little."
-  - version: 0.0.1
-    name: Heltec V4
-    datetime: '2026-02-20T21:53:22Z'
-    url: https://github.com/eliahreeves/mesh-loader/releases/tag/0.0.1
-    prerelease: false
+updatedAt: '2026-08-17T14:30:01.559Z'
+releases: []

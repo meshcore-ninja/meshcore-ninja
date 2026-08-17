@@ -1,27 +1,4 @@
 source: github
 repo: swannman/meshcore64
-updatedAt: '2026-06-23T21:29:44.169Z'
-releases:
-  - version: v0.1.0
-    name: v0.1.0 — Initial Release
-    datetime: '2026-03-09T04:42:15Z'
-    url: https://github.com/swannman/meshcore64/releases/tag/v0.1.0
-    prerelease: false
-    notes: |-
-      First public release of MeshCore64.
-
-      ### Features
-      - Channel messaging (up to 8 channels)
-      - Direct messages with delivery confirmation (yellow → green)
-      - @-mention cycling with Up/Down arrows
-      - Persistent companion address config (saved to disk)
-      - Auto-reconnect on connection loss
-      - NMI-driven serial receive (no lost bytes)
-
-      ### Requirements
-      - Commodore 64 with SwiftLink cartridge (or emulator)
-      - MeshCore companion device running TCP serial bridge
-
-      ### Downloads
-      - **meshcore64.d64** — Disk image, ready to load on real hardware or VICE
-      - **meshcore64.prg** — Standalone PRG file
+updatedAt: '2026-08-17T14:31:58.710Z'
+releases: []

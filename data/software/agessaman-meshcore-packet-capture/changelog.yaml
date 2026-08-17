@@ -1,46 +1,4 @@
 source: github
 repo: agessaman/meshcore-packet-capture
-updatedAt: '2026-07-30T17:37:33.537Z'
-releases:
-  - version: v2.2.0
-    name: v2.2.0
-    datetime: '2026-07-30T15:12:08Z'
-    url: https://github.com/agessaman/meshcore-packet-capture/releases/tag/v2.2.0
-    prerelease: false
-    notes: "## What's Changed\r\n* Publish a periodic neighbors snapshot, and serialise device commands by @agessaman in https://github.com/agessaman/meshcore-packet-capture/pull/42\r\n* feat(presets): enable neighbors publishing for chimesh by @agessaman in https://github.com/agessaman/meshcore-packet-capture/pull/43\r\n* User service scripts by @jakee417 in https://github.com/agessaman/meshcore-packet-capture/pull/39\r\n* Update Colorado Mesh preset by @nwithan8 in https://github.com/agessaman/meshcore-packet-capture/pull/44\r\n\r\n## New Contributors\r\n* @jakee417 made their first contribution in https://github.com/agessaman/meshcore-packet-capture/pull/39\r\n* @nwithan8 made their first contribution in https://github.com/agessaman/meshcore-packet-capture/pull/44\r\n\r\n**Full Changelog**: https://github.com/agessaman/meshcore-packet-capture/compare/v2.1.0...v2.1.1"
-  - version: v2.1.0
-    name: MeshCore Packet Capture 2.1.0
-    datetime: '2026-07-25T22:20:00Z'
-    url: https://github.com/agessaman/meshcore-packet-capture/releases/tag/v2.1.0
-    prerelease: false
-    notes: "### Highlights\r\n- **Payload decoding** — Optional `decoded` object on packets (GRP_TXT channel decryption, ADVERT parsing). MQTT publish stays off by default; opt in with `include_decoded` (global or per broker).\r\n- **Owner identification** — Optional per-broker `owner_public_key` / `owner_email` for token-auth brokers (was only global); installer can prompt for these.\r\n- **Configurable BLE PIN** — Six-digit `ble_pin` for BLE connection auth (connection-only; no device PIN mutation).\r\n- **Packet log rotation** — Size- or time-based rotation; logs append compact JSONL when an output file is used.\r\n\r\n### Fixes & packaging\r\n- Installer correctly forwards pinned tags before the install subcommand.\r\n- `cryptography` declared as a dependency (Python + Nix).\r\n- Version consistency check across package/installer/docs surfaces.\r\n\r\n### Presets\r\n- Deprecated EU/US analyzer presets replaced; meshat-se and meshmapper updated.\r\n- New/updated community presets (e.g. bostonmesh, flmesh-us, coloradomesh, ctmesh, dutchmeshcore, meshcore-ca, inwmesh, nz-analyzer)."
-  - version: v2.0.0
-    name: v2.0.0
-    datetime: '2026-06-22T21:21:15Z'
-    url: https://github.com/agessaman/meshcore-packet-capture/releases/tag/v2.0.0
-    prerelease: false
-    notes: "Realigns configuration, install, and runtime layout with meshcoretomqtt.\r\n\r\n### Added\r\n- TOML configuration under `/etc/meshcore-packet-capture/` (`config.toml` + `config.d/*.toml`, deep-merged; `[[broker]]` merges by name).\r\n- Python installer (`python3 -m installer`) with install / update / migrate, systemd & launchd units, Docker, service account, and BLE/serial/TCP setup.\r\n- PyPI distribution: `pipx install meshcore-packet-capture` + `meshcore-packet-capture` CLI.\r\n- Bundled broker presets (`presets/`, installed as `config.d/10-*.toml`).\r\n- Unlimited sequentially-numbered MQTT brokers.\r\n- JWT auth via pure-Python Ed25519 (pynacl), per-broker owner/email, token TTL.\r\n- Device stats (core/radio/packets) in MQTT status messages.\r\n- macOS BLE support via a per-user LaunchAgent.\r\n\r\n### Changed\r\n- App installs to `/opt`, config to `/etc`, state to `/var/lib` (FHS).\r\n- `.env`/`.env.local` are now a legacy fallback, overridden by TOML.\r\n- Requires Python 3.11+ and `meshcore >= 2.2.31`.\r\n- Default advert interval standardized at 47 hours.\r\n- Docker image no longer bundles Node.js (JWT signing is pure-Python).\r\n\r\n### Upgrading\r\nRun the installer to migrate a legacy `~/.meshcore-packet-capture` install to the new `/opt` + `/etc` layout; your `.env`/`.env.local` is converted to `config.d/99-user.toml`. The old directory is left in place for rollback.\r\n\r\n## New Contributors\r\n* @vergoh made their first contribution in https://github.com/agessaman/meshcore-packet-capture/pull/26\r\n* @maxious made their first contribution in https://github.com/agessaman/meshcore-packet-capture/pull/32\r\n\r\n**Full Changelog**: https://github.com/agessaman/meshcore-packet-capture/compare/v0.4...v2.0.0"
-  - version: v0.4
-    name: v0.4
-    datetime: '2026-03-28T18:38:53Z'
-    url: https://github.com/agessaman/meshcore-packet-capture/releases/tag/v0.4
-    prerelease: false
-    notes: "## What's Changed\r\n* Add device listing for FreeBSD by @samm-git in https://github.com/agessaman/meshcore-packet-capture/pull/9\r\n* Enhance advert state management to avoid adverts on every launch and update install.sh to 1.2.1 by @agessaman in https://github.com/agessaman/meshcore-packet-capture/pull/14\r\n* Enhance packet capture and installation scripts for MeshCore 1.14.0 compatibility by @agessaman in https://github.com/agessaman/meshcore-packet-capture/pull/16\r\n* Align advert and control parsing with MeshCore by @robekl in https://github.com/agessaman/meshcore-packet-capture/pull/19\r\n* Preserve decoded advert metadata by @robekl in https://github.com/agessaman/meshcore-packet-capture/pull/20\r\n* Harden advert parsing against partial payloads by @robekl in https://github.com/agessaman/meshcore-packet-capture/pull/22\r\n* Avoid duplicate packet publishes from RAW events by @robekl in https://github.com/agessaman/meshcore-packet-capture/pull/21\r\n\r\n## New Contributors\r\n* @samm-git made their first contribution in https://github.com/agessaman/meshcore-packet-capture/pull/9\r\n* @robekl made their first contribution in https://github.com/agessaman/meshcore-packet-capture/pull/19\r\n\r\n**Full Changelog**: https://github.com/agessaman/meshcore-packet-capture/compare/v0.3...v0.4"
-  - version: v0.3
-    name: v0.3
-    datetime: '2025-12-20T22:51:53Z'
-    url: https://github.com/agessaman/meshcore-packet-capture/releases/tag/v0.3
-    prerelease: false
-    notes: "- Refactored auth token signing to use the radio to sign JWTs, with fallbacks to a python implementation (typically unnecessary unless then firmware is 6+ months old). Removes dependency on meshcore-decoder.\r\n- Improved BLE timeout and reconnect handling.\r\n- Fixes pairing process in pairing_helper.py on MacOS\r\n- Improvements in install.sh"
-  - version: v0.2
-    name: v0.2
-    datetime: '2025-10-21T04:57:18Z'
-    url: https://github.com/agessaman/meshcore-packet-capture/releases/tag/v0.2
-    prerelease: false
-    notes: "- This release includes preliminary installer support for Windows—the installer works, but it won't automatically find and pair nodes due to limitations in scripting the Windows BLE stack. The installer will automatically create the necessary configuration files.\r\n- Added firmware, model, and packet-capture version to status updates in MQTT brokers\r\n- improved handling of timeouts and more descriptive error logging\r\n\r\nThanks to those who have tried the script so far, your feedback has been really helpful."
-  - version: v0.1
-    name: v0.1 - Initial Release
-    datetime: '2025-10-16T03:19:22Z'
-    url: https://github.com/agessaman/meshcore-packet-capture/releases/tag/v0.1
-    prerelease: false
-    notes: "- **Multi-Connection Support**: BLE, Serial, and TCP connections\r\n- **Packet Analysis**: Route types, payload parsing, and RF metrics (SNR/RSSI)\r\n- **Multi-Broker MQTT**: Up to 4 MQTT brokers simultaneously\r\n- **JWT Authentication**: Device private key authentication with automatic renewal\r\n- **Connection Management**: Automatic reconnection and health monitoring\r\n- **Output Options**: Console, file, and MQTT publishing\r\n- **Service Installation**: Automated systemd/launchd service setup\r\n- **Docker Support**: Containerized deployment\r\n- **Topic Templates**: Dynamic MQTT topics with IATA and device placeholders\r\n- **Packet Hashing**: SHA-256 packet identification\r\n- **Advert Parsing**: MeshCore advertisement data support\r\n- **TLS/WebSocket**: Encrypted MQTT connections with WebSocket transport"
+updatedAt: '2026-08-17T14:30:44.581Z'
+releases: []

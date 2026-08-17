@@ -1,10 +1,4 @@
 source: github
 repo: mtoolstec/TapTapFW
-updatedAt: '2026-06-24T03:23:03.477Z'
-releases:
-  - version: v1.0.0
-    name: TapTapFW v1.0.0
-    datetime: '2026-02-08T00:10:27Z'
-    url: https://github.com/mtoolstec/TapTapFW/releases/tag/v1.0.0
-    prerelease: false
-    notes: "TapTapFW starts with features below on T1000E and WisMesh Tag. \r\n1. Canned Message Mode\r\n2. Morse Code Input Mode\r\n3. Clock on LED Morse code\r\n4. RTTTL Ringtone customization\r\n5. CW Message playing."
+updatedAt: '2026-08-17T14:30:35.544Z'
+releases: []

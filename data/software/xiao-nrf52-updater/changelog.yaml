@@ -1,22 +1,4 @@
 source: github
 repo: recrof/xiao_nrf52_updater
-updatedAt: '2026-06-25T18:55:22.380Z'
-releases:
-  - version: v1.2
-    name: v1.2
-    datetime: '2026-06-21T14:47:07Z'
-    url: https://github.com/recrof/xiao_nrf52_updater/releases/tag/v1.2
-    prerelease: false
-    notes: "- introduced `wedge_cooldown` to fix cases when older bootloader gets stuck during update\r\n- bugfixes"
-  - version: v1.1
-    name: v1.1
-    datetime: '2026-06-02T22:10:14Z'
-    url: https://github.com/recrof/xiao_nrf52_updater/releases/tag/v1.1
-    prerelease: false
-    notes: "- added RAK4631 / 3401 with RAK15001 flash module\r\n- various fixes"
-  - version: v1.0
-    name: v1.0
-    datetime: '2026-05-28T14:36:13Z'
-    url: https://github.com/recrof/xiao_nrf52_updater/releases/tag/v1.0
-    prerelease: false
-    notes: '- Initial release'
+updatedAt: '2026-08-17T14:32:48.182Z'
+releases: []
