@@ -1,4 +1,10 @@
 source: github
 repo: Mambo430/MeshCore-SAME-EAS-Alerter
-updatedAt: '2026-08-17T14:31:46.253Z'
-releases: []
+updatedAt: '2026-08-17T16:30:21.603Z'
+releases:
+  - version: v0.1.0
+    name: v0.1.0
+    datetime: '2025-12-18T16:57:53Z'
+    url: https://github.com/Mambo430/MeshCore-SAME-EAS-Alerter/releases/tag/v0.1.0
+    prerelease: false
+    notes: '**Full Changelog**: https://github.com/Mambo430/MeshCore-SAME-EAS-Alerter/commits/v0.1.0'

@@ -1,4 +1,1525 @@
 source: github
 repo: ALLFATHER-BV/wadamesh
-updatedAt: '2026-08-17T14:30:37.845Z'
-releases: []
+updatedAt: '2026-08-17T16:30:09.299Z'
+releases:
+  - version: beta_65
+    name: wadamesh beta_65
+    datetime: '2026-08-13T17:39:52Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_65
+    prerelease: true
+    notes: >-
+      **Test build.** Stable stays
+      [beta_63](https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_63).
+
+
+      Flash it at **[flasher.wadamesh.com](https://flasher.wadamesh.com)** with the Beta toggle on,
+      or on-device via **Settings → Firmware** with "Get test builds (beta)" enabled.
+
+
+      Mostly a follow-up to beta_64: two things testers hit within hours, one feature request, and a
+      documentation correction that was overdue.
+
+
+      ---
+
+
+      ## Updating no longer strands you on "LoRa radio not detected"
+
+
+      Reported on a T-Deck immediately after taking beta_64. On boards where the radio sits behind a
+      peripheral power switch, an update ends in a **software** reset — which releases that switch,
+      collapses the rail, and then the firmware checks for the radio before it has finished powering
+      back up. So the first boot after an update could dead-end on the fatal error screen, and the
+      only way out was to power-cycle by hand.
+
+
+      The firmware now does that power-cycle itself and probes again. It only runs when the
+      alternative is halting on the error screen, so a board that comes up normally never executes
+      any of it.
+
+
+      ## Back no longer opens the status bar too
+
+
+      Leaving an app by the "‹" went back **and** pulled the dropdown open — one tap doing two
+      things. The bar closes an app page on touch-down (so a dropped tap can't trap you on a
+      touch-only board), and the click that followed the same tap was falling through to the
+      control-center toggle. Harmless while that behaviour was limited to one page; wrong for every
+      app page since beta_49. Thanks @Istvan.
+
+
+      ## Share your position without broadcasting it
+
+
+      Until now the only way to share position was to put it in your advert — broadcast in the clear
+      to every node in range, indefinitely. MeshCore can instead answer position **on request**,
+      encrypted to the contact that asked, and only for contacts you chose. Almost all of that was
+      already implemented and simply had no way to switch it on.
+
+
+      - **Settings → Mesh → "Share my location when asked"** — Never / Chosen contacts only / Anyone
+      who asks.
+
+      - **A contact's own menu → "Share my loc"** — grant it, and take it back from the same place.
+
+
+      Nothing is broadcast; it is sent only when that contact asks. No protocol change, so it
+      interoperates with the MeshCore app and other MeshCore nodes. Requested by @janmashat
+      ([#266](https://github.com/ALLFATHER-BV/wadamesh/issues/266)).
+
+
+      ## If you tried to write a Lua app and gave up — try again
+
+
+      The SDK page at **[wadamesh.com/sdk.html](https://wadamesh.com/sdk.html)** was wrong about the
+      very first thing an app author does. It said to define your callbacks as globals named
+      `on_start` / `on_stop`. The firmware has never called those: an app is a table you build and
+      `return`, with `on_open`, `on_tick`, `on_input`, `on_message`, `on_close`.
+
+
+      Following the published example gave you an app where **nothing ran and nothing was reported**
+      — a blank screen with no error. If that happened to you, it was the documentation, not you. It
+      is corrected now, along with `ev.key` (the page named a field that does not exist) and the
+      real `label` / `button` signatures.
+
+
+      The page also now documents everything beta_64 added: the clock, buzzer, battery, GPS, per-app
+      file storage, sending and receiving mesh messages, and the permission model behind the last
+      two.
+
+
+      ## Store fixed
+
+
+      The app and language Store is served from a path nothing was publishing to. Translations sat
+      at an older version than the ones in the project, and an app published to the catalog never
+      appeared at all. Fixed — the Hungarian, German and Dutch updates are live, along with the
+      **SDK Test** app, which exercises every SDK call and reports pass/fail per line.
+
+
+      ---
+
+
+      **Boards:** Heltec V4 TFT · Heltec V4-R8 TFT · LilyGo T-Deck · T-Lora Pager (LR1121 / SX1262)
+      · ThinkNode M9 · RAK TAP v2 · Attaky Mesh Series · LilyGo T-Display P4 (AMOLED + LCD).
+
+
+      Use `-merged.bin` for a fresh install at offset 0x0; the plain `.bin` is the app-only image
+      for OTA and the Launcher.
+  - version: beta_64
+    name: wadamesh beta_64
+    datetime: '2026-08-13T15:21:45Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_64
+    prerelease: true
+    notes: >-
+      **Test build.** Stable stays
+      [beta_63](https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_63).
+
+
+      Flash it at **[flasher.wadamesh.com](https://flasher.wadamesh.com)** with the Beta toggle on,
+      or on-device via **Settings → Firmware** with "Get test builds (beta)" enabled.
+
+
+      ---
+
+
+      ## The Heltec V4 freeze — the rest of it
+
+
+      beta_62 took one storage delete off the packet path and that genuinely helped. Then @Yoss101
+      came back with the detail that mattered: the freezes had got **rarer and longer**. Rarer was
+      the fix working. Longer was the half nobody had measured.
+
+
+      Here is what was actually costing the time. A contact record is **152 bytes** and the table
+      holds up to **2000** of them, so saving contacts rewrote the whole **304 KB** file on *every*
+      change — and the crash-safe write keeps a second copy of the same size beside it while it
+      swaps. Roughly **600 KB of flash churn because one contact changed**. On a board with no card
+      that lands on internal flash, whose garbage collection suspends the flash cache and stalls
+      **both CPU cores**. That is why the entire device went away instead of dropping a packet.
+
+
+      But the table never changes in bulk. Replacing the oldest contact overwrites **one slot** —
+      the array is unsorted and never shifts — and hearing from a node you already know touches
+      **one entry**. So each record is now compared against what is already stored and only the
+      differing ones are written back.
+
+
+      **A new contact replacing an old one writes 152 bytes instead of 304,000.** A save with
+      nothing to change writes nothing at all.
+
+
+      Because that is a new way of writing the file, and because the data at stake is your contact
+      list, it checks its own work: every patched record is **read back and compared**, and on any
+      disagreement it falls through to the old whole-file write. A filesystem that accepts a
+      positioned write and quietly drops it cannot leave you with a half-written contact list.
+
+
+      Also: contact deletes that overflowed the queue used to leak their stored record permanently —
+      fixed, and the queue is 4× deeper. **About → System info** gained a **Contact store** panel
+      (contacts, space used, how full internal flash is, and what the last save cost). If you report
+      a freeze, that panel is the useful photograph.
+
+
+      @Yoss101 and @pisti87 — this is the one to test. Thank you both, and particularly @Yoss101 for
+      coming back to say a fix had only half worked; that report is what found the rest of it.
+
+
+      ## Apps got a lot more capable
+
+
+      Lua apps gained the real date and time, the buzzer, battery state, GPS position, a scoped and
+      rate-limited private folder each, hardware key presses, and the ability to send mesh messages
+      and receive replies (#245).
+
+
+      Anything reaching outside an app **asks you first, per app, once**. Sending and receiving are
+      separate permissions, so granting one does not grant the other, and a refusal is remembered
+      rather than nagged. New page: **Settings → App permissions** — every installed app, exactly
+      what it may do, and a switch to take any of it back.
+
+
+      The extended toolkit is limited to boards with the memory to carry it, so the Heltec V4 keeps
+      its resources for the mesh; apps can see which features exist and adapt. An **SDK Test** app
+      is in the Store — it exercises every new call and reports pass/fail per line.
+
+
+      ## Fixes
+
+
+      - Accented and non-Latin characters showed as **empty boxes in the grey hint text** inside
+      empty fields — the Wi-Fi password box, the MQTT bridge fields, and ~two dozen others. Fixed
+      everywhere, in every language. (Thanks @pisti87, and to istvan for finding the last one.)
+
+      - A translated line whose placeholders **do not match the English original** is now ignored
+      rather than used. Since language files download from the Store, this closes off a whole class
+      of crash — including in files you write yourself.
+
+      - Channel messages could be **silently dropped** when an unused channel slot matched first.
+      Sends also match by name at the moment of transmission, so a message can no longer go out
+      encrypted to th
+
+      …
+  - version: beta_63
+    name: wadamesh beta_63 (stable)
+    datetime: '2026-08-12T11:15:20Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_63
+    prerelease: false
+    notes: >-
+      **beta_63 is the new stable**, replacing beta_50 — thirteen betas, 310 commits and ten
+      contributors of work.
+
+
+      Flash it from **https://flasher.wadamesh.com** (Stable), or on-device via Settings → Firmware.
+
+
+      ---
+
+
+      - Read this one first if you are coming from beta_50: the chat-history format on the SD card
+      changed during this run, and the change is ONE-WAY. Updating is safe and your history is
+      converted for you, but if you later flash a firmware older than beta_52 it will not be able to
+      read that history. Back up first if that matters to you.
+
+      - Chats now keep the newest 250 messages each by default. If you had a chat with more than
+      that, the extra is trimmed on first run. The limit is yours to change under Settings > Chats >
+      "Keep per chat (messages)" - 100, 250, 500, 1000 or off.
+
+      - If you ever picked a region preset, your radio was transmitting at roughly 9x less power
+      than it should have been. That is fixed. Expect noticeably better range, and re-check your
+      power setting if you had raised it to compensate.
+
+      - Your identity no longer lives on the SD card, so swapping or removing the card can never
+      cost you your node identity again.
+
+      - The MeshCore core moved from 1.16 to 1.17. Every board is rebased on it. This is the largest
+      under-the-hood change since 1.16, and it lays the groundwork for listen-before-talk: the radio
+      can check whether the channel is busy before transmitting. About reports v1.17.4-touch.
+
+      - WADAMESH runs apps written in Lua. They install from a Store on the device, appear in the
+      app drawer, and can be updated or removed from there. RF Monitor and Airtime are now Lua apps
+      rather than firmware pages, and both gained features as a result. You can write your own: drop
+      a bare .lua file into /apps/ on the card and it shows up.
+
+      - Translations are no longer baked into the firmware - they download from the Store's
+      Languages tab, so a language can be fixed or completed without a new firmware release. Every
+      language got a full sweep of around 150 strings that had quietly stayed English, and Romanian
+      and Hungarian joined as full interface languages.
+
+      - Major SD storage rework, contributed by the community: the device recovers from a wedged or
+      removed card at runtime instead of playing dead until reboot, and chat history is stored in
+      append-friendly segments. A large chat history no longer slows the whole interface down.
+
+      - Storage writes run on a dedicated background worker, so a big save can no longer make the
+      interface stutter or the device freeze.
+
+      - Hungarian devices no longer reboot when logging in to a repeater. A translated sentence had
+      its two values in the wrong order, and the firmware followed a number as if it were a memory
+      address. Beyond fixing the text, a translation that does not match the original is now ignored
+      rather than trusted - no language file can crash a device, including one you write yourself.
+
+      - The T-Lora Pager no longer crashes while scrolling back through chat history.
+
+      - Heltec V4 units no longer freeze in a busy mesh. Two separate causes: every advert heard
+      used to trigger a storage write, and later, a full contact list made every new contact delete
+      a stored record on the receive path. Both are off the packet path now.
+
+      - Settings can no longer silently reset themselves. An interrupted settings write could
+      truncate the file and lose everything in it.
+
+      - Messages no longer arrive in a nameless "#unknown" thread, and channel messages can no
+      longer be silently dropped by an unused channel slot.
+
+      - Fixed the 3-minute boot with an SD card inserted, and formatting a card on the V4-R8 or
+      ThinkNode M9 no longer hangs forever.
+
+      - Blocking someone now actually works - three separate bugs, and unblocking now fully clears
+      the block.
+
+      - Sends retry until the mesh has actually heard them, under Settings > Radio & Mesh > "Retry
+      sends until heard" (off by default).
+
+      - Message bubbles show the time on the top row next to the sender, so more messages fit on
+      screen.
+
+      - The chat list preview no longer shows an old message and 
+
+      …
+  - version: beta_62
+    name: wadamesh beta_62
+    datetime: '2026-08-11T08:32:44Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_62
+    prerelease: true
+    notes: >-
+      Test build. Stable stays **beta_50**.
+
+
+      Most of this release is community work — **@PixPMusic** wrote 22 of its 30 changes, and the
+      German, Dutch and Hungarian translations are **@pisti87**'s.
+
+
+      Flash it from **https://flasher.wadamesh.com** (flip the Beta toggle), or on-device via
+      Settings → Firmware with "Get test builds (beta)" enabled.
+
+
+      ---
+
+
+      ### The enlarged UI, by @PixPMusic (#198)
+
+
+      The large font presets are usable across the whole interface now, not just in chat.
+
+
+      Chat rows, the composer and the Pager's line spacing size themselves from the font's real
+      metrics instead of fixed pixel heights, so nothing clips or overlaps at the bigger presets.
+      Contact detail menus, the contact share panel, mentions, the overview header and its action
+      buttons, and the QR panel all scale with the preset instead of overflowing it. The
+      discovered-count badge is centred, the close button and the signal poll no longer strand a
+      focus outline, and app pages close from the back gesture.
+
+
+      New in the same pass: a full-width traffic detail chart, Jumbo chat text properly distinct
+      from Large, and the preset names kept as the ones you already know.
+
+
+      ### Open-licensed fonts, by @PixPMusic (#198)
+
+
+      The bundled fonts are rebuilt from their OFL sources. The set shipped before this was
+      generated from a proprietary system font, which was never ours to redistribute — the firmware
+      is GPL, so that needed correcting whether or not anyone had noticed. Glyph shapes shift very
+      slightly; nothing else about the text changes.
+
+
+      ### Accented and non-Latin characters render everywhere again
+
+
+      The rebuilt fonts carry their extended coverage in a fallback chain, and roughly eighty labels
+      across the interface pinned a base font directly rather than the chained one. On those, an ä,
+      a Hungarian ő or a Cyrillic character came out as an empty box while the identical string
+      rendered fine one screen over. Every label now takes the chained font, verified by a static
+      sweep of the UI source rather than by eye. Surfaced while checking @pisti87's Hungarian
+      translation.
+
+
+      ### The Heltec V4 no longer locks up when its contact list is full (#222)
+
+
+      Once the contact table is full, every advert from an unknown node evicts the oldest contact —
+      and the firmware deleted that contact's stored record on the spot, on the receive path. On the
+      V4 that store is internal flash, where a delete can trigger a garbage-collection pass, and
+      such a pass suspends the flash cache and stalls **both** processor cores: the whole device
+      goes dead, Bluetooth and TCP drop, the screen will not wake, and it comes back on its own a
+      moment later. It got steadily worse the fuller the list was — degrading around 350 contacts,
+      locking hard by 600, constant at 2000.
+
+
+      The delete is now queued and performed between packets, at most one every half second, so a
+      stream of adverts can no longer chain those pauses together. Reported by @Yoss101 and
+      @pisti87.
+
+
+      ### Also
+
+
+      - Downloading a firmware image to the SD card checks the card's free space first and says so,
+      instead of failing partway through the write with a bare "SD write failed".
+
+      - German, Dutch and Hungarian now translate all 48 interface strings that had been left
+      English in every language (@pisti87). The other ten have the strings listed and still fall
+      back to English — the files are in `deploy/apps/lang` and contributions are welcome.
+
+
+      ### Known, not fixed here
+
+
+      The intermittent T-Lora Pager crash (#233, #251) is still open. Both dumps decode to a freed
+      LVGL callback — the same fault from two angles — and @PixPMusic's #234 restructures that
+      teardown. It predates beta_60 and is not a 1.17 regression.
+  - version: beta_61
+    name: wadamesh beta_61
+    datetime: '2026-08-10T11:15:20Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_61
+    prerelease: true
+    notes: >-
+      Test build. Stable stays **beta_50**.
+
+
+      **If you are on beta_60, update.** It shipped with three regressions from the MeshCore 1.17
+      rebase, all fixed here. Flashing beta_61 over the top is enough — nothing needs erasing, and
+      no data was lost in any of them.
+
+
+      Flash it from **https://flasher.wadamesh.com** (flip the Beta toggle), or on-device via
+      Settings → Firmware with "Get test builds (beta)" enabled.
+
+
+      ---
+
+
+      ### The beta_60 regressions
+
+
+      **Boot loop on an empty contact list** (#249). A device with no contacts saved — a fresh
+      install, an erase-and-flash, or a card that had not mounted yet — crashed during startup and
+      rebooted forever. 1.17 reserved eight slots at the head of the contact table and claimed them
+      before the table was allocated, so a new startup routine walked a null pointer. Every board on
+      our bench had contacts on it, which is exactly why this got past testing; the release process
+      now checks that case. Reported by @Pierre747 and @rustinmyeye, whose boot log is what cracked
+      it.
+
+
+      **The newest contacts were unreachable** (#252). Same reserved slots, different consequence:
+      the contact list, the action sheets and the phone-app sync were still counting from the old
+      start of the table, so the eight most recently added contacts could not be shown or acted on.
+      A contact you had just added was invisible, and a room server's **Log in** silently did
+      nothing because it resolved to an empty reserved slot. Nothing was lost — those contacts were
+      in the table the whole time. Reported by myshoeisonfire.
+
+
+      **The T-Display P4 could send but never receive** (#253). No channel messages, no delivery
+      confirmations, no adverts, RX counters flat at zero — while the Monitor app still showed
+      signal, because it talks to the radio directly. The P4 is the one board whose radio interrupt
+      is not wired to the processor, so it has to ask the radio over SPI whether a packet arrived.
+      That polling code was never in the repository — it lived only in a generated directory that
+      gets rebuilt — so the 1.17 rebase erased it. It is rewritten and now version-controlled, with
+      a build-time check so it cannot vanish again. Reported by @D-Melhede.
+
+
+      ### Also fixed
+
+
+      - A contact that changes its node name no longer leaves two chat threads behind. The thread is
+      matched by key, but its title was never updated, while incoming messages are filed by sender
+      name — so the first message after a rename started a second thread. Reported by
+      myshoeisonfire.
+
+      - Release builds now derive the firmware version, build date and core version from the release
+      itself, and a release **aborts** if any board's image does not carry its own tag. beta_60
+      reported `v1.16.0-touch` in About because that value was maintained by hand.
+
+      - All 13 language files gained the 48 UI strings none of them had, so those stop being
+      permanently English and translators can see the gaps. New tool `scripts/build/audit-lang.py`
+      reports drift in both directions.
+
+
+      ### Known, not fixed here
+
+
+      The intermittent T-Lora Pager crash (#233, #251) is still open. Both dumps decode to a freed
+      LVGL callback — the same underlying fault seen from two angles — and @PixPMusic's #234
+      restructures exactly that teardown. It is not a 1.17 regression and predates beta_60.
+  - version: beta_60
+    name: wadamesh beta_60
+    datetime: '2026-08-09T16:19:17Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_60
+    prerelease: true
+    notes: >-
+      Test build. Stable stays **beta_50** — but this one is different: **beta_60 is the build we
+      want to promote to stable as soon as it proves itself**, so tester feedback matters more than
+      for any beta before it.
+
+
+      The reason: **the MeshCore core under wadamesh moved from 1.16 to 1.17.** Every board in this
+      release is rebased on the new core — mesh routing, the seen-packet tables, radio drivers and
+      the companion protocol are all the current upstream generation, with our buffered LoRa receive
+      path carried over on top.
+
+
+      **If you run betas, please run this one as your daily build** and report anything that behaves
+      differently from beta_59 — radio range, message delivery, room servers, battery life, phone
+      pairing. Nothing you can send helps more right now than "ran it for two days, here is what
+      changed". Once feedback clears it, beta_60 becomes the new stable so every new user starts on
+      the 1.17 core.
+
+
+      Flash it from **https://flasher.wadamesh.com** (flip the Beta toggle), or on-device via
+      Settings → Firmware with "Get test builds (beta)" enabled.
+
+
+      ---
+
+
+      ### MeshCore 1.17
+
+
+      The whole core is the current upstream generation. Two things are worth knowing beyond
+      "everything underneath is newer":
+
+
+      - **Channel activity detection (listen-before-talk) groundwork is in.** The radio can check
+      the channel is clear before transmitting. It ships **disabled** in this build while upstream
+      finishes making it configurable — a Radio & Mesh toggle follows in a later beta.
+
+      - **Our local core additions survived the rebase** — buffered LoRa receive (the drain task and
+      the heard/read/late counters in About) is intact on 1.17.
+
+
+      About now reports **v1.17.0-touch**.
+
+
+      ### Fixes
+
+
+      - A white frame around the boot logo in the first seconds after power-on — a 1.17 side effect
+      caught on the bench: the early boot screen let the new core pick its background instead of
+      forcing black.
+
+      - A LoRa radio that fails to start now says so on screen — "LoRa radio not detected", with a
+      hint to check the module — instead of a silent boot with the only clue on serial (#244).
+
+      - Messages retried from the failed state appear in the open chat immediately, not after
+      reopening it (#248).
+
+      - **Favorites survive the contact-table cleanup.** The star only lived in the touch UI's
+      records, so the core's eviction could silently drop a starred contact when the table filled;
+      the star is now written through to the core's contact flags, which skip favorites (#178).
+
+      - Settings saves skip writes when nothing changed, ending bursts of identical snapshot writes
+      to flash (#246).
+
+      - The Files app shows each file's modified date and time (#185).
+
+      - Discover rows show the distance to a node when both sides have a position fix (#239).
+
+      - The Store no longer offers a language "update" that is older than the installed one (#247,
+      #232).
+
+      - The long-press accent picker gained æ/Æ on the A key for Danish and Norwegian (#237).
+
+
+      ### Community
+
+
+      The T-Pager stack in this release is by **@PixPMusic** — four merged PRs:
+
+
+      - **Wi-Fi/BLE coexistence** (#210): enabling Wi-Fi no longer reboots the board, BLE bonds
+      survive the handoff so the phone re-pairs without deleting the device, and BLE returns
+      automatically when Wi-Fi is unavailable.
+
+      - **SD arbitration + map tiles** (#206, #221): SD access from different parts of the firmware
+      no longer collides on the shared bus, and map tiles load reliably from the card.
+
+      - **Lock-screen brand mark** (#235).
+
+
+      Hungarian is at **v9** — a full sweep by **@pisti87**, with the one punctuation glyph our
+      fonts lack swapped for its typographic twin.
+  - version: beta_59
+    name: wadamesh beta_59
+    datetime: '2026-08-04T22:50:01Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_59
+    prerelease: true
+    notes: >-
+      Test build. Stable stays **beta_50**.
+
+
+      The big one: **WADAMESH runs apps written in Lua now**, installed from a Store on the device
+      and updated over the air without reflashing. The runtime, the API, the Store and the first
+      converted apps all ship together in this tag.
+
+
+      Flash it from **https://flasher.wadamesh.com** (flip the Beta toggle), or on-device via
+      Settings → Firmware with "Get test builds (beta)" enabled.
+
+
+      ---
+
+
+      ### Lua apps
+
+
+      An app is a single `.lua` file. It installs from the Store, appears in the app drawer beside
+      the built-ins, and updates when a newer version lands in the catalog — no firmware flash
+      involved.
+
+
+      **Store** lives in the app drawer, with three tabs:
+
+
+      - **Apps** — install, update or remove what the catalog offers.
+
+      - **Built-in** — hide the stock apps you never open, so the drawer holds what you actually
+      reach for. The MQTT bridge is hidden by default now.
+
+      - **Languages** — download translations (see below).
+
+
+      **RF Monitor** and **Airtime** are Lua apps rather than firmware pages, and they gained things
+      the native versions never had: RF Monitor scrolls the full packet list, Airtime has proper
+      Y-axis labels and a Reset button. **Snake** is a Lua app too. Removing one really removes it;
+      reinstalling brings it back with your scores intact.
+
+
+      **Write your own.** Drop a bare `.lua` file into `/apps/` on the card and it appears in the
+      drawer — no manifest needed. The API is about thirty functions covering the screen, input,
+      read-only mesh data, an HTTP fetch and a little per-app storage.
+
+
+      📖 **API reference: https://wadamesh.com/sdk.html**
+
+
+      Two constraints worth knowing up front. The mesh is **read-only** in v1 — an app can read
+      contacts, the packet log and radio statistics, but cannot transmit; a buggy or hostile app
+      must not be able to put packets on the air in your name. And `http_get` is plain HTTP, because
+      after Wi-Fi associates there is not enough internal heap left for a TLS handshake on the
+      smaller boards.
+
+
+      ### Languages are files now
+
+
+      Translations are no longer baked into the firmware. They download from the Store's Languages
+      tab as versioned files, so a translation can be fixed and shipped without waiting for a
+      firmware release — the device offers **Update** when a newer one exists.
+
+
+      Every language got a full sweep: roughly 150 strings that had quietly stayed English for
+      months — the channel settings sheets, the message menus, most buttons — are translated across
+      all 13 languages. Settings → Language opens the Languages tab directly, and switching one now
+      tells you it is restarting before it does, instead of rebooting under your finger.
+
+
+      ### Heltec V4
+
+
+      The V4 has 2 MB of PSRAM and very little free internal memory, which made the Store unreliable
+      there. It now ships **every language and every catalog app inside the firmware image** — the
+      apps are in the drawer on first boot and all 13 languages are already installed. Its Store is
+      a picker rather than a shop.
+
+
+      Around **17 KB of internal memory reclaimed** on the V4, measured step by step: the store and
+      Discover tables moved out of static memory, and the allocator now places ordinary allocations
+      in PSRAM instead of forcing everything under 4 KB into internal RAM.
+
+
+      ### Fixes
+
+
+      - **"Save update bin to SD" works again.** It failed with "SD write failed" at 1–7% on every
+      T-Deck and had been broken since the feature shipped in beta_36. The download buffer sat in
+      PSRAM, which the SD card cannot reliably DMA from, so the write died partway through at a
+      point that moved with the network. Nothing to do with card size or formatting. Reported by
+      **Marshal W7TER**, **df2080** and **Dennis**.
+
+      - The same defect is fixed in two places nobody had hit yet: copying any file to the SD card
+      from the Files app, and exporting a crash dump.
+
+      - **The Store fits narrow and high-DPI screens.** Cards measure their own text instead of
+      assuming two lines, so nothing is cut off and a long title no longer lands on top of the
+      description. This also fixes every board for languages whose tex
+
+      …
+  - version: beta_58
+    name: wadamesh beta_58
+    datetime: '2026-08-04T09:08:26Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_58
+    prerelease: true
+    notes: >-
+      Test build. Stable stays **beta_50**.
+
+
+      **Update strongly recommended if you ran beta_57** — this fixes the upgrade bug that left
+      devices booting into remote mode with the screen frozen on the boot logo.
+
+
+      Flash it from **https://flasher.wadamesh.com** (flip the Beta toggle), or on-device via
+      Settings → Firmware with "Get test builds (beta)" enabled.
+
+
+      ---
+
+
+      ### The beta_57 upgrade bug
+
+
+      Updating from beta_56 to beta_57 corrupted part of the stored settings. beta_57's new retry
+      preference was inserted into the middle of the persisted settings layout instead of appended
+      at the end; the settings blob is a raw byte copy, so every later value shifted by one on
+      upgrade. The worst casualty: the remote-mode flag inherited a neighbouring value that an old
+      migration forces to 1 on every install — so upgraded devices enabled Remote Mode without
+      consent, which renders the interface off-screen for a browser and stops drawing to the
+      physical panel. From the outside that looked like a device frozen on a half-drawn boot logo,
+      on the T-Display P4 as much as the Pager. The map's developer debug overlay switched on the
+      same way, and a chat-history safety flush was silently disabled.
+
+
+      Independently found, byte-for-byte analysed, and fixed by **@PixPMusic** (#229, #230) —
+      including compile-time guards that make this class of mistake a build error from now on, and a
+      test suite over the migration paths. Affected devices repair themselves on this update: a
+      normal install, no erase. On devices that ran beta_57, the repaired settings (web control
+      panel, remote mode and its orientation, web terminal, map debug overlay, history-flush tuning)
+      return to their defaults — the pre-beta_57 values were overwritten and cannot be recovered.
+      Everything else, including your language, radio settings and per-chat history limits, is
+      preserved. Devices coming straight from beta_56 or older upgrade losslessly.
+
+
+      ### Auto-retry is now opt-in
+
+
+      beta_57 turned "retry sends until heard" on for everyone. That choice should be yours: it now
+      defaults **off**, and the toggle lives in **Settings → Radio & Mesh** if you want your sends
+      retransmitted until the mesh confirms them.
+
+
+      ### Magyar
+
+
+      Hungarian translation across the full interface, contributed by **@pisti87** (#227). Existing
+      language choices are preserved across the update. Köszönjük!
+
+
+      ### Fixes
+
+
+      - **The lock screen finally says WADAMESH.** The old MESHCOMOD was baked into the wallpaper
+      image itself rather than drawn as text, so the earlier branding fix missed it — both the
+      built-in wallpaper and the copy seeded to storage are replaced. Reported by **@smhawkes**
+      (#228).
+
+      - **T-Display P4: profile export and backups work again.** The backup writer still pointed at
+      the storage system beta_54 retired, so every save failed with "can't open file" — the backup
+      list and restore were equally affected. Reported by **@D-Melhede** (#231).
+
+
+      ---
+
+
+      Both P4 panel variants are built fresh for this tag: `wadamesh-tdisplay-p4*` (AMOLED) and
+      `wadamesh-tdisplay-p4-lcd*` (TFT-LCD).
+
+
+      Full notes: `release-notes/beta_58.txt`.
+  - version: beta_57
+    name: wadamesh beta_57
+    datetime: '2026-08-03T15:18:09Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_57
+    prerelease: true
+    notes: >-
+      Test build. Stable stays **beta_50**.
+
+
+      Flash it from **https://flasher.wadamesh.com** (flip the Beta toggle), or on-device via
+      Settings → Firmware with "Get test builds (beta)" enabled.
+
+
+      Most of this beta is contributed work: **@PixPMusic** (storage and Pager fixes) and
+      **@mikecarper** (the new send retry). Thank you both.
+
+
+      ---
+
+
+      ### Sends retry until the mesh has heard them
+
+
+      Until now a message was transmitted exactly once. If that single transmission collided with
+      other traffic or a repeater was mid-hop, it was simply gone — the app showed it as sent, the
+      mesh never saw it. Built by **@mikecarper** (#207): the device now listens for evidence its
+      message went out (a repeater echoing it, or the delivery ACK) and retransmits on a growing
+      backoff until something confirms it was heard — direct and flood sends alike, including sends
+      from the phone app. If you prefer the old single-shot behaviour, there is a new toggle under
+      **Settings → Radio & Mesh → "Retry sends until heard"** (on by default).
+
+
+      ### Saving settings on SD storage was broken
+
+
+      If your device stores data on the SD card (T-Deck, V4-R8, Pager, Launcher installs), every
+      settings save has been failing with "Couldn't save name to storage" and quietly surviving only
+      through a recovery file. The commit step renamed a file onto itself because both rename
+      arguments shared one path buffer, so it could never succeed. Found and fixed by **@PixPMusic**
+      (#211).
+
+
+      Two more storage fixes from the same series: watchdog state is now preserved around long
+      SD/flash work instead of being blindly re-armed afterwards, which removes a cause of spurious
+      watchdog reboots (#213), and preference reads no longer hand out pointers into a shared cache
+      that another task could invalidate mid-read (#212).
+
+
+      ### Pager radio: the oscillator voltage was wrong
+
+
+      The SX1262 T-Lora Pager drove its radio oscillator at a generic 1.6 V fallback; LilyGo's own
+      reference code uses 3.0 V for this exact board. The result was a weak link — transmissions
+      nearby nodes missed, ACKs that never arrived. **@PixPMusic** confirmed on hardware that the
+      voltage was the difference (#209).
+
+
+      ### Fixes
+
+
+      - **Discover froze when a node name contains an emoji or a `#`.** The scanner list colours
+      each row with text markup, and a name cut mid-emoji (or a stray hash) broke that markup for
+      every row after it — the list looked frozen from that point on. Names are now cleaned and
+      escaped before display, here and in the message-info repeat list. Reported by **@4nuts** with
+      the exact culprit name, "Ouderkerk☀️" (#223).
+
+      - **Formatting an SD card on the V4-R8 or ThinkNode M9 hung forever.** The Format button
+      exists on both boards, but the code that performs the format was only compiled for the T-Deck
+      — the "this can take up to a minute" notice stayed up with nothing running behind it, and the
+      card stayed unusable until a reboot. Reported by **@TrustYourTechnoLust** (#172).
+
+      - **Files-app Copy/Paste silently did nothing except on the T-Deck** — same root cause as the
+      format hang, fixed the same way.
+
+
+      ---
+
+
+      Both P4 panel variants are built fresh for this tag: `wadamesh-tdisplay-p4*` (AMOLED) and
+      `wadamesh-tdisplay-p4-lcd*` (TFT-LCD).
+
+
+      Full notes: `release-notes/beta_57.txt`.
+  - version: beta_56
+    name: wadamesh beta_56
+    datetime: '2026-08-01T10:38:29Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_56
+    prerelease: true
+    notes: >-
+      ## wadamesh beta_56 — test build
+
+
+      **Update recommended for everyone who ever picked a region preset.**
+
+
+      Flash via **[flasher.wadamesh.com](https://flasher.wadamesh.com)** (Beta toggle), the
+      on-device updater, or LauncherHub WADAMESH BETA.
+
+
+      ### ⚠️ Duty-cycle fix (#161)
+
+      The region presets set the airtime limit **10× too loose**: a 10% preset actually allowed ~91%
+      duty — the home-screen meter reading "91% max duty cycle" was correctly reporting your radio's
+      real budget. This build fixes the preset math **and self-heals affected devices**: if your
+      radio parameters exactly match a preset and carry the old faulty limit, the correct one is
+      written automatically at boot. Hand-tuned airtime factors are never touched. Thanks
+      @Lankyalong for the report.
+
+
+      ### T-Pager
+
+      - **The SD card is used now (#193).** It mounted and browsed but nothing stored to it — the
+      storage feature was never switched on for this board. The Pager now has the same "Store data
+      on SD", boot storage selection and migration as the T-Deck. Thanks @AtomAlex12.
+
+
+      ### Fixes
+
+      - Message details show the region scope for scoped **direct** messages, and no longer show
+      `Scope 0000` when the sender carries the region in the alternate slot (#157, thanks
+      @D-Melhede).
+
+      - Discover app: long node names no longer push the last-heard time off screen (#191, thanks
+      @4nuts). Note: companions don't answer discover pings yet — only repeaters implement the
+      responder — so only repeaters appear, that's expected for now.
+
+      - The unlock animation says WADAMESH (#165 — the last MESHCOMOD leftover, thanks @D-Melhede).
+
+
+      Full changelog: `beta_55...beta_56`
+
+
+      🤖 Generated with [Claude Code](https://claude.com/claude-code)
+  - version: beta_55
+    name: wadamesh beta_55
+    datetime: '2026-08-01T09:49:20Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_55
+    prerelease: true
+    notes: >-
+      ## wadamesh beta_55 — test build
+
+
+      **The reliability release** — with two community contributions by @PixPMusic. Flash via
+      **[flasher.wadamesh.com](https://flasher.wadamesh.com)** (Beta toggle), the on-device updater,
+      or LauncherHub WADAMESH BETA.
+
+
+      ### Settings that stay put — by @PixPMusic (#195, #196)
+
+      An interrupted settings write could truncate the settings file: sound toggles reverting, the
+      setup wizard reappearing, phantom `#unknown` channels. Settings now persist through paired
+      CRC-checked snapshots written in the background — a torn write can only lose the newest
+      change, never your configuration. Saves also no longer hitch the UI.
+
+      *Downgrade note: older firmware reads the settings file, which can be one save behind after
+      running this build.*
+
+
+      ### 3-minute boots with an SD card fixed (#194)
+
+      A card that woke at a low clock kept that clock all session — contacts and history loading at
+      ~25 KB/s, the file manager showing an inserted card as 0 KB/empty, backups wedging. The mount
+      now raises the clock to full speed after a slow wake. Mostly hit T-Deck Launcher installs.
+      Thanks @scsirob for the decisive testing.
+
+
+      ### T-Pager UI size presets — by @PixPMusic (#197)
+
+      Small (current, default), Medium, Large — bigger text tuned for the 480×222 screen, encoder
+      scrolling for tall content. **Pager testers: please try Medium/Large and report anything that
+      clips.**
+
+
+      ### Heltec V4-R8
+
+      - **The buzzer works** — it shipped disabled because the Expansion Kit V2's driver-chip wiring
+      was unconfirmed; Heltec's schematic settled it (DIN = GPIO4, driver hardware-enabled). Still
+      silent? The small **SW1** switch on the expansion board is a hardware mute.
+
+      - Landscape touch fix from beta_54 confirmed by testers — thank you.
+
+
+      ### General
+
+      - Long-pressing the GPS tile in the control centre opens the GPS settings page (was: radio
+      page).
+
+
+      Full changelog: `beta_54...beta_55`
+
+
+      🤖 Generated with [Claude Code](https://claude.com/claude-code)
+  - version: beta_54
+    name: wadamesh beta_54
+    datetime: '2026-07-31T15:54:59Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_54
+    prerelease: true
+    notes: >-
+      ## wadamesh beta_54 — test build
+
+
+      **T-Display P4 owners: this is the one.** The whole-screen blue flash (#167) is fixed, and GPS
+      actually works now.
+
+
+      Flash or update via **[flasher.wadamesh.com](https://flasher.wadamesh.com)** (Beta toggle),
+      the on-device updater ("Get test builds"), or the LauncherHub WADAMESH BETA entry.
+
+
+      ### T-Display P4
+
+      - **Screen flash fixed (#167).** Root cause, established by on-device measurement: SD-card
+      write bursts delay the interrupt that re-arms the display's frame DMA — the panel shows the
+      late frame as a blue flash (35–39 ms gaps against a 20 ms cadence, one-for-one with card
+      transactions). The hot store (contacts, channels, chat history) now lives on fast internal
+      storage; the SD carries map tiles, backups and exports. Your data migrates automatically on
+      first boot — the card is left untouched as a rollback.
+
+      - **Card independence:** the SD card no longer holds your identity — swapping or removing it
+      can never change your node or lose contacts.
+
+      - **GPS fixed for real.** The sensor loop was never serviced on this board, so the firmware
+      never read the GPS module at all. Confirmed fixing outdoors.
+
+      - **Live satellite page:** in view / in use / signal strength, updating while open.
+
+      - Storage writes run on a dedicated worker task — no more UI stutter on big saves.
+
+
+      ### Romanian — by @jcyrio (#188, #189)
+
+      Romanian is the 13th UI language, with a proper keyboard layout: **ă** on the home row,
+      **ş/ţ** on the deck, **â/î** via the accent popups. Mulţumim!
+
+
+      ### Heltec V4-R8
+
+      - **Landscape touch fixed** (was point-mirrored — the R8's panel baseline differs from the
+      V4's, and the touch mapping assumed the V4). If you got stuck in landscape: this build boots
+      back to portrait automatically.
+
+      - For safety the R8 returns to portrait on every boot until a tester confirms the corrected
+      mapping — please try landscape and report.
+
+
+      ### General
+
+      - Airtime + Snake apps: crash fix on close.
+
+
+      Full changelog: `beta_53...beta_54`
+
+
+      🤖 Generated with [Claude Code](https://claude.com/claude-code)
+  - version: beta_53
+    name: wadamesh beta_53
+    datetime: '2026-07-30T15:49:55Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_53
+    prerelease: true
+    notes: >-
+      Test build. Stable stays **beta_50**.
+
+
+      Flash it from **https://flasher.wadamesh.com** (flip the Beta toggle), or on-device via
+      Settings → Firmware with "Get test builds (beta)" enabled.
+
+
+      ---
+
+
+      ### ⚠️ Read this before updating
+
+
+      **Chats now keep the newest 250 messages each by default.** If a chat holds more than that,
+      the older messages are dropped the next time it receives one. Change it or turn it off under
+      **Settings → Chats → "Keep per chat (messages)"** first if you want to keep a deep backlog.
+
+
+      ---
+
+
+      ### Speed with a large chat history
+
+
+      This is the headline. A busy channel made the whole interface crawl, and the cause was the
+      chat list re-scanning the **entire** message store once **per chat**, every refresh — so the
+      more history you had, the slower everything became. One reporter had 3800 messages in a single
+      channel. That work now happens once instead of once per chat, and it is why the drag was
+      noticeable even at ~300 messages.
+
+
+      Alongside it, a new **per-chat history limit** (Settings → Chats): 100 / 250 / 500 / 1000 /
+      2000 / No limit, default **250**. Previously the message store was one shared pool with no
+      per-chat bound, so a single busy channel could occupy essentially all of it and starve your
+      other chats of history. Choosing **No limit** asks you to confirm, because an unlimited
+      history is exactly what caused the slowdown.
+
+
+      ### Blocking now actually works
+
+
+      Three separate bugs, all reported by **@D-Melhede** (#177):
+
+
+      - blocking a sender in a **channel** never saved properly, so it did not stick
+
+      - blocking a person inside a **room server** silenced the **entire room** instead of that one
+      person
+
+      - blocked names were only filtered in channels, so **room posts still came through**
+
+
+      Unblocking is also fixed: blocks were stored in two places and only one was cleared, so
+      someone could stay silently blocked after you unblocked them.
+
+
+      ### Chats
+
+
+      - **Chat list preview stuck on an old message.** It chose the "newest" message by timestamp,
+      which breaks on a device whose clock restarts each boot — a message from an earlier session
+      could outrank everything new, permanently. It now uses actual arrival order. Mostly seen on
+      the T-Display P4.
+
+      - **Notification sound works again.** A failed map-tile fetch left an internal counter stuck,
+      and that counter was silently muting every chime. Reported by **@ropafiro** (#184).
+
+
+      ### Stability and connection
+
+
+      - **Multi-second freezes on Heltec V4** in a busy mesh. Every advert heard triggered a
+      redundant write to internal flash, and contact saves were not rate-limited. Thanks to **Raph**
+      for the detailed report and video.
+
+      - **Wi-Fi scanning no longer gets stuck off** after a badly-timed disconnect (#171,
+      **@TrustYourTechnoLust**).
+
+      - **The phone app gets its replies again** — ping and telemetry responses could be swallowed
+      before reaching it (#124, **@nicocdu23-blip**).
+
+      - **The web control panel no longer drops typed characters.** Thanks to **VE2CCK**.
+
+
+      ### Apps
+
+
+      - **Airtime and Snake** now behave like the Spectrum app: a proper `‹ back` title bar, and you
+      can no longer tap or swipe through to the screen behind them. A crash-on-close path was fixed
+      at the same time.
+
+      - **Swiping inside any full-screen app** (Airtime, Spectrum, RF Monitor, Discover, Web, VNC,
+      Remote) no longer jumps you to another tab.
+
+      - Three older reports from **@dreirund**: crash-restart dialog text overlapping its buttons
+      (#97), the settings sheet from "Discovered" being cut off (#109), and room servers getting
+      their own icon in the contacts list (#106).
+
+
+      ### T-Display P4
+
+
+      - **The clock is fixed.** The P4 showed the wrong time on screen while sent messages carried
+      the correct one, and "Sync clock from system" then broke the good clock too. Its RTC chip was
+      being set but the system clock never was. (This also affects the ThinkNode M9, which has the
+      same chip.)
+
+      - **New LoRa antenna setting** (Settings → Radio). The on-board antenna is selected on **every
+      boot**, and switching to the external socket asks you to confirm an antenna
+
+      …
+  - version: beta_52
+    name: wadamesh beta_52 (RISKY - storage rework, needs testing)
+    datetime: '2026-07-29T15:16:48Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_52
+    prerelease: true
+    notes: >-
+      # ⚠️ RISKY TEST BUILD — READ BEFORE FLASHING ⚠️
+
+
+      > **This beta reworks how chat history is stored on the SD card, and it has NOT been
+      soak-tested over long uptime yet. It may have data-loss bugs.**
+
+      >
+
+      > - 🧪 **It needs community testing.** Please run it for hours or days and report any SD
+      errors, "history not saving," or storage weirdness on the issues tracker.
+
+      > - 💾 **The chat-history format changes, and the change is ONE-WAY.** If you flash an older
+      firmware after running this, your saved chat history is lost. Back up anything you care about
+      first.
+
+      > - 🛑 **Do not run this as your only or daily device** unless you're OK risking your chat
+      history.
+
+      >
+
+      > If you just want a solid device, stay on **beta_50** (current stable) or **beta_51**.
+
+
+      ---
+
+
+      **wadamesh beta_52** lands a major community SD/storage rework for testing.
+
+
+      > Test build. Turn on **Get test builds (beta)** on the device, use the **Beta** toggle on the
+      [web flasher](https://flasher.wadamesh.com), or grab a `-merged.bin` below. Stable stays on
+      beta_50.
+
+
+      ## What's new — SD storage rework (by @Vybo,
+      [#179](https://github.com/ALLFATHER-BV/wadamesh/pull/179))
+
+      - **Runtime SD recovery**: the device now recovers from an SD card that wedges or is pulled at
+      runtime, instead of playing dead until a reboot.
+
+      - **Chat-store health** on the About page: resolved backend, last save time, and failure
+      details, so a sick store is visible.
+
+      - **Segmented message store**: chat history is written as small append-friendly segment files
+      instead of rewriting the whole file on every save — shorter write windows, per-segment
+      corruption isolation, crash-atomic migration.
+
+      - Plus a fix for the follow-on bug where SD writes started failing after a few hours of uptime
+      once the segment table filled.
+
+
+      Huge thanks to **@Vybo** (Dan Vybiral) for the deep root-cause work on the SD stack.
+
+
+      ## Also included (from beta_51)
+
+      Chat bubble timestamp on the top row (@scratchdiver), the Airtime channel-utilization tool
+      (@jacobpretorius), the lockscreen wallpaper corruption fix (@Yazutsu, #127), and the T-Display
+      P4 text-size fix.
+
+
+      ## Boards
+
+      T-Deck · Heltec V4 TFT · Heltec V4-R8 · ThinkNode M9 · RAK TAP v2 · T-LoRa Pager (LR1121 /
+      SX1262) · Attaky Core · T-Display P4 (AMOLED + LCD). Flash `<board>-merged.bin` at `0x0` for a
+      full install, or `<board>.bin` for an app-only update.
+  - version: beta_51
+    name: wadamesh beta_51
+    datetime: '2026-07-29T12:41:34Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_51
+    prerelease: true
+    notes: >-
+      **wadamesh beta_51** is a community drop — a chat layout change, a channel-airtime tool, and a
+      lockscreen fix. Thanks to @Yazutsu, @scratchdiver and @jacobpretorius.
+
+
+      > Test build. Turn on **Get test builds (beta)** on the device, use the **Beta** toggle on the
+      [web flasher](https://flasher.wadamesh.com), or grab a `-merged.bin` below. Stable stays on
+      beta_46.
+
+
+      ## Chat — by @scratchdiver ([#182](https://github.com/ALLFATHER-BV/wadamesh/pull/182))
+
+      - Message bubbles now put the **time on the top row** next to the sender, so more messages fit
+      on screen. Applies to channels, DMs and room-server threads.
+
+
+      ## New: Airtime tool — by @jacobpretorius
+      ([#176](https://github.com/ALLFATHER-BV/wadamesh/pull/176))
+
+      - A new **Airtime** app in the Apps drawer measures how busy the LoRa channel actually is, so
+      congestion can be checked against real data instead of assumed. It shows channel utilization
+      over time, packets lost at the radio (CRC errors, late reads, queue drops), live RSSI/noise,
+      the LoRa preset, and a plain verdict.
+
+
+      ## Fixed
+
+      - **Lockscreen wallpaper** no longer corrupts into coloured noise after visiting the map — a
+      stale LVGL image-cache entry pointed at freed PSRAM the map had reused. By @Yazutsu
+      ([#181](https://github.com/ALLFATHER-BV/wadamesh/pull/181), fixes
+      [#127](https://github.com/ALLFATHER-BV/wadamesh/issues/127)).
+
+      - **T-Display P4**: the text-size setting works again — it was pinned to 100% and ignored your
+      choice.
+
+
+      ## Boards
+
+      T-Deck · Heltec V4 TFT · Heltec V4-R8 · ThinkNode M9 · RAK TAP v2 · T-LoRa Pager (LR1121 /
+      SX1262) · Attaky Core · T-Display P4 (AMOLED + LCD). Flash `<board>-merged.bin` at `0x0` for a
+      full install, or `<board>.bin` for an app-only update.
+  - version: beta_50
+    name: wadamesh beta_50
+    datetime: '2026-07-22T21:02:30Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_50
+    prerelease: false
+    notes: >-
+      **wadamesh beta_50 is the new stable build.** It rolls up everything since beta_46 (beta_47 →
+      beta_50). Flash it from the [web flasher](https://flasher.wadamesh.com), or grab a
+      `-merged.bin` below and flash at `0x0`.
+
+
+      Thanks to community contributors @attakygit and @codemonkeybr.
+
+
+      ## New
+
+      - **Discover app** — actively sweep for nearby nodes and list everything that answers
+      (repeaters, companions, room servers), ranked by signal, with live RSSI/SNR, a **direct**
+      badge for anything in RF range, and a last-heard age. Tap a node to add it straight to your
+      contacts.
+
+      - **Wardriving** — with a GPS fix, Discover logs every node it hears against your position to
+      a CSV on the SD card and plots your RF coverage on the map as a signal-coloured track (green =
+      strong, red = weak). A standalone on-device coverage mapper, no phone needed.
+
+      - **New board: Attaky Core** (ESP32-S3, 16 MB / 8 MB PSRAM), contributed by @attakygit
+      ([#158](https://github.com/ALLFATHER-BV/wadamesh/pull/158)).
+
+      - **T-Display P4 TFT-LCD** screen model now supported alongside the AMOLED.
+
+
+      ## On-device updates
+
+      - The updater was downloading the **wrong firmware** on the Heltec V4-R8, ThinkNode M9, RAK
+      Tap V2, T-LoRa Pager and Attaky (it pulled the V4 TFT build). Each board now installs its own
+      build.
+
+      - **T-Display P4**: the "Get test builds (beta)" toggle and on-device updates now appear — the
+      P4 was previously USB-only.
+
+
+      ## Fixes
+
+      - Crash that could reboot the device while typing in a chat.
+
+      - Devices stuck on the boot screen after an update with a microSD card fitted.
+
+      - Message times showing 1910 / wrong dates — they now match the clock.
+
+      - MQTT bridge settings not saving across reboots.
+
+      - Dutch keyboard typing "ij" / "IJ" on the "1" and "!" keys.
+
+      - The message box dropping the end of long messages; copy/paste cutting off long text.
+
+      - Quick messages list not scrolling; room-server names with an unusual first character showing
+      an empty box on Join.
+
+      - Tanmatsu: only about half the emoji were reachable in the picker.
+
+
+      ## Per-board
+
+      - **T-Display P4**: screen timeout works (plus standby / burn-in dimming); the full-screen
+      tools and the Snake game exit with a top-bar tap instead of trapping you; GPS (L76K) detected
+      reliably at 9600; taller control-center dropdown; LCD backlight fixed.
+
+      - **T-LoRa Pager** (@codemonkeybr, [#162](https://github.com/ALLFATHER-BV/wadamesh/pull/162)):
+      lock screen fixed (Backspace peek / hold-to-unlock, layout fits the wide screen); rotary
+      encoder keeps focus in the chat list with the composer keys remapped.
+
+      - **Attaky Core**: on-screen keyboard works with the detachable keyboard module; POWER button
+      toggles/wakes the screen; LoRa-clock, GPS-baud and sensor-probe fixes.
+
+
+      ## Boards
+
+      T-Deck · Heltec V4 TFT · Heltec V4-R8 · ThinkNode M9 · RAK TAP v2 · T-LoRa Pager (LR1121 /
+      SX1262) · Attaky Core · T-Display P4 (AMOLED + LCD).
+  - version: beta_49
+    name: wadamesh beta_49
+    datetime: '2026-07-21T18:46:49Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_49
+    prerelease: true
+    notes: >-
+      **wadamesh beta_49** is a **T-Display P4 only** drop.
+
+
+      > **Not on a P4? Skip this one.** It only has P4 fixes, there is nothing new for the other
+      boards. Stay on beta_48.
+
+
+      > Test build. Turn on **Get test builds (beta)** on the device, use the **Beta** toggle on the
+      [web flasher](https://flasher.wadamesh.com), or grab a `-merged.bin` below. Stable stays on
+      beta_46.
+
+
+      ## Fixed (T-Display P4)
+
+      - The **Snake game** no longer traps you. Tap the top bar to leave it. Before, the only way
+      out was a reset.
+
+      - The full-screen tools (**Monitor, Spectrum, Discover, Web mirror, Advert**) can now be left
+      by tapping the top bar, so they no longer trap you either.
+
+      - **Screen timeout** now works. The display turns off after your idle time and wakes on touch.
+      This also fixes standby and burn-in dimming.
+
+      - **Text overflow** fixed. The interface is pinned to the 100% size that fits the panel.
+
+      - **GPS**: the L76K is now found reliably and read at 9600 baud (a boot-time detect race plus
+      a stale 38400 setting kept it dead). You still need the GPS antenna connected and a clear view
+      of the sky to get a fix.
+
+      - The **control center dropdown** is taller, so the GPS status line sits below the buttons
+      instead of behind them.
+
+
+      ## P4 LCD model (HI8561)
+
+      - Fixed the **black screen** on the TFT-LCD SKU. The backlight now turns on. Please flash
+      `wadamesh-tdisplay-p4-lcd-merged.bin` at `0x0` and report back.
+
+
+      ## Boards
+
+      This drop rebuilds every board so the version stays in step, but only the **T-Display P4** has
+      changes. Other boards can stay on beta_48. Flash `<board>-merged.bin` at `0x0` for a full
+      install, or `<board>.bin` for an app-only update.
+  - version: beta_48
+    name: wadamesh beta_48
+    datetime: '2026-07-20T09:33:01Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_48
+    prerelease: true
+    notes: >-
+      **wadamesh beta_48** is a stability and bug-fix drop. A big batch of reported issues sorted.
+
+
+      > Test build. Turn on **Get test builds (beta)** on the device, use the **Beta** toggle on the
+      [web flasher](https://flasher.wadamesh.com), or grab a `-merged.bin` below. Stable stays on
+      beta_46.
+
+
+      ## Fixed
+
+      - Crash that could reboot the device while typing in a chat
+      ([#98](https://github.com/ALLFATHER-BV/wadamesh/issues/98)).
+
+      - Devices stuck on the boot screen after an update with a microSD card fitted. The boot-time
+      copy of your data to the card could hang on a slow or damaged card; it is now guarded so the
+      device always boots ([#142](https://github.com/ALLFATHER-BV/wadamesh/issues/142),
+      [#148](https://github.com/ALLFATHER-BV/wadamesh/issues/148)).
+
+      - MQTT bridge settings not saving. They were going to the wrong storage; now they stick across
+      reboots ([#128](https://github.com/ALLFATHER-BV/wadamesh/issues/128)).
+
+      - Message times showing 1910 or other wrong dates. They now match the clock at the top of the
+      screen ([#100](https://github.com/ALLFATHER-BV/wadamesh/issues/100),
+      [#152](https://github.com/ALLFATHER-BV/wadamesh/issues/152)).
+
+      - Dutch keyboard typing "ij" and "IJ" on the "1" and "!" keys
+      ([#144](https://github.com/ALLFATHER-BV/wadamesh/issues/144),
+      [#164](https://github.com/ALLFATHER-BV/wadamesh/issues/164)).
+
+      - Message box letting you type past the real send limit and silently dropping the end of a
+      long message ([#119](https://github.com/ALLFATHER-BV/wadamesh/issues/119)).
+
+      - Copy and paste cutting off long text
+      ([#120](https://github.com/ALLFATHER-BV/wadamesh/issues/120)).
+
+      - Quick messages list not scrolling when there were more entries than fit on screen
+      ([#151](https://github.com/ALLFATHER-BV/wadamesh/issues/151)).
+
+      - Room server names starting with an unusual character showing an empty box on the Join screen
+      ([#116](https://github.com/ALLFATHER-BV/wadamesh/issues/116)).
+
+      - Tanmatsu: only about half the emojis were reachable in the picker
+      ([#141](https://github.com/ALLFATHER-BV/wadamesh/issues/141)).
+
+      - Tanmatsu: the last settings item (About) being unreachable was already fixed in an earlier
+      build, so it is sorted here too ([#140](https://github.com/ALLFATHER-BV/wadamesh/issues/140)).
+
+
+      ## Boards
+
+      T-Deck · Heltec V4 TFT · Heltec V4-R8 · ThinkNode M9 · RAK TAP v2 · T-LoRa Pager (LR1121 /
+      SX1262) · Attaky Core · T-Display P4. Flash `<board>-merged.bin` at `0x0` for a full install,
+      or `<board>.bin` for an app-only update.
+  - version: beta_47
+    name: wadamesh beta_47
+    datetime: '2026-07-19T16:02:03Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_47
+    prerelease: true
+    notes: >-
+      **wadamesh beta_47** — a new **Discover** app (find, list and map the nodes around you, plus
+      wardriving), a new board, and pager + T-Display P4 additions.
+
+
+      > 🧪 Test build. Flip **Get test builds (beta)** on-device, use the **Beta** toggle on the
+      [web flasher](https://flasher.wadamesh.com), or grab a `-merged.bin` below. Stable stays on
+      beta_46.
+
+
+      🙏 **Community contributions:** thanks to **[@attakygit](https://github.com/attakygit)** for
+      the **Attaky Core** board port ([#158](https://github.com/ALLFATHER-BV/wadamesh/pull/158)) and
+      **[@codemonkeybr](https://github.com/codemonkeybr)** (Tesso Codemonkey) for the **T-LoRa
+      Pager** navigation fix ([#162](https://github.com/ALLFATHER-BV/wadamesh/pull/162)).
+
+
+      ## ✨ Discover — find what's around you
+
+      - **Active discovery** — open the **Discover** app (app drawer → the ⟳ tile, next to Map): it
+      sweeps for nearby nodes and lists every repeater / companion / room server that answers,
+      **ranked by signal** — live RSSI/SNR, a green **direct** badge for anything in direct RF
+      range, and a last-heard age.
+
+      - **One-tap add** — tap a node to add it straight to your contacts (it keeps the right type:
+      repeater, companion or room).
+
+      - **Wardriving** — with a GPS fix it logs every node it hears against your position to a CSV
+      on the SD card as you move, and paints your **RF coverage on the map** as a signal-coloured
+      track (green = strong → red = weak). A standalone, on-device coverage mapper — no phone
+      tethered.
+
+
+      ## 📟 New boards
+
+      - **Attaky Core** (ESP32-S3, 16 MB flash / 8 MB PSRAM) — a new board *(by @attakygit, #158)*.
+      Experimental: beta channel only while hardware verification finishes.
+
+      - **LilyGo T-Display P4 — TFT-LCD variant** — early support for the LCD screen model (the
+      AMOLED variant was already supported). Experimental; the `wadamesh-tdisplay-p4-lcd-merged.bin`
+      asset below is for LCD-screen units (flash at `0x0`).
+
+
+      ## 🛠 Fixed
+
+      - **LilyGo T-LoRa Pager** — the rotary encoder now keeps its focus inside the chat message
+      list, and the composer navigation keys are remapped so moving around and typing a message no
+      longer collide *(by @codemonkeybr, #162)*.
+
+
+      ## 📦 Boards
+
+      T-Deck · Heltec V4 TFT · Heltec V4-R8 · ThinkNode M9 · RAK TAP v2 · T-LoRa Pager (LR1121 /
+      SX1262) · Attaky Core · T-Display P4. Flash `<board>-merged.bin` at `0x0` (full install) or
+      `<board>.bin` for an app-only/OTA update.
+  - version: beta_46
+    name: wadamesh beta_46
+    datetime: '2026-07-16T20:42:03Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_46
+    prerelease: false
+    notes: >-
+      **wadamesh beta_46 — now the stable release.** This promotes beta_46 to stable; below is
+      everything since the previous stable (**beta_45**).
+
+
+      > ✅ Stable channel. Install via the [web flasher](https://flasher.wadamesh.com) (Stable), the
+      LauncherHub **WADAMESH** entry, or a `-merged.bin` below. Newer test builds live on the Beta
+      channel.
+
+
+      🙏 **Community contribution:** huge thanks to
+      **[@codemonkeybr](https://github.com/codemonkeybr)** (Tesso Codemonkey) for the **Do Not
+      Disturb** feature (originally [#156](https://github.com/ALLFATHER-BV/wadamesh/pull/156)).
+
+
+      ## 🛠 Fixed
+
+      - **Contacts no longer go missing between reboots on microSD devices.** Saves are now
+      **atomic** — written to a temp file and swapped in only once fully written — so an interrupted
+      write can never truncate your contact list, and the card is mounted far more reliably at boot.
+      *(If you've ever lost repeaters/contacts overnight, this is the fix — update to it.)*
+
+      - **Heltec V4-R8** — the microSD card now mounts, and the freeze when waking the device from
+      sleep is fixed.
+
+      - **LilyGo T-Pager** — the map no longer shows a "storage error" under the launcher; it now
+      caches tiles to the microSD card (like the T-Deck).
+
+      - **Heltec V4 (portrait)** — the Bluetooth icon no longer overlaps the clock, and
+      control-center buttons no longer clip when tapped.
+
+
+      ## ✨ New
+
+      - **Redesigned control center** — round quick-toggle buttons that spread to fill the panel, a
+      frosted-glass look, real lock/bell glyphs, and a confirmation popup on every toggle.
+
+      - **Do Not Disturb** *(by @codemonkeybr,
+      [#156](https://github.com/ALLFATHER-BV/wadamesh/pull/156))* — set quiet hours in **Settings →
+      Sound** to silence the incoming-message chime during a daily window, with a bell in the status
+      bar while it's active. Plus a matching control-center quick-toggle (a bell that gains a slash
+      while quiet hours are on).
+
+
+      ## 📦 Boards
+
+      T-Deck · Heltec V4 TFT · Heltec V4-R8 · ThinkNode M9 · RAK TAP v2 · T-LoRa Pager (LR1121 /
+      SX1262) · T-Display P4. Flash `<board>-merged.bin` at `0x0` (full install) or `<board>.bin`
+      for an app-only/OTA update.

@@ -1,4 +1,321 @@
 source: github
 repo: danst0/fennek
-updatedAt: '2026-08-17T14:29:50.794Z'
-releases: []
+updatedAt: '2026-08-17T16:29:54.581Z'
+releases:
+  - version: v2.7.4
+    name: v2.7.4
+    datetime: '2026-07-22T17:34:34Z'
+    url: https://github.com/danst0/fennek/releases/tag/v2.7.4
+    prerelease: false
+    notes: >-
+      IJKL geräteweit als Alias zu WASD: alle Apps akzeptieren zusätzlich I/J/K/L
+      (hoch/links/runter/rechts). Mesh- und Schach-Kollisionen sauber gelöst; mathquiz-Keypad und
+      Sudoku-Zifferneingabe unangetastet.
+  - version: v2.7.3
+    name: v2.7.3
+    datetime: '2026-07-22T15:50:34Z'
+    url: https://github.com/danst0/fennek/releases/tag/v2.7.3
+    prerelease: false
+    notes: >-
+      Sudoku: Ziffern ohne Alt-Taste (Numpad-Aufdruck W E R / S D F / Z X C = 1..9), Cursor auf IJKL
+      umgestellt.
+  - version: v2.7.1
+    name: v2.7.1
+    datetime: '2026-07-19T07:33:31Z'
+    url: https://github.com/danst0/fennek/releases/tag/v2.7.1
+    prerelease: false
+    notes: >-
+      Schach-Trainer-Modus: neuer Gegner bewertet jeden Zug offline (Einstufung + Begründung +
+      Empfehlung). Zentraler WLAN-Multiprofil-Service (services/wifi.*) ersetzt die duplizierte
+      WiFi.begin-Sequenz in 9 Diensten und wählt per Scan das stärkste bekannte Netz.
+  - version: v2.7.0
+    name: v2.7.0
+    datetime: '2026-07-19T06:29:18Z'
+    url: https://github.com/danst0/fennek/releases/tag/v2.7.0
+    prerelease: false
+    notes: 'Schach: Stufenname im Serial-Log wird jetzt übersetzt (i18n::tr statt Enum-Wert an %s).'
+  - version: v2.6.9
+    name: v2.6.9
+    datetime: '2026-07-19T06:28:17Z'
+    url: https://github.com/danst0/fennek/releases/tag/v2.6.9
+    prerelease: false
+    notes: >-
+      Sperrbildschirm als Vollbild (große exakte Uhr, Datum, Akku, Now-Playing, Entsperr-Hinweis) +
+      informativeres Standby-Banner (grobe Uhr "Nach HH:xx", nächster Wecker, Akku-Ladeanzeige).
+      Wake-/Entsperr-Hinweise nennen den oberen Knopf.
+  - version: v2.6.5
+    name: v2.6.5
+    datetime: '2026-07-14T11:26:25Z'
+    url: https://github.com/danst0/fennek/releases/tag/v2.6.5
+    prerelease: false
+    notes: >-
+      feat(calibre): E-Book-Pull-Sync von Calibre-Web via OPDS
+
+
+      - Neuer Service services/calibre_books: zieht das Buecherregal "Fennek" (Shelf, Name oder ID)
+      von Calibre-Web via OPDS und laedt neue EPUBs nach /books (Basic-Auth, Dateiname aus
+      Content-Disposition)
+
+      - Nur-hinzufuegend: Manifest /.fennek/calibre.tsv, max. 8 Downloads/Lauf
+
+      - Auto-Sync vor dem Auto-Standby hoechstens alle 6 h + RTC-Back-off
+
+      - Konsole: calibre url/user/pass/shelf/on/off/sync + Status
+
+
+      🤖 Generated with [Claude Code](https://claude.com/claude-code)
+  - version: v2.6.4
+    name: Fennek v2.6.4
+    datetime: '2026-07-14T07:44:33Z'
+    url: https://github.com/danst0/fennek/releases/tag/v2.6.4
+    prerelease: false
+    notes: >-
+      Schutznetze gegen stille Akku-Tiefentladung im Standby:
+
+
+      - Schlaf-Diagnose im RTC-RAM (Phase-Breadcrumb + Wake-Historie, beim nächsten Vollboot ins
+      battlog)
+
+      - Task-Watchdog um Timer-Wake-Minimalpfad (30 s) und enterStandby (60 s),
+      Loslass-Warteschleife mit 10-s-Timeout
+
+      - Crash-Loop-Bremse: 3 abnormale Resets in Folge → Not-Standby (nur Knopf-Wake), Crash-Boots
+      flushen sofort auf SD
+
+      - Tiefentladeschutz: ≤5 % auf Akku → sofort Standby, im Schlaf keine Stunden-Wakes mehr
+      (Wecker bis 3 %)
+
+      - GPIO42 (Tastatur-Backlight-Gate) über Deep Sleep gehalten, E-Ink-Controller vor Deep Sleep
+      in hibernate()
+
+      - Launcher: Kachel-Icons links + Text-Label, Lage/Gyro-App deaktiviert
+  - version: v2.6.3
+    name: v2.6.3
+    datetime: '2026-06-24T13:45:28Z'
+    url: https://github.com/danst0/fennek/releases/tag/v2.6.3
+    prerelease: false
+    notes: >-
+      App-Kacheln im Launcher zeigen jetzt selbst gezeichnete Icons statt Text (Note, Kopfhörer,
+      Buch, Mesh, Zahnrad, Würfel, Ordner, Notizblatt, Wecker, Pin, Gyro, Operatoren, Karteikarten,
+      Kalender, Todo).
+
+
+      OTA: firmware.bin angehängt.
+  - version: v2.6.2
+    name: v2.6.2
+    datetime: '2026-06-24T12:51:56Z'
+    url: https://github.com/danst0/fennek/releases/tag/v2.6.2
+    prerelease: false
+    notes: >-
+      Rechnen-App: Schätz-Wertung + 20-s-Ziel (gedeckelte Zahlenbereiche, Toleranzfenster für große
+      Produkte/Geld-Prozente/SHARE/GROWTH, Sekunden-Anzeige). Kalender: CalDAV-Abo (iCloud u. a.)
+      via `caldav:`-Feed mit Basic-Auth, Zugangsdaten in Settings-App/Konsole.
+  - version: v2.6.0
+    name: v2.6.0
+    datetime: '2026-06-22T16:46:35Z'
+    url: https://github.com/danst0/fennek/releases/tag/v2.6.0
+    prerelease: false
+    notes: >-
+      ## Änderungen
+
+
+      - **Tic-Tac-Toe**: Fennek macht mit 20 % Wahrscheinlichkeit einen zufälligen Zug statt Minimax
+      — der Spieler hat jetzt eine echte Chance zu gewinnen
+
+      - **Adaptives Polling**: Eingabe-Polling drosselt sich nach 3 s Leerlauf von ~100 Hz auf ~30
+      Hz (spart Core-1-Wachzeit ohne spürbare Latenz)
+
+      - **Tap-Log-Drossel**: Gehaltener Finger flutete Serial-Konsole mit Dauer-Taps — jetzt max. 1
+      Log-Zeile alle 400 ms
+
+      - **`power::idleMs()`**: Neue Funktion gibt Millisekunden seit letzter Aktivität zurück
+  - version: v2.5.9
+    name: Fennek v2.5.9
+    datetime: '2026-06-21T19:36:11Z'
+    url: https://github.com/danst0/fennek/releases/tag/v2.5.9
+    prerelease: false
+    notes: >-
+      Podcast-App deaktiviert (WLAN-Sync zu langsam).
+
+
+      - Auto-WLAN-Sync vor Standby (podcast::flushBeforeStandby) auskommentiert — brachte bei jedem
+      Standby das WLAN über den 4-MHz-SD-Bus hoch
+
+      - Launcher-Kachel + appmgr-Registrierung + podcast::begin() aus → App vom Gerät verschwunden,
+      Slot 13 (Seite 2) bleibt leer
+
+      - Code/Konsolen-Befehle/NVS-Toggle/i18n bewusst behalten (reaktivierbar)
+  - version: v2.5.7
+    name: v2.5.7
+    datetime: '2026-06-21T19:05:52Z'
+    url: https://github.com/danst0/fennek/releases/tag/v2.5.7
+    prerelease: false
+    notes: >-
+      ## Sudoku als fünftes Spiel
+
+
+      Neues Spiel **Sudoku** in der Spiele-App (neben 2048, Minensucher, Schach, Tic-Tac-Toe).
+
+
+      - Arduino-freier Generator + Solver (`sudoku_core.h`, host-getestet): randomisiertes
+      Backtracking für die Vollösung, dann eindeutigkeitsprüfendes Ausgraben — erzeugt nur Rätsel
+      mit genau einer Lösung. Rekursionsfrei (iterativer Level-Stack).
+
+      - 9×9-Gitter à 26 px, Touch-Tap/WASD-Cursor, Zifferntasten 1–9 setzen, 0/Backspace/Mikrofon
+      leeren, Konfliktzellen invertiert, „Gelöst"-Overlay mit Zeit.
+
+      - Schwierigkeit Leicht/Mittel/Schwer (40/32/26 Vorgaben).
+
+      - Beststände im NVS (gelöste Rätsel + Bestzeit), inkl. INI-Export/-Import.
+
+
+      **OTA:** `firmware.bin` angehängt.
+  - version: v2.5.6
+    name: v2.5.6
+    datetime: '2026-06-21T15:32:44Z'
+    url: https://github.com/danst0/fennek/releases/tag/v2.5.6
+    prerelease: false
+    notes: >-
+      fix(power): Dateien-Modus am Kabel nicht einschlafen lassen
+
+
+      - battery::external() (DSG-Bit aus BatteryStatus 0x0A) erkennt Netzteil zuverlässig, auch bei
+      vollem Akku (charging() fiel bei Strom ~0 auf false)
+
+      - power::poll() nutzt external() statt charging() für die Dateien-Standby-Bremse
+  - version: v2.5.5
+    name: v2.5.5
+    datetime: '2026-06-21T15:07:48Z'
+    url: https://github.com/danst0/fennek/releases/tag/v2.5.5
+    prerelease: false
+    notes: |-
+      feat(wecker): Einmalig-Option für Wecker
+
+      - Neues Alarm-Feld `once` (NVS byte0 Bit4, abwärtskompatibel)
+      - Einmalige Wecker feuern am nächsten hh:mm tageunabhängig und schalten sich danach selbst aus
+      - Editor-Preset "Einmalig" im Feld Tage; Liste/Editor zeigen es an
+      - Konsole: `alarm <i> <hh:mm> einmal` (once/1x)
+
+      OTA: firmware.bin angehängt.
+  - version: v2.5.4
+    name: v2.5.4
+    datetime: '2026-06-21T15:00:17Z'
+    url: https://github.com/danst0/fennek/releases/tag/v2.5.4
+    prerelease: false
+    notes: >-
+      OTA-Update-Fix + Ollama-Timeout.
+
+
+      - **OTA `-104` behoben:** GitHub liefert für Release-Assets eine signierte Redirect-URL
+      (`release-assets.githubusercontent.com`, ~900 Zeichen). Diese sprengte den 300-Byte-Puffer in
+      `apply()` → abgeschnittene URL → `httpUpdate`-Fehler `-104` (wrong http code). Puffer auf 1400
+      Byte vergrößert.
+
+      - **notes_ai (Ollama) Timeout:** `HTTPClient::setTimeout()` nimmt `uint16_t` (max 65535 ms);
+      der Wert 120000 lief still auf 54464 ms über. Konstante auf 65000 ms korrigiert.
+
+
+      Erstes Release, mit dem OTA von einer früheren Version aus zuverlässig durchläuft.
+  - version: v2.5.3
+    name: v2.5.3
+    datetime: '2026-06-21T14:48:58Z'
+    url: https://github.com/danst0/fennek/releases/tag/v2.5.3
+    prerelease: false
+    notes: |-
+      perf(dateien): Request-Zähler-Refresh 10x seltener gegen E-Ink-Flackern
+
+      - Drosselung des Request-Zähler-Voll-Redraws im RUNNING-Zustand von 5 s auf 50 s
+      - Zähler ist reine Info; seltenere Voll-Redraws sparen sichtbares E-Ink-Flackern
+  - version: v2.5.2
+    name: Fennek v2.5.2
+    datetime: '2026-06-21T14:29:15Z'
+    url: https://github.com/danst0/fennek/releases/tag/v2.5.2
+    prerelease: false
+    notes: >-
+      ## Highlights
+
+
+      - **On-Device-OTA-Knopf** (Settings → Update → „Aktualisieren"): prüft GitHub-Releases und
+      flasht direkt am Gerät mit Vollbild-Fortschritt (Phase + Balken + %). Kein Browser/Konsole
+      mehr nötig.
+
+      - **Notizen:** Audionotiz-Player (Play/Pause, ±10 s, Region-Fortschritt) + hoch-scrollbarer
+      Editor.
+
+      - **Karteikarten:** Übersicht mit Leitner-Fächer-Verteilung (fällig/bearbeitet).
+
+      - **Kopfrechnen:** adaptive Schwierigkeit, je-Modus persistierte Stufe.
+
+      - **notes_ai:** behutsamerer Korrektur-Prompt (nur Rechtschreibung/Umlaute, kein Umdichten).
+
+      - **Tools:** `maps_tiles.py` mit wählbaren Kachelquellen (`--preset standard|cyclosm|topo`).
+
+
+      ## OTA-Update
+
+
+      Geräte ab v2.5.1 können direkt am Gerät auf diese Version aktualisieren (Settings → Update →
+      „Aktualisieren") oder via Web-UI (`fennek.local`) / Konsole (`ota update`).
+
+
+      **Flashen (USB):** `firmware.bin` in den inaktiven OTA-Slot bzw. via `pio run -e fennek -t
+      upload`.
+  - version: v2.5.0
+    name: v2.5.0
+    datetime: '2026-06-21T10:11:51Z'
+    url: https://github.com/danst0/fennek/releases/tag/v2.5.0
+    prerelease: false
+    notes: '**Full Changelog**: https://github.com/danst0/fennek/compare/v2.4.9...v2.5.0'
+  - version: v2.4.8
+    name: Fennek v2.4.8
+    datetime: '2026-06-20T19:59:52Z'
+    url: https://github.com/danst0/fennek/releases/tag/v2.4.8
+    prerelease: false
+    notes: >-
+      ## Änderungen
+
+
+      - **OTA:** Semver-Vergleich für Update-Erkennung (`tag_name != FENNEK_VERSION` → korrekte
+      Versionslogik)
+
+      - **Akku:** Batterieanzeige-Fix in der Statuszeile
+
+
+      ## Flashen
+
+
+      ```
+
+      pio run -e fennek -t upload
+
+      ```
+
+
+      oder OTA via `fennek.local` → Firmware-Update.
+  - version: v2.3.1
+    name: Fennek v2.3.1
+    datetime: '2026-06-19T14:27:33Z'
+    url: https://github.com/danst0/fennek/releases/tag/v2.3.1
+    prerelease: false
+    notes: >-
+      ## Notizen / Audio
+
+      - **Sprachnotiz-Liste** zeigt jetzt **Datum + HH:MM** (statt HH:MM:SS bzw. generisch
+      „Sprachnotiz").
+
+      - **Aufnahme-Gain ×6** mit Sättigung: das PDM-Mikro war ~−20 dBFS leise → Wiedergabe kaum
+      hörbar. Neue Aufnahmen sitzen bei ~−7 dBFS (kein Clipping).
+
+      - **Sauberer I2S0-Handover** nach der Aufnahme: kein doppeltes `i2s_driver_uninstall` mehr
+      (`endMic`/`MicResume` macht uninstall+install in einem Schritt).
+
+
+      ## Karten / GPS
+
+      - **No-Fix-Fallback** zentriert jetzt auf **Düsseldorf** (51.2277/6.7735); `DEFAULT_ZOOM` 15 →
+      13 (NRW-weit bekachelt).
+
+      - **GPS-Zeit-Diagnose**: Einmal-Log `[MAPS] GPS-Zeit empfangen …` pro Karten-Session.
+
+
+      Enthält außerdem v2.3.0 (GPS-/WAV-Diagnose-Logs, Karten-Fallback, Notizen-Zeitlabel).

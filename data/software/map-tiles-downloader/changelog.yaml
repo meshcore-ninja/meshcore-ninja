@@ -1,4 +1,81 @@
 source: github
 repo: tekk/map-tiles-downloader
-updatedAt: '2026-08-17T14:30:53.818Z'
-releases: []
+updatedAt: '2026-08-17T16:30:13.248Z'
+releases:
+  - version: v1.3.6
+    name: v1.3.6
+    datetime: '2026-05-11T14:03:18Z'
+    url: https://github.com/tekk/map-tiles-downloader/releases/tag/v1.3.6
+    prerelease: false
+    notes: >-
+      Bug fix release: force UTF-8 stdio so `mt-downloader list regions` and other commands work on
+      Windows consoles (which default to cp1252 and could not encode non-ASCII region names like
+      *Łódź* or *Kočovce*).
+  - version: v1.3.5
+    name: v1.3.5
+    datetime: '2026-05-11T11:42:28Z'
+    url: https://github.com/tekk/map-tiles-downloader/releases/tag/v1.3.5
+    prerelease: false
+    notes: >-
+      Patch release. Documentation: README now describes the region-name behavior introduced in
+      v1.3.4.
+  - version: v1.3.4
+    name: v1.3.4
+    datetime: '2026-05-11T11:03:48Z'
+    url: https://github.com/tekk/map-tiles-downloader/releases/tag/v1.3.4
+    prerelease: false
+    notes: >-
+      Show human-readable region names in country menus.
+
+
+      Resolves admin1 codes to real names where possible:
+
+      - US states via geonamescache's get_us_states()
+
+      - Other countries: each admin1 is labeled with its most populous city (e.g. "08 (around
+      Toronto)"), making the geonames adm1 numbers identifiable.
+
+
+      Fixes #3.
+  - version: v1.3.3
+    name: v1.3.3
+    datetime: '2025-10-09T11:08:27Z'
+    url: https://github.com/tekk/map-tiles-downloader/releases/tag/v1.3.3
+    prerelease: false
+    notes: '**Full Changelog**: https://github.com/tekk/map-tiles-downloader/compare/v1.3.2...v1.3.3'
+  - version: v1.3.2
+    name: v1.3.2
+    datetime: '2025-10-09T10:58:42Z'
+    url: https://github.com/tekk/map-tiles-downloader/releases/tag/v1.3.2
+    prerelease: false
+    notes: '**Full Changelog**: https://github.com/tekk/map-tiles-downloader/compare/v1.3.1...v1.3.2'
+  - version: v1.3.1
+    name: v1.3.1
+    datetime: '2025-10-09T09:01:30Z'
+    url: https://github.com/tekk/map-tiles-downloader/releases/tag/v1.3.1
+    prerelease: false
+    notes: '**Full Changelog**: https://github.com/tekk/map-tiles-downloader/compare/v1.3.0...v1.3.1'
+  - version: v1.3.0
+    name: v1.3.0
+    datetime: '2025-10-09T08:46:40Z'
+    url: https://github.com/tekk/map-tiles-downloader/releases/tag/v1.3.0
+    prerelease: false
+    notes: '**Full Changelog**: https://github.com/tekk/map-tiles-downloader/compare/v1.2.9...v1.3.0'
+  - version: v1.2.9
+    name: v1.2.9
+    datetime: '2025-10-09T08:41:30Z'
+    url: https://github.com/tekk/map-tiles-downloader/releases/tag/v1.2.9
+    prerelease: false
+    notes: '**Full Changelog**: https://github.com/tekk/map-tiles-downloader/compare/v1.2.8...v1.2.9'
+  - version: v1.2.8
+    name: v1.2.8
+    datetime: '2025-10-09T08:19:37Z'
+    url: https://github.com/tekk/map-tiles-downloader/releases/tag/v1.2.8
+    prerelease: false
+    notes: '**Full Changelog**: https://github.com/tekk/map-tiles-downloader/compare/v1.2.7...v1.2.8'
+  - version: v1.2.6
+    name: v1.2.6
+    datetime: '2025-10-08T14:33:07Z'
+    url: https://github.com/tekk/map-tiles-downloader/releases/tag/v1.2.6
+    prerelease: false
+    notes: '**Full Changelog**: https://github.com/tekk/map-tiles-downloader/compare/v1.2.5...v1.2.6'

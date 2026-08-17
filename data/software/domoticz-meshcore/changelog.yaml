@@ -1,4 +1,108 @@
 source: github
 repo: galadril/Domoticz-MeshCore-Plugin
-updatedAt: '2026-08-17T14:30:48.025Z'
-releases: []
+updatedAt: '2026-08-17T16:30:11.982Z'
+releases:
+  - version: v0.1.0
+    name: v0.1.0
+    datetime: '2026-05-23T08:42:35Z'
+    url: https://github.com/galadril/Domoticz-MeshCore-Plugin/releases/tag/v0.1.0
+    prerelease: false
+    notes: "## What's Changed\r\n* Autocomplete emoticons like with Slack :sun: by @galadril in https://github.com/galadril/Domoticz-MeshCore-Plugin/pull/13\r\n\r\n\r\n**Full Changelog**: https://github.com/galadril/Domoticz-MeshCore-Plugin/compare/v0.0.9...v0.1.0"
+  - version: v0.0.10
+    name: MeshCore Plugin v0.0.10
+    datetime: '2026-05-23T08:41:48Z'
+    url: https://github.com/galadril/Domoticz-MeshCore-Plugin/releases/tag/v0.0.10
+    prerelease: false
+    notes: >-
+      ## What's Changed
+
+      * Autocomplete emoticons like with Slack :sun: by @galadril in
+      https://github.com/galadril/Domoticz-MeshCore-Plugin/pull/13
+
+
+
+      **Full Changelog**:
+      https://github.com/galadril/Domoticz-MeshCore-Plugin/compare/v0.0.9...v0.0.10
+  - version: v0.0.9
+    name: MeshCore Plugin v0.0.9
+    datetime: '2026-05-23T08:40:45Z'
+    url: https://github.com/galadril/Domoticz-MeshCore-Plugin/releases/tag/v0.0.9
+    prerelease: false
+    notes: >-
+      ## What's Changed
+
+      * feat: topology map, analytics, heard nodes, map tools, ACK logging, UX fixes by @gizmocuz in
+      https://github.com/galadril/Domoticz-MeshCore-Plugin/pull/12
+
+
+
+      **Full Changelog**:
+      https://github.com/galadril/Domoticz-MeshCore-Plugin/compare/v0.0.8...v0.0.9
+  - version: v0.0.8
+    name: MeshCore Plugin v0.0.8
+    datetime: '2026-05-21T10:18:58Z'
+    url: https://github.com/galadril/Domoticz-MeshCore-Plugin/releases/tag/v0.0.8
+    prerelease: false
+    notes: >-
+      ## What's Changed
+
+      * Enhance MeshCore plugin documentation and scripts by @galadril in
+      https://github.com/galadril/Domoticz-MeshCore-Plugin/pull/11
+
+
+
+      **Full Changelog**:
+      https://github.com/galadril/Domoticz-MeshCore-Plugin/compare/v0.0.7...v0.0.8
+  - version: v0.0.7
+    name: MeshCore Plugin v0.0.7
+    datetime: '2026-05-21T09:38:24Z'
+    url: https://github.com/galadril/Domoticz-MeshCore-Plugin/releases/tag/v0.0.7
+    prerelease: false
+    notes: >-
+      ## What's Changed
+
+      * Add GitHub Actions workflow for automated releases by @galadril in
+      https://github.com/galadril/Domoticz-MeshCore-Plugin/pull/10
+
+
+
+      **Full Changelog**:
+      https://github.com/galadril/Domoticz-MeshCore-Plugin/compare/v0.0.6...v0.0.7
+  - version: v0.0.6
+    name: v0.0.6
+    datetime: '2026-05-21T09:11:59Z'
+    url: https://github.com/galadril/Domoticz-MeshCore-Plugin/releases/tag/v0.0.6
+    prerelease: false
+    notes: "## What's Changed\r\n* feat: map tools, historical analytics, queued-msg resolution fix by @gizmocuz in https://github.com/galadril/Domoticz-MeshCore-Plugin/pull/9\r\n\r\n\r\n**Full Changelog**: https://github.com/galadril/Domoticz-MeshCore-Plugin/compare/v0.0.5...v0.0.6"
+  - version: v0.0.5
+    name: v0.0.5
+    datetime: '2026-05-20T08:34:18Z'
+    url: https://github.com/galadril/Domoticz-MeshCore-Plugin/releases/tag/v0.0.5
+    prerelease: false
+    notes: "## What's Changed\r\n* dzVents command bridge + clock-skew, inbox-filter & layout fixes by @gizmocuz in https://github.com/galadril/Domoticz-MeshCore-Plugin/pull/6\r\n\r\n\r\n**Full Changelog**: https://github.com/galadril/Domoticz-MeshCore-Plugin/compare/v0.0.4...v0.0.5"
+  - version: v0.0.4
+    name: v0.0.4
+    datetime: '2026-05-19T10:45:23Z'
+    url: https://github.com/galadril/Domoticz-MeshCore-Plugin/releases/tag/v0.0.4
+    prerelease: false
+    notes: "## What's Changed\r\n* Some fixes on UI/Theming, collapse node setting and keep contact view in local state by @galadril in https://github.com/galadril/Domoticz-MeshCore-Plugin/pull/5\r\n\r\n## New Contributors\r\n* @galadril made their first contribution in https://github.com/galadril/Domoticz-MeshCore-Plugin/pull/5\r\n\r\n**Full Changelog**: https://github.com/galadril/Domoticz-MeshCore-Plugin/compare/v0.0.3...v0.0.4"
+  - version: v0.0.3
+    name: v0.0.3
+    datetime: '2026-05-19T06:17:31Z'
+    url: https://github.com/galadril/Domoticz-MeshCore-Plugin/releases/tag/v0.0.3
+    prerelease: false
+    notes: "## What's Changed\r\n* Serial transport, dashboard overhaul, reliable messaging & device-side settings by @gizmocuz in https://github.com/galadril/Domoticz-MeshCore-Plugin/pull/2\r\n* feat: WebSocket dashboard + SQLite message store by @gizmocuz in https://github.com/galadril/Domoticz-MeshCore-Plugin/pull/4\r\n\r\n## New Contributors\r\n* @gizmocuz made their first contribution in https://github.com/galadril/Domoticz-MeshCore-Plugin/pull/2\r\n\r\n**Full Changelog**: https://github.com/galadril/Domoticz-MeshCore-Plugin/compare/v0.0.2...v0.0.3"
+  - version: v0.0.2
+    name: v0.0.2
+    datetime: '2026-04-06T07:16:53Z'
+    url: https://github.com/galadril/Domoticz-MeshCore-Plugin/releases/tag/v0.0.2
+    prerelease: false
+    notes: >-
+      **Full Changelog**:
+      https://github.com/galadril/Domoticz-MeshCore-Plugin/compare/v0.0.1...v0.0.2
+  - version: v0.0.1
+    name: v0.0.1
+    datetime: '2026-04-04T14:41:28Z'
+    url: https://github.com/galadril/Domoticz-MeshCore-Plugin/releases/tag/v0.0.1
+    prerelease: false
+    notes: '**Full Changelog**: https://github.com/galadril/Domoticz-MeshCore-Plugin/commits/v0.0.1'

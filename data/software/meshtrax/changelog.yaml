@@ -1,4 +1,110 @@
 source: github
 repo: venamartin/meshtrax
-updatedAt: '2026-08-17T14:32:18.183Z'
-releases: []
+updatedAt: '2026-08-17T16:30:26.431Z'
+releases:
+  - version: v1.7.19
+    name: Release v1.7.19
+    datetime: '2026-08-12T16:51:58Z'
+    url: https://github.com/venamartin/meshtrax/releases/tag/v1.7.19
+    prerelease: false
+    notes: "## Highlights\r\n\r\nMeshTrax reactions are now fully interoperable with **MeshCore One** — and\r\nrepeater administration got dramatically faster and more reliable. This\r\nrelease rolls up everything since v1.7.12.\r\n\r\n## Reactions & MeshCore One interop\r\n\r\n- **Reactions are sent in the MeshCore One dialect** (`👍@[Name]` + hash) —\r\n  readable on every client, resolvable by MeshCore One, no more\r\n  meshtrax-only `r:` codes on the air.\r\n- **React with any emoji**: new full emoji picker with search, skin tones\r\n  and recents, replacing the fixed grid.\r\n- **Reactions to replies work in both directions.** A live two-phone\r\n  capture session showed they failed 100% of the time: MeshCore One hashes\r\n  the raw on-air reply text, MeshTrax hashed the rewritten display body.\r\n  Reply rows now keep their original wire text and both sides of the\r\n  matching use it. Verified on hardware: every reaction landed, and both\r\n  apps produced byte-identical hashes for the same message.\r\n- **Reactions to retried messages resolve.** Senders re-stamp retries, and\r\n  reactors hash whichever copy they heard — merged repeats now contribute\r\n  their timestamps (also fixes reactions to mention-led messages and\r\n  wire-clock mismatches, started in 1.7.13).\r\n- **A reaction whose target isn't in your history** shows as a normal\r\n  bubble with a small reaction icon (never a raw hash), and lands on its\r\n  target automatically if the message arrives later — even after a restart.\r\n- The wire formats are documented in `docs/meshcoreone-formats.md`,\r\n  as measured on the air.\r\n\r\n## Repeater administration\r\n\r\n- **Commands answer in ~1 second instead of up to 29.** Timeouts now scale\r\n  with the real path and escalate across retries instead of burning the\r\n  full worst-case budget on every attempt.\r\n- **Replies stay with their command.** Late replies used to land on the\r\n  NEXT command — the settings screen could store a frequency string as TX\r\n  power. Every command now carries a token and replies are matched to it.\r\n- **Status, telemetry and neighbors retry** instead of failing on one lost\r\n  packet — no more \"timed out\" followed by the data arriving anyway.\r\n- Saving settings only writes what changed, TX power saves correctly, and\r\n  discovered repeaters are identified by their key, never by a hash\r\n  collision.\r\n\r\n## Notifications\r\n\r\n- **One notification per direct message** — a sender retrying an un-ACKed\r\n  DM no longer rings your phone once per copy.\r\n- A reaction that can't be placed no longer alarms as a mention (and can\r\n  no longer pierce a muted channel).\r\n\r\n## Channels & connection\r\n\r\n- Jump straight into a channel after creating it.\r\n- Message timestamps use a causality-based clamp: broken sender clocks\r\n  can't scramble ordering, while genuinely old backlog keeps its real dates.\r\n- BLE auto-connect can be cancelled and stays off after a manual\r\n  disconnect; opening the USB picker stops BLE reconnecting underneath it.\r\n\r\n## Compatibility\r\n\r\nReply-reactions sent from 1.7.19 use the raw-text hash MeshCore One\r\nexpects. On older MeshTrax builds they show as the compact unresolved-\r\nreaction bubble instead of a chip — update both ends for the full\r\nexperience.\r\n\r\n**Install:** `meshtrax-v1.7.19-arm64.apk` covers all modern Android\r\ndevices (2016+).\r\n\r\n\r\n\r\n**Full Changelog**: https://github.com/venamartin/meshtrax/compare/v1.7.12...v1.7.19"
+  - version: v1.7.12
+    name: Release v1.7.12
+    datetime: '2026-07-31T23:56:26Z'
+    url: https://github.com/venamartin/meshtrax/releases/tag/v1.7.12
+    prerelease: false
+    notes: "## What's new\r\n\r\n### Mention notifications\r\nWhen someone @mentions you or replies to you in a channel, you now get a\r\nnotification titled **\"Mention in <channel>\"** — even if that channel is muted.\r\nTapping it opens the channel anchored on the exact message. Enabled by default;\r\ntoggle it in App Settings → Notifications. Mentioning yourself stays silent,\r\nand you never get a double notification — on unmuted channels the mention\r\nreplaces the regular channel notification.\r\n\r\n### Debug log upgrades\r\nFilter the App Debug Log by All / Warnings / Errors, save it to a text file\r\nvia the system save dialog, and every entry now shows a full date + time.\r\n\r\n### Fixes\r\n- Messages your companion collected while the app was away now keep their real\r\n  send times instead of all being stamped with the connection time. Ordering\r\n  remains by arrival, so nothing shuffles.\r\n- Offline-queued messages no longer claim they arrived \"Direct\" — they show\r\n  their true hop count, including a fix for 2-byte path-hash networks where\r\n  hop counts displayed halved.\r\n- Contacts discovered from over-the-air adverts now decode their path header\r\n  correctly (paths were stored corrupted on 2-byte-hash networks).\r\n- The Add Channel dialog's Create/Add button is pinned next to Close, where the\r\n  keyboard can't cover it — and the keyboard's ✓ key submits.\r\n- The @ mention picker no longer truncates the contact list; emoji-named\r\n  contacts appear at the top (they drop out as soon as you type a letter).\r\n\r\n**Full Changelog**: https://github.com/venamartin/meshtrax/compare/v1.7.10...v1.7.12"
+  - version: v1.7.10
+    name: Release v1.7.10
+    datetime: '2026-07-30T20:44:58Z'
+    url: https://github.com/venamartin/meshtrax/releases/tag/v1.7.10
+    prerelease: false
+    notes: "## What's Changed since v1.7.7\r\n\r\n### Interoperability with other MeshCore apps\r\n* **Reactions and replies from MeshCore One now display properly.** Their reactions (`❤️@[Name]` + hash) render as reaction pills on the target message, and their replies render as quote bubbles — in channels and DMs. Anything that can't be matched is shown as a normal message rather than dropped.\r\n* **Replies are now sent in a universally readable quote format** (`@[Name]` + `>quoted snippet..`). Clients that don't parse it still show a legible quote; MeshTrax keeps reading the old `re:` format from earlier versions. Reactions still use the compact 9-byte `r:` format (meshcore-open standard).\r\n\r\n### New\r\n* **Reactions show who reacted** — chips are larger, overlap the bubble like other messengers, and tapping one lists the people behind each emoji.\r\n* **Quick mentions** — swipe right on a message (reply stays swipe left) or long-press → *Mention* to insert `@[name]` at your cursor.\r\n* **Zoom level setting** — chat text scale is adjustable in App Settings below Theme (0.80x–1.80x, default now 1.20x). Pinch-to-zoom and double-tap-to-reset still work and stay in sync.\r\n* **Conversations sort by arrival** — chats and unread ordering now use when your radio actually received a message, so a sender with a wrong clock can no longer bury a conversation in the past (or pin it to the future).\r\n\r\n### Fixed\r\n* Repeated channel messages are deduplicated by their original wire time, closing a repeat-echo path that produced duplicates.\r\n* Buffered channel messages can no longer be delivered to a different channel after slots are re-mapped, and the channel map is re-verified after an unexpected disconnect.\r\n* Windows builds no longer ship without their native libraries (v1.7.7 broke USB serial on Windows)\r\n\r\n**Full Changelog**: https://github.com/venamartin/meshtrax/compare/v1.7.7...v1.7.10"
+  - version: v1.7.7
+    name: Release v1.7.7
+    datetime: '2026-07-25T21:58:55Z'
+    url: https://github.com/venamartin/meshtrax/releases/tag/v1.7.7
+    prerelease: false
+    notes: "## What's New in 1.7.7\r\n\r\n### Message storage moved to a real database\r\nThis is the big one. Messages, contacts, discovered nodes, and channel data no\r\nlonger live in app preference files — they're now in an embedded SQLite database\r\nvia Drift. Every write is a single row instead of a rewrite of the whole\r\nconversation, so history can't be clobbered by an unlucky save, and the app reads\r\nwhat it needs instead of loading everything into memory at startup.\r\n\r\nYour existing history migrates automatically the first time you open each\r\nconversation after updating. Nothing to do, and nothing is thrown away.\r\n\r\n### Channels are identified by their key, not their slot number\r\nChannel history is now filed by the channel's encryption key rather than the slot\r\nit happens to occupy on your radio. Reorder your channels, delete one and add\r\nanother in its place, or run two channels with the same name and different keys —\r\nmessages still land in the right conversation. Two channels whose names collide\r\non the air are now told apart correctly, so a channel can no longer go \"deaf\"\r\nbecause another one shares its hash.\r\n\r\nMeshTrax also refuses to create a channel with a key you already have, and checks\r\nyour radio's slot table after each sync to warn you about duplicates.\r\n\r\n### Sending is more reliable\r\nChannel messages sent before the app finished verifying your channel list are no\r\nlonger stranded or silently dropped — they queue and go out once the list is\r\nready. Sends now also wait longer for a quiet moment before transmitting, so a\r\nmessage composed right after a burst of incoming traffic is less likely to\r\ncollide with mesh traffic still in flight.\r\n\r\n### Path tracing\r\nYou can now jump straight from a path trace to Set Custom Path. Traces that fail\r\ntell you so with a toast instead of leaving the previous result on screen, and a\r\nroute that already makes a round trip is no longer doubled in the display. The\r\ncontact picker used to reach path trace was also fixed.\r\n\r\n### Also in this release\r\nRepeater discovery waits 30 seconds instead of 10, so slower repeaters actually\r\nshow up. Repeater CLI commands can return sooner instead of always waiting out a\r\n15-second floor. Line-of-sight endpoint dropdowns are sorted alphabetically.\r\nUnread badges are computed directly from the database, so they stay consistent\r\nwith what you actually see in the conversation.\r\n\r\n**Full Changelog**: https://github.com/venamartin/meshtrax/compare/v1.7.0...v1.7.7\r\nub.com/venamartin/meshtrax/compare/v1.7.0...v1.7.7"
+  - version: v1.7.0
+    name: Release v1.7.0
+    datetime: '2026-07-19T19:38:16Z'
+    url: https://github.com/venamartin/meshtrax/releases/tag/v1.7.0
+    prerelease: false
+    notes: "## What's New in 1.7.0\r\n\r\n### Room server\r\nIf you're an admin on a room server, you can now manage it right from the room\r\nchat — tap the manage icon to reach status, telemetry, settings, neighbors, and\r\nthe command line.\r\n\r\n### Replies that point at the right message\r\nReplying in a channel now quotes the exact message you picked, instead of the\r\nperson's most recent one. Mentioning someone with @ no longer accidentally turns\r\nyour message into a reply, and quoted replies now appear correctly in other\r\nMeshCore apps too.\r\n\r\n### Smarter contact list\r\nNodes with a broken clock no longer show nonsense ages like \"755 days ago\".\r\nMeshTrax corrects the time and marks the contact with a small clock icon so you\r\nknow why.\r\n\r\n### Notifications that go where you expect\r\nTapping a notification now opens the right conversation, even if the app was\r\nclosed.\r\n\r\n### Bug fixes\r\nChannel messages send more reliably over USB, message retries can be turned off,\r\na reconnecting status now shows in chat, notifications no longer appear for\r\nunused channel slots, duplicate device info entries removed, and various fixes\r\nfor improved compatibility with the latest device firmware.\r\n\r\n**Full Changelog**: https://github.com/venamartin/meshtrax/compare/v1.6.3...v1.7.0"
+  - version: v1.6.3
+    name: Release v1.6.3
+    datetime: '2026-07-12T00:20:30Z'
+    url: https://github.com/venamartin/meshtrax/releases/tag/v1.6.3
+    prerelease: false
+    notes: >-
+      ## What's Changed
+
+      * Fixed bug on showing repeaters farther that 50 miles away as unknown. by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/24
+
+      * Bugfix: DM duplicate message by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/25
+
+      * Chore/flutter analyze cleanup by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/26
+
+      * Feature/auto connect last by @venamartin in https://github.com/venamartin/meshtrax/pull/27
+
+      * chore: add Google Play Store icon and feature graphic by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/28
+
+      * Feature/UI improvements by @venamartin in https://github.com/venamartin/meshtrax/pull/29
+
+      * chore: remove dead code files by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/30
+
+      * Play Store readiness: moderation, terms, notifications, and defaults by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/31
+
+      * Fix/notification tap and names by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/32
+
+      * Docs/readme screenshots by @venamartin in https://github.com/venamartin/meshtrax/pull/33
+
+      * chore: set Play Store package name to com.vena.meshtrax by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/34
+
+      * Lost ble notification by @venamartin in https://github.com/venamartin/meshtrax/pull/35
+
+      * fix: resolve ack-queue race that falsely marked USB channel sends as failed by @venamartin
+      in https://github.com/venamartin/meshtrax/pull/36
+
+      * chore: bump version to 1.6.2+2 by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/37
+
+      * Fix/channel reply wire format by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/38
+
+
+
+      **Full Changelog**: https://github.com/venamartin/meshtrax/compare/v1.5.5...v1.6.3
+  - version: v1.5.5
+    name: Release v1.5.5
+    datetime: '2026-07-07T22:38:18Z'
+    url: https://github.com/venamartin/meshtrax/releases/tag/v1.5.5
+    prerelease: false
+    notes: "## What's Changed\r\n* Removed translation feature to minimize app size. by @venamartin in https://github.com/venamartin/meshtrax/pull/22\r\n* Link for hashtag channels to create or jump to\r\n* Font color change on links\r\n* Simple markdown support for bold, italic, and code blocks.\r\n* Minor bug fixes\r\n\r\n\r\n**Full Changelog**: https://github.com/venamartin/meshtrax/compare/v1.5.4...v1.5.5"
+  - version: v1.5.2
+    name: Release v1.5.2
+    datetime: '2026-07-05T18:55:49Z'
+    url: https://github.com/venamartin/meshtrax/releases/tag/v1.5.2
+    prerelease: false
+    notes: "## What's Changed\r\n* Enhancement/bluetooth UI and sync by @venamartin in https://github.com/venamartin/meshtrax/pull/17\r\n\r\n# Bluetooth & Connection Reliability\r\n* **Improved Android Connections**: Fix random connection failures (specifically the \"133\" error on Android).\r\n* **Detailed Sync Progress**: Added better tracking for when the app is downloading your contacts, channels, and queued messages from the hardware. \r\n* **Firmware Version Tracking**: The app now reads and remembers the exact firmware version string of your connected hardware.\r\n\r\n# Messaging Enhancements\r\n* **New Message Status Icons**: Upgraded the small icons next to your sent messages. Successfully delivered messages now show a green double-checkmark. Additionally, failed channel messages will now show a amber checkmark.\r\n* **Channel Message Retries**: Added behind-the-scenes support to track how many times a channel message has attempted to retry sending. We also added new translation keys to support a setting for \"Max Channel Message Retries\" in the UI.\r\n\r\n# Design & Layout\r\n* **Polished Connection Screens**: The buttons on the Scanner, USB, and TCP connection screens have been centered and raised slightly off the bottom edge for a cleaner, more balanced look.\r\n\r\n# Bug Fixes\r\n* **Fixed \"Phantom\" Favorites**: Resolved an issue where newly discovered contacts on the mesh would sometimes incorrectly show up with a \"Favorite\" star. Now, a contact will only be marked as a favorite if you explicitly save and favorite it on your companion device.\r\n\r\n\r\n**Full Changelog**: https://github.com/venamartin/meshtrax/compare/v1.5.0...v1.5.2"
+  - version: v1.5.0
+    name: Release v1.5.0
+    datetime: '2026-07-01T19:59:09Z'
+    url: https://github.com/venamartin/meshtrax/releases/tag/v1.5.0
+    prerelease: false
+    notes: "## What's Changed\r\n\r\n# Update: Make the app feel more like a standard messaging app\r\n\r\n- Unified Chats Screen: Combined \"Contacts\" and \"Channels\" into a single Inbox so all your active conversations are in one place.\r\n- Better Address Book: Added a \"New Chat\" button that opens a clean list of your saved contacts and newly discovered devices.\r\n- Cleaner Inbox: Channels now show a preview of their most recent message instead of just saying \"Private/Unread\".\r\n- Dedicated Repeaters Screen: Moved repeaters to their own separate page so they no longer clutter up your main contact list.\r\n- General Cleanup: Fixed minor visual bugs, removed duplicate menus, and cleaned up the background code to make the app run smoother.\r\n - QR Code scanning and generation for channels and companion contact. by @venamartin in https://github.com/venamartin/meshtrax/pull/15\r\n\r\n**Full Changelog**: https://github.com/venamartin/meshtrax/compare/v1.4.4...v1.5.0"
+  - version: v1.4.4
+    name: Release v1.4.4
+    datetime: '2026-06-24T20:43:53Z'
+    url: https://github.com/venamartin/meshtrax/releases/tag/v1.4.4
+    prerelease: false
+    notes: "## What's Changed\r\n\r\n* Path Hash Size fixes and low level bug fixes by @venamartin in https://github.com/venamartin/meshtrax/pull/14\r\n\r\n**Full Changelog**: https://github.com/venamartin/meshtrax/compare/v1.4.1...v1.4.4"

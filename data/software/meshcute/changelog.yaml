@@ -1,4 +1,10 @@
 source: github
 repo: MadScientistCH/meshcute
-updatedAt: '2026-08-17T14:32:04.005Z'
-releases: []
+updatedAt: '2026-08-17T16:30:24.540Z'
+releases:
+  - version: 0.0.1
+    name: Switzerland
+    datetime: '2026-03-29T14:37:12Z'
+    url: https://github.com/MadScientistCH/meshcute/releases/tag/0.0.1
+    prerelease: true
+    notes: "**Full Changelog**: https://github.com/MadScientistCH/meshcute/commits/0.0.1\r\n\r\nInitial version so you get to know and maybe like (?) the project."

@@ -1,4 +1,43 @@
 source: github
 repo: jooray/roadstr
-updatedAt: '2026-08-17T14:32:42.336Z'
-releases: []
+updatedAt: '2026-08-17T16:30:29.354Z'
+releases:
+  - version: v0.3.0
+    name: v0.3.0
+    datetime: '2026-06-24T18:06:17Z'
+    url: https://github.com/jooray/roadstr/releases/tag/v0.3.0
+    prerelease: false
+    notes: >-
+      ## What's new in 0.3.0
+
+
+      - **Imperial units** — new Metric/Imperial option (Settings → Display) showing speed in mph
+      and distances in miles/feet.
+
+      - **Speed Threshold slider** now shows its live value as you drag it.
+
+      - **Cleaner main screen** — Keys and Settings moved into the toolbar overflow menu, freeing
+      space for the events list.
+
+      - **Larger report-type buttons** with bigger icons, easier to tap on high-density screens.
+  - version: v0.2.0
+    name: v0.2.0
+    datetime: '2026-06-16T10:52:18Z'
+    url: https://github.com/jooray/roadstr/releases/tag/v0.2.0
+    prerelease: false
+    notes: |-
+      First signed release of the Roadstr OsmAnd plugin.
+
+      - Decentralized road event reporting over Nostr (kinds 1315/1316)
+      - OsmAnd AIDL map integration with color-coded event markers
+      - Bearing-aware proximity alerts (500m ahead)
+      - Multi-level geohash spatial queries, NIP-40 expiration
+      - Auth via NIP-07, NIP-46 (Amber), ephemeral or generated keys
+
+      Requires the OsmAnd app installed.
+  - version: v0.1.1
+    name: Initial demo release
+    datetime: '2026-03-09T11:51:07Z'
+    url: https://github.com/jooray/roadstr/releases/tag/v0.1.1
+    prerelease: true
+    notes: Initial demo release - debug

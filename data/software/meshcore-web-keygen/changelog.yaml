@@ -1,4 +1,30 @@
 source: github
 repo: agessaman/meshcore-web-keygen
-updatedAt: '2026-08-17T14:31:57.645Z'
-releases: []
+updatedAt: '2026-08-17T16:30:23.392Z'
+releases:
+  - version: v0.4
+    name: v0.4
+    datetime: '2025-12-27T18:10:45Z'
+    url: https://github.com/agessaman/meshcore-web-keygen/releases/tag/v0.4
+    prerelease: false
+    notes: "Disabled generation when the target pubkey starts with 00 or FF, as these are reserved in the MeshCore specs.\r\n\r\nImplemented parallel key generation using Web Workers for improved performance."
+  - version: v0.3
+    name: v0.3
+    datetime: '2025-09-13T22:01:35Z'
+    url: https://github.com/agessaman/meshcore-web-keygen/releases/tag/v0.3
+    prerelease: false
+    notes: >-
+      [This release updates the Ed25519 private key generation to comply with RFC 8032
+      standard](https://github.com/agessaman/meshcore-web-keygen/pull/1)
+  - version: v0.2
+    name: Release Notes - v0.2.0
+    datetime: '2025-08-23T22:45:44Z'
+    url: https://github.com/agessaman/meshcore-web-keygen/releases/tag/v0.2
+    prerelease: false
+    notes: "### Changes\r\n- Added Step-By-Step Instructions with screenshots for using your generated MeshCore key\r\n- Moved JSON import instructions to detailed instructions from quick guide\r\n\r\n### Files Modified\r\n- `index.html` - Added footer, modal link, styling updates\r\n- `instructions/index.html` - WebP images, styling consistency, content cleanup\r\n- `instructions/images/` - All images converted to WebP format"
+  - version: v0.1
+    name: v0.1
+    datetime: '2025-08-20T22:53:11Z'
+    url: https://github.com/agessaman/meshcore-web-keygen/releases/tag/v0.1
+    prerelease: false
+    notes: "# Release Notes\r\n\r\n## v0.1.0 - Initial Release\r\n\r\n**Released:** August 2025\r\n\r\n### Features\r\n- Client-side Ed25519 key generation for MeshCore compatibility\r\n- Custom hex prefix search (1-8 characters)\r\n- Real-time progress tracking with attempts, speed, and elapsed time\r\n- JSON export with public and private keys\r\n- Built-in import instructions for MeshCore nodes\r\n- Offline-capable with fallback libraries\r\n\r\n### Technical Details\r\n- Uses noble-ed25519 library for cryptographic operations\r\n- Implements proper Ed25519 scalar clamping\r\n- Web Crypto API for secure random number generation\r\n- Single HTML file with embedded JavaScript and CSS\r\n- No external dependencies required for basic functionality\r\n\r\n### Browser Support\r\n- Chrome/Chromium 60+\r\n- Firefox 55+\r\n- Safari 11+\r\n- Edge 79+\r\n\r\n### Security\r\n- All processing happens locally in the browser\r\n- No network requests during key generation\r\n- Keys never leave the user's device"

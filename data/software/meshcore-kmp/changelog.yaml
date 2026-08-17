@@ -1,4 +1,70 @@
 source: github
 repo: Wavesonics/MeshCoreKmp
-updatedAt: '2026-08-17T14:31:28.905Z'
-releases: []
+updatedAt: '2026-08-17T16:30:19.200Z'
+releases:
+  - version: v0.12.2
+    name: v0.12.2
+    datetime: '2026-03-06T21:47:44Z'
+    url: https://github.com/Wavesonics/MeshCoreKmp/releases/tag/v0.12.2
+    prerelease: false
+    notes: '**Full Changelog**: https://github.com/Wavesonics/MeshCoreKmp/compare/v0.12.1...v0.12.2'
+  - version: v0.12.1
+    name: v0.12.1
+    datetime: '2026-03-06T21:13:53Z'
+    url: https://github.com/Wavesonics/MeshCoreKmp/releases/tag/v0.12.1
+    prerelease: false
+    notes: '**Full Changelog**: https://github.com/Wavesonics/MeshCoreKmp/compare/v0.12.0...v0.12.1'
+  - version: v0.12.0
+    name: v0.12.0
+    datetime: '2026-03-06T09:21:08Z'
+    url: https://github.com/Wavesonics/MeshCoreKmp/releases/tag/v0.12.0
+    prerelease: false
+    notes: '**Full Changelog**: https://github.com/Wavesonics/MeshCoreKmp/compare/v0.11.0...v0.12.0'
+  - version: v0.11.0
+    name: v0.11.0
+    datetime: '2026-03-06T08:28:37Z'
+    url: https://github.com/Wavesonics/MeshCoreKmp/releases/tag/v0.11.0
+    prerelease: false
+    notes: '**Full Changelog**: https://github.com/Wavesonics/MeshCoreKmp/compare/v0.10.3...v0.11.0'
+  - version: v0.10.3
+    name: v0.10.3
+    datetime: '2026-02-28T06:53:55Z'
+    url: https://github.com/Wavesonics/MeshCoreKmp/releases/tag/v0.10.3
+    prerelease: false
+    notes: '**Full Changelog**: https://github.com/Wavesonics/MeshCoreKmp/compare/v0.10.2...v0.10.3'
+  - version: v0.10.2
+    name: v0.10.2
+    datetime: '2026-02-28T00:39:01Z'
+    url: https://github.com/Wavesonics/MeshCoreKmp/releases/tag/v0.10.2
+    prerelease: false
+    notes: '**Full Changelog**: https://github.com/Wavesonics/MeshCoreKmp/compare/v0.9.3...v0.10.2'
+  - version: v0.10.1
+    name: v0.10.1
+    datetime: '2026-02-27T23:10:05Z'
+    url: https://github.com/Wavesonics/MeshCoreKmp/releases/tag/v0.10.1
+    prerelease: false
+    notes: '**Full Changelog**: https://github.com/Wavesonics/MeshCoreKmp/compare/v0.10.0...v0.10.1'
+  - version: v0.10.0
+    name: v0.10.0
+    datetime: '2026-02-26T05:06:21Z'
+    url: https://github.com/Wavesonics/MeshCoreKmp/releases/tag/v0.10.0
+    prerelease: false
+    notes: '**Full Changelog**: https://github.com/Wavesonics/MeshCoreKmp/compare/v0.9.3...v0.10.0'
+  - version: v0.9.3
+    name: v0.9.3
+    datetime: '2026-02-24T05:05:57Z'
+    url: https://github.com/Wavesonics/MeshCoreKmp/releases/tag/v0.9.3
+    prerelease: false
+    notes: '**Full Changelog**: https://github.com/Wavesonics/MeshCoreKmp/compare/v0.9.2...v0.9.3'
+  - version: v0.9.2
+    name: v0.9.2
+    datetime: '2026-02-24T04:45:47Z'
+    url: https://github.com/Wavesonics/MeshCoreKmp/releases/tag/v0.9.2
+    prerelease: false
+    notes: '**Full Changelog**: https://github.com/Wavesonics/MeshCoreKmp/compare/v0.9.1...v0.9.2'
+  - version: v0.9.0
+    name: v0.9.0
+    datetime: '2026-02-24T04:23:11Z'
+    url: https://github.com/Wavesonics/MeshCoreKmp/releases/tag/v0.9.0
+    prerelease: false
+    notes: '**Full Changelog**: https://github.com/Wavesonics/MeshCoreKmp/commits/v0.9.0'

@@ -1,4 +1,599 @@
 source: github
 repo: dz0ny/meshcore-sar
-updatedAt: '2026-08-17T14:31:47.421Z'
-releases: []
+updatedAt: '2026-08-17T16:30:21.928Z'
+releases:
+  - version: v2026.0613.2
+    name: MeshCore SAR v2026.0613.2
+    datetime: '2026-06-13T12:04:16Z'
+    url: https://github.com/dz0ny/meshcore-sar/releases/tag/v2026.0613.2
+    prerelease: false
+    notes: Release 2026.0613.2
+  - version: v2026.0412.1
+    name: 2026.0412.1
+    datetime: '2026-04-12T20:47:49Z'
+    url: https://github.com/dz0ny/meshcore-sar/releases/tag/v2026.0412.1
+    prerelease: false
+    notes: >-
+      Release assets are published for all supported build targets:
+
+      - Android (`.apk`)
+
+      - Linux (`.tar.gz`)
+
+      - macOS (`.dmg`)
+
+      - Windows (`.zip`)
+
+      - iOS unsigned (`-ios-unsigned.ipa`, `-ios-runner-app.zip`)
+
+
+      Windows status: currently unusable. The BLE stack on Windows is broken, so BLE features do not
+      work.
+
+
+      iOS manual signing and install:
+
+      1. Download `*-ios-unsigned.ipa` (or `*-ios-runner-app.zip`) from this release.
+
+      2. Re-sign it with your Apple Development/Distribution certificate and provisioning profile.
+
+      3. If you used `*-ios-runner-app.zip`, create a signed `.ipa` from `Runner.app` during
+      signing.
+
+      4. Install the signed `.ipa` on your iPhone using Apple Configurator 2 or Xcode (Devices and
+      Simulators).
+  - version: v2026.0408.1
+    name: 2026.0408.1
+    datetime: '2026-04-08T16:45:29Z'
+    url: https://github.com/dz0ny/meshcore-sar/releases/tag/v2026.0408.1
+    prerelease: false
+    notes: >-
+      Release assets are published for all supported build targets:
+
+      - Android (`.apk`)
+
+      - Linux (`.tar.gz`)
+
+      - macOS (`.dmg`)
+
+      - Windows (`.zip`)
+
+      - iOS unsigned (`-ios-unsigned.ipa`, `-ios-runner-app.zip`)
+
+
+      Windows status: currently unusable. The BLE stack on Windows is broken, so BLE features do not
+      work.
+
+
+      iOS manual signing and install:
+
+      1. Download `*-ios-unsigned.ipa` (or `*-ios-runner-app.zip`) from this release.
+
+      2. Re-sign it with your Apple Development/Distribution certificate and provisioning profile.
+
+      3. If you used `*-ios-runner-app.zip`, create a signed `.ipa` from `Runner.app` during
+      signing.
+
+      4. Install the signed `.ipa` on your iPhone using Apple Configurator 2 or Xcode (Devices and
+      Simulators).
+  - version: v2026.0405.2
+    name: 2026.0405.2
+    datetime: '2026-04-05T19:49:08Z'
+    url: https://github.com/dz0ny/meshcore-sar/releases/tag/v2026.0405.2
+    prerelease: false
+    notes: >-
+      Release assets are published for all supported build targets:
+
+      - Android (`.apk`)
+
+      - Linux (`.tar.gz`)
+
+      - macOS (`.dmg`)
+
+      - Windows (`.zip`)
+
+      - iOS unsigned (`-ios-unsigned.ipa`, `-ios-runner-app.zip`)
+
+
+      Windows status: currently unusable. The BLE stack on Windows is broken, so BLE features do not
+      work.
+
+
+      iOS manual signing and install:
+
+      1. Download `*-ios-unsigned.ipa` (or `*-ios-runner-app.zip`) from this release.
+
+      2. Re-sign it with your Apple Development/Distribution certificate and provisioning profile.
+
+      3. If you used `*-ios-runner-app.zip`, create a signed `.ipa` from `Runner.app` during
+      signing.
+
+      4. Install the signed `.ipa` on your iPhone using Apple Configurator 2 or Xcode (Devices and
+      Simulators).
+  - version: v2026.0405.1
+    name: 2026.0405.1
+    datetime: '2026-04-05T18:07:32Z'
+    url: https://github.com/dz0ny/meshcore-sar/releases/tag/v2026.0405.1
+    prerelease: false
+    notes: >-
+      Release assets are published for all supported build targets:
+
+      - Android (`.apk`)
+
+      - Linux (`.tar.gz`)
+
+      - macOS (`.dmg`)
+
+      - Windows (`.zip`)
+
+      - iOS unsigned (`-ios-unsigned.ipa`, `-ios-runner-app.zip`)
+
+
+      Windows status: currently unusable. The BLE stack on Windows is broken, so BLE features do not
+      work.
+
+
+      iOS manual signing and install:
+
+      1. Download `*-ios-unsigned.ipa` (or `*-ios-runner-app.zip`) from this release.
+
+      2. Re-sign it with your Apple Development/Distribution certificate and provisioning profile.
+
+      3. If you used `*-ios-runner-app.zip`, create a signed `.ipa` from `Runner.app` during
+      signing.
+
+      4. Install the signed `.ipa` on your iPhone using Apple Configurator 2 or Xcode (Devices and
+      Simulators).
+  - version: v2026.0404.1
+    name: 2026.0404.1
+    datetime: '2026-04-04T18:22:35Z'
+    url: https://github.com/dz0ny/meshcore-sar/releases/tag/v2026.0404.1
+    prerelease: false
+    notes: >-
+      Release assets are published for all supported build targets:
+
+      - Android (`.apk`)
+
+      - Linux (`.tar.gz`)
+
+      - macOS (`.dmg`)
+
+      - Windows (`.zip`)
+
+      - iOS unsigned (`-ios-unsigned.ipa`, `-ios-runner-app.zip`)
+
+
+      Windows status: currently unusable. The BLE stack on Windows is broken, so BLE features do not
+      work.
+
+
+      iOS manual signing and install:
+
+      1. Download `*-ios-unsigned.ipa` (or `*-ios-runner-app.zip`) from this release.
+
+      2. Re-sign it with your Apple Development/Distribution certificate and provisioning profile.
+
+      3. If you used `*-ios-runner-app.zip`, create a signed `.ipa` from `Runner.app` during
+      signing.
+
+      4. Install the signed `.ipa` on your iPhone using Apple Configurator 2 or Xcode (Devices and
+      Simulators).
+  - version: v2026.0403.1
+    name: 2026.0403.1
+    datetime: '2026-04-03T20:40:08Z'
+    url: https://github.com/dz0ny/meshcore-sar/releases/tag/v2026.0403.1
+    prerelease: false
+    notes: >-
+      Release assets are published for all supported build targets:
+
+      - Android (`.apk`)
+
+      - Linux (`.tar.gz`)
+
+      - macOS (`.dmg`)
+
+      - Windows (`.zip`)
+
+      - iOS unsigned (`-ios-unsigned.ipa`, `-ios-runner-app.zip`)
+
+
+      Windows status: currently unusable. The BLE stack on Windows is broken, so BLE features do not
+      work.
+
+
+      iOS manual signing and install:
+
+      1. Download `*-ios-unsigned.ipa` (or `*-ios-runner-app.zip`) from this release.
+
+      2. Re-sign it with your Apple Development/Distribution certificate and provisioning profile.
+
+      3. If you used `*-ios-runner-app.zip`, create a signed `.ipa` from `Runner.app` during
+      signing.
+
+      4. Install the signed `.ipa` on your iPhone using Apple Configurator 2 or Xcode (Devices and
+      Simulators).
+  - version: v2026.0402.1
+    name: 2026.0402.1
+    datetime: '2026-04-02T07:25:23Z'
+    url: https://github.com/dz0ny/meshcore-sar/releases/tag/v2026.0402.1
+    prerelease: false
+    notes: >-
+      Release assets are published for all supported build targets:
+
+      - Android (`.apk`)
+
+      - Linux (`.tar.gz`)
+
+      - macOS (`.dmg`)
+
+      - Windows (`.zip`)
+
+      - iOS unsigned (`-ios-unsigned.ipa`, `-ios-runner-app.zip`)
+
+
+      Windows status: currently unusable. The BLE stack on Windows is broken, so BLE features do not
+      work.
+
+
+      iOS manual signing and install:
+
+      1. Download `*-ios-unsigned.ipa` (or `*-ios-runner-app.zip`) from this release.
+
+      2. Re-sign it with your Apple Development/Distribution certificate and provisioning profile.
+
+      3. If you used `*-ios-runner-app.zip`, create a signed `.ipa` from `Runner.app` during
+      signing.
+
+      4. Install the signed `.ipa` on your iPhone using Apple Configurator 2 or Xcode (Devices and
+      Simulators).
+  - version: v2026.0324.1
+    name: 2026.0324.1
+    datetime: '2026-03-24T18:28:55Z'
+    url: https://github.com/dz0ny/meshcore-sar/releases/tag/v2026.0324.1
+    prerelease: false
+    notes: >-
+      Release assets are published for all supported build targets:
+
+      - Android (`.apk`)
+
+      - Linux (`.tar.gz`)
+
+      - macOS (`.dmg`)
+
+      - Windows (`.zip`)
+
+      - iOS unsigned (`-ios-unsigned.ipa`, `-ios-runner-app.zip`)
+
+
+      Windows status: currently unusable. The BLE stack on Windows is broken, so BLE features do not
+      work.
+
+
+      iOS manual signing and install:
+
+      1. Download `*-ios-unsigned.ipa` (or `*-ios-runner-app.zip`) from this release.
+
+      2. Re-sign it with your Apple Development/Distribution certificate and provisioning profile.
+
+      3. If you used `*-ios-runner-app.zip`, create a signed `.ipa` from `Runner.app` during
+      signing.
+
+      4. Install the signed `.ipa` on your iPhone using Apple Configurator 2 or Xcode (Devices and
+      Simulators).
+  - version: v2026.0323.3
+    name: 2026.0323.3
+    datetime: '2026-03-23T20:01:18Z'
+    url: https://github.com/dz0ny/meshcore-sar/releases/tag/v2026.0323.3
+    prerelease: false
+    notes: >-
+      Release assets are published for all supported build targets:
+
+      - Android (`.apk`)
+
+      - Linux (`.tar.gz`)
+
+      - macOS (`.dmg`)
+
+      - Windows (`.zip`)
+
+      - iOS unsigned (`-ios-unsigned.ipa`, `-ios-runner-app.zip`)
+
+
+      Windows status: currently unusable. The BLE stack on Windows is broken, so BLE features do not
+      work.
+
+
+      iOS manual signing and install:
+
+      1. Download `*-ios-unsigned.ipa` (or `*-ios-runner-app.zip`) from this release.
+
+      2. Re-sign it with your Apple Development/Distribution certificate and provisioning profile.
+
+      3. If you used `*-ios-runner-app.zip`, create a signed `.ipa` from `Runner.app` during
+      signing.
+
+      4. Install the signed `.ipa` on your iPhone using Apple Configurator 2 or Xcode (Devices and
+      Simulators).
+  - version: v2026.0323.2
+    name: 2026.0323.2
+    datetime: '2026-03-23T19:53:13Z'
+    url: https://github.com/dz0ny/meshcore-sar/releases/tag/v2026.0323.2
+    prerelease: false
+    notes: >-
+      Release assets are published for all supported build targets:
+
+      - Android (`.apk`)
+
+      - Linux (`.tar.gz`)
+
+      - macOS (`.dmg`)
+
+      - Windows (`.zip`)
+
+      - iOS unsigned (`-ios-unsigned.ipa`, `-ios-runner-app.zip`)
+
+
+      Windows status: currently unusable. The BLE stack on Windows is broken, so BLE features do not
+      work.
+
+
+      iOS manual signing and install:
+
+      1. Download `*-ios-unsigned.ipa` (or `*-ios-runner-app.zip`) from this release.
+
+      2. Re-sign it with your Apple Development/Distribution certificate and provisioning profile.
+
+      3. If you used `*-ios-runner-app.zip`, create a signed `.ipa` from `Runner.app` during
+      signing.
+
+      4. Install the signed `.ipa` on your iPhone using Apple Configurator 2 or Xcode (Devices and
+      Simulators).
+  - version: v2026.0323.1
+    name: 2026.0323.1
+    datetime: '2026-03-23T15:04:46Z'
+    url: https://github.com/dz0ny/meshcore-sar/releases/tag/v2026.0323.1
+    prerelease: false
+    notes: "Release assets are published for all supported build targets:\r\n- Android (`.apk`)\r\n- Linux (`.tar.gz`)\r\n- macOS (`.dmg`)\r\n- Windows (`.zip`)\r\n- iOS unsigned (`-ios-unsigned.ipa`, `-ios-runner-app.zip`)\r\n\r\nWindows status: currently unusable. The BLE stack on Windows is broken, so BLE features do not work.\r\n\r\niOS manual signing and install:\r\n1. Download `*-ios-unsigned.ipa` (or `*-ios-runner-app.zip`) from this release.\r\n2. Re-sign it with your Apple Development/Distribution certificate and provisioning profile.\r\n3. If you used `*-ios-runner-app.zip`, create a signed `.ipa` from `Runner.app` during signing.\r\n4. Install the signed `.ipa` on your iPhone using Apple Configurator 2 or Xcode (Devices and Simulators)."
+  - version: v2026.0322.2
+    name: 2026.0322.2
+    datetime: '2026-03-22T18:05:22Z'
+    url: https://github.com/dz0ny/meshcore-sar/releases/tag/v2026.0322.2
+    prerelease: false
+    notes: >-
+      Release assets are published for all supported build targets:
+
+      - Android (`.apk`)
+
+      - Linux (`.tar.gz`)
+
+      - macOS (`.dmg`)
+
+      - Windows (`.zip`)
+
+      - iOS unsigned (`-ios-unsigned.ipa`, `-ios-runner-app.zip`)
+
+
+      Windows status: currently unusable. The BLE stack on Windows is broken, so BLE features do not
+      work.
+
+
+      iOS manual signing and install:
+
+      1. Download `*-ios-unsigned.ipa` (or `*-ios-runner-app.zip`) from this release.
+
+      2. Re-sign it with your Apple Development/Distribution certificate and provisioning profile.
+
+      3. If you used `*-ios-runner-app.zip`, create a signed `.ipa` from `Runner.app` during
+      signing.
+
+      4. Install the signed `.ipa` on your iPhone using Apple Configurator 2 or Xcode (Devices and
+      Simulators).
+  - version: v2026.0322.1
+    name: 2026.0322.1
+    datetime: '2026-03-22T09:13:29Z'
+    url: https://github.com/dz0ny/meshcore-sar/releases/tag/v2026.0322.1
+    prerelease: false
+    notes: >-
+      Release assets are published for all supported build targets:
+
+      - Android (`.apk`)
+
+      - Linux (`.tar.gz`)
+
+      - macOS (`.dmg`)
+
+      - Windows (`.zip`)
+
+      - iOS unsigned (`-ios-unsigned.ipa`, `-ios-runner-app.zip`)
+
+
+      Windows status: currently unusable. The BLE stack on Windows is broken, so BLE features do not
+      work.
+
+
+      iOS manual signing and install:
+
+      1. Download `*-ios-unsigned.ipa` (or `*-ios-runner-app.zip`) from this release.
+
+      2. Re-sign it with your Apple Development/Distribution certificate and provisioning profile.
+
+      3. If you used `*-ios-runner-app.zip`, create a signed `.ipa` from `Runner.app` during
+      signing.
+
+      4. Install the signed `.ipa` on your iPhone using Apple Configurator 2 or Xcode (Devices and
+      Simulators).
+  - version: v2026.0321.1
+    name: 2026.0321.1
+    datetime: '2026-03-21T19:45:51Z'
+    url: https://github.com/dz0ny/meshcore-sar/releases/tag/v2026.0321.1
+    prerelease: false
+  - version: v2026.0319.1+2
+    name: 2026.0319.1
+    datetime: '2026-03-20T18:10:00Z'
+    url: https://github.com/dz0ny/meshcore-sar/releases/tag/v2026.0319.1%2B2
+    prerelease: false
+    notes: >-
+      Release assets are published for all supported build targets:
+
+      - Android (`.apk`)
+
+      - Linux (`.tar.gz`)
+
+      - macOS (`.dmg`)
+
+      - Windows (`.zip`)
+
+      - iOS unsigned (`-ios-unsigned.ipa`, `-ios-runner-app.zip`)
+
+
+      Windows status: currently unusable. The BLE stack on Windows is broken, so BLE features do not
+      work.
+
+
+      iOS manual signing and install:
+
+      1. Download `*-ios-unsigned.ipa` (or `*-ios-runner-app.zip`) from this release.
+
+      2. Re-sign it with your Apple Development/Distribution certificate and provisioning profile.
+
+      3. If you used `*-ios-runner-app.zip`, create a signed `.ipa` from `Runner.app` during
+      signing.
+
+      4. Install the signed `.ipa` on your iPhone using Apple Configurator 2 or Xcode (Devices and
+      Simulators).
+  - version: v2026.0318.1
+    name: 2026.0318.1
+    datetime: '2026-03-18T16:26:25Z'
+    url: https://github.com/dz0ny/meshcore-sar/releases/tag/v2026.0318.1
+    prerelease: false
+    notes: >-
+      Release assets are published for all supported build targets:
+
+      - Android (`.apk`)
+
+      - Linux (`.tar.gz`)
+
+      - macOS (`.dmg`)
+
+      - Windows (`.zip`)
+
+      - iOS unsigned (`-ios-unsigned.ipa`, `-ios-runner-app.zip`)
+
+
+      Windows status: currently unusable. The BLE stack on Windows is broken, so BLE features do not
+      work.
+
+
+      iOS manual signing and install:
+
+      1. Download `*-ios-unsigned.ipa` (or `*-ios-runner-app.zip`) from this release.
+
+      2. Re-sign it with your Apple Development/Distribution certificate and provisioning profile.
+
+      3. If you used `*-ios-runner-app.zip`, create a signed `.ipa` from `Runner.app` during
+      signing.
+
+      4. Install the signed `.ipa` on your iPhone using Apple Configurator 2 or Xcode (Devices and
+      Simulators).
+  - version: v2026.0317.1
+    name: 2026.0317.1
+    datetime: '2026-03-17T21:12:51Z'
+    url: https://github.com/dz0ny/meshcore-sar/releases/tag/v2026.0317.1
+    prerelease: false
+    notes: >-
+      Release assets are published for all supported build targets:
+
+      - Android (`.apk`)
+
+      - Linux (`.tar.gz`)
+
+      - macOS (`.dmg`)
+
+      - Windows (`.zip`)
+
+      - iOS unsigned (`-ios-unsigned.ipa`, `-ios-runner-app.zip`)
+
+
+      Windows status: currently unusable. The BLE stack on Windows is broken, so BLE features do not
+      work.
+
+
+      iOS manual signing and install:
+
+      1. Download `*-ios-unsigned.ipa` (or `*-ios-runner-app.zip`) from this release.
+
+      2. Re-sign it with your Apple Development/Distribution certificate and provisioning profile.
+
+      3. If you used `*-ios-runner-app.zip`, create a signed `.ipa` from `Runner.app` during
+      signing.
+
+      4. Install the signed `.ipa` on your iPhone using Apple Configurator 2 or Xcode (Devices and
+      Simulators).
+  - version: v2026.0315.2
+    name: 2026.0315.2
+    datetime: '2026-03-15T20:11:13Z'
+    url: https://github.com/dz0ny/meshcore-sar/releases/tag/v2026.0315.2
+    prerelease: false
+    notes: >-
+      Release assets are published for all supported build targets:
+
+      - Android (`.apk`)
+
+      - Linux (`.tar.gz`)
+
+      - macOS (`.dmg`)
+
+      - Windows (`.zip`)
+
+      - iOS unsigned (`-ios-unsigned.ipa`, `-ios-runner-app.zip`)
+
+
+      Windows status: currently unusable. The BLE stack on Windows is broken, so BLE features do not
+      work.
+
+
+      iOS manual signing and install:
+
+      1. Download `*-ios-unsigned.ipa` (or `*-ios-runner-app.zip`) from this release.
+
+      2. Re-sign it with your Apple Development/Distribution certificate and provisioning profile.
+
+      3. If you used `*-ios-runner-app.zip`, create a signed `.ipa` from `Runner.app` during
+      signing.
+
+      4. Install the signed `.ipa` on your iPhone using Apple Configurator 2 or Xcode (Devices and
+      Simulators).
+  - version: v2026.0315.1
+    name: 2026.0315.1
+    datetime: '2026-03-15T10:15:43Z'
+    url: https://github.com/dz0ny/meshcore-sar/releases/tag/v2026.0315.1
+    prerelease: false
+    notes: >-
+      Release assets are published for all supported build targets:
+
+      - Android (`.apk`)
+
+      - Linux (`.tar.gz`)
+
+      - macOS (`.dmg`)
+
+      - Windows (`.zip`)
+
+      - iOS unsigned (`-ios-unsigned.ipa`, `-ios-runner-app.zip`)
+
+
+      Windows status: currently unusable. The BLE stack on Windows is broken, so BLE features do not
+      work.
+
+
+      iOS manual signing and install:
+
+      1. Download `*-ios-unsigned.ipa` (or `*-ios-runner-app.zip`) from this release.
+
+      2. Re-sign it with your Apple Development/Distribution certificate and provisioning profile.
+
+      3. If you used `*-ios-runner-app.zip`, create a signed `.ipa` from `Runner.app` during
+      signing.
+
+      4. Install the signed `.ipa` on your iPhone using Apple Configurator 2 or Xcode (Devices and
+      Simulators).

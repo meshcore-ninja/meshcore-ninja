@@ -1,4 +1,34 @@
 source: github
 repo: MultiMote/meshcore-cardputer-adv
-updatedAt: '2026-08-17T14:30:06.523Z'
-releases: []
+updatedAt: '2026-08-17T16:29:59.949Z'
+releases:
+  - version: 2026.7.3
+    name: Firmware 2026.7.3
+    datetime: '2026-07-31T16:37:32Z'
+    url: https://github.com/MultiMote/meshcore-cardputer-adv/releases/tag/2026.7.3
+    prerelease: false
+    notes: "* Add default scope (region) option to the settings\r\n* Add search box to the contacts page\r\n* Move layout icon to the status bar"
+  - version: 2026.7.2
+    name: Firmware 2026.7.2
+    datetime: '2026-07-18T19:52:51Z'
+    url: https://github.com/MultiMote/meshcore-cardputer-adv/releases/tag/2026.7.2
+    prerelease: false
+    notes: "* Remove messages preview screen\r\n* Add \"New message\" screen that appears when a new message is received when screen is off or current page is main\r\n* Move unsynced messages count to the stats page\r\n* After selecting chat and pressing `Esc`, current page is restored to the previous one"
+  - version: 2026.7.1
+    name: Firmware 2026.7.1
+    datetime: '2026-07-14T16:40:53Z'
+    url: https://github.com/MultiMote/meshcore-cardputer-adv/releases/tag/2026.7.1
+    prerelease: false
+    notes: "* Multiple direct message sending attempts\r\n* Press `Ctrl+T` to break resending\r\n* Press `Ctrl+Up` to insert last sent message into the text field\r\n* Add arrows to font\r\n* Fix screen not updated on new message"
+  - version: 2026.7.0
+    name: Firmware 2026.7.0
+    datetime: '2026-07-06T19:10:46Z'
+    url: https://github.com/MultiMote/meshcore-cardputer-adv/releases/tag/2026.7.0
+    prerelease: false
+    notes: "* Add versioning\r\n* **Cardputer hardware abstraction rework**\r\n  - Remove M5Unified, M5GFX, and M5Cardputer\r\n  - Replace M5GFX with \"LovyanGFX\"\r\n  - Replace M5Cardputer with \"Adafruit TCA8418\"\r\n* **[BREAKING] Keyboard layout rework**\r\n  - Support keyboard layers based on key modifiers (`Fn`, `OPT`, `Ctrl`, `Alt`, `Shift`)\r\n  - Allow overriding the base layout\r\n  - Layout file format changed (check the Wiki for details)\r\n  - Improve chat page `Fn` + `Arrows` logic (an empty input line does not require pressing `Fn`; the logic is reversed when typing)\r\n* **Power consumption reduced**\r\n  - Sleep mode (power saving): from ~52mA to ~22mA\r\n* Remove G0 button handling\r\n* Add more Unicode blocks to font\r\n* Move shutdown and reset to the tools menu\r\n* Move node name to the settings menu and make it editable\r\n* Move status icons to the left side\r\n* Add unread icon\r\n* Fix chat input line truncated at the wrong side\r\n* Do not pop up the message preview in the chat page"
+  - version: latest
+    name: Snapshot
+    datetime: '2026-05-15T16:13:48Z'
+    url: https://github.com/MultiMote/meshcore-cardputer-adv/releases/tag/latest
+    prerelease: true
+    notes: "Current - Meshcore v1.16.0\r\nNot updated - Meshcore v1.15.0"

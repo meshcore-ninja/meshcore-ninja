@@ -1,4 +1,1561 @@
 source: github
 repo: Kpa-clawbot/CoreScope
-updatedAt: '2026-08-17T14:30:45.820Z'
-releases: []
+updatedAt: '2026-08-17T16:30:11.532Z'
+releases:
+  - version: v3.9.2
+    name: CoreScope v3.9.2
+    datetime: '2026-06-13T04:48:03Z'
+    url: https://github.com/Kpa-clawbot/CoreScope/releases/tag/v3.9.2
+    prerelease: false
+    notes: >-
+      **Upgrade urgency: Recommended.** Big batch of operator-felt wins.
+
+
+      ## Highlights
+
+
+      ### Accessibility (#1668 — M2/M3/M4/M5 merged; M6 in flight)
+
+      - Two-tier CSS palette with semantic tokens (`--palette-*` → `--color-*`/`--text-*`);
+      operators can now hot-swap theme palettes
+
+      - WCAG AA color-contrast hits across all 22 audited routes — **443 baseline violations → 0**
+      verified by the new axe CI gate (#1696)
+
+      - Typography pass: 14px body / 12px+500 chip floor across the entire chrome (#1679)
+
+      - Hash-cell analytics palette, badge contrast, /live VCR controls (#1681)
+
+      - Audio-lab BPM + Volume sliders now have aria-labels
+
+
+      ### MQTT observability
+
+      - Per-source MQTT status endpoint + Observers panel (#1682) —
+      connected/disconnected/last-packet/error counters per broker
+
+      - Mobile-friendly: cards at ≤640px instead of squished table (#1698)
+
+
+      ### Cold-load + analytics correctness
+
+      - **Packet-store cold-load actually loads the database now (#1691).** Pre-fix: after restart,
+      only 0.3% of DB rows were loaded into RAM, dashboards looked empty for hours. Root cause:
+      hot-load filtered by `first_seen` (immutable per hash) instead of effective recency. New
+      `transmissions.last_seen` denormalized column + writer-side update fixes this end-to-end.
+
+      - Analytics endpoint returns 503 Retry-After during warm-up (#1688) — operators no longer see
+      post-restart partial slices
+
+      - Warm-up banner surfaces backfill state in the UI (#1683)
+
+
+      ### Firmware 1.16 sync
+
+      - Server-side decoder parity for extended ACK payloads (#1695)
+
+      - Customizer toggle to hide 1-byte path hops (collide ~8-way at 2k nodes) — #1689
+
+
+      ### Performance
+
+      - `/packets` init parallelizes loadObservers + loadPackets (#1693) — first-row time dropped
+      from 25-40s to <5s on slow links
+
+      - Confidence rating weighted by hash mode (#1687) — 1-byte sightings carry less weight than
+      6-byte
+
+
+      ### CI / operability
+
+      - OpenAPI completeness gate (#1678 Phase 1)
+
+      - Release fast-path: re-tag :edge → :vX.Y.Z when SHA matches (#1680) — most patch releases now
+      skip the 30min full pipeline rerun
+
+      - Staging disk monitor + cleanup cron (#1686)
+
+      - Slideover E2E flake-gate reduced 20× → 3×, root cause fixed in #1693
+
+
+      ## Container image
+
+
+      `ghcr.io/kpa-clawbot/corescope:v3.9.2` (multi-arch: amd64, arm64)
+
+
+      ## Verification
+
+
+      - 22 routes × 2 themes × 2 viewports automated a11y gate (axe-core, #1696)
+
+      - All 19 PRs ran through the full polish chain (parallel reviewers + Kent Beck TDD gate)
+
+      - Cold-load fix verified by `transmissions.last_seen` test fixture (#1691)
+
+
+      ## Operator upgrade (MikroTik)
+
+
+      ```
+
+      /container add remote-image=ghcr.io/kpa-clawbot/corescope:v3.9.2 envlist=cs-env
+      mounts=cs-data,cs-caddyfile interface=veth-corescope start-on-boot=yes
+      name=corescope-prod-v392
+
+      ```
+
+
+      ## Acknowledgements
+
+
+      External contributors carry over from v3.9.1.
+  - version: v3.9.1
+    name: CoreScope v3.9.1
+    datetime: '2026-06-12T06:41:14Z'
+    url: https://github.com/Kpa-clawbot/CoreScope/releases/tag/v3.9.1
+    prerelease: false
+    notes: >-
+      **Upgrade urgency: Recommended** — v3.9.1 is what v3.9.0 should have been. v3.9.0's container
+      image never published (Playwright flake gated Docker build). v3.9.1 includes everything in
+      v3.9.0 plus:
+
+
+      - **WCAG AA contrast pass** — new two-tier CSS palette (raw `--palette-*` → semantic
+      `--color-*`/`--text-*`); muted-text family bumped to ≥4.5:1 in both themes (most well above —
+      `--text-muted` on dark surface goes 3.5 → 11.58:1). Operator-reported unknown-repeater chip
+      ("dark-blue text on dark-blue background") fixed (2.75:1 → 4.95:1). Closes #1671. Partial fix
+      for #1668. (#1676, f0addfda)
+
+      - **Slideover test stability** — `test-slideover-1056-e2e.js` was racing the packets
+      virtual-scroll spacer; tightened selectors, bumped data-row wait to 20s. Cleared the
+      day-of-release CI flakes. Fixes #1662. (#1663+followups, f06359d7)
+
+
+      ## Verification
+
+
+      Test plan: `workspace-meshcore/test-plans/v3.9.0-cdp-test-plan.md` (93 tests, applies
+      unchanged to v3.9.1).
+
+      M1 a11y audit: `workspace-meshcore/a11y-audit/reports/violations-summary.md` (2,429 BLOCKER →
+      estimated 85% cleared by M2).
+
+
+      ## Acknowledgements
+
+
+      External contributors from v3.9.0 still apply: @efiten, @EldoonNemar. No new external PRs
+      since v3.9.0.
+  - version: v3.9.0
+    name: CoreScope v3.9.0
+    datetime: '2026-06-12T02:55:34Z'
+    url: https://github.com/Kpa-clawbot/CoreScope/releases/tag/v3.9.0
+    prerelease: false
+    notes: >-
+      **Upgrade urgency: Medium** — fixes the post-restart "relay timelines empty" regression,
+      surfaces silent `/api/nodes` truncation, and ships operator-controlled per-name hiding.
+
+
+      _257 commits since v3.8.3 (72 substantive + 185 auto-generated coverage bumps). Every bullet
+      ends with a commit SHA — `git show <sha>` to verify._
+
+
+      ## Highlights
+
+
+      - **Your relay timelines survive a restart.** Before v3.9.0, every container restart left
+      repeater nodes with empty hop histories until live traffic replayed enough adverts to
+      re-attribute. Now the relay-hop index is rebuilt from `path_json` during cold load — per-relay
+      timelines, hop counts, and route stats are intact the moment the server says it's ready.
+      (#1643, 938153dd)
+
+      - **`/api/nodes` stops silently truncating at 500 rows.** The hard cap was hiding nodes from
+      the map, analytics and packets pages on any mesh of meaningful size — without any warning. Now
+      properly paginated across every consumer, with internal UI requests bypassing the per-page
+      clamp. (#1607, 26105748; #1637, 9002b25b; #1589, 7421ead9)
+
+      - **Hide your own node from a public dashboard with a prefix rename.** New
+      `hiddenNamePrefixes` config (default `["🚫"]`) drops matching nodes from `/api/nodes*` while
+      keeping DB rows for analytics — same convention other MeshCore dashboards already follow, no
+      DB surgery, no permanent loss of history. (#1655, 825b2648)
+
+      - **Observer Compare is finally discoverable.** The compare page existed before but was a
+      hidden URL trick; now there are three entry points (header CTA, sticky selector strip,
+      observer-table multi-select) leading into a Tufte-grade compare view with state-preserving
+      selection. (#1642, 531bc8ac; #1645, c93ae67e; #1647, 167af54e)
+
+      - **Per-node Reach.** New `/api/nodes/{pubkey}/reach` + UI surfaces directional link quality
+      per neighbor — answers "is my link to X any good in both directions" without staring at a
+      topology graph. (#1627, e2212f50)
+
+
+
+      ## What's New
+
+
+      ### Observer Compare
+
+      - Promote observer comparison to first-class: header CTA, sticky selector strip,
+      observer-table multi-select. (#1642, 531bc8ac)
+
+      - Tufte-grade compare page with themed button vocabulary + state-preserving multi-select
+      across navigations. (#1645, c93ae67e)
+
+      - Polish: tightened checkboxes, hierarchy, selector strip + mobile fixes. (#1647, 167af54e)
+
+      - Wire `TableSort` on the observers table with numeric/time column types so the sort
+      affordance actually sorts. (#1641, d72ab69f)
+
+
+      ### Reach & Nodes
+
+      - Per-node Reach page + `GET /api/nodes/{pubkey}/reach` (directional link quality). (#1627,
+      e2212f50)
+
+      - Paginate `/api/nodes` across map/live/analytics/packets/area-map so the 500-row server cap
+      stops silently truncating UIs. (#1607, 26105748; #1637, 9002b25b)
+
+      - Sortable First Seen column on the Nodes table. (#1587, 7533b3b6)
+
+      - Firmware `repeat:on|off` hint now excludes listener-only observers from the disambiguator.
+      (#1624, a4776557)
+
+      - Link RTC-reset warnings on node detail to the offending packet hashes. (#1590, 1a2b8c48)
+
+
+      ### Analytics
+
+      - Relay Airtime Share endpoint + dumbbell chart. (#1601, 3898688d)
+
+      - 5-minute rolling-baseline anomaly detection for Write Sources. (#1593, a26a412c)
+
+      - TRACE packets overlay per-hop SNR on the path graph. (#1622, e9aed641)
+
+      - Multi-byte prefix repeaters now show up in the 1-byte hash-usage matrix view. (#1591,
+      3df89241)
+
+
+      ### Live & Map
+
+      - Fullscreen toggle on the live map + controls collapsed by default. (#1572, d7bd9d57)
+
+      - Colorblind simulation overlay (Brettel/Vienot) with reset-to-Wong button. (#1600, 571c960c)
+
+      - Path symbols legend disclosure on packets. (#1570, 5fd8900c)
+
+      - OSM / Stamen tile providers with per-provider Leaflet layer control. (#1533, d7cd9203)
+
+      - Operator-configurable `liveMap.maxNodes` (default 2000). (#1577, 1bdb92de)
+
+
+      ### Config & Operator Surfaces
+
+      - `hiddenNamePrefixes` (default `["🚫"]`) — drop matching nodes from `/api/nodes*` while
+      preserving DB rows. (#1655, 825b2648)
+
+      - Config-driven disabled-tabs list in the customizer modal. (#1579, 7292d60f)
+
+      - `branding
+
+      …
+  - version: v3.8.3
+    name: CoreScope v3.8.3
+    datetime: '2026-06-04T01:49:15Z'
+    url: https://github.com/Kpa-clawbot/CoreScope/releases/tag/v3.8.3
+    prerelease: false
+    notes: >-
+      # CoreScope v3.8.3
+
+
+      **Upgrade urgency: High** — contains a stored XSS fix. Public dashboards should upgrade
+      immediately.
+
+
+      _187 commits since v3.8.2 (47 substantive + 140 auto-generated coverage bumps). Every bullet
+      ends with a commit SHA — `git show <sha>` to verify._
+
+
+      ## Highlights
+
+
+      - **The live map is buttery now.** Packet animations and node pulses moved off SVG-per-frame
+      onto a hardware-accelerated canvas overlay — 60 FPS even when the mesh is firing on all
+      cylinders. (#1490, 914f8694; #1521, 75a38f02)
+
+      - **Dashboards and APIs feel snappier under load.** `/api/observers` p95 dropped from ~10.8s
+      to sub-second on busy meshes, `/api/stats` is no longer re-scanning the observations table
+      every 15s for the navbar, and per-observer analytics stopped re-parsing every timestamp three
+      times. (#1483, 13bdee57; #1516, 38506001)
+
+      - **Stored XSS class closed — same class as CVE-2026-45323.** Mesh-advertised node names and
+      observer names were rendered to the DOM unescaped on
+      app/nodes/observers/packets/live/analytics/route-view/area-map; a payload like `<img src=x
+      onerror=…>` executed. All sinks now escape; follow-up audits closed three more XSS sinks, an
+      unbounded-`limit` DoS, and several log-injection paths. New CI gate hard-fails PRs that
+      reintroduce either class. (#1537, f15b6779; #1539, 53339e08; #1540, 800d61c3; #1544, 7b430450;
+      #1543, e4a21fc9)
+
+      - **Cross-domain embeds.** `?embed=1` on `/#/map` and `/#/channels` strips the chrome, and a
+      new `CORS_ALLOWED_ORIGINS` env unlocks Home Assistant / Grafana panel embeds. (#1500,
+      367265eb)
+
+      - **The map's region filter now actually filters the map.** Selecting a region hides
+      non-region nodes by default; a "Show all nodes" toggle preserves the old behavior. (#1501,
+      28713fab)
+
+      - **Observers with broken clocks now name themselves.** Observers emitting zone-less
+      timestamps get a ⚠️ chip on the observer list and a banner on detail with fix instructions —
+      no more "why is this observer showing 1970?" support tickets. (#1480, 43b93c6b)
+
+      - **Operators with big DBs no longer wait minutes for ingestor startup.** Heavy index builds
+      run in the background via a new async-migration runner; the ingestor accepts packets
+      immediately on boot. (#1541, e438451d)
+
+      - **Fresh deploys can decrypt #Public out of the box.** Default Public channel key now ships
+      in `channel-rainbow.json`. (#897, 451b5e88)
+
+
+      <details>
+
+      <summary><b>Stored-XSS sink list (for security verification)</b></summary>
+
+
+      HTML-escaped at: `app.js` global search dropdown (node + channel name); `nodes.js` table row +
+      Leaflet popups (×2); `observers.js` table name cell; `packets.js` observer-name cells (×4) +
+      multi-select checkbox label; `live.js` node-filter `<option>` + map tooltip + hop popup;
+      `analytics.js` topology tooltip + RF-health aria-label; `packets.js` CHAN hex decode fields;
+      `route-view.js` hop + union tooltips (×2); `area-map.html` node popups (×2). Global
+      `escapeHtml` now covers the full 5-char OWASP set (`& < > " '`). `map.js` `safeEsc` was a
+      no-op identity since #48 — now wired to the real escaper. Backend `sanitizeName()`
+      deliberately keeps `< > " &` for lossless storage / `meshcore://` deep-links; fix is at the
+      sink per OWASP. Round-2 sweep added: `traces.js` URL-fragment in popups, `observer-detail.js`
+      MQTT-meta tooltip, `analytics.js` RF-health `aria-label`. Pinned by `test-xss-escape-sinks.js`
+      and `test-anl1-tooltip-render.js` with tag-injection and attribute-breakout payloads. (#1537,
+      #1539)
+
+
+      </details>
+
+
+      ## Features
+
+
+      - Hide non-region nodes by default on the live map when a region is selected; "Show all nodes"
+      toggle restores legacy view; state in `localStorage['mc-region-show-all-nodes']`. Fixes #1108.
+      (#1501, 28713fab)
+
+      - `?embed=1` on `/#/map` or `/#/channels` suppresses top-nav, bottom-nav, drawer; new
+      `corsAllowedOrigins` config + `CORS_ALLOWED_ORIGINS` env; `Access-Control-Allow-Methods`
+      tightened to `GET, HEAD, OPTIONS`. Fixes #1369. (#1500, 367265eb)
+
+      - Customizer: marker stroke color/width/opacity tunable via Colors → Marker Stro
+
+      …
+  - version: v3.8.2
+    name: v3.8.2 — Mobile UX, Customizer, Performance
+    datetime: '2026-05-29T02:50:54Z'
+    url: https://github.com/Kpa-clawbot/CoreScope/releases/tag/v3.8.2
+    prerelease: false
+    notes: >-
+      # v3.8.2 — Mobile UX, Customizer, Performance
+
+
+      _(Draft for operator review. ~3 weeks of work since v3.8.1, ~25 substantive commits.)_
+
+
+      ## Headliners
+
+
+      - **Mobile UX overhaul** — packets surface redesigned mobile-first with single-row navbar,
+      semantic-first detail panel, hidden chrome rail; nav controls (Favorites/Search/Customize)
+      finally reachable on phones (#1471 — closes #1415/#1458/#1461/#1467/#1468/#1470).
+
+      - **Customizer reframe** — CB preset is now an end-user OPT-IN, not a force-override.
+      Operator's `config.json nodeColors` are honored by default; per-user customizer override beats
+      the preset (#1446/#1447/#1448/#1449 — fixes longstanding "config not honored" reports).
+
+      - **Dark-tile provider picker** — 4 dark map variants pickable in customizer: Carto Dark, Esri
+      Dark Gray, Voyager Inverted, Positron Inverted (#1420/#1430). Honored across all map surfaces
+      including node-detail inset (#1470).
+
+      - **Observer timestamps fixed** — California (UTC-7) observers were perpetually 7h stale
+      because naive timestamps were treated as UTC. Now: `observer.last_seen` always uses ingest
+      time, per-packet rxTime keeps envelope time with symmetric clamp (#1463/#1464/#1465/#1466).
+
+      - **Cold-path cache** — `/api/nodes` no longer blocks on stale-cache rebuild; serves
+      stale-while-revalidate (#1272/#1436).
+
+
+      ## Operator-facing changes
+
+
+      ### UI / UX
+
+      - New customizer toggle: **Show encrypted channels** (default OFF — finally a way to control
+      the encrypted-channel flood without DevTools) (#1454/#1455)
+
+      - **Traffic share** label replaces the misleading "Usefulness" score (renamed everywhere; new
+      `traffic_share_score` JSON field added alongside the legacy `usefulness_score` for API
+      compat). Tooltips explain both Traffic share and Bridge score with tap-to-toast on mobile
+      (#1456/#1457)
+
+      - **Custom navbar logos** no longer squished to 125×36 — proportional aspect preserved for
+      square, tall, wide variants (#1450/#1451)
+
+      - **Per-role color overrides** now actually propagate to marker SVGs (was silently dropped
+      before — #1438/#1439/#1441/#1443)
+
+      - "unknown" fake channel no longer accumulates in the channel list (live router was
+      synthesizing it from undecryptable CHAN messages — #1468)
+
+      - Hash matrix marks **0x00 and 0xFF as reserved prefixes** per MeshCore firmware keygen
+      convention (@halo779 report — #1473/#1474)
+
+      - Mobile gesture hints — touch-only gate added (no longer show on desktop), width:fit-content
+      fix for off-screen pills (#1065 chain)
+
+
+      ### Server / Performance
+
+      - `repeaterEnrichTTL` cache cold-path now stale-while-revalidate; first request after expiry
+      no longer blocks (#1272/#1436)
+
+      - Hourly SQLite WAL checkpoint prevents unbounded WAL growth (#1435)
+
+      - Startup warning when `GOMEMLIMIT < 50% of container memory limit` — prevents future OOMs
+      (#1264/#1429)
+
+      - WebSocket MQTT broker support (`ws://` / `wss://`) documented + tested (#902)
+
+      - Paths-through-node now sorted by recency (LastSeen DESC) with count as tiebreaker — was
+      non-deterministic map iteration order (#1145/#1431)
+
+
+      ### Bug fixes
+
+      - Naive (zone-less) ISO timestamps in MQTT envelopes now symmetrically clamped (was: only
+      future-skew rejected, past-skew passed through verbatim — California observers perpetually
+      stale) (#1463/#1464)
+
+      - Observer.last_seen always uses ingest time, never envelope time (architectural cleanup,
+      eliminates whole class of TZ bugs) (#1465/#1466)
+
+      - Hop-name mis-resolution on prefix collision — regression test added for #1144 (the
+      production fix shipped earlier; this guards against re-introduction) (#1433)
+
+      - Channel-color-picker outside-click E2E flake fixed for real this time (race with
+      `setTimeout(0)` listener install — proper fix using rAF×2 + retry) (#1462)
+
+      - CI: master runs no longer cancelled by subsequent commits (was dropping Deploy Staging
+      silently — #1395/#1426)
+
+      - CSS parse-error: stray non-comment text after `#1062` block was eating the next CSS rule
+      from CSSOM (gesture-hint .width:fit-content wasn't taking effect for weeks) (#1065/#1453)
+
+
+      ## Community contributions this cycl
+
+      …
+  - version: v3.8.1
+    name: v3.8.1 — Route, Refined
+    datetime: '2026-05-27T08:29:10Z'
+    url: https://github.com/Kpa-clawbot/CoreScope/releases/tag/v3.8.1
+    prerelease: false
+    notes: >-
+      # CoreScope v3.8.1 — Route, Refined
+
+
+      _Released 2026-05-27. Previous:
+      [v3.7.2](https://github.com/Kpa-clawbot/CoreScope/releases/tag/v3.7.2) (2026-05-06).
+      Supersedes [v3.8.0](https://github.com/Kpa-clawbot/CoreScope/releases/tag/v3.8.0) (released
+      earlier today, before this perf fix landed)._
+
+
+      ## ⚡ Patch in v3.8.1: `/api/nodes` TTL fix
+
+
+      Community contribution from **@efiten** (#1425). The `repeaterEnrichTTL` was 15 seconds but
+      the background recomputer runs every 5 minutes — so the cache was stale for 4m45s out of every
+      5min. On dense hop-graph deployments that meant 18s `/api/nodes` cold-miss responses. TTL is
+      now derived as `2 * recomputer interval` so the cache stays warm between ticks. Measured 18.6s
+      → ~0.5s on the contributor's prod mesh (analyzer.on8ar.eu).
+
+
+      If you already deployed v3.8.0, just upgrade to v3.8.1 — same image semantics, drop-in.
+
+
+      ---
+
+
+      Three weeks, 135 merged PRs. The headline is the **Route Viewer redesign** — packets and the
+      paths they travel, finally rendered as one coherent story. Underneath: startup-window
+      improvements for large DBs, a near-complete mobile chrome overhaul.
+
+
+      ---
+
+
+      ## 🗺️ NEW: Route Viewer
+
+
+      The new route viewer (`route-view.js` + `route-view.css`) puts packet context, observer paths,
+      and resolved hops in one sidebar — and reflows cleanly to a bottom sheet on mobile.
+
+
+      - **Packet context block** in the sidebar header — per-type fact list (ADVERT
+      name/role/sig/pubkey, DM src→dst with encryption state, GRP_TXT channel + decrypted preview,
+      TRACE official-vs-observed hops, PATH src→dst with payload-source chips). Merges
+      `pkt.decoded_json` + `obs.decoded_json` and falls back to byte-level `raw_hex` parsing for
+      encrypted DMs.
+
+      - **Multi-path picker** — chip per unique observer-path (`<count>/<total>` + hex hop string).
+      Click to isolate; "All" renders an edge-deduplicated UNION view (each unique edge once, stroke
+      weight = observer count).
+
+      - **Deep-link URLs** — `#/map?packet=<hash>&obs=<id>`. Bookmarkable, shareable, single source
+      of truth. sessionStorage flow removed.
+
+      - **Hop resolution priority chain** — server `resolved_path` → shared `HopResolver`
+      (observer-IATA-aware, same as packets page) → raw prefix. Kills a whole class of "route view
+      named hops differently than packet detail" bugs.
+
+      - **Markers** — uniform 22 px filled circle with seq number inside, hollow endpoint ring for
+      SRC/DST, double concentric ring on SRC=DST loops, spider-fan for sub-14 px collisions
+      debounced to `zoomend`.
+
+      - **Colorblind-preset live colors** — `routeRamp` per preset (viridis / plasma /
+      pure-luminance) written to `--mc-rt-ramp-0..4` CSS vars and hot-recoloured on
+      `cb-preset-changed` / `theme-changed`.
+
+      - **Desktop chrome** — drag-to-resize sidebar persisted to localStorage, Material/Drive-style
+      collapse chevron centred on the right edge.
+
+      - **Mobile bottom sheet** — anchored above bottom-nav + safe-area inset, thin summary line
+      when collapsed (`TYPE · N hops · X km · M obs`), expands to ~75 vh. All three legacy mobile
+      detail panels closed on route entry.
+
+
+      Closes: #1418, #1419, #1422 · PR #1423
+
+
+      Related map work that landed this cycle: role-aware marker shapes + outline rings (#1334),
+      WCAG 2.2 AA pass on cluster bubbles + role pills + multi-byte labels (#1357), thinner
+      always-on marker outline (#1347).
+
+
+      ---
+
+
+      ## ⚡ Startup
+
+
+      - **Hot startup window** — new `packetStore.hotStartupHours` config loads only N hours of
+      packet history synchronously and fills the rest in background daily chunks. Large DBs
+      (multi-GB) no longer block the HTTP listener on a full-retention load before serving traffic
+      (#1187).
+
+      - **Ingestor now owns the neighbor-graph and all schema migrations**; the server is read-only.
+      Removes a class of startup races where two processes raced the same migration (#1286, #1289).
+
+
+      ---
+
+
+      ## 🔬 NEW: Protocol decoder coverage
+
+
+      The MeshCore decoder now handles every documented payload type, with the legend updated
+      end-to-end so operators see real names instead of `Type 6`.
+
+
+      - **GRP_DATA + MULTIPART** wire-format decoded (#12
+
+      …
+  - version: v3.8.0
+    name: v3.8.0 — Route, Refined (superseded by v3.8.1)
+    datetime: '2026-05-27T08:11:17Z'
+    url: https://github.com/Kpa-clawbot/CoreScope/releases/tag/v3.8.0
+    prerelease: true
+    notes: >-
+      > ⚠️ **Superseded by [v3.8.1](https://github.com/Kpa-clawbot/CoreScope/releases/tag/v3.8.1)**
+      — released the same day with a community-contributed `/api/nodes` TTL fix (#1425, @efiten).
+      Use v3.8.1 instead.
+
+
+      ---
+
+
+      # CoreScope v3.8.0 — Route, Refined
+
+
+      _Released 2026-05-27. Previous:
+      [v3.7.2](https://github.com/Kpa-clawbot/CoreScope/releases/tag/v3.7.2) (2026-05-06)._
+
+
+      Three weeks, 135 merged PRs. The headline is the **Route Viewer redesign** — packets and the
+      paths they travel, finally rendered as one coherent story. Underneath: startup-window
+      improvements for large DBs, a near-complete mobile chrome overhaul.
+
+
+      ---
+
+
+      ## 🗺️ NEW: Route Viewer
+
+
+      The new route viewer (`route-view.js` + `route-view.css`) puts packet context, observer paths,
+      and resolved hops in one sidebar — and reflows cleanly to a bottom sheet on mobile.
+
+
+      - **Packet context block** in the sidebar header — per-type fact list (ADVERT
+      name/role/sig/pubkey, DM src→dst with encryption state, GRP_TXT channel + decrypted preview,
+      TRACE official-vs-observed hops, PATH src→dst with payload-source chips). Merges
+      `pkt.decoded_json` + `obs.decoded_json` and falls back to byte-level `raw_hex` parsing for
+      encrypted DMs.
+
+      - **Multi-path picker** — chip per unique observer-path (`<count>/<total>` + hex hop string).
+      Click to isolate; "All" renders an edge-deduplicated UNION view (each unique edge once, stroke
+      weight = observer count).
+
+      - **Deep-link URLs** — `#/map?packet=<hash>&obs=<id>`. Bookmarkable, shareable, single source
+      of truth. sessionStorage flow removed.
+
+      - **Hop resolution priority chain** — server `resolved_path` → shared `HopResolver`
+      (observer-IATA-aware, same as packets page) → raw prefix. Kills a whole class of "route view
+      named hops differently than packet detail" bugs.
+
+      - **Markers** — uniform 22 px filled circle with seq number inside, hollow endpoint ring for
+      SRC/DST, double concentric ring on SRC=DST loops, spider-fan for sub-14 px collisions
+      debounced to `zoomend`.
+
+      - **Colorblind-preset live colors** — `routeRamp` per preset (viridis / plasma /
+      pure-luminance) written to `--mc-rt-ramp-0..4` CSS vars and hot-recoloured on
+      `cb-preset-changed` / `theme-changed`.
+
+      - **Desktop chrome** — drag-to-resize sidebar persisted to localStorage, Material/Drive-style
+      collapse chevron centred on the right edge.
+
+      - **Mobile bottom sheet** — anchored above bottom-nav + safe-area inset, thin summary line
+      when collapsed (`TYPE · N hops · X km · M obs`), expands to ~75 vh. All three legacy mobile
+      detail panels closed on route entry.
+
+
+      Closes: #1418, #1419, #1422 · PR #1423
+
+
+      Related map work that landed this cycle: role-aware marker shapes + outline rings (#1334),
+      WCAG 2.2 AA pass on cluster bubbles + role pills + multi-byte labels (#1357), thinner
+      always-on marker outline (#1347).
+
+
+      ---
+
+
+      ## ⚡ Startup
+
+
+      - **Hot startup window** — new `packetStore.hotStartupHours` config loads only N hours of
+      packet history synchronously and fills the rest in background daily chunks. Large DBs
+      (multi-GB) no longer block the HTTP listener on a full-retention load before serving traffic
+      (#1187).
+
+      - **Ingestor now owns the neighbor-graph and all schema migrations**; the server is read-only.
+      Removes a class of startup races where two processes raced the same migration (#1286, #1289).
+
+
+      ---
+
+
+      ## 🔬 NEW: Protocol decoder coverage
+
+
+      The MeshCore decoder now handles every documented payload type, with the legend updated
+      end-to-end so operators see real names instead of `Type 6`.
+
+
+      - **GRP_DATA + MULTIPART** wire-format decoded (#1280) — group-data sensor payloads +
+      multipart fragmentation are no longer opaque blobs.
+
+      - **CONTROL flags** + `advertRole` fix — accurate role attribution on ADVERTs from edge cases
+      that were previously misclassified (#1280).
+
+      - **`payloadTypeNames` table** centralised, exposed at the API + UI; new TransportCodes /
+      Feat1 / Feat2 enums; RAW_CUSTOM type plumbed through; sensor-payload docs published (#1291).
+
+
+      ---
+
+
+      ## 🆕 NEW: Operator features
+
+
+      - **Repeater "usefulness score" (bridge axis)** — secon
+
+      …
+  - version: v3.7.2
+    name: v3.7.2
+    datetime: '2026-05-06T19:33:26Z'
+    url: https://github.com/Kpa-clawbot/CoreScope/releases/tag/v3.7.2
+    prerelease: false
+  - version: v3.7.1
+    name: v3.7.1
+    datetime: '2026-05-05T00:08:03Z'
+    url: https://github.com/Kpa-clawbot/CoreScope/releases/tag/v3.7.1
+    prerelease: false
+    notes: >-
+      Identical to v3.7.0 + live PSK decrypt fix (#1031). This is the tagged release with the Docker
+      image on GHCR.
+
+
+      ```
+
+      docker pull ghcr.io/kpa-clawbot/corescope:v3.7.1
+
+      ```
+
+
+      See [v3.7.0 release notes](https://github.com/Kpa-clawbot/CoreScope/releases/tag/v3.7.0) for
+      full changelog.
+  - version: v3.7.0
+    name: v3.7.0 — Operator's Toolkit
+    datetime: '2026-05-04T05:13:52Z'
+    url: https://github.com/Kpa-clawbot/CoreScope/releases/tag/v3.7.0
+    prerelease: false
+    notes: >-
+      # CoreScope v3.7.0 — "Operator's Toolkit"
+
+
+      50 commits · 30 issues closed · 95 files changed · +7,710 / -293 LOC
+
+
+      ---
+
+
+      ### Channel Decryption
+
+      Rebuilt from scratch. Pure-JS AES-128-ECB + SHA-256/HMAC — works on HTTP and HTTPS. PSK
+      channels: add by key, name them, delete them, see decrypt count. Live WebSocket auto-decrypt
+      with unread badges. Channel hash-byte dedup fixed.
+
+
+      ### Analytics
+
+      Selectable timeframes (1h/24h/7d/30d). Region attribution by repeater home, not observer.
+      "All" filter fixed. Topology dedup (no more triple-counted repeaters). Timestamp format
+      applied to chart axes.
+
+
+      ### New Surfaces
+
+      - `/#/roles` — role distribution + per-role clock-skew
+
+      - `/api/backup` — API-key gated SQLite export via VACUUM INTO
+
+      - `/api/healthz` — readiness probe
+
+
+      ### Packets & Filters
+
+      Transport route type filter (`transport == true`, `T_FLOOD`, `T_DIRECT`). Clear filters
+      button. Scroll position preserved. Null hash/timestamp packets cleaned. GRP_DATA type 6
+      support.
+
+
+      ### Map & Nodes
+
+      Short pubkey-prefix URLs (📡 Copy short URL). Multi-byte hash support indicator on markers.
+      Channel color picker fixed.
+
+
+      ### MQTT & Ingestor
+
+      Async path_json backfill (no more startup blocks). Per-source `region` field. MQTT startup
+      resilience (unreachable sources don't block). Configurable connect timeout. Observer IATA
+      whitelist + blacklist. Per-hop TRACE SNR extraction in ingestor.
+
+
+      ### Observer & Node
+
+      Flood/direct filter on comparison page. TRACE per-hop SNR in byte breakdown. Clock skew
+      evidence UI. Separate last-status vs last-packet timestamps. Soft-deleted observers excluded.
+      Export/import includes favorites.
+
+
+      ### Infra
+
+      CORS allowlist. RW SQLite connection cache. GeoFilter Builder draft save/load/download.
+      False-positive path exclusion.
+
+
+      ---
+
+
+      **Upgrade:** New config fields in `config.example.json`: `observerIATAWhitelist`,
+      `observerBlacklist`, per-source `region`/`connectTimeoutSec`, CORS `allowedOrigins`. One-time
+      DB migration runs async on startup.
+
+
+      ---
+
+
+      > ⚠️ **Docker image not available for this tag** (CI trigger issue). Use **v3.7.1** for the
+      container image: `ghcr.io/kpa-clawbot/corescope:v3.7.1`
+  - version: v3.6.0
+    name: v3.6.0 - The Forensics
+    datetime: '2026-05-01T09:25:39Z'
+    url: https://github.com/Kpa-clawbot/CoreScope/releases/tag/v3.6.0
+    prerelease: false
+    notes: >-
+      # v3.6.0 - The Forensics
+
+
+      CoreScope just got eyes everywhere. This release drops **path inspection**, **color-by-hash
+      markers**, **clock skew detection**, **full channel encryption**, an **observer graph**, and a
+      pile of robustness fixes that make your mesh network feel like it's being watched by someone
+      who actually cares.
+
+
+      134 commits, 105 PRs merged, 18K+ lines added. Here's what shipped.
+
+
+      ---
+
+
+      ## 🚀 New Features
+
+
+      ### Path-Prefix Candidate Inspector (#944, #945)
+
+      The marquee feature. Click any path segment and CoreScope opens an interactive inspector
+      showing every candidate node that could match that hop prefix - plotted on a map with scoring
+      by neighbor-graph affinity and geographic centroid. Ambiguous hops? Now you can see *why*
+      they're ambiguous and pick the right one.
+
+
+      **Why you'll love it:** No more guessing which `0xA3` is the real repeater. The inspector lays
+      out every candidate, scores them, and lets you drill in visually.
+
+
+      ### Color-by-Hash Packet Markers (#948, #951)
+
+      Every packet type gets a vivid, hash-derived color - on the live feed, map polylines, and
+      flying-packet animations. Bright fill with dark outline for contrast. No more monochrome blobs
+      - you can visually track packet flows by color at a glance.
+
+
+      ### Node Filter on Live Page (#924, #771)
+
+      Filter the live packet stream to show only traffic flowing through a specific node. Pick a
+      repeater, see exactly what it's carrying. That simple.
+
+
+      ### Clock Skew Detection (#746, #752, #828, #850)
+
+      Full pipeline: backend computes drift using Theil-Sen regression with outlier rejection
+      (#828), the UI shows per-node badges, detail sparklines, and fleet-wide analytics (#752).
+      Bimodal clock severity (#850) surfaces flaky-RTC nodes that toggle between accurate and
+      drifted - instead of hiding them as "No Clock."
+
+
+      **Why you'll love it:** Nodes with bad clocks silently corrupt your timeline. Now they glow
+      red before they ruin your analysis.
+
+
+      ### Observer Graph (M1+M2) (#774)
+
+      Observers are now first-class graph citizens. CoreScope builds a neighbor graph from
+      observation overlaps, scores hop-resolver candidates by graph edges (#876), and uses
+      geographic centroid for tiebreaking. The observer topology is visible and queryable.
+
+
+      ### Channel Encryption - Full Stack (#726, #733, #750, #760)
+
+      Three milestones landed as one: DB-backed channel message history (#726), client-side PSK
+      decryption in the browser (#733), and PSK channel management with add/remove UX and message
+      caching (#750). Add a channel key in the UI, and CoreScope decrypts messages client-side - no
+      server-side key storage. The add-channel button (#760) makes it dead simple.
+
+
+      **Why you'll love it:** Encrypted channels are no longer black boxes. Add your PSK, see the
+      messages, search history - all without exposing keys to the server.
+
+
+      ### Hash Collision Inspector (#758)
+
+      The Hash Usage Matrix now shows collision details for all hash sizes. When two nodes share a
+      prefix, you see exactly who collides and at what size.
+
+
+      ### Geofilter Builder - In-App (#735, #900)
+
+      The geofilter polygon builder is now served directly from CoreScope with a full docs page
+      (#900). No more hunting for external tools. Link from the customizer, draw your polygon, done.
+
+
+      ### Node Blacklist (#742)
+
+      `nodeBlacklist` in config hides abusive or troll nodes from all views. They're gone.
+
+
+      ### Observer Retention (#764)
+
+      Stale observers are automatically pruned after a configurable number of days. Your observer
+      list stays clean without manual intervention.
+
+
+      ### Advert Signature Validation (#794)
+
+      Corrupt packets with invalid advert signatures are now rejected at ingest. Bad data never hits
+      your store.
+
+
+      ### Bounded Cold Load (#790)
+
+      `Load()` now respects a memory budget - no more OOM on cold start with a fat database.
+      Combined with retention-hours cutoff (#917), cold start is safe on constrained hardware.
+
+
+      ### Multi-Arch Docker Images (#869)
+
+      Official images now publish `amd64` + `arm64` in a single multi-arch manifest. Raspberry Pi
+      operators: pull and run. No specia
+
+      …
+  - version: v3.5.2
+    name: CoreScope v3.5.2
+    datetime: '2026-04-13T05:49:59Z'
+    url: https://github.com/Kpa-clawbot/CoreScope/releases/tag/v3.5.2
+    prerelease: false
+    notes: >-
+      ## CoreScope v3.5.2
+
+
+      ### 🔧 New: `corescope-decrypt` CLI
+
+      Standalone tool for retroactive channel message decryption. Decrypt hashtag channel messages
+      from your SQLite database — even packets ingested before the channel key was configured.
+
+
+      ```bash
+
+      corescope-decrypt --channel "#test" --db meshcore.db --format irc
+
+      corescope-decrypt --channel "#wardriving" --db meshcore.db --format json --output
+      messages.json
+
+      corescope-decrypt --channel "#sf" --db meshcore.db --format html --output viewer.html
+
+      ```
+
+
+      Three output formats: JSON (full metadata), HTML (interactive viewer), IRC/log (greppable
+      plain text). Included in the Docker image at `/app/corescope-decrypt`. Only works with hashtag
+      channels (`#name`) — the `public` channel uses a pre-shared key, not hashtag derivation.
+
+
+      ### ⚡ Eviction redesign
+
+      Replaced `HeapAlloc`-based eviction with self-accounting `trackedBytes` counter. No more
+      cascading eviction on large databases. High/low watermark hysteresis + 25% safety cap.
+
+
+      ### 📊 Cache invalidation tuning
+
+      Wired the `invalidationDebounce` config (was dead code). Default cooldown 10s → 300s.
+      Collision cache only clears on new nodes. Expected cache hit rate: 7% → 50-80%.
+
+
+      ### 🔬 Multi-byte capability
+
+      Repeater multi-byte detection integrated into Hash Adopters table. Filter buttons fixed. TRACE
+      packets excluded from suspected detection (pre-1.14 repeaters can forward multi-byte TRACEs).
+
+
+      ### 🐛 Fixes
+
+      - Relay-only nodes now appear as alive (path hop indexing + debounced DB touch)
+
+      - Live feed timestamps refresh every 10s (no more stale "10s ago")
+
+      - Perf page shows tracked memory, not heap
+
+      - SQLite busy_timeout on all write connections
+
+      - Dockerfile includes `internal/sigvalidate`
+
+
+      ### Downloads
+
+      - `corescope-decrypt-linux-amd64` — x86_64 static binary
+
+      - `corescope-decrypt-linux-arm64` — ARM64 static binary (Raspberry Pi, etc.)
+
+
+      ### Upgrade
+
+      ```bash
+
+      docker pull ghcr.io/kpa-clawbot/corescope:v3.5.2
+
+      ```
+  - version: v3.5.0
+    name: CoreScope v3.5.0 🚀
+    datetime: '2026-04-08T07:27:29Z'
+    url: https://github.com/Kpa-clawbot/CoreScope/releases/tag/v3.5.0
+    prerelease: false
+    notes: >-
+      # CoreScope v3.5.0 🚀
+
+
+      The "stop building from source and start analyzing your mesh" release. 95 commits.
+
+
+      ---
+
+
+      ## 🐳 Pre-built Docker Images
+
+
+      CoreScope now ships as a ready-to-run Docker image on GitHub Container Registry. No cloning,
+      no building, no dependencies — just pull and run.
+
+
+      ```bash
+
+      docker run -d --name corescope -p 80:80 -p 443:443 -p 1883:1883 \
+        -v corescope-data:/app/data \
+        ghcr.io/kpa-clawbot/corescope:v3.5.0
+      ```
+
+
+      **Using HTTPS with a custom domain?** Mount your Caddyfile and certs directory:
+
+      ```bash
+
+      docker run -d --name corescope -p 80:80 -p 443:443 -p 1883:1883 \
+        -v /your/data:/app/data \
+        -v /your/Caddyfile:/etc/caddy/Caddyfile:ro \
+        -v /your/caddy-data:/data/caddy \
+        ghcr.io/kpa-clawbot/corescope:v3.5.0
+      ```
+
+      Caddy auto-provisions Let's Encrypt certs. Your Caddyfile just needs:
+
+      ```
+
+      yourdomain.example.com {
+          reverse_proxy localhost:3000
+      }
+
+      ```
+
+
+      That's it. Zero config required — MQTT broker, Caddy HTTPS, and SQLite are built in.
+
+
+      **Already running CoreScope?**
+
+      ```bash
+
+      # 1. Find your running container name
+
+      docker ps --format '{{.Names}}'
+
+
+      # 2. Stop and remove it
+
+      docker stop <container-name> && docker rm <container-name>
+
+
+      # 3. Pull the pre-built image
+
+      docker pull ghcr.io/kpa-clawbot/corescope:v3.5.0
+
+
+      # 4. Run with your existing data directory
+
+      docker run -d --name corescope -p 80:80 -p 443:443 -p 1883:1883 \
+        -v /your/data:/app/data \
+        -v /your/Caddyfile:/etc/caddy/Caddyfile:ro \
+        -v /your/caddy-data:/data/caddy \
+        ghcr.io/kpa-clawbot/corescope:v3.5.0
+      ```
+
+      Your data volume stays. Nothing to migrate.
+
+
+      Tags: `v3.5.0` (this release) · `latest` (latest tagged release) · `edge` (master tip, for
+      testing). Env: `DISABLE_CADDY=true` / `DISABLE_MOSQUITTO=true` if you bring your own.
+
+
+      ---
+
+
+      ## ⚡ 83% Faster
+
+
+      35 performance commits. Packets endpoint p50 dropped from 16.7ms → 2.7ms. Server now serves
+      HTTP within 2 minutes on *any* DB size — async background backfill means you're never staring
+      at a loading screen. N+1 API calls killed everywhere. Prefix map memory cut 10x. WebSocket
+      renders batched via rAF.
+
+
+      ---
+
+
+      ## 🔬 RF Health Dashboard
+
+
+      New Analytics tab. Per-observer noise floor as color-coded columns (green/yellow/red), airtime
+      utilization, error rates, battery levels. Click any observer for the full breakdown.
+      Region-filterable. This is the beginning of making CoreScope more than just a packet viewer.
+
+
+      ---
+
+
+      ## 🗺️ See Where Traces Actually Go
+
+
+      Send a trace → watch it on the live map. Solid animated line shows how far it got. Dashed
+      ghost shows where it didn't reach. Finally know *where* your trace failed, not just *that* it
+      failed.
+
+
+      ---
+
+
+      ## 📊 Things That Were Lying To You
+
+
+      - "By Repeaters" was counting companions. Fixed.
+
+      - Zero-hop adverts claimed "1 byte hash" when the hash size was unknowable. Fixed.
+
+      - "Packets through this node" showed packets through a *different* node with the same prefix.
+      Fixed — now uses the neighbor affinity graph.
+
+      - Table sorting on nodes/neighbors/observers silently did nothing. Fixed.
+
+
+      ---
+
+
+      ## 🔗 Deep Links · 🎨 Channel Colors · 📱 Mobile · 🔑 Security
+
+
+      **Deep links** — every page state goes in the URL. Share a link to a specific node, filter, or
+      analytics tab.
+
+
+      **Channel colors** — click the color dot next to any channel, pick from 8 colors, see it
+      highlighted across the feed. Persists in localStorage.
+
+
+      **Distance units** — km, miles, or auto-detect from locale. Customizer → Display.
+
+
+      **Mobile** — 44px touch targets, ARIA labels, responsive breakpoints.
+
+
+      **Security** — weak API keys rejected at startup. License: GPL v3.
+
+
+      ---
+
+
+      ## 📡 Full API Documentation
+
+
+      Every endpoint is now documented with an auto-generated OpenAPI 3.0 spec — always in sync with
+      the running server.
+
+
+      - **Interactive Swagger UI:** [analyzer.00id.net/api/docs](https://analyzer.00id.net/api/docs)
+      — browse and test all 40+ endpoints
+
+      - **Machine-readable spec:** [analyzer.00id.net/api/spec](https://analyzer.00id.net/api/spec)
+      — import into Postman, Insomnia, or use for bot/integration development
+
+
+      On your own instanc
+
+      …
+  - version: v3.4.1
+    name: v3.4.1 — Server-Side Hop Resolution & Performance
+    datetime: '2026-04-04T08:36:55Z'
+    url: https://github.com/Kpa-clawbot/CoreScope/releases/tag/v3.4.1
+    prerelease: false
+    notes: >-
+      ## v3.4.1 — Server-Side Hop Resolution & Performance
+
+
+      ### ⭐ Headline: Resolved Paths
+
+
+      Hop prefixes are now resolved to full node identities **at ingest time** using a persisted
+      neighbor affinity graph. No more guessing — the server knows which "D6" is which.
+
+
+      - **Persisted neighbor graph** (`neighbor_edges` table) — builds automatically on first run,
+      loads instantly on restart. 4-tier resolution: affinity → geo → GPS → first match.
+
+      - **`resolved_path` on every observation** — full 64-char pubkeys stored alongside raw
+      `path_json`. Ambiguous prefixes that the old client-side resolver got wrong are now correct.
+
+      - **Frontend prefers server-resolved paths** — packets page, live map, Show Route, packet
+      detail all use `resolved_path` with automatic fallback for old data.
+
+      - **Zero-cost on subsequent startups** — edges and resolved paths persist in SQLite. First run
+      does a one-time backfill.
+
+
+      ### 🚀 Performance
+
+
+      - **Distance index rebuild debounced** — was triggering on every ingest cycle, now at most
+      every 30s. Eliminates CPU hot loop on busy meshes.
+
+      - **Neighbor graph build optimized** — cached `strings.ToLower`, cached JSON parsing via
+      `sync.Once`, TTL bumped 60s → 5min. Cuts cold start time.
+
+      - **O(n²) observation dedup → O(n)** — map-based replacement.
+
+      - **O(n²) selection sort → sort.Slice** — standard library sort.
+
+      - **Parallelized expanded group fetches** — hashIndex Map lookup instead of linear scan.
+
+      - **Advert pubkey tracking incremental** — eliminates per-request JSON parsing.
+
+      - **Rate-limited cache invalidation** — prevents 0% hit rate under sustained ingest.
+
+      - **VCR replay chunked** — prevents UI freezes on large replays.
+
+
+      ### 🐛 Fixes
+
+
+      - **`hasResolvedPath` flag race** — `detectSchema()` ran before column was added, causing full
+      re-backfill on every restart. Fixed.
+
+      - **`resolved_path` missing from grouped packets** — `groupByHash=true` response wasn't
+      including resolved paths. Fixed.
+
+      - **Memory leak in `pruneStaleNodes`** — `nodeActivity` map entries never cleaned up. Fixed.
+
+      - **iOS tap-to-scroll broken** — scroll container restructured for status bar tap.
+
+      - **Observer filter dropped groups** — grouped packets view lost groups when observer filter
+      was active. Fixed.
+
+      - **Null crash on ADVERT detail** — `pathHops` null guard added.
+
+      - **Mobile filter dropdown** — CSS specificity prevented expansion. Fixed.
+
+      - **Hash collision analysis** — now only counts repeaters, not all nodes.
+
+      - **Virtual scroll height** — accounts for expanded group rows.
+
+
+      ### 🔧 Infra
+
+
+      - CI build and deploy jobs pinned to `meshcore-vm` runner.
+
+      - Deep linking rule added to AGENTS.md.
+
+
+      ### ⚠️ Known Issues / Heads Up
+
+
+      - **First restart after upgrade takes ~4 minutes on large DBs** — The server builds the
+      neighbor graph (~40s), then backfills `resolved_path` for all existing observations (~2 min),
+      plus normal data load (~35s). With 1M+ observations, expect heavy CPU and SQLite locking
+      during this window. MQTT ingest may disconnect and reconnect. **This is a one-time cost** —
+      subsequent restarts load from SQLite in ~15s. Do not restart the server during this process or
+      it will start over.
+
+
+      ### 📊 By the Numbers
+
+
+      - 22 commits, 13 files changed
+
+      - 1.1M observations backfilled with resolved paths
+
+      - 408K neighbor edges persisted
+
+      - Cold start: ~4 min first run → ~15s subsequent
+  - version: v3.4.0
+    name: CoreScope v3.4.0 — Neighbor Affinity
+    datetime: '2026-04-03T08:56:39Z'
+    url: https://github.com/Kpa-clawbot/CoreScope/releases/tag/v3.4.0
+    prerelease: false
+    notes: "# CoreScope v3.4 Release Notes\r\n\r\n**The neighbor affinity release.** CoreScope now understands how nodes relate to each other — not just that they exist, but how strongly they're connected. This powers smarter hop resolution, richer node detail pages, and a new graph visualization in analytics.\r\n\r\n---\r\n\r\n## 🎯 Features\r\n\r\n### Neighbor Affinity System (7 milestones)\r\nA complete neighbor relationship engine, from backend graph building to frontend visualization:\r\n\r\n- **Affinity graph builder** — computes neighbor relationships and connection strength from packet traffic (#507)\r\n- **Affinity API endpoints** — REST endpoints to query neighbor data (#508)\r\n- **Show Neighbors via affinity API** — the existing Show Neighbors feature now uses real affinity data instead of raw packet heuristics (#512, fixes #484)\r\n- **Affinity-aware hop resolution** — hop resolver uses neighbor affinity to pick better paths (#511)\r\n- **Node detail neighbors section** — dedicated neighbors panel on the node detail page (#510)\r\n- **Affinity debugging tools** — inspect and troubleshoot affinity calculations (#521)\r\n- **Neighbor graph visualization** — interactive neighbor graph in the analytics tab (#513)\r\n\r\n### Customizer v2\r\n- Event-driven state management replaces the old imperative approach — cleaner, more predictable theme/config updates (#503)\r\n\r\n---\r\n\r\n## 🐛 Bug Fixes\r\n\r\n- **Stale parsed cache on observation packets** — observation packets now correctly invalidate the JSON parse cache (#505)\r\n- **Null-guard rAF callbacks** — live page no longer crashes when `requestAnimationFrame` callbacks fire after cleanup (#506)\r\n- **Customizer v2 phantom overrides** — fixed phantom config entries, missing defaults, and stale dark mode state (#520)\r\n- **Neighbor affinity empty results** — fixed pubKey field name mismatch causing empty affinity graphs (#524)\r\n- **Home defaults in server theme** — server-side theme config now includes home page defaults (#526)\r\n- **Neighbor UI crash + dark mode** — fixed Show Neighbors crash and improved dark mode contrast (#527)\r\n- **Home page steps + FAQ** — both steps AND FAQ now render correctly on the home page (#529)\r\n\r\n---\r\n\r\n## ⚡ Performance\r\n\r\n- **Cached JSON.parse for packet data** — packet payloads are parsed once and cached, avoiding redundant `JSON.parse` calls on repeated access (#400)\r\n\r\n---\r\n\r\n## Known Limitations\r\n\r\n- **Affinity graph scales with traffic volume** — networks with very low packet rates may show weak or missing neighbor relationships until enough data accumulates\r\n- **Debugging tools are developer-facing** — the affinity debug panel (#521) is functional but not polished for end-user consumption\r\n- **Customizer v2 migration** — custom themes saved under v1 may need to be re-applied after upgrade"
+  - version: v3.3.0
+    name: CoreScope v3.3.0 — Performance & Polish
+    datetime: '2026-04-02T07:16:23Z'
+    url: https://github.com/Kpa-clawbot/CoreScope/releases/tag/v3.3.0
+    prerelease: false
+    notes: >-
+      # CoreScope v3.3.0 — Performance & Polish
+
+
+      28 changes since v3.2.0. This release is all about making CoreScope faster, more accurate, and
+      harder to break.
+
+
+      ## ⚡ Performance Overhaul
+
+
+      - **Virtual scroll for packets table** — handles 10K+ packets without breaking a sweat (#402)
+
+      - **Observer Map lookups** — O(1) instead of linear scans on every render (#468)
+
+      - **requestAnimationFrame animations** — live page ditches setInterval, no more stacking when
+      tab-switching (#470)
+
+      - **Client-side My Nodes filter** — instant toggle, zero server round-trips (#401)
+
+      - **Server-side collision analysis** — heavy computation moved off the browser (#415)
+
+      - **In-place ADVERT upserts** — node updates without full page reload (#461)
+
+      - **Targeted cache invalidation** — analytics refresh only what changed (#379)
+
+      - **Faster /api/packets and /api/channels** — query optimizations for large stores (#328)
+
+
+      ## 🗺️ New Features
+
+
+      - **Show Direct Neighbors** — click any node on the map to filter to its 1-hop neighbors
+      (#480)
+
+      - **Auto cache busters** — `__BUST__` placeholders replaced at startup, no more merge
+      conflicts over timestamps (#481)
+
+      - **Release tag pinning** — `manage.sh update v3.3.0` pins to exact versions (#456)
+
+
+      ## 🔧 Fixes
+
+
+      - **Haversine distances** — hop distances now use proper great-circle math instead of
+      flat-earth approximation (#478)
+
+      - **Observer online status** — packet ingestion updates last_seen, fixing false "offline"
+      flags (#479)
+
+      - **Hash collision region filter** — analytics respects region selection (#477)
+
+      - **Channel hash display** — shows hex (0x1A) instead of confusing decimal (#471)
+
+      - **VCR timezone** — timeline and clock respect UTC/local toggle (#459)
+
+      - **Graceful shutdown** — WAL checkpoint on container stop (#453)
+
+      - **PerfStats data race** — mutex synchronization eliminates concurrent access bugs (#469)
+
+      - **Multiple null-guard fixes** — no more crashes on navigate-away (#454, #462)
+
+      - **Score/direction extraction** — MQTT fields properly parsed with unit stripping (#371)
+
+      - **Config reset** — no more SITE_CONFIG contamination after reset (#460)
+
+      - **Staging config** — always refreshes from prod (#467)
+
+
+      ## 📊 By the Numbers
+
+
+      - 28 merged PRs
+
+      - 8 performance improvements
+
+      - 13 bug fixes
+
+      - 3 new features
+
+      - 2 CI/docs improvements
+
+      - ~1,400 lines added across 23 files
+  - version: v3.2.0
+    name: CoreScope v3.2.0 — Stability & Data Integrity
+    datetime: '2026-04-01T06:40:19Z'
+    url: https://github.com/Kpa-clawbot/CoreScope/releases/tag/v3.2.0
+    prerelease: false
+    notes: >-
+      A stability and data integrity release — fixing critical crashes, broken observer data, and
+      WebSocket storms, while adding transport code visibility, geo-filtering, and a fully
+      responsive navigation bar.
+
+
+      **15 commits · 35 files · +1,659 / -229 · 3 contributors · 9 issues closed**
+
+
+      ---
+
+
+      ## 🐛 Critical Fixes
+
+
+      **Packets page crash on mobile** (#326) — `Number(null)` silently set the time window to "All
+      time", loading 50K+ packets and crashing iOS Safari/Edge. Fixed with proper guard, 1K packet
+      cap on mobile, and restricted time window options.
+
+
+      **Observer metadata broken since Go migration** (#320, #321) — Battery, uptime, noise floor
+      read at wrong nesting level; SNR/RSSI case-sensitive with no fallback. All fields now work
+      with 10 regression tests.
+
+
+      **Hash stats frozen on historical data** (#303) — Reconfigured repeaters now show updated hash
+      size immediately instead of requiring dozens of adverts to shift the statistical mode.
+
+
+      **WebSocket replaying entire database** (#349) — Corrupted DB caused the poller to start from
+      ID 0, broadcasting 76K packets at ~2,000/sec. Poller now cross-checks against the in-memory
+      store.
+
+
+      ## ✨ Features
+
+
+      **Transport code badge** (#241) — "T" badge on packets using `T_FLOOD` / `T_DIRECT` routing —
+      instant visibility into transport adoption across the mesh.
+
+
+      **Geo-filter enforcement** (#215) — Server-side polygon boundary filtering, automatic DB
+      pruning for out-of-bounds nodes, and a visual geofilter-builder tool.
+
+
+      **Responsive navigation** (#322) — Hamburger menu at ≤1023px with drawer scroll, outside-click
+      close, Escape key, and `aria-expanded`. Priority+ pattern on tablets (768–1023px): 5 primary
+      tabs inline + "More ▾" dropdown for the rest.
+
+
+      ## 🎨 Improvements
+
+
+      **Side pane contrast** (#334) — Card-style backgrounds on node detail side pane sections,
+      fixing poor dark mode contrast.
+
+
+      **WebSocket time filtering** — WS packets now respect the selected time window instead of
+      showing data from days ago.
+
+
+      **CI runner cleanup** (#333) — Automatic Docker image pruning after deploy. Runner was 100%
+      full (18.8GB of dangling images).
+
+
+      ---
+
+
+      **Full changelog:**
+      [`v3.1.0...v3.2.0`](https://github.com/Kpa-clawbot/CoreScope/compare/v3.1.0...v3.2.0)
+  - version: v3.1.0
+    name: CoreScope v3.1.0
+    datetime: '2026-03-31T08:01:07Z'
+    url: https://github.com/Kpa-clawbot/CoreScope/releases/tag/v3.1.0
+    prerelease: false
+    notes: "**152 commits · 240 files changed · 51K insertions / 55K deletions · 44 PRs merged · 7 contributors**\r\n\r\n## Highlights\r\n\r\n**Timestamp Controls** — Toggle between relative (\"3m ago\") and absolute timestamps across all pages. UTC/local timezone, format presets, admin-configurable defaults. New Display tab in customizer.\r\n\r\n**Channel Region Filtering** — Multi-region deployments no longer show cross-region message crosstalk. Server-side SQL prefilter + frontend WS guard.\r\n\r\n**Disable Internal Mosquitto** — `DISABLE_MOSQUITTO=true` in `.env` skips the built-in broker for users running their own.\r\n\r\n**Port Negotiation** — `manage.sh setup` detects port conflicts, suggests alternatives, persists choices to `.env`.\r\n\r\n**Packet Store Eviction** — In-memory packet store now has configurable memory limits with LRU eviction to prevent OOM on long-running instances.\r\n\r\n**Telemetry Decoding** — Battery voltage and temperature decoded from sensor adverts and displayed on node detail pages.\r\n\r\n**Observer Identity** — Go ingestor now persists model, firmware, client version, and radio from observer status messages.\r\n\r\n**Hash Size Analytics** — Dominant hash size computation (mode, not last-seen), multi-byte hash usage matrix with stats and tooltips, distribution by repeaters.\r\n\r\n**Performance** — O(n) slice prepend eliminated on packet ingest, parallel coverage collector (8min → 30-60s), packet store query optimizations.\r\n\r\n**Decoder Alignment** — Packet decoder aligned with MeshCore firmware spec, TRACE path hops parsed correctly.\r\n\r\n**manage.sh Overhaul** — Compose-only wrapper, `.env` as single source of truth, config migration from repo root to data directory, CRLF auto-fix, tilde expansion.\r\n\r\n**CI/CD** — Go server E2E tests replace Node.js, Playwright suite, `workflow_dispatch` for manual triggers, repo-wide LF normalization with blame history preservation.\r\n\r\n**Mobile Responsive** — Live bottom-sheet, perf layout, nodes column hiding for small screens.\r\n\r\n**Configurable Health Thresholds** — Node health thresholds now configurable in hours via config.json.\r\n\r\n**pprof Profiling** — Optional pprof endpoints controlled by `ENABLE_PPROF` env var for production debugging.\r\n\r\n## Breaking Changes\r\n\r\n- **Config location moved** — `config.json` now lives in the data directory (`~/meshcore-data/config.json`). `manage.sh` auto-migrates from repo root on `update`/`start`.\r\n- **Node.js backend fully removed** — all backend code is Go. If you were running the Node.js server directly, you must switch to the Docker image.\r\n\r\n## Known Issues\r\n\r\n- FAQ/home page customizer editing can cause steps to disappear — needs architectural fix (#284, #325)\r\n- Observer telemetry (battery, uptime, noise_floor) reads wrong JSON level (#320)\r\n- SNR/RSSI case-sensitive key lookup may miss lowercase variants (#321)\r\n- Repeater hash stats may not update after hash size change (#303)\r\n- VCR timeline ignores UTC/local timezone setting (#324)\r\n- Top nav bar controls invisible on narrow screens (#322)"
+  - version: v3.0.0
+    name: v3.0.0 — Go Backend Rewrite
+    datetime: '2026-03-28T08:56:09Z'
+    url: https://github.com/Kpa-clawbot/CoreScope/releases/tag/v3.0.0
+    prerelease: false
+    notes: "# v3.0.0 — The Go Rewrite\r\n\r\nMeshCore Analyzer is now powered by Go. The entire backend — MQTT ingestion, packet decoding, API server, WebSocket broadcast — has been rewritten from Node.js to Go. Same features, same UI, same database. Dramatically faster.\r\n\r\nThis is the biggest change in the project's history. Over 200 commits, 58 issues closed, and a ground-up reimplementation that delivers real, measurable performance gains on every endpoint.\r\n\r\n---\r\n\r\n## ⚡ Performance\r\n\r\nThese are real numbers from production with 56K+ packets:\r\n\r\n| Endpoint | Node.js | Go |\r\n|----------|---------|-----|\r\n| Packet queries | 30-100ms | **sub-millisecond** (in-memory store) |\r\n| GroupByHash | 437ms (9s before store) | **97ms** |\r\n| Analytics (RF, topology, distance) | 1-8 seconds | **all under 100ms** |\r\n| Node health calculation | 13 seconds | **instant** (precomputed) |\r\n| Server startup (56K packets) | ~9 seconds | **< 1 second** |\r\n| Memory (56K packets) | ~1.3 GB | **~300 MB** |\r\n\r\nThe Go server loads all packets into an in-memory store at startup and serves queries directly from RAM. Analytics are precomputed at ingest time — no more scanning the full packet table on every request. TTL caches protect expensive aggregations. The result: every page in the UI feels instant.\r\n\r\n---\r\n\r\n## 🆕 New Features\r\n\r\n### Protobuf API Contract\r\n10 `.proto` files define the exact shape of all 40+ API endpoints and WebSocket messages. Golden fixture tests ensure the Go server matches the Node.js response format byte-for-byte. API drift is caught in CI before it reaches production.\r\n\r\n### Go Runtime Metrics\r\nThe performance page now shows Go-specific runtime stats when connected to a Go backend: goroutine count, heap allocation, GC pause percentiles, and memory breakdown. The engine badge in the stats bar shows **[go]** or **[node]** so you always know which backend you're running.\r\n\r\n### Build Identity\r\nEvery API response from `/api/stats` and `/api/health` now includes `engine`, `version`, `commit`, and `buildTime` fields. The stats bar in the UI shows the commit hash as a clickable link to the exact source.\r\n\r\n### Observer Packet Comparison (#129)\r\nNew `#/compare` page lets you compare what different observers saw for the same packet — side-by-side diffs of paths, timestamps, and signal data.\r\n\r\n### Auto-Updating Nodes List\r\nThe Nodes tab now updates in real-time when ADVERT packets arrive via WebSocket. No more manual refresh to see new nodes.\r\n\r\n### Channel Improvements\r\n- Channel hash displayed for undecrypted GRP_TXT messages — you can see *which* channel even without the key\r\n- Sortable channels table with persistent column sort preferences\r\n- Garbage decryption detection — wrong keys no longer produce garbled \"decrypted\" text\r\n- AES-128-CTR channel decryption natively in Go\r\n\r\n### Node Pruning (#202)\r\nNodes past the retention window are automatically moved to an `inactive_nodes` table instead of polluting the active node list. Pruning runs hourly.\r\n\r\n### Correct Advert Counts\r\nAdvert counts now reflect unique transmissions, not total observations. A packet seen by 8 observers counts as 1 advert, not 8.\r\n\r\n---\r\n\r\n## 🐛 Bug Fixes\r\n\r\n- **Phantom nodes from hop prefixes** (#133) — `autoLearnHopNodes` no longer creates fake nodes from 1-byte repeater IDs. Active node counts, live page counter, and topology analytics all filtered to real nodes only.\r\n- **Offline nodes on map** (#126) — ambiguous hop prefixes excluded from path-seen tracking. Stale nodes dim on the live map instead of disappearing.\r\n- **Disappearing live map nodes** (#130) — stale nodes are dimmed, not removed, preventing the jarring vanish-and-reappear cycle.\r\n- **packetsLastHour always zero** (#182) — early `break` in observer loop prevented counting; fixed across all observers.\r\n- **Corrupted packet decoder crash** (#183) — bounds check on path hops prevents buffer overrun on malformed packets.\r\n- **Node detail rendering crashes** (#190) — `Number()` casts and `Array.isArray` guards \n…"
+  - version: v2.9.0
+    name: v2.9.0 — Database Optimization & Developer Experience
+    datetime: '2026-03-25T22:50:49Z'
+    url: https://github.com/Kpa-clawbot/CoreScope/releases/tag/v2.9.0
+    prerelease: false
+    notes: >-
+      ## 🗜️ Database Optimization
+
+
+      The observations table has been completely rearchitected for efficiency. Existing instances
+      **migrate automatically on startup** — no manual action needed.
+
+
+      - **70% smaller database** — 478MB → 141MB on a real-world instance with 950K observations
+
+      - Observer IDs stored as integer foreign keys instead of 64-char hex strings repeated per row
+
+      - Redundant columns removed (`hash`, `observer_name`, `created_at`)
+
+      - Timestamps stored as epoch integers instead of ISO strings
+
+      - In-memory dedup Set prevents expensive unique index lookups during ingestion
+
+
+      ### Migration Safety
+
+      - Timestamped backup created automatically before migration (never overwrites previous
+      backups)
+
+      - Detects already-migrated databases (safe to restart mid-migration)
+
+      - Falls back gracefully if migration fails — original data preserved
+
+      - `packets_v` view maintains full backward compatibility — no frontend changes needed
+
+
+      ### WAL Management
+
+      - Daily `TRUNCATE` checkpoint at 2:00 AM UTC reclaims WAL file space
+
+      - `VACUUM` + `TRUNCATE` checkpoint runs after migration completes
+
+
+      ## 📊 SQLite Observability
+
+
+      New section in the Performance Dashboard (`#/perf`) showing:
+
+      - DB file size, WAL size, freelist (wasted space)
+
+      - Row counts for all tables
+
+      - WAL busy pages — shows if checkpointing is keeping up
+
+      - Color-coded thresholds (green/yellow/red)
+
+
+      ## 🐛 Bug Fixes
+
+
+      - **`disambiguateHops`**: Restored `known` field that was dropped during a refactor — hop
+      resolution in analytics now correctly reports whether a prefix was resolved
+
+      - **E2E tests**: Fixed channel message queries for `#hashtag` channels (missing URL encoding)
+
+      - **MQTT in tests**: Tests no longer connect to real MQTT brokers — `NODE_ENV=test` skips MQTT
+      setup
+
+
+      ## 🏗️ Setup & Operations
+
+
+      - `manage.sh` — new idempotent setup wizard for Docker deployments
+
+      - Backup/restore now includes config, Caddyfile, and theme
+
+      - Deployment guide rewritten for beginners with Mermaid diagrams
+
+      - Live page packet rendering unified into `renderPacketTree()`
+
+
+      ## 🧪 Tests
+
+
+      839 tests across 9 suites, 0 failures:
+
+      - 30 new migration tests (schema upgrade, idempotency, backup safety, crash recovery)
+
+      - 19 new v3 schema tests (ingestion, dedup, view compatibility)
+
+      - All pre-existing test suites updated and passing

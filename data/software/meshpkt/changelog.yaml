@@ -1,4 +1,82 @@
 source: github
 repo: meshcore-cz/meshpkt
-updatedAt: '2026-08-17T14:32:14.609Z'
-releases: []
+updatedAt: '2026-08-17T16:30:25.798Z'
+releases:
+  - version: v0.1.15
+    name: meshpkt v0.1.15
+    datetime: '2026-06-25T22:26:31Z'
+    url: https://github.com/meshcore-cz/meshpkt/releases/tag/v0.1.15
+    prerelease: false
+    notes: '**Full Changelog**: https://github.com/meshcore-cz/meshpkt/compare/v0.1.14...v0.1.15'
+  - version: v0.1.14
+    name: meshpkt v0.1.14
+    datetime: '2026-06-19T06:15:31Z'
+    url: https://github.com/meshcore-cz/meshpkt/releases/tag/v0.1.14
+    prerelease: false
+    notes: '**Full Changelog**: https://github.com/meshcore-cz/meshpkt/compare/v0.1.13...v0.1.14'
+  - version: v0.1.11
+    name: meshpkt v0.1.11
+    datetime: '2026-06-18T02:20:07Z'
+    url: https://github.com/meshcore-cz/meshpkt/releases/tag/v0.1.11
+    prerelease: false
+    notes: '**Full Changelog**: https://github.com/meshcore-cz/meshpkt/compare/v0.1.10...v0.1.11'
+  - version: v0.1.10
+    name: meshpkt v0.1.10
+    datetime: '2026-06-15T23:01:58Z'
+    url: https://github.com/meshcore-cz/meshpkt/releases/tag/v0.1.10
+    prerelease: false
+    notes: '**Full Changelog**: https://github.com/meshcore-cz/meshpkt/compare/v0.1.9...v0.1.10'
+  - version: v0.1.9
+    name: meshpkt v0.1.9
+    datetime: '2026-06-15T20:07:24Z'
+    url: https://github.com/meshcore-cz/meshpkt/releases/tag/v0.1.9
+    prerelease: false
+    notes: '**Full Changelog**: https://github.com/meshcore-cz/meshpkt/commits/v0.1.9'
+  - version: v0.1.8
+    name: meshpkt v0.1.8
+    datetime: '2026-06-13T15:10:27Z'
+    url: https://github.com/meshcore-cz/meshpkt/releases/tag/v0.1.8
+    prerelease: false
+    notes: '**Full Changelog**: https://github.com/meshcore-cz/meshpkt/compare/v0.1.7...v0.1.8'
+  - version: v0.1.7
+    name: meshpkt v0.1.7
+    datetime: '2026-06-12T13:12:54Z'
+    url: https://github.com/meshcore-cz/meshpkt/releases/tag/v0.1.7
+    prerelease: false
+    notes: '**Full Changelog**: https://github.com/meshcore-cz/meshpkt/compare/v0.1.6...v0.1.7'
+  - version: v0.1.6
+    name: meshpkt v0.1.6
+    datetime: '2026-06-09T23:55:06Z'
+    url: https://github.com/meshcore-cz/meshpkt/releases/tag/v0.1.6
+    prerelease: false
+    notes: '**Full Changelog**: https://github.com/meshcore-cz/meshpkt/compare/v0.1.5...v0.1.6'
+  - version: v0.1.5
+    name: meshpkt v0.1.5
+    datetime: '2026-06-09T23:04:53Z'
+    url: https://github.com/meshcore-cz/meshpkt/releases/tag/v0.1.5
+    prerelease: false
+    notes: '**Full Changelog**: https://github.com/meshcore-cz/meshpkt/compare/v0.1.4...v0.1.5'
+  - version: v0.1.4
+    name: meshpkt v0.1.4
+    datetime: '2026-06-09T22:39:44Z'
+    url: https://github.com/meshcore-cz/meshpkt/releases/tag/v0.1.4
+    prerelease: false
+    notes: '**Full Changelog**: https://github.com/meshcore-cz/meshpkt/compare/v0.1.2...v0.1.4'
+  - version: v0.1.2
+    name: meshpkt v0.1.2
+    datetime: '2026-06-09T21:16:47Z'
+    url: https://github.com/meshcore-cz/meshpkt/releases/tag/v0.1.2
+    prerelease: false
+    notes: '**Full Changelog**: https://github.com/meshcore-cz/meshpkt/compare/v0.1.1...v0.1.2'
+  - version: v0.1.1
+    name: meshpkt v0.1.1
+    datetime: '2026-06-09T10:51:33Z'
+    url: https://github.com/meshcore-cz/meshpkt/releases/tag/v0.1.1
+    prerelease: false
+    notes: '**Full Changelog**: https://github.com/meshcore-cz/meshpkt/compare/v0.1.0...v0.1.1'
+  - version: v0.1.0
+    name: meshpkt v0.1.0
+    datetime: '2026-06-09T10:36:01Z'
+    url: https://github.com/meshcore-cz/meshpkt/releases/tag/v0.1.0
+    prerelease: false
+    notes: '**Full Changelog**: https://github.com/meshcore-cz/meshpkt/commits/v0.1.0'

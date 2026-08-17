@@ -1,4 +1,880 @@
 source: github
 repo: laserir/MCLite
-updatedAt: '2026-08-17T14:29:56.586Z'
-releases: []
+updatedAt: '2026-08-17T16:29:56.451Z'
+releases:
+  - version: v0.4.2
+    name: v0.4.2 — scope-from-repeater picker, channel repeater echoes, memory tooling
+    datetime: '2026-07-23T15:45:57Z'
+    url: https://github.com/laserir/MCLite/releases/tag/v0.4.2
+    prerelease: false
+    notes: >-
+      On-device **scope-from-repeater picker**, **"heard by N repeaters"** on channel messages,
+      received **hop-count** display, and a **memory-usage indicator**, plus a scoped-flood fix.
+      Update over WiFi (Admin → WiFi → Check for updates) or via the web flasher.
+
+
+
+      ### Added
+
+      - **Pick a scope from a nearby repeater.** When setting a region scope — global (**Settings →
+      Radio → Scope**) or
+        a per-channel/room override — a new **From repeater** button asks a heard repeater for the list of regions it
+        actually serves, so you don't have to know the exact names. Pick a repeater, then pick **one** region from the
+        reply; it fills the scope field for you to review and **Save**. The manual text entry is untouched — this just
+        adds a shortcut. The picker lists **direct-range (0-hop) repeaters** the device has heard (tap the flood-advert
+        button on the Heard Adverts screen to prompt discovery). Requires a repeater running firmware that answers the
+        region query. **Multi-hop repeaters are not supported** — the query needs a route-direct path, and an overheard
+        advert path isn't a reliable one; configure scopes from a repeater within direct range. (#45)
+      - **"Heard by N repeaters" on sent channel messages.** A channel message you send now shows `✓
+      ↻ N` once nearby
+        repeaters rebroadcast it — the `✓` means sent, and `↻ N` is how many distinct repeaters were heard echoing it
+        back (the count climbs as echoes arrive). It's deliberately different from a direct message's `✓✓` (which is a
+        real delivery ACK) — a channel echo only confirms a repeater relayed it. Always on; only meaningful where
+        repeaters are in range. Thanks @jason-s13r (#39).
+      - **Show received hop count.** Optionally show how many hops a received message took (`xN`
+      next to the time;
+        `x0` = heard directly). Off by default — enable in **Settings → Messaging → Show Hop Count**. (#39)
+      - **Memory usage indicator (debug).** Optionally show `P% R%` (PSRAM / internal-RAM used) in
+      the status bar, and
+        log internal-DRAM free / low-water / largest-free-block plus PSRAM over serial — handy for diagnosing memory
+        pressure. Off by default — enable in **Settings → Display → Show Memory Usage**. Thanks @jason-s13r (#38).
+
+      ### Changed
+
+      - **LVGL now allocates from PSRAM instead of internal DRAM.** This frees scarce internal RAM
+      for the things that
+        can only live there — notably BLE companion mode. Measured on the T-Deck with BLE companion *and* an app
+        connected: ~124 KB internal DRAM free with a ~111 KB largest contiguous block (negligible fragmentation); the
+        redirect is effectively what lets that combination fit. Validated on both T-Deck (octal PSRAM) and T-Watch Ultra
+        (quad PSRAM) with no perceptible UI slowdown. Falls back to DRAM if PSRAM is unavailable. Thanks @jason-s13r (#38).
+      - **Chat bubbles are freed when you leave a chat**, so a previously-viewed conversation no
+      longer keeps its
+        rendered bubbles in memory while you're on other screens (they're rebuilt from history on reopen). (#38)
+
+      ### Fixed
+
+      - **A scope/region field with spaces no longer silently kills scoped floods.** A scope holds a
+      *single* region
+        name; pasting a multi-region `region def` list (e.g. `west pnw or wv eug`) hashed the whole string into a
+        transport key that matched no repeater, so hashtag/private-channel traffic was dropped while Public kept
+        working. The config tool now rejects a scope containing a space, and the firmware keeps only the first token
+        (with a serial note) across every input path — `config.json`, the companion set-scope command, and the
+        on-device scope editor. (#36)
+  - version: v0.4.1
+    name: v0.4.1 — MeshCore 1.16, full companion command set, message-sync fixes
+    datetime: '2026-06-25T11:41:04Z'
+    url: https://github.com/laserir/MCLite/releases/tag/v0.4.1
+    prerelease: false
+    notes: >-
+      MeshCore 1.16 upgrade, the full companion command set (status/trace, anon-req,
+      explicit-unscoped), and companion message-sync fixes. Update over WiFi (Admin → WiFi → Check
+      for updates) or via the web flasher.
+
+
+
+      ### Added
+
+      - **Manage rooms and channels from the companion app.** The companion protocol gained the
+      standard write/action
+        commands the official MeshCore app uses, so things that previously failed against MCLite now work:
+        - **Room login** (`CMD_SEND_LOGIN`): log into a configured room or repeater from the app. A blank password field
+          uses the password already in the device config, and a wrong password instantly retries with the stored one.
+          Thanks to the reporters (#32).
+        - **Add / remove channels** (`CMD_SET_CHANNEL`): join a Public, hashtag, or private channel — or remove one —
+          from the app. **Adding applies instantly with no reboot** — the channel is usable right away and its share QR
+          shows the real key, not zeros, with the session staying connected. **Removing a channel still reboots** to
+          apply (a known limitation — MeshCore offers no way to remove a channel from the running radio, so the device
+          rebuilds its channel table from config at boot; the app reconnects on its own). Gated by the
+          `permissions.conversation_management` setting, so a locked-down device still refuses it (#31).
+        - **Add / edit / remove contacts** (`CMD_ADD_UPDATE_CONTACT`, `CMD_REMOVE_CONTACT`): add a contact, rename one,
+          or delete one (and its chat history) straight from the app. **Adding and renaming apply instantly** (the app
+          stays connected); **removing reboots** to apply (the app reconnects) — see the consistent add/remove model
+          below. Editing maps to the contact's **display name**; per-contact permission flags stay device-owner settings
+          (the config tool / on-device Admin), and the app's own contact flags remain app-local. Gated by
+          `permissions.conversation_management` (#33).
+        - **Share a contact** (`CMD_SHARE_CONTACT`) re-broadcasts a contact's advert so a nearby device can add them,
+          and **reboot** (`CMD_REBOOT`) is now honoured from the app's button.
+        - The app's **Local vs Flood** advert buttons were already handled; confirmed during this work.
+        With this, the companion can fully manage rooms, channels, and contacts (#31, #32, #33 all closed). A consistent
+        rule across both contacts and channels: **adding and editing apply instantly; removing reboots** to apply (the
+        app reconnects on its own). The reboot on removal is required for channels — MeshCore has no way to drop a
+        channel from the running radio — and kept for contacts so the behaviour is uniform and predictable. Live changes
+        are reflected on the **device's own UI** too — a contact/channel added or renamed from the app shows up in the
+        on-device conversation list and Admin screens right away, no reboot. In-place editing of a contact's permission
+        flags / a channel's settings still arrives alongside on-device editing.
+      - **Change device settings from the companion app.** With `permissions.settings` set to
+      `full`, a connected app
+        can now set the **device name**, **radio parameters** (frequency / spreading factor / bandwidth / coding rate),
+        **TX power**, the **BLE pairing PIN**, and the **path-hash mode** (1/2/3 bytes per hop). Values are range-checked;
+        the device name applies instantly to mesh adverts (the Bluetooth scan name refreshes on the next reboot), while
+        radio / TX / PIN / path-hash save and apply on a quick reboot (the app reconnects). **Path-hash mode** is
+        especially useful on large meshes — it lets app users match a 3-byte network
+        without hand-editing `config.json` (see #36). A device left at `restricted` or `none` refuses these. Identity
+        keys, advert location (MCLite advertises GPS at the configured precision), and auto-add stay device-managed by
+        design and are rejected.
+
+      - **Set the region/scope from the companion app.** The companion now honours
+      `CMD_SET_DEFAULT_FLOOD_SCOPE` (set the
+        persi
+      …
+  - version: v0.4.0
+    name: v0.4.0 — on-device editing, contact sharing, permissions
+    datetime: '2026-06-22T14:47:00Z'
+    url: https://github.com/laserir/MCLite/releases/tag/v0.4.0
+    prerelease: false
+    notes: >-
+      ## What's Changed
+
+      * Chat screen header buttons: contact's map, requesting telemetry, and info dialog. by
+      @jason-s13r in https://github.com/laserir/MCLite/pull/30
+
+      * Add more radio presets by @jason-s13r in https://github.com/laserir/MCLite/pull/29
+
+
+
+      **Full Changelog**: https://github.com/laserir/MCLite/compare/v0.3.9...v0.4.0
+  - version: v0.3.9
+    name: 0.3.9
+    datetime: '2026-06-21T08:09:35Z'
+    url: https://github.com/laserir/MCLite/releases/tag/v0.3.9
+    prerelease: false
+    notes: >-
+      ### Added
+
+      - **Step-wise admin permissions.** Beyond the existing `security.admin_enabled` (global on/off
+      for the Admin
+        screen), a new `permissions` config block scopes what's reachable *inside* Admin: `permissions.settings`
+        (`full` / `restricted` / `none`) — **restricted** keeps only the basics editable (brightness, auto-dim, dim
+        brightness, keyboard brightness, theme) and shows everything else read-only (no chevron); **none** makes all
+        settings read-only. `permissions.companion` (default on) hides the Companion group (WiFi/USB/Bluetooth) when
+        off — configured services still run. `permissions.conversation_management` (default off) is reserved for a
+        future release (on-device add/edit/remove of contacts/channels/rooms; they stay read-only views for now). All
+        three are provisionable from the config tool. Defaults are fully permissive, so existing configs are unchanged.
+      - **Settings reorganised into per-section screens + Admin is now a pure hub.** The on-device
+      Admin screen no
+        longer mixes settings, diagnostics and shortcuts — it's three labelled groups of links: **Companion** (WiFi /
+        USB / Bluetooth), **Conversations** (Contacts / Channels / Rooms, read-only views), and **Settings** (Device,
+        Radio, Display, Messaging, Sound, GPS, Battery, Security). Each section is its own screen mirroring the config
+        tool, with all of its editable settings *and* its read-only diagnostics in one place (no more duplicated rows
+        across Admin and Device Settings). Newly editable on-device: **Radio** (region preset picker — EU/UK/CH vs
+        US/Canada — plus a TX-power slider and an advert-interval picker; frequency/SF/BW/CR/scope/path-hash stay read-only),
+        **Messaging** (history, max-per-chat, location format, retries, telemetry request/badges/auto-refresh, canned
+        messages, allow-mute), and **GPS** (enable, location-advert precision, timezone, clock offset, last-known max
+        age). Offgrid mode and the live Heard-Adverts count now live at the top of the Radio screen. Each hub link
+        carries an icon (gear for settings; `@`/`#`/`R` for contacts/channels/rooms; Wi-Fi/USB/Bluetooth for
+        companion), and the 3rd-party licenses moved to an *About* block at the bottom of the hub. Radio/GPS changes
+        reboot once on exit (same batched-save model as theme/language). The old single "Device Settings" screen is
+        superseded by this layout.
+      - **Selectable UI themes.** Choose a color palette — **Dark** (default), **Light**, **Amber**
+      (a "military"
+        night mode that preserves night vision), or **High contrast** — on-device (Admin → Theme, reboots to apply)
+        or via `display.theme` in config. Custom palettes can be defined under `display.themes` (start from a built-in
+        `base`, override any color with `#RRGGBB`). Default appearance is unchanged. On/off switches now use the
+        theme accent colour too. Thanks [@jason-s13r](https://github.com/jason-s13r) (#24).
+      - **Per-row Info + Map buttons on the Heard Adverts screen.** Each heard node now has an
+      explicit info (eye)
+        button that opens its detail dialog, and — when the advert carries a location — a map button that opens the
+        map centered on that node. Back now returns to the Admin screen. Thanks [@jason-s13r](https://github.com/jason-s13r) (#15).
+      - **Map screen pan buttons + windowed chrome.** The map gains an on-screen D-pad
+      (up/left/centre/right/down)
+        alongside the existing drag-to-pan. On the T-Deck the map now keeps the **status bar visible** and uses the
+        standard `lv_win` header with a back button (the T-Watch stays full-screen). Thanks [@jason-s13r](https://github.com/jason-s13r) (#22, supersedes #20/#21).
+      - **Uptime + last-charged in the Admin Battery section.** Shows when the device booted
+      (wall-clock + relative)
+        and when charging last stopped (with the level at the time). Thanks [@jason-s13r](https://github.com/jason-s13r) (#23).
+      - **On-device Device Settings.** A new editable settings screen (Admin → Device Settings,
+      behind the existing
+        `admin.enabled` gate) for changing device n
+      …
+  - version: v0.3.8
+    name: MCLite 0.3.8
+    datetime: '2026-06-16T09:19:15Z'
+    url: https://github.com/laserir/MCLite/releases/tag/v0.3.8
+    prerelease: false
+    notes: >-
+      ## Highlights
+
+
+      **Less advert spam, more location privacy.**
+
+
+      ### Added
+
+      - **Location-advert privacy precision.** The location-advert setting (now
+      `gps.location_precision`) can coarsen the position you broadcast: **Off · Exact · ~100 m ·
+      ~750 m · ~3 km · ~12 km · ~50 km** (Meshtastic-style grid snapping, centred in the cell). Only
+      the broadcast advert is coarsened — **telemetry replies to authorized contacts and the in-chat
+      GPS insert always use your exact position**. Default off; old `location_advert: true/false`
+      configs are read automatically. Scheme adopted from @jason-s13r.
+
+      - **Zero-hop "Local" advert button** on the Heard Adverts screen — announce yourself to
+      immediate neighbours without flooding the whole mesh.
+
+
+      ### Changed
+
+      - **No more periodic flood adverts by default** (#13). MCLite previously flooded a mesh-wide
+      advert every ~9 min; on a 110-repeater mesh one device generated ~half of all adverts. Now it
+      sends a single flood advert **on boot** and otherwise advertises **on demand** — matching
+      stock MeshCore clients. Thanks @stucamp and @jason-s13r.
+
+      - **Opt-in periodic advert** — new `radio.advert_interval_min` field (config tool → Radio)
+      re-enables periodic adverts for ad-hoc / SAR / private meshes. Default 0 = off; if set,
+      enforced to ≥60 min (720 / 12 h recommended).
+
+      - **GPS button inserts your location into the message** instead of a "Send Location?" confirm
+      — append `@ <coords>` to the input, add context, send normally (byte-guarded against the
+      160-byte limit).
+
+
+      ---
+
+      Flash from the web flasher or grab the merged `.bin` below. T-Deck Plus: `mclite-v0.3.8.bin` ·
+      T-Watch Ultra: `mclite-watch-v0.3.8.bin`.
+  - version: v0.3.7
+    name: MCLite 0.3.7
+    datetime: '2026-06-15T09:34:57Z'
+    url: https://github.com/laserir/MCLite/releases/tag/v0.3.7
+    prerelease: false
+    notes: >-
+      MCLite 0.3.7 — tappable map coordinates, lv_win screen chrome, and on-device screenshots.
+
+
+      ## Added
+
+      - **Tap a shared location to open it on the map.** A received/sent message containing a GPS
+      position — decimal `lat, lon` or MGRS/UTMREF — shows an underlined "Open in map" link under
+      the bubble; tapping it opens the map centered there. Touch-only, shown only when map tiles are
+      present on SD. Adds a reverse MGRS→lat/lon parser, unit-tested.
+
+      - **Screenshot to SD** (debug aid, off by default). Enable `debug.screenshots` (config tool →
+      Display) and capture the current screen to `/screenshots/*.bmp` (24-bit BMP, opens on any PC)
+      — T-Deck: **Shift+$**; T-Watch: **double-press the side (PEK) button**. (Top-layer overlays
+      like toasts/PIN/SOS aren't captured.)
+
+
+      ## Changed
+
+      - **Heard Adverts** screen now uses the standard `lv_win` chrome (back arrow + title + action
+      buttons) — the first step of rolling consistent screen headers across the app (community PR
+      #8, @jason-s13r).
+
+
+      ## Removed
+
+      - The non-functional Alt+L "insert location" keyboard shortcut (the chat GPS button already
+      does this).
+
+
+      ## Notes
+
+      - Config tool: "Save screenshots" toggle (Display); Security section relayout (Lock + Auto
+      Lock on one line, Admin Screen separate).
+
+      - Both boards (T-Deck Plus, T-Watch Ultra) build; 246 native tests pass.
+  - version: v0.3.6
+    name: MCLite 0.3.6
+    datetime: '2026-06-12T09:45:06Z'
+    url: https://github.com/laserir/MCLite/releases/tag/v0.3.6
+    prerelease: false
+    notes: >-
+      MCLite 0.3.6 — emoji, three-step volume, and reliability polish.
+
+
+      ## Added
+
+      - **Emoji in chat** — received emoji render inline (monochrome OpenMoji font with a Montserrat
+      fallback, so plain text is unchanged and unknown glyphs degrade gracefully). An on-device
+      emoji picker (`display.emoji`, default on, can be disabled) adds a smiley button to compose
+      from a curated set, capped to the 160-byte message budget. Incoming/outgoing text is sanitized
+      (strips emoji variation selectors, normalizes smart quotes to ASCII). Adopted from the
+      @jason-s13r fork; OpenMoji is CC-BY-SA 4.0.
+
+      - **Three-step volume** — the status-bar bell now cycles max → mute → mid → max; the built-in
+      chime and custom WAV notifications scale to the level. Default is max (loudness unchanged);
+      SOS stays fixed and loud (@jason-s13r, #11).
+
+
+      ## Changed
+
+      - **`sound.enabled` is now a true master switch.** `false` means fully silent — no
+      notifications, no chime, and no SOS sound — and the status-bar bell is hidden. Set `true` (the
+      default) for the 3-step volume bell.
+
+
+      ## Fixed
+
+      - A last-known position restored after reboot no longer reports "~0s ago" before the clock has
+      synced — it shows "Last known position" until GPS/NTP re-locks, then the real age.
+
+      - A failed send now shows a "Send failed - try again" toast instead of a silently FAILED
+      bubble (still tap-to-retry).
+
+      - Map tile loader hardening: oversized/corrupt PNGs and out-of-range tile coordinates are
+      rejected and grey-filled cleanly.
+
+
+      Both boards (T-Deck Plus, T-Watch Ultra) build; 219 native tests pass.
+  - version: v0.3.5
+    name: v0.3.5 — i18n cap + config-tool WiFi-wipe fixes
+    datetime: '2026-06-11T10:32:26Z'
+    url: https://github.com/laserir/MCLite/releases/tag/v0.3.5
+    prerelease: false
+    notes: >-
+      ### Fixed
+
+      - **Translations past ~128 keys reverted to English.** The i18n loader capped SD-loaded
+      strings at 128, but the
+        language files now hold ~197 keys — so on German/French/Italian every key past the cap silently fell back to
+        English (e.g. `canned_5`–`8`, plus the offgrid / firmware-update / WiFi / USB / BLE / map / heard-adverts /
+        toast screens). Raised the cap to 256 and added a boot-time warning if a language file ever exceeds it.
+      - **Config tool wiped stored WiFi on edit.** The tool's file-import never loaded the `wifi`
+      section, so
+        importing a device's `config.json`, editing it, and re-exporting produced an empty `wifi` block — clearing
+        the device's stored SSID/password on the next copy to SD. WiFi (and the persisted BLE pairing PIN) now
+        round-trip correctly, including through the share-link and start-fresh paths.
+  - version: v0.3.4
+    name: v0.3.4 — Quick replies, auto-GPS refresh, companion advert + fixes
+    datetime: '2026-06-11T10:03:31Z'
+    url: https://github.com/laserir/MCLite/releases/tag/v0.3.4
+    prerelease: false
+    notes: >-
+      ### Added
+
+      - **Auto-refresh contact GPS** — keeps the map markers / convo-list badges of contacts who
+      *don't* broadcast
+        their own location fresh, by quietly re-requesting telemetry GPS before the cached fix goes stale. Throttled
+        (one request per scan, respects the EU duty cycle, yields to manual requests) and self-limiting (stops asking
+        a contact that doesn't answer). New setting `messaging.auto_telemetry`, **default on**, can be disabled.
+      - **Per-conversation quick replies** — any contact, channel, or room can carry its own
+      `canned` list (max 8)
+        that overrides the global quick-reply list *for that chat only*; leave it empty to fall back to the global
+        list. Editable per card in the config tool. Turns a conversation into a command menu — e.g. a Home Assistant
+        / automation bridge ("Open gate", "Lights on", "Status?").
+      - **Last-known location persists across reboots** — the most recent GPS fix is saved to SD
+        (`/mclite/last_location.json`, throttled) and restored on boot, so the map opens to your last position
+        without waiting for a fresh fix ([@jason-s13r](https://github.com/jason-s13r), #10).
+      - **Advertise from the companion app** — the MeshCore phone/desktop app's **Advertise** button
+      now works while
+        connected (BLE/WiFi/USB); previously it was rejected as an unsupported command. Honours the app's flood vs
+        local (zero-hop) option. The on-device advert button and the automatic periodic advert are unchanged.
+
+      ### Changed
+
+      - The device-info / admin screen is now fully localized — every row label routes through the
+      translation
+        table (de/fr/it) ([@jason-s13r](https://github.com/jason-s13r), #9).
+      - Conversation history now loads only the most recent `max_history_per_chat` messages per chat
+      at boot
+        (previously the whole file was loaded into RAM). Bounds memory if a history file is larger than the cap —
+        e.g. after lowering the setting. No visible change; the runtime cap was already in place.
+
+      ### Fixed
+
+      - Telemetry retry is no longer cancelled by the contact-info pop-up's own timeout when the
+      mesh's outbound
+        queue is busy (the two timers now stay in lockstep) — the retry fires under congestion as intended.
+      - Closing the contact-info pop-up now cancels its in-flight telemetry retry, so no stray flood
+      request goes
+        out for a pop-up you already closed.
+      - Muting a chat is now absolute: it silences notifications even for a contact flagged
+      `always_sound`
+        (`always_sound` still overrides *global* mute, unchanged).
+      - Messages that exceed the 160-**byte** limit (e.g. emoji or accented/non-Latin text — which
+      can be ≤160
+        *characters* but more bytes) are now refused with a "Message too long" toast that keeps your text, instead
+        of silently failing to send while still drawing a (failed) bubble.
+      - A timed-out telemetry request now releases the radio's single telemetry slot when the
+      exchange ends
+        (previously the slot stayed held after a no-response request). Without this, **auto-refresh contact GPS**
+        would stall for the rest of the session after the first contact that didn't answer, and slow/multi-hop
+        contacts could be backed off too eagerly; both are resolved.
+      - Auto-refresh no longer lets a single un-sendable contact block the rest of the round-robin,
+      and
+        `max_history_per_chat: 0` now consistently means "unlimited" on both load and prune (previously prune at 0
+        would wipe the conversation).
+  - version: v0.3.3
+    name: v0.3.3 — Unified contact location + reliability batch
+    datetime: '2026-06-10T16:51:48Z'
+    url: https://github.com/laserir/MCLite/releases/tag/v0.3.3
+    prerelease: false
+    notes: >-
+      Contact-location and delivery-reliability improvements, plus a batch of community
+      contributions from [@jason-s13r](https://github.com/jason-s13r).
+
+
+      ## Added
+
+      - **Unified contact location** — one source of truth for where a contact is: fresh telemetry
+      (accurate) → their advert GPS → a heard advert. The conversation-list **GPS badge** now shows
+      for *any* known position (not just telemetry); the **contact info pop-up** shows that position
+      even without a telemetry reply (advert-sourced coordinates are marked approximate with `~`),
+      offers the **Map** button whenever any position is known, and on a request timeout shows the
+      known position instead of a bare "No response". Telemetry stays primary; the 30-minute
+      freshness window is unchanged.
+
+      - **Flood-routing retries** for better delivery when a direct path degrades — on **DM**
+      retries and on **telemetry-request** retries (with a "Retrying…" state).
+
+      - **Per-chat mute** — opt-in (`messaging.allow_mute`, default off). Long-press a conversation
+      to mute; muted chats don't beep or wake the screen (SOS always does), with an indicator in the
+      list and chat header.
+
+      - **Vendor row** on the device-info screen showing the firmware's source repo (`owner/repo`) —
+      handy with fork flashing.
+
+
+      ## Fixed
+
+      - Chat scroll-to-bottom is more robust on an empty chat area / on open.
+
+
+      ## Thanks
+
+      - @jason-s13r for PRs #3–#7.
+
+
+      Install/update via the [web flasher](https://laserir.github.io/MCLite/tools/web-flasher/), or
+      on-device (SD card / WiFi). Binaries: `mclite-v0.3.3.bin` (T-Deck Plus),
+      `mclite-watch-v0.3.3.bin` (T-Watch Ultra).
+
+
+      **Full Changelog**: https://github.com/laserir/MCLite/compare/v0.3.2...v0.3.3
+  - version: v0.3.2
+    name: v0.3.2 — Unified map + review fixes
+    datetime: '2026-06-09T11:03:17Z'
+    url: https://github.com/laserir/MCLite/releases/tag/v0.3.2
+    prerelease: false
+    notes: >-
+      Map unification plus fixes from a careful review of 0.3.0/0.3.1.
+
+
+      ## Changed
+
+      - The contact **Map** button and the status-bar **GPS icon** now open the *same* map (one
+      screen, one set of controls). Opening from a contact just centers on that contact and
+      pre-selects it — drawn slightly larger with a highlight ring and its name in the bottom bar —
+      while still showing every other contact / telemetry / heard-node location and your own
+      position (a distinct green/amber dot).
+
+      - **Reload** rebuilds all markers and re-checks your own position; **Center** always jumps to
+      your own location once a fix is available (even when opened from a contact), falling back to
+      the location the map opened on when there's no fix.
+
+
+      ## Fixed
+
+      - Center now uses your own location on a contact-opened map (previously it only ever
+      recentered on the contact).
+
+      - The status-bar GPS icon stays visible (dimmed) and tappable when GPS is disabled, so the map
+      remains reachable.
+
+      - @mention no longer truncates a near-full message draft.
+
+      - Companion: the contacts `since` field is read safely (removed an unaligned read).
+
+
+      Install/update via the [web flasher](https://laserir.github.io/MCLite/tools/web-flasher/), or
+      on-device (SD card / WiFi). Binaries: `mclite-v0.3.2.bin` (T-Deck Plus),
+      `mclite-watch-v0.3.2.bin` (T-Watch Ultra).
+
+
+      **Full Changelog**: https://github.com/laserir/MCLite/compare/v0.3.1...v0.3.2
+  - version: v0.3.1
+    name: v0.3.1 — GPS in adverts + map
+    datetime: '2026-06-09T09:01:00Z'
+    url: https://github.com/laserir/MCLite/releases/tag/v0.3.1
+    prerelease: false
+    notes: >-
+      Fork-adoption batch (features adopted from the jason-s13r/MCLite fork) plus map polish.
+
+
+      ## Added
+
+      - **GPS location in adverts** (opt-in, `gps.location_advert`, default off) — broadcast your
+      position so contacts see you on their map. Uses MeshCore's native advert location; sends a
+      live fix or a still-valid last-known one. Unencrypted broadcast — hence opt-in. Read-only
+      status on the admin GPS screen; toggled via the config tool / SD.
+
+      - **General map** — tap the status-bar GPS icon for a map of your own location plus every
+      heard node / contact that carries GPS (same chat / repeater / room / sensor symbols as the
+      heard-adverts list). Tap a marker for its name; **Reload** button re-scans heard nodes.
+
+      - **NTP time sync** — set the clock from an NTP server over WiFi when GPS hasn't locked (GPS
+      still overrides once it does).
+
+      - **@mention** — tap a sender's name in a channel/room to insert `@name `.
+
+      - **Fork-aware OTA** — build-time overridable update repo so forks can self-update.
+
+      - **Web flasher repo/fork picker** — choose which repo's published releases to flash.
+
+
+      ## Changed
+
+      - Map markers render as filled colored dots (type color + contrasting symbol) so they read
+      against any tile; selection ring sits just outside the dot.
+
+
+      ## Fixed
+
+      - Map markers are reliably tappable (tap-slop dead-zone; wider hit tolerance).
+
+      - Map markers no longer blink out near the viewport edge across zoom levels.
+
+
+      Install/update via the [web flasher](https://laserir.github.io/MCLite/tools/web-flasher/), or
+      on-device (SD card / WiFi). Binaries: `mclite-v0.3.1.bin` (T-Deck Plus),
+      `mclite-watch-v0.3.1.bin` (T-Watch Ultra).
+
+
+      **Full Changelog**: https://github.com/laserir/MCLite/compare/v0.3.0...v0.3.1
+  - version: v0.3.0
+    name: v0.3.0 — Companion mode (WiFi / USB / BLE)
+    datetime: '2026-06-08T12:18:56Z'
+    url: https://github.com/laserir/MCLite/releases/tag/v0.3.0
+    prerelease: false
+    notes: >-
+      ## Highlights
+
+
+      **Companion mode** — bridge the radio to a phone, desktop, or CLI using the standard MeshCore
+      companion protocol, in parallel with normal on-device use (messages appear in both):
+
+      - **Bluetooth** — pairs with the official MeshCore iOS/Android apps (6-digit passkey +
+      bonding).
+
+      - **WiFi** — reach it from `meshcore-cli`/`meshcore.js`/`meshcore_py` on your LAN.
+
+      - **USB** — wired serial companion.
+
+
+      One transport at a time; messaging is read-only for config. WiFi and Bluetooth can't run
+      together (shared radio/RAM) — the device handles the switch and offers a reboot when needed.
+
+
+      Also includes the on-device firmware-update fixes and a refreshed README (Quick Start +
+      balanced companion docs).
+
+
+      Install/update via the [web flasher](https://laserir.github.io/MCLite/tools/web-flasher/), or
+      on-device (SD card / WiFi). Binaries: `mclite-v0.3.0.bin` (T-Deck Plus),
+      `mclite-watch-v0.3.0.bin` (T-Watch Ultra).
+
+
+      **Full Changelog**: https://github.com/laserir/MCLite/compare/v0.2.2...v0.3.0
+  - version: v0.2.2
+    name: v0.2.2 — Fix WiFi OTA crash
+    datetime: '2026-06-07T15:20:45Z'
+    url: https://github.com/laserir/MCLite/releases/tag/v0.2.2
+    prerelease: false
+    notes: >-
+      Fixes a stack overflow that crashed the device when installing a firmware update over WiFi
+      (the TLS handshake + on-stack buffer exceeded the loop-task stack). WiFi over-the-air updates
+      now work end-to-end. SD-card install and USB flashing were unaffected.
+
+
+      Note: devices on 0.2.1 should update via SD card or USB (the 0.2.1 WiFi installer has the
+      crash); 0.2.2 onward updates over WiFi cleanly.
+  - version: v0.2.0
+    name: v0.2.0 — T-Watch Ultra support
+    datetime: '2026-06-01T14:43:59Z'
+    url: https://github.com/laserir/MCLite/releases/tag/v0.2.0
+    prerelease: false
+    notes: '**Full Changelog**: https://github.com/laserir/MCLite/compare/v0.1.8...v0.2.0'
+  - version: v0.1.8
+    name: v0.1.8 — Heard Adverts
+    datetime: '2026-05-05T12:01:26Z'
+    url: https://github.com/laserir/MCLite/releases/tag/v0.1.8
+    prerelease: false
+    notes: >-
+      ## Highlights
+
+
+      **Heard Adverts** — every advert MeshCore decodes goes into a 64-entry LRU buffer (RAM,
+      evaporates on reboot). New screen reachable from the admin menu lists them with type icons,
+      last-heard age, alias-when-known, and a queued badge for entries you've saved this session.
+      Detail modal shows fingerprint-style pubkey + per-hop path direction.
+
+
+      - **Live updates** while the screen is visible: 1 Hz rate-limited rebuild, focus preserved by
+      pubkey, skipped while a modal is open.
+
+      - **Save discovered chat contacts** — Save button on the detail modal appends a
+      `from_discovery: true` entry to `config.json` with conservative defaults (all permissions off,
+      no SOS in/out). Activates on next boot via the existing ContactStore + MCLiteMesh registration
+      path. CHAT-only — repeaters/rooms/sensors stay infrastructure. After save: `[Reboot now, OK]`
+      confirmation.
+
+      - **Manual advert** button in the header — sends a local advert immediately and re-anchors the
+      periodic 9-min schedule. Toast confirms.
+
+      - **Clear button** wipes the in-memory buffer.
+
+
+      ## Config persistence hardening
+
+
+      - `ConfigManager::save()` now uses **atomic writes**: stage to `.tmp`, retain previous file as
+      `.bak` during the rename, drop `.bak` on successful completion. Steady state is just
+      `config.json`.
+
+      - **Boot fallback** to `config.json.bak` if the live file is missing or corrupt (mid-save
+      power loss). Successful recovery promotes the loaded content back to main and removes `.bak`.
+
+      - Required because `config.json` holds the device identity keys — a torn truncate-write would
+      brick the unit.
+
+
+      ## Other changes
+
+
+      - **Boot screen** — MCLite mark glyph above the title, drawn programmatically (no raster
+      asset).
+
+      - **Default `dim_brightness` 20 → 0** — auto-dim now goes fully dark, prevents long-term
+      burn-in on the always-on status bar.
+
+      - **Long-standing log fix**: `[MCLiteMesh] Discovered contact` was printing the raw packed
+      `path_len` byte (low 6 bits = hops, upper 2 = hash size). Values like `70` actually meant 6
+      hops with 2-byte hashes. Now masked correctly.
+
+      - **Config tool**: amber 'Added via device — review me' badge on `from_discovery` contacts,
+      with an inline ✕ to mark reviewed. Round-trip preserves the flag on both load paths and the
+      export builder.
+
+      - **i18n**: 19 new keys covering type names, field labels, hops format,
+      save/reboot/queue/error states, advert-sent toast — across en/de/fr/it and the embedded
+      LANG_FILES.
+
+
+      ## Tests
+
+
+      - 185 native test cases (was 172). New coverage in `test_heard_advert_cache` (14) and
+      `test_config` (atomic writes, `.bak` fallback, recovery cleanup, `from_discovery` round-trip,
+      append-discovered-contact success/duplicate/cap).
+
+
+      ## Compatibility
+
+
+      - Backward-compatible config: missing `from_discovery` parses as `false`. Old firmware ignores
+      the field.
+
+      - ConfigManager now writes through the atomic path even for the existing offgrid-toggle save —
+      no caller change needed.
+
+      - To force first-boot regen, delete **both** `config.json` and `config.json.bak`.
+
+
+      ## Install
+
+
+      - **Web flasher:**
+      [laserir.github.io/MCLite/tools/web-flasher](https://laserir.github.io/MCLite/tools/web-flasher/)
+      — pick v0.1.8
+
+      - **Manual:** \`esptool.py write_flash 0x0 mclite-v0.1.8.bin\`
+
+
+      🤖 Generated with [Claude Code](https://claude.com/claude-code)
+  - version: v0.1.7
+    name: v0.1.7 — Room Server Client
+    datetime: '2026-04-29T10:39:57Z'
+    url: https://github.com/laserir/MCLite/releases/tag/v0.1.7
+    prerelease: false
+    notes: >-
+      ## Highlights
+
+
+      **Room server client** — join community message boards run by MeshCore room servers. Posts
+      appear in the conversation list with an `R` icon (purple), ordered alongside DMs and channels
+      by last activity. Up to 8 rooms.
+
+
+      - **Auto-login on boot** with exponential backoff (1 → 2 → 4 → cap 30 min).
+
+      - **Disconnect recovery** — re-login on chat-open (rate-limited 30s) and after 10 minutes of
+      silence while a room chat is foreground. Both wake the server's 3-strike push-freeze that
+      trips after ~36s of radio dropout, so passive readers don't miss posts after brief
+      out-of-range moments.
+
+      - **Per-room flags** mirroring channels: `read_only`, `allow_sos` (default true), `send_sos`
+      (default false), `scope` override.
+
+      - **Sender resolution** — 4-byte `sender_prefix` looked up against ContactStore: alias if
+      known, else 8-hex-char fallback.
+
+      - **`sync_since` persisted** per-room across reboots; only newer posts replay on next login.
+
+      - **AdminScreen Rooms section** under Channels: name, online/offline indicator, last-sync
+      timestamp.
+
+      - **Config tool** Rooms card with all four toggles and the new `info-icon` collapsible-hint
+      pattern.
+
+
+      ## Other changes
+
+
+      - `MAX_CONTACTS=32 → 40` (32 chat + 8 room) with cap warnings on overflow.
+
+      - `MAX_CONVERSATIONS=48 → 56`.
+
+      - Translations: `sec_rooms` added in de/fr/it.
+
+      - `data[5]` keep-alive byte runtime watch — warns if a future MeshCore server re-enables the
+      legacy interval.
+
+
+      ## Compatibility
+
+
+      - Backward-compatible config: missing `room_servers` block parses as empty list. Old firmware
+      ignores the field.
+
+      - DM and channel history files stay byte-identical (no `syncSince` written when zero).
+
+      - Telemetry, SOS, key/PIN lock, offgrid mode all unaffected.
+
+
+      ## Install
+
+
+      - **Web flasher:**
+      [laserir.github.io/MCLite/tools/web-flasher](https://laserir.github.io/MCLite/tools/web-flasher/)
+      — pick v0.1.7
+
+      - **Manual:** `esptool.py write_flash 0x0 mclite-v0.1.7.bin`
+
+
+      🤖 Generated with [Claude Code](https://claude.com/claude-code)
+  - version: v0.1.5
+    name: v0.1.5
+    datetime: '2026-04-21T09:31:28Z'
+    url: https://github.com/laserir/MCLite/releases/tag/v0.1.5
+    prerelease: false
+    notes: >-
+      ## Highlights
+
+
+      - **MeshCore upgraded to v1.15.0** (`companion-v1.15.0`) — catches up with upstream bug fixes,
+      new token-bucket duty-cycle dispatcher, and default-scope aligned wire format.
+      Binary-compatible with all MCLite v0.1.x peers.
+
+      - **SOS burst hardened** — 50ms inter-send pacing and dispatcher yield between each recipient
+      so the packet pool can drain. Fixes intermittent cases where SOS delivered to only some
+      contacts/channels in meshes with many targets.
+
+      - **SOS received → key lock auto-disengages** — when an incoming SOS alert appears, the device
+      automatically unlocks its keys so the user can respond immediately. **PIN lock stays engaged**
+      — no security compromise.
+
+      - **Configurable path hash mode** — new `radio.path_hash_mode` setting (0/1/2 → 1/2/3 bytes
+      per repeater fingerprint in the packet path). Larger sizes reduce path collisions in dense
+      meshes at the cost of a few extra bytes per hop. Defaults to 0 for wire-identical
+      compatibility with pre-v1.15 peers.
+
+      - **Admin screen shows active path hash size** plus per-channel scope overrides rendered as
+      `[scope:#name]`, distinct from the `[SOS]` / `[read-only]` capability flags.
+
+
+      ## Changes since v0.1.4
+
+
+      - `08ca1f7` Bump MeshCore to v1.15.0, harden SOS burst delivery
+
+      - `a90ad6e` Add configurable path hash mode and admin screen scope display
+
+      - `0f53de1` Bump version to 0.1.5
+
+      - `aba8ceb` Publish firmware v0.1.5 to web flasher
+
+      - `debad94` Document scope and path_hash_mode in example config
+
+
+      ## Install
+
+
+      Flash `mclite-v0.1.5.bin` via the [web
+      flasher](https://laserir.github.io/MCLite/tools/web-flasher/) or manually with esptool. Use
+      `mclite_config_tool.html` (offline, single file) to edit `config.json`.
+  - version: v0.1.4
+    name: v0.1.4
+    datetime: '2026-04-20T18:19:03Z'
+    url: https://github.com/laserir/MCLite/releases/tag/v0.1.4
+    prerelease: false
+    notes: >-
+      ## Highlights
+
+
+      - **Map view on telemetry modal** — tap a contact's name in the chat header → telemetry modal
+      → **Map** button (visible when the contact has fresh GPS and SD tiles are available).
+      Full-screen slippy-tile map centred on the contact, own-device marker, `+`/`-` zoom, scale
+      bar. Tile pack layout `/tiles/{z}/{x}/{y}.png` is compatible with upstream MeshCore T-Deck
+      firmware — existing tile packs work unchanged. See the updated README for how to prepare a
+      `/tiles` folder with [map-tiles-downloader](https://github.com/tekk/map-tiles-downloader).
+
+      - **Screen lock & auto-lock unified** — single `lock` / `auto_lock` config with deferred
+      click; backwards-compatible with older configs missing `auto_key_lock`.
+
+      - **Region scope transport codes** — optional per-radio / per-channel scope for repeater
+      filtering.
+
+      - **MeshCore dependency pinned** to commit `792f2999` for reproducible builds.
+
+
+      ## Changes since v0.1.3
+
+
+      - `444065d` Add map view on telemetry modal
+
+      - `89c3825` Add Map view to features list, drop OSM attribution note
+
+      - `b4598bb` Correct map-tiles-downloader description (TUI, not browser) and document GeoNames
+      region codes
+
+      - `6f378e0` Pin MeshCore dep to commit 792f2999 for reproducible builds
+
+
+      ## Install
+
+
+      Flash `mclite-v0.1.4.bin` via the [web
+      flasher](https://laserir.github.io/MCLite/tools/web-flasher/) or manually with esptool. Use
+      `mclite_config_tool.html` (offline, single file) to edit `config.json`.
+  - version: v0.1.3
+    name: v0.1.3
+    datetime: '2026-04-13T08:44:54Z'
+    url: https://github.com/laserir/MCLite/releases/tag/v0.1.3
+    prerelease: false
+    notes: >-
+      ## What's New
+
+
+      - **Region scope** — tag outgoing packets with MeshCore transport codes so repeaters can
+      filter by region. Set a global scope or override per channel. Compatible with 1-byte and
+      2-byte repeaters
+
+      - **Automatic DST** — POSIX timezone strings for automatic daylight saving time transitions
+
+      - **SOS fix** — SOS acknowledgement no longer triggers an SOS alert on the sender's device
+
+      - **Telemetry fix** — CayenneLPP parsing off-by-one corrected
+
+      - **Config tool** — region scope settings for radio and per-channel override
+
+
+      ## Install
+
+
+      Flash via the [Web Flasher](https://laserir.github.io/MCLite/tools/web-flasher/) or download
+      the binary below and flash with esptool:
+
+      ```
+
+      esptool.py write_flash 0x0 mclite-v0.1.3.bin
+
+      ```

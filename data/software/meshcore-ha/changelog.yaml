@@ -1,4 +1,446 @@
 source: github
 repo: meshcore-dev/meshcore-ha
-updatedAt: '2026-08-17T14:31:24.467Z'
-releases: []
+updatedAt: '2026-08-17T16:30:18.218Z'
+releases:
+  - version: v2.9.0
+    name: v2.9.0
+    datetime: '2026-07-22T04:37:59Z'
+    url: https://github.com/meshcore-dev/meshcore-ha/releases/tag/v2.9.0
+    prerelease: false
+    notes: >-
+      ## Features
+
+
+      - **CLI Console** (#295, @drewmccal) — an opt-in dashboard console for the local companion
+      radio. Enable it in Configure → Global Settings:
+        - `execute_command` / `execute_command_ui` gain a `record_to_console` boolean; when set, the command and its response are recorded to a rolling transcript and a `meshcore_cli_response` event fires for automations.
+        - New `sensor.*_cli_console` transcript entity (last 50 command/response pairs, pre-rendered for a markdown card), plus compact **CLI Run Command** / **CLI Clear Console** button entities and a `meshcore.cli_console_clear` service.
+        - The transcript is excluded from the recorder database, and the sensor state is a neutral command counter, so command text (which can include credentials) is never written to history.
+        - Failed contact lookups in `execute_command` now return structured errors (`pubkey_prefix_too_short`, `contact_not_found`, `not_connected`) instead of a silent no-op.
+        - New [CLI Command Reference](https://meshcore-dev.github.io/meshcore-ha/docs/cli-commands) docs page and dashboard examples.
+
+      ## Fixes
+
+
+      - **Outgoing DM lost when `send_message` is called with `entry_id`** (#293) — the message was
+      delivered but never recorded: no conversation entity update, no logbook entry, no
+      `meshcore_message_sent` event. Now recorded the same as sends without `entry_id`.
+
+      - **Entity-less devices can be removed** (#297) — follow-up to #247: a device whose last
+      entity was already removed can now be deleted from the HA UI even while the contact is live,
+      and the telemetry dedup map is evicted on entity removal so re-added contacts recreate sensors
+      cleanly.
+
+      - **Slovak translation quoting** (#301).
+
+
+      ## Improvements
+
+
+      - **Repeater login uses `send_login_sync`** (#269) — login and path discovery now use the SDK
+      sync helpers with hop-aware timeouts, making logins to distant repeaters more reliable.
+
+
+      ## Notes
+
+
+      - No config migration in this release.
+
+      - Minimum Home Assistant version remains `2023.8.0`; `meshcore-py` floor unchanged
+      (`>=2.3.7`).
+
+      - Internal: CI now runs lint, unit, and integration test tiers on every PR (#270, #280, #281).
+  - version: v2.8.0
+    name: v2.8.0
+    datetime: '2026-06-18T01:55:11Z'
+    url: https://github.com/meshcore-dev/meshcore-ha/releases/tag/v2.8.0
+    prerelease: false
+    notes: >-
+      ## Features
+
+
+      - **Unified Contact Discovery Mode** (#261) — the two overlapping contact-discovery flags
+      (`disable_contact_discovery` and the never-shipped `large_mesh_mode`) are collapsed into a
+      single **Contact Discovery Mode** select with three choices:
+        - **Entity per contact** (default) — one diagnostic binary_sensor per discovered contact, same as before.
+        - **Data only** — discovered (un-added) contacts are tracked as data with no per-contact entity, while added/curated contacts keep theirs. On dense meshes this avoids hundreds of low-utility entities and the entity-registry churn they drive. The dropdown, services, chat panel, an aggregate summary sensor, and `meshcore.get_discovered_contact` all keep working.
+        - **Disabled** — no discovered-contact processing at all.
+
+        Set it at install time or in Configure → Global Settings.
+
+      ## Fixes
+
+
+      - **Telemetry/GPS AttributeError from untracked nodes** (#266) — `_get_node_info` assumed a
+      dict-shaped `public_key`; a TELEMETRY/GPS event from a node that wasn't a tracked
+      repeater/client/root raised `AttributeError` on the string-shaped key and killed the handler.
+
+      - **node_status sensor stuck "Disconnected"** (#267) — the status callback set its value but
+      never pushed state, so the header indicator could show disconnected (while actually connected)
+      until the next device event. Now pushes on event and seeds an initial value at setup.
+
+      - **UTC-aware MQTT timestamps** (#259) — status, raw event, and normalized packet payloads now
+      emit offset-aware ISO 8601 timestamps so consumers don't misread local time as UTC. Fixes
+      #258.
+
+      - **Quiet benign reconnect-race log noise** (#268) — the `no_event_received` result from the
+      `get_msg` loops during config re-add / reconnect is downgraded to debug; real errors still log
+      at ERROR.
+
+      - **Flood-scope `*` wildcard** (#263) — a raw `*` entry in the flood-scope allowlist is now
+      recognized as the global wildcard and skipped, instead of deriving a junk transport key for a
+      non-existent `#*` region.
+
+
+      ## Notes
+
+
+      - **Migration on first start**: existing installs migrate config entry v2 → v3 automatically.
+      `disable_contact_discovery=true` maps to **Disabled**; otherwise the mode defaults to **Entity
+      per contact**, so behavior is unchanged unless you opt into **Data only**. No reload, no
+      entity-registry churn.
+
+      - **MQTT timestamp format change** (#259): the `time`/`date` display fields in MQTT packet
+      payloads now reflect UTC wall-clock rather than local time. If you parse those downstream,
+      note the shift.
+
+      - Minimum Home Assistant version remains `2023.8.0`. No `meshcore-py` floor change (still
+      `>=2.3.7`).
+  - version: v2.7.0
+    name: v2.7.0
+    datetime: '2026-06-01T02:44:44Z'
+    url: https://github.com/meshcore-dev/meshcore-ha/releases/tag/v2.7.0
+    prerelease: false
+    notes: >-
+      ## Features
+
+
+      - **Self-diagnostic sensors for the companion node** (#251) — opt-in polling of the
+      locally-attached companion's `get_stats_core` / `get_stats_radio` / `get_stats_packets`,
+      exposed as 13+ new sensors on the main device. Local-transport queries only — no mesh traffic.
+
+      - **Region-scoped channel broadcasts** (#250) — new `scope` parameter on
+      `meshcore.send_channel_message` for TC_FLOOD region-scoped sends. Optional `flood_scopes`
+      allowlist in global settings labels incoming scoped messages with their region name.
+
+      - **Remove orphan devices from the UI** (#247) — repeater, client, and contact devices that
+      are no longer tracked can now be deleted via the HA device page. Hub and live devices are
+      refused. Closes #229.
+
+      - **Repeater neighbor count sensor** (#228) — per-repeater count of active neighbors derived
+      from the existing neighbor list.
+
+      - **hop_count + snr on incoming channel messages** (#245) — logbook event now carries SNR and
+      hop count for channel traffic, matching the existing DM behavior.
+
+      - **Conditional recipient type selection** (#218) — adapts the message-input UI based on the
+      chosen recipient.
+
+
+      ## Fixes
+
+
+      - **Region-scope (TC_FLOOD) RX_LOG correlation** (#246) — fixes a 4-byte transport-code offset
+      that broke RX_LOG correlation for all region-scoped messages and corrects the AES plaintext
+      offset. Closes #237, #242, #198.
+
+      - **path_hash_size on rx_log correlation entry** (#249) — completes #226 by propagating the
+      per-hop hash width to every consumer of `meshcore_message`.
+
+      - **execute_command response normalization** (#248) — `req_*_sync` helpers that return plain
+      dicts, lists, scalars, or `None` are now surfaced correctly instead of being silently dropped
+      or raising a confusing error.
+
+      - **Discovered-contact cleanup post-#236** (#252) — repairs four cleanup paths that the #236
+      unique_id migration left looking up entities by the old format.
+
+      - **Recorder cap on discovered-contact select** (#254) — `options` is now excluded from
+      recorder state, dodging the 16 KiB per-state attribute cap that fired warnings on dense
+      meshes. Closes #243.
+
+      - **Removed `hass.helpers.entity_registry.async_get()` accessor** (#253) — switched to
+      `er.async_get(hass)` in three contact services. Fixes `AttributeError` on recent HA core.
+
+      - **MQTT startup wait** (#244) — fixes a task that blocked HA boot.
+
+      - **recv errors as count + measurement** (#239) — corrects sensor types.
+
+      - **multi-entry message_sent fan-out** (#235) — filters by entry_id.
+
+      - **Contact-diagnostic unique_id scoping** (#236) — scoped by entry_id with one-time
+      migration.
+
+      - **TZ-aware UTC timestamp on meshcore_message** (#234).
+
+      - **RX_LOG multi-byte path size parsing** (#226).
+
+
+      ## Docs
+
+
+      - Companion Integration API page (#217)
+
+      - ESPHome BLE bridge workaround (#223)
+
+      - Discord community channel linked in README + docs site
+
+
+      ## Notes
+
+
+      - Minimum Home Assistant version remains `2023.8.0`.
+
+      - The `meshcore-py` floor is `>=2.3.7` (was bumped in #222).
+
+      - #236's unique_id migration runs once per install on first start of this release. Entities
+      migrate automatically. Users on the broken cleanup state from earlier #236-only installs will
+      see the Phase 4 orphan sweep clean up stale registry entries (covered by #252).
+
+      - #251 self-diagnostics defaults off. Enable in Global Settings if you want the new sensors.
+  - version: v2.6.0
+    name: v2.6.0
+    datetime: '2026-04-28T05:19:48Z'
+    url: https://github.com/meshcore-dev/meshcore-ha/releases/tag/v2.6.0
+    prerelease: false
+    notes: >-
+      ## Features
+
+
+      - **Structured query services for companion integrations** (#216) — new
+      `meshcore.get_contacts`, `meshcore.get_channels`, and `meshcore.trace` services return typed
+      responses so companions don't have to scrape `execute_command` output.
+
+      - **SNR + hop count on incoming DM events** (#215) — `meshcore_message` events now include
+      `hop_count` (always) and `snr` (V3 firmware) for direct messages, matching what was already
+      available for channel messages via `rx_log_data`.
+
+      - **Repeater neighbor sensors** (#211) — per-repeater SNR and activity sensors with
+      auto-cleanup of stale neighbors, plus an opt-in toggle and configurable airtime cost in the
+      global settings.
+
+      - **Per-device online binary sensor** (#209) — replaces the imprecise global
+      `device.connected` flag with per-device `binary_sensor.*_online` entities derived from
+      `_last_successful_request` timing.
+
+      - **Stale discovered-contact cleanup** (#183) — new `days_threshold` parameter on
+      `clear_discovered_contacts`, plus an opt-in daily auto-cleanup with a configurable threshold.
+
+      - **Adaptive RX_LOG poll-wait** (#182) — replaces the blocking 500ms sleep on incoming channel
+      messages with a 50ms-step poll that fires as soon as data arrives, with a background pass for
+      late-arriving repeater RX_LOGs delivered as `meshcore_delivery_update` events.
+
+
+      ## Fixes
+
+
+      - **Entity-identity stabilization** (#201) — removes device name from `unique_id` (one-time
+      startup migration), refreshes SELF_INFO after config-modifying commands, and adds missing
+      `async_write_ha_state()` so frontend updates without a reload.
+
+      - **Map uploader** (#200) — corrects ADV_TYPE_CHAT and points the uploader at meshcore.io.
+
+      - **Telemetry sensors** (#191) — restores missing `device_class` and units on telemetry
+      sensors.
+
+      - **execute_command AttributeError** (#190) — removes a stale `set_command_result` call.
+
+
+      ## Docs
+
+
+      - README now links to the [meshcore-card](https://github.com/jpettitt/meshcore-card) Lovelace
+      card (#220).
+
+      - Installation docs USB firmware note (#133).
+
+
+      ## Notes
+
+
+      - **Migration on first start**: #201 strips device names from `unique_id` once per upgrade;
+      entities migrate automatically. Some users may see a brief reload as the registry updates.
+
+      - The minimum Home Assistant version remains `2023.8.0`.
+  - version: v2.5.0
+    name: v2.5.0
+    datetime: '2026-04-01T16:21:30Z'
+    url: https://github.com/meshcore-dev/meshcore-ha/releases/tag/v2.5.0
+    prerelease: false
+    notes: >-
+      ## What's New
+
+
+      ### Map Auto Uploader
+
+      Automatically uploads repeater and room server adverts to
+      [map.meshcore.dev](https://map.meshcore.dev) when your companion hears them. No separate bot
+      needed. Enable in Global Settings. Requires `ENABLE_PRIVATE_KEY_EXPORT=1` on firmware. (#163)
+
+
+      ### Message Delivery Feedback
+
+      New `Last Message Delivery` sensor shows real-time delivery status for sent messages. Channel
+      messages show repeater count (progressive updates as relays arrive). Direct messages show ACK
+      confirmation. (#168)
+
+
+      ### Instant Message Delivery
+
+      Subscribes to the firmware's `MESSAGES_WAITING` push notification for near-instant message
+      fetching instead of waiting for the poll interval. (#177)
+
+
+      ### Reconfigure Connection
+
+      Change your connection type (USB/BLE/TCP) or parameters without deleting and re-adding the
+      integration. All settings are preserved. Look for the "Reconfigure" button on the integration
+      page. (#187)
+
+
+      ### Public Key Change Detection
+
+      Detects when a companion device's public key changes (e.g., after firmware reflash) and
+      automatically migrates all entity IDs. Creates a repair notification for any manual references
+      that need updating. (#169)
+
+
+      ### Companion Prefix Sensor
+
+      New sensor showing the device's routing prefix based on `path_hash_mode`, with live updates
+      from SELF_INFO events. (#169)
+
+
+      ## Fixes
+
+
+      - **Repeater status/telemetry timeouts** — Fixed login check (was comparing against wrong
+      event type), switched to SDK sync methods with firmware-calculated timeouts. Multi-hop
+      repeaters now respond reliably. (#185)
+
+      - **coordinator.data set to None** — `_async_update_data` now returns `result_data` so HA's
+      coordinator framework has valid data. Fixes `NoneType has no attribute 'get'` crashes. (#171)
+
+      - **Repeater firmware version not updating** — Re-queries firmware version when editing a
+      repeater in Manage Devices. (#179)
+
+      - **Edit repeater clears password** — Password field no longer gets overwritten with empty
+      string when saving other settings. (#179)
+
+      - **set_flood_scope type** — Fixed parameter type from `int` to `str`. (#181)
+
+      - **Conditional message polling** — Replaced unconditional `get_msg()` every 5s with a
+      60-second safety-net poll, reducing ~17,280 unnecessary commands/day on quiet meshes. (#186)
+
+      - **mesh_core returns None when disconnected** — Prevents startup crashes when device isn't
+      available. (#163)
+
+      - **ConfigEntryNotReady on connection failure** — HA retries connection automatically instead
+      of leaving the integration in a broken state. (#173)
+
+
+      ## Other
+
+
+      - Dutch and Slovak translations for new features
+
+      - Last command result sensor for dashboard CLI feedback (#163)
+
+      - Channel select now filters unused/empty channels (#163)
+
+      - `execute_command` supports `return_response` for automation use (#169)
+
+      - OptionsFlow updated to HA 2024+ pattern (#163)
+
+      - Deprecated `logger.warn()` calls replaced with `logger.warning()`
+  - version: V2.4.1
+    name: V2.4.1
+    datetime: '2026-03-07T16:20:29Z'
+    url: https://github.com/meshcore-dev/meshcore-ha/releases/tag/V2.4.1
+    prerelease: false
+    notes: "* Bump meshcore requirement to >=2.2.24 by @yellowcooln in https://github.com/meshcore-dev/meshcore-ha/pull/155\r\n* Fix LetsMesh MQTT Status Parity: Accurate Startup Metadata, Radio Format Alignment, and Secure Owner Claims by @yellowcooln in https://github.com/meshcore-dev/meshcore-ha/pull/152"
+  - version: v2.4.0
+    name: V2.4.0
+    datetime: '2026-03-03T03:07:52Z'
+    url: https://github.com/meshcore-dev/meshcore-ha/releases/tag/v2.4.0
+    prerelease: false
+    notes: "### MQTT Upload Support\r\n- Multi-broker MQTT upload with full UI configuration\r\n- LetsMesh integration with EdDSA auth-token support (Python fallback when CLI unavailable)\r\n- Per-broker owner/email JWT claim settings\r\n- Periodic MQTT status metrics for LetsMesh observer support\r\n- Packet-only publishing aligned with meshcoretomqtt format\r\n- Broker connection status binary sensors\r\n- Auto-fetch device private key for auth tokens\r\n- Packet hash stabilization to reduce LetsMesh duplicates\r\n\r\n### Execute Command Improvements\r\n- Bump `meshcore` to `>=2.2.15` with synced command parameter mappings\r\n- Functional syntax support: `set_coords(37.7749, -122.4194)` (fixes #111)\r\n- Supports positional args, keyword args, strings, numbers, booleans, and bytes literals\r\n- Add `set_flood_scope` command\r\n\r\n### Discovered Contacts Management\r\n- New opt-in FIFO limit for discovered contacts (configurable max, default 100 when enabled)\r\n- Oldest contacts evicted first; re-advertisements refresh queue position\r\n- Evicted contacts have binary sensor entities automatically removed\r\n- New `meshcore.clear_discovered_contacts` service to remove all at once\r\n\r\n### Bug Fixes\r\n- Fix duplicate entry setup and guard static path registration\r\n- Fix options menu contact detection for repeaters and clients\r\n- Fix missing log argument\r\n- Only cleanup devices associated with the current entry\r\n\r\n### Telemetry\r\n- Support negative current readings (charging vs discharging)\r\n- Add power sensor, display current in mA\r\n- 2-character pubkey prefix for display\r\n\r\n### Documentation\r\n- Add MQTT upload documentation page\r\n- Document functional command syntax in services docs\r\n- Add contact FIFO limit section to contacts docs\r\n- Replace manual storage file deletion with `clear_discovered_contacts` service\r\n\r\n### Housekeeping\r\n- Add `__pycache__/`, `*.pyc`, `.pytest_cache` to `.gitignore`\r\n- Add test infrastructure and unit tests for command parsing and contact eviction"
+  - version: V2.3.0
+    name: V2.3.0
+    datetime: '2026-02-05T20:47:45Z'
+    url: https://github.com/meshcore-dev/meshcore-ha/releases/tag/V2.3.0
+    prerelease: false
+    notes: '* Fixes issues with non-normalized repeater names and the latest versions of home assistant'
+  - version: v2.2.5
+    name: v2.2.5
+    datetime: '2026-01-26T21:21:19Z'
+    url: https://github.com/meshcore-dev/meshcore-ha/releases/tag/v2.2.5
+    prerelease: false
+    notes: Fix documentation link
+  - version: v2.2.4
+    name: v2.2.4
+    datetime: '2025-12-27T22:18:30Z'
+    url: https://github.com/meshcore-dev/meshcore-ha/releases/tag/v2.2.4
+    prerelease: false
+    notes: Fix issue with broken contact select options
+  - version: v2.2.3
+    name: v2.2.3
+    datetime: '2025-11-28T06:03:49Z'
+    url: https://github.com/meshcore-dev/meshcore-ha/releases/tag/v2.2.3
+    prerelease: false
+    notes: >-
+      Fixes minor issue with sensors reverting to discovered after being added to the connected
+      client.
+  - version: v2.2.2
+    name: v2.2.2
+    datetime: '2025-11-27T06:39:05Z'
+    url: https://github.com/meshcore-dev/meshcore-ha/releases/tag/v2.2.2
+    prerelease: false
+    notes: "- Fixes some bugs preventing proper contact sensor synchronization when adding/removing contacts.\r\n- Changes RX and TX Airtime sensors to be TOTAL_INCREASING"
+  - version: v2.2.1
+    name: v2.2.1
+    datetime: '2025-11-23T17:58:52Z'
+    url: https://github.com/meshcore-dev/meshcore-ha/releases/tag/v2.2.1
+    prerelease: false
+    notes: "#### New Features\r\n\r\n  **RX_LOG Correlation**\r\n\r\n  - Automatic RX_LOG parsing and decryption - RX_LOG_DATA events are now automatically parsed and decrypted when\r\n  GroupText payloads are detected\r\n  - Multi-reception correlation - meshcore_message events now include rx_log_data with radio metrics (SNR, RSSI) and path\r\n   information from all mesh receptions\r\n  - Path visualization - See which routes your messages took through the mesh network\r\n\r\n  Example rx_log_data includes:\r\n  - Signal quality (SNR/RSSI)\r\n  - Mesh path (hop nodes)\r\n  - Channel hash\r\n  - Multiple receptions from different routes\r\n\r\n  **Contact Management**\r\n\r\n  - Remove discovered contact service - New service to clean up discovered contacts from Home Assistant without removing from \r\n  node\r\n  - Disable contact discovery toggle - New global setting to disable automatic contact sensor creation for large networks (500+ \r\n  contacts)\r\n\r\n  #### Improvements\r\n\r\n  **Performance & Reliability**\r\n\r\n  - Rate limiting - Token bucket refill rate reduced from 180s to 120s (2 minutes instead of 3)\r\n  - Auto-disable inactive devices - Tracked repeaters/clients automatically disable after 5 days without successful\r\n  requests (120 hours)\r\n  - Increased sensor timeout tolerance - Sensors now wait 3x the update interval before marking unavailable (previously\r\n  1.5x)\r\n  - Event-driven contact updates - Removed contact refresh interval setting in favor of real-time NEW_CONTACT event handling\r\n\r\n  **Bug Fixes**\r\n\r\n  - Fixed service parameter types for change_contact_path and change_contact_flags methods"
+  - version: v2.2.0
+    name: v2.2.0
+    datetime: '2025-10-29T05:04:29Z'
+    url: https://github.com/meshcore-dev/meshcore-ha/releases/tag/v2.2.0
+    prerelease: false
+    notes: "# MeshCore Home Assistant Integration - Version 2.2.0\r\n\r\n  ## 🚀 Major Features\r\n\r\n  ### Token Bucket Rate Limiting\r\n  - **New**: Intelligent rate limiting to protect mesh network from excessive traffic\r\n  - **Configuration**: 20 token burst capacity, 1 token refills every 3 minutes\r\n  - **Impact**: Sustains ~20 requests per hour across all tracked devices\r\n  - **Sensor**: Exposes a sensor to track the rate limiting bucket capacity overtime\r\n  - **Behavior**: Requests are skipped (not queued) when tokens depleted, logged as debug messages\r\n  - **Documentation**: Comprehensive rate limiting guide in remote device tracking docs\r\n\r\n  ### Device Disabling\r\n  - **New**: Temporarily disable repeaters or clients without removing them\r\n  - **Access**: Available in config flow → Manage Monitored Devices → Edit\r\n  - **Use Cases**:\r\n    - Maintenance windows\r\n    - Reducing network traffic\r\n    - Testing network performance\r\n    - Isolating problematic devices\r\n  - **Result**: All status, telemetry, and login requests stopped while entities remain\r\n\r\n  ### Manual Contact Management Mode\r\n  - **New**: Automatic manual contact mode on startup\r\n  - **Discovered Contacts**: New select entity for contacts not yet added to node\r\n  - **Added Contacts**: Separate select entity for contacts already on your node\r\n  - **Persistence**: Discovered contacts saved to `.storage/meshcore.<entry_id>.discovered_contacts`\r\n  - **Services**:\r\n    - `meshcore.add_selected_contact` - Add discovered contacts via UI\r\n    - `meshcore.remove_selected_contact` - Remove contacts via UI\r\n    - `meshcore.cleanup_unavailable_contacts` - Remove all unavailable contact sensors\r\n  - **Immediate Updates**: Contact list refreshes immediately on add/remove operations\r\n\r\n  ## ✨ Enhancements\r\n\r\n  ### Channel Improvements\r\n  - **Channel Select Entity**: Now displays actual channel names instead of \"Channel 0\"\r\n  - **Format**: \"Name (idx)\" e.g., \"#pdx (1)\", \"work (2)\"\r\n  - **Unused Channels**: Display as \"(unused) (idx)\" when not configured\r\n  - **Auto-Update**: Channel info refreshes immediately after `set_channel` commands\r\n  - **Documentation**: Complete guide on hash-based channel encryption and configuration UI\r\n\r\n  ### Channel Message Service\r\n  - **Fix**: Now correctly reads `channel_idx` from channel select entity attributes\r\n  - **Previous Issue**: Tried to parse channel index from display string\r\n  - **Result**: Works with new channel name format\r\n\r\n  ## 🐛 Bug Fixes\r\n\r\n  ### Reduced Login Packets\r\n  - **Fix**: Reduced excessive login attempts to repeaters\r\n  - **Reason**: Login is rarely the failure case in established sessions\r\n  - **Impact**: Reduces unnecessary mesh network traffic\r\n\r\n  ### Special Characters in Contact Names\r\n  - **Fix**: Handles names with parentheses correctly (e.g., \"Queen Anne (Soon)\")\r\n  - **Method**: Regex-based parsing extracts rightmost parentheses content\r\n  - **Centralized**: New `extract_pubkey_from_selection()` utility function\r\n\r\n  ## 🔄 Migration Notes\r\n\r\n  No breaking changes - all new features are additive. Existing configurations will continue to work without modification."
+  - version: v2.1.12
+    name: v2.1.12
+    datetime: '2025-10-22T20:05:36Z'
+    url: https://github.com/meshcore-dev/meshcore-ha/releases/tag/v2.1.12
+    prerelease: false
+    notes: "Add more decimal places to battery sensors\r\nAdd delay on server startup to avoid corrupting connections\r\nFix bug with repeater settings not persisting"
+  - version: v2.1.11
+    name: v2.1.11
+    datetime: '2025-10-19T03:13:31Z'
+    url: https://github.com/meshcore-dev/meshcore-ha/releases/tag/v2.1.11
+    prerelease: false
+    notes: "## What's Changed\r\n* Fix issue with nodes not resetting by @awolden in https://github.com/meshcore-dev/meshcore-ha/pull/89"
+  - version: v2.1.10
+    name: v2.1.10
+    datetime: '2025-10-15T15:12:10Z'
+    url: https://github.com/meshcore-dev/meshcore-ha/releases/tag/v2.1.10
+    prerelease: false
+    notes: "- Adds channel name support. Channel name will now be used in logs and sensors instead of the index\r\n- Fixes a bug with sensors going stale after an hour if the configured interval was longer than an hour\r\n- Updates the default refresh interval to be 2 hours"
+  - version: v2.1.9
+    name: v2.1.9
+    datetime: '2025-10-13T19:08:28Z'
+    url: https://github.com/meshcore-dev/meshcore-ha/releases/tag/v2.1.9
+    prerelease: false
+    notes: "## What's Changed\r\n* Battery Percentage calc by @oliverl-21 in https://github.com/meshcore-dev/meshcore-ha/pull/77\r\n* Make all services translatable + update sk translation. by @jose1711 in https://github.com/meshcore-dev/meshcore-ha/pull/79\r\n* Add sensor support by @awolden in https://github.com/meshcore-dev/meshcore-ha/pull/84\r\n\r\n## New Contributors\r\n* @oliverl-21 made their first contribution in https://github.com/meshcore-dev/meshcore-ha/pull/77\r\n\r\n**Full Changelog**: https://github.com/meshcore-dev/meshcore-ha/compare/v2.1.8...v2.1.9"
+  - version: v2.1.8
+    name: v2.1.8
+    datetime: '2025-10-05T18:15:37Z'
+    url: https://github.com/meshcore-dev/meshcore-ha/releases/tag/v2.1.8
+    prerelease: false
+    notes: "- Improved call spacing to reduce collisions\r\n- Added more translation keys\r\n- Added flag to disable path resetting"
+  - version: v2.1.7
+    name: 2.1.7
+    datetime: '2025-10-03T22:48:02Z'
+    url: https://github.com/meshcore-dev/meshcore-ha/releases/tag/v2.1.7
+    prerelease: false
+    notes: "### Reliability Tracking Sensors\r\n  - **Request Success/Failure Counters**: New sensors track all over-the-wire communication attempts for\r\n  each monitored node\r\n  - **Complete Coverage**: Tracks login, status, and telemetry requests for comprehensive network health\r\n  monitoring\r\n  - **Troubleshooting**: Identify problematic nodes and routing issues with detailed success/failure\r\n  metrics\r\n\r\n  ### Flexible Update Intervals\r\n  - **Removed Maximum Limits**: Update intervals now support unlimited maximums \r\n  - **Unified Minimums**: Both repeaters and clients use consistent 300-second minimum intervals\r\n  - **Better Configuration**: Support for very long intervals (hours or days) for low-power scenarios\r\n\r\n  ### Enhanced Failure Handling\r\n  - **Smarter Backoff**: Dynamic base interval calculation ensures exactly 5 retries fit within configured\r\n   update windows\r\n  - **Faster Path Recovery**: Path reset now triggers after 3 failures (was 5) for quicker routing\r\n  recovery\r\n  - **Improved Login Logic**: Fixed bug where timeouts/unexpected responses were incorrectly counted as\r\n  successes\r\n\r\n  ## 🐛 Bug Fixes\r\n  - **Login Success Detection**: Now properly validates login responses instead of treating non-errors as\r\n  success\r\n- **path reset** - fixed an issue where path was not being set my the pubkey prefix arg"

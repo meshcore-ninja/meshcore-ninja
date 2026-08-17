@@ -1,4 +1,140 @@
 source: github
 repo: sosprz/Meshcore-Wio-Tracker-L1-Pro
-updatedAt: '2026-08-17T14:30:27.224Z'
-releases: []
+updatedAt: '2026-08-17T16:30:04.713Z'
+releases:
+  - version: v1.16.91
+    name: v1.16.91
+    datetime: '2026-07-20T18:42:07Z'
+    url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.16.91
+    prerelease: false
+    notes: "- **GPS home details** - The Home GPS page now shows fix status, satellite count, DMS latitude/longitude, and altitude when GPS data is available.\r\n- **GPS DMS format** - GPS data views now display coordinates in degrees, minutes, and seconds instead of decimal degrees.\r\n- **Wio Tracker L1 EINK input bounce fix** - Bounced GPIO interrupt edges are now coalesced into one UI press, preventing a single physical joystick or button press from triggering multiple actions.\r\n- **Region scope settings** - Added `System -> Radio -> Region scope` so companion-radio devices can view, set, and clear the persisted default flood scope name and 16-byte key without the companion app."
+  - version: v1.16.90
+    name: v1.16.90
+    datetime: '2026-07-07T20:42:20Z'
+    url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.16.90
+    prerelease: false
+    notes: >-
+      - **eInk display flip setting** - `System -> Screen -> Rotation` now toggles supported
+      displays between the build default orientation and a 180-degree flip for upside-down installs.
+  - version: v1.16.89
+    name: v1.16.89
+    datetime: '2026-07-05T11:37:05Z'
+    url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.16.89
+    prerelease: false
+    notes: "- **DM delivery confirmation refresh** - Delivery ACKs now invalidate the cached DM render lines so sent messages update from pending to confirmed immediately on the tracker screen.\r\n- **Message hop display fix** - On-device DM/channel views now decode encoded path length before showing hops.\r\n- **Sound OFF menu option** - Sound volume cycling now includes `OFF` after `HIGH`, so users can mute from the Sound menu as well as with the triple-back shortcut."
+  - version: v1.16.88
+    name: v1.16.88
+    datetime: '2026-06-29T20:16:59Z'
+    url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.16.88
+    prerelease: false
+    notes: "- **LoRaGotchi MVP** - Added `Tools -> LoRaGotchi` mesh pet that derives level, mood, stats, and five badges from existing local packet/contact counters.\r\n- **Sound mute/volume split** - Triple-back now only mutes or unmutes sound, while the Sound UI cycles the selected volume level separately."
+  - version: v1.16.87
+    name: v1.16.87
+    datetime: '2026-06-26T15:59:56Z'
+    url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.16.87
+    prerelease: false
+    notes: "- **Radio path hash setting** - Added `Radio Settings -> Path hash` so companion-radio devices can switch outgoing flood path hashes between `1B`, `2B`, and `3B` directly from the device UI.\r\n- **Wio Tracker L1 EINK viewport fix** - The EINK companion build now reports the actual usable `128x90` logical viewport, so lists scroll when the visible rows are exhausted and text-entry keyboards stay within the visible screen area.\r\n- **Wio Tracker L1 EINK input reliability** - EINK joystick, menu, and enter presses are now interrupt-queued while the display is refreshing, reducing missed inputs caused by slow e-paper update cycles."
+  - version: v1.16.86
+    name: v1.16.86
+    datetime: '2026-06-21T15:48:50Z'
+    url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.16.86
+    prerelease: false
+    notes: '- **EINK keyboard layout fix**'
+  - version: v1.16.85
+    name: v1.16.85
+    datetime: '2026-06-12T19:33:32Z'
+    url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.16.85
+    prerelease: false
+    notes: >-
+      - **Scheduled advert fix** - `Adverts -> Settings -> 0-hop rate` now schedules automatic
+      zero-hop self-adverts at the selected interval.
+  - version: v1.16.84
+    name: v1.16.84
+    datetime: '2026-06-09T13:31:51Z'
+    url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.16.84
+    prerelease: false
+    notes: '- **Off-grid 869 Repeat menu fix**'
+  - version: v1.16.83
+    name: v1.16.83
+    datetime: '2026-06-08T19:28:32Z'
+    url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.16.83
+    prerelease: false
+    notes: >-
+      - updated the default EU off-grid repeat frequency from `869.000 MHz` to `869.495 MHz`,
+      completing alignment with companion firmware v1.16.0.
+  - version: v1.16.82
+    name: v1.16.82
+    datetime: '2026-06-07T19:29:58Z'
+    url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.16.82
+    prerelease: false
+    notes: '**Aligned with latest companion v1.16.0 firmware**'
+  - version: v1.15.81
+    name: v1.15.81
+    datetime: '2026-06-03T13:06:32Z'
+    url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.15.81
+    prerelease: false
+    notes: "- **Time settings GPS sync now** - Added `Settings -> Time -> Sync now from GPS` to request a one-off GPS time sync on demand, with progress stages.\r\n- **GPS boot time sync** - Added `Settings -> GPS -> Boot time sync`; when enabled, startup temporarily turns GPS on, waits for GPS time to sync the RTC, shows `GPS time synced`, and silently turns GPS back off if it was only enabled for the boot sync attempt."
+  - version: v1.15.80
+    name: v1.15.80
+    datetime: '2026-05-25T13:49:01Z'
+    url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.15.80
+    prerelease: false
+    notes: >-
+      - **Full sound mute on startup/reset** - Saved `Sound: OFF` is now applied before the startup
+      tone is requested, so rebooting or resetting does not produce audio while muted.
+  - version: v1.15.79
+    name: v1.15.79
+    datetime: '2026-05-22T14:33:07Z'
+    url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.15.79
+    prerelease: false
+    notes: >-
+      - **Greek text support** - Added `GR` as a message input language with Greek T9 and on-screen
+      keyboard layouts, tonos variants for vowels.
+  - version: v1.15.78
+    name: v1.15.78
+    datetime: '2026-05-22T06:19:30Z'
+    url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.15.78
+    prerelease: false
+    notes: "- **Off-grid repeat frequency fix** - Client/off-grid repeat now matches upstream MeshCore presets and allows only `433.000`, `869.000`, and `918.000 MHz` instead of incorrectly blocking those bands.\r\n- **Repeat preset assist** - Enabling repeat from the Radio menu now opens an off-grid preset chooser, and disabling repeat restores the previous radio settings when available."
+  - version: v1.15.77
+    name: v1.15.77
+    datetime: '2026-05-22T04:53:46Z'
+    url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.15.77
+    prerelease: false
+    notes: >-
+      - **Repeater admin blank-password login** - Repeater admin login now opens a choice between
+      `Blank password` and `Enter password`; the blank option sends an empty admin login directly
+      for ACL-only re-login to repeaters that already know the companion device.
+  - version: v1.15.76
+    name: v1.15.76
+    datetime: '2026-05-21T19:03:54Z'
+    url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.15.76
+    prerelease: false
+    notes: >-
+      - **Repeater blank-password login** - Repeater guest login now opens a choice between `Blank
+      password` and `Enter password`; the blank option sends an empty login directly for ACL-only
+      re-login to repeaters that already know the companion device.
+  - version: v1.15.75
+    name: v1.15.75
+    datetime: '2026-05-17T18:35:35Z'
+    url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.15.75
+    prerelease: false
+    notes: "- **Mainstream sync (v1.15 backend)** - Integrated upstream companion protocol/backend changes for v1.15 without adding new on-device UI screens.\r\n- **Default flood scope compatibility** - Added persisted default flood scope name/key handling and companion protocol commands for get/set default scope, while keeping scope editing out of the local UI.\r\n- **GROUP_DATA binary packets** - Added backend send/receive support for channel binary datagrams (`CMD_SEND_CHANNEL_DATA` / `RESP_CODE_CHANNEL_DATA_RECV`) so companion apps can use the new group-data protocol.\r\n- **Protocol/version update** - Bumped companion protocol metadata to firmware protocol code `11` / `v1.15.0` and aligned radio frequency validation with upstream lower-frequency support."
+  - version: v1.14.1.73
+    name: v1.14.1.73
+    datetime: '2026-03-27T18:43:07Z'
+    url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.14.1.73
+    prerelease: false
+    notes: "- **Tracker -> phone message replay fix** - Messages sent from the Wio Tracker / companion device are now queued for companion-app sync as well, so outgoing DMs and channels show up in the mobile app and can also be replayed after reconnect.\r\n- **Muted channels survive reboot** - Channel mute/unmute state is now persisted and restored after restart, so accidental Wio Tracker L1 side-button reboots do not clear muted channels.\r\n- **Private/group message mix fix** - Fixed channel history/state corruption where removing or reordering channels could let a different hashtag/private group inherit old slot history, unread state, or mute state from another channel.\r\n- **Channel send text corruption fix** - Fixed channel send/local-echo handling for app-framed messages so private/group messages no longer pick up random garbage characters from non-null-terminated payload bytes."
+  - version: v1.14.0.72
+    name: v1.14.0.72
+    datetime: '2026-03-19T17:34:15Z'
+    url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.14.0.72
+    prerelease: false
+    notes: "- **Wio Tracker L1: OLED invert theme** - Added `System -> Display -> Theme` options `Black/White` and `White/Black` for SH1106 companion-radio builds, so users can switch between normal and inverted monochrome display rendering.\r\n-  **On-screen keyboard: QWERTY layout** - Changed the soft keyboard letter order from alphabetical `ABC` layout to `QWERTY` sequence for companion-radio text entry."
+  - version: v1.14.0.69
+    name: v1.14.0.69
+    datetime: '2026-03-06T17:15:21Z'
+    url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.14.0.69
+    prerelease: false
+    notes: "- **Mainstream sync (v1.14.0)** - Merged upstream \r\n- **Screen lock hardening (3x PREV bug fix)** - Triple-click `PREV` no longer cycles `Sound` levels while `Screen lock` is active."

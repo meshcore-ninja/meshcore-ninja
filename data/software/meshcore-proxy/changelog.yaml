@@ -1,4 +1,28 @@
 source: github
 repo: rgregg/meshcore-proxy
-updatedAt: '2026-08-17T14:31:45.000Z'
-releases: []
+updatedAt: '2026-08-17T16:30:21.389Z'
+releases:
+  - version: v0.4.0
+    name: 0.4 - First Friday
+    datetime: '2026-01-17T04:47:13Z'
+    url: https://github.com/rgregg/meshcore-proxy/releases/tag/v0.4.0
+    prerelease: false
+    notes: Mainstream release for easier installation
+  - version: v0.3.3-alpha
+    name: 0.3.3-alpha - First Friday
+    datetime: '2026-01-17T04:28:46Z'
+    url: https://github.com/rgregg/meshcore-proxy/releases/tag/v0.3.3-alpha
+    prerelease: false
+    notes: "## What's Changed\r\n* Add signal handling for graceful Docker shutdown by @Copilot in https://github.com/rgregg/meshcore-proxy/pull/2\r\n* Fix BLEConnection AttributeError on disconnect handler setup by @Copilot in https://github.com/rgregg/meshcore-proxy/pull/4\r\n* Fix PyPI release pipeline with dynamic versioning from git tags by @Copilot in https://github.com/rgregg/meshcore-proxy/pull/6\r\n* Versioning is hard by @rgregg in https://github.com/rgregg/meshcore-proxy/pull/7\r\n\r\n## New Contributors\r\n* @Copilot made their first contribution in https://github.com/rgregg/meshcore-proxy/pull/2\r\n* @rgregg made their first contribution in https://github.com/rgregg/meshcore-proxy/pull/7\r\n\r\n**Full Changelog**: https://github.com/rgregg/meshcore-proxy/compare/v0.2.0-alpha...v0.3.3-alpha"
+  - version: v0.2.0-alpha
+    name: 0.2.0 - Midnight release
+    datetime: '2026-01-16T07:51:46Z'
+    url: https://github.com/rgregg/meshcore-proxy/releases/tag/v0.2.0-alpha
+    prerelease: false
+    notes: "Second release today - this one fixes a crash in the BLE stack on MacOS when exiting the app. Still lots of testing to perform, but the releases make it easier to test via docker and pipx.\r\n\r\n**Full Changelog**: https://github.com/rgregg/meshcore-proxy/compare/v0.1.0-alpha...v0.2.0-alpha"
+  - version: v0.1.0-alpha
+    name: v0.1.0-alpha - First Release
+    datetime: '2026-01-16T07:22:44Z'
+    url: https://github.com/rgregg/meshcore-proxy/releases/tag/v0.1.0-alpha
+    prerelease: false
+    notes: "This is the initial release - tested with USB Serial and BLE on MacOS. Need to do more testing on other platforms.\r\n\r\n**Full Changelog**: https://github.com/rgregg/meshcore-proxy/commits/2026-01-15"

@@ -1,4 +1,22 @@
 source: github
 repo: atomozero/CubeCellMeshCore
-updatedAt: '2026-08-17T14:29:47.430Z'
-releases: []
+updatedAt: '2026-08-17T16:29:52.800Z'
+releases:
+  - version: v0.5.0
+    name: v0.5.0 San Valentino Release
+    datetime: '2026-02-14T16:53:46Z'
+    url: https://github.com/atomozero/CubeCellMeshCore/releases/tag/v0.5.0
+    prerelease: false
+    notes: "Quiet Hours + Circuit Breaker + Adaptive TX Power\r\n\r\n  Three new features leveraging the existing SNR/RSSI infrastructure to improve reliability, power savings, and mesh network resilience.\r\n\r\n- Quiet Hours — Configurable night-time rate limiting (e.g. 22:00-06:00) reduces forwarding from 100 to 30 packets/min. Saves battery during low-traffic periods. Requires TimeSync.\r\n\r\n- Circuit Breaker — Automatically blocks DIRECT forwarding to neighbours with degraded links (SNR < -10dB). Transitions to half-open after 5 minutes for a test packet. Good SNR closes the breaker. FLOOD traffic is never blocked.\r\n\r\n- Adaptive TX Power — Dynamically adjusts transmit power (5-14 dBm EU) based on average neighbour SNR. Reduces power when signal is strong, increases when weak."
+  - version: v0.4.0
+    name: v0.4.0 - Battery Fix, Remote CLI & Flash Optimization
+    datetime: '2026-02-09T22:23:34Z'
+    url: https://github.com/atomozero/CubeCellMeshCore/releases/tag/v0.4.0
+    prerelease: false
+    notes: "## What's New in v0.4.0\r\n\r\n   ### Bug Fixes\r\n   - **Battery ADC fixed** - Resolved 0V battery reading caused by\r\n   CubeCell framework 1.6.0 bug (ch3 SAR calibration not initialized).\r\n   New workaround uses `analogRead()` + ch0 calibration + `VBAT_ADC_CTL`\r\n    circuit control\r\n   - **Airtime tracking** - RX/TX airtime now properly calculated\r\n   per-packet using LoRa formula\r\n   - **Noise floor estimation** - EMA-smoothed noise floor from\r\n   RSSI-SNR, no longer stuck at 0dB\r\n   - **Remote CLI commands** - Fixed \"Err:Unknown\" for commands only\r\n   available on local serial\r\n\r\n   ### New Features\r\n   - **`radiostats` command** - Noise floor, last RSSI/SNR, airtime\r\n   TX/RX (serial + remote)\r\n   - **`packetstats` command** - Packet breakdown: flood/direct RX/TX\r\n   (serial + remote)\r\n   - **`lifetime` command** - Now available via remote CLI (was\r\n   serial-only)\r\n   - **`tempradio` command** - Temporary radio parameter changes without\r\n    saving to EEPROM\r\n\r\n   ### Optimizations\r\n   - **Flash savings: 2,904 bytes** - String abbreviation in LOG/LOG_RAW\r\n    macros (98.3% → 96.0%)\r\n   - Startup banner simplified (removed unicode box-drawing characters)\r\n\r\n   ### Documentation\r\n   - Complete command reference tables in README\r\n   - Corrected radio parameters (frequency, TX power, sync word)\r\n\r\n   ### Build Info\r\n   - Flash: 96.5% (126,492 / 131,072 bytes)\r\n   - RAM: 51.3% (8,408 / 16,384 bytes)\r\n   - Board: Heltec CubeCell HTCC-AB01\r\n   - Region: EU868"
+  - version: v0.3.3
+    name: CubeCellMeshCore v0.3.3
+    datetime: '2026-01-23T21:37:34Z'
+    url: https://github.com/atomozero/CubeCellMeshCore/releases/tag/v0.3.3
+    prerelease: false
+    notes: "## Features\r\n\r\n  - **MeshCore Protocol Compatible** - Works with MeshCore Android/iOS apps\r\n  - **Ed25519 Authentication** - Secure login with encrypted sessions\r\n  - **Rate Limiting** - Protection against brute-force and flood attacks\r\n  - **Persistent Statistics** - Lifetime stats survive reboots (EEPROM)\r\n  - **Neighbour Tracking** - Direct repeater discovery via 0-hop ADVERTs\r\n  - **Remote CLI** - Encrypted command access via mesh network\r\n  - **Deep Sleep** - Low power mode support\r\n\r\n  ## What's New in v0.3.3\r\n\r\n  - Added persistent statistics stored in EEPROM\r\n  - Tracks lifetime: RX/TX/FWD packets, unique nodes, logins, uptime\r\n  - Auto-save every 5 minutes with CRC16 integrity\r\n  - New commands: `lifetime`, `savestats`\r\n  - Boot counter for reliability monitoring\r\n\r\n  ## Installation\r\n\r\n  Download `CubeCellMeshCore-v0.3.3.zip` and flash using CubeCellTool or PlatformIO.\r\n\r\n  See `INSTALL.md` for detailed instructions.\r\n\r\n  ## Hardware\r\n\r\n  - Heltec CubeCell HTCC-AB01\r\n  - Flash: 95.8% used\r\n  - RAM: 51.1% used"

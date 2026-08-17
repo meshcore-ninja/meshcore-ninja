@@ -1,4 +1,220 @@
 source: github
 repo: hermes-gadget/SigurdOS-client
-updatedAt: '2026-08-17T14:32:44.738Z'
-releases: []
+updatedAt: '2026-08-17T16:30:29.859Z'
+releases:
+  - version: beta-0.07.0
+    name: SlopOS Client beta-0.07.0
+    datetime: '2026-05-26T16:25:19Z'
+    url: https://github.com/hermes-gadget/SigurdOS-client/releases/tag/beta-0.07.0
+    prerelease: true
+    notes: >-
+      **SlopOS Client beta-0.07.0** — upstream sync + map cache button
+
+
+      ### New
+
+      - 📥 **One-tap map tile cache** — download icon button on the Map screen caches visible area
+      at current zoom ±1 (PR #1)
+
+      - 🌐 **Upstream sync** — merged 14 upstream commits from `zjs81/meshcore-open` including:
+        - Translation features: automatic/manual message translation with flutter_langdetect
+        - Translated notifications and chat bubbles
+        - Room server fixes (first message letters trim)
+
+      ### Changed
+
+      - All localization files updated with translation-related strings
+
+      - Reorder in channels migrated to `onReorderItem` API
+
+
+      ### Infrastructure
+
+      - CODEOWNERS added, AGENTS.md/CLAUDE.md locked
+
+      - Cloudflare Workers deployment removed (unused)
+
+      - Reboot via frame instead of CLI command
+
+
+      ### Notes
+
+      - Upstream sync resolved 4 merge conflicts; all SlopOS features preserved
+
+      - Requires `flutter pub get` to fetch new dependencies (flutter_langdetect)
+  - version: beta-0.06.0
+    name: beta-0.06.0 — pixel geometry map markers
+    datetime: '2026-05-22T10:54:52Z'
+    url: https://github.com/hermes-gadget/SigurdOS-client/releases/tag/beta-0.06.0
+    prerelease: true
+    notes: >-
+      ## Changes since beta-0.05.0
+
+
+      - **Pixel geometry map markers** — node types encoded by shape when pixel fonts on, circles
+      when off
+
+      - New vibrant colour palette
+
+      - **Pixel fonts now OFF by default**
+
+      - **Release signing fix** — permanent keystore for consistent updates
+
+
+      ### APK
+
+      Attached below (built via CI)
+  - version: beta-0.05.0
+    name: beta-0.05.0 — transitions, app bar, font toggle
+    datetime: '2026-05-21T23:12:00Z'
+    url: https://github.com/hermes-gadget/SigurdOS-client/releases/tag/beta-0.05.0
+    prerelease: true
+    notes: >-
+      ## Changes
+
+
+      ### UI Improvements
+
+      - **Faster transitions**: removed fade, now 150ms slide-over between screens (was 220ms
+      fade+slide)
+
+      - **Cleaner app bar**: always shows SlopOS (top) + node name (bottom), removed SNR and radio
+      stats clutter
+
+      - **Font switcher**: toggle between pixel fonts and Inter (modern, SIL Open Font) in Settings
+      → Appearance
+
+      - **Battery only**: app bar shows battery percentage + blinking indicator + 3-dot menu only
+
+
+      ### Technical
+
+      - Added google_fonts dependency for Inter font family
+
+      - 31 files changed, +270 / -69 lines
+
+      - Version: 0.3.0+1
+
+
+      ### APK
+
+      Attached below (built via CI)
+  - version: beta-0.04.0
+    name: beta-0.04.0 — message info, forward, canned responses, pinned contacts
+    datetime: '2026-05-21T22:20:09Z'
+    url: https://github.com/hermes-gadget/SigurdOS-client/releases/tag/beta-0.04.0
+    prerelease: true
+    notes: >-
+      ## Changes
+
+
+      ### New Features
+
+      - **Message Info**: long-press any message to see delivery metadata (status, trip time, hop
+      count, retries, message ID)
+
+      - **Forward**: send a message to another contact or channel from the long-press menu
+
+      - **Canned Responses**: quick-preset bar above the composer with common field phrases (OK,
+      ETA?, etc.)
+
+      - **Pinned Contacts**: pin frequent contacts to the top of your contacts list, persisted
+      across sessions
+
+      - **Solid Nav Bar**: removed the liquid-glass blur effect from the bottom navigation bar for a
+      cleaner look
+
+
+      ### Technical
+
+      - 30 files changed, +2335 / -117 lines
+
+      - 0 new lint issues
+
+      - Version: 0.2.0+1
+
+
+      ### APK
+
+      Attached below (built via CI)
+  - version: beta-0.03.0
+    name: SlopOS Client beta-0.03.0
+    datetime: '2026-05-19T08:08:51Z'
+    url: https://github.com/hermes-gadget/SigurdOS-client/releases/tag/beta-0.03.0
+    prerelease: true
+    notes: 'Codex cross-audit fixes: protocol bugs, error handling, frame parsing'
+  - version: beta-0.02.0
+    name: SlopOS Client beta-0.02.0
+    datetime: '2026-05-19T00:42:30Z'
+    url: https://github.com/hermes-gadget/SigurdOS-client/releases/tag/beta-0.02.0
+    prerelease: true
+    notes: >-
+      ## SlopOS Client — Beta 0.02.0
+
+
+      Initial SlopOS-branded APK release, forked from
+      [meshcore-open](https://github.com/zjs81/meshcore-open) by [zjs81](https://github.com/zjs81).
+
+
+      ### What's included
+
+      - **Dark Discord-inspired pixel theme** — deep black (#0F0F0F) surfaces, cyan (#00BFFF)
+      accents, PressStart2P/PixelifySans fonts
+
+      - **SlopOS logo and icon set** — launcher icons for all densities
+
+      - **Full MeshCore feature set**: BLE/USB/TCP companion, messaging, channels, map, repeater hub
+
+      - **GPL-3.0-or-later** license
+
+
+      ### Install
+
+      - Download the APK below
+
+      - Or add `https://github.com/hermes-gadget/SlopOS-client` to
+      [Obtainium](https://obtainium.imranr.dev/)
+
+
+      ### Upstream
+
+      All credit for the core Flutter client, BLE protocol integration, and cross-platform
+      architecture goes to [meshcore-open](https://github.com/zjs81/meshcore-open).
+  - version: beta-0.01.0
+    name: beta-0.01.0 — Initial SlopOS Client
+    datetime: '2026-05-18T22:02:23Z'
+    url: https://github.com/hermes-gadget/SigurdOS-client/releases/tag/beta-0.01.0
+    prerelease: true
+    notes: >-
+      ## SlopOS Client — First Beta
+
+
+      Fork of [zjs81/meshcore-open](https://github.com/zjs81/meshcore-open), adapted with the SlopOS
+      dark theme and branding.
+
+
+      ### Changes
+
+      - **Theme**: SlopOS Discord-inspired dark palette (#0F0F0F bg, #00BFFF cyan accent)
+
+      - **License**: MIT → GPL-3.0-or-later (upstream notice preserved)
+
+      - **Branding**: Full rebrand — slopos_client, org.slopos.client
+
+      - **All platforms** updated: Android/iOS/macOS/Linux/Windows/Web
+
+      - **Codex audited**: 2 rounds, all build-critical issues resolved
+
+
+      ### APK
+
+      - **app-release.apk** (113 MB) — attached below
+
+      - Built via GitHub Actions on 
+
+      - All 5 platform builds passing (android, ios, linux, macos, web)
+
+
+      ### Repo
+
+      https://github.com/hermes-gadget/SlopOS-client

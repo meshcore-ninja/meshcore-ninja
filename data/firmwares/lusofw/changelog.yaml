@@ -1,4 +1,466 @@
 source: github
 repo: Meshcore-Portugal/lusofw
-updatedAt: '2026-08-17T14:29:55.328Z'
-releases: []
+updatedAt: '2026-08-17T16:29:56.200Z'
+releases:
+  - version: v2026.7.2-rc3-bdd8e64
+    name: v2026.7.2-rc3-bdd8e64
+    datetime: '2026-08-06T13:05:47Z'
+    url: https://github.com/Meshcore-Portugal/lusofw/releases/tag/v2026.7.2-rc3-bdd8e64
+    prerelease: true
+    notes: >-
+      Automated dev prerelease of dev@bdd8e64 for v2026.7.2-rc3.
+
+
+
+      Based on MeshCore v1.16.0
+
+      main@e8d3c53ba1ea863937081cd0caad759b832f3028
+
+
+      ### Correções
+
+
+      - CLIENTE: A página inicial do GPS agora fica oculta no carrossel quando nenhum GPS é
+      detectado na porta série no arranque, em vez de aparecer sempre quando `ENV_INCLUDE_GPS` está
+      ativado.
+
+      - REPETIDOR: Corrigido envio de anúncios por inundação (flood adverts): agora respeita o
+      `default_scope` e o modo de hash de caminho (`path_hash_mode` nas preferências).
+
+      - REPETIDOR: Removida a redução probabilística de flood adverts.
+
+      - REPETIDOR: Corrigido um *buffer overflow* no acumulador de comandos série.
+
+
+      #### Melhorias
+
+
+      - CLI: Adicionada a leitura do motivo de arranque do ESP32 (`get pwrmgt.bootreason`).
+
+      - CLI: Reforçada a cópia segura de strings no tratamento de comandos.
+
+      - RÁDIO: Ajustado o atraso de retentativa CAD para intervalo entre 120 a 360 ms.
+
+
+      ####
+      Observabilidade                                                                                                                                                                                                                                                                                                                                                                    
+
+
+      - DISPATCHER: Adicionados logs de debug para conclusão de TX.
+
+      - ESTATÍSTICAS: Removidos parâmetros não usados na formatação de respostas.
+
+
+      #### Build e Configuração
+
+
+      - BUILD: Adicionada a variável `DISABLE_DEBUG` ao processo de build.
+
+      - BUILD: Reorganizadas as build flags no platformio.ini.
+
+      - BUILD: Adicionado o ambiente de build da ponte RS232 (`heltec_v4_repeater_bridge_rs232`)
+      para o Heltec v4.
+  - version: v2026.7.2-rc2-e56877e
+    name: v2026.7.2-rc2-e56877e
+    datetime: '2026-07-16T20:10:13Z'
+    url: https://github.com/Meshcore-Portugal/lusofw/releases/tag/v2026.7.2-rc2-e56877e
+    prerelease: true
+    notes: >-
+      Automated dev prerelease of dev@e56877e for v2026.7.2-rc2.
+
+
+
+      Based on MeshCore v1.16.0
+
+      main@e8d3c53ba1ea863937081cd0caad759b832f3028
+
+
+      ### Correções
+
+
+      - CLIENTE: A página inicial do GPS agora fica oculta no carrossel quando nenhum GPS é
+      detectado na porta série no arranque, em vez de aparecer sempre quando `ENV_INCLUDE_GPS` está
+      ativado.
+
+      - REPETIDOR: Corrigido envio de anúncios por inundação (flood adverts): agora respeita o
+      `default_scope` e o modo de hash de caminho (`path_hash_mode` nas preferências).
+
+      - REPETIDOR: Removida a redução probabilística de flood adverts.
+
+      - REPETIDOR: Corrigido um *buffer overflow* no acumulador de comandos série.
+
+
+      #### Melhorias
+
+
+      - CLI: Adicionada a leitura do motivo de arranque do ESP32 (`get pwrmgt.bootreason`).
+
+      - CLI: Reforçada a cópia segura de strings no tratamento de comandos.
+
+      - RÁDIO: Ajustado o atraso de retentativa CAD para intervalo entre 120 a 360 ms.
+
+
+      ####
+      Observabilidade                                                                                                                                                                                                                                                                                                                                                                    
+
+
+      - DISPATCHER: Adicionados logs de debug para conclusão de TX.
+
+      - ESTATÍSTICAS: Removidos parâmetros não usados na formatação de respostas.
+
+
+      #### Build e Configuração
+
+
+      - BUILD: Adicionada a variável `DISABLE_DEBUG` ao processo de build.
+
+      - BUILD: Reorganizadas as build flags no platformio.ini.
+  - version: v2026.7.2-rc1-f22a2ba
+    name: v2026.7.2-rc1-f22a2ba
+    datetime: '2026-07-14T15:57:34Z'
+    url: https://github.com/Meshcore-Portugal/lusofw/releases/tag/v2026.7.2-rc1-f22a2ba
+    prerelease: true
+    notes: >-
+      Automated dev prerelease of dev@f22a2ba for v2026.7.2-rc1.
+
+
+
+      Based on MeshCore v1.16.0
+
+      main@e8d3c53ba1ea863937081cd0caad759b832f3028
+
+
+      ### Correções
+
+
+      - CLIENTE: A página inicial do GPS agora fica oculta no carrossel quando nenhum GPS é
+      detectado na porta série no arranque, em vez de aparecer sempre quando `ENV_INCLUDE_GPS` está
+      ativado.
+
+      - REPETIDOR: Corrigido envio de anúncios por inundação (flood adverts): agora respeita o
+      `default_scope` e o modo de hash de caminho (`path_hash_mode` nas preferências).
+
+      - REPETIDOR: Melhorada a rotina de sleep com rearmar de wake sources. (upstream v1.16.0 bug)
+
+      - REPETIDOR: Removida a redução probabilística de flood adverts.
+
+
+      #### Melhorias
+
+
+      - CLI: Adicionada a leitura do motivo de arranque do ESP32 (`get pwrmgt.bootreason`).
+
+      - CLI: Reforçada a cópia segura de strings no tratamento de comandos.
+
+      - RÁDIO: Ajustado o atraso de retentativa CAD para intervalo entre 120 a 360 ms.
+
+
+      ####
+      Observabilidade                                                                                                                                                                                                                                                                                                                                                                    
+
+
+      - DISPATCHER: Adicionados logs de debug para conclusão de TX.
+
+      - ESTATÍSTICAS: Removidos parâmetros não usados na formatação de respostas.
+
+
+      #### Build e Configuração
+
+
+      - BUILD: Adicionada a variável `DISABLE_DEBUG` ao processo de build.
+
+      - BUILD: Reorganizadas as build flags no platformio.ini.
+  - version: v2026.7.1
+    name: v2026.7.1
+    datetime: '2026-07-01T20:22:41Z'
+    url: https://github.com/Meshcore-Portugal/lusofw/releases/tag/v2026.7.1
+    prerelease: false
+    notes: "Based on MeshCore v1.16.0\r\nmain@e8d3c53ba1ea863937081cd0caad759b832f3028\r\n\r\n### Features\r\n\r\n- Added SHTC3 temperature/humidity sensor support (fixed I²C address 0x70) to the environment-sensor manager.\r\n- Added smart adverts: deterministic, collision-resistant flood-advert scheduling over a rolling 23h window, with each node's slot derived from its name and public key plus per-cycle jitter. (@DiogoLinoPT)\r\n- Disabled the per-hop probabilistic forwarding filter (`P(h)=0.308^(hops-1)`) that randomly dropped flood adverts as they propagated.\r\n- Implemented hardware Channel Activity Detection (CAD) listen-before-talk before each transmit, enabled by default (Cherry-picked upstream PR #1727).\r\n- Loop detection is now enabled by default at `LOOP_DETECT_MINIMAL` sensitivity (previously off).\r\n- Outbound packets are now expired and dropped once they exceed the maximum queue age (`MAX_PACKET_QUEUE_AGE_MS`).\r\n- Reverted the default airtime (duty-cycle) factor to 1.0, i.e. a 50% duty cycle, rolling back the prior setting that caused internationalization-related issues.\r\n- The repeater home screen now surfaces battery charge as an intuitive percentage, so remaining power can be read at a glance.\r\n- The repeater path-hash mode now defaults to 2 bytes (`path_hash_mode=1`), up from 1 byte.\r\n\r\n### Client\r\n\r\n- Implemented hardware Channel Activity Detection (CAD) listen-before-talk before each transmit, enabled by default (Cherry-picked upstream PR #1727).\r\n- Rendered the T114 boot logo as a true-color RGB image at its native panel resolution (192×54).\r\n- Shrunk the T114 battery indicator icon to 16×8 logical pixels.\r\n- Switched the T114 ST7789 font to DejaVu Sans UI.\r\n- The client path-hash mode now defaults to 2 bytes (`path_hash_mode=1`), up from 1 byte.\r\n\r\n### Security\r\n\r\n- Fixed network time replay vulnerability; reject time-source timestamps not newer than the last accepted one.\r\n- Enforce initial sync (forward-only) vs maintenance sync (±60s), replacing the symmetric ±30s logic that allowed backward clock moves.\r\n\r\n### Improvements\r\n\r\n- Updated MeshCore website links and logo placement across the UI and splash screens.\r\n\r\n### KTLO\r\n\r\n- Added `--upload ` argument to `build.sh` to compile and upload firmware in a single command.\r\n- Increased the GitHub Actions parallel job limit and updated the PlatformIO dependencies.\r\n- Removed the `ENABLE_CONSENSUS_TIME_SYNC` feature from the codebase."
+  - version: v2026.6.1-rc4-b5683eb
+    name: v2026.6.1-rc4-b5683eb
+    datetime: '2026-06-28T22:28:44Z'
+    url: https://github.com/Meshcore-Portugal/lusofw/releases/tag/v2026.6.1-rc4-b5683eb
+    prerelease: true
+    notes: >-
+      Automated dev prerelease of dev@b5683eb for v2026.6.1-rc4.
+
+
+
+      Based on MeshCore v1.16.0
+
+      main@e8d3c53ba1ea863937081cd0caad759b832f3028
+
+
+      ### Features
+
+
+      - Added SHTC3 temperature/humidity sensor support (fixed I²C address 0x70) to the
+      environment-sensor manager, exposed via the `ENV_INCLUDE_SHTC3` build flag and wired into the
+      RAK4631 and RAK3112 variant configs with the matching Adafruit library dependency.
+
+      - Outbound packets are now expired and dropped once they exceed the maximum queue age
+      (`MAX_PACKET_QUEUE_AGE_MS`), freeing pool slots before head-of-line blocking and clearing
+      dedup state so a later copy gets another chance instead of delivering stale or duplicate
+      traffic.
+
+      - Loop detection is now enabled by default at `LOOP_DETECT_MINIMAL` sensitivity (previously
+      off). It drops packets whose flood path repeats a node hash, suppressing retransmission storms
+      while keeping the check cheap enough for the lowest sensitivity tier.
+
+      - Reverted the default airtime (duty-cycle) factor to 1.0, i.e. a 50% duty cycle, rolling back
+      the prior setting that caused internationalization-related issues. The factor maps to a duty
+      cycle of `100/(factor+1)%` over the rolling one-hour window.
+
+      - The repeater path-hash mode now defaults to 2 bytes (`path_hash_mode=1`), up from 1 byte.
+
+      - Disabled the per-hop probabilistic forwarding filter (`P(h)=0.308^(hops-1)`) that randomly
+      dropped flood adverts as they propagated.
+
+      - The repeater home screen now surfaces battery charge as an intuitive percentage, so
+      remaining power can be read at a glance.
+
+      - Implemented hardware Channel Activity Detection (CAD) listen-before-talk before each
+      transmit, enabled by default. The radio samples the channel and defers TX while busy, with
+      bounded retry and a CAD-timeout error flag if activity persists past the maximum duration.
+      (Cherry-picked upstream PR #1727).
+
+      - Added smart adverts: deterministic, collision-resistant flood-advert scheduling over a
+      rolling 23h window, with each node's slot derived from its name and public key plus per-cycle
+      jitter.
+
+
+      ### Client
+
+
+      - Rendered the T114 boot logo as a true-color RGB image at its native panel resolution
+      (192×54).
+
+      - Switched the T114 ST7789 font to DejaVu Sans UI.
+
+      - Shrunk the T114 battery indicator icon to 16×8 logical pixels.
+
+      - The path hash mode defaults to 2 bytes.
+
+
+      ### Security
+
+
+      - Fixed network time replay vulnerability; reject time-source timestamps not newer than the
+      last accepted one.
+
+      - Enforce initial sync (forward-only) vs maintenance sync (±60s), replacing the symmetric ±30s
+      logic that allowed backward clock moves.
+
+
+      ### Improvements
+
+
+      - Updated MeshCore website links and logo placement across the UI and splash screens.
+
+
+      ### KTLO
+
+
+      - Added a `build_upload.sh` wrapper to compile and upload firmware in a single command.
+
+      - Increased the GitHub Actions parallel job limit and updated the PlatformIO dependencies.
+
+      - Removed the `ENABLE_CONSENSUS_TIME_SYNC` feature from the codebase.
+  - version: v2026.6.1-rc3-851d8ce
+    name: v2026.6.1-rc3-851d8ce
+    datetime: '2026-06-27T23:31:38Z'
+    url: https://github.com/Meshcore-Portugal/lusofw/releases/tag/v2026.6.1-rc3-851d8ce
+    prerelease: true
+    notes: >-
+      Automated dev prerelease of dev@851d8ce for v2026.6.1-rc3.
+
+
+
+      Based on MeshCore v1.16.0
+
+      main@e8d3c53ba1ea863937081cd0caad759b832f3028
+
+
+      ### Features
+
+
+      - Added SHTC3 sensor support and updated the PlatformIO build flags.
+
+      - Dropped stale packets from the TX queue to prevent late or duplicate delivery.
+
+      - Enabled loop detection at the minimum sensitivity setting.
+
+      - Reverted the airtime factor to 50% to address issues related to internationalization.
+
+      - Set the repeater advert path hash size to 2 bytes.
+
+      - Disabled probabilistic reduction for adverts.
+
+      - Added battery percentage to the repeater home screen.
+
+
+      ### Client
+
+
+      - Rendered the T114 boot logo as a true-color RGB image at its native panel resolution
+      (192×54).
+
+      - Switched the T114 ST7789 font to DejaVu Sans UI.
+
+      - Shrunk the T114 battery indicator icon to 16×8 logical pixels.
+
+      - The path hash mode defaults to 2 bytes.
+
+
+      ### Security
+
+
+      - Fixed network time replay vulnerability; reject time-source timestamps not newer than the
+      last accepted one.
+
+      - Enforce initial sync (forward-only) vs maintenance sync (±60s), replacing the symmetric ±30s
+      logic that allowed backward clock moves.
+
+
+      ### Improvements
+
+
+      - Updated MeshCore website links and logo placement across the UI and splash screens.
+
+
+      ### KTLO
+
+
+      - Added a `build_upload.sh` wrapper to compile and upload firmware in a single command.
+
+      - Increased the GitHub Actions parallel job limit and updated the PlatformIO dependencies.
+
+      - Removed the `ENABLE_CONSENSUS_TIME_SYNC` feature from the codebase.
+  - version: v2026.6.1-rc2-7342246
+    name: v2026.6.1-rc2-7342246
+    datetime: '2026-06-27T18:32:39Z'
+    url: https://github.com/Meshcore-Portugal/lusofw/releases/tag/v2026.6.1-rc2-7342246
+    prerelease: true
+    notes: >-
+      Automated dev prerelease of dev@7342246 for v2026.6.1-rc2.
+
+
+
+      Based on MeshCore v1.16.0
+
+      main@e8d3c53ba1ea863937081cd0caad759b832f3028
+
+
+      ### Features
+
+
+      - Added SHTC3 sensor support and updated the PlatformIO build flags.
+
+      - Drop stale packets from TX queue to prevent late/duplicate delivery
+
+      - Enabled loop detection sensitivity with the minimum setting.
+
+      - Reverted the airtime factor to 50% to address internationalization-related issues.
+
+      - Set the repeater advert path hash size to 2 bytes.
+
+
+      ### Client
+
+
+      - Added a double-tap gesture on the companion radio to mark all unread messages as read
+      (dismiss-only).
+
+      - Rendered the T114 boot logo as a true-color RGB image at the native panel resolution
+      (192×54).
+
+      - Switched the T114 ST7789 font to DejaVu Sans UI.
+
+      - Shrunk the battery indicator icon on the T114 to 16×8 logical pixels.
+
+
+      ### Security
+
+
+      - Fixed network time replay vulnerability; reject time-source timestamps not newer than the
+      last accepted one.
+
+      - Enforce initial sync (forward-only) vs maintenance sync (±60s), replacing the symmetric ±30s
+      logic that allowed backward clock moves.
+
+
+      ### Improvements
+
+
+      - Updated MeshCore website links and logo placement across the UI and splash screens.
+
+
+      ### KTLO
+
+
+      - Added a `build_upload.sh` wrapper to compile and upload firmware in a single command.
+
+      - Increased the GitHub Actions parallel job limit and updated the PlatformIO dependencies.
+
+      - Removed the `ENABLE_CONSENSUS_TIME_SYNC` feature from the codebase.
+  - version: v2026.5.2
+    name: v2026.5.2
+    datetime: '2026-05-27T15:22:12Z'
+    url: https://github.com/Meshcore-Portugal/lusofw/releases/tag/v2026.5.2
+    prerelease: false
+    notes: |-
+      Based on MeshCore v1.15.0
+      main@ecd0cfc1c133aad93e65257f002151591f6bcfd9
+
+      ### Features
+
+      - Add support for the Seeed P1 Pro bridge type
+      - Restrict the “01” advert reduction to repeaters only
+  - version: v2026.5.1
+    name: v2026.5.1
+    datetime: '2026-05-22T16:26:25Z'
+    url: https://github.com/Meshcore-Portugal/lusofw/releases/tag/v2026.5.1
+    prerelease: false
+    notes: "## [v2026.5.1] - 22/05/2026\r\n\r\nBased on MeshCore v1.15.0\r\nmain@ecd0cfc1c133aad93e65257f002151591f6bcfd9\r\n\r\n### Features\r\n\r\n- Update versioning scheme to year.month.release format (e.g. 2026.5.1)\r\n- Include Lora longer preamble #1954 to improve 868MHz performance in Portugal\r\n- Reduce advert rate from 3 to 1 within the permitted broadcast window\r\n- Prevent advert from mobile repeaters identified with (01)\r\n\r\n**Full Changelog**: https://github.com/Meshcore-Portugal/lusofw/compare/v0.0.7...v2026.5.1"
+  - version: v0.0.7
+    name: v0.0.7
+    datetime: '2026-04-01T14:51:33Z'
+    url: https://github.com/Meshcore-Portugal/lusofw/releases/tag/v0.0.7
+    prerelease: true
+    notes: "# Changelog\r\n\r\n## [v0.0.7] - 01/04/2026\r\n\r\nBased on MeshCore v1.14.1\r\nmain@467959cc3bfc884e5f3425caac89453a450151b6\r\n\r\n### Features\r\n\r\n- Increase default airtime factor to 9.0 (targets ~10% duty cycle)\r\n- Set default `flood_advert_interval` to 24 hours (instead of disabled)\r\n- Only schedule flood advert timers when `flood_advert_interval` is greater than 0\r\n- Add version-aware defaults migration with persisted firmware version tracking\r\n- Apply only defaults newer than the stored version during migration\r\n- `radio.lna` renamed to `radio.rxgain`, use with `get` and `set`\r\n- Add rs232 support for Xiao NRF52 (serial1, rx(7), tx(6))\r\n\r\n**Full Changelog**: https://github.com/Meshcore-Portugal/lusofw/compare/v0.0.6...v0.0.7"
+  - version: v0.0.6
+    name: v0.0.6
+    datetime: '2026-03-06T13:49:38Z'
+    url: https://github.com/Meshcore-Portugal/lusofw/releases/tag/v0.0.6
+    prerelease: true
+    notes: "# Changelog\r\n\r\n## [v0.0.6] - 06/03/2026\r\n\r\nBased on MeshCore v1.14.0\r\ndev@3fe2dd7f48733fe77da7549cd24ef28bf07e1e5a\r\n\r\n### Features\r\n\r\n- Disable advert interval by default (was 2 minutes)\r\n- Disable flood advert interval by default (was 12 hours)\r\n- Enable listen before talk with interference threshold of 14\r\n- Refactor buildAdvertData to use prefs when no GPS support is enabled\r\n- Set default loop detection preference to minimal sensitivity\r\n- Add 0x01 to reserved identity hash prefixes\r\n\r\n------\r\n\r\n**Full Changelog**: https://github.com/Meshcore-Portugal/lusofw/compare/v0.0.5...v0.0.6"
+  - version: v0.0.5
+    name: v0.0.5
+    datetime: '2026-03-04T20:03:53Z'
+    url: https://github.com/Meshcore-Portugal/lusofw/releases/tag/v0.0.5
+    prerelease: true
+    notes: '**Full Changelog**: https://github.com/Meshcore-Portugal/lusofw/compare/v0.0.4...v0.0.5'
+  - version: v0.0.4
+    name: v0.0.4
+    datetime: '2026-02-23T12:30:49Z'
+    url: https://github.com/Meshcore-Portugal/lusofw/releases/tag/v0.0.4
+    prerelease: true
+    notes: '**Full Changelog**: https://github.com/Meshcore-Portugal/lusofw/compare/v0.0.3...v0.0.4'
+  - version: v0.0.3
+    name: v0.0.3
+    datetime: '2026-02-21T12:12:33Z'
+    url: https://github.com/Meshcore-Portugal/lusofw/releases/tag/v0.0.3
+    prerelease: true
+    notes: '**Full Changelog**: https://github.com/Meshcore-Portugal/lusofw/compare/v0.0.2...v0.0.3'
+  - version: v0.0.2
+    name: v0.0.2
+    datetime: '2026-02-20T17:26:07Z'
+    url: https://github.com/Meshcore-Portugal/lusofw/releases/tag/v0.0.2
+    prerelease: true
+    notes: '**Full Changelog**: https://github.com/Meshcore-Portugal/lusofw/compare/v0.0.1...v0.0.2'
+  - version: v0.0.1
+    name: v0.0.1
+    datetime: '2026-02-18T11:24:51Z'
+    url: https://github.com/Meshcore-Portugal/lusofw/releases/tag/v0.0.1
+    prerelease: true
+    notes: '**Full Changelog**: https://github.com/Meshcore-Portugal/lusofw/commits/v0.0.1'

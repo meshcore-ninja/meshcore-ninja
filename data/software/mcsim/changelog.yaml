@@ -1,4 +1,10 @@
 source: github
 repo: Brent-A/mcsim
-updatedAt: '2026-08-17T14:30:57.471Z'
-releases: []
+updatedAt: '2026-08-17T16:30:13.760Z'
+releases:
+  - version: v0.1.0-test
+    name: MCSim v0.1.0-test
+    datetime: '2026-01-24T03:09:59Z'
+    url: https://github.com/Brent-A/mcsim/releases/tag/v0.1.0-test
+    prerelease: true
+    notes: '**Full Changelog**: https://github.com/Brent-A/mcsim/commits/v0.1.0-test'

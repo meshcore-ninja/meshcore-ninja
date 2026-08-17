@@ -1,4 +1,16 @@
 source: github
 repo: Hude06/MeshCoreDiscordBridge
-updatedAt: '2026-08-17T14:31:16.138Z'
-releases: []
+updatedAt: '2026-08-17T16:30:16.806Z'
+releases:
+  - version: v1.2
+    name: V1.2
+    datetime: '2026-02-23T21:24:06Z'
+    url: https://github.com/Hude06/MeshCoreDiscordBridge/releases/tag/v1.2
+    prerelease: false
+    notes: '@tek126 Wrote a full new branch with lots of new docs and some new features.'
+  - version: release
+    name: v1.1
+    datetime: '2026-01-04T01:21:49Z'
+    url: https://github.com/Hude06/MeshCoreDiscordBridge/releases/tag/release
+    prerelease: false
+    notes: Added Prefix Identifiers for messages and added back slash commands.

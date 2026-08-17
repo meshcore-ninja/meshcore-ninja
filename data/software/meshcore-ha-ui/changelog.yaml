@@ -1,4 +1,39 @@
 source: github
 repo: Ratty7198/MeshCore-HA-UI
-updatedAt: '2026-08-17T14:31:25.553Z'
-releases: []
+updatedAt: '2026-08-17T16:30:18.453Z'
+releases:
+  - version: Alpha_4.3
+    name: MeshCore-HA-UI
+    datetime: '2026-03-28T13:04:32Z'
+    url: https://github.com/Ratty7198/MeshCore-HA-UI/releases/tag/Alpha_4.3
+    prerelease: false
+  - version: Alpha_4.2
+    name: MeshCore-HA-UI
+    datetime: '2026-03-28T12:29:03Z'
+    url: https://github.com/Ratty7198/MeshCore-HA-UI/releases/tag/Alpha_4.2
+    prerelease: false
+  - version: Alpha_4.1
+    name: MeshCore-HA-UI
+    datetime: '2026-03-28T11:51:25Z'
+    url: https://github.com/Ratty7198/MeshCore-HA-UI/releases/tag/Alpha_4.1
+    prerelease: false
+  - version: Alpha_4
+    name: MeshCore-HA-UI
+    datetime: '2026-03-28T11:29:03Z'
+    url: https://github.com/Ratty7198/MeshCore-HA-UI/releases/tag/Alpha_4
+    prerelease: false
+  - version: Alpha_3
+    name: MeshCore-HA-UI
+    datetime: '2026-03-27T20:52:09Z'
+    url: https://github.com/Ratty7198/MeshCore-HA-UI/releases/tag/Alpha_3
+    prerelease: false
+  - version: Alpha_2
+    name: MeshCore-HA-UI
+    datetime: '2026-03-27T20:40:01Z'
+    url: https://github.com/Ratty7198/MeshCore-HA-UI/releases/tag/Alpha_2
+    prerelease: false
+  - version: Alpha_1
+    name: MeshCore-HA-UI
+    datetime: '2026-03-27T20:09:53Z'
+    url: https://github.com/Ratty7198/MeshCore-HA-UI/releases/tag/Alpha_1
+    prerelease: false
