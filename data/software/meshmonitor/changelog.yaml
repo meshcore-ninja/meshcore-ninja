@@ -1,7 +1,61 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-08-15T20:25:46.063Z'
+updatedAt: '2026-08-17T04:44:29.708Z'
 releases:
+  - version: v4.14.2-rc4
+    name: v4.14.2-rc4
+    datetime: '2026-08-17T04:22:59Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.14.2-rc4
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.14.2-rc4
+
+
+      > ⚠️ **Pre-release (release candidate).** Not tagged `:latest`. For testing ahead of the
+      4.14.2 final.
+
+
+      This release candidate rolls up six changes on top of rc3. On the feature side, the RF **site
+      planner UI** makes predictive coverage reachable — a Fresnel + path-loss tool with a dedicated
+      panel for estimating reach from a node or a map-click origin. Public-key mismatches now come
+      with a clear explanation instead of a bare assertion. Waypoint scheduled rebroadcasts keep
+      their off-by-default behavior and gain a warning about Android notification spam when you do
+      enable them. On the fix side, firmware region names now resolve correctly and MeshMonitor no
+      longer writes `UNSET` back to radios, Polish is offered as a UI language (with CI now failing
+      when a ready translation isn't listed), and messages that mention `areyoumeshingwith.us` no
+      longer vanish from the chat view. No database migrations or schema changes are included.
+
+
+      ## Features
+
+      - RF site planner UI — predictive coverage becomes reachable (#4727)
+
+      - Explain a public-key mismatch instead of asserting one (#4738)
+
+      - Warn about Android notification spam when enabling waypoint rebroadcast; still off by
+      default (#4752)
+
+
+      ## Bug Fixes
+
+      - Resolve every firmware region name; stop writing `UNSET` back to radios (#4749)
+
+      - Offer Polish, and fail CI when a ready translation is not listed (#4748)
+
+      - Stop hiding real messages that mention `areyoumeshingwith.us` when link previews are off
+      (#4751)
+
+
+      ## Issues Resolved
+
+      - #4751 — Messages with URLs vanish from chat when link previews disabled
+
+      - #4752 — Scheduled waypoint rebroadcasts: keep, default off, warn about Android notifications
+
+      - #4749 — Firmware region name resolution / UNSET write-back
+
+
+      **Full changelog:** https://github.com/Yeraze/meshmonitor/compare/v4.14.2-rc3...v4.14.2-rc4
   - version: v4.14.2-rc3
     name: v4.14.2-rc3
     datetime: '2026-08-15T19:42:23Z'
@@ -2120,139 +2174,5 @@ releases:
       ✅ All tests passed
 
       ✅
-
-      …
-  - version: v4.13.2-rc1
-    name: v4.13.2-rc1
-    datetime: '2026-07-21T20:59:22Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.13.2-rc1
-    prerelease: true
-    notes: >-
-      > ⚠️ **Pre-release (Release Candidate 1 for 4.13.2).** Not marked `latest`; no `:latest`
-      Docker tags are published. For testing ahead of the 4.13.2 release — please report issues.
-
-
-      ## Summary
-
-
-      Release candidate 1 for **4.13.2**. The headline is the completion of the **3D Map &
-      Elevation** effort (issue #3826): Map Analysis gains a real 2D/3D toggle backed by a
-      standalone MapLibre GL terrain view, a DEM tile proxy that hides the configured elevation
-      source, and neighbor-link/traceroute layers with full selection parity in 3D (#4235, #4239,
-      #4242). The Link Profile tool now seeds antenna heights from node-reported altitude, and
-      neighbor links are finally clickable with terrain analysis available on route segments (#4253,
-      #4254). Unified Messages shows sender short-names alongside long names, emoji reactions show
-      the reactor's short name, and Copy NodeInfo gains per-field selection with a MAC-address fix
-      (#4257, #4247, #4249). A security fix lets Bearer API tokens work on the legacy `/api/*`
-      endpoints instead of only `/api/v1/*` (#4262, closes #4259). This RC also lands a
-      PostgreSQL/MySQL migration ledger that stops migrations replaying on every boot (#4236), a
-      batch of MeshCore hardware system-tests (#4232, #4241, #4248), and a round of follow-up fixes
-      to the UI icon migration and map-visibility handling. Server routing was refactored out of the
-      monolithic `server.ts` as the first step of a larger cleanup (#4260).
-
-
-      ## Features
-
-
-      - 3D Map & Elevation epic (#3826): neighbor-link terrain integration (#4235), 3D terrain view
-      + DEM tile proxy (#4239), 3D neighbor/traceroute layers + selection parity (#4242)
-
-      - Link Profile antenna AGL seeded from node-reported altitude (#4254)
-
-      - Unified Messages: show short name alongside long name on sender labels (#4257)
-
-      - Channels: show reactor's short name next to emoji reactions (#4247)
-
-      - Per-field Copy NodeInfo with overwrite + MAC address display fix (#4249)
-
-      - Unified Messages: reply box shows "Unknown message" when the parent is missing (#4246)
-
-      - Consistent Lucide/emoji icon style across the full UI (#4217, @wilhel1812)
-
-
-      ## Bug Fixes
-
-
-      - Clickable neighbor links + terrain analysis on route segments (#4253)
-
-      - Restore compact glyphs in the channel dropdown options after the icon migration (#4258)
-
-      - Repair text spacing left behind by the icon migration (#4238)
-
-      - Close the status-glyph gap in the no-hardcoded-ui-glyph rule (#4255)
-
-      - Per-transport last-seen timestamps with decay + unstick visibility toggles (#4250, #4240)
-
-      - Stop discarding MeshCore favorites in the node projection (#4256)
-
-      - Fix MeshCore marker keying to prevent ghost markers across sources (#4237)
-
-      - PostgreSQL/MySQL migration ledger — stop replaying migrations (and rebuilding
-      `route_segments`) on every boot (#4236)
-
-
-      ## Security
-
-
-      - Accept Bearer API tokens on legacy `/api/*` endpoints, not just `/api/v1/*` (#4262, closes
-      #4259)
-
-
-      ## Refactoring
-
-
-      - Extract messages/poll/config/user routes from `server.ts` (#4260, first step of #3502)
-
-
-      ## Tests / CI
-
-
-      - MeshCore hardware system-tests — Phase 1 connect/handshake (#4232), Phase 2 companion
-      channel + repeater DM auto-ack (#4241), Phase 3 repeater remote-admin login + telemetry poll
-      (#4248)
-
-
-      ## Chore
-
-
-      - Version bump to 4.13.2-rc1 (#4261)
-
-
-      ## Issues Resolved
-
-
-      - #3826 — 3D map mode for elevation display
-
-      - #4259 — Bearer API tokens silently rejected on legacy endpoints
-
-      - #4245 — Unified Messages "Unknown message" reply indicator
-
-      - #4244 — Copy NodeInfo per-field selection + MAC address
-
-      - #4243 — reactor short name on reactions
-
-      - #4240 — favorited/freshly-heard node missing from map + stuck hide-from-map toggle
-
-      - #4234 — MeshCore nodes visible on every map
-
-      - #4233 — PostgreSQL/MySQL migrations replaying every boot
-
-      - #4215 — expand Lucide/emoji icon style across the UI
-
-      - #4193 — short name alongside long name for message senders
-
-
-      **Full changelog:** https://github.com/Yeraze/meshmonitor/compare/v4.13.1...v4.13.2-rc1
-
-
-      ## 🚀 MeshMonitor v4.13.2-rc1
-
-
-      ### 📦 Installation
-
-
-      **Docker (recommended):**
-
-      ```
 
       …
