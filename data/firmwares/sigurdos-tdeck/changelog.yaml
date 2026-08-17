@@ -1,7 +1,145 @@
 source: github
 repo: hermes-gadget/SigurdOS-tdeck
-updatedAt: '2026-08-02T17:02:22.940Z'
+updatedAt: '2026-08-17T01:23:07.613Z'
 releases:
+  - version: beta-0.1.48-RC10
+    name: beta-0.1.48-RC10
+    datetime: '2026-08-16T23:58:29Z'
+    url: https://github.com/hermes-gadget/SigurdOS-tdeck/releases/tag/beta-0.1.48-RC10
+    prerelease: true
+    notes: >-
+      **SigurdOS T-Deck Firmware** — beta-0.1.48-RC10
+
+
+      Release candidate 10. This GitHub release is marked as a pre-release, but **beta-0.1.48-RC10
+      is the intended stable release** for this cycle.
+
+
+      ### Flash with esptool
+
+      ```bash
+
+      # Full flash (first install):
+
+      esptool.py --chip esp32s3 --port /dev/ttyACM0 write_flash 0x0 firmware-merged.bin
+
+
+      # App update (keep settings):
+
+      esptool.py --chip esp32s3 --port /dev/ttyACM0 \
+        write_flash 0x10000 firmware.bin
+      ```
+
+
+      ### Web Flasher
+
+      Use `manifest.json` with [ESP Web Tools](https://esphome.github.io/esp-web-tools/).
+
+
+      | File | Use |
+
+      |------|-----|
+
+      | `firmware.bin` | App only (flash at 0x10000) |
+
+      | `firmware-merged.bin` | Full flash (flash at 0x0) |
+
+      | `SigurdOS-tdeck-launcher.bin` | For bmorcelli/Launcher install |
+
+      | `firmware-debug.bin` | Debug build with verbose logging |
+
+      | `sbom.cdx.json` | CycloneDX firmware dependency inventory |
+
+      | `manifest.json` | Web flasher manifest |
+
+      | `build-metadata.json` | Build provenance and component hashes |
+
+      | `sigurdos-tdeck-bootloader.bin` | Web flasher bootloader |
+
+      | `sigurdos-tdeck-partitions.bin` | Web flasher partition table |
+
+      | `sigurdos-tdeck-boot_app0.bin` | Web flasher boot app0 |
+
+      | `sigurdos-tdeck-firmware.bin` | Web flasher app firmware |
+
+      | `sigurdos-tdeck-full.bin` | Web flasher full image |
+
+
+      ### Changes since beta-0.1.47-RC9
+
+      - #1493: Reconciled the documented MeshCore submodule pin caveat.
+
+      - #1494: Fixed red development gates, coverage locking, and warning-budget enforcement.
+
+      - #1527: Closed audit issues across boot order, firmware paths, screen animations, and channel
+      capacity.
+
+      - #1528: Cleared SD-backed message history and quiesced companion transports during factory
+      reset.
+
+      - #1529: Guarded deferred UI widget lifetimes.
+
+      - #1530: Routed asynchronous companion binary responses only to their requesting client.
+
+      - #1531: Fixed QR display name handling, preference-failure propagation, and guest-password
+      masking.
+
+      - #1532: Hardened GPS retry deadlines and diagnostic-drain ownership.
+
+      - #1533: Hardened hardware-soak crash detection and release liveness probing.
+
+      - #1534: Added allowlisted BLE evidence and NVS entry-state boot markers.
+
+      - #1535: Fixed storage migration, contact teardown, legacy keys, and QR buffer handling.
+
+      - #1536: Hardened repeat allowlists, SD remount recovery, lease restoration, and capacity
+      refresh.
+
+      - #1537: Wired production-linked MeshCore integration gates, corrected RC evidence
+      verification, canonicalized dependency PURLs, and added the font reproducibility gate.
+
+      - #1539: Added the shared SPIFFS mount guard so each boot mounts once.
+
+      - #1541: Added build-info allowlisting and mesh readiness to test-controller status.
+
+      - #1542: Hardened the hardware-test runner with per-screen navigation budgets, mesh-ready
+      polling, and radio-profile restoration.
+
+      - #1543: Parameterized the PlatformIO lock checker for product build environments.
+
+      - #1545: Removed the map-leave watchdog wedge from text-fit asynchronous churn.
+
+      - #1562: Fixed the QR share buffer-overflow panic.
+
+      - #1564: Added the OTA task-WDT fix and onboarding Public channel, with associated audit
+      closure.
+
+      - #1565: Removed internal audit artifacts from the public repository.
+
+      - #1567: Added the missing `setTxTimeoutMs()` no-op to the companion USB discard console.
+
+      - Release engineering: bounded the hardware runner's serial drain under continuous telemetry.
+
+
+      ### Verification
+
+      - Native tests: 1,692 cases; 2 expected skips, 1,690 succeeded.
+
+      - Production-linked MeshCore integration: 5/5 passed.
+
+      - Native sanitizers: 1,692 cases; 2 expected skips, 1,690 succeeded.
+
+      - Release/script unit tests: 182/182 passed.
+
+      - Final production, debug, and radio-enabled remote-test builds: passed.
+
+      - Final T-Deck hardware smoke on the RC10 firmware-content image: passed; Home and Settings
+      captures were 320×240 with complete 153,600-byte framebuffers.
+
+      - Physical T-Deck UI sweep: all 20 standardized navigation targets passed; Home and Settings
+      captures were visually inspected. The final tag commits after the hardware run 
+
+      …
   - version: beta-0.1.47-RC9
     name: beta-0.1.47-RC9
     datetime: '2026-08-02T16:49:32Z'
@@ -1969,56 +2107,3 @@ releases:
 
       **Full Changelog**:
       https://github.com/hermes-gadget/SlopOS-tdeck/compare/beta-0.1.29...beta-0.1.30
-  - version: beta-0.1.29
-    name: beta-0.1.29
-    datetime: '2026-05-23T16:17:05Z'
-    url: https://github.com/hermes-gadget/SigurdOS-tdeck/releases/tag/beta-0.1.29
-    prerelease: true
-    notes: >-
-      **SlopOS T-Deck Firmware** — beta-0.1.29
-
-
-      ### Flash with esptool
-
-      ```bash
-
-      # Full flash (first install):
-
-      esptool.py --chip esp32s3 --port /dev/ttyACM0 write_flash 0x0 firmware-merged.bin
-
-
-      # App update (keep settings):
-
-      esptool.py --chip esp32s3 --port /dev/ttyACM0 \\
-        write_flash 0x10000 firmware.bin
-      ```
-
-
-      ### Web Flasher
-
-      Use the manifest at `webflasher/manifest.json` with
-      [esptool.js](https://espressif.github.io/esptool-js/).
-
-
-      | File | Use |
-
-      |------|-----|
-
-      | `firmware.bin` | App only (flash at 0x10000) |
-
-      | `firmware-merged.bin` | Full flash (flash at 0x0) |
-
-      | `webflasher/slopos-tdeck-firmware.bin` | App update |
-
-      | `webflasher/slopos-tdeck-full.bin` | Full flash |
-
-      | `webflasher/slopos-tdeck-bootloader.bin` | Bootloader |
-
-      | `webflasher/slopos-tdeck-partitions.bin` | Partition table |
-
-      | `webflasher/manifest.json` | Web flasher manifest |
-
-
-
-      **Full Changelog**:
-      https://github.com/hermes-gadget/SlopOS-tdeck/compare/beta-0.1.28...beta-0.1.29
