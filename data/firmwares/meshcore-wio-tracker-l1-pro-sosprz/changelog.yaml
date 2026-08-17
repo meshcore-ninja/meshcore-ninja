@@ -1,7 +1,13 @@
 source: github
 repo: sosprz/Meshcore-Wio-Tracker-L1-Pro
-updatedAt: '2026-08-17T16:30:04.713Z'
+updatedAt: '2026-08-17T18:42:18.736Z'
 releases:
+  - version: v1.17.92
+    name: v1.17.92
+    datetime: '2026-08-17T17:43:06Z'
+    url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.17.92
+    prerelease: false
+    notes: '- **Upstream v1.17.1 integration** - Merged the current MeshCore mainline'
   - version: v1.16.91
     name: v1.16.91
     datetime: '2026-07-20T18:42:07Z'
@@ -132,9 +138,3 @@ releases:
     url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.14.0.72
     prerelease: false
     notes: "- **Wio Tracker L1: OLED invert theme** - Added `System -> Display -> Theme` options `Black/White` and `White/Black` for SH1106 companion-radio builds, so users can switch between normal and inverted monochrome display rendering.\r\n-  **On-screen keyboard: QWERTY layout** - Changed the soft keyboard letter order from alphabetical `ABC` layout to `QWERTY` sequence for companion-radio text entry."
-  - version: v1.14.0.69
-    name: v1.14.0.69
-    datetime: '2026-03-06T17:15:21Z'
-    url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.14.0.69
-    prerelease: false
-    notes: "- **Mainstream sync (v1.14.0)** - Merged upstream \r\n- **Screen lock hardening (3x PREV bug fix)** - Triple-click `PREV` no longer cycles `Sound` levels while `Screen lock` is active."
