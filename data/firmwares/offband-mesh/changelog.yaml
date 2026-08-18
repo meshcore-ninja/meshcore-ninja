@@ -1,7 +1,71 @@
 source: github
 repo: OffbandMesh/meshcore-firmware
-updatedAt: '2026-08-17T16:30:07.455Z'
+updatedAt: '2026-08-18T01:19:53.601Z'
 releases:
+  - version: offband-v1.5.0-beta3
+    name: Offband offband-v1.5.0-beta3
+    datetime: '2026-08-17T23:52:43Z'
+    url: https://github.com/OffbandMesh/meshcore-firmware/releases/tag/offband-v1.5.0-beta3
+    prerelease: true
+    notes: |-
+      ### Fixed (beta2)
+      - **Rotated-out brokers no longer lose the traffic they missed** (#723): a regression in
+        `beta1`. Re-attaching a broker resynced its ring cursor to the head, which was meant to
+        stop a *newly enabled* broker replaying stale boot backlog — but the same path runs on
+        every rotation re-entry, so a broker returning from its dwell discarded exactly the
+        backlog the ring exists to hold. On an observer with rotating TLS brokers this silently
+        dropped most of the feed, and the drop counter read zero throughout because a resync is
+        a deliberate skip, not an overrun. Resync now happens on first attach only.
+      - **Observer packets over ~98 bytes were silently discarded** (#726): the `/packets`
+        JSON builder renders up to 1024 bytes but the publish ring only accepted 512, and a
+        refused append counted nothing anywhere. Hex-encoding doubles the packet, so anything
+        over ~98 bytes of air time simply vanished — present since the ring was introduced
+        (#175), found in the field on beta1 by a tester whose observer published one small
+        message and silently dropped the two larger ones. The ring now accepts what the
+        builder produces, and a compile-time assert makes the size mismatch a build error
+        rather than a silent refusal.
+      - **BLE transfers no longer lose 3 bytes per full frame** (#711): a regression of #450,
+        reintroduced by #454 — when the cached peer MTU was ≥ 179, every full BLE frame was
+        sized 3 bytes over what the link delivers and the stack clipped the tail. Caplog
+        downloads noticed (they announce a byte total); every other chunked path clipped
+        silently. Frame sizing is now pinned by a regression test that fails without the fix.
+        Not yet device-verified — that is what this beta is for.
+      - **Framed serial writes are all-or-nothing** (#718): a short non-blocking write could
+        emit a frame header with no payload behind it, desyncing the stream — corruption, not
+        just loss. A refused frame is now retried whole; nothing partial reaches the wire.
+        Also awaiting device verification on this beta.
+      - **Repeater OTA recovers from a stale session** (#676): starting OTA over WiFi tears
+        down a stale server instead of refusing, and the repeater holds off idle light-sleep
+        while a persistent-WiFi window is open so the OTA window stays reachable.
+
+      ### Changed (beta2)
+      - **Observer publish ring reworked; `/packets` payload slimmed** (#727): the ring now
+        stores compact packet records rendered per-broker at publish time instead of
+        pre-rendered JSON — roughly 10 KB less RAM and a 40-deep ring, with receive
+        timestamps captured at receive so a backlogged broker's messages aren't mis-stamped.
+        The `/packets` body now carries the raw packet plus link metadata only: CoreScope and
+        its forks (CoreComms/EastMesh, confirmed from their public ingestor source) decode
+        the raw packet themselves and never read the on-device parsed fields. **If you run a
+        custom `/packets` consumer that read parsed fields, decode from `raw` now.**
+
+      ### Added (beta2)
+      - **Heltec Vision Master E290 builds** (#733): companion BLE + USB for the first e-ink
+        board in the fleet, from the upstream 1.17 variant. The radio/mesh side is stock
+        upstream support; the e-ink display path under the Offband stack is exactly what beta
+        testing needs to prove. Repeater role deferred.
+
+      ### Added
+      - **`wifi clear` and a visible reason for WiFi disconnects** (#696): an observer on an
+        open, passwordless network could sit at `StaConnecting` indefinitely with no reason
+        available anywhere, and a stored PSK could not be cleared without an NVS wipe that
+        destroys the device identity. `wifi clear [pwd|all]` now removes stored credentials
+        properly, and STA disconnect reasons appear in the `wifi status` reply as well as the
+        retry log — the status reply being the load-bearing half, since a remote reporter
+        cannot read a serial console. Association behaviour is unchanged.
+
+      ### Fixed
+      - **Observer multi-broker rotation actually rotates** (#708): with more th
+      …
   - version: offband-v1.5.0-beta2
     name: Offband offband-v1.5.0-beta2
     datetime: '2026-08-16T09:07:16Z'
@@ -1293,77 +1357,3 @@ releases:
 
       **Full Changelog**:
       https://github.com/OffbandMesh/meshcore-firmware/compare/crosswire-v0.14.0...offband-v0.17.0-rc1
-  - version: crosswire-v0.15.0
-    name: Crosswire crosswire-v0.15.0
-    datetime: '2026-06-10T23:43:44Z'
-    url: https://github.com/OffbandMesh/meshcore-firmware/releases/tag/crosswire-v0.15.0
-    prerelease: false
-    notes: >-
-      Observer MQTT connectivity -- hardware-validated against three brokers
-
-      (CoreScope / W8OOF tcp-anon, eastme.sh wss/jwt, LetsMesh-US wss/jwt).
-
-
-      ### Added
-
-      - Owner broker registry: seed the default 6-slot broker set with an `iata=HAO`
-        default; per-broker GTS Root R4 + ISRG Root X2 CA certificates added and
-        mapped, registry cert-names corrected. (#48)
-      - Per-broker JWT identity claims `jwt_owner` / `jwt_email`
-        (`set mqtt.broker.<N>.jwt_owner|jwt_email`), surfaced in `mqtt status`. (#63)
-      - Multi-frame `mqtt status` over the BLE `_sys` channel: the per-slot broker
-        table spans multiple frames instead of truncating. (#48)
-
-      ### Fixed
-
-      - BLE `_sys` command channel no longer hangs when `set mqtt.broker.*` runs. The
-        blocking `esp_mqtt` lifecycle ops (connect / destroy) moved off `loopTask` to a
-        dedicated `mqtt_worker` task with a per-broker lock and a per-slot reconcile
-        flag. (#53)
-      - wss/JWT broker authentication: send the MQTT CONNECT username
-        `v1_<UPPERCASE pubkey>` (was a null username) so eastme.sh / LetsMesh accept
-        the connection -- the broker verifies the token's `publicKey` claim against it
-        and rejects a null username (CONNACK rc=5) even with an otherwise-valid token.
-        (#68)
-
-
-
-      ## What's Changed
-
-      * fix(#27): pio-flash firmware_dir -> repo root + --firmware-dir override by @Strycher in
-      https://github.com/Strycher/Crosswire/pull/28
-
-      * pio-flash artifact-flash: flash CI release artifacts through the identity gate (#29, #34) by
-      @Strycher in https://github.com/Strycher/Crosswire/pull/35
-
-      * fix(#33): OLED splash carries pre-release identifier (v0.14.0-rc1, not v0.14.0+0) by
-      @Strycher in https://github.com/Strycher/Crosswire/pull/37
-
-      * chore(#38): gitignore __pycache__/ by @Strycher in
-      https://github.com/Strycher/Crosswire/pull/40
-
-      * feat(#42): strip observer companion to minima + delete dead ring buffer by @Strycher in
-      https://github.com/Strycher/Crosswire/pull/50
-
-      * docs: pin Crosswire project identity (Citadel + Agent Mail keys) (#55) by @Strycher in
-      https://github.com/Strycher/Crosswire/pull/56
-
-      * docs(#32): position-to-map pipeline architecture draft by @Strycher in
-      https://github.com/Strycher/Crosswire/pull/57
-
-      * docs: MeshCore 1.16.0 base-update impact assessment (spike #54) by @Strycher in
-      https://github.com/Strycher/Crosswire/pull/58
-
-      * chore(#59): port /work + session-state.py compaction-recovery hook into Crosswire by
-      @Strycher in https://github.com/Strycher/Crosswire/pull/60
-
-      * docs(#61): correct CLAUDE.md build/flash + migration-status after meshcore-firmware retire
-      by @Strycher in https://github.com/Strycher/Crosswire/pull/62
-
-      * feat: observer MQTT connectivity (crosswire-v0.15.0) — #53 #48 #63 #68 by @Strycher in
-      https://github.com/Strycher/Crosswire/pull/72
-
-
-
-      **Full Changelog**:
-      https://github.com/Strycher/Crosswire/compare/crosswire-v0.14.0-rc1...crosswire-v0.15.0

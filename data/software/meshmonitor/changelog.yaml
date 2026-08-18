@@ -1,7 +1,105 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-08-17T16:30:25.251Z'
+updatedAt: '2026-08-18T01:20:16.839Z'
 releases:
+  - version: v4.14.2-rc5
+    name: v4.14.2-rc5
+    datetime: '2026-08-17T23:24:31Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.14.2-rc5
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.14.2-rc5
+
+
+      > ⚠️ **Pre-release (release candidate).** Not tagged `:latest`. For testing ahead of the
+      4.14.2 final.
+
+
+      This candidate rolls up 19 commits since rc4. The headline is the **maplibre-gl 5 → 6**
+      upgrade — its lone blocker (the leaflet adapter's lack of v6 support) cleared upstream, and
+      the 3D terrain map was validated rendering correctly under software WebGL. On the feature
+      side, the map **age filter** gains non-linear steps reaching 30 days, telemetry graphs
+      **export to CSV**, and a **Prometheus `/api/v1/metrics`** endpoint exposes mesh health for
+      Grafana/alerting. Fixes include the long-standing Virtual Node bug where it advertised a
+      **stale local node number** (spawning an unpurgeable phantom duplicate and breaking MQTT),
+      three mobile/PWA/desktop **map & modal CSS quirks**, and a **MQTT device-telemetry**
+      node-metrics refresh. Rounded out with dependency bumps (`pg`, `lucide-react`, dev tooling),
+      the mesh-impact checklist added to contributor guidance, and updated translations. No database
+      migrations or schema changes.
+
+
+      ## Features
+
+      - maplibre-gl 5 → 6 upgrade; 3D render validated under SwiftShader WebGL (#4650)
+
+      - Non-linear map age filter with week/month reach, 720h cap (#4770)
+
+      - Export telemetry graphs as CSV (#4771)
+
+      - Prometheus `/api/v1/metrics` endpoint for mesh monitoring (#4757)
+
+
+      ## Bug Fixes
+
+      - Virtual Node stops advertising a stale local node number (#1390)
+
+      - Three mobile/map CSS quirks: search modal, iOS PWA offset, desktop popup scrollbar (#4774,
+      #4772, #4758)
+
+      - Refresh MQTT device-telemetry node metrics (#4755)
+
+
+      ## Dependencies / Docs / i18n
+
+      - `pg` + `@types/pg`, `lucide-react` 1.31.0, and several dev-dependency + CI-action bumps
+
+      - Mesh-impact checklist added to agent guidance (#4778)
+
+      - Weblate translations update (#4709)
+
+
+      ## Issues Resolved
+
+      - #1390 — V-Node creates its own ID (stale node number)
+
+      - #4650 — Deferred maplibre-gl 5 → 6 upgrade
+
+      - #4758, #4772, #4774 — map/modal CSS quirks
+
+
+      **Full changelog:** https://github.com/Yeraze/meshmonitor/compare/v4.14.2-rc4...v4.14.2-rc5
+
+
+      ## 🚀 MeshMonitor v4.14.2-rc5
+
+
+      ### 📦 Installation
+
+
+      **Docker (recommended):**
+
+      ```bash
+
+      docker run -d \
+        --name meshmonitor \
+        -p 8080:3001 \
+        -v meshmonitor-data:/data \
+        ghcr.io/Yeraze/meshmonitor:4.14.2-rc5
+      ```
+
+
+      ### 🧪 Testing
+
+      ✅ All tests passed
+
+      ✅ TypeScript checks passed
+
+      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
+
+
+      ### 📋 Changes
+
+      See commit history for detailed changes.
   - version: v4.14.2-rc4
     name: v4.14.2-rc4
     datetime: '2026-08-17T04:22:59Z'
@@ -2062,149 +2160,3 @@ releases:
       ### 📋 Changes
 
       See commit history for detailed changes.
-  - version: v4.13.2-rc2
-    name: v4.13.2-rc2
-    datetime: '2026-07-23T16:02:12Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.13.2-rc2
-    prerelease: true
-    notes: >-
-      # MeshMonitor v4.13.2-rc2
-
-
-      > ⚠️ **Pre-release (Release Candidate).** This build is for testing ahead of the v4.13.2
-      stable release. Docker `:latest` tags are **not** updated. Report any issues you hit.
-
-
-      This release candidate closes out the large multi-phase remediation epic (#3962) and the
-      server-route extraction effort (#3502), decomposing the monolithic `server.ts` into focused
-      route and service modules, migrating the frontend onto real routes + TanStack query hooks, and
-      driving raw `fetch()` usage to zero. On the feature side it adds cross-source **NodeInfo
-      Enrichment** (analysis report + apply API, #3837), a Portainer Stack export format in the
-      configurator (#3724), richer MeshCore route popups (packet-flow mini map,
-      `{ROUTE_NAMES}`/`{HASH_SIZE}` tokens, accessible detail modals), a per-trigger pre-send delay
-      for the MeshCore Auto-Responder (#3953), configurable Auto-Ack DM resend attempts (#4266), and
-      a map distinction between `ROUTER_LATE` and `ROUTER` with an unmessageable badge (#4295).
-      Security fixes suppress a false-positive duplicate-key warning on the Meshtastic 2.8 NodeNum
-      renumber (#4251) and add a self-service **Clear** action for stale security-risk warnings
-      (#4302). CI hardening pins all GitHub Actions to commit SHAs. This is a testing build ahead of
-      v4.13.2 stable.
-
-
-      ## ✨ Features
-
-
-      - **NodeInfo Enrichment** — cross-source analysis + apply API (#4287) and a report under
-      Analysis & Reports (#4289) — resolves #3837
-
-      - **Portainer Stack** export format in the configurator (#4282) — resolves #3724
-
-      - **Map:** distinguish `ROUTER_LATE` from `ROUTER`, add unmessageable badge (#4303) — resolves
-      #4295
-
-      - **MeshCore:** `{ROUTE_NAMES}` / `{HASH_SIZE}` tokens + clickable route-detail popup (#4276)
-
-      - **MeshCore:** packet-flow mini map in route popup + accessible detail modals (#4277)
-
-      - **MeshCore:** per-trigger pre-send delay for the Auto-Responder (#4281) — resolves #3953
-
-      - **Automation:** configurable Auto-Ack DM resend attempts (#4273) — resolves #4266
-
-
-      ## 🐛 Bug Fixes & Security
-
-
-      - **Security:** self-service **Clear** action for stale security-risk warnings (#4304) —
-      resolves #4302
-
-      - **Security:** suppress false-positive duplicate-key warning for the Meshtastic 2.8 NodeNum
-      renumber (#4272) — resolves #4251
-
-
-      ## ♻️ Refactoring
-
-
-      **server.ts route extraction (#3502):**
-
-      - Extract settings + admin routes (#4263)
-
-      - Extract nodes routes + composition-root teardown (#4265)
-
-
-      **Remediation epic — finish the half-migrated abstractions (#3962):**
-
-      - 4.2a — retire `meshcoreRegistry` shim + `meshtasticManager` Proxy alias, and extract
-      services: MQTT bridge/NodeDB, announce scheduler, admin-ack + favorites, device/remote-admin
-      (#4267, #4268, #4269, #4270, #4271)
-
-      - 4.2b — explicit connection state machine for `meshtasticManager` (#4274)
-
-      - 4.3 — split `meshcoreRoutes` into concern modules (#4275)
-
-      - 5.1–5.2 — memoize context providers + TanStack version-check (#4280)
-
-      - 5.3 — SettingsTab draft-object rewrite (#4284)
-
-      - 5.4 — router scaffold + full tab-to-route migration (#4285, #4286, #4288, #4290, #4291,
-      #4292, #4293, #4296)
-
-      - 5.5 — migrate raw `fetch()` sites to `ApiService`, baseline to zero (#4297, #4298)
-
-      - 5.6 — `nodes.css` cascade-order fix + CSS containment convention (#4299)
-
-
-      ## 🔧 CI / DevOps
-
-
-      - Pin all GitHub Actions to commit SHAs (#4283)
-
-
-      ## 📝 Docs
-
-
-      - Epic #3962 Phase 4+5 close-out (#4300)
-
-      - Add MeshEC to the Site Gallery (#4279)
-
-      - Record the two verification gaps from the session (#4264)
-
-
-      ## ✅ Issues Resolved
-
-
-      #3502, #3724, #3837, #3953, #3962, #4251, #4266, #4278, #4295, #4302
-
-
-      ## 🙏 New Contributors
-
-
-      - @mirkosalvato1-ctrl — first contribution in #4283 (pinning Actions to SHAs). Welcome!
-
-
-      **Full changelog:** https://github.com/Yeraze/meshmonitor/compare/v4.13.2-rc1...v4.13.2-rc2
-
-
-      ## 🚀 MeshMonitor v4.13.2-rc2
-
-
-      ### 📦 Installation
-
-
-      **Docker (recommended):**
-
-      ```bash
-
-      docker run -d \
-        --name meshmonitor \
-        -p 8080:3001 \
-        -v meshmonitor-data:/data \
-        ghcr.io/Yeraze/meshmonitor:4.13.2-rc2
-      ```
-
-
-      ### 🧪 Testing
-
-      ✅ All tests passed
-
-      ✅
-
-      …
