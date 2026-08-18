@@ -1,7 +1,13 @@
 source: github
 repo: meshcore-dev/meshcore-cli
-updatedAt: '2026-08-17T16:30:15.983Z'
+updatedAt: '2026-08-18T14:35:51.391Z'
 releases:
+  - version: v1.6.1
+    name: v1.6.1
+    datetime: '2026-08-18T13:47:05Z'
+    url: https://github.com/meshcore-dev/meshcore-cli/releases/tag/v1.6.1
+    prerelease: false
+    notes: "@4nd3r added the possibility to associate scopes to channels via `scopes` file in config dir, thanks it should help people in crowded meshes ;)\r\n\r\nSome little fixes got into since last week:\r\n- fixed a regression with quotes handling due to pipeline ...\r\n- completion of aliases work\r\n\r\n## What's Changed\r\n* make channel scopes configurable by @4nd3r in https://github.com/meshcore-dev/meshcore-cli/pull/68\r\n\r\n## New Contributors\r\n* @4nd3r made their first contribution in https://github.com/meshcore-dev/meshcore-cli/pull/68\r\n\r\n**Full Changelog**: https://github.com/meshcore-dev/meshcore-cli/compare/v1.6.0...v1.6.1"
   - version: v1.6.0
     name: v1.6.0
     datetime: '2026-08-12T23:24:20Z'
