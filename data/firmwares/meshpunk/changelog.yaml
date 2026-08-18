@@ -1,7 +1,13 @@
 source: github
 repo: PhilMo6/meshpunk
-updatedAt: '2026-08-17T16:30:05.789Z'
+updatedAt: '2026-08-18T16:33:49.295Z'
 releases:
+  - version: v0.3.5
+    name: v0.3.5 heltec v4 r8 expansion v2 support
+    datetime: '2026-08-18T16:14:12Z'
+    url: https://github.com/PhilMo6/meshpunk/releases/tag/v0.3.5
+    prerelease: false
+    notes: "Added full support for the heltec v4 r8 with the v2 expansion.\r\nImplemented on screen keyboard and gamepad.\r\nImage decoding and bridge for jpgs as well as the image viewer app.\r\nRead me app update with dynamic per device text and per app read me pages."
   - version: v0.3.4
     name: v0.3.4 launcher fix
     datetime: '2026-08-08T02:10:27Z'
@@ -118,9 +124,3 @@ releases:
     url: https://github.com/PhilMo6/meshpunk/releases/tag/v0.1.5
     prerelease: false
     notes: "This release has several elf loader fixes to allow for loading larger files.\r\nThe major update is the map app! Only shows contacts ands lets you select a contact for basic info for now. \r\nMaps must be downloaded via wifi and requires a SD card.\r\nThey can be pre-cached with the download button which will download all map tiles within the selected area.\r\nNavigation improvements! \r\nWASD are now usable for navigation.\r\nTrackball sensitivity settings in the device settings."
-  - version: v0.1.4
-    name: v0.1.4 alpha
-    datetime: '2026-06-07T00:31:09Z'
-    url: https://github.com/PhilMo6/meshpunk/releases/tag/v0.1.4
-    prerelease: false
-    notes: First release
