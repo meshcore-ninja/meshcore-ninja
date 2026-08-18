@@ -1,7 +1,13 @@
 source: github
 repo: mintylinux/Meshcore-Wardrive-Android
-updatedAt: '2026-08-17T16:30:22.986Z'
+updatedAt: '2026-08-18T20:27:05.890Z'
 releases:
+  - version: 1.0.43
+    name: Meshcore-Wardrive-Android-1.0.43
+    datetime: '2026-08-18T19:16:47Z'
+    url: https://github.com/mintylinux/Meshcore-Wardrive-Android/releases/tag/1.0.43
+    prerelease: false
+    notes: "# Changelog\r\n\r\n## v1.0.43 - 2026-08-18\r\n\r\n### Fixed\r\n- **#34 Settings page collapsing**: Settings sheet no longer closes on every toggle change. Changes are applied live and synced when the sheet is dismissed.\r\n- **#32 Battery saver disable option**: New toggle in Settings to disable battery saver mode entirely. Useful when phone is plugged in but stuck at low battery percentage.\r\n- **Community coverage tile alignment**: Community tiles now use exact geohash bounds instead of center + delta approximation, fixing offset/distortion and aligning 1:1 with local coverage tiles.\r\n- **Community coverage overlapping user data**: Community cells that overlap with the user's own coverage are now hidden. Opacity reduced to avoid visual clutter.\r\n- **Community coverage resolution mismatch**: Downloaded tiles are now reaggregated at render time to match the user's chosen coverage precision setting.\r\n\r\n### Technical\r\n- Removed parent `setState()` from all settings handlers; only `setModalState()` used inside the sheet\r\n- Added `.then()` on `showModalBottomSheet` to sync parent state on close\r\n- `_aggregateCommunityAtPrecision()` groups community cells by coverage-precision geohash prefix\r\n- `geohash.GeoHash.decode(hash).bounds.southWest/northEast` used for exact tile bounds\r\n- `SettingsService`: added `batterySaverEnabled` toggle"
   - version: 1.0.42
     name: Meshcore-Wardrive-Android-1.0.42
     datetime: '2026-07-12T22:37:16Z'
@@ -116,9 +122,3 @@ releases:
     url: https://github.com/mintylinux/Meshcore-Wardrive-Android/releases/tag/1.0.27
     prerelease: false
     notes: "# Changelog\r\n\r\n## v1.0.27 - 2026-02-13\r\n\r\n### Fixed\r\n- **WhisperOS Device Support**: Devices running WhisperOS now appear in Bluetooth scan list\r\n  - Added 'whisper' to device name filter in Bluetooth scanning\r\n  - Users with WhisperOS-based MeshCore devices can now connect to the app\r\n  - Line 152 in lora_companion_service.dart"
-  - version: 1.0.26
-    name: Meshcore-Wardrive-Android-1.0.26
-    datetime: '2026-02-12T01:44:24Z'
-    url: https://github.com/mintylinux/Meshcore-Wardrive-Android/releases/tag/1.0.26
-    prerelease: false
-    notes: "# Changelog\r\n\r\n## v1.0.26 - 2026-02-12\r\n\r\n### Fixed\r\n- **Ping Timeout**: Increased ping timeout from 20 seconds to 30 seconds to respect repeater rate limits\r\n  - Repeaters are rate-limited to 4 responses per 120 seconds (30 seconds between responses)\r\n  - Previous 20-second timeout could trigger pings too quickly at highway speeds\r\n  - New 30-second timeout ensures at least 60 seconds between pings (30s travel + 30s timeout)\r\n  - Prevents overwhelming single repeaters in low-density areas\r\n\r\n### Added\r\n- **Miles Traveled Tracking**: Display cumulative distance traveled during tracking sessions\r\n  - Shows distance in control panel when tracking is active\r\n  - Supports both miles and kilometers (configurable in settings)\r\n  - Distance resets at the start of each new tracking session\r\n  - Updates in real-time as you move\r\n- **Screenshot Capture**: Take clean map screenshots without UI clutter\r\n  - New camera button in app bar to capture screenshots\r\n  - Automatically hides UI elements, control panel, floating buttons, and user location marker\r\n  - Saves high-quality PNG to device gallery\r\n  - Option to share screenshot immediately after capture\r\n  - Perfect for sharing coverage maps with others\r\n- **Color Blind Accessibility Mode**: Alternative color palettes for users with color vision deficiencies\r\n  - Support for Deuteranopia (red-green, most common)\r\n  - Support for Protanopia (red-green)\r\n  - Support for Tritanopia (blue-yellow)\r\n  - Applies to coverage boxes, sample markers, and repeater icons\r\n  - Normal mode uses traditional green/red colors\r\n  - Color blind modes use blue/orange, blue/yellow, or pink/teal palettes\r\n  - Configurable in settings menu\r\n\r\n### Technical\r\n- Added distance tracking streams to LocationService\r\n- Created ColorBlindPalette utility class with scientifically-designed accessible color schemes\r\n- Modified AggregationService to accept color blind mode parameter\r\n- Integrated screenshot package for high-quality image capture\r\n- Added image_gallery_saver for saving screenshots to device"
