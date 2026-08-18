@@ -1,7 +1,47 @@
 source: github
 repo: Treehouse-00/pymc_console-dist
-updatedAt: '2026-08-18T20:27:13.305Z'
+updatedAt: '2026-08-18T22:26:33.522Z'
 releases:
+  - version: v0.9.352
+    name: Release v0.9.352
+    datetime: '2026-08-18T20:36:15Z'
+    url: https://github.com/Treehouse-00/pymc_console-dist/releases/tag/v0.9.352
+    prerelease: false
+    notes: >-
+      ### Changed
+
+      - The time-range selector has one persistent home: the top-right corner of the page title, on
+      every page and at every screen size (compact on phones). Dashboard, Statistics, Packet
+      History, RF Health, and Map & Contacts each return a full row to content.
+
+      - Packet History's filters are now a collapsible bar on the Filters card itself — collapsed by
+      default on phones with the Transport/V2 quick-toggles still usable, expanded by default on
+      larger screens (and collapsible there for the first time). The floating filter button is gone.
+
+
+
+      ---
+
+      Full history:
+      [CHANGELOG.md](https://github.com/dmduran12/pymc_console-dist/blob/main/CHANGELOG.md)
+
+
+      ## Installation
+
+      ```bash
+
+      sudo ./manage.sh install
+
+      ```
+
+
+      ## Upgrade
+
+      ```bash
+
+      sudo ./manage.sh upgrade
+
+      ```
   - version: v0.9.351
     name: Release v0.9.351
     datetime: '2026-08-18T20:03:27Z'
@@ -374,23 +414,6 @@ releases:
     name: Release v0.9.333
     datetime: '2026-07-08T01:13:16Z'
     url: https://github.com/Treehouse-00/pymc_console-dist/releases/tag/v0.9.333
-    prerelease: false
-    notes: |-
-      Automated release from pymc_console.
-
-      ## Installation
-      ```bash
-      sudo ./manage.sh install
-      ```
-
-      ## Upgrade
-      ```bash
-      sudo ./manage.sh upgrade
-      ```
-  - version: v0.9.332
-    name: Release v0.9.332
-    datetime: '2026-07-08T01:10:51Z'
-    url: https://github.com/Treehouse-00/pymc_console-dist/releases/tag/v0.9.332
     prerelease: false
     notes: |-
       Automated release from pymc_console.
