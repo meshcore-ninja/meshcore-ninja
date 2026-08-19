@@ -1,7 +1,107 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-08-18T01:20:16.839Z'
+updatedAt: '2026-08-19T04:39:28.115Z'
 releases:
+  - version: v4.14.2-rc6
+    name: v4.14.2-rc6
+    datetime: '2026-08-19T03:59:40Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.14.2-rc6
+    prerelease: true
+    notes: >-
+      > ⚠️ **Pre-release (release candidate).** Not for production. Docker images are tagged
+      `4.14.2-rc6` only, the `:latest` tag is untouched.
+
+
+      This RC is headlined by a **map-improvements trio**: a new **Satellite + Labels** hybrid
+      tileset that layers ESRI reference labels over the satellite imagery (#4728); **3D terrain**
+      extended from Map Analysis to the per-source Mesh Map, the Unified Map, and the classic
+      `/nodes` map, each with a capability-gated toggle and a WebGL fallback (#4704); and a
+      brand-new **GPS/GNSS constellation overlay** (#4729) that computes the theoretical satellites
+      overhead from CelesTrak TLEs, a per-node sky plot with a reported-vs-theoretical
+      `sats_in_view` diagnostic, plus a DOP coverage heatmap with a time scrubber on Map Analysis.
+      Alongside the maps, this build fixes waypoint virtual-flag persistence on edit (#4795), keeps
+      the mobile bottom nav tappable under the search modal (#4774), resolves the token user in
+      notification handlers (#4785), accepts Bearer API tokens on admin routes (#4784), corrects the
+      EnvironmentMetrics current unit to mA (#4780), and preserves the hop-hash width in MeshCore
+      Trace Path (#4787). Auto Announce now notes the firmware-2.8 MeshBeacon alternative (#4731),
+      and translations were refreshed from Weblate (#4775).
+
+
+      ## ✨ Features
+
+      - **Satellite + Labels hybrid map tile**, ESRI reference-label overlay over the satellite
+      imagery, with its own attribution (#4791, closes #4728)
+
+      - **3D terrain on the Mesh Map, Unified Map, and classic `/nodes` map**, capability-gated
+      toggle, WebGL fallback to 2D (#4793, closes #4704)
+
+      - **GPS/GNSS satellite constellation overlay**, sky plot + reported-vs-theoretical
+      `sats_in_view`, DOP coverage heatmap with a time control (#4796, closes #4729)
+
+      - **Auto Announce:** note the firmware 2.8 MeshBeacon alternative in the config (#4790, closes
+      #4731)
+
+
+      ## 🐛 Bug Fixes
+
+      - **Waypoints:** persist the virtual flag on edit (PATCH) (#4798, closes #4795)
+
+      - **Mobile:** keep the bottom nav tappable under the search modal (#4789, closes #4774)
+
+      - **Notifications:** resolve the token user in notification handlers (#4785)
+
+      - **Auth:** accept Bearer API tokens on `requireAdmin` routes (#4784)
+
+      - **Telemetry:** label EnvironmentMetrics current as mA, not A (#4780)
+
+      - **MeshCore:** preserve hop hash width in Trace Path (#4787)
+
+
+      ## 🌍 Translations
+
+      - Translations update from Hosted Weblate (#4775)
+
+
+      ## 🔭 Known follow-ups (tracked, not in this build)
+
+      - 3D map polish, hide 2D-only controls in 3D, memoize `nodesWithPosition` (#4794)
+
+      - GNSS overlay, DOP-grid event-loop yielding, TLE parse resync, DOP panel time-anchor (#4797)
+
+
+      **Full changelog:** https://github.com/Yeraze/meshmonitor/compare/v4.14.2-rc5...v4.14.2-rc6
+
+
+      ## 🚀 MeshMonitor v4.14.2-rc6
+
+
+      ### 📦 Installation
+
+
+      **Docker (recommended):**
+
+      ```bash
+
+      docker run -d \
+        --name meshmonitor \
+        -p 8080:3001 \
+        -v meshmonitor-data:/data \
+        ghcr.io/Yeraze/meshmonitor:4.14.2-rc6
+      ```
+
+
+      ### 🧪 Testing
+
+      ✅ All tests passed
+
+      ✅ TypeScript checks passed
+
+      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
+
+
+      ### 📋 Changes
+
+      See commit history for detailed changes.
   - version: v4.14.2-rc5
     name: v4.14.2-rc5
     datetime: '2026-08-17T23:24:31Z'
@@ -2043,108 +2143,6 @@ releases:
         -p 8080:3001 \
         -v meshmonitor-data:/data \
         ghcr.io/Yeraze/meshmonitor:4.13.2-rc4
-      ```
-
-
-      ### 🧪 Testing
-
-      ✅ All tests passed
-
-      ✅ TypeScript checks passed
-
-      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
-
-
-      ### 📋 Changes
-
-      See commit history for detailed changes.
-  - version: v4.13.2-rc3
-    name: v4.13.2-rc3
-    datetime: '2026-07-24T13:14:34Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.13.2-rc3
-    prerelease: true
-    notes: >-
-      # MeshMonitor v4.13.2-rc3
-
-
-      > ⚠️ **Pre-release** — this is a release candidate for testing. Docker images are not tagged
-      `:latest`.
-
-
-      This release candidate lands two major feature epics plus targeted fixes. The ATAK/CoT
-      integration epic (#3691) arrives in full: TAKPacket V1 decoding with Packet Monitor previews
-      and GeoChat messages, per-source ATAK contacts with a dedicated map layer, and a CoT TCP feed
-      that ATAK/WinTAK clients can connect to directly. The TX-disabled epic (#4294/#4308) makes
-      MeshMonitor a proper citizen on receive-only (listen-only) nodes: `lora.txEnabled=false` is
-      now honored by a central server-side TX guard, transmit-dependent UI controls are gated,
-      automations get a TX-disabled badge, and configuration import no longer silently forces TX
-      back on. MQTT ingest now applies auto-delete-by-distance inline at ingest time rather than
-      waiting for the periodic sweep (#3900). A touch-device layout bug that visually detached a
-      sender's long name from its message bubble is fixed (#4311).
-
-
-      ## Features
-
-      - #4307 feat(atak): TAKPacket V1 decode, Packet Monitor previews, GeoChat messages (#3691
-      Phase 1)
-
-      - #4310 feat(atak): per-source ATAK contacts + map layer (#3691 Phase 2)
-
-      - #4314 feat(atak): CoT TCP feed for ATAK/WinTAK clients (#3691 Phase 3)
-
-      - #4309 feat(server): honor lora.txEnabled with central TX-disabled guard (#4294)
-
-      - #4313 feat(ui): gate transmit-dependent controls when TX is disabled (#4294)
-
-      - #4316 docs+feat: TX-disabled polish — automations badge, API docs, receive-only guide
-      (#4294)
-
-      - #4306 feat(mqtt): apply auto-delete-by-distance inline at ingest (#3900)
-
-
-      ## Bug Fixes
-
-      - #4312 fix(channels): tie long name to its bubble on touch devices (#4311)
-
-
-      ## Chores
-
-      - #4318 chore: bump version to 4.13.2-rc3
-
-
-      ## Issues Resolved
-
-      - #3691 Feature: ATAK / CoT integration for Meshtastic ATAK plugin packets
-
-      - #4294 [BUG] Local Configuration tab silently forces LoRa txEnabled=true, breaking
-      intentional TX-off (listen-only) nodes
-
-      - #4308 Epic: Properly support LoRa tx_enabled=false (receive-only mode)
-
-      - #3900 [FEAT] Apply auto-delete-by-distance inline at MQTT ingest, not just on periodic
-      interval
-
-      - #4311 [BUG] Long name visually detached from its message bubble on touch devices
-
-
-      **Full Changelog**: https://github.com/Yeraze/meshmonitor/compare/v4.13.2-rc2...v4.13.2-rc3
-
-
-      ## 🚀 MeshMonitor v4.13.2-rc3
-
-
-      ### 📦 Installation
-
-
-      **Docker (recommended):**
-
-      ```bash
-
-      docker run -d \
-        --name meshmonitor \
-        -p 8080:3001 \
-        -v meshmonitor-data:/data \
-        ghcr.io/Yeraze/meshmonitor:4.13.2-rc3
       ```
 
 
