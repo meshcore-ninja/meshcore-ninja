@@ -1,7 +1,44 @@
 source: github
 repo: Treehouse-00/pymc_console-dist
-updatedAt: '2026-08-19T01:22:00.461Z'
+updatedAt: '2026-08-19T06:48:01.966Z'
 releases:
+  - version: v0.9.354
+    name: Release v0.9.354
+    datetime: '2026-08-19T06:30:21Z'
+    url: https://github.com/Treehouse-00/pymc_console-dist/releases/tag/v0.9.354
+    prerelease: false
+    notes: >-
+      ### Fixed
+
+      - First taps land reliably on touch devices. Packet History rows in duplicate groups or
+      carrying trace tags — and chart legend entries — previously swallowed the first tap on
+      iPhone/iPad (Safari consumed it as hover intent), needing a second tap to act. Hover-driven
+      highlighting is now mouse/trackpad only, so every tap counts.
+
+
+
+      ---
+
+      Full history:
+      [CHANGELOG.md](https://github.com/dmduran12/pymc_console-dist/blob/main/CHANGELOG.md)
+
+
+      ## Installation
+
+      ```bash
+
+      sudo ./manage.sh install
+
+      ```
+
+
+      ## Upgrade
+
+      ```bash
+
+      sudo ./manage.sh upgrade
+
+      ```
   - version: v0.9.353
     name: Release v0.9.353
     datetime: '2026-08-18T22:59:45Z'
@@ -435,23 +472,6 @@ releases:
     name: Release v0.9.335
     datetime: '2026-07-08T03:20:55Z'
     url: https://github.com/Treehouse-00/pymc_console-dist/releases/tag/v0.9.335
-    prerelease: false
-    notes: |-
-      Automated release from pymc_console.
-
-      ## Installation
-      ```bash
-      sudo ./manage.sh install
-      ```
-
-      ## Upgrade
-      ```bash
-      sudo ./manage.sh upgrade
-      ```
-  - version: v0.9.334
-    name: Release v0.9.334
-    datetime: '2026-07-08T02:01:15Z'
-    url: https://github.com/Treehouse-00/pymc_console-dist/releases/tag/v0.9.334
     prerelease: false
     notes: |-
       Automated release from pymc_console.
