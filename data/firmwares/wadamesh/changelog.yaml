@@ -1,7 +1,99 @@
 source: github
 repo: ALLFATHER-BV/wadamesh
-updatedAt: '2026-08-19T14:36:19.253Z'
+updatedAt: '2026-08-19T16:34:08.337Z'
 releases:
+  - version: beta_66
+    name: wadamesh beta_66
+    datetime: '2026-08-19T14:43:00Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_66
+    prerelease: true
+    notes: >-
+      **Test build.** Stable is now
+      [beta_65](https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_65).
+
+
+      Flash it at **[flasher.wadamesh.com](https://flasher.wadamesh.com)** with the Beta toggle on,
+      or on-device via **Settings → Firmware** with "Get test builds (beta)" enabled.
+
+
+      ---
+
+
+      ## T-Display P4: two measured hardware fixes
+
+
+      **The P4 was transmitting at roughly a twentieth of its rated power.** It never exceeded about
+      **+14.1 dBm** however high you set it, and the steps stopped tracking near the top. The SX1262
+      needs ~118 mA to deliver +22 dBm, but its over-current protection was left at the chip default
+      of 60 mA, so the amplifier was current-limited long before reaching the requested power. Every
+      S3 board has always set this; the P4 was the one target that never did. Found by @wb6zsu on an
+      HP E8285A test set, and confirmed independently by @stephen-62
+      ([#283](https://github.com/ALLFATHER-BV/wadamesh/issues/283)).
+
+
+      **The P4 battery percentage now comes from the fuel gauge**, not from terminal voltage. The
+      BQ27220 coulomb-counts against its learned pack profile and knows the real state of charge;
+      voltage is charger-driven, which is why it pinned at 100% the instant USB went in, sat under
+      100% on a rested full pack, and once read 71% on a pack Meck-P4 measured at 11%. Calibrating
+      "this is full" while charging baked that error in permanently. Reported by @D-Melhede and
+      @wb6zsu ([#273](https://github.com/ALLFATHER-BV/wadamesh/issues/273)).
+
+
+      ⚠️ This does **not** cover charging itself or the red/green charge LED — those are the BQ25896
+      charger, which we do not talk to yet. That half of #273 stays open.
+
+
+      ## The map was hiding your newest contacts
+
+
+      The marker array held 32 entries with one reserved for self, so **31 contact dots was the
+      ceiling** — and the loop stopped there silently while the counter in the corner kept counting
+      every positioned contact. Because contacts are appended and the loop walks in order, the dots
+      that never got drawn were always the newest ones.
+
+
+      Ceiling is now **256**, and if it is ever reached the counter says "31 of 45 on map" rather
+      than quietly disagreeing with the screen. **Map options → "Max dots"** (default All) is there
+      for anyone who wants to cap it.
+
+
+      ## A crash on the home screen
+
+
+      From a coredump a user sent in. Boards with the Expansion Kit were reading the BME280 over I2C
+      **on every home-screen refresh, about once a second**, on the UI thread. Adafruit reads it
+      with a repeated start, and if that sequence stalls, Arduino's `TwoWire` is left holding a lock
+      it then tries to release from the wrong task — FreeRTOS asserts and the device reboots. The
+      reading is now cached and refreshed at most every few seconds.
+
+
+      ## Fixes
+
+
+      - **Language pack downloads failed silently** on some devices while apps downloaded fine.
+      Languages need a much larger buffer; if that memory was not available the download just gave
+      up. It now steps down to smaller buffers, and when it does fail it says why. Reported by
+      @AtomAlex12 ([#274](https://github.com/ALLFATHER-BV/wadamesh/issues/274)).
+
+      - **Every screen is fully translated again** — 29 strings added over recent releases had never
+      reached the language files. Reported by @pisti87
+      ([#277](https://github.com/ALLFATHER-BV/wadamesh/issues/277)), who also supplied the Hungarian
+      for the longest of them.
+
+      - A login that gets no reply now tells you if **multi-byte path hashing** is on, since older
+      repeaters silently drop those packets and the failure otherwise looks like nothing happening
+      at all ([#278](https://github.com/ALLFATHER-BV/wadamesh/issues/278),
+      [#280](https://github.com/ALLFATHER-BV/wadamesh/issues/280)).
+
+      - Exit the **Store / Language page with the keyboard** — @oumike,
+      [#282](https://github.com/ALLFATHER-BV/wadamesh/pull/282), reported by @ichliebespam.
+
+      - **Remote Mode** on the T-Lora Pager no longer leaves a black screen with no way out —
+      @oumike, [#275](https://github.com/ALLFATHER-BV/wadamesh/pull/275), reported by @AtomAlex12.
+
+      - **Room login recovery**: a server that
+
+      …
   - version: beta_65
     name: wadamesh beta_65 (stable)
     datetime: '2026-08-13T17:39:52Z'
@@ -1457,57 +1549,3 @@ releases:
       T-Deck · Heltec V4 TFT · Heltec V4-R8 · ThinkNode M9 · RAK TAP v2 · T-LoRa Pager (LR1121 /
       SX1262) · Attaky Core · T-Display P4. Flash `<board>-merged.bin` at `0x0` (full install) or
       `<board>.bin` for an app-only/OTA update.
-  - version: beta_46
-    name: wadamesh beta_46
-    datetime: '2026-07-16T20:42:03Z'
-    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_46
-    prerelease: false
-    notes: >-
-      **wadamesh beta_46 — now the stable release.** This promotes beta_46 to stable; below is
-      everything since the previous stable (**beta_45**).
-
-
-      > ✅ Stable channel. Install via the [web flasher](https://flasher.wadamesh.com) (Stable), the
-      LauncherHub **WADAMESH** entry, or a `-merged.bin` below. Newer test builds live on the Beta
-      channel.
-
-
-      🙏 **Community contribution:** huge thanks to
-      **[@codemonkeybr](https://github.com/codemonkeybr)** (Tesso Codemonkey) for the **Do Not
-      Disturb** feature (originally [#156](https://github.com/ALLFATHER-BV/wadamesh/pull/156)).
-
-
-      ## 🛠 Fixed
-
-      - **Contacts no longer go missing between reboots on microSD devices.** Saves are now
-      **atomic** — written to a temp file and swapped in only once fully written — so an interrupted
-      write can never truncate your contact list, and the card is mounted far more reliably at boot.
-      *(If you've ever lost repeaters/contacts overnight, this is the fix — update to it.)*
-
-      - **Heltec V4-R8** — the microSD card now mounts, and the freeze when waking the device from
-      sleep is fixed.
-
-      - **LilyGo T-Pager** — the map no longer shows a "storage error" under the launcher; it now
-      caches tiles to the microSD card (like the T-Deck).
-
-      - **Heltec V4 (portrait)** — the Bluetooth icon no longer overlaps the clock, and
-      control-center buttons no longer clip when tapped.
-
-
-      ## ✨ New
-
-      - **Redesigned control center** — round quick-toggle buttons that spread to fill the panel, a
-      frosted-glass look, real lock/bell glyphs, and a confirmation popup on every toggle.
-
-      - **Do Not Disturb** *(by @codemonkeybr,
-      [#156](https://github.com/ALLFATHER-BV/wadamesh/pull/156))* — set quiet hours in **Settings →
-      Sound** to silence the incoming-message chime during a daily window, with a bell in the status
-      bar while it's active. Plus a matching control-center quick-toggle (a bell that gains a slash
-      while quiet hours are on).
-
-
-      ## 📦 Boards
-
-      T-Deck · Heltec V4 TFT · Heltec V4-R8 · ThinkNode M9 · RAK TAP v2 · T-LoRa Pager (LR1121 /
-      SX1262) · T-Display P4. Flash `<board>-merged.bin` at `0x0` (full install) or `<board>.bin`
-      for an app-only/OTA update.
