@@ -1,111 +1,99 @@
 source: github
 repo: ALLFATHER-BV/wadamesh
-updatedAt: '2026-08-17T16:30:09.299Z'
+updatedAt: '2026-08-19T14:36:19.253Z'
 releases:
   - version: beta_65
-    name: wadamesh beta_65
+    name: wadamesh beta_65 (stable)
     datetime: '2026-08-13T17:39:52Z'
     url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_65
-    prerelease: true
+    prerelease: false
     notes: >-
-      **Test build.** Stable stays
-      [beta_63](https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_63).
+      **This is now the stable release.** It supersedes
+      [beta_63](https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_63) and covers everything
+      from beta_64 and beta_65.
 
 
-      Flash it at **[flasher.wadamesh.com](https://flasher.wadamesh.com)** with the Beta toggle on,
-      or on-device via **Settings → Firmware** with "Get test builds (beta)" enabled.
-
-
-      Mostly a follow-up to beta_64: two things testers hit within hours, one feature request, and a
-      documentation correction that was overdue.
+      Flash it at **[flasher.wadamesh.com](https://flasher.wadamesh.com)**, or on-device via
+      **Settings → Firmware**.
 
 
       ---
 
 
-      ## Updating no longer strands you on "LoRa radio not detected"
+      ## The Heltec V4 freeze, properly this time
 
 
-      Reported on a T-Deck immediately after taking beta_64. On boards where the radio sits behind a
-      peripheral power switch, an update ends in a **software** reset — which releases that switch,
-      collapses the rail, and then the firmware checks for the radio before it has finished powering
-      back up. So the first boot after an update could dead-end on the fatal error screen, and the
-      only way out was to power-cycle by hand.
+      V4 units that froze whenever a new contact arrived are fixed, and **both reporters have
+      confirmed it on their own devices**. beta_62 moved one storage delete off the packet path,
+      which helped but left the larger half in place.
 
 
-      The firmware now does that power-cycle itself and probes again. It only runs when the
-      alternative is halting on the error screen, so a board that comes up normally never executes
-      any of it.
+      A contact record is 152 bytes and the table holds up to 2000 of them, so saving contacts
+      rewrote the entire **304 KB** file on every change, and the crash-safe write keeps a second
+      copy of the same size beside it during the swap. Roughly **600 KB of flash churn because one
+      contact changed**. On a card-less board that lands on internal flash, whose garbage collection
+      suspends the flash cache and stalls **both CPU cores**. That is why the whole device went away
+      rather than dropping a packet.
 
 
-      ## Back no longer opens the status bar too
+      But the table never changes in bulk: replacing the oldest contact overwrites one slot, and
+      hearing from a known node touches one entry. So each record is now compared against what is
+      stored and only the differences are written back. **A new contact replacing an old one writes
+      152 bytes instead of 304,000**, and a save with nothing to change writes nothing at all. Every
+      patched record is read back and compared, and on any disagreement the firmware falls through
+      to the old whole-file write, so your contact list cannot end up half-written by the new path.
 
 
-      Leaving an app by the "‹" went back **and** pulled the dropdown open — one tap doing two
-      things. The bar closes an app page on touch-down (so a dropped tap can't trap you on a
-      touch-only board), and the click that followed the same tap was falling through to the
-      control-center toggle. Harmless while that behaviour was limited to one page; wrong for every
-      app page since beta_49. Thanks @Istvan.
+      Thanks to @Yoss101 and @pisti87 — and particularly to @Yoss101 for coming back to say a first
+      fix had only half worked, which is the report that found the rest of it.
+
+
+      ## Apps can do much more, and now ask permission
+
+
+      Lua apps gained the real date and time, the buzzer, battery state, GPS position, a scoped and
+      rate-limited private folder each, hardware key presses, and the ability to send mesh messages
+      and receive replies (#245).
+
+
+      Anything reaching outside an app **asks you first, per app, once**. Sending and receiving are
+      separate permissions, so granting one does not grant the other, and a refusal is remembered
+      rather than nagged. New page: **Settings → App permissions**, listing every installed app and
+      what it may do, with a switch to take any of it back. The extended toolkit is limited to
+      boards with the memory to carry it, so the Heltec V4 keeps its resources for the mesh.
+
+
+      **If you tried to write a Lua app and gave up, try again.** The SDK page was wrong about the
+      very first thing an app does: it said to define callbacks as globals named
+      `on_start`/`on_stop`, which the firmware has never called. An app is a table you build and
+      `return`, with `on_open`, `on_tick`, `on_input`, `on_message`, `on_close`. The old example
+      produced an app where nothing ran and nothing was reported. [The
+      page](https://wadamesh.com/sdk.html) is corrected and now documents all of the above. An **SDK
+      Test** app in the Store checks every call on your own board.
 
 
       ## Share your position without broadcasting it
 
 
-      Until now the only way to share position was to put it in your advert — broadcast in the clear
-      to every node in range, indefinitely. MeshCore can instead answer position **on request**,
-      encrypted to the contact that asked, and only for contacts you chose. Almost all of that was
-      already implemented and simply had no way to switch it on.
+      An advert broadcasts your position in the clear to every node in range. You can now instead
+      answer **on request**, encrypted to the contact that asked, and only for contacts you chose:
+      **Settings → Radio & Mesh → "Share my location when asked"** (Never / Chosen contacts only /
+      Anyone who asks), with the per-contact grant in each contact's own menu. No protocol change,
+      so it interoperates with the MeshCore app. Requested by @janmashat (#266).
 
 
-      - **Settings → Mesh → "Share my location when asked"** — Never / Chosen contacts only / Anyone
-      who asks.
-
-      - **A contact's own menu → "Share my loc"** — grant it, and take it back from the same place.
+      ## Fixes
 
 
-      Nothing is broadcast; it is sent only when that contact asks. No protocol change, so it
-      interoperates with the MeshCore app and other MeshCore nodes. Requested by @janmashat
-      ([#266](https://github.com/ALLFATHER-BV/wadamesh/issues/266)).
+      - Accented and non-Latin characters showed as **empty boxes in the grey hint text** of empty
+      fields — the Wi-Fi password box, the MQTT bridge fields, ~two dozen others. Fixed everywhere,
+      in every language.
 
+      - A translated line whose **placeholders do not match** the English original is now ignored
+      rather than used. Since language files download from the Store, this closes off a whole class
+      of crash, including 
 
-      ## If you tried to write a Lua app and gave up — try again
-
-
-      The SDK page at **[wadamesh.com/sdk.html](https://wadamesh.com/sdk.html)** was wrong about the
-      very first thing an app author does. It said to define your callbacks as globals named
-      `on_start` / `on_stop`. The firmware has never called those: an app is a table you build and
-      `return`, with `on_open`, `on_tick`, `on_input`, `on_message`, `on_close`.
-
-
-      Following the published example gave you an app where **nothing ran and nothing was reported**
-      — a blank screen with no error. If that happened to you, it was the documentation, not you. It
-      is corrected now, along with `ev.key` (the page named a field that does not exist) and the
-      real `label` / `button` signatures.
-
-
-      The page also now documents everything beta_64 added: the clock, buzzer, battery, GPS, per-app
-      file storage, sending and receiving mesh messages, and the permission model behind the last
-      two.
-
-
-      ## Store fixed
-
-
-      The app and language Store is served from a path nothing was publishing to. Translations sat
-      at an older version than the ones in the project, and an app published to the catalog never
-      appeared at all. Fixed — the Hungarian, German and Dutch updates are live, along with the
-      **SDK Test** app, which exercises every SDK call and reports pass/fail per line.
-
-
-      ---
-
-
-      **Boards:** Heltec V4 TFT · Heltec V4-R8 TFT · LilyGo T-Deck · T-Lora Pager (LR1121 / SX1262)
-      · ThinkNode M9 · RAK TAP v2 · Attaky Mesh Series · LilyGo T-Display P4 (AMOLED + LCD).
-
-
-      Use `-merged.bin` for a fresh install at offset 0x0; the plain `.bin` is the app-only image
-      for OTA and the Launcher.
+      …
   - version: beta_64
     name: wadamesh beta_64
     datetime: '2026-08-13T15:21:45Z'
