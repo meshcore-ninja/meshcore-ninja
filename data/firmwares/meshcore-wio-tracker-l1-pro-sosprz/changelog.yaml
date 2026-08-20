@@ -1,7 +1,13 @@
 source: github
 repo: sosprz/Meshcore-Wio-Tracker-L1-Pro
-updatedAt: '2026-08-17T18:42:18.736Z'
+updatedAt: '2026-08-20T16:37:23.023Z'
 releases:
+  - version: v1.17.93
+    name: v1.17.93
+    datetime: '2026-08-20T16:32:41Z'
+    url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.17.93
+    prerelease: false
+    notes: "- **GPS preference startup fix** - Saved GPS on/off state and update interval are now applied after GPS hardware initialization, so they persist reliably across restarts in both display and headless companion builds.\r\n- **Sound-off persistence fix** - A saved `Sound: OFF` preference is now preserved at boot; the L1 no longer re-enables the buzzer after power cycling.\r\n- **Contact list and advert discovery fix** - The UI now skips its internal anonymous-contact slots, eliminating blank, unusable contact rows. Newly received adverts are correctly treated as new contacts and saved reliably."
   - version: v1.17.92
     name: v1.17.92
     datetime: '2026-08-17T17:43:06Z'
@@ -132,9 +138,3 @@ releases:
     url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.14.1.73
     prerelease: false
     notes: "- **Tracker -> phone message replay fix** - Messages sent from the Wio Tracker / companion device are now queued for companion-app sync as well, so outgoing DMs and channels show up in the mobile app and can also be replayed after reconnect.\r\n- **Muted channels survive reboot** - Channel mute/unmute state is now persisted and restored after restart, so accidental Wio Tracker L1 side-button reboots do not clear muted channels.\r\n- **Private/group message mix fix** - Fixed channel history/state corruption where removing or reordering channels could let a different hashtag/private group inherit old slot history, unread state, or mute state from another channel.\r\n- **Channel send text corruption fix** - Fixed channel send/local-echo handling for app-framed messages so private/group messages no longer pick up random garbage characters from non-null-terminated payload bytes."
-  - version: v1.14.0.72
-    name: v1.14.0.72
-    datetime: '2026-03-19T17:34:15Z'
-    url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.14.0.72
-    prerelease: false
-    notes: "- **Wio Tracker L1: OLED invert theme** - Added `System -> Display -> Theme` options `Black/White` and `White/Black` for SH1106 companion-radio builds, so users can switch between normal and inverted monochrome display rendering.\r\n-  **On-screen keyboard: QWERTY layout** - Changed the soft keyboard letter order from alphabetical `ABC` layout to `QWERTY` sequence for companion-radio text entry."

@@ -1,7 +1,30 @@
 source: github
 repo: andymux/meshos-releases
-updatedAt: '2026-08-17T16:30:25.555Z'
+updatedAt: '2026-08-20T16:37:47.027Z'
 releases:
+  - version: fw-v1.6.6
+    name: MeshOS firmware v1.6.6
+    datetime: '2026-08-20T16:23:53Z'
+    url: https://github.com/andymux/meshos-releases/releases/tag/fw-v1.6.6
+    prerelease: false
+    notes: >-
+      Typing feels instant: eliminated input stalls during busy mesh traffic, fixed phantom double
+      letters, and deferred background work off the keyboard. New: select words with the joypad or
+      trackball (left to select, backspace to delete), tap to place the cursor and edit mid-message
+      (T-Deck). Plus a globe icon for the MeshOS channel, international characters now sit correctly
+      in Modern font, and a clearer message when updating without an SD card.
+
+
+      Device firmware for LilyGo T-Deck and ThinkNode M9.
+
+      Install via SD card (firmware.bin) or the in-firmware updater.
+
+
+      SHA-256:
+
+      - TDeck: 6b03705490ee569fc94d15739eacda1f7bbead1025e41e15a7b8fa8f10bce231
+
+      - M9: 53897c105eb99aa8a17e5c96504a0c0c2a6e021a653da00357acc90404173639
   - version: fw-v1.6.5
     name: MeshOS firmware v1.6.5
     datetime: '2026-08-12T15:38:00Z'
@@ -445,23 +468,3 @@ releases:
       - TDeck: 9422f5835f0d2a0e2cac0eb3623e31a9303b48dd34a4f3db2b4729668878777f
 
       - M9: e41a5361e1d0841676502b54085e20d3a8628bc9ee137a91c4a85e0b03bb3b21
-  - version: fw-v1.5.0
-    name: MeshOS firmware v1.5.0
-    datetime: '2026-07-09T11:45:40Z'
-    url: https://github.com/andymux/meshos-releases/releases/tag/fw-v1.5.0
-    prerelease: true
-    notes: >-
-      MeshOS 1.5.0 - Modern UI overhaul: overlay font scaling, emoji picker v2, home notification
-      band, browser image save/wallpaper, momentum scrolling, charge sensing
-
-
-      Device firmware for LilyGo T-Deck and ThinkNode M9.
-
-      Install via SD card (firmware.bin) or the in-firmware updater.
-
-
-      SHA-256:
-
-      - TDeck: 33df19a56529e5f39df692d379238403d91071ef756e1c098a7d34bd4e4482db
-
-      - M9: 414aef61ce870bca2340b93e5af6529418de2c2abcac2e4072d2ae850bfe9705
