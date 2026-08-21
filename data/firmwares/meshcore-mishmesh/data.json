@@ -5,15 +5,15 @@
     "githubForks": 9,
     "githubWatchers": 9,
     "githubOpenIssues": 10,
-    "githubContributors": 176,
-    "releaseDownloads": 518,
-    "latestReleaseDownloads": 224,
-    "lastChecked": "2026-08-20"
+    "githubContributors": 194,
+    "releaseDownloads": 522,
+    "latestReleaseDownloads": 228,
+    "lastChecked": "2026-08-21"
   },
   "verification": {
     "sourceAvailable": true,
     "releasesAvailable": true,
     "ciBuilds": true,
-    "lastChecked": "2026-08-20"
+    "lastChecked": "2026-08-21"
   }
 }
