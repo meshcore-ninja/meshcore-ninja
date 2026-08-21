@@ -1,7 +1,96 @@
 source: github
 repo: ALLFATHER-BV/wadamesh
-updatedAt: '2026-08-21T18:39:17.038Z'
+updatedAt: '2026-08-21T20:28:12.519Z'
 releases:
+  - version: beta_68
+    name: wadamesh beta_68
+    datetime: '2026-08-21T20:08:52Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_68
+    prerelease: true
+    notes: >-
+      **Test build.** Stable stays
+      [beta_65](https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_65). Flash it from the
+      web flasher at [wadamesh.com](https://wadamesh.com) with the Beta toggle on, or from the
+      device under Settings > Updates with "Get test builds (beta)" enabled.
+
+
+      This drop is almost entirely new **Lua SDK** surface. If you write apps, this is the one to
+      try. If you do not, the user-facing changes are a handful of fixes and two new Store apps.
+
+
+      ## Apps can now do the things the firmware does
+
+
+      The SDK gained the four capabilities that were keeping third-party apps a sketch of a built-in
+      one.
+
+
+      **`wada.map`** puts the real map on an app's page. Not a drawing of a map: the same
+      OpenStreetMap tiles, the same Web Mercator projection and the same on-disk cache the Map tab
+      uses. Markers and lines are placed by latitude and longitude, taps convert back to
+      coordinates, and `map:tiles()` reports how many tiles were actually placed so an app can say
+      "nothing cached here" rather than showing an empty rectangle that looks like open water. It
+      owns a small pool of its own rather than borrowing the Map tab's, so the two cannot evict each
+      other's tiles.
+
+
+      **`wada.ui.list`** is the "pick one of N" widget that did not exist. Every app needing one
+      drew rows by hand and tracked scrolling itself, which is most of why app screens looked worse
+      than the firmware's own. Rows are real buttons, so keyboard and trackball navigation walks
+      them on boards with no touchscreen.
+
+
+      **`app.on_packet`** delivers each received frame once, in arrival order. Polling `rx_log()`
+      sampled a 16-deep ring on a timer, so in real traffic an app saw a subset and could not count
+      anything.
+
+
+      **`wada.mesh.discover`** fires the active zero-hop discovery probe. A reply proves the link
+      works from where you are standing, which listening can never establish, and each reply carries
+      **both directions**: how well you heard them and how well they heard you. Those are rarely
+      equal, and "I can hear the repeater but it cannot hear me" is a different fact from "no
+      coverage". It sits behind its own permission, separate from sending messages, because a probe
+      spends airtime on every neighbour's radio and not only yours.
+
+
+      Everything those need to be useful came with them:
+
+
+      - Packets report **who sent them, only where the frame honestly says so**. An advert carries a
+      real public key and is reported as one; addressed frames carry one-byte hashes and are
+      reported as those; anything else stays anonymous. Nothing is inferred.
+
+      - **`wada.ui.input`** for a line of text, using the firmware's own dialog and keyboard, so it
+      behaves the same on touch, on a physical keyboard and on a trackball.
+
+      - **`wada.geo`** for distance, bearing and compass point, in C. A dozen trigonometry calls per
+      contact per tick was a real slice of an app's instruction budget. (It is not a compass: no
+      board here has a magnetometer, so this is the direction to steer, not the direction you are
+      facing.)
+
+      - **`wada.sys.env`** for temperature, humidity and pressure, gated on whether the board *has*
+      the sensors rather than on the memory limit that gates the rest of the extended SDK. Those are
+      different questions.
+
+      - **Named and one-shot timers.** An app had one clock; anything with a second cadence had to
+      be a counter inside it.
+
+      - **`wada.net.http_post`**, so a survey log or a sensor series can leave the device.
+
+      - **Exact coordinates.** Lua is built with 32-bit floats, so anything logging a track was
+      quietly losing about a metre. `lat_e6`/`lon_e6` are the same reading as exact integers,
+      alongside GPS altitude and satellite time.
+
+
+      Two new Store apps demonstrate the lot. **Wardrive** is a coverage survey: it probes on a
+      cadence, discards samples taken without a GPS fix rather than logging them at 0,0, and writes
+      a CSV with both link directions per node. **Nearby** puts your contacts on a real map sorted
+      by distance, with bearing, and counts frames live.
+
+
+      Full reference, including the instruction budget and what it costs: [wadames
+
+      …
   - version: beta_67
     name: wadamesh beta_67
     datetime: '2026-08-21T16:20:46Z'
@@ -1539,62 +1628,3 @@ releases:
       This drop rebuilds every board so the version stays in step, but only the **T-Display P4** has
       changes. Other boards can stay on beta_48. Flash `<board>-merged.bin` at `0x0` for a full
       install, or `<board>.bin` for an app-only update.
-  - version: beta_48
-    name: wadamesh beta_48
-    datetime: '2026-07-20T09:33:01Z'
-    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_48
-    prerelease: true
-    notes: >-
-      **wadamesh beta_48** is a stability and bug-fix drop. A big batch of reported issues sorted.
-
-
-      > Test build. Turn on **Get test builds (beta)** on the device, use the **Beta** toggle on the
-      [web flasher](https://flasher.wadamesh.com), or grab a `-merged.bin` below. Stable stays on
-      beta_46.
-
-
-      ## Fixed
-
-      - Crash that could reboot the device while typing in a chat
-      ([#98](https://github.com/ALLFATHER-BV/wadamesh/issues/98)).
-
-      - Devices stuck on the boot screen after an update with a microSD card fitted. The boot-time
-      copy of your data to the card could hang on a slow or damaged card; it is now guarded so the
-      device always boots ([#142](https://github.com/ALLFATHER-BV/wadamesh/issues/142),
-      [#148](https://github.com/ALLFATHER-BV/wadamesh/issues/148)).
-
-      - MQTT bridge settings not saving. They were going to the wrong storage; now they stick across
-      reboots ([#128](https://github.com/ALLFATHER-BV/wadamesh/issues/128)).
-
-      - Message times showing 1910 or other wrong dates. They now match the clock at the top of the
-      screen ([#100](https://github.com/ALLFATHER-BV/wadamesh/issues/100),
-      [#152](https://github.com/ALLFATHER-BV/wadamesh/issues/152)).
-
-      - Dutch keyboard typing "ij" and "IJ" on the "1" and "!" keys
-      ([#144](https://github.com/ALLFATHER-BV/wadamesh/issues/144),
-      [#164](https://github.com/ALLFATHER-BV/wadamesh/issues/164)).
-
-      - Message box letting you type past the real send limit and silently dropping the end of a
-      long message ([#119](https://github.com/ALLFATHER-BV/wadamesh/issues/119)).
-
-      - Copy and paste cutting off long text
-      ([#120](https://github.com/ALLFATHER-BV/wadamesh/issues/120)).
-
-      - Quick messages list not scrolling when there were more entries than fit on screen
-      ([#151](https://github.com/ALLFATHER-BV/wadamesh/issues/151)).
-
-      - Room server names starting with an unusual character showing an empty box on the Join screen
-      ([#116](https://github.com/ALLFATHER-BV/wadamesh/issues/116)).
-
-      - Tanmatsu: only about half the emojis were reachable in the picker
-      ([#141](https://github.com/ALLFATHER-BV/wadamesh/issues/141)).
-
-      - Tanmatsu: the last settings item (About) being unreachable was already fixed in an earlier
-      build, so it is sorted here too ([#140](https://github.com/ALLFATHER-BV/wadamesh/issues/140)).
-
-
-      ## Boards
-
-      T-Deck · Heltec V4 TFT · Heltec V4-R8 · ThinkNode M9 · RAK TAP v2 · T-LoRa Pager (LR1121 /
-      SX1262) · Attaky Core · T-Display P4. Flash `<board>-merged.bin` at `0x0` for a full install,
-      or `<board>.bin` for an app-only update.
