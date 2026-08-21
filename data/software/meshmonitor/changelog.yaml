@@ -1,7 +1,119 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-08-19T04:39:28.115Z'
+updatedAt: '2026-08-21T04:41:04.222Z'
 releases:
+  - version: v4.14.2-rc7
+    name: v4.14.2-rc7
+    datetime: '2026-08-21T03:53:03Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.14.2-rc7
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.14.2-rc7
+
+
+      > ⚠️ **Pre-release (release candidate).** For testing ahead of the 4.14.2 final. No `:latest`
+      Docker tags are published for this build.
+
+
+      Release candidate focused on message **Delivery Details** diagnostics and finishing 3D-map
+      parity. A new clickable Delivery Details view surfaces per-message protocol, route, hop, and
+      heard-by data — built up across five phases (diagnostics UI, exact RoutingError persistence, a
+      per-message event timeline, Meshtastic Heard-By correlation, and a user guide). The 3D terrain
+      map reaches visual parity with the 2D map: node markers now carry hop color, node-type glyphs,
+      and age dimming; neighbor/traceroute lines are gated to visible nodes; markers open the same
+      node popup; and MeshCore edge + MapAnalysis coloring follow-ups landed. This RC also adds
+      received node **Status Messages** (decode + display), a MeshBeacon broadcast-interval/region
+      control, an automation "Run Now" action, and an Uptime sort for the node list. Fixes include
+      the rc6 3D-marker regression (MapLibre v6 worker), the Traffic Management firmware gate (now
+      2.8.0), MeshCore telemetry temperature units, packet-monitor and NodeDB-sync deduplication,
+      invisible message links, and sign-in reachability on permission-scoped source pages.
+
+
+      ## Features
+
+      - **Message Delivery Details** (#4816): clickable delivery-status diagnostics (#4837), persist
+      exact Meshtastic RoutingError code (#4839), per-message event timeline (#4841), Meshtastic
+      Heard-By correlation (#4842), user guide + honest-labeling audit (#4843)
+
+      - Receive + display node **Status Messages** (#4834, closes #4818)
+
+      - 3D map parity with 2D — marker color/glyphs/age dimming (#4815), visible-node line gating
+      (#4817), click-to-open node popups (#4825), MeshCore edge gating + MapAnalysis coloring
+      (#4830) (#4808)
+
+      - MeshBeacon broadcast interval + transmit region / broadcast targets (#4804, closes #4802)
+
+      - Automation: **Run Now** to fire an automation's actions immediately (#4833, closes #4827)
+
+      - Uptime sort option in the map-view node list (#4820, closes #4814)
+
+      - Airtime: count CLIENT_BASE as infrastructure for neighbor averaging (#4831, closes #4822)
+
+
+      ## Bug Fixes
+
+      - 3D terrain showed no node markers — load the MapLibre v6 worker (#4806, closes #4800 rc6
+      regression)
+
+      - Traffic Management firmware gate too low → require 2.8.0 (#4807, closes #4792)
+
+      - MeshCore telemetry: honor the user's temperature unit (#4805, closes #3659)
+
+      - Keep sign-in reachable on a source without connection permission (#4829, closes #4828)
+
+      - Invisible links on sent message bubbles (#4821, closes #4819)
+
+      - Packet Monitor: drop exact-duplicate receptions (#4812, closes #4811)
+
+      - Stop re-recording NodeDB dump as duplicate position/telemetry history (#4810, closes #4809)
+
+      - Automation: accept `!hex` node IDs in deviceReboot target (#4832, closes #4826)
+
+
+      ## Other
+
+      - Enhance star-history display with responsive images (#4813)
+
+
+      ## Issues Resolved
+
+      #4818, #4816, #4808, #4802, #4827, #4814, #4822, #4800, #4792, #3659, #4828, #4819, #4811,
+      #4809, #4826
+
+
+      **Full changelog:** https://github.com/Yeraze/meshmonitor/compare/v4.14.2-rc6...v4.14.2-rc7
+
+
+      ## 🚀 MeshMonitor v4.14.2-rc7
+
+
+      ### 📦 Installation
+
+
+      **Docker (recommended):**
+
+      ```bash
+
+      docker run -d \
+        --name meshmonitor \
+        -p 8080:3001 \
+        -v meshmonitor-data:/data \
+        ghcr.io/Yeraze/meshmonitor:4.14.2-rc7
+      ```
+
+
+      ### 🧪 Testing
+
+      ✅ All tests passed
+
+      ✅ TypeScript checks passed
+
+      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
+
+
+      ### 📋 Changes
+
+      See commit history for detailed changes.
   - version: v4.14.2-rc6
     name: v4.14.2-rc6
     datetime: '2026-08-19T03:59:40Z'
@@ -2044,117 +2156,3 @@ releases:
       direct message, and the firmware's `addFromContact()` sets `is_favorite` to sh
 
       …
-  - version: v4.13.2-rc4
-    name: v4.13.2-rc4
-    datetime: '2026-07-25T19:47:27Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.13.2-rc4
-    prerelease: true
-    notes: >-
-      Pre-release. Rolls up the complete `ok_to_mqtt` violation-detection feature and its pagination
-      follow-up.
-
-
-      ## Detect MQTT gateways that ignore `ok_to_mqtt`
-
-
-      Meshtastic packets carry an `ok_to_mqtt` bit by which the originating node signals whether it
-      consents to its traffic being uplinked to MQTT. Firmware only enforces it when a gateway
-      relays *other* nodes' packets, and it skips the check entirely whenever the gateway believes
-      its broker address is private — a plain IP-range test with no awareness of NAT or port
-      forwarding. A gateway reaching its broker through a LAN-literal address that is *also*
-      port-forwarded gets misclassified as private and silently relays opted-out traffic to what is
-      effectively a public broker.
-
-
-      MeshMonitor now detects that. When a received packet's bit is **explicitly clear** and the
-      publishing gateway is not the originator, it is a provable violation — and it is recorded.
-
-
-      **Important:** a violation is almost certainly a gateway **misconfiguration**, not malice.
-      Treat it as something worth flagging to the gateway's operator.
-
-
-      ### Where you see it
-
-
-      - **Packet Monitor** — a `violation` badge on affected packets, and a per-gateway `ok_to_mqtt`
-      column in the packet detail view showing which gateway violated (a packet can be relayed by
-      many). Four states are distinguished: violation, allowed, opted out, and unknown (bit
-      unreadable).
-
-      - **Analysis & Reports → ok_to_mqtt Violations** — a cross-source report with a per-gateway
-      summary (violation count, distinct originators affected, sources, first/last seen), drill-down
-      to individual violating packets, window presets (24 h / 7 / 30 / 90 days) or an explicit date
-      range, CSV export, and an optional "include unproven" toggle.
-
-
-      ### Behaviour worth knowing
-
-
-      - **Recording is on by default.** Violation history is kept ~90 days in its own store,
-      independent of the MQTT Packet Monitor's much shorter window — so the report works out of the
-      box. The per-packet **badge**, however, reads the Packet Monitor's capture log, which is
-      **opt-in and off by default**; the Packet Monitor now says so explicitly when capture is off,
-      so an absence of badges is never mistaken for an absence of violations.
-
-      - **Forward-only.** Detection covers traffic received after upgrading. No backfill is possible
-      — the bit was never previously stored — so expect an empty history at first.
-
-      - **Confirmed vs. suspected.** Rows whose bit could not be read (undecryptable, or captured
-      before this feature existed) are reported as *unknown/suspected*, never as confirmed
-      violations, and they come from a much shorter retention window.
-
-
-      ## Included changes
-
-
-      - #4324 — Phase 1: backend detection, migration 128, durable history, cross-source endpoints
-
-      - #4328 — Phase 2: Packet Monitor badge + per-gateway attribution
-
-      - #4331 — Phase 3: the `ok_to_mqtt Violations` report
-
-      - #4332 — fixes #4330: SQL sorting/paging so large result sets page correctly and ascending
-      sorts are accurate
-
-
-      ## Upgrade notes
-
-
-      Migration **128** adds columns to `mqtt_packet_log` and creates the violation-history table.
-      It is idempotent and was verified against SQLite, PostgreSQL 16 and MySQL 8.4. The new table
-      is included in `migrate-db`, so backend-to-backend migrations carry violation history across.
-
-
-      No configuration is required.
-
-      ## 🚀 MeshMonitor v4.13.2-rc4
-
-
-      ### 📦 Installation
-
-
-      **Docker (recommended):**
-
-      ```bash
-
-      docker run -d \
-        --name meshmonitor \
-        -p 8080:3001 \
-        -v meshmonitor-data:/data \
-        ghcr.io/Yeraze/meshmonitor:4.13.2-rc4
-      ```
-
-
-      ### 🧪 Testing
-
-      ✅ All tests passed
-
-      ✅ TypeScript checks passed
-
-      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
-
-
-      ### 📋 Changes
-
-      See commit history for detailed changes.
