@@ -1,7 +1,68 @@
 source: github
 repo: PEG4TRON/MeshCorium
-updatedAt: '2026-07-05T17:14:45.459Z'
+updatedAt: '2026-08-21T01:25:09.150Z'
 releases:
+  - version: 0.9.1
+    name: MeshCorium v0.9.1 — message fixes & maps
+    datetime: '2026-08-20T23:56:15Z'
+    url: https://github.com/PEG4TRON/MeshCorium/releases/tag/0.9.1
+    prerelease: false
+    notes: >-
+      ## OSM tiles fixed
+
+
+      OpenStreetMap tiles now load directly from the browser instead of going through the backend
+      `/api/tiles/proxy`. The proxy sent `curl/x.y` as User-Agent with no Referer, so OSM returned
+      "Access blocked" placeholder images (masked as HTTP 200 with 24h cache). Direct browser
+      requests carry a proper User-Agent and Referer and satisfy the OSM tile usage policy. The tile
+      proxy remains for OpenFreeMap only.
+
+
+      ## Messaging & timestamps
+
+
+      - Legacy V2 message format fallback: the background session now accepts RESP_CONTACT_MSG_RECV
+      (7) / RESP_CHANNEL_MSG_RECV (8) alongside V3 codes, so messages are no longer silently dropped
+      after a device reboot resets the protocol version.
+
+      - Corrupt sender timestamps are sanitized on the read side (`sort_timestamp` ranking, hourly
+      sweep) — fixes wrong message dates in lists, search, and mentions.
+
+
+      ## Android client
+
+
+      Rebuilt APK attached (`meshcorium-android-client.0.9.1.db2b845.apk`).
+
+
+      ---
+
+
+      ## Тайлы OSM исправлены
+
+
+      Тайлы OpenStreetMap теперь загружаются напрямую из браузера, а не через backend-прокси
+      `/api/tiles/proxy`. Прокси отправлял `curl/x.y` как User-Agent без Referer, из-за чего OSM
+      отдавал картинки-заглушки "Access blocked" (маскировались как HTTP 200 с кэшем на сутки).
+      Прямые браузерные запросы несут корректный User-Agent и Referer и соответствуют политике
+      использования тайлов OSM. Прокси остался только для OpenFreeMap.
+
+
+      ## Сообщения и временные метки
+
+
+      - Fallback на устаревший формат сообщений V2: фоновая сессия принимает RESP_CONTACT_MSG_RECV
+      (7) / RESP_CHANNEL_MSG_RECV (8) наравне с кодами V3 — сообщения больше не теряются молча после
+      перезагрузки устройства, сбрасывающей версию протокола.
+
+      - Санитизация кривых sender_timestamp на стороне чтения (ранжирование по sort_timestamp,
+      почасовой sweep) — исправлены неверные даты сообщений в списках, поиске и mention.
+
+
+      ## Android-клиент
+
+
+      Пересобранный APK приложен (`meshcorium-android-client.0.9.1.db2b845.apk`).
   - version: 0.9.0
     name: MeshCorium v0.9.0 — UI/UX improvements & WIKI page + Android client
     datetime: '2026-06-30T17:50:27Z'
