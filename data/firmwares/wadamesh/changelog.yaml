@@ -1,7 +1,115 @@
 source: github
 repo: ALLFATHER-BV/wadamesh
-updatedAt: '2026-08-19T16:34:08.337Z'
+updatedAt: '2026-08-21T16:37:23.376Z'
 releases:
+  - version: beta_67
+    name: wadamesh beta_67
+    datetime: '2026-08-21T16:20:46Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_67
+    prerelease: true
+    notes: >-
+      **Test build.** Stable stays
+      [beta_65](https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_65).
+
+
+      Flash it at **[flasher.wadamesh.com](https://flasher.wadamesh.com)** with the Beta toggle on,
+      or on-device via **Settings → Firmware** with "Get test builds (beta)" enabled.
+
+
+      ---
+
+
+      ## ⚠️ App developers and testers: this is the build to hammer
+
+
+      The Lua SDK gained the ability to hold a **whole conversation**, and it is the least-proven
+      part of this release. It builds on all ten images and has **not been exercised on hardware** —
+      I would rather say that plainly than have you find out.
+
+
+      ```lua
+
+      wada.mesh.send_dm(to, text)   -- ok, "sent" | "room" | err   (contact NAME, a room is a
+      contact)
+
+      wada.mesh.channels()          -- names of the channels configured on this device
+
+      app.on_message(m)             -- m.kind = "channel" | "dm" | "room"
+
+      wada.crypto.hmac_sha1(k, m)   -- + sha1/sha256/hmac_sha256/hex, on EVERY board
+
+      ```
+
+
+      **What would help most:**
+
+
+      1. **Send a DM from an app** and confirm it lands in that contact's thread on the device, not
+      just on the air. This is the highest-consequence call in the SDK: it writes as you.
+
+      2. **Receive a DM and a room post** with an app open and check `m.kind`. Apps previously only
+      ever got channel messages, because the delivery hook ran before the sender and body were
+      parsed. That is fixed but unverified.
+
+      3. **Toggle the four permissions independently** in Settings → App permissions and confirm one
+      does not clear another.
+
+      4. **Run SDK Test 1.2** from the Store. Its crypto section checks against published RFC 2202 /
+      4231 vectors, so a PASS is real evidence rather than "it returned something", and it times 200
+      HMACs so you can see why this belongs in C.
+
+
+      Permissions went **two → four**: post to channels as me, read channel messages, send private
+      messages as me, read private messages. Posting to a channel you are already in is not the same
+      act as writing to one person as you, and channel traffic is not your private conversations, so
+      each is granted separately.
+
+
+      **Two bugs found while building it.** Granting one permission silently revoked another (the
+      grant wrote the whole permission set rather than the one switch) — invisible with one
+      permission, constant with four. And apps could only ever receive channel messages, never DMs
+      or room posts.
+
+
+      **`wada.crypto`** exists because @Tiamat and @Jade hit "instruction budget exceeded" doing
+      HMAC-SHA1 in pure Lua for a one-time-password app. That is a legitimate use of 100k VM
+      instructions, not a runaway: SHA-1 is 80 bit operations per block and the interpreter
+      multiplies each one. mbedTLS is already linked, so it is now microseconds. Deliberately
+      available on **every** board, including those without the rest of the extended toolkit, since
+      it only computes over data the app already holds.
+
+
+      Full API at **[wadamesh.com/sdk.html](https://wadamesh.com/sdk.html)**.
+
+
+      ## ThinkNode M9 and Heltec V4-R8: a large audit pass
+
+
+      **@cvhviz**, [#287](https://github.com/ALLFATHER-BV/wadamesh/pull/287), validated on hardware.
+      M9 navigation soft-locks fixed, including a hardware Back key that had stopped working and a
+      permission dialog that could not be answered on a touchless board; "Store data on SD" now
+      honoured, with chat history and the tile cache following it; deep sleep really drops the
+      rails; and terminal, keyboard and update features that had been quietly T-Deck-only were
+      widened.
+
+
+      Spectrum on the M9 now runs to the LR1110's specification: roughly 2× faster per sweep,
+      correct 150–960 MHz clamps, and opening it mid-transmission waits rather than truncating the
+      packet on the air.
+
+
+      V4-R8: chat history and battery log follow SD adoption, the Orientation reboot trap is
+      defused, and a crash when Wi-Fi associated with Bluetooth already on is fixed.
+
+
+      ## T-Display P4
+
+
+      The battery percentage no longer flickers between 0 and the real value. The gauge shares its
+      bus with several other chips, so a lost reading is normal — the code was treating a failed
+      read as a genuine 0%. It now keeps
+
+      …
   - version: beta_66
     name: wadamesh beta_66
     datetime: '2026-08-19T14:43:00Z'
@@ -1490,62 +1598,3 @@ releases:
       T-Deck · Heltec V4 TFT · Heltec V4-R8 · ThinkNode M9 · RAK TAP v2 · T-LoRa Pager (LR1121 /
       SX1262) · Attaky Core · T-Display P4. Flash `<board>-merged.bin` at `0x0` for a full install,
       or `<board>.bin` for an app-only update.
-  - version: beta_47
-    name: wadamesh beta_47
-    datetime: '2026-07-19T16:02:03Z'
-    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_47
-    prerelease: true
-    notes: >-
-      **wadamesh beta_47** — a new **Discover** app (find, list and map the nodes around you, plus
-      wardriving), a new board, and pager + T-Display P4 additions.
-
-
-      > 🧪 Test build. Flip **Get test builds (beta)** on-device, use the **Beta** toggle on the
-      [web flasher](https://flasher.wadamesh.com), or grab a `-merged.bin` below. Stable stays on
-      beta_46.
-
-
-      🙏 **Community contributions:** thanks to **[@attakygit](https://github.com/attakygit)** for
-      the **Attaky Core** board port ([#158](https://github.com/ALLFATHER-BV/wadamesh/pull/158)) and
-      **[@codemonkeybr](https://github.com/codemonkeybr)** (Tesso Codemonkey) for the **T-LoRa
-      Pager** navigation fix ([#162](https://github.com/ALLFATHER-BV/wadamesh/pull/162)).
-
-
-      ## ✨ Discover — find what's around you
-
-      - **Active discovery** — open the **Discover** app (app drawer → the ⟳ tile, next to Map): it
-      sweeps for nearby nodes and lists every repeater / companion / room server that answers,
-      **ranked by signal** — live RSSI/SNR, a green **direct** badge for anything in direct RF
-      range, and a last-heard age.
-
-      - **One-tap add** — tap a node to add it straight to your contacts (it keeps the right type:
-      repeater, companion or room).
-
-      - **Wardriving** — with a GPS fix it logs every node it hears against your position to a CSV
-      on the SD card as you move, and paints your **RF coverage on the map** as a signal-coloured
-      track (green = strong → red = weak). A standalone, on-device coverage mapper — no phone
-      tethered.
-
-
-      ## 📟 New boards
-
-      - **Attaky Core** (ESP32-S3, 16 MB flash / 8 MB PSRAM) — a new board *(by @attakygit, #158)*.
-      Experimental: beta channel only while hardware verification finishes.
-
-      - **LilyGo T-Display P4 — TFT-LCD variant** — early support for the LCD screen model (the
-      AMOLED variant was already supported). Experimental; the `wadamesh-tdisplay-p4-lcd-merged.bin`
-      asset below is for LCD-screen units (flash at `0x0`).
-
-
-      ## 🛠 Fixed
-
-      - **LilyGo T-LoRa Pager** — the rotary encoder now keeps its focus inside the chat message
-      list, and the composer navigation keys are remapped so moving around and typing a message no
-      longer collide *(by @codemonkeybr, #162)*.
-
-
-      ## 📦 Boards
-
-      T-Deck · Heltec V4 TFT · Heltec V4-R8 · ThinkNode M9 · RAK TAP v2 · T-LoRa Pager (LR1121 /
-      SX1262) · Attaky Core · T-Display P4. Flash `<board>-merged.bin` at `0x0` (full install) or
-      `<board>.bin` for an app-only/OTA update.

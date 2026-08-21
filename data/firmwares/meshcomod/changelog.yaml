@@ -1,7 +1,15 @@
 source: github
 repo: ALLFATHER-BV/meshcomod
-updatedAt: '2026-08-17T16:29:57.658Z'
+updatedAt: '2026-08-21T16:37:10.598Z'
 releases:
+  - version: companion-v1.17.0.4
+    name: Companion Firmware v1.17.0.4
+    datetime: '2026-08-21T16:22:58Z'
+    url: https://github.com/ALLFATHER-BV/meshcomod/releases/tag/companion-v1.17.0.4
+    prerelease: false
+    notes: >-
+      **Full Changelog**:
+      https://github.com/ALLFATHER-BV/meshcomod/compare/companion-v1.17.0.3...companion-v1.17.0.4
   - version: companion-v1.17.0.3
     name: Companion Firmware v1.17.0.3
     datetime: '2026-08-13T15:53:45Z'
@@ -71,11 +79,3 @@ releases:
 
       **Full Changelog**:
       https://github.com/ALLFATHER-BV/meshcomod/compare/companion-v1.16.0.4...companion-v1.17.0
-  - version: companion-v1.16.0.4
-    name: Companion Firmware v1.16.0.4
-    datetime: '2026-06-16T19:39:49Z'
-    url: https://github.com/ALLFATHER-BV/meshcomod/releases/tag/companion-v1.16.0.4
-    prerelease: false
-    notes: >-
-      **Full Changelog**:
-      https://github.com/ALLFATHER-BV/meshcomod/compare/companion-v1.16.0.3...companion-v1.16.0.4
