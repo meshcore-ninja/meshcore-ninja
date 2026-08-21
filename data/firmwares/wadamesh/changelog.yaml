@@ -1,6 +1,6 @@
 source: github
 repo: ALLFATHER-BV/wadamesh
-updatedAt: '2026-08-21T16:37:23.376Z'
+updatedAt: '2026-08-21T18:39:17.038Z'
 releases:
   - version: beta_67
     name: wadamesh beta_67
@@ -71,7 +71,7 @@ releases:
       or room posts.
 
 
-      **`wada.crypto`** exists because @Tiamat and @Jade hit "instruction budget exceeded" doing
+      **`wada.crypto`** exists because Tiamat and Jade hit "instruction budget exceeded" doing
       HMAC-SHA1 in pure Lua for a one-time-password app. That is a legitimate use of 100k VM
       instructions, not a runaway: SHA-1 is 80 bit operations per block and the interpreter
       multiplies each one. mbedTLS is already linked, so it is now microseconds. Deliberately
@@ -107,7 +107,7 @@ releases:
 
       The battery percentage no longer flickers between 0 and the real value. The gauge shares its
       bus with several other chips, so a lost reading is normal — the code was treating a failed
-      read as a genuine 0%. It now keeps
+      read as a genuine 0%. It now keeps t
 
       …
   - version: beta_66
@@ -377,7 +377,7 @@ releases:
 
       - Accented and non-Latin characters showed as **empty boxes in the grey hint text** inside
       empty fields — the Wi-Fi password box, the MQTT bridge fields, and ~two dozen others. Fixed
-      everywhere, in every language. (Thanks @pisti87, and to istvan for finding the last one.)
+      everywhere, in every language. (Thanks @pisti87, who also found the last one.)
 
       - A translated line whose placeholders **do not match the English original** is now ignored
       rather than used. Since language files download from the Store, this closes off a whole class
@@ -385,7 +385,7 @@ releases:
 
       - Channel messages could be **silently dropped** when an unused channel slot matched first.
       Sends also match by name at the moment of transmission, so a message can no longer go out
-      encrypted to th
+      encrypted to the wrong cha
 
       …
   - version: beta_63

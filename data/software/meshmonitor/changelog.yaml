@@ -1,7 +1,124 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-08-21T04:41:04.222Z'
+updatedAt: '2026-08-21T18:39:34.181Z'
 releases:
+  - version: v4.15.0
+    name: v4.15.0
+    datetime: '2026-08-21T16:58:38Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.15.0
+    prerelease: false
+    notes: >-
+      # MeshMonitor v4.15.0
+
+
+      A large feature release with **no breaking changes**. MeshMonitor 4.15 reaches past Meshtastic
+      and MeshCore to a third network, adds tools to plan and survey RF coverage, and tells you far
+      more about what happened to every message you send. Reticulum joins as a first-class monitored
+      network — LXMF messaging, position and telemetry, own-mode radio, and full topology / remote
+      monitoring. A new predictive RF coverage model and Site Planner estimate a node's reach from a
+      Fresnel-zone + path-loss model, while a passive network survey derives reach, neighbours, and
+      hop distribution from traffic you already received. Click any message for Delivery Details:
+      the exact routing result, a per-message event timeline, and a Heard-By correlation of which
+      nodes relayed it. Maps gain 3D terrain across every surface with markers that match the 2D
+      view, a GNSS satellite overlay, and a hybrid satellite tile. Rounding it out: a Prometheus
+      metrics endpoint, Node Status Messages, telemetry CSV export, completed MeshBeacon + XEdDSA
+      support, and a long list of fixes.
+
+
+      Full notes live in the
+      [CHANGELOG](https://github.com/Yeraze/meshmonitor/blob/main/CHANGELOG.md).
+
+
+      ## Features
+
+
+      - **Reticulum network support** — LXMF messaging, position/telemetry, own-mode radio, and
+      topology / remote monitoring (#3960)
+
+      - **Predictive RF coverage & Site Planner** — Fresnel-zone + path-loss model, sweep, API, and
+      map layer (#4727, #4741, #4746)
+
+      - **Passive network survey** — reach, neighbours, and hop distribution from received traffic
+      (#4726, #4737)
+
+      - **Message Delivery Details** — RoutingError codes, per-message timeline, Heard-By
+      correlation (#4816, #4837, #4839, #4841, #4842, #4855)
+
+      - **3D maps** — terrain on all map surfaces + 2D-matching node markers with clickable popups
+      (#4704, #4808)
+
+      - **GNSS satellite constellation overlay** — sky plot + DOP map (#4729)
+
+      - **Satellite + labels (hybrid) map tiles** (#4728)
+
+      - **Prometheus metrics endpoint** (#4757)
+
+      - **Node Status Messages** — receive + display (#4818)
+
+      - **MeshBeacon** — completed MeshBeacon + XEdDSA, invitation card, broadcast interval /
+      transmit region config (#4689, #4723, #4735, #4802)
+
+      - **Telemetry graph CSV export** (#4771)
+
+      - **Automation additions** — Run Now, waypoint-anchored geofence, triggering message in the
+      run log (#4827, #4722, #4716)
+
+      - **Map & node-list** — non-linear age filter, Uptime sort, incomplete-NodeInfo badge (#4770,
+      #4814, #4720)
+
+      - **MeshCore ⭐ favorite syncs to the firmware favourite bit** (#4838)
+
+      - **Notifications show service, channel, and instance** (#4845)
+
+      - **Public-key mismatch is explained, not asserted** (#4747)
+
+      - **Position-precision warning** for the public-channel clamp (#4710)
+
+      - **More languages** — Polish and Traditional Chinese (#4748, #4742)
+
+
+      ## Bug Fixes
+
+
+      - Relayed packets no longer attribute RSSI/SNR to the source node (#4857)
+
+      - ACK metadata persists for confirmed DMs (#4855)
+
+      - Node metrics refresh from MQTT telemetry (#4755)
+
+      - MeshCore: honour temperature unit (#4805), preserve hop hash width in Trace Path (#4787),
+      reserve channel 0 for Public (#4734)
+
+      - Traceroute channel resolution — three bypassing paths + PSK/name gaps (#4712)
+
+      - Firmware region names all resolve; stop writing UNSET to radios (#4749)
+
+      - EnvironmentMetrics current labelled mA, not A (#4780)
+
+      - Bearer API tokens accepted on requireAdmin routes (#4784)
+
+      - Sign-in reachable on a source without connection permission (#4829)
+
+      - Invisible links on sent message bubbles (#4821)
+
+      - Mobile bottom nav tappable under the search modal + CSS quirks (#4789, #4776)
+
+      - Waypoints persist their virtual flag on edit (#4798)
+
+      - Packet log drops exact-duplicate receptions (#4812)
+
+      - NodeInfo history recorded only for the local node (#4810)
+
+      - Virtual node stops advertising a stale local node number (#4779)
+
+      - Automation: `!hex` deviceReboot targets (#4832), MT↔MC bridge relays operator's own messages
+      (#4695, #4699)
+
+      - Position-history rendering/fetching bounded (#4744)
+
+      - Async TCP socket write failures propagat
+
+      …
   - version: v4.14.2-rc7
     name: v4.14.2-rc7
     datetime: '2026-08-21T03:53:03Z'
@@ -2052,107 +2169,3 @@ releases:
       ### 📋 Changes
 
       See commit history for detailed changes.
-  - version: v4.13.2
-    name: v4.13.2
-    datetime: '2026-07-27T21:21:31Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.13.2
-    prerelease: false
-    notes: >-
-      # MeshMonitor v4.13.2
-
-
-      This release finishes the **ATAK / CoT** work, teaches MeshMonitor to respect a node that
-      cannot transmit, adds a **3D terrain view**, and catches gateways that uplink traffic their
-      senders asked to keep off MQTT.
-
-
-      **If you run PostgreSQL or MySQL, take this release.** Those two backends re-ran every
-      migration on each boot, and migration 030 rebuilds `route_segments` from scratch — 865k rows
-      deleted and reinserted on every restart for one reporting install. SQLite was never affected.
-
-
-      See the [release blog post](https://meshmonitor.org/blog/2026-07-27-v4.13.2-release) for the
-      narrative walkthrough, and the
-      [CHANGELOG](https://github.com/Yeraze/meshmonitor/blob/main/CHANGELOG.md) for all 49 entries.
-
-
-      ## Fix first: PostgreSQL / MySQL migration ledger
-
-
-      - The `settingsKey` idempotency guard was SQLite-only, so PostgreSQL and MySQL replayed all
-      128 migrations at every start. Both backends now record applied migrations in a ledger.
-      (#4233)
-
-
-      ## ATAK / CoT
-
-
-      - **Packet decoding** for ATAK plugin portnum 72 (`TAKPacket`) and portnum 78 (`TAKPacketV2`,
-      zstd-compressed against the vendored TAKPacket-SDK dictionaries) — position, GeoChat, markers,
-      routes, CASEVAC, emergency. GeoChat messages persist into Messages. (#3691 Phase 1, #4317)
-
-      - **ATAK contacts on every map** — team-colored callsign markers with a `Show ATAK Contacts`
-      toggle, STALE badge after 15 minutes, purge after 24 hours. (#3691 Phase 2)
-
-      - **CoT TCP feed** for ATAK / WinTAK — settings-gated, streams Cursor-on-Target XML covering
-      ATAK contacts plus every positioned Meshtastic and MeshCore node from every source. No
-      authentication or encryption; trusted-network only. (#3691 Phase 3)
-
-
-      ## Receive-only nodes
-
-
-      - MeshMonitor now honors `lora.tx_enabled`. A central server-side guard rejects every transmit
-      path, the UI disables transmit-dependent controls with an explanation instead of failing at
-      the radio, and config import reads live remote LoRa config so it cannot flip TX back on by
-      accident. New [Receive-only mode](https://meshmonitor.org/features/receive-only-mode) guide.
-      (#4294, #4315)
-
-
-      ## MQTT
-
-
-      - **ok_to_mqtt violation detection** — flags gateways that uplink packets from nodes that
-      opted out, with 90 days of history and an **ok_to_mqtt Violations** report (per-gateway and
-      per-packet views, node names, CSV export, SQL-side paging). (#4114, #4330, #4343)
-
-      - **Configurable downlink hop-limit override** (0–7) on the embedded broker, replacing the
-      zero-hop toggle. (#4081)
-
-      - **Auto-delete-by-distance applies at ingest**, so an out-of-radius node never reaches the
-      map. (#3900)
-
-
-      ## Maps
-
-
-      - **3D terrain view** on Map Analysis (MapLibre + server-side DEM proxy), with node markers,
-      neighbor links, and traceroute paths in 3D and a clean fallback without WebGL. (#3826)
-
-      - **Terrain Link Profile refinements** — antenna AGL seeded from node altitude, clickable thin
-      neighbor links, terrain analysis on route segments. (#4253, #4254)
-
-      - `ROUTER_LATE` is distinguishable from `ROUTER`, unmessageable nodes show a badge, and the
-      Nodes tab is now called **Map**. (#4295, #4325)
-
-
-      ## Also in this release
-
-
-      - **Share a node as a Meshtastic contact** — QR code plus a `meshtastic.org/v/#…` contact
-      link. (#4327)
-
-      - **NodeInfo Enrichment report** — finds fields one source could fill from another and applies
-      the fix; Copy NodeInfo gained per-field selection and overwrite. (#3837, #4244)
-
-      - **MeshCore Virtual Node "Allow PKI export"** — a separate, default-off gate serving
-      `ExportPrivateKey(23)` for tools that authenticate as the node itself. The VN port has no
-      client authentication and the private key lets a client permanently become your node, so this
-      is deliberately *not* folded into admin commands. See [Virtual Node
-      docs](https://meshmonitor.org/configuration/virtual-node#pki-private-key-export-meshcore).
-      (#3933, #4366)
-
-      - **Every PKI DM was favoriting its recipient** — `add_contact` was pushed before every PKI
-      direct message, and the firmware's `addFromContact()` sets `is_favorite` to sh
-
-      …
