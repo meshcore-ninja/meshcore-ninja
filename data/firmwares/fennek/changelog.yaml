@@ -1,7 +1,33 @@
 source: github
 repo: danst0/fennek
-updatedAt: '2026-08-17T16:29:54.581Z'
+updatedAt: '2026-08-22T06:42:23.109Z'
 releases:
+  - version: v2.7.5
+    name: v2.7.5
+    datetime: '2026-08-22T05:31:06Z'
+    url: https://github.com/danst0/fennek/releases/tag/v2.7.5
+    prerelease: false
+    notes: >-
+      ## Fix: E-Ink bleibt nicht mehr im Controller-Deep-Sleep hängen
+
+
+      Behebt den in #2 gemeldeten Zustand, in dem das Panel auf dem Schlafbild stehen bleibt und
+      jeder Refresh in `Busy Timeout!` endet.
+
+
+      `display::hibernate()` schickt den UC8253 des GDEQ031T10 per Kommando `0x07` in den
+      Controller-Deep-Sleep — daraus kommt er ausschließlich über einen Hardware-Reset zurück.
+      GxEPD2 setzt beim nächsten `init()` aber `_hibernating = false`, unabhängig davon, ob der
+      RST-Puls gewirkt hat. War der Puls zu kurz (Fennek nutzte bisher 2 ms, GxEPD2-Default ist 10
+      ms), ignoriert das schlafende Panel den anschließenden Soft-Reset, BUSY bleibt dauerhaft
+      aktiv, und das Bild lässt sich firmwareübergreifend nicht mehr aktualisieren, bis sich das
+      Panel nach Stunden selbst entladen hat.
+
+
+      **Neu:** `initPanel()` in `src/core/display.cpp` eskaliert die Reset-Puls-Länge (20 / 50 / 200
+      ms) und prüft nach jedem Versuch die BUSY-Leitung. Greift beim Kaltstart (`begin()`) wie beim
+      Timer-Wake (`beginAfterSleep()`); schlägt alles fehl, landet eine Zeile `[EINK] Panel
+      antwortet nicht` im Serial-Log statt eines stillen Timeouts.
   - version: v2.7.4
     name: v2.7.4
     datetime: '2026-07-22T17:34:34Z'
@@ -292,30 +318,3 @@ releases:
 
 
       oder OTA via `fennek.local` → Firmware-Update.
-  - version: v2.3.1
-    name: Fennek v2.3.1
-    datetime: '2026-06-19T14:27:33Z'
-    url: https://github.com/danst0/fennek/releases/tag/v2.3.1
-    prerelease: false
-    notes: >-
-      ## Notizen / Audio
-
-      - **Sprachnotiz-Liste** zeigt jetzt **Datum + HH:MM** (statt HH:MM:SS bzw. generisch
-      „Sprachnotiz").
-
-      - **Aufnahme-Gain ×6** mit Sättigung: das PDM-Mikro war ~−20 dBFS leise → Wiedergabe kaum
-      hörbar. Neue Aufnahmen sitzen bei ~−7 dBFS (kein Clipping).
-
-      - **Sauberer I2S0-Handover** nach der Aufnahme: kein doppeltes `i2s_driver_uninstall` mehr
-      (`endMic`/`MicResume` macht uninstall+install in einem Schritt).
-
-
-      ## Karten / GPS
-
-      - **No-Fix-Fallback** zentriert jetzt auf **Düsseldorf** (51.2277/6.7735); `DEFAULT_ZOOM` 15 →
-      13 (NRW-weit bekachelt).
-
-      - **GPS-Zeit-Diagnose**: Einmal-Log `[MAPS] GPS-Zeit empfangen …` pro Karten-Session.
-
-
-      Enthält außerdem v2.3.0 (GPS-/WAV-Diagnose-Logs, Karten-Fallback, Notizen-Zeitlabel).
