@@ -1,7 +1,107 @@
 source: github
 repo: ALLFATHER-BV/wadamesh
-updatedAt: '2026-08-21T20:28:12.519Z'
+updatedAt: '2026-08-22T22:24:46.265Z'
 releases:
+  - version: beta_69
+    name: wadamesh beta_69
+    datetime: '2026-08-22T22:07:24Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_69
+    prerelease: true
+    notes: >-
+      **This is a test build.** Stable stays on `beta_65`. Flash it from
+      [wadamesh.com](https://wadamesh.com) with the Beta toggle on, or turn on "Get test builds
+      (beta)" on the device.
+
+
+      Half of this drop came from outside the project. [@cvhviz](https://github.com/cvhviz) wrote
+      the ThinkNode M9's compass support and the GPS Compass app, and
+      [@oumike](https://github.com/oumike) did the T-Lora Pager work, the region list and the SD
+      listing API. Between them that is 35 of the 68 commits since `beta_68`.
+
+
+      ## Console mode is new, and it is very early
+
+
+      Console mode boots the device into a plain text console with **no graphical interface at
+      all**: no LVGL, no widgets, no draw buffer. You type commands, you read replies, and the
+      memory and processor time the interface would have used are yours instead.
+
+
+      **Please read this as a first look, not a feature.** It has had one day on hardware. Most of
+      the graphical interface is simply not there: no map, no file manager, no Lua apps, no settings
+      editor. Expect missing commands, rough text layout and things you reach for that do not exist
+      yet.
+
+
+      - It is **off by default**, in Settings > General, marked experimental. Toggling it reboots.
+
+      - Type `ui` or `exit` to come back.
+
+      - If it ever crashes on the way up, the device notices and returns to the graphical interface
+      on its own, so you cannot strand yourself in it.
+
+      - What works today: contacts, channels, unread counts, reading a thread, sending to a contact
+      or channel, a live monitor of arriving messages, radio and battery and Wi-Fi readouts,
+      discovery, a numbered quick-launch menu, and anything the node CLI already answers.
+
+
+      The most useful thing you can send us is what you reached for and could not find.
+
+
+      ## ThinkNode M9 compass, GPS motion and a GPS Compass app, by @cvhviz
+      ([#292](https://github.com/ALLFATHER-BV/wadamesh/pull/292))
+
+
+      The M9's magnetometer was on the board and nothing had ever talked to it. The driver is
+      written from the chip's own register map rather than a library that writes the sample rate
+      into the wrong register, and the axis orientation was **measured on hardware** at four
+      headings ninety degrees apart rather than inherited from a declaration nobody had verified. A
+      calibrated device points north with no setup.
+
+
+      The new **GPS Compass** app in the Store gives you a dial with bearing and range to a chosen
+      contact, a satellite meter, hard-iron calibration and per-row imperial or metric units. On
+      boards without a magnetometer it falls back to GPS course over ground.
+
+
+      It also carries a set of fixes found while testing on real hardware, which affect every board:
+
+
+      - Opening the Map cost about 2.5 seconds **every single visit**, because leaving the tab threw
+      away every decoded tile. Boards with the memory now keep them: roughly ten times faster to
+      return.
+
+      - Lua apps opened on a white page on keyboard and trackball boards.
+
+      - An app closed mid-request could free the buffer the other processor core was still reading
+      from.
+
+      - The `icon` field in an app manifest finally does something. Every app had been drawing the
+      same generic glyph.
+
+
+      Apps can also read speed and heading from the GPS, and the raw field vector where there is a
+      magnetometer.
+
+
+      ## T-Lora Pager, regions and SD listing, by @oumike
+
+
+      - "Save update bin to SD" was half converted to the new capability flags, leaving the Pager
+      without it ([#291](https://github.com/ALLFATHER-BV/wadamesh/pull/291), closes
+      [#289](https://github.com/ALLFATHER-BV/wadamesh/issues/289)). A Pager with an unreadable card
+      now has a way back, and the board docs were corrected to match the hardware.
+
+      - Regions are a list you can add to, and a scoped message says which region it came from
+      ([#311](https://github.com/ALLFATHER-BV/wadamesh/pull/311), closes
+      [#271](https://github.com/ALLFATHER-BV/wadamesh/issues/271), reported by
+      [@D-Melhede](https://github.com/D-Melhede)).
+
+      - Lua apps can list the SD card, read only
+      ([#312](https://github.com/ALLFATHER-BV/wadamesh/pull/312), closes
+      [#309](https://github.com/ALLFATHER-BV/
+
+      …
   - version: beta_68
     name: wadamesh beta_68
     datetime: '2026-08-21T20:08:52Z'
@@ -1578,53 +1678,3 @@ releases:
 
       T-Deck · Heltec V4 TFT · Heltec V4-R8 · ThinkNode M9 · RAK TAP v2 · T-LoRa Pager (LR1121 /
       SX1262) · Attaky Core · T-Display P4 (AMOLED + LCD).
-  - version: beta_49
-    name: wadamesh beta_49
-    datetime: '2026-07-21T18:46:49Z'
-    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_49
-    prerelease: true
-    notes: >-
-      **wadamesh beta_49** is a **T-Display P4 only** drop.
-
-
-      > **Not on a P4? Skip this one.** It only has P4 fixes, there is nothing new for the other
-      boards. Stay on beta_48.
-
-
-      > Test build. Turn on **Get test builds (beta)** on the device, use the **Beta** toggle on the
-      [web flasher](https://flasher.wadamesh.com), or grab a `-merged.bin` below. Stable stays on
-      beta_46.
-
-
-      ## Fixed (T-Display P4)
-
-      - The **Snake game** no longer traps you. Tap the top bar to leave it. Before, the only way
-      out was a reset.
-
-      - The full-screen tools (**Monitor, Spectrum, Discover, Web mirror, Advert**) can now be left
-      by tapping the top bar, so they no longer trap you either.
-
-      - **Screen timeout** now works. The display turns off after your idle time and wakes on touch.
-      This also fixes standby and burn-in dimming.
-
-      - **Text overflow** fixed. The interface is pinned to the 100% size that fits the panel.
-
-      - **GPS**: the L76K is now found reliably and read at 9600 baud (a boot-time detect race plus
-      a stale 38400 setting kept it dead). You still need the GPS antenna connected and a clear view
-      of the sky to get a fix.
-
-      - The **control center dropdown** is taller, so the GPS status line sits below the buttons
-      instead of behind them.
-
-
-      ## P4 LCD model (HI8561)
-
-      - Fixed the **black screen** on the TFT-LCD SKU. The backlight now turns on. Please flash
-      `wadamesh-tdisplay-p4-lcd-merged.bin` at `0x0` and report back.
-
-
-      ## Boards
-
-      This drop rebuilds every board so the version stays in step, but only the **T-Display P4** has
-      changes. Other boards can stay on beta_48. Flash `<board>-merged.bin` at `0x0` for a full
-      install, or `<board>.bin` for an app-only update.
