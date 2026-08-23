@@ -1,11 +1,11 @@
 source: github
 repo: Colorado-Mesh/mesh-client
-updatedAt: '2026-08-22T16:27:29.022Z'
+updatedAt: '2026-08-23T03:04:33.798Z'
 releases:
-  - version: untagged-1a7d458feb5a1ac8ddab
+  - version: v5.30.0
     name: 5.30.0
     datetime: '2026-08-22T16:25:41Z'
-    url: https://github.com/Colorado-Mesh/mesh-client/releases/tag/untagged-1a7d458feb5a1ac8ddab
+    url: https://github.com/Colorado-Mesh/mesh-client/releases/tag/v5.30.0
     prerelease: false
     notes: "<!-- mesh-client-schema-compare -->\r\n# Release build — database schema check\r\n\r\nThis build schema: **48**\r\nLast official release: **v5.29.0** (schema **48**)\r\n\r\nNo schema bump vs last official release.\r\n<!-- mesh-client-schema-compare -->\r\n\r\n## [v5.30.0] - 2026-08-22\r\n\r\n### Highlights\r\n- **Chat:** Outgoing bubbles show in-memory relay coverage — MeshCore heard-by repeaters, Meshtastic network heard/timeout, and Reticulum predicted route hops — without DB or message schema changes.\r\n- **Meshtastic:** Fixed `Date×1000` last_heard double-conversion that poisoned live node status after configure.\r\n- **MeshCore:** Channel share QR renders inline under the row you clicked (scrolls into view).\r\n- **Reticulum:** Regenerated rsReticulum overlays after upstream `main` drift (restores CI sidecar clone / Build Binaries / Flatpak).\r\n\r\n### Breaking Changes\r\n*(None)*\r\n\r\n---\r\n\r\n### Chat / App-wide\r\n* In-memory relay coverage on outgoing chat bubbles — MeshCore confirmed heard repeaters (post-TX listen window), Meshtastic RF channel/broadcast heard/timeout, Reticulum predicted route at send time; survives pending→wire id renames; clears on disconnect/failed sends (#883)\r\n\r\n### Meshtastic\r\n* Stop `Date×1000` last_heard double-conversion — SDK `PacketMetadata.rxTime` is already a `Date`; Protocol was multiplying again and breaking live bumps after configure; SQL normalize aligned with three-pass export/UI path (#884)\r\n\r\n### MeshCore\r\n* Channel share QR renders inline under the clicked row instead of after the full list (scroll into view, `aria-expanded`, clears on delete) (#886)\r\n\r\n### Reticulum\r\n* Regenerate rsReticulum overlays for floated `main` — `ble-rnode-bond-desync` (generation-owner pairing / bond-aware reconnect) and `path-medium-slots` test helper hunks (#885)\r\n\r\n### Full Changelog\r\n[`v5.29.0...v5.30.0`](https://github.com/Colorado-Mesh/mesh-client/compare/v5.29.0...v5.30.0)"
   - version: v5.29.0
