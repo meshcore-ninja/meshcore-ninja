@@ -1,6 +1,6 @@
 source: github
 repo: OffbandMesh/meshcore-firmware
-updatedAt: '2026-08-23T03:04:26.529Z'
+updatedAt: '2026-08-23T20:25:29.026Z'
 releases:
   - version: offband-v1.5.0-beta5
     name: Offband offband-v1.5.0-beta5
@@ -66,6 +66,16 @@ releases:
       ### Fixed
       - **Observer multi-broker rotation actually rotates** (#708): with more th
       …
+  - version: diag-builds
+    name: Diagnostic Builds (rolling — NOT a version release)
+    datetime: '2026-08-23T18:51:27Z'
+    url: https://github.com/OffbandMesh/meshcore-firmware/releases/tag/diag-builds
+    prerelease: true
+    notes: >-
+      Rolling drop for one-off diagnostic firmware images. NOT a product release — no version
+      semantics, no CHANGELOG, do not treat as a beta. Assets are diag builds (caplog pinned on +
+      boot beacon + UART0 mesh-log mirror), replaced as needed. Current: sprocket observer diagnosis
+      (#956), built from firmware-base @ 2a768939 (firmware-identical to v1.5.0-beta5 + diag flags).
   - version: offband-v1.5.0-beta4
     name: Offband offband-v1.5.0-beta4
     datetime: '2026-08-21T04:40:04Z'
@@ -1278,96 +1288,3 @@ releases:
 
       **Full Changelog**:
       https://github.com/OffbandMesh/meshcore-firmware/compare/offband-v0.17.0...offband-v0.18.0
-  - version: offband-v0.17.0
-    name: Offband offband-v0.17.0
-    datetime: '2026-06-14T07:31:59Z'
-    url: https://github.com/OffbandMesh/meshcore-firmware/releases/tag/offband-v0.17.0
-    prerelease: false
-    notes: >-
-      First release under **OffbandMesh/meshcore-firmware**. Bundles the 0.16.0 observer
-
-      work below (which landed on `firmware-base` but was never separately tagged) with
-
-      the Crosswire→Offband rebrand and the OffbandMesh org cutover. *(Version pending
-
-      owner confirmation; the tag is hardware-gated per VERSIONING.md.)*
-
-
-      ### Changed
-
-      - **Rebranded the fork from Crosswire to Offband** (GitHub org `OffbandMesh`):
-        the C++ namespace, build macros, embedded identity blob, version prefix
-        (`offband-v*`), MQTT / flash-audit identity fields (`offband_*`), brand
-        strings (serial banner, `version` command, OLED splash, Home Assistant
-        manufacturer), and the WiFi setup-AP SSID (`Offband-Observer-`). Historical
-        `crosswire-v*` release tags are preserved; the `_sys` PSK domain separator
-        and the MeshCore interop topic namespace are intentionally unchanged. (#100)
-      - **Repo / board / working-dir cutover to OffbandMesh** — repo
-        `OffbandMesh/meshcore-firmware`, OffbandMesh org Projects board, and the
-        preflight / CLAUDE.md / label-sync workflow re-pointed; removed the stale
-        upstream `CNAME`. (#107, #111)
-
-      ### Docs
-
-      - Finished the rebrand reference cleanup across docs + code comments. (#113, #114)
-
-      - Release-readiness pass: README getting-started + multi-role positioning, the
-        docs index surfaces the observer guides, and observer `_sys` CLI reference
-        corrections. (#117)
-
-
-
-      ## What's Changed
-
-      * feat: observer MQTT connectivity (crosswire-v0.15.0) — #53 #48 #63 #68 by @Strycher in
-      https://github.com/OffbandMesh/meshcore-firmware/pull/72
-
-      * docs: fix README license link (LICENSE.txt -> license.txt) — #73 by @Strycher in
-      https://github.com/OffbandMesh/meshcore-firmware/pull/74
-
-      * docs: 2026-06-10 observer-MQTT session handoff — #75 by @Strycher in
-      https://github.com/OffbandMesh/meshcore-firmware/pull/76
-
-      * chore: relocate to C:/Dev/Crosswire — canonical hook sync + AM repin by @Strycher in
-      https://github.com/OffbandMesh/meshcore-firmware/pull/78
-
-      * docs(#79): correct stale active-agents line in CLAUDE.md by @Strycher in
-      https://github.com/OffbandMesh/meshcore-firmware/pull/80
-
-      * Observer: time arbiter (#69) + position in /status (#31) + _sys CLI grammar (#45) by
-      @Strycher in https://github.com/OffbandMesh/meshcore-firmware/pull/91
-
-      * Observer follow-ups: arbiter decouple + held-state (#87) + /status radio from runtime prefs
-      (#88) by @Strycher in https://github.com/OffbandMesh/meshcore-firmware/pull/92
-
-      * docs: README/CHANGELOG 0.16.0 (#93) + observer instructions (#94) by @Strycher in
-      https://github.com/OffbandMesh/meshcore-firmware/pull/99
-
-      * #95: observer MQTT broker pre-config + per-device auth by @Strycher in
-      https://github.com/OffbandMesh/meshcore-firmware/pull/105
-
-      * #98: mqtt view + mqtt clear (broker config inspection) by @Strycher in
-      https://github.com/OffbandMesh/meshcore-firmware/pull/106
-
-      * Offband rebrand: Crosswire -> Offband (code + docs) by @Strycher in
-      https://github.com/OffbandMesh/meshcore-firmware/pull/108
-
-      * chore(#107): finish OffbandMesh local cutover (preflight, CLAUDE.md, board #1) by @Strycher
-      in https://github.com/OffbandMesh/meshcore-firmware/pull/109
-
-      * chore(#111): remove stale upstream CNAME (docs.meshcore.nz) by @Strycher in
-      https://github.com/OffbandMesh/meshcore-firmware/pull/112
-
-      * docs(#113): finish rebrand — Strycher/Crosswire refs + CLAUDE.md PROJECT_PAT note by
-      @Strycher in https://github.com/OffbandMesh/meshcore-firmware/pull/115
-
-      * chore(#114): update stale Strycher/Crosswire# refs in code comments -> #N by @Strycher in
-      https://github.com/OffbandMesh/meshcore-firmware/pull/116
-
-      * epic(#117): Offband release-readiness — docs, observer reference, CHANGELOG prep by
-      @Strycher in https://github.com/OffbandMesh/meshcore-firmware/pull/125
-
-
-
-      **Full Changelog**:
-      https://github.com/OffbandMesh/meshcore-firmware/compare/crosswire-v0.14.0...offband-v0.17.0
