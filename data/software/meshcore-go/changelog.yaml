@@ -1,7 +1,21 @@
 source: github
 repo: meshcore-go/meshcore-go
-updatedAt: '2026-08-17T16:30:17.493Z'
+updatedAt: '2026-08-24T04:48:08.485Z'
 releases:
+  - version: v1.1.0
+    name: v1.1.0
+    datetime: '2026-08-24T03:10:03Z'
+    url: https://github.com/meshcore-go/meshcore-go/releases/tag/v1.1.0
+    prerelease: false
+    notes: >-
+      ## What's Changed
+
+      * release: v1.1.0 — MeshCore expanded private key support by @tuzzmaniandevil in
+      https://github.com/meshcore-go/meshcore-go/pull/11
+
+
+
+      **Full Changelog**: https://github.com/meshcore-go/meshcore-go/compare/v1.0.9...v1.1.0
   - version: v1.0.9
     name: v1.0.9
     datetime: '2026-06-28T23:14:47Z'
