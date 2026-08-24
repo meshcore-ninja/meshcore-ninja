@@ -1,7 +1,13 @@
 source: github
 repo: vicliu624/trail-mate
-updatedAt: '2026-08-17T16:30:08.862Z'
+updatedAt: '2026-08-24T14:44:37.268Z'
 releases:
+  - version: v0.1.41-alpha
+    name: v0.1.41-alpha
+    datetime: '2026-08-24T13:27:38Z'
+    url: https://github.com/vicliu624/trail-mate/releases/tag/v0.1.41-alpha
+    prerelease: true
+    notes: "## [0.1.41-alpha] - 2026-08-24\n\n### Added\n\n- Added an SD-editable `/trailmate/config.tms` working configuration. Valid settings on the\n  card take priority at startup; when it is absent, existing NVS settings are used and can\n  be materialized to the card.\n- Added a show/hide control to masked on-device Settings fields, so PSKs and other long\n  secrets can be verified before saving while masking remains the default (#82).\n\n### Changed\n\n- Made the SD working configuration the portable, primary source for all supported\n  settings, including protocol and network options, radio channels, device preferences,\n  Wi-Fi profiles, and cellular settings. Existing installations retain their saved\n  settings during the first upgrade to this release.\n- USB Disk now gives the host exclusive SD-card access and temporarily pauses competing\n  application, radio, Wi-Fi, GPS, and display activity without changing the user's saved\n  settings.\n\n### Fixed\n\n- Fixed USB Disk transfers that could report absent media or drop during access by holding\n  SD ownership stable for the whole host session and preventing competing shared-SPI\n  activity (#83).\r\n\r\n\n\n## What's Changed\n* Codex/config persistence by @vicliu624 in https://github.com/vicliu624/trail-mate/pull/84\n\n\n**Full Changelog**: https://github.com/vicliu624/trail-mate/compare/v0.1.40-alpha...v0.1.41-alpha"
   - version: v0.1.40-alpha
     name: v0.1.40-alpha
     datetime: '2026-08-14T08:37:42Z'
@@ -422,9 +428,3 @@ releases:
 
       **Full Changelog**:
       https://github.com/vicliu624/trail-mate/compare/v0.1.21-alpha...v0.1.22-alpha
-  - version: v0.1.21-alpha
-    name: v0.1.21-alpha
-    datetime: '2026-04-21T08:51:24Z'
-    url: https://github.com/vicliu624/trail-mate/releases/tag/v0.1.21-alpha
-    prerelease: true
-    notes: "## [0.1.21-alpha] - 2026-04-21\r\n### Changed / 变更\r\n- Extensions app surfaces now participate fully in the shared localization pipeline, covering the menu label/description, top bar title, package list/detail headings, and install/uninstall status copy across the supported language packs / Extensions 相关界面现已完整接入共享本地化链路，覆盖菜单名称与描述、顶部标题、语言包列表/详情标题，以及安装/卸载状态文案，并同步补齐各已支持语言包的词条\r\n- Pager home footer layout now uses a split alignment model, keeping node ID anchored on the left while RAM and PSRAM usage stay grouped on the right, with the app description lifted above the footer to preserve readability / Pager 主界面底栏现改为分离对齐布局，节点 ID 固定左对齐，RAM 与 PSRAM 使用情况固定右对齐，同时将应用描述抬升到底栏上方，避免被遮挡\r\n\r\n### Fixed / 修复\r\n- Fixed localized menu refresh paths that were still using raw text updates, which left the Extensions icon label and focused description untranslated after language changes / 修复菜单本地化刷新路径中仍使用 raw text 更新的问题，解决切换语言后 Extensions 图标标签与焦点描述未正确翻译的问题\r\n- Fixed untranslated and inconsistent copy throughout the Extensions runtime, including compatibility badges, package action states, Wi-Fi status text, and package install/uninstall progress notifications / 修复 Extensions 运行时中多处未本地化或不一致的文案，包括兼容性标记、包操作状态、Wi-Fi 状态文字，以及安装/卸载过程通知\r\n- Fixed pager footer overlap where the bottom bar could cover icon descriptions, especially on the focused-card layout / 修复 pager 焦点卡片布局下底栏遮挡应用描述的问题\r\n\r\n\n\n**Full Changelog**: https://github.com/vicliu624/trail-mate/compare/v0.1.20-alpha...v0.1.21-alpha"

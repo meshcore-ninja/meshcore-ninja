@@ -1,19 +1,13 @@
 source: github
 repo: meshcore-dev/meshcore-cli
-updatedAt: '2026-08-18T14:35:51.391Z'
+updatedAt: '2026-08-24T14:44:46.273Z'
 releases:
-  - version: v1.6.1
-    name: v1.6.1
-    datetime: '2026-08-18T13:47:05Z'
-    url: https://github.com/meshcore-dev/meshcore-cli/releases/tag/v1.6.1
+  - version: v1.6.2
+    name: v1.6.2
+    datetime: '2026-08-24T13:13:28Z'
+    url: https://github.com/meshcore-dev/meshcore-cli/releases/tag/v1.6.2
     prerelease: false
-    notes: "@4nd3r added the possibility to associate scopes to channels via `scopes` file in config dir, thanks it should help people in crowded meshes ;)\r\n\r\nSome little fixes got into since last week:\r\n- fixed a regression with quotes handling due to pipeline ...\r\n- completion of aliases work\r\n\r\n## What's Changed\r\n* make channel scopes configurable by @4nd3r in https://github.com/meshcore-dev/meshcore-cli/pull/68\r\n\r\n## New Contributors\r\n* @4nd3r made their first contribution in https://github.com/meshcore-dev/meshcore-cli/pull/68\r\n\r\n**Full Changelog**: https://github.com/meshcore-dev/meshcore-cli/compare/v1.6.0...v1.6.1"
-  - version: v1.6.0
-    name: v1.6.0
-    datetime: '2026-08-12T23:24:20Z'
-    url: https://github.com/meshcore-dev/meshcore-cli/releases/tag/v1.6.0
-    prerelease: false
-    notes: "This release has seen a big refactoring of the command processing to permit redirection of output. It is now possible to redirect the output of a command to a file or a unix process. Some mechanisms have been introduced to follow this change such as an alias mechanism.\r\n\r\nHere is a non exhaustive list of the new features:\r\n- redirections and pipes\r\n- aliases\r\n- process handlers\r\n- force unscope (and more generally better scope management)\r\n- better json output\r\n- better terminal use"
+    notes: "## What's Changed\r\n\r\n* use ~ or / to get back to root quickly by @4nd3r in https://github.com/meshcore-dev/meshcore-cli/pull/69\r\n* `send_raw`\r\n* send cli commands through `cli` command or `:` prefix in im mode. If no command found in im, try cli\r\n* remote cli commands to companions (must set the `0x10` flag in contact to allow remote cli)\r\n\r\n**Full Changelog**: https://github.com/meshcore-dev/meshcore-cli/compare/v1.6.1...v1.6.2"
   - version: v1.5.0
     name: v1.5.0
     datetime: '2026-03-10T20:52:57Z'
