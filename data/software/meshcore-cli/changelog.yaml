@@ -1,7 +1,13 @@
 source: github
 repo: meshcore-dev/meshcore-cli
-updatedAt: '2026-08-24T14:44:46.273Z'
+updatedAt: '2026-08-24T16:40:36.687Z'
 releases:
+  - version: v1.6.3
+    name: v1.6.3
+    datetime: '2026-08-24T15:57:11Z'
+    url: https://github.com/meshcore-dev/meshcore-cli/releases/tag/v1.6.3
+    prerelease: false
+    notes: "Sorry guys, there were some annoying bugs in 1.6.2 :(\r\n\r\n**Full Changelog**: https://github.com/meshcore-dev/meshcore-cli/compare/v1.6.2...v1.6.3"
   - version: v1.6.2
     name: v1.6.2
     datetime: '2026-08-24T13:13:28Z'
