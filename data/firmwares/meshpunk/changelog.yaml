@@ -1,7 +1,13 @@
 source: github
 repo: PhilMo6/meshpunk
-updatedAt: '2026-08-22T22:24:42.475Z'
+updatedAt: '2026-08-24T18:43:02.768Z'
 releases:
+  - version: v0.3.7
+    name: v0.3.7 screenshots
+    datetime: '2026-08-24T17:18:41Z'
+    url: https://github.com/PhilMo6/meshpunk/releases/tag/v0.3.7
+    prerelease: false
+    notes: "You can now take screenshots using a keyboard or the on screen gamepad in module games or using the screenshot app in lua.\r\nAdded a easy type mode for the on screen keyboard. press the keyboard button on the bottom left to cycle to easy type mode.\r\nEasy type features larger buttons as well as entry confirmation."
   - version: v0.3.6
     name: v0.3.6 power menu update
     datetime: '2026-08-22T21:23:14Z'
@@ -118,9 +124,3 @@ releases:
     url: https://github.com/PhilMo6/meshpunk/releases/tag/v0.1.8
     prerelease: false
     notes: "MeshPunk v0.1.8\r\nChanges since v0.1.6\r\n\r\nA big release focused on MeshCore feature completion, a new app/storage architecture, and the Map app's meshprint triangulation.\r\n\r\nHighlights\r\nMeshprint sender triangulation (Map app) — With enough mesh data, run a meshprint on a message's sender to capture their first- and second-hop repeaters and triangulate the sender's approximate location. The more data you have, the better the result.\r\nFuller MeshCore support — Added region support, auto-add contact settings, and an auto-add max hops setting, bringing the device closer to feature parity with the MeshCore companion apps.\r\nApp manager — All apps now launch and close through a central app manager. Apps register their timers so they always tear down cleanly, fixing a class of leaks and stale-timer crashes.\r\nNew file storage system — Messages now persist as binary files that prune based on age (days) rather than message count, with GPS-seeded timestamps.\r\n\r\nMessenger\r\nMajor messenger overhaul: chat-bubble UI and the remaining MeshCore-related settings.\r\nTrackball/keyboard navigation now works consistently everywhere in the app.\r\nAdded a ? help button explaining how to use q to back out of selected areas.\r\nHardened teardown and fixed a small public-channel UI issue.\r\nMap\r\nMeshprint triangulation (see Highlights).\r\nFixed a map memory leak.\r\nAdded an archive-contact cycle button for stepping through archived contacts that don't all fit on screen at once.\r\nChannels\r\nPublic is now a normal channel — it was previously a non-removable special case. It can now be removed and re-added just like any other channel.\r\nNavigation\r\nReplaced the old gridnav logic with a dedicated nav.lua navigation layer; messenger and all settings pages updated to use it for more reliable trackball/WASD focus handling.\r\nPICO-8\r\nFixed a Lua interpreter bug that mis-evaluated certain values, causing rare random glitches.\r\nPerformance optimizations for heavy carts.\r\nUnder the hood / fixes\r\nLarge Lua files now stream to the loader in chunks instead of being read into one big string first — files of any size load correctly.\r\nSLog logger added to stop serial prints from stepping on each other.\r\nGC hardening to reduce memory pressure during app lifecycle.\r\nFixed a build bug where the custom partition/allocation file was ignored because it shared a name with a framework default (renamed to meshpunk_custom_16Mb.csv)."
-  - version: v0.1.6
-    name: v0.1.6 alpha Pico8 emulator
-    datetime: '2026-06-13T04:29:59Z'
-    url: https://github.com/PhilMo6/meshpunk/releases/tag/v0.1.6
-    prerelease: false
-    notes: "This release has a bunch of map improvements including faster sd card load times!\r\nAdded a message path animation as well as a replay for older messages\r\n\r\nPico8 emulator! a modified version of the fake08 Pico8 emulator it should run any pico8 .p8 or .png cart."
