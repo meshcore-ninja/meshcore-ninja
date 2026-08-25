@@ -1,7 +1,94 @@
 source: github
 repo: Treehouse-00/pymc_console-dist
-updatedAt: '2026-08-20T18:42:35.888Z'
+updatedAt: '2026-08-25T22:30:09.717Z'
 releases:
+  - version: v0.9.356
+    name: Release v0.9.356
+    datetime: '2026-08-25T20:44:04Z'
+    url: https://github.com/Treehouse-00/pymc_console-dist/releases/tag/v0.9.356
+    prerelease: false
+    notes: >-
+      ### Added
+
+      - The TUI Kit is now the application-wide instrument system. Manufactured keycaps and toggle
+      keys, precise wells and filler plates, status lamps, seven-segment readouts, pixel screens,
+      annunciators, readout racks, illuminated bar meters, scope charts, faceplates, and nameplates
+      share one portable component vocabulary across dark and light modes.
+
+      - `/tui-kit` is the living specimen and migration reference: it now includes the canonical
+      component sheet, interaction lab, grammar atlas, and a source-linked coverage ledger for all
+      27 application routes.
+
+      - Displays behave like energized hardware. P3-tuned lamps and LED bars use restrained optical
+      scatter, cascaded level changes, bright strike and release edges, while seven-segment dies
+      retain ghost segments and fast per-segment decay. Reduced-motion users receive the same final
+      state without decorative movement.
+
+
+      ### Changed
+
+      - The complete System workspace now uses the TUI hardware grammar. Resources, Sensors, Logs,
+      Storage, Recovery, Diagnostics, and Terminal share consistent screen typography, instrument
+      headers, compact text keycaps, semantic readouts, and responsive control banks without
+      removing their existing actions or data.
+
+      - System Resources is organized as a telemetry console: compact CPU and memory channel
+      controls, independently switchable frozen readouts, an analogue I/O scope, illuminated
+      envelope meters, and pixel-aligned process and platform screens replace generic dashboard
+      furniture.
+
+      - System Logs keeps search, level and logger controls beside the stream they affect. Its
+      compact summary, pass/mute channel registers, and log feed now use the same readable terminal
+      hierarchy at desktop and mobile widths.
+
+      - Card headers and application controls use the restrained Oswald silkscreen voice; Unifont
+      remains confined to digital screens and inputs, while molded identity typography is reserved
+      for page-level character.
+
+      - Shared confirmation dialogs now use TUI screen, key-well, and keycap patterns, including
+      caller-specific action legends rather than generic button copy.
+
+
+      ### Fixed
+
+      - Storage vacuum now asks for confirmation before running, reports its work through an
+      illuminated key state instead of a spinner, and preserves the table-management workflow in a
+      compact mobile-safe console.
+
+      - Resource channel keys, process sort keys, page-header actions, and their seven-segment
+      companions use correctly sized shared wells; disabled channels ghost and freeze their displays
+      instead of continuing to show live values.
+
+      - LED and seven-segment edge effects are lightweight, interruptible, and reduced-motion safe,
+      avoiding the performance regression caused by long per-segment fades.
+
+      - Confirmation actions such as Delete and Replace Key once again keep their specific visible
+      labels, so destructive and credential workflows remain unambiguous.
+
+
+
+      ---
+
+      Full history:
+      [CHANGELOG.md](https://github.com/dmduran12/pymc_console-dist/blob/main/CHANGELOG.md)
+
+
+      ## Installation
+
+      ```bash
+
+      sudo ./manage.sh install
+
+      ```
+
+
+      ## Upgrade
+
+      ```bash
+
+      sudo ./manage.sh upgrade
+
+      ```
   - version: v0.9.355
     name: Release v0.9.355
     datetime: '2026-08-20T18:06:04Z'
@@ -532,23 +619,6 @@ releases:
     name: Release v0.9.337
     datetime: '2026-07-19T07:52:22Z'
     url: https://github.com/Treehouse-00/pymc_console-dist/releases/tag/v0.9.337
-    prerelease: false
-    notes: |-
-      Automated release from pymc_console.
-
-      ## Installation
-      ```bash
-      sudo ./manage.sh install
-      ```
-
-      ## Upgrade
-      ```bash
-      sudo ./manage.sh upgrade
-      ```
-  - version: v0.9.336
-    name: Release v0.9.336
-    datetime: '2026-07-08T04:46:56Z'
-    url: https://github.com/Treehouse-00/pymc_console-dist/releases/tag/v0.9.336
     prerelease: false
     notes: |-
       Automated release from pymc_console.
