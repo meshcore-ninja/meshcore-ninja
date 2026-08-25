@@ -1,7 +1,35 @@
 source: github
 repo: burakcan/MeshCore-mishmesh
-updatedAt: '2026-08-21T20:28:05.681Z'
+updatedAt: '2026-08-25T12:51:05.957Z'
 releases:
+  - version: mishmesh-v1.4.0
+    name: mishmesh Firmware v1.4.0
+    datetime: '2026-08-25T11:52:37Z'
+    url: https://github.com/burakcan/MeshCore-mishmesh/releases/tag/mishmesh-v1.4.0
+    prerelease: false
+    notes: >-
+      - Cyrillic rendering and keyboard support for Ukrainian, Russian, Belarussian, Bulgarian,
+      Serbian and Macedonian languages. Thanks to @nxstd for the base of this work.
+
+      - Option to open chats from the oldest unread message
+
+
+
+
+      ## What's Changed
+
+      * Add Cyrillic rendering and Russian keypad support by @nxstd in
+      https://github.com/burakcan/MeshCore-mishmesh/pull/15
+
+
+      ## New Contributors
+
+      * @nxstd made their first contribution in
+      https://github.com/burakcan/MeshCore-mishmesh/pull/15
+
+
+      **Full Changelog**:
+      https://github.com/burakcan/MeshCore-mishmesh/compare/mishmesh-v1.3.0...mishmesh-v1.4.0
   - version: mishmesh-v1.3.0
     name: mishmesh Firmware v1.3.0
     datetime: '2026-08-21T18:51:01Z'
