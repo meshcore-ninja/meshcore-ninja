@@ -1,7 +1,86 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-08-25T22:30:05.068Z'
+updatedAt: '2026-08-26T22:52:13.434Z'
 releases:
+  - version: v4.15.2-rc5
+    name: v4.15.2-rc5
+    datetime: '2026-08-26T21:47:05Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.15.2-rc5
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.15.2-rc5
+
+
+      > ⚠️ **Pre-release (RC).** For testing. Not tagged `:latest`; use a specific image tag.
+
+
+      Release candidate 5 for 4.15.2, rolling up seven PRs since rc4. Adds a device-config
+      **Restore** button to Backup Management (#4933) with the reboot notice now driven by the
+      actual restore flag (#4935), and lands **Phase 1 of Carto basemap API-key** support (#4936)
+      with the key field relocated to the Map settings section (#4938). Fixes a MeshCore flood-scope
+      bug so truly-unscoped floods no longer fall back to the node's default region (#4937), hides
+      the MeshMonitor logo/wordmark on per-source pages (#4939), and makes the Site Planner panel
+      explain *why* a coverage prediction rendered as a plain circle instead of terrain-shaped
+      (#4940).
+
+
+      ## Features
+
+      - feat(backup): add Restore button to Device Backup Management (#4933)
+
+      - feat(map): support a Carto basemap API key — Phase 1 (#4936)
+
+
+      ## Bug Fixes
+
+      - fix(backup): surface restore reboot notice from the actual flag (#4935)
+
+      - fix(meshcore): send truly-unscoped floods, not the node default region (#4937)
+
+      - fix(settings): move Carto API key field to the Map section (#4938)
+
+      - fix(header): hide MeshMonitor logo/wordmark on per-source pages (#4939)
+
+      - fix(site-planner): surface why coverage is a circle in the panel (#4940)
+
+
+      ## Issues Resolved
+
+      - #4926, #4932, #4934 (Phase 1), #4727
+
+
+      **Full changelog:** https://github.com/Yeraze/meshmonitor/compare/v4.15.2-rc4...v4.15.2-rc5
+
+      ## 🚀 MeshMonitor v4.15.2-rc5
+
+
+      ### 📦 Installation
+
+
+      **Docker (recommended):**
+
+      ```bash
+
+      docker run -d \
+        --name meshmonitor \
+        -p 8080:3001 \
+        -v meshmonitor-data:/data \
+        ghcr.io/Yeraze/meshmonitor:4.15.2-rc5
+      ```
+
+
+      ### 🧪 Testing
+
+      ✅ All tests passed
+
+      ✅ TypeScript checks passed
+
+      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
+
+
+      ### 📋 Changes
+
+      See commit history for detailed changes.
   - version: v4.15.2-rc4
     name: v4.15.2-rc4
     datetime: '2026-08-25T21:18:42Z'
@@ -1948,111 +2027,3 @@ releases:
       - feat(traceroute): Copy Forward/Return/Both text links with insecure-context fallback (#4429)
 
       …
-  - version: v4.13.3-rc5
-    name: v4.13.3-rc5
-    datetime: '2026-08-01T18:42:51Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.13.3-rc5
-    prerelease: true
-    notes: >-
-      Release candidate 5 for 4.13.3. Twelve changes since rc4.
-
-
-      ## Remote administration no longer blocks on the mesh
-
-
-      Issue #4482 — a single remote admin action could legitimately hold a browser HTTP request open
-      for up to **75 seconds** (up to 45s acquiring the session passkey, plus up to 30s awaiting a
-      routing ACK). Behind a reverse proxy or CDN that surfaced as an upstream 502 with an unhelpful
-      "Request failed".
-
-
-      Remote admin commands, session-passkey acquisition, and remote config import now return `202
-      Accepted` with an operation id and complete in the background, polled via `GET
-      /api/admin/operations/:id`. Local-node commands stay synchronous — they have no passkey step
-      and no ACK wait.
-
-
-      - **Remote ignore/unignore now confirm.** They wait for the routing ACK exactly as favorites
-      do, so a remote ignore can be verified rather than "succeeding" instantly with no way to
-      check.
-
-      - **Partial config imports report what failed**, not just what landed — "1 channel" is now
-      distinguishable from "1 of 2 channels".
-
-
-      (#4485, #4486; documented in #4490)
-
-
-      ## Admin messages honor the configured hop limit
-
-
-      Admin packets were built with a hardcoded `hopLimit: 3` — the firmware default, not the user's
-      setting. Anyone who raised their node's LoRa hop limit to reach a deeper mesh still had every
-      remote admin command expire 3 hops out, with no indication why. They now use the node's
-      configured value, matching how the Meshtastic Python client behaves. (#4479)
-
-
-      ## Fixes
-
-
-      - `GET /stats` returned 500 whenever `sourceId` was omitted — the cross-source aggregate path
-      had never worked (#4470)
-
-      - MeshCore: anon auth banner, channel-sync data loss, reply/trigger ordering (#4491)
-
-      - MeshCore: channel view now opens at the top, and Delete no longer appears to do nothing
-      (#4488)
-
-      - MeshCore: hop/route/scope info preserved in channel message history (#4475)
-
-      - Older-message loads no longer force-scroll the view to the bottom (#4477)
-
-      - Restored the send-message button icon (#4480)
-
-
-      ## Navigation
-
-
-      - Unified Meshtastic/MeshCore per-source navigation (#4481)
-
-      - Meshtastic phone navigation moved to the shared bottom bar (#4484)
-
-
-      ## Validation
-
-
-      Full system-test suite passed on hardware — all 12 legs, including **Configuration Import**,
-      which exercises the newly-async `/api/admin/import-config` path and the hop-limit change
-      against a real device. This is the first build to put the async remote-admin work in front of
-      hardware; it shipped on unit and route coverage alone.
-
-      ## 🚀 MeshMonitor v4.13.3-rc5
-
-
-      ### 📦 Installation
-
-
-      **Docker (recommended):**
-
-      ```bash
-
-      docker run -d \
-        --name meshmonitor \
-        -p 8080:3001 \
-        -v meshmonitor-data:/data \
-        ghcr.io/Yeraze/meshmonitor:4.13.3-rc5
-      ```
-
-
-      ### 🧪 Testing
-
-      ✅ All tests passed
-
-      ✅ TypeScript checks passed
-
-      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
-
-
-      ### 📋 Changes
-
-      See commit history for detailed changes.
