@@ -1,7 +1,13 @@
 source: github
 repo: venamartin/meshtrax
-updatedAt: '2026-08-17T16:30:26.431Z'
+updatedAt: '2026-08-26T01:25:19.536Z'
 releases:
+  - version: v1.7.22
+    name: Release v1.7.22
+    datetime: '2026-08-26T00:09:00Z'
+    url: https://github.com/venamartin/meshtrax/releases/tag/v1.7.22
+    prerelease: false
+    notes: "## MeshTrax 1.7.22\r\n\r\n### What's New\r\n\r\n- **DM from a channel message** (#99). Long-press any channel message and pick **Direct Message**. The sender is matched against your saved and discovered contacts with a key-verification picker, since names aren't unique on a mesh. Already chatting with them? You jump straight into the conversation. No match? One dialog sends your advert and drafts an ask-in-channel message, then watches for their advert and offers the DM when it arrives.\r\n- **\"Direct\" badge** (#104). Channel messages heard with zero hops (your radio heard *their* radio, no repeater in between) wear a small green pill. It survives repeater echoes: the via-path and repeat counter still show the mesh's longest route and copy count.\r\n- **Colorful sender names** (#103, #105). Channel senders get a stable identity color shared by their name, avatar, and reply quotes, from a curated 11-hue palette. Prefer the old look? Turn it off under Settings, App Settings, Appearance: \"Colorful sender names\".\r\n- **One contact list** (#98). My Contacts and Discovered are merged, matching Manage Repeaters: discovered entries show outlined, tapping one imports it, and a new Source filter (All / Saved / Discovered) keeps the old views one tap away.\r\n\r\n### Fixed\r\n\r\n- **Discovered contacts could be erased** (#97). A startup race let an empty in-memory list overwrite the discovered-contacts table. The store is now upsert-only, so no code path can bulk-erase it.\r\n- **TCP drops now auto-reconnect** (#100). Non-manual TCP disconnects retry with backoff until the link returns. Launch auto-connect follows your last-used transport instead of always hunting the last Bluetooth radio, and the Scan, USB, and TCP buttons cancel any pending reconnect.\r\n- **Native-feel swipes** (#102). Reply and mention swipes only trigger when the gesture is clearly horizontal, commit on release rather than peak (overshoot and return to cancel), and tick when you cross the trigger point.\r\n\r\n\r\n**Full Changelog**: https://github.com/venamartin/meshtrax/compare/v1.7.19...v1.7.22"
   - version: v1.7.19
     name: Release v1.7.19
     datetime: '2026-08-12T16:51:58Z'
