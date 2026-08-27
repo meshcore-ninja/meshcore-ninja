@@ -1,6 +1,6 @@
 source: script
 repo: meshcore-dev/MeshCore
-updatedAt: '2026-08-17T16:29:59.663Z'
+updatedAt: '2026-08-27T08:09:43.379Z'
 releases:
   - version: room-server-v1.17.1
     name: Room Server Firmware v1.17.1
@@ -81,7 +81,7 @@ releases:
       ## Fixes and enhancements for devices with FEM
 
 
-      The `radio.fem.rxgain` setting was not being persisted properly in v1.17.1, this is now fixed.
+      The `radio.fem.rxgain` setting was not being persisted properly in v1.17.0, this is now fixed.
       Repeater admins will want to check that `radio.fem.rxgain` and `radio.rxgain` are configured
       to their liking after updating. Companion firmware currently has no way to configure these
       settings, so they they will use the default values only for now.
@@ -173,7 +173,7 @@ releases:
       ## Fixes and enhancements for devices with FEM
 
 
-      The `radio.fem.rxgain` setting was not being persisted properly in v1.17.1, this is now fixed.
+      The `radio.fem.rxgain` setting was not being persisted properly in v1.17.0, this is now fixed.
       Repeater admins will want to check that `radio.fem.rxgain` and `radio.rxgain` are configured
       to their liking after updating. Companion firmware currently has no way to configure these
       settings, so they they will use the default values only for now.
@@ -265,7 +265,7 @@ releases:
       ## Fixes and enhancements for devices with FEM
 
 
-      The `radio.fem.rxgain` setting was not being persisted properly in v1.17.1, this is now fixed.
+      The `radio.fem.rxgain` setting was not being persisted properly in v1.17.0, this is now fixed.
       Repeater admins will want to check that `radio.fem.rxgain` and `radio.rxgain` are configured
       to their liking after updating. Companion firmware currently has no way to configure these
       settings, so they they will use the default values only for now.
@@ -1531,241 +1531,19 @@ releases:
     datetime: '2026-04-19T03:07:54Z'
     url: https://github.com/meshcore-dev/MeshCore/releases/tag/room-server-v1.15.0
     prerelease: false
-    notes: >-
-      **Download**
-
-
-      Latest firmwares are in the [flasher.meshcore.io](https://flasher.meshcore.io/)
-
-
-      **Change Log**
-
-
-      -   Default Scope support
-
-      -   Support for New GROUP\_DATA (binary) packets
-      [#1928](https://github.com/meshcore-dev/MeshCore/pull/1928)
-      [#2130](https://github.com/meshcore-dev/MeshCore/pull/2130)
-
-      -   Heltec V4.3 support [#1867](https://github.com/meshcore-dev/MeshCore/pull/1867)
-
-      -   Heltec nRF Tracker (T096) support
-      [#2097](https://github.com/meshcore-dev/MeshCore/pull/2097)
-
-      -   GAT562 Mesh EVB Pro repeater and room server support
-      [#2042](https://github.com/meshcore-dev/MeshCore/pull/2042)
-
-      -   Radio rxgain now ON by default [#2124](https://github.com/meshcore-dev/MeshCore/pull/2124)
-
-      -   Radio freq range now supported down to 150Mhz
-      [#2126](https://github.com/meshcore-dev/MeshCore/pull/2126)
-
-      -   GPS pref peristence fix [#2018](https://github.com/meshcore-dev/MeshCore/pull/2018)
-
-      -   New `get|set dutycycle` CLI command
-      [#1961](https://github.com/meshcore-dev/MeshCore/pull/1961)
-
-      -   Muzi Works R1 Neo support [#2007](https://github.com/meshcore-dev/MeshCore/pull/2007)
-
-      -   GAT562 Watch support [#2138](https://github.com/meshcore-dev/MeshCore/pull/2138)
-      [#2228](https://github.com/meshcore-dev/MeshCore/pull/2228)
-
-      -   BME680 sensor init fix [#2227](https://github.com/meshcore-dev/MeshCore/pull/2227)
-
-      -   Heltec Wireless Paper battery read fix
-      [#2164](https://github.com/meshcore-dev/MeshCore/pull/2164)
-
-      -   WiFi companion fixes for Heltec V4,TBeam 1W
-      [#1833](https://github.com/meshcore-dev/MeshCore/pull/1833)
-
-      -   Waveshare RP2040: RXEN fix [#2298](https://github.com/meshcore-dev/MeshCore/pull/2298)
-
-      -   nRF companion, support for OTA updates
-      [#2323](https://github.com/meshcore-dev/MeshCore/pull/2323)
-
-      -   Added companion for Heltec Wireless Paper
-      [#2315](https://github.com/meshcore-dev/MeshCore/pull/2315)
-
-      -   Misc [#2134](https://github.com/meshcore-dev/MeshCore/pull/2134)
-      [#2190](https://github.com/meshcore-dev/MeshCore/pull/2190)
-      [#1425](https://github.com/meshcore-dev/MeshCore/pull/1425)
-      [#2075](https://github.com/meshcore-dev/MeshCore/pull/2075)
-      [#2302](https://github.com/meshcore-dev/MeshCore/pull/2302)
-      [#2306](https://github.com/meshcore-dev/MeshCore/pull/2306)
-
-      -   Xiao C3 bootloop fix [#2328](https://github.com/meshcore-dev/MeshCore/pull/2328)
-
-
-      **Documentation Links**
-
-
-      For info on the new Default Scope feature, please see [this
-      article](https://blog.meshcore.io/2026/04/17/default-scope).
-
-
-      For low level format of the GROUP\_DATA packets, please see [this docs
-      link](https://docs.meshcore.io/payloads/?h=group+datagram#group-datagram).
-    notesUrl: https://blog.meshcore.io/2026/04/19/release-1-15-0
+    notes: "https://blog.meshcore.io/2026/04/19/release-1-15-0\r\n\r\n- Default Scope support\r\n- Support for New GROUP_DATA (binary) packets #1928 #2130\r\n- Heltec V4.3 support #1867\r\n- Heltec nRF Tracker (T096) support #2097\r\n- GAT562 Mesh EVB Pro repeater and room server support #2042\r\n- Radio rxgain now ON by default #2124\r\n- Radio freq range now supported down to 150Mhz #2126\r\n- GPS pref peristence fix #2018\r\n- New get|set dutycycle CLI command #1961\r\n- Muzi Works R1 Neo support #2007\r\n- GAT562 Watch support #2138 #2228\r\n- BME680 sensor init fix #2227\r\n- Heltec Wireless Paper battery read fix #2164\r\n- WiFi companion fixes for Heltec V4,TBeam 1W #1833\r\n- Waveshare RP2040: RXEN fix #2298\r\n- nRF companion, support for OTA updates #2323\r\n- Added companion for Heltec Wireless Paper #2315\r\n- Misc #2134 #2190 #1425 #2075 #2302 #2306\r\n- Xiao C3 bootloop fix #2328"
   - version: repeater-v1.15.0
     name: Repeater Firmware v1.15.0
     datetime: '2026-04-19T03:08:26Z'
     url: https://github.com/meshcore-dev/MeshCore/releases/tag/repeater-v1.15.0
     prerelease: false
-    notes: >-
-      **Download**
-
-
-      Latest firmwares are in the [flasher.meshcore.io](https://flasher.meshcore.io/)
-
-
-      **Change Log**
-
-
-      -   Default Scope support
-
-      -   Support for New GROUP\_DATA (binary) packets
-      [#1928](https://github.com/meshcore-dev/MeshCore/pull/1928)
-      [#2130](https://github.com/meshcore-dev/MeshCore/pull/2130)
-
-      -   Heltec V4.3 support [#1867](https://github.com/meshcore-dev/MeshCore/pull/1867)
-
-      -   Heltec nRF Tracker (T096) support
-      [#2097](https://github.com/meshcore-dev/MeshCore/pull/2097)
-
-      -   GAT562 Mesh EVB Pro repeater and room server support
-      [#2042](https://github.com/meshcore-dev/MeshCore/pull/2042)
-
-      -   Radio rxgain now ON by default [#2124](https://github.com/meshcore-dev/MeshCore/pull/2124)
-
-      -   Radio freq range now supported down to 150Mhz
-      [#2126](https://github.com/meshcore-dev/MeshCore/pull/2126)
-
-      -   GPS pref peristence fix [#2018](https://github.com/meshcore-dev/MeshCore/pull/2018)
-
-      -   New `get|set dutycycle` CLI command
-      [#1961](https://github.com/meshcore-dev/MeshCore/pull/1961)
-
-      -   Muzi Works R1 Neo support [#2007](https://github.com/meshcore-dev/MeshCore/pull/2007)
-
-      -   GAT562 Watch support [#2138](https://github.com/meshcore-dev/MeshCore/pull/2138)
-      [#2228](https://github.com/meshcore-dev/MeshCore/pull/2228)
-
-      -   BME680 sensor init fix [#2227](https://github.com/meshcore-dev/MeshCore/pull/2227)
-
-      -   Heltec Wireless Paper battery read fix
-      [#2164](https://github.com/meshcore-dev/MeshCore/pull/2164)
-
-      -   WiFi companion fixes for Heltec V4,TBeam 1W
-      [#1833](https://github.com/meshcore-dev/MeshCore/pull/1833)
-
-      -   Waveshare RP2040: RXEN fix [#2298](https://github.com/meshcore-dev/MeshCore/pull/2298)
-
-      -   nRF companion, support for OTA updates
-      [#2323](https://github.com/meshcore-dev/MeshCore/pull/2323)
-
-      -   Added companion for Heltec Wireless Paper
-      [#2315](https://github.com/meshcore-dev/MeshCore/pull/2315)
-
-      -   Misc [#2134](https://github.com/meshcore-dev/MeshCore/pull/2134)
-      [#2190](https://github.com/meshcore-dev/MeshCore/pull/2190)
-      [#1425](https://github.com/meshcore-dev/MeshCore/pull/1425)
-      [#2075](https://github.com/meshcore-dev/MeshCore/pull/2075)
-      [#2302](https://github.com/meshcore-dev/MeshCore/pull/2302)
-      [#2306](https://github.com/meshcore-dev/MeshCore/pull/2306)
-
-      -   Xiao C3 bootloop fix [#2328](https://github.com/meshcore-dev/MeshCore/pull/2328)
-
-
-      **Documentation Links**
-
-
-      For info on the new Default Scope feature, please see [this
-      article](https://blog.meshcore.io/2026/04/17/default-scope).
-
-
-      For low level format of the GROUP\_DATA packets, please see [this docs
-      link](https://docs.meshcore.io/payloads/?h=group+datagram#group-datagram).
-    notesUrl: https://blog.meshcore.io/2026/04/19/release-1-15-0
+    notes: "https://blog.meshcore.io/2026/04/19/release-1-15-0\r\n\r\n- Default Scope support\r\n- Support for New GROUP_DATA (binary) packets #1928 #2130\r\n- Heltec V4.3 support #1867\r\n- Heltec nRF Tracker (T096) support #2097\r\n- GAT562 Mesh EVB Pro repeater and room server support #2042\r\n- Radio rxgain now ON by default #2124\r\n- Radio freq range now supported down to 150Mhz #2126\r\n- GPS pref peristence fix #2018\r\n- New get|set dutycycle CLI command #1961\r\n- Muzi Works R1 Neo support #2007\r\n- GAT562 Watch support #2138 #2228\r\n- BME680 sensor init fix #2227\r\n- Heltec Wireless Paper battery read fix #2164\r\n- WiFi companion fixes for Heltec V4,TBeam 1W #1833\r\n- Waveshare RP2040: RXEN fix #2298\r\n- nRF companion, support for OTA updates #2323\r\n- Added companion for Heltec Wireless Paper #2315\r\n- Misc #2134 #2190 #1425 #2075 #2302 #2306\r\n- Xiao C3 bootloop fix #2328"
   - version: companion-v1.15.0
     name: Companion Firmware v1.15.0
     datetime: '2026-04-19T06:48:14Z'
     url: https://github.com/meshcore-dev/MeshCore/releases/tag/companion-v1.15.0
     prerelease: false
-    notes: >-
-      **Download**
-
-
-      Latest firmwares are in the [flasher.meshcore.io](https://flasher.meshcore.io/)
-
-
-      **Change Log**
-
-
-      -   Default Scope support
-
-      -   Support for New GROUP\_DATA (binary) packets
-      [#1928](https://github.com/meshcore-dev/MeshCore/pull/1928)
-      [#2130](https://github.com/meshcore-dev/MeshCore/pull/2130)
-
-      -   Heltec V4.3 support [#1867](https://github.com/meshcore-dev/MeshCore/pull/1867)
-
-      -   Heltec nRF Tracker (T096) support
-      [#2097](https://github.com/meshcore-dev/MeshCore/pull/2097)
-
-      -   GAT562 Mesh EVB Pro repeater and room server support
-      [#2042](https://github.com/meshcore-dev/MeshCore/pull/2042)
-
-      -   Radio rxgain now ON by default [#2124](https://github.com/meshcore-dev/MeshCore/pull/2124)
-
-      -   Radio freq range now supported down to 150Mhz
-      [#2126](https://github.com/meshcore-dev/MeshCore/pull/2126)
-
-      -   GPS pref peristence fix [#2018](https://github.com/meshcore-dev/MeshCore/pull/2018)
-
-      -   New `get|set dutycycle` CLI command
-      [#1961](https://github.com/meshcore-dev/MeshCore/pull/1961)
-
-      -   Muzi Works R1 Neo support [#2007](https://github.com/meshcore-dev/MeshCore/pull/2007)
-
-      -   GAT562 Watch support [#2138](https://github.com/meshcore-dev/MeshCore/pull/2138)
-      [#2228](https://github.com/meshcore-dev/MeshCore/pull/2228)
-
-      -   BME680 sensor init fix [#2227](https://github.com/meshcore-dev/MeshCore/pull/2227)
-
-      -   Heltec Wireless Paper battery read fix
-      [#2164](https://github.com/meshcore-dev/MeshCore/pull/2164)
-
-      -   WiFi companion fixes for Heltec V4,TBeam 1W
-      [#1833](https://github.com/meshcore-dev/MeshCore/pull/1833)
-
-      -   Waveshare RP2040: RXEN fix [#2298](https://github.com/meshcore-dev/MeshCore/pull/2298)
-
-      -   nRF companion, support for OTA updates
-      [#2323](https://github.com/meshcore-dev/MeshCore/pull/2323)
-
-      -   Added companion for Heltec Wireless Paper
-      [#2315](https://github.com/meshcore-dev/MeshCore/pull/2315)
-
-      -   Misc [#2134](https://github.com/meshcore-dev/MeshCore/pull/2134)
-      [#2190](https://github.com/meshcore-dev/MeshCore/pull/2190)
-      [#1425](https://github.com/meshcore-dev/MeshCore/pull/1425)
-      [#2075](https://github.com/meshcore-dev/MeshCore/pull/2075)
-      [#2302](https://github.com/meshcore-dev/MeshCore/pull/2302)
-      [#2306](https://github.com/meshcore-dev/MeshCore/pull/2306)
-
-      -   Xiao C3 bootloop fix [#2328](https://github.com/meshcore-dev/MeshCore/pull/2328)
-
-
-      **Documentation Links**
-
-
-      For info on the new Default Scope feature, please see [this
-      article](https://blog.meshcore.io/2026/04/17/default-scope).
-
-
-      For low level format of the GROUP\_DATA packets, please see [this docs
-      link](https://docs.meshcore.io/payloads/?h=group+datagram#group-datagram).
-    notesUrl: https://blog.meshcore.io/2026/04/19/release-1-15-0
+    notes: "https://blog.meshcore.io/2026/04/19/release-1-15-0\r\n\r\n- Default Scope support\r\n- Support for New GROUP_DATA (binary) packets #1928 #2130\r\n- Heltec V4.3 support #1867\r\n- Heltec nRF Tracker (T096) support #2097\r\n- GAT562 Mesh EVB Pro repeater and room server support #2042\r\n- Radio rxgain now ON by default #2124\r\n- Radio freq range now supported down to 150Mhz #2126\r\n- GPS pref peristence fix #2018\r\n- New get|set dutycycle CLI command #1961\r\n- Muzi Works R1 Neo support #2007\r\n- GAT562 Watch support #2138 #2228\r\n- BME680 sensor init fix #2227\r\n- Heltec Wireless Paper battery read fix #2164\r\n- WiFi companion fixes for Heltec V4,TBeam 1W #1833\r\n- Waveshare RP2040: RXEN fix #2298\r\n- nRF companion, support for OTA updates #2323\r\n- Added companion for Heltec Wireless Paper #2315\r\n- Misc #2134 #2190 #1425 #2075 #2302 #2306\r\n- Xiao C3 bootloop fix #2328"
   - version: room-server-v1.14.1
     name: Room Server Firmware v1.14.1
     datetime: '2026-03-20T02:54:49Z'
