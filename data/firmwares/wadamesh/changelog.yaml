@@ -1,7 +1,183 @@
 source: github
 repo: ALLFATHER-BV/wadamesh
-updatedAt: '2026-08-22T22:24:46.265Z'
+updatedAt: '2026-08-27T20:11:59.090Z'
 releases:
+  - version: beta_71
+    name: wadamesh beta_71
+    datetime: '2026-08-27T12:07:06Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_71
+    prerelease: true
+    notes: >-
+      **This is a test build.** Stable stays on `beta_65`. Flash it from
+      [wadamesh.com](https://wadamesh.com) with the Beta toggle on, or turn on "Get test builds
+      (beta)" on the device.
+
+
+      A small drop on top of `beta_70`, aimed almost entirely at people writing Lua apps. Three of
+      these came from developers hitting walls this week.
+
+
+      ## For people writing Lua apps
+
+
+      **Apps can clear their page.** `wada.ui.clear()`. There was no way to remove widgets an app
+      had already created, so anything with a second screen drew it on top of the first. Reported by
+      [@pisti87](https://github.com/pisti87), who had been working around it with buttons, and who
+      pointed out that `ui.list()` has a `clear()` while the page it sits on did not.
+
+
+      Any widget handle you still hold from before the clear becomes **inert rather than
+      dangerous**: calling a method on it does nothing instead of crashing. That is the reason this
+      is not simply a call to LVGL's `lv_obj_clean()`: widget handles are raw pointers, so a
+      variable still referring to a label from the previous screen would otherwise walk straight
+      into freed memory.
+
+
+      **Apps can reach all your contacts.** `wada.mesh.contacts()` stopped at 100, and only ever
+      scanned the first 200 in the first place, so on a device with 2000 contacts most were
+      unreachable and nothing indicated it had truncated. It takes an offset and a limit now
+      (default 100, maximum 250 per call, because each entry is an eight-field table and thousands
+      in one call would exhaust the app heap). New `wada.mesh.contact_count()` says how many there
+      are, so you can page without probing for the end.
+
+
+      **Apps can be three times larger.** The source limit was 64 KB, which an ordinary program can
+      reach. It is **192 KB**. The source only lives in memory until it is compiled, so this is a
+      transient cost rather than something each app carries; the real ceiling is still the 256 KB
+      per-app heap.
+
+
+      All three are documented at [wadamesh.com/sdk.html](https://wadamesh.com/sdk.html).
+
+
+      ## T-Deck keyboard
+
+
+      Modifier latching could fail to switch on **even with the correct keyboard firmware
+      installed** ([#332](https://github.com/ALLFATHER-BV/wadamesh/issues/332)). The firmware asked
+      the keyboard controller what it could do exactly once, on the first I2C read after boot, which
+      is the read most likely to come back short or garbled, because the controller is still
+      starting. One bad answer meant no latching for the rest of the session, and rebooting just
+      asked again at the same unlucky moment.
+
+
+      It now keeps asking for a second and a half before settling for the older protocol, still
+      delivers anything you type during that window, and reports what it actually saw when it does
+      give up, so the next report of this is one line to diagnose rather than a guess about
+      someone's firmware version.
+
+
+      ## For testers
+
+
+      This sits on top of `beta_70`, which carried the fix for the **crash when leaving the
+      known-regions screen**. If you have not tried that yet it is still the thing most worth
+      confirming: add and remove a few regions, leave the screen, check the device stays up.
+
+
+      If your screen is not going to sleep, that is
+      [#333](https://github.com/ALLFATHER-BV/wadamesh/issues/333) and it is **not** fixed here. It
+      is still being narrowed down and I would rather not change screen behaviour for everyone on a
+      guess.
+  - version: beta_70
+    name: wadamesh beta_70
+    datetime: '2026-08-27T09:09:52Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_70
+    prerelease: true
+    notes: >-
+      **This is a test build.** Stable stays on `beta_65`. Flash it from
+      [wadamesh.com](https://wadamesh.com) with the Beta toggle on, or turn on "Get test builds
+      (beta)" on the device.
+
+
+      ## The crash on the regions screen
+
+
+      Adding or removing known regions and then leaving that screen crashed the device. If you have
+      been stuck in Radio & mesh and had to reset to get out
+      ([#314](https://github.com/ALLFATHER-BV/wadamesh/issues/314)), this was why.
+
+
+      The cause is general rather than anything to do with regions. When LVGL destroys a text field
+      it sends that field one last `LV_EVENT_DEFOCUSED`, and seven fields in this firmware save
+      their value on losing focus. So a field was reading its own text and writing it back **from
+      inside its own destructor**, on memory that was already being freed. All seven now ignore a
+      blur that is really a deletion.
+
+
+      Decoded from the core dump attached to
+      [#330](https://github.com/ALLFATHER-BV/wadamesh/issues/330) against a beta_69 image rebuilt
+      from the tag. Sending that file is what made this findable, so thank you.
+
+
+      ## Translations: undoing damage we caused
+
+
+      Language file v18 shipped keys that exist nowhere in the firmware. `Paste (move)Paste (copy)`
+      and `Unblock  Block` are two separate buttons glued together, and one entry was a **Dutch**
+      phrase that appears only inside a source-code comment.
+
+
+      That was a bug in the tool that decides which text belongs in a language file, which I
+      introduced in the previous release. Fixed on both counts: it no longer joins the two halves of
+      a ternary into one key, and it no longer reads string literals out of comments. **202 invented
+      entries removed** from all thirteen files, with nothing that had actually been translated
+      touched.
+
+
+      Also: the curly quotes in the Hungarian map credits rendered as empty boxes, because no
+      bundled font carries U+201E/U+201D. Five more strings are translatable
+      ([@pisti87](https://github.com/pisti87) found them and gave line numbers). Language files are
+      at **v19**; v18 is withdrawn.
+
+
+      ## The Store stops offering apps your board cannot run
+
+
+      Wardrive and Nearby need the extended SDK, which the Heltec V4 does not have. The Store
+      offered both anyway, so the most common board in the mesh could download, install and open two
+      apps that then refused to do anything. Apps declare `requires` in the catalog now, and the
+      Store greys the button and says so on the row.
+
+
+      ## Community work
+
+
+      **[@oumike](https://github.com/oumike)** (11 commits this drop):
+
+
+      - **WAV and MP3 playback for Lua apps**
+      ([#316](https://github.com/ALLFATHER-BV/wadamesh/pull/316), closes
+      [#315](https://github.com/ALLFATHER-BV/wadamesh/issues/315)), from the SD card or from memory.
+
+      - **@-mention autocomplete** in the device chat and the web interface
+      ([#313](https://github.com/ALLFATHER-BV/wadamesh/pull/313)), suggesting people whose adverts
+      this device actually heard rather than your whole contact list.
+
+      - **Latching symbol and alt keys**
+      ([#320](https://github.com/ALLFATHER-BV/wadamesh/pull/320)): tap once for the next key, twice
+      to lock the layer. No more holding a modifier down.
+
+      - **A home page from the SD card** for the web reader
+      ([#317](https://github.com/ALLFATHER-BV/wadamesh/pull/317)), so a device with no internet
+      still has somewhere to start.
+
+      - **Wardrive survives emoji in node names**
+      ([#324](https://github.com/ALLFATHER-BV/wadamesh/pull/324), closes
+      [#323](https://github.com/ALLFATHER-BV/wadamesh/issues/323), reported by
+      [@4nuts](https://github.com/4nuts)). Names are cut on character boundaries, and text from an
+      app is validated before it reaches LVGL.
+
+      - **Screenshots from the Control Center** on the ThinkNode M9 and both Pagers, with a 0/3/10
+      second timer ([#328](https://github.com/ALLFATHER-BV/wadamesh/pull/328), closes
+      [#327](https://github.com/ALLFATHER-BV/wadamesh/issues/327)).
+
+      - M9 Home key works while typing, and Snake starts on the first direction pressed
+      ([#326](https://github.com/ALLFATHER-BV/wadamesh/pull/326)).
+
+      - Tapping an already-focused chat composer reopens the keybo
+
+      …
   - version: beta_69
     name: wadamesh beta_69
     datetime: '2026-08-22T22:07:24Z'
@@ -1553,128 +1729,3 @@ releases:
       T-Deck · Heltec V4 TFT · Heltec V4-R8 · ThinkNode M9 · RAK TAP v2 · T-LoRa Pager (LR1121 /
       SX1262) · Attaky Core · T-Display P4 (AMOLED + LCD). Flash `<board>-merged.bin` at `0x0` for a
       full install, or `<board>.bin` for an app-only update.
-  - version: beta_51
-    name: wadamesh beta_51
-    datetime: '2026-07-29T12:41:34Z'
-    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_51
-    prerelease: true
-    notes: >-
-      **wadamesh beta_51** is a community drop — a chat layout change, a channel-airtime tool, and a
-      lockscreen fix. Thanks to @Yazutsu, @scratchdiver and @jacobpretorius.
-
-
-      > Test build. Turn on **Get test builds (beta)** on the device, use the **Beta** toggle on the
-      [web flasher](https://flasher.wadamesh.com), or grab a `-merged.bin` below. Stable stays on
-      beta_46.
-
-
-      ## Chat — by @scratchdiver ([#182](https://github.com/ALLFATHER-BV/wadamesh/pull/182))
-
-      - Message bubbles now put the **time on the top row** next to the sender, so more messages fit
-      on screen. Applies to channels, DMs and room-server threads.
-
-
-      ## New: Airtime tool — by @jacobpretorius
-      ([#176](https://github.com/ALLFATHER-BV/wadamesh/pull/176))
-
-      - A new **Airtime** app in the Apps drawer measures how busy the LoRa channel actually is, so
-      congestion can be checked against real data instead of assumed. It shows channel utilization
-      over time, packets lost at the radio (CRC errors, late reads, queue drops), live RSSI/noise,
-      the LoRa preset, and a plain verdict.
-
-
-      ## Fixed
-
-      - **Lockscreen wallpaper** no longer corrupts into coloured noise after visiting the map — a
-      stale LVGL image-cache entry pointed at freed PSRAM the map had reused. By @Yazutsu
-      ([#181](https://github.com/ALLFATHER-BV/wadamesh/pull/181), fixes
-      [#127](https://github.com/ALLFATHER-BV/wadamesh/issues/127)).
-
-      - **T-Display P4**: the text-size setting works again — it was pinned to 100% and ignored your
-      choice.
-
-
-      ## Boards
-
-      T-Deck · Heltec V4 TFT · Heltec V4-R8 · ThinkNode M9 · RAK TAP v2 · T-LoRa Pager (LR1121 /
-      SX1262) · Attaky Core · T-Display P4 (AMOLED + LCD). Flash `<board>-merged.bin` at `0x0` for a
-      full install, or `<board>.bin` for an app-only update.
-  - version: beta_50
-    name: wadamesh beta_50
-    datetime: '2026-07-22T21:02:30Z'
-    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_50
-    prerelease: false
-    notes: >-
-      **wadamesh beta_50 is the new stable build.** It rolls up everything since beta_46 (beta_47 →
-      beta_50). Flash it from the [web flasher](https://flasher.wadamesh.com), or grab a
-      `-merged.bin` below and flash at `0x0`.
-
-
-      Thanks to community contributors @attakygit and @codemonkeybr.
-
-
-      ## New
-
-      - **Discover app** — actively sweep for nearby nodes and list everything that answers
-      (repeaters, companions, room servers), ranked by signal, with live RSSI/SNR, a **direct**
-      badge for anything in RF range, and a last-heard age. Tap a node to add it straight to your
-      contacts.
-
-      - **Wardriving** — with a GPS fix, Discover logs every node it hears against your position to
-      a CSV on the SD card and plots your RF coverage on the map as a signal-coloured track (green =
-      strong, red = weak). A standalone on-device coverage mapper, no phone needed.
-
-      - **New board: Attaky Core** (ESP32-S3, 16 MB / 8 MB PSRAM), contributed by @attakygit
-      ([#158](https://github.com/ALLFATHER-BV/wadamesh/pull/158)).
-
-      - **T-Display P4 TFT-LCD** screen model now supported alongside the AMOLED.
-
-
-      ## On-device updates
-
-      - The updater was downloading the **wrong firmware** on the Heltec V4-R8, ThinkNode M9, RAK
-      Tap V2, T-LoRa Pager and Attaky (it pulled the V4 TFT build). Each board now installs its own
-      build.
-
-      - **T-Display P4**: the "Get test builds (beta)" toggle and on-device updates now appear — the
-      P4 was previously USB-only.
-
-
-      ## Fixes
-
-      - Crash that could reboot the device while typing in a chat.
-
-      - Devices stuck on the boot screen after an update with a microSD card fitted.
-
-      - Message times showing 1910 / wrong dates — they now match the clock.
-
-      - MQTT bridge settings not saving across reboots.
-
-      - Dutch keyboard typing "ij" / "IJ" on the "1" and "!" keys.
-
-      - The message box dropping the end of long messages; copy/paste cutting off long text.
-
-      - Quick messages list not scrolling; room-server names with an unusual first character showing
-      an empty box on Join.
-
-      - Tanmatsu: only about half the emoji were reachable in the picker.
-
-
-      ## Per-board
-
-      - **T-Display P4**: screen timeout works (plus standby / burn-in dimming); the full-screen
-      tools and the Snake game exit with a top-bar tap instead of trapping you; GPS (L76K) detected
-      reliably at 9600; taller control-center dropdown; LCD backlight fixed.
-
-      - **T-LoRa Pager** (@codemonkeybr, [#162](https://github.com/ALLFATHER-BV/wadamesh/pull/162)):
-      lock screen fixed (Backspace peek / hold-to-unlock, layout fits the wide screen); rotary
-      encoder keeps focus in the chat list with the composer keys remapped.
-
-      - **Attaky Core**: on-screen keyboard works with the detachable keyboard module; POWER button
-      toggles/wakes the screen; LoRa-clock, GPS-baud and sensor-probe fixes.
-
-
-      ## Boards
-
-      T-Deck · Heltec V4 TFT · Heltec V4-R8 · ThinkNode M9 · RAK TAP v2 · T-LoRa Pager (LR1121 /
-      SX1262) · Attaky Core · T-Display P4 (AMOLED + LCD).

@@ -1,7 +1,49 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-08-26T22:52:13.434Z'
+updatedAt: '2026-08-27T20:12:15.715Z'
 releases:
+  - version: v4.15.2-rc6
+    name: v4.15.2-rc6
+    datetime: '2026-08-27T19:46:28Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.15.2-rc6
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.15.2-rc6
+
+
+      > ⚠️ **Pre-release (RC).** For testing. Not tagged `:latest`; use a specific image tag.
+
+
+      Release candidate 6 for 4.15.2, rolling up four PRs since rc5. Adds a **Nightly firmware
+      channel** so the updater can install the develop/2.8 build (the source of MeshBeacon) from the
+      same folder the official web flasher uses (#4950); makes the **Beacon Offers Panel** actually
+      work — it was fetching the wrong URL and showing nothing, and joining an offered channel into
+      an empty slot was wrongly blocked (#4952 / #4946); adds a **per-source Default Path Hash
+      Size** setting for MeshCore (#4951); and adds a **"show all" (0 = never)** option to the
+      Maximum Age of Active Nodes control (#4949).
+
+
+      ## Features
+
+      - feat(firmware): add a Nightly channel for develop (2.8.x) builds (#4950)
+
+      - feat(meshcore): add per-source Default Path Hash Size setting (#4951)
+
+      - feat(nodes): "show all" (0 = never) option for Maximum Age of Active Nodes (#4949)
+
+
+      ## Bug Fixes
+
+      - fix(beacons): Beacon Offers Panel fetched the wrong URL and showed nothing; also fixes
+      joining an offer into an empty channel slot (#4952, #4946)
+
+
+      ## Issues Resolved
+
+      - #4946, #4945, #4947
+
+
+      **Full changelog:** https://github.com/Yeraze/meshmonitor/compare/v4.15.2-rc5...v4.15.2-rc6
   - version: v4.15.2-rc5
     name: v4.15.2-rc5
     datetime: '2026-08-26T21:47:05Z'
@@ -1907,123 +1949,5 @@ releases:
 
 
       - **@wilhel1812** for reporting the zoom-to-fit icon confusion in Discord (#45
-
-      …
-  - version: v4.14.0
-    name: v4.14.0
-    datetime: '2026-08-03T18:26:58Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.14.0
-    prerelease: false
-    notes: >-
-      # MeshMonitor v4.14.0
-
-
-      The first stable release since **v4.13.2** — the 4.13.3 release candidates were folded into
-      this minor instead, because the work that landed is a minor's worth, not a patch's. The
-      headline is the **MeshCore Analyzer Observer**: publish what your Companion hears to a
-      regional analyzer without a second app fighting for the serial port, observation-only by
-      design. Meshtastic and MeshCore sources now share **one navigation system**, which on phones
-      means a bottom bar that scrolls sideways with readable labels instead of eleven crushed icons.
-      Remote admin gained **distinct ACK outcomes** — rejected reads differently from timed out —
-      plus opt-in auto-retry, and commands no longer die when the browser navigates away. MeshCore
-      messages carry **SNR and RSSI** when heard directly, "Discover Nodes" now lists who answered
-      with signal in both directions, and per-channel permissions finally do what they say. Node
-      Details shows **where a position came from and how precise it is**, and Null Island estimates
-      are no longer passed off as real fixes. The Packet Monitor's node filters became searchable
-      comboboxes, which matters most on a phone and on a large mesh. Under the hood, the database
-      driver moved to **better-sqlite3 13** (N-API), verified at runtime on amd64, arm64 and armv7
-      before shipping.
-
-
-      ## ⚠️ Breaking Change: v1 API root paths removed
-
-
-      4.13 moved the v1 mesh-data endpoints under `/api/v1/sources/{sourceId}/…` and kept the old
-      root paths alive for one release behind a `Warning: 299` header. **That grace period ends
-      here** — these paths now return **404**:
-
-
-      ```
-
-      /api/v1/nodes      /api/v1/telemetry     /api/v1/network
-
-      /api/v1/messages   /api/v1/traceroutes   /api/v1/status
-
-      /api/v1/channels   /api/v1/packets       /api/v1/position-history
-
-      ```
-
-
-      Migrate by moving the source into the path:
-
-
-      ```bash
-
-      # Before (4.13, deprecated)
-
-      curl -H "Authorization: Bearer mm_v1_…" "https://host/api/v1/nodes?sourceId=abc123"
-
-
-      # After (4.14)
-
-      curl -H "Authorization: Bearer mm_v1_…" "https://host/api/v1/sources/abc123/nodes"
-
-      ```
-
-
-      `GET /api/v1/sources` lists your source ids, or use the literal `default` to target the
-      primary source. The `/api/upgrade/*` endpoints, returning `410 Gone` since 4.13, are also
-      removed.
-
-
-      **If you script against the REST API, check for these paths before upgrading.** Everything
-      else is drop-in; the database schema migrates automatically on first boot.
-
-
-      Full details in the [release
-      announcement](https://meshmonitor.org/blog/2026-08-03-v4.14.0-release).
-
-
-      ### Features
-
-
-      - feat(analysis): show node names in the ok_to_mqtt violations report (#4343)
-
-      - feat(i18n): localize the MapStyleManager settings component (#4363)
-
-      - feat(meshcore): serve ExportPrivateKey over the Virtual Node behind an "Allow PKI export"
-      gate (#4366)
-
-      - feat(automations): hop-count tapback + {{ trigger.hopEmoji }} (#4340 phase 1) (#4390)
-
-      - feat(traceroute): visual node strip on the Node Details panel (#4392)
-
-      - feat(automations): per-node cooldown scope (#4340 phase 2) (#4396)
-
-      - feat(meshcore): add per-node ignore list to the auto-responder (#4402)
-
-      - feat(map): per-overlay toggle to disable the GeoJSON click popup (#4403)
-
-      - feat(meshcore): add zero-hop ping action (#4404)
-
-      - feat(tx-guard): allow sends when UDP Broadcast can relay for a TX-disabled node (#4405)
-
-      - feat(waypoints): let the user pick the broadcast channel (#4406)
-
-      - feat(automations): Auto-Ack parity conditions (#4340 phase 3) (#4407)
-
-      - feat(automations): Auto-Acknowledge → Automation converter (#4340 phase 4) (#4408)
-
-      - feat(settings): per-source settings foundation and guardrails (#4412 Phase 1) (#4417)
-
-      - feat(traceroute): interactive strip — node popup More Details action + link tooltips (epic
-      phase 1) (#4424)
-
-      - feat(settings): read Node Display settings per-source (#4412 Phase 2) (#4425)
-
-      - feat(traceroute): participation picker on all sources — brings the strip to MQTT (epic phase
-      2) (#4427)
-
-      - feat(traceroute): Copy Forward/Return/Both text links with insecure-context fallback (#4429)
 
       …
