@@ -1,7 +1,137 @@
 source: github
 repo: Treehouse-00/pymc_console-dist
-updatedAt: '2026-08-25T22:30:09.717Z'
+updatedAt: '2026-08-28T18:34:52.295Z'
 releases:
+  - version: v0.9.358
+    name: Release v0.9.358
+    datetime: '2026-08-28T09:01:22Z'
+    url: https://github.com/Treehouse-00/pymc_console-dist/releases/tag/v0.9.358
+    prerelease: false
+    notes: >-
+      ### Added
+
+      - Channel headers now have a Regions button for adding, editing, removing, and selecting an
+      outgoing region override. A green outline and checkmark indicate an enabled, supported
+      override.
+
+      - Scoped outgoing messages show their original `#region` before the repeat counter and a green
+      bubble outline. Local annotations survive reloads in both Frame and Companion API modes.
+
+
+      ### Fixed
+
+      - Removing the selected region can be saved to return to the companion default, and edit
+      cancellation is clearly separate from canceling the whole dialog.
+
+      - Region sends preserve their original scope on safe retries and never silently fall back to
+      an ordinary send. Uncertain Frame sends are not automatically retried.
+
+      - Outgoing Companion API channel messages retain text before a colon instead of treating it as
+      a sender prefix.
+
+
+      ### Compatibility
+
+      - Per-message regions require a backend that explicitly advertises support. Frame support is
+      proposed in [openHop Repeater PR
+      #417](https://github.com/openhop-dev/openhop_repeater/pull/417); the Companion API fork
+      includes the corresponding scoped endpoint. Ordinary sends remain compatible with older
+      backends.
+
+      - Region choices and annotations are local to this browser. History without original region
+      metadata remains unmarked. No repeater database migration or shared radio-setting change is
+      required.
+
+
+
+      ---
+
+      Full history:
+      [CHANGELOG.md](https://github.com/dmduran12/pymc_console-dist/blob/main/CHANGELOG.md)
+
+
+      ## Installation
+
+      ```bash
+
+      sudo ./manage.sh install
+
+      ```
+
+
+      ## Upgrade
+
+      ```bash
+
+      sudo ./manage.sh upgrade
+
+      ```
+  - version: v0.9.357
+    name: Release v0.9.357
+    datetime: '2026-08-28T06:51:33Z'
+    url: https://github.com/Treehouse-00/pymc_console-dist/releases/tag/v0.9.357
+    prerelease: false
+    notes: >-
+      ### Changed
+
+      - Startup now requests a real 12 hours of packet history instead of 24 hours. Saved shorter
+      windows are preserved; longer windows remain available on demand.
+
+      - History loads use smaller, sequential pages, and packet caching and topology analysis do
+      less repeated work on busy meshes.
+
+
+      ### Added
+
+      - The Packets Received chart shows a shimmer while loading, with a compact "Slow? Load 3hrs
+      only" shortcut in the chart and sidebar progress display.
+
+      - Switching to 3 hours, 1 hour, or 20 minutes cancels the larger browser request, reuses
+      history already received, and requests only missing coverage.
+
+
+      ### Fixed
+
+      - Cancelled or failed history loads and topology jobs no longer leave stale progress or
+      overwrite newer selections. Deep Analysis also reports completion and errors consistently.
+
+      - Large topology histories no longer fail when processing extensive ghost-node observations.
+
+
+      ### Compatibility
+
+      - Existing repeater versions remain supported. Stopping database work on the server requires
+      the cancellation API proposed in [openHop Repeater PR
+      #416](https://github.com/openhop-dev/openhop_repeater/pull/416); until that backend update is
+      installed, cancellation stops the browser request but cannot guarantee that an active database
+      query stops.
+
+      - This Console update does not change the repeater database or require a schema migration.
+
+
+
+      ---
+
+      Full history:
+      [CHANGELOG.md](https://github.com/dmduran12/pymc_console-dist/blob/main/CHANGELOG.md)
+
+
+      ## Installation
+
+      ```bash
+
+      sudo ./manage.sh install
+
+      ```
+
+
+      ## Upgrade
+
+      ```bash
+
+      sudo ./manage.sh upgrade
+
+      ```
   - version: v0.9.356
     name: Release v0.9.356
     datetime: '2026-08-25T20:44:04Z'
@@ -585,40 +715,6 @@ releases:
     name: Release v0.9.339
     datetime: '2026-07-24T08:00:13Z'
     url: https://github.com/Treehouse-00/pymc_console-dist/releases/tag/v0.9.339
-    prerelease: false
-    notes: |-
-      Automated release from pymc_console.
-
-      ## Installation
-      ```bash
-      sudo ./manage.sh install
-      ```
-
-      ## Upgrade
-      ```bash
-      sudo ./manage.sh upgrade
-      ```
-  - version: v0.9.338
-    name: Release v0.9.338
-    datetime: '2026-07-23T08:40:41Z'
-    url: https://github.com/Treehouse-00/pymc_console-dist/releases/tag/v0.9.338
-    prerelease: false
-    notes: |-
-      Automated release from pymc_console.
-
-      ## Installation
-      ```bash
-      sudo ./manage.sh install
-      ```
-
-      ## Upgrade
-      ```bash
-      sudo ./manage.sh upgrade
-      ```
-  - version: v0.9.337
-    name: Release v0.9.337
-    datetime: '2026-07-19T07:52:22Z'
-    url: https://github.com/Treehouse-00/pymc_console-dist/releases/tag/v0.9.337
     prerelease: false
     notes: |-
       Automated release from pymc_console.

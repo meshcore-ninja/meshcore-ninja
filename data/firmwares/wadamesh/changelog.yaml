@@ -1,7 +1,202 @@
 source: github
 repo: ALLFATHER-BV/wadamesh
-updatedAt: '2026-08-28T06:00:26.546Z'
+updatedAt: '2026-08-28T18:34:31.613Z'
 releases:
+  - version: beta_74
+    name: wadamesh beta_74
+    datetime: '2026-08-28T17:36:14Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_74
+    prerelease: true
+    notes: >-
+      **This is a test build.** Stable stays on `beta_65`. Flash it from
+      [wadamesh.com](https://wadamesh.com) with the Beta toggle on, or turn on "Get test builds
+      (beta)" on the device.
+
+
+      ## If your T-Deck types the wrong letters, there is now a switch
+
+
+      **Settings > Keyboard > "Older keyboard protocol"** skips the automatic detection and uses the
+      protocol every T-Deck keyboard understands.
+
+
+      It exists because the detection cannot always be certain, and the failure is self-trapping:
+      when it guesses wrong your keyboard types the wrong letters, so **any remedy that requires
+      typing is not a remedy**. This switch is operated by touch and applies immediately, with no
+      reboot.
+
+
+      Turning it on costs modifier latching, which a keyboard that needs the switch cannot do
+      anyway. Automatic detection is unchanged and remains the default, so if `beta_73` fixed your
+      keyboard nothing here changes for you.
+
+
+      This is not a substitute for finding the cause on the devices where detection still gets it
+      wrong ([#351](https://github.com/ALLFATHER-BV/wadamesh/issues/351)). It stops people being
+      stuck while that continues, which is a different and more urgent thing.
+
+
+      ## The web settings page could quietly change your radio
+
+
+      Reported by [@bradhawkins85](https://github.com/bradhawkins85)
+      ([#345](https://github.com/ALLFATHER-BV/wadamesh/issues/345)). The remote page displayed a
+      bandwidth of 62.5 as **62**, and pressing Apply sent 62 back to the device. So opening the
+      page and applying anything reconfigured the radio onto a bandwidth the mesh was not using.
+
+
+      Two independent faults, both needed: the device serialised bandwidth with no decimal places,
+      and the form's bandwidth input had no `step` attribute so it would have rejected a decimal
+      anyway. The apply direction was never wrong, which is exactly why it looked cosmetic while
+      actually changing the radio.
+
+
+      ## Keyboard
+
+
+      **Shift latches** like symbol and alt already did
+      ([#344](https://github.com/ALLFATHER-BV/wadamesh/issues/344),
+      [@jrote1](https://github.com/jrote1)): tap once for the next letter, tap twice to lock until
+      you tap again. It was a plain "is shift held" test while the other two went through the
+      latching class, which is why they behaved differently. The two shift keys share one latch, so
+      either arms it and either releases it.
+
+
+      **The Attaky Mesh Deck's front D-pad and SELECT work**, by
+      [@oumike](https://github.com/oumike)
+      ([#346](https://github.com/ALLFATHER-BV/wadamesh/pull/346)). The board has nine buttons and
+      only POWER did anything. They hang off an expander rather than direct GPIO, so the driver
+      drains an expander queue in its own pump.
+
+
+      ## Reading a route
+
+
+      Each hop now shows its path prefix beside the repeater name
+      ([#348](https://github.com/ALLFATHER-BV/wadamesh/issues/348), @jrote1): `3A Repeater Name`
+      rather than the name alone. The prefix is what the node is keyed by on the wire, so it stays
+      true when a repeater is named misleadingly or two share a name, which is precisely when you
+      are reading a route.
+
+
+      ## Translations
+
+
+      "Known regions" and the Bluetooth pairing hint are translatable and translated, from
+      [@pisti87](https://github.com/pisti87)
+      ([#347](https://github.com/ALLFATHER-BV/wadamesh/issues/347)).
+
+
+      ## For testers
+
+
+      Still open and **not** fixed here: a map that renders nothing since `beta_71`
+      ([#339](https://github.com/ALLFATHER-BV/wadamesh/issues/339)), a screen that will not stay
+      dark after a manual lock ([#333](https://github.com/ALLFATHER-BV/wadamesh/issues/333)), the
+      web flasher hanging at "wrapping up" on the T-Display P4
+      ([#342](https://github.com/ALLFATHER-BV/wadamesh/issues/342)), and an M9 reporting no SD card
+      when formatting ([#343](https://github.com/ALLFATHER-BV/wadamesh/issues/343)).
+
+
+      A reminder, because it caught someone: **two separate settings** control whether an arriving
+      message lights a dark screen. **"Flash on new message"** is in Settings > **Keyboard** and is
+      the one that wakes the screen. **"At a glance"** is in Settings > **Display** and draws the
+      preview text. Turning
+
+      …
+  - version: beta_73
+    name: wadamesh beta_73
+    datetime: '2026-08-28T08:46:42Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_73
+    prerelease: true
+    notes: >-
+      **This is a test build.** Stable stays on `beta_65`. Flash it from
+      [wadamesh.com](https://wadamesh.com) with the Beta toggle on, or turn on "Get test builds
+      (beta)" on the device.
+
+
+      **If your T-Deck has been typing the wrong letters, this is the fix.** One change matters
+      here; the rest is a footnote.
+
+
+      ## Older T-Decks could not be typed on
+
+
+      Pressing `a` produced `q ` and `m` produced `qa `, which makes the keyboard useless for
+      writing, navigating, or locking the screen. Reported by [@Vybo](https://github.com/Vybo) in
+      [#341](https://github.com/ALLFATHER-BV/wadamesh/issues/341), and it has been broken since
+      `beta_70`.
+
+
+      It affects the **older T-Deck keyboards**, the ones without the controllable backlight. At
+      startup the firmware asks the keyboard whether it speaks the newer column protocol that
+      modifier latching needs. An older keyboard answers a five-byte read with the pressed character
+      in the first byte and padding after it, and every lowercase letter has its high bit clear, so
+      that answer passed the test. Read as a key-position report it is nonsense:
+
+
+      ```
+
+      'a' = 0x61 -> bits 0,5,6 of column 0 -> "q "
+
+      'm' = 0x6d -> bits 0,2,3,5,6         -> "qa "
+
+      ```
+
+
+      **Nothing can tell the two keyboards apart while nobody is typing**: idle, both answer with
+      zeros. Requiring proof before committing sounds right and is useless: proof only arrives when
+      someone types, nobody types during boot, so every device falls back and silently loses
+      modifier latching. That was measured, not assumed.
+
+
+      So the initial guess stays optimistic and becomes reversible. Raw mode now inspects each
+      frame, and three or more bits in the first byte with a printable value and every other column
+      empty is not something a key matrix can report, but is exactly an ASCII character. On that,
+      the firmware switches to the older protocol, delivers the character, and carries on.
+
+
+      Checked against the real key tables: **all 26 lowercase letters trigger it, so any letter
+      corrects the device on the first press.** Going the other way needs three or more of `q`, `w`,
+      `a`, space held simultaneously and nothing else, which the printable-range test narrows
+      further.
+
+
+      Newer keyboards are unaffected and keep latching, verified on hardware.
+
+
+      One more thing worth saying: **the `beta_72` change meant to make this detection more reliable
+      made it worse**, because retrying gave an older keyboard more chances to look like a newer
+      one. That is why upgrading to 72 did not help anyone affected.
+
+
+      ## Translations
+
+
+      Two Hungarian strings from [@pisti87](https://github.com/pisti87)
+      ([#340](https://github.com/ALLFATHER-BV/wadamesh/issues/340)): `Mark read`, which had never
+      been translated, and a shorter wording for joining the public channel so it fits its button.
+      Already on devices, since language files publish separately from firmware.
+
+
+      ## For testers
+
+
+      If your keyboard was typing nonsense, you should be able to install this normally rather than
+      needing a cable.
+
+
+      A reminder while it is fresh, because it caught someone this week: **two separate settings**
+      control whether an arriving message lights a dark or locked screen. **Message flash** wakes
+      the screen; **At a glance** draws the preview text on it. Both live in Options > Display, and
+      turning off At a glance alone will not stop the screen lighting up.
+
+
+      Still open and **not** fixed here: a map that renders nothing after `beta_71`
+      ([#339](https://github.com/ALLFATHER-BV/wadamesh/issues/339)), a screen that will not stay
+      dark after a manual lock ([#333](https://github.com/ALLFATHER-BV/wadamesh/issues/333)), and
+      the web flasher hanging at "wrapping up" on the T-Display P4
+      ([#342](https://github.com/ALLFATHER-BV/wadamesh/issues/342)).
   - version: beta_72
     name: wadamesh beta_72
     datetime: '2026-08-27T20:30:33Z'
@@ -1563,182 +1758,3 @@ releases:
 
 
       🤖 Generated with [Claude Code](https://claude.com/claude-code)
-  - version: beta_54
-    name: wadamesh beta_54
-    datetime: '2026-07-31T15:54:59Z'
-    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_54
-    prerelease: true
-    notes: >-
-      ## wadamesh beta_54 — test build
-
-
-      **T-Display P4 owners: this is the one.** The whole-screen blue flash (#167) is fixed, and GPS
-      actually works now.
-
-
-      Flash or update via **[flasher.wadamesh.com](https://flasher.wadamesh.com)** (Beta toggle),
-      the on-device updater ("Get test builds"), or the LauncherHub WADAMESH BETA entry.
-
-
-      ### T-Display P4
-
-      - **Screen flash fixed (#167).** Root cause, established by on-device measurement: SD-card
-      write bursts delay the interrupt that re-arms the display's frame DMA — the panel shows the
-      late frame as a blue flash (35–39 ms gaps against a 20 ms cadence, one-for-one with card
-      transactions). The hot store (contacts, channels, chat history) now lives on fast internal
-      storage; the SD carries map tiles, backups and exports. Your data migrates automatically on
-      first boot — the card is left untouched as a rollback.
-
-      - **Card independence:** the SD card no longer holds your identity — swapping or removing it
-      can never change your node or lose contacts.
-
-      - **GPS fixed for real.** The sensor loop was never serviced on this board, so the firmware
-      never read the GPS module at all. Confirmed fixing outdoors.
-
-      - **Live satellite page:** in view / in use / signal strength, updating while open.
-
-      - Storage writes run on a dedicated worker task — no more UI stutter on big saves.
-
-
-      ### Romanian — by @jcyrio (#188, #189)
-
-      Romanian is the 13th UI language, with a proper keyboard layout: **ă** on the home row,
-      **ş/ţ** on the deck, **â/î** via the accent popups. Mulţumim!
-
-
-      ### Heltec V4-R8
-
-      - **Landscape touch fixed** (was point-mirrored — the R8's panel baseline differs from the
-      V4's, and the touch mapping assumed the V4). If you got stuck in landscape: this build boots
-      back to portrait automatically.
-
-      - For safety the R8 returns to portrait on every boot until a tester confirms the corrected
-      mapping — please try landscape and report.
-
-
-      ### General
-
-      - Airtime + Snake apps: crash fix on close.
-
-
-      Full changelog: `beta_53...beta_54`
-
-
-      🤖 Generated with [Claude Code](https://claude.com/claude-code)
-  - version: beta_53
-    name: wadamesh beta_53
-    datetime: '2026-07-30T15:49:55Z'
-    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_53
-    prerelease: true
-    notes: >-
-      Test build. Stable stays **beta_50**.
-
-
-      Flash it from **https://flasher.wadamesh.com** (flip the Beta toggle), or on-device via
-      Settings → Firmware with "Get test builds (beta)" enabled.
-
-
-      ---
-
-
-      ### ⚠️ Read this before updating
-
-
-      **Chats now keep the newest 250 messages each by default.** If a chat holds more than that,
-      the older messages are dropped the next time it receives one. Change it or turn it off under
-      **Settings → Chats → "Keep per chat (messages)"** first if you want to keep a deep backlog.
-
-
-      ---
-
-
-      ### Speed with a large chat history
-
-
-      This is the headline. A busy channel made the whole interface crawl, and the cause was the
-      chat list re-scanning the **entire** message store once **per chat**, every refresh — so the
-      more history you had, the slower everything became. One reporter had 3800 messages in a single
-      channel. That work now happens once instead of once per chat, and it is why the drag was
-      noticeable even at ~300 messages.
-
-
-      Alongside it, a new **per-chat history limit** (Settings → Chats): 100 / 250 / 500 / 1000 /
-      2000 / No limit, default **250**. Previously the message store was one shared pool with no
-      per-chat bound, so a single busy channel could occupy essentially all of it and starve your
-      other chats of history. Choosing **No limit** asks you to confirm, because an unlimited
-      history is exactly what caused the slowdown.
-
-
-      ### Blocking now actually works
-
-
-      Three separate bugs, all reported by **@D-Melhede** (#177):
-
-
-      - blocking a sender in a **channel** never saved properly, so it did not stick
-
-      - blocking a person inside a **room server** silenced the **entire room** instead of that one
-      person
-
-      - blocked names were only filtered in channels, so **room posts still came through**
-
-
-      Unblocking is also fixed: blocks were stored in two places and only one was cleared, so
-      someone could stay silently blocked after you unblocked them.
-
-
-      ### Chats
-
-
-      - **Chat list preview stuck on an old message.** It chose the "newest" message by timestamp,
-      which breaks on a device whose clock restarts each boot — a message from an earlier session
-      could outrank everything new, permanently. It now uses actual arrival order. Mostly seen on
-      the T-Display P4.
-
-      - **Notification sound works again.** A failed map-tile fetch left an internal counter stuck,
-      and that counter was silently muting every chime. Reported by **@ropafiro** (#184).
-
-
-      ### Stability and connection
-
-
-      - **Multi-second freezes on Heltec V4** in a busy mesh. Every advert heard triggered a
-      redundant write to internal flash, and contact saves were not rate-limited. Thanks to **Raph**
-      for the detailed report and video.
-
-      - **Wi-Fi scanning no longer gets stuck off** after a badly-timed disconnect (#171,
-      **@TrustYourTechnoLust**).
-
-      - **The phone app gets its replies again** — ping and telemetry responses could be swallowed
-      before reaching it (#124, **@nicocdu23-blip**).
-
-      - **The web control panel no longer drops typed characters.** Thanks to **VE2CCK**.
-
-
-      ### Apps
-
-
-      - **Airtime and Snake** now behave like the Spectrum app: a proper `‹ back` title bar, and you
-      can no longer tap or swipe through to the screen behind them. A crash-on-close path was fixed
-      at the same time.
-
-      - **Swiping inside any full-screen app** (Airtime, Spectrum, RF Monitor, Discover, Web, VNC,
-      Remote) no longer jumps you to another tab.
-
-      - Three older reports from **@dreirund**: crash-restart dialog text overlapping its buttons
-      (#97), the settings sheet from "Discovered" being cut off (#109), and room servers getting
-      their own icon in the contacts list (#106).
-
-
-      ### T-Display P4
-
-
-      - **The clock is fixed.** The P4 showed the wrong time on screen while sent messages carried
-      the correct one, and "Sync clock from system" then broke the good clock too. Its RTC chip was
-      being set but the system clock never was. (This also affects the ThinkNode M9, which has the
-      same chip.)
-
-      - **New LoRa antenna setting** (Settings → Radio). The on-board antenna is selected on **every
-      boot**, and switching to the external socket asks you to confirm an antenna
-
-      …

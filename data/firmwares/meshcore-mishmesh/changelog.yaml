@@ -1,7 +1,22 @@
 source: github
 repo: burakcan/MeshCore-mishmesh
-updatedAt: '2026-08-25T12:51:05.957Z'
+updatedAt: '2026-08-28T18:34:23.595Z'
 releases:
+  - version: mishmesh-v1.4.1
+    name: mishmesh Firmware v1.4.1
+    datetime: '2026-08-28T08:22:06Z'
+    url: https://github.com/burakcan/MeshCore-mishmesh/releases/tag/mishmesh-v1.4.1
+    prerelease: false
+    notes: >-
+      - Fix: messages could go missing from a chat in some cases.
+
+      - Affected devices repair themselves on the next boot after update.
+
+
+
+
+      **Full Changelog**:
+      https://github.com/burakcan/MeshCore-mishmesh/compare/mishmesh-v1.4.0...mishmesh-v1.4.1
   - version: mishmesh-v1.4.0
     name: mishmesh Firmware v1.4.0
     datetime: '2026-08-25T11:52:37Z'
