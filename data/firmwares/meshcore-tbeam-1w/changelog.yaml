@@ -1,7 +1,13 @@
 source: github
 repo: mintylinux/Meshcore-T-beam-1W-Firmware
-updatedAt: '2026-08-17T16:30:04.405Z'
+updatedAt: '2026-08-28T06:00:21.185Z'
 releases:
+  - version: 1.17.1
+    name: Meshcore-T-Beam-1W-Firmware Ver 1.17.1
+    datetime: '2026-08-28T01:11:49Z'
+    url: https://github.com/mintylinux/Meshcore-T-beam-1W-Firmware/releases/tag/1.17.1
+    prerelease: false
+    notes: "## T-Beam 1W SX1262 Firmware v1.17.1\r\n\r\nBased on MeshCore v1.17.1 (upstream main)\r\n\r\n### Changes from v1.15.0:\r\n- **Rebased onto MeshCore v1.17.1** — all upstream improvements since v1.15.0\r\n- **PA ramp time fix (#3)**: Increased from 0x05 (800µs) to 0x06 (1700µs) per LilyGo recommendation for >800µs PA stabilization\r\n- **Temperature-based fan control**: Fan now activates based on MCU temperature instead of every transmission\r\n  - Fan ON at ≥45°C\r\n  - Fan OFF below 41°C (hysteresis)\r\n  - Minimum 5 second runtime\r\n  - Active in all builds (Repeater, Room Server, Companion USB/BLE)\r\n- **SX126X_REGISTER_PATCH=1** for more stable SX1262 noise floor\r\n- **USE_SX1262** build flag added\r\n- **default_16MB.csv** partitions — uses full 16MB flash\r\n- **Board JSON** uses generic esp32s3 variant for reliable builds"
   - version: 1.15.0
     name: Meshcore-T-Beam-1W-Firmware Ver 1.15.0
     datetime: '2026-05-07T23:36:55Z'

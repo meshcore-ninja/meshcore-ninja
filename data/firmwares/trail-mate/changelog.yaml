@@ -1,7 +1,13 @@
 source: github
 repo: vicliu624/trail-mate
-updatedAt: '2026-08-26T14:46:52.988Z'
+updatedAt: '2026-08-28T06:00:25.975Z'
 releases:
+  - version: v0.1.43-alpha
+    name: v0.1.43-alpha
+    datetime: '2026-08-28T04:25:04Z'
+    url: https://github.com/vicliu624/trail-mate/releases/tag/v0.1.43-alpha
+    prerelease: true
+    notes: "## [0.1.43-alpha] - 2026-08-28\r\n\r\n### Fixed\r\n\r\n- Fixed ESP32 timezone changes so they apply without restarting the device and are\r\n  synchronized to the SD working configuration before a later boot can restore an older\r\n  `config.tms` value (#86).\r\n\r\n\n\n## What's Changed\n* Codex/t display p4 lilygo display chain by @vicliu624 in https://github.com/vicliu624/trail-mate/pull/85\n* Codex/fix issue 86 timezone persistence by @vicliu624 in https://github.com/vicliu624/trail-mate/pull/87\n\n\n**Full Changelog**: https://github.com/vicliu624/trail-mate/compare/v0.1.42-alpha...v0.1.43-alpha"
   - version: v0.1.42-alpha
     name: v0.1.42-alpha
     datetime: '2026-08-26T13:35:06Z'
@@ -393,9 +399,3 @@ releases:
 
       **Full Changelog**:
       https://github.com/vicliu624/trail-mate/compare/v0.1.22-alpha...v0.1.24-alpha
-  - version: v0.1.23-alpha
-    name: v0.1.23-alpha
-    datetime: '2026-04-30T18:58:11Z'
-    url: https://github.com/vicliu624/trail-mate/releases/tag/v0.1.23-alpha
-    prerelease: true
-    notes: "## [0.1.23-alpha] - 2026-05-01\r\n### Added / 新增\r\n- Cardputer Zero and Linux simulator foundations, including shared Linux runtime wiring, shell boot paths, simulator pages, and an adaptation specification for the final device shape / 新增 Cardputer Zero 与 Linux 模拟器基础能力，包括共享 Linux runtime 接线、Shell 启动路径、模拟器页面，以及面向最终设备形态的适配规格\r\n- An installable Russian locale bundle with a Cyrillic external font pack, package catalog metadata, and attribution for @polarikus' contributed translations / 新增可安装俄语语言包，包含 Cyrillic 外部字体包、包目录元数据，并注明 @polarikus 对俄语翻译的贡献\r\n- A GPS runtime specification under `docs/specs/`, defining user enable intent, receiver mode, satellite mask, power policy, internal NMEA, external NMEA export, transport readiness, and observation state as separate concepts / 新增 `docs/specs/` 下的 GPS runtime 规格，将用户启用意图、接收机模式、卫星系统选择、电源策略、内部 NMEA、外部 NMEA 导出、传输就绪与观测状态明确拆分\r\n\r\n### Changed / 变更\r\n- GPS configuration semantics are now unified across ESP Arduino, ESP-IDF, Linux, nRF52/GAT562, phone bridge, and UI settings: `gps_enabled` is the enable flag, while `gps_mode`, `gps_sat_mask`, `gps_strategy`, and external NMEA export keep their own meanings / GPS 配置语义现已在 ESP Arduino、ESP-IDF、Linux、nRF52/GAT562、手机桥接与 UI 设置中统一：`gps_enabled` 是启用开关，而 `gps_mode`、`gps_sat_mask`、`gps_strategy` 与外部 NMEA 导出各自保持独立含义\r\n- Board-level GPS startup now treats UART transport readiness separately from UBX receiver probing on T-Deck, T-Deck Pro, and T-LoRa Pager, with each board owning the correct UART teardown path / T-Deck、T-Deck Pro 与 T-LoRa Pager 的板级 GPS 启动现已将 UART 传输就绪与 UBX 接收机探测拆开，并由各板型自己负责正确的 UART 关闭路径\r\n- The Linux simulator/dev-container path now mounts and exposes the repository root more consistently, making shared runtime work easier to exercise from the Linux shell / Linux 模拟器与 dev-container 路径现更一致地挂载并暴露仓库根目录，使共享 runtime 工作更容易在 Linux Shell 中验证\r\n\r\n### Fixed / 修复\r\n- Fixed the T-Watch S3 release build for watch Morse input by passing board-owned PDM microphone pins through build-time definitions / 修复 T-Watch S3 发布构建中 watch Morse 输入缺少板级 PDM 麦克风 pin 定义导致的编译失败\r\n- Fixed the GPS no-lock regression where internal receiver NMEA could be disabled by external export/privacy-style settings, leaving maps and skyplot without parsed GPS data even when GPS was enabled / 修复 GPS 无法锁定的回归：内部接收机 NMEA 可能被外部导出或旧 privacy 风格设置关闭，导致即使 GPS 已启用，地图与星图也拿不到可解析数据\r\n- Fixed startup cases where T-Deck GPS was reported as failed because a short UBX identity probe timed out, preventing the runtime from continuously reading NMEA while the receiver warmed up / 修复 T-Deck 启动阶段因短时间 UBX identity 探测超时而把 GPS 判定失败的问题，使 runtime 能在接收机预热期间持续读取 NMEA\r\n- Fixed T-Deck display startup and brightness handling, reducing early backlight/display initialization regressions on that board family / 修复 T-Deck 显示启动与亮度处理，降低该板型早期背光与屏幕初始化回归\r\n- Fixed Energy Sweep sampling so it uses instant RSSI and only owns the LoRa lock while scanning, avoiding stale measurements and unnecessary radio contention outside active sweeps / 修复 Energy Sweep 采样逻辑，改用 instant RSSI，并只在扫描期间持有 LoRa 锁，避免陈旧测量值和非扫描阶段的无线资源争用\r\n\r\n\r\n\r\n**Full Changelog**: https://github.com/vicliu624/trail-mate/compare/v0.1.22-alpha...v0.1.23-alpha"

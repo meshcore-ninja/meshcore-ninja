@@ -1,7 +1,13 @@
 source: github
 repo: eliahreeves/mesh-loader
-updatedAt: '2026-08-17T16:29:57.371Z'
+updatedAt: '2026-08-28T06:00:12.817Z'
 releases:
+  - version: v0.1.2
+    name: v0.1.2
+    datetime: '2026-08-27T21:49:42Z'
+    url: https://github.com/eliahreeves/mesh-loader/releases/tag/v0.1.2
+    prerelease: false
+    notes: "## What's Changed\r\n* update submodules, patches, and CI deps by @BlitDev in https://github.com/eliahreeves/mesh-loader/pull/4\r\n\r\n## New Contributors\r\n* @BlitDev made their first contribution in https://github.com/eliahreeves/mesh-loader/pull/4\r\n\r\n**Full Changelog**: https://github.com/eliahreeves/mesh-loader/compare/v0.1.1...v0.1.2\n\n## What's Changed\n* update submodules, patches, and CI deps by @BlitDev in https://github.com/eliahreeves/mesh-loader/pull/4\n\n## New Contributors\n* @BlitDev made their first contribution in https://github.com/eliahreeves/mesh-loader/pull/4\n\n**Full Changelog**: https://github.com/eliahreeves/mesh-loader/compare/v0.1.1...v0.1.2"
   - version: v0.1.1
     name: v0.1.1
     datetime: '2026-05-13T03:56:42Z'

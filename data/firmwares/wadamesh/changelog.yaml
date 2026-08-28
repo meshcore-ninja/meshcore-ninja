@@ -1,7 +1,92 @@
 source: github
 repo: ALLFATHER-BV/wadamesh
-updatedAt: '2026-08-27T20:11:59.090Z'
+updatedAt: '2026-08-28T06:00:26.546Z'
 releases:
+  - version: beta_72
+    name: wadamesh beta_72
+    datetime: '2026-08-27T20:30:33Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_72
+    prerelease: true
+    notes: >-
+      **This is a test build.** Stable stays on `beta_65`. Flash it from
+      [wadamesh.com](https://wadamesh.com) with the Beta toggle on, or turn on "Get test builds
+      (beta)" on the device.
+
+
+      **If you have a ThinkNode M9 or a T-Lora Pager, update before touching console mode.** On the
+      previous two releases it could leave you unable to get back out.
+
+
+      ## Two regressions from beta_70 and beta_71
+
+
+      **Console mode was a one-way door on boards with no console input**
+      ([#336](https://github.com/ALLFATHER-BV/wadamesh/issues/336), reported by gadgeteerza). On a
+      ThinkNode M9 it painted the prompt, showed the line telling you to type `ui` to return, and
+      accepted nothing. A power cycle came back to it, the reset button came back to it, and
+      reflashing appeared to fail.
+
+
+      `CAP_CONSOLE` was gated on there being a display. That reasons entirely about output and says
+      nothing about whether the user can type. The console has exactly two input drains, the T-Deck
+      keyboard and the on-screen keypad, and the M9 has an I2C keyboard and no touchscreen, so it
+      had neither. The runtime self-heal did not help either: it only triggers on a panic, and a
+      console with no input has not crashed.
+
+
+      The M9's keyboard is now drained in the console, so that board keeps the feature.
+      `CAP_CONSOLE` also requires an input path, so a board without one does not offer the mode at
+      all. **That guard immediately caught a second board**: the T-Lora Pager was one Settings
+      toggle away from the same state and no longer shows the option.
+
+
+      *Already stuck?* Hold **BOOT**, tap **RESET**, release BOOT, then flash normally. The device
+      is fine, it just has to be flashed from the bootloader rather than from the running app, which
+      is why a normal reflash reported a failure.
+
+
+      **Accent popups stopped working on physical keyboards**
+      ([#338](https://github.com/ALLFATHER-BV/wadamesh/issues/338), reported by Buko84), with the
+      settings toggle appearing to do nothing. The accent box and the new @-mention picker share one
+      function, which used to show the mention picker if warranted and otherwise the accent box.
+      When the mention work went in, the accent half was dropped from one of its two callers, and
+      that caller is the path a **physical** keyboard takes. Touchscreen typing was unaffected,
+      which is why it read as a settings bug rather than a code one.
+
+
+      ## New
+
+
+      **Share a contact with whoever is next to you**, by [@oumike](https://github.com/oumike)
+      ([#337](https://github.com/ALLFATHER-BV/wadamesh/pull/337), closes
+      [#321](https://github.com/ALLFATHER-BV/wadamesh/issues/321)). The contact menu gains a Share
+      entry that re-broadcasts that contact so nodes in direct range can add them. Deliberately
+      direct-range only: putting someone else's node onto the whole mesh is a lot of airtime for a
+      packet nobody asked for.
+
+
+      **The signal card is translatable.** `Signal`, `Signal (stale)` and `nothing heard yet` were
+      never wrapped, so that card stayed English in every language while the same words were
+      translated everywhere else. Found by [@pisti87](https://github.com/pisti87), who pointed at
+      the line twice.
+
+
+      ## Fixed
+
+
+      **The T-Deck reported a full battery as 4.09 V**, by
+      [@alphalord336](https://github.com/alphalord336)
+      ([#335](https://github.com/ALLFATHER-BV/wadamesh/pull/335)), a first contribution. The
+      conversion from the board's voltage divider was slightly off, so every T-Deck read low.
+
+
+      ## Still open
+
+
+      A screen that will not stay dark after a manual lock
+      ([#333](https://github.com/ALLFATHER-BV/wadamesh/issues/333)) is **not** fixed here. It is
+      still being narrowed down, and I would rather not change screen behaviour for everyone on a
+      guess.
   - version: beta_71
     name: wadamesh beta_71
     datetime: '2026-08-27T12:07:06Z'
@@ -1657,75 +1742,3 @@ releases:
       boot**, and switching to the external socket asks you to confirm an antenna
 
       …
-  - version: beta_52
-    name: wadamesh beta_52 (RISKY - storage rework, needs testing)
-    datetime: '2026-07-29T15:16:48Z'
-    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_52
-    prerelease: true
-    notes: >-
-      # ⚠️ RISKY TEST BUILD — READ BEFORE FLASHING ⚠️
-
-
-      > **This beta reworks how chat history is stored on the SD card, and it has NOT been
-      soak-tested over long uptime yet. It may have data-loss bugs.**
-
-      >
-
-      > - 🧪 **It needs community testing.** Please run it for hours or days and report any SD
-      errors, "history not saving," or storage weirdness on the issues tracker.
-
-      > - 💾 **The chat-history format changes, and the change is ONE-WAY.** If you flash an older
-      firmware after running this, your saved chat history is lost. Back up anything you care about
-      first.
-
-      > - 🛑 **Do not run this as your only or daily device** unless you're OK risking your chat
-      history.
-
-      >
-
-      > If you just want a solid device, stay on **beta_50** (current stable) or **beta_51**.
-
-
-      ---
-
-
-      **wadamesh beta_52** lands a major community SD/storage rework for testing.
-
-
-      > Test build. Turn on **Get test builds (beta)** on the device, use the **Beta** toggle on the
-      [web flasher](https://flasher.wadamesh.com), or grab a `-merged.bin` below. Stable stays on
-      beta_50.
-
-
-      ## What's new — SD storage rework (by @Vybo,
-      [#179](https://github.com/ALLFATHER-BV/wadamesh/pull/179))
-
-      - **Runtime SD recovery**: the device now recovers from an SD card that wedges or is pulled at
-      runtime, instead of playing dead until a reboot.
-
-      - **Chat-store health** on the About page: resolved backend, last save time, and failure
-      details, so a sick store is visible.
-
-      - **Segmented message store**: chat history is written as small append-friendly segment files
-      instead of rewriting the whole file on every save — shorter write windows, per-segment
-      corruption isolation, crash-atomic migration.
-
-      - Plus a fix for the follow-on bug where SD writes started failing after a few hours of uptime
-      once the segment table filled.
-
-
-      Huge thanks to **@Vybo** (Dan Vybiral) for the deep root-cause work on the SD stack.
-
-
-      ## Also included (from beta_51)
-
-      Chat bubble timestamp on the top row (@scratchdiver), the Airtime channel-utilization tool
-      (@jacobpretorius), the lockscreen wallpaper corruption fix (@Yazutsu, #127), and the T-Display
-      P4 text-size fix.
-
-
-      ## Boards
-
-      T-Deck · Heltec V4 TFT · Heltec V4-R8 · ThinkNode M9 · RAK TAP v2 · T-LoRa Pager (LR1121 /
-      SX1262) · Attaky Core · T-Display P4 (AMOLED + LCD). Flash `<board>-merged.bin` at `0x0` for a
-      full install, or `<board>.bin` for an app-only update.
