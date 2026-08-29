@@ -1,7 +1,100 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-08-28T06:00:45.049Z'
+updatedAt: '2026-08-29T20:36:56.946Z'
 releases:
+  - version: v4.15.2-rc7
+    name: v4.15.2-rc7
+    datetime: '2026-08-29T17:42:04Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.15.2-rc7
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.15.2-rc7
+
+
+      > ⚠️ **Pre-release** — this is a release candidate for testing. Docker images are not tagged
+      `:latest`.
+
+
+      This candidate adds the new Mesh Issues analysis report, which scans the RF graph for role and
+      placement health problems across three rule tiers, with a coverage preface, per-issue
+      dismissal, and settings. The Packet Monitor gains a full portnum filter with free-text content
+      search, plus a Stop capturing control on every monitor view. MeshCore node details now offer
+      the same telemetry time-window selector (15m–7d) that Meshtastic already had. The new
+      Installed Scripts inventory appears in global settings, and the Scripts section is now
+      reachable from the settings nav.
+
+
+      ## Features
+
+      - #4966, #4967, #4968 — Mesh Issues analysis report: Phase 1 foundation + Tier A rules, Tier B
+      RF-graph rules, and Phase 3 coverage preface, dismiss UI, Tier C, and settings (#4964)
+
+      - #4970 — MeshCore: telemetry time window selector in node details, parity with Meshtastic
+      (#4969)
+
+      - #4961 — Packet Monitor: full portnum filter + free-text content search (#4958)
+
+      - #4956 — Installed Scripts inventory in global settings (#4942)
+
+
+      ## Bug Fixes
+
+      - #4960 — Packet Monitor: Stop capturing control on all packet monitors; capture no longer
+      persists through refresh (#4957)
+
+      - #4962 — Scripts section added to the settings nav (#4942)
+
+
+      ## Chores
+
+      - #4971 — version bump to 4.15.2-rc7
+
+
+      ## Issues Resolved
+
+      - #4969 — MeshCore telemetry time window selector
+
+      - #4964 — Epic: Mesh Issues analysis report
+
+      - #4958 — Filter and search beacon/status app in packet capture
+
+      - #4957 — Packet Monitor has no Stop button
+
+      - #4852 — No meshbeacon or status message in packet monitor
+
+
+      **Full changelog:** https://github.com/Yeraze/meshmonitor/compare/v4.15.2-rc6...v4.15.2-rc7
+
+      ## 🚀 MeshMonitor v4.15.2-rc7
+
+
+      ### 📦 Installation
+
+
+      **Docker (recommended):**
+
+      ```bash
+
+      docker run -d \
+        --name meshmonitor \
+        -p 8080:3001 \
+        -v meshmonitor-data:/data \
+        ghcr.io/Yeraze/meshmonitor:4.15.2-rc7
+      ```
+
+
+      ### 🧪 Testing
+
+      ✅ All tests passed
+
+      ✅ TypeScript checks passed
+
+      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
+
+
+      ### 📋 Changes
+
+      See commit history for detailed changes.
   - version: v4.15.2-rc6
     name: v4.15.2-rc6
     datetime: '2026-08-27T19:46:28Z'
@@ -1870,115 +1963,4 @@ releases:
         -p 8080:3001 \
         -v meshmonitor-data:/data \
         
-      …
-  - version: v4.14.1-rc1
-    name: v4.14.1-rc1
-    datetime: '2026-08-05T18:02:54Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.14.1-rc1
-    prerelease: true
-    notes: >-
-      # MeshMonitor v4.14.1-rc1
-
-
-      > ⚠️ **Pre-release.** This is a release candidate for 4.14.1. It ships on the `:dev` Docker
-      tag, not `:latest`. Run it if you want the fixes early and can tolerate rough edges; report
-      anything you hit.
-
-
-      ## Summary
-
-
-      This candidate is mostly MeshCore work plus two map-interaction fixes. The headline feature is
-      **strict receive-only mode** for MeshCore Companion sources — a per-source switch that holds
-      every transmitting command, scheduler and automation while leaving receive, the packet log,
-      the Analyzer Observer and local serial configuration fully working. Because MeshCore firmware
-      has no radio-level transmit switch, this is enforced in software; link-layer acknowledgements
-      and any advert schedule configured outside MeshMonitor are unaffected, and the UI says so
-      plainly. The Analyzer Observer gained battery, uptime and noise-floor reporting, and it now
-      hot-swaps its publisher when you import a signing key instead of demanding a source
-      disable/re-enable cycle. On the permissions side, **MeshCore contact positions now honor
-      `canViewOnMap`**, matching how Meshtastic nodes have always behaved — a migration backfills
-      the flag so no existing user loses map access on upgrade. Two map fixes: clicking a marker now
-      zooms in first only when the marker is genuinely crowded (isolated markers open their popup
-      immediately at any zoom), and the threshold that governs it is configurable rather than
-      hardcoded at z13. The zoom-to-fit button also stopped wearing a crosshair icon, which everyone
-      reasonably read as "center on my GPS location."
-
-
-      ## Features
-
-
-      - **MeshCore strict receive-only mode** — per-source enforcement (#4550), UI (#4552), and
-      Virtual Node gating plus docs (#4555). Closes #4547.
-
-      - **Analyzer Observer publishes battery, uptime and noise floor** in its status payload
-      (#4557). Closes #4556.
-
-
-      ## Bug Fixes
-
-
-      - **MeshCore map positions now require `canViewOnMap`** instead of only `nodes:read`, so a
-      read-only user can see the contact list without learning where those nodes are (#4560). Closes
-      #4559.
-
-      - **Marker clicks gate on density, not zoom alone** — an isolated marker opens its popup on
-      the first click at any zoom, and the crowding threshold is now a setting (#4563). Closes
-      #4551.
-
-      - **Zoom-to-fit no longer uses the locate-me crosshair icon** (#4564). Closes #4562.
-
-      - **MeshCore contact Last Heard updates on incoming direct messages** (#4554). Closes #4553.
-
-      - **Analyzer Observer hot-swaps its publisher on a signing-key change** — no more
-      disable/re-enable dance after importing a key (#4544). Closes #4543.
-
-      - **DeviceMetadata arriving before MyNodeInfo is buffered** rather than dropped (#4548).
-
-      - **Remote admin stops implying it knows a remote node's favorite/ignored state** — the admin
-      protocol has no readback for those flags, so the UI no longer pretends otherwise (#4542).
-      Closes #4511.
-
-
-      ## Documentation
-
-
-      - Documented the new **Map Click Zoom Gate** setting and the MeshCore `canViewOnMap` change,
-      including the upgrade backfill (#4565).
-
-      - Site gallery: added **Norway Østlandet Mesh** (#4546). Closes #4545.
-
-
-      ## Tests / CI
-
-
-      - **System tests moved off the v1 API root paths removed in 4.14** (#4565). The
-      `/api/v1/nodes`-style root paths were deleted in 4.14 (#4117); because a 404 body isn't JSON,
-      every assertion was dying inside `jq` with an opaque parse error. The same change corrects
-      `/api/upgrade/*` from the transitional `410` to its post-removal `404`. Nothing user-facing —
-      but the suite is honest again.
-
-
-      ## Translations
-
-
-      - Weblate updates (#4541, #4252) — thank you to everyone translating.
-
-
-      ## Upgrade Notes
-
-
-      - **Migration 135** backfills `canViewOnMap` on existing `nodes` grants for MeshCore sources
-      that already had read access, so current users keep map visibility across the upgrade. New
-      grants must set the flag explicitly.
-
-      - Receive-only mode is **per source** and defaults to off. Nothing changes unless you turn it
-      on.
-
-
-      ## Thanks
-
-
-      - **@wilhel1812** for reporting the zoom-to-fit icon confusion in Discord (#45
-
       …

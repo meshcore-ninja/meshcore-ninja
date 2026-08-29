@@ -1,7 +1,13 @@
 source: github
 repo: ipnet-mesh/meshcore-hub
-updatedAt: '2026-08-17T16:30:18.677Z'
+updatedAt: '2026-08-29T20:36:50.672Z'
 releases:
+  - version: v0.17.3
+    name: v0.17.3
+    datetime: '2026-08-29T19:50:01Z'
+    url: https://github.com/ipnet-mesh/meshcore-hub/releases/tag/v0.17.3
+    prerelease: false
+    notes: "## What's Changed\r\n* fix(collector): survive broker dropping MQTT connections without FIN by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/361\r\n* chore(deps): update dependency i18next to v26.4.0 by @renovate[bot] in https://github.com/ipnet-mesh/meshcore-hub/pull/360\r\n* chore(deps): update anomalyco/opencode action to v1.18.23 by @renovate[bot] in https://github.com/ipnet-mesh/meshcore-hub/pull/352\r\n* chore(deps): update dependency react-i18next to v17.0.12 by @renovate[bot] in https://github.com/ipnet-mesh/meshcore-hub/pull/362\r\n* chore(deps): update dependency vitest to v4.1.11 by @renovate[bot] in https://github.com/ipnet-mesh/meshcore-hub/pull/359\r\n* chore(deps): update dependency daisyui to v5.7.22 by @renovate[bot] in https://github.com/ipnet-mesh/meshcore-hub/pull/351\r\n* chore(deps): update react monorepo to v19.2.18 by @renovate[bot] in https://github.com/ipnet-mesh/meshcore-hub/pull/356\r\n* chore(deps): update dependency jsdom to v30 by @renovate[bot] in https://github.com/ipnet-mesh/meshcore-hub/pull/353\r\n* chore(deps): update dependency react-router to v8.3.1 by @renovate[bot] in https://github.com/ipnet-mesh/meshcore-hub/pull/366\r\n* chore(deps): update testing-library monorepo by @renovate[bot] in https://github.com/ipnet-mesh/meshcore-hub/pull/358\r\n* chore(deps): update dependency @vitejs/plugin-react to v6.1.1 by @renovate[bot] in https://github.com/ipnet-mesh/meshcore-hub/pull/354\r\n* docs: align README Python version by @hardtofindg in https://github.com/ipnet-mesh/meshcore-hub/pull/364\r\n* chore(deps): update dependency vite to v8.2.2 by @renovate[bot] in https://github.com/ipnet-mesh/meshcore-hub/pull/355\r\n* chore(deps): update dependency @types/leaflet to v1.9.22 by @renovate[bot] in https://github.com/ipnet-mesh/meshcore-hub/pull/357\r\n* chore(deps): update dependency @tanstack/react-query to v5.102.8 by @renovate[bot] in https://github.com/ipnet-mesh/meshcore-hub/pull/363\r\n* chore(deps): update anomalyco/opencode action to v1.18.25 by @renovate[bot] in https://github.com/ipnet-mesh/meshcore-hub/pull/365\r\n* fix(web): paginate /map/data node and profile fetches by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/367\r\n\r\n## New Contributors\r\n* @hardtofindg made their first contribution in https://github.com/ipnet-mesh/meshcore-hub/pull/364\r\n\r\n**Full Changelog**: https://github.com/ipnet-mesh/meshcore-hub/compare/v0.17.2...v0.17.3"
   - version: v0.17.2
     name: v0.17.2
     datetime: '2026-07-28T20:04:56Z'
@@ -116,9 +122,3 @@ releases:
     url: https://github.com/ipnet-mesh/meshcore-hub/releases/tag/v0.13.4
     prerelease: false
     notes: "## What's Changed\r\n* Added nix-shell support by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/250\r\n* chore(tests): speed up pytest from >2min to ~12s by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/251\r\n* chore(ci): optimise GitHub workflows by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/252\r\n* fix(docker): correct OCI source label to ipnet-mesh/meshcore-hub by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/254\r\n* chore(deps): update actions/cache action to v5 by @renovate[bot] in https://github.com/ipnet-mesh/meshcore-hub/pull/253\r\n* fix: forward/cache repeated query params (observer filters) by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/255\r\n\r\n\r\n**Full Changelog**: https://github.com/ipnet-mesh/meshcore-hub/compare/v0.13.3...v0.13.4"
-  - version: v0.13.3
-    name: v0.13.3
-    datetime: '2026-06-14T19:10:34Z'
-    url: https://github.com/ipnet-mesh/meshcore-hub/releases/tag/v0.13.3
-    prerelease: false
-    notes: "## What's Changed\r\n* fix(web): collapse newlines in rendered message text by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/249\r\n\r\n\r\n**Full Changelog**: https://github.com/ipnet-mesh/meshcore-hub/compare/v0.13.2...v0.13.3"

@@ -1,7 +1,13 @@
 source: github
 repo: Colorado-Mesh/mesh-client
-updatedAt: '2026-08-27T20:12:04.513Z'
+updatedAt: '2026-08-29T20:36:47.009Z'
 releases:
+  - version: v5.32.0
+    name: 5.32.0
+    datetime: '2026-08-29T18:07:10Z'
+    url: https://github.com/Colorado-Mesh/mesh-client/releases/tag/v5.32.0
+    prerelease: false
+    notes: "<!-- mesh-client-macos-install -->\r\n### macOS install\r\n\r\n- **Recommended:** open the **`.dmg`** and drag **Mesh-client** to **Applications**.\r\n- If you use the **`.zip`**: extract with **[Keka](https://www.keka.io/en/)** or `ditto -xk` — **do not use 7-Zip** (or Finder Archive Utility); they break framework symlinks and can crash at launch with `Library not loaded: Squirrel.framework`.\r\n- See [troubleshooting](https://github.com/Colorado-Mesh/mesh-client/blob/main/docs/troubleshooting.md#macos-library-not-loaded-squirrelframework-after-zip-extract) if the app will not open after a ZIP extract.\r\n<!-- mesh-client-macos-install -->\r\n\r\n<!-- mesh-client-schema-compare -->\r\n# Release build — database schema check\r\n\r\nThis build schema: **48**\r\nLast official release: **v5.31.0** (schema **48**)\r\n\r\nNo schema bump vs last official release.\r\n<!-- mesh-client-schema-compare -->\r\n\r\n## [v5.32.0] - 2026-08-29\r\n\r\n### Highlights\r\n- **Reticulum:** In-app **Micron page editor** for Nomad My Pages, three new interface types (**Serial**, **AX.25 KISS**, **Local**) driven by a shared catalog, path-table clear, and blocklist import/export.\r\n- **RRC:** Reticulum page addresses and LXMF hashes are clickable, and the nicklist now resolves hashes to real names — cached in SQLite so they survive restarts and history clears.\r\n- **Games:** **Four in a Row** is playable end to end (board + challenge menus); previously these sessions rendered through a truncated Tic-Tac-Toe board.\r\n- **Meshtastic / MeshCore:** Radio settings no longer overwrite edits while you type, Apply results appear inline under the section you applied, and TCP heartbeat rejections are now diagnosable from a log alone.\r\n- **CI:** New **Buttonmash** renderer chaos-testing workflow, plus PR tests scoped to merge-base paths so pull-request runs are faster and narrower.\r\n- **Accessibility:** Adjustable **UI font size** in Appearance settings, applied across chat and RRC.\r\n- **Stability:** BLE connect can no longer wedge for the process lifetime, the app always quits after BLE shutdown, and stale MQTT clients can't tear down a healthy connection.\r\n\r\n### First-time contributor\r\n- Welcome **[M3SHGH0ST](https://github.com/cj-vana)** — first contributions to mesh-client, on the CI side: the Buttonmash renderer chaos-testing workflow (#910), scoping PR tests to merge-base paths with parallelized checks (#911), and fixing the renderer findings chaos testing surfaced (#913). Added to [credits](https://github.com/Colorado-Mesh/mesh-client/blob/main/docs/credits.md).\r\n\r\n### Breaking Changes\r\n*(None)*\r\n\r\n### Database schema\r\nSchema **48** — unchanged from v5.31.0. No migration runs on upgrade.\r\n\r\n---\r\n\r\n## Reticulum\r\n\r\n### Nomad\r\n* **In-app Micron page editor for My Pages** — hosting a Nomad site previously meant editing `.mu` files on disk in an external editor. My Pages now offers New / Edit / Delete on the hosted-page list, opening a split pane with raw Micron source plus a formatting toolbar on the left and a live preview on the right. Saves write into the watched folder, so the existing FS watcher re-indexes them. Authoring is gated on a configured content source rather than on active serving, since page mutations only need a live stack and resolved roots. File uploads and a local-files list remain intentionally absent. (#912)\r\n* Editor preview now renders through the same `nomad-micron-page` path as the Nomad browser, so previewed pages match what visitors see (#912)\r\n* **Security:** Micron page text is sanitized at the `innerHTML` sink rather than in a later whole-document pass — the three markup-building writes (text spans, style-run spans, link labels) route through `setSanitizedHtml`, closing CodeQL `js/xss-through-dom` for editor-sourced content (#912)\r\n* Sidecar `NomadError` values map to stable snake_case codes (`page_too_large`, `page_not_found`, `invalid_page_path`, `page_io_error`, `page_not_utf8`, `page_write_failed`) instead of stringified English prose, so write failures are translat\n…"
   - version: v5.31.0
     name: 5.31.0
     datetime: '2026-08-27T16:33:23Z'
@@ -116,113 +122,3 @@ releases:
     url: https://github.com/Colorado-Mesh/mesh-client/releases/tag/v5.20.1
     prerelease: false
     notes: "## Highlights\r\n\r\nMeshCore interop and Rooms UX catch up with Chat: companion-style keyless tapbacks/replies by default, optional **MeshCore Open wire compatibility** for keyed replies, Open reactions, and GIF send, plus Rooms toolbar parity (search, export, mute, collapse). Channel unread badges recover from RTC-skew poison traffic, and releases stay **draft** until a maintainer publishes them.\r\n\r\n## Features\r\n\r\n### MeshCore Open wire compatibility (#568)\r\n- New **App → MeshCore → Open wire compatibility** toggle (default **off**, marked experimental).\r\n- When enabled: keyed text replies (`@[Name#key]`), Open `r:HASH:INDEX` reactions (tapback fallback), and outbound `g:GIFID` GIF send via Chat GIF modal.\r\n- Default remains companion keyless `@[Name]` replies and tapbacks for official app / Discord bridge parity.\r\n\r\n### Rooms panel parity (#566)\r\n- In-panel **search** with highlight, **export**, **jump-to-date**, **per-room mute**, day separators, **compact mode**, sender filter, and **collapsible room list** (localStorage).\r\n- Muted `room:*` views excluded from sidebar/tab unread counts; App notified on mute changes.\r\n- Collapsed rail shows 2-letter room initials, auth status dot, and green selection border (no broken login-all control).\r\n\r\n### Chat & media (#566)\r\n- **Clear search filter** when Chat search is closed (toggle, Escape, ×).\r\n- Inbound MeshCore Open **`g:GIFID`** wire renders inline Giphy GIFs in chat (with page link fallback).\r\n\r\n## Bug fixes\r\n\r\n### MeshCore tapbacks & reactions (#494, #565, #566, #567, #569)\r\n- Outbound reactions use keyless **`@[Name] emoji`** companion wire (not `@[Name#timestamp]`, which leaked into Discord/MQTT bridges).\r\n- Local chat still shows reaction **badges**; `replyId` kept for dedup without keyed wire.\r\n- Inbound emoji-only replies promoted to tapbacks; wider **10 min** echo dedup with sec/ms `replyId` matching.\r\n- RF replay dedup and UI dedupe stop stacking optimistic + echo rows (#494).\r\n- Inbound Open **`r:HASH:INDEX`** reactions parsed; outbound Open wire removed in favor of companion format.\r\n\r\n### MeshCore reply threading & quotes (#568)\r\n- Outbound channel/DM replies prefixed on wire via shared `buildMeshcoreOutboundSendText()` (fixes plain-text sends after Protocol migration).\r\n- Parent lookup matches firmware **seconds vs client ms** keys; explicit `#key` no longer falls back to “latest from sender.”\r\n- Default text replies use keyless `@[Name]` wire; keyed prefix retained for inbound wire from other clients.\r\n\r\n### Channel unread badges (#568, #569)\r\n- Unread counting aligned with mark-read using `effectiveMessageTimestampMs` and clamped watermarks.\r\n- Future-dated / poison traffic no longer inflates `ch:N` last-read; timestamps clamped at ingest, DB save/load, and hydration.\r\n- **Copy Debug Snapshot** extended with last-read triage fields for badge debugging.\r\n\r\n### Rooms scroll (#566, #568, #569)\r\n- Fixes race where pinned-bottom scroll clobbered **Go to message** / Starred jumps on room switch.\r\n- Skips live-append scroll while `scrollToRowKey` or suppress flags are active.\r\n\r\n### Timestamps & room login (#570, #571)\r\n- Explicit `<= 0` guards in `messageTimestampSkew` (zero = missing timestamp / no watermark, not Unix epoch).\r\n- Hop-scaled MeshCore room login timeouts extracted to named constants in `timeConstants.ts`.\r\n\r\n## Infrastructure & housekeeping\r\n- **GitHub releases stay draft** until manual publish (#564) — `electron-builder` + Flatpak workflow + docs updated.\r\n- `release.sh`: single git-log pass, correct `feat!:` breaking detection, annotated tags.\r\n- CodeQL hardening: Giphy URL hostname parsing, dead-code cleanup, MeshCore runtime naming/constants.\r\n- Docs: reply misquote cause, room BBS wire vs chat, AGENTS/troubleshooting/parity updates.\r\n\r\n## Breaking changes\r\n*(None)*\r\n\r\n**Full Changelog**: https://github.com/Colorado-Mesh/mesh-client/compare/v5.20.0...v5.20.1"
-  - version: v5.20.0
-    name: 5.20.0
-    datetime: '2026-06-19T21:46:06Z'
-    url: https://github.com/Colorado-Mesh/mesh-client/releases/tag/v5.20.0
-    prerelease: false
-    notes: >-
-      ## Highlights
-
-
-      A major reliability and parity release: virtualized chat scroll is stable on Windows/Linux,
-      Windows on ARM gets dedicated installers and CI smoke tests, Meshtastic/MeshCore feature gaps
-      close (MQTT proxy gateway, per-node key backup, flood scope), and identity-scoped stores no
-      longer leave chat stuck after reconnect.
-
-
-      ## Features
-
-
-      ### Per-node key backup (#520, #521)
-
-      - Encrypted backup/restore for **full public + private key pairs**, indexed per Meshtastic
-      `nodeNum` and MeshCore `nodeId` (replaces single app-wide Meshtastic slot).
-
-      - Shared **Key Backup / Restore** UI with **Restore from backup…** picker for factory reset /
-      node-id changes; legacy `mesh-client:key-backup` migrates on first Security tab open.
-
-      - MeshCore Security tab enabled for backup/restore, sign, export/import; restore syncs active
-      MQTT identity.
-
-
-      ### Meshtastic / MeshCore parity (#532)
-
-      - **Meshtastic MQTT proxy gateway** — `MqttClientProxyMessage` bridge over local radio, broker
-      `publishProxy` IPC, module-config auto-connect, Map Report module section, XMODEM on Radio
-      tab, module debug status panels.
-
-      - **MeshCore parity** — Regional flood scope (collapsible Radio section), TX Power with
-      firmware max clamp, zero-hop advert + App auto-flood type, waiting-messages Chat badge,
-      Sniffer transport/route legend.
-
-      - **Remote-admin UI gating** — Hide local-only controls (XMODEM, MQTT proxy hint,
-      DFU/OTA/factory reset) when **Configure node** targets a remote radio.
-
-      - **Sniffer expand-row parity** — Meshtastic Raw Packet Log rows show legend hints and decoded
-      `MeshPacket` details above hex, matching MeshCore.
-
-      - **Chat transport badges** — Hybrid RF+MQTT messages show Wi‑Fi and globe icons side-by-side.
-
-
-      ### UI & notifications (#522, #542, #549)
-
-      - **Animated Lucide icons** (~140 inline SVGs → `lucide-react-motion`) with shared icon
-      modules; **App → Appearance → Reduce motion** toggle suppresses decorative animation while
-      keeping functional spinners and connection pulses.
-
-      - **Identity-aware boot sequence** — Terminal-style splash on connect reflecting active
-      identity, hardware, channels, and node sync before the protocol one-liner.
-
-      - **Typed chat notification sounds** — Channel = single 880 Hz pulse; DM/reply = dual-tone
-      chord; batch priority reply > dm > channel; App vs ChatPanel split avoids double beeps when
-      backgrounded.
-
-
-      ### MeshCore UX (#531)
-
-      - Contact offload progress UI with cancel support during save/remove/reconcile.
-
-      - RSSI/SNR metrics in node list and detail panel (capability-gated).
-
-      - Rooms panel compact header toolbar; **Log in all** only targets rooms with saved passwords;
-      per-view mute respected for background toasts/sounds.
-
-
-      ## Bug fixes
-
-
-      ### Chat scroll & virtualization (#535, #537, #539, #545–#547, #552, #562)
-
-      - TanStack Virtual end-anchored chat/rooms with shared `chatScrollUtils` helpers; fixes
-      Windows/Linux wheel jitter, unread-divider snap, virtual row overlap, and tab-return scroll
-      jumps.
-
-      - ResizeObserver 0×0 measurements on hidden tabs no longer corrupt row height cache.
-
-      - Decoupled virtualizer scroll-end threshold (30px) from UI pin threshold (200px) to stop
-      Windows bounce after dynamic content grows.
-
-      - Scroll position restored on tab re-entry; pinned-to-bottom auto-scroll preserved.
-
-
-      ### Identity & data integrity (#544, #561)
-
-      - Startup DB repairs: stuck MeshCore room `sending` rows, orphan duplicates, MeshCore contact
-      labels purged from Meshtastic node table, null inbound message status set to `acked`.
-
-      - **Stuck chat after reconnect** — Live ingress vs offline identity bucket mismatch fixed;
-      offline store slices merge on connect; **Copy Debug Snapshot** in App panel for support.
-
-      - Meshtastic ingest skips saving MeshCore contact-type labels; shared
-      `meshcoreContactHwLabels` constants.
-
-
-      ### Windows packaging (#519, #534, #538, #550, #555–#560)
-
-      - **Separate x64 and arm64 NSIS installers** (`Mesh-client Setup {version}.exe` and
-      `-arm64.exe`) instead of broken universal installer.
-
-      - NSIS payloads switched from 7z to **zip** for reliable
-
-      …
