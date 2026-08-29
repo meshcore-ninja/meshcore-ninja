@@ -1,7 +1,13 @@
 source: github
 repo: ipnet-mesh/meshcore-hub
-updatedAt: '2026-08-29T20:36:50.672Z'
+updatedAt: '2026-08-29T23:57:16.070Z'
 releases:
+  - version: v0.18.0
+    name: v0.18.0
+    datetime: '2026-08-29T21:52:04Z'
+    url: https://github.com/ipnet-mesh/meshcore-hub/releases/tag/v0.18.0
+    prerelease: false
+    notes: "## What's Changed\r\n* fix(security): close fail-open defaults, header spoofing, and add CSP by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/368\r\n* fix: silent config drops, metrics event-loop stall, and route/decoder bugs by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/369\r\n* fix: readiness 503s, maintenance gating, cache invalidation, and webhook/engine hardening by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/370\r\n\r\n\r\n**Full Changelog**: https://github.com/ipnet-mesh/meshcore-hub/compare/v0.17.3...v0.18.0"
   - version: v0.17.3
     name: v0.17.3
     datetime: '2026-08-29T19:50:01Z'
@@ -116,9 +122,3 @@ releases:
     url: https://github.com/ipnet-mesh/meshcore-hub/releases/tag/v0.14.0
     prerelease: false
     notes: "## What's Changed\r\n* ci: prune old untagged GHCR package versions by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/256\r\n* Add optional PostgreSQL backend (v0.14.0) by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/243\r\n* Added migrate service to overlay network by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/259\r\n* chore(deps): update postgres docker tag to v18 by @renovate[bot] in https://github.com/ipnet-mesh/meshcore-hub/pull/258\r\n* Reverted to Postgres 17 by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/260\r\n* fix: sink NULL last_seen nodes to bottom of node list by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/263\r\n* fix: normalize date-bucket keys for Postgres dashboard charts by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/264\r\n* fix: normalize packets feature flag check to !== false by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/265\r\n* Added explicit pull policies for core services by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/266\r\n* fix: ensure CI required checks run on all PRs by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/268\r\n* docs: tidy database docs and deprecate SQLite by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/267\r\n* chore(deps): update anomalyco/opencode action to v1.17.8 by @renovate[bot] in https://github.com/ipnet-mesh/meshcore-hub/pull/269\r\n* docs: centralise env vars and split deployment/observer/maintenance docs by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/271\r\n\r\n\r\n**Full Changelog**: https://github.com/ipnet-mesh/meshcore-hub/compare/v0.13.4...v0.14.0"
-  - version: v0.13.4
-    name: v0.13.4
-    datetime: '2026-06-14T22:39:25Z'
-    url: https://github.com/ipnet-mesh/meshcore-hub/releases/tag/v0.13.4
-    prerelease: false
-    notes: "## What's Changed\r\n* Added nix-shell support by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/250\r\n* chore(tests): speed up pytest from >2min to ~12s by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/251\r\n* chore(ci): optimise GitHub workflows by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/252\r\n* fix(docker): correct OCI source label to ipnet-mesh/meshcore-hub by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/254\r\n* chore(deps): update actions/cache action to v5 by @renovate[bot] in https://github.com/ipnet-mesh/meshcore-hub/pull/253\r\n* fix: forward/cache repeated query params (observer filters) by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/255\r\n\r\n\r\n**Full Changelog**: https://github.com/ipnet-mesh/meshcore-hub/compare/v0.13.3...v0.13.4"

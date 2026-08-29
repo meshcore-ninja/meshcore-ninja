@@ -1,7 +1,31 @@
 source: github
 repo: laserir/MCLite
-updatedAt: '2026-08-17T16:29:56.451Z'
+updatedAt: '2026-08-29T23:56:52.879Z'
 releases:
+  - version: v0.4.3
+    name: v0.4.3 - reactions, colour emoji, on-device permissions and admin lock
+    datetime: '2026-08-29T21:53:20Z'
+    url: https://github.com/laserir/MCLite/releases/tag/v0.4.3
+    prerelease: false
+    notes: >-
+      Message reactions that interoperate with the MeshCore One app, colour emoji for the on-device
+      emoji set, on-device editing of permissions and per-conversation quick replies, an admin
+      lockout with its own PIN, and an optional status-bar menu button.
+
+
+      Then a large correctness pass over all of it. That found and fixed two ways to lock a device
+      out of itself permanently, two ways an incoming or outgoing message could be lost with no
+      trace, and a leak of the sharer's WiFi credentials in the config tool's share-preset links.
+      The changelog has the detail.
+
+
+      Tested on T-Deck Plus. The T-Watch Ultra build compiles and the unit tests pass, but it was
+      not run on hardware for this release, and two of the fixes here are specific to that board
+      (the on-screen PIN keypad and the PIN editor). T-Watch users should treat the PIN lock as
+      untested for now.
+
+
+      Full changelog: https://github.com/laserir/MCLite/blob/main/CHANGELOG.md
   - version: v0.4.2
     name: v0.4.2 — scope-from-repeater picker, channel repeater echoes, memory tooling
     datetime: '2026-07-23T15:45:57Z'
@@ -845,36 +869,3 @@ releases:
       Flash `mclite-v0.1.4.bin` via the [web
       flasher](https://laserir.github.io/MCLite/tools/web-flasher/) or manually with esptool. Use
       `mclite_config_tool.html` (offline, single file) to edit `config.json`.
-  - version: v0.1.3
-    name: v0.1.3
-    datetime: '2026-04-13T08:44:54Z'
-    url: https://github.com/laserir/MCLite/releases/tag/v0.1.3
-    prerelease: false
-    notes: >-
-      ## What's New
-
-
-      - **Region scope** — tag outgoing packets with MeshCore transport codes so repeaters can
-      filter by region. Set a global scope or override per channel. Compatible with 1-byte and
-      2-byte repeaters
-
-      - **Automatic DST** — POSIX timezone strings for automatic daylight saving time transitions
-
-      - **SOS fix** — SOS acknowledgement no longer triggers an SOS alert on the sender's device
-
-      - **Telemetry fix** — CayenneLPP parsing off-by-one corrected
-
-      - **Config tool** — region scope settings for radio and per-channel override
-
-
-      ## Install
-
-
-      Flash via the [Web Flasher](https://laserir.github.io/MCLite/tools/web-flasher/) or download
-      the binary below and flash with esptool:
-
-      ```
-
-      esptool.py write_flash 0x0 mclite-v0.1.3.bin
-
-      ```
