@@ -1,7 +1,71 @@
 source: github
 repo: OffbandMesh/meshcore-firmware
-updatedAt: '2026-08-23T20:25:29.026Z'
+updatedAt: '2026-08-30T11:29:43.964Z'
 releases:
+  - version: offband-v1.5.0-beta6
+    name: Offband offband-v1.5.0-beta6
+    datetime: '2026-08-30T07:55:25Z'
+    url: https://github.com/OffbandMesh/meshcore-firmware/releases/tag/offband-v1.5.0-beta6
+    prerelease: true
+    notes: |-
+      ### Fixed (beta2)
+      - **Rotated-out brokers no longer lose the traffic they missed** (#723): a regression in
+        `beta1`. Re-attaching a broker resynced its ring cursor to the head, which was meant to
+        stop a *newly enabled* broker replaying stale boot backlog — but the same path runs on
+        every rotation re-entry, so a broker returning from its dwell discarded exactly the
+        backlog the ring exists to hold. On an observer with rotating TLS brokers this silently
+        dropped most of the feed, and the drop counter read zero throughout because a resync is
+        a deliberate skip, not an overrun. Resync now happens on first attach only.
+      - **Observer packets over ~98 bytes were silently discarded** (#726): the `/packets`
+        JSON builder renders up to 1024 bytes but the publish ring only accepted 512, and a
+        refused append counted nothing anywhere. Hex-encoding doubles the packet, so anything
+        over ~98 bytes of air time simply vanished — present since the ring was introduced
+        (#175), found in the field on beta1 by a tester whose observer published one small
+        message and silently dropped the two larger ones. The ring now accepts what the
+        builder produces, and a compile-time assert makes the size mismatch a build error
+        rather than a silent refusal.
+      - **BLE transfers no longer lose 3 bytes per full frame** (#711): a regression of #450,
+        reintroduced by #454 — when the cached peer MTU was ≥ 179, every full BLE frame was
+        sized 3 bytes over what the link delivers and the stack clipped the tail. Caplog
+        downloads noticed (they announce a byte total); every other chunked path clipped
+        silently. Frame sizing is now pinned by a regression test that fails without the fix.
+        Not yet device-verified — that is what this beta is for.
+      - **Framed serial writes are all-or-nothing** (#718): a short non-blocking write could
+        emit a frame header with no payload behind it, desyncing the stream — corruption, not
+        just loss. A refused frame is now retried whole; nothing partial reaches the wire.
+        Also awaiting device verification on this beta.
+      - **Repeater OTA recovers from a stale session** (#676): starting OTA over WiFi tears
+        down a stale server instead of refusing, and the repeater holds off idle light-sleep
+        while a persistent-WiFi window is open so the OTA window stays reachable.
+
+      ### Changed (beta2)
+      - **Observer publish ring reworked; `/packets` payload slimmed** (#727): the ring now
+        stores compact packet records rendered per-broker at publish time instead of
+        pre-rendered JSON — roughly 10 KB less RAM and a 40-deep ring, with receive
+        timestamps captured at receive so a backlogged broker's messages aren't mis-stamped.
+        The `/packets` body now carries the raw packet plus link metadata only: CoreScope and
+        its forks (CoreComms/EastMesh, confirmed from their public ingestor source) decode
+        the raw packet themselves and never read the on-device parsed fields. **If you run a
+        custom `/packets` consumer that read parsed fields, decode from `raw` now.**
+
+      ### Added (beta2)
+      - **Heltec Vision Master E290 builds** (#733): companion BLE + USB for the first e-ink
+        board in the fleet, from the upstream 1.17 variant. The radio/mesh side is stock
+        upstream support; the e-ink display path under the Offband stack is exactly what beta
+        testing needs to prove. Repeater role deferred.
+
+      ### Added
+      - **`wifi clear` and a visible reason for WiFi disconnects** (#696): an observer on an
+        open, passwordless network could sit at `StaConnecting` indefinitely with no reason
+        available anywhere, and a stored PSK could not be cleared without an NVS wipe that
+        destroys the device identity. `wifi clear [pwd|all]` now removes stored credentials
+        properly, and STA disconnect reasons appear in the `wifi status` reply as well as the
+        retry log — the status reply being the load-bearing half, since a remote reporter
+        cannot read a serial console. Association behaviour is unchanged.
+
+      ### Fixed
+      - **Observer multi-broker rotation actually rotates** (#708): with more th
+      …
   - version: offband-v1.5.0-beta5
     name: Offband offband-v1.5.0-beta5
     datetime: '2026-08-23T02:46:02Z'
@@ -1215,76 +1279,3 @@ releases:
 
       **Full Changelog**:
       https://github.com/OffbandMesh/meshcore-firmware/compare/offband-v0.18.0...offband-v0.18.1
-  - version: offband-v0.18.0
-    name: Offband offband-v0.18.0
-    datetime: '2026-06-15T02:56:19Z'
-    url: https://github.com/OffbandMesh/meshcore-firmware/releases/tag/offband-v0.18.0
-    prerelease: false
-    notes: >-
-      ### Added
-
-      - **Heltec V4 TFT observer build** (`heltec_v4_tft_companion_observer_wifi`) — the
-        observer role on the TFT (ST7789) display variant, switched to the NimBLE stack
-        the observer requires. Added to the CI build matrix and the release env set so it
-        **always builds and ships**.
-
-      ### Changed
-
-      - **Firmware download clarity** — a "Which file?" table in the README and a static
-        footer appended to every GitHub Release, explaining `-merged.bin` (first install)
-        vs `.bin` (update) vs `.uf2` (nRF52).
-
-      ### Fixed
-
-      - **`pio-flash` device matching** — `find_in_registry` prefers an exact
-        DeviceID-instance match over a class-only label, so a registered chip is no longer
-        shadowed by a same-class device with null discriminators (fixes nRF52/ESP32
-        mislabels where two boards share a VID:PID).
-
-      ### Internal
-
-      - Wire a gitignored `HARDWARE.local.md` (symlink to the LoRa hardware inventory) plus
-        a CLAUDE.md "read before any hardware work" pointer.
-
-
-      ---
-
-
-      ### Which file do I download?
-
-
-      | File | What it is | When to use it |
-
-      |---|---|---|
-
-      | `*-merged.bin` (ESP32 — Heltec V3/V4, XIAO) | **Full image** — bootloader + partition table
-      + app in one, flashed at `0x0` after a chip erase. Self-contained, works on a blank chip. |
-      **First install / clean setup.** In a web flasher this is the **"Full Firmware"** option. |
-
-      | `*.bin` (ESP32) | **App only** — flashed at the app offset (`0x10000`); the bootloader must
-      already be on the chip. | **Updating** an existing node — OTA / **"Update Only."** Keeps the
-      device identity + WiFi/MQTT config. |
-
-      | `*.uf2` (nRF52 — RAK, T-Echo, XIAO nRF52) | Complete self-contained image. | **First install
-      *and* updates** — double-tap reset, then drag-drop onto the USB drive. (nRF52 has no
-      merged/app split.) |
-
-
-      > ⚠️ **ESP32:** the app-only `*.bin` will **not boot** if flashed at `0x0` — use
-      `*-merged.bin` for a fresh install. A full erase / "Full Firmware" wipes the device's identity
-      + saved config, so use it only for a first install or recovery, **never** a routine update.
-
-
-
-      ## What's Changed
-
-      * docs(#127): MeshCore 1.16.0 base-update merge plan by @Strycher in
-      https://github.com/OffbandMesh/meshcore-firmware/pull/133
-
-      * feat: Heltec V4 TFT observer build (always-build) + flash docs & tooling by @Strycher in
-      https://github.com/OffbandMesh/meshcore-firmware/pull/138
-
-
-
-      **Full Changelog**:
-      https://github.com/OffbandMesh/meshcore-firmware/compare/offband-v0.17.0...offband-v0.18.0
