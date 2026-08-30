@@ -1,7 +1,13 @@
 source: github
 repo: ipnet-mesh/meshcore-hub
-updatedAt: '2026-08-29T23:57:16.070Z'
+updatedAt: '2026-08-30T16:16:45.363Z'
 releases:
+  - version: v0.19.0
+    name: v0.19.0
+    datetime: '2026-08-30T12:35:27Z'
+    url: https://github.com/ipnet-mesh/meshcore-hub/releases/tag/v0.19.0
+    prerelease: false
+    notes: "## What's Changed\r\n* Remove SQLite support; PostgreSQL is now the only database backend by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/371\r\n* Add Playwright e2e job to CI and upload test report artifacts by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/372\r\n* fix(compose): keep bundled postgres out of the core profile in production by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/373\r\n* ci: add consolidated job summary with test results and artifacts by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/374\r\n* chore(deps): update actions/download-artifact action to v8 by @renovate[bot] in https://github.com/ipnet-mesh/meshcore-hub/pull/375\r\n* test(e2e): expand Playwright coverage for UI regression protection by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/376\r\n* feat(web): cluster map markers for large node counts by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/377\r\n\r\n\r\n**Full Changelog**: https://github.com/ipnet-mesh/meshcore-hub/compare/v0.18.0...v0.19.0"
   - version: v0.18.0
     name: v0.18.0
     datetime: '2026-08-29T21:52:04Z'
@@ -116,9 +122,3 @@ releases:
     url: https://github.com/ipnet-mesh/meshcore-hub/releases/tag/v0.15.0
     prerelease: false
     notes: "## What's Changed\r\n* chore(deps): update actions/checkout action to v7 by @renovate[bot] in https://github.com/ipnet-mesh/meshcore-hub/pull/272\r\n* feat(spam): score messages at ingest and hide likely spam by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/275\r\n* chore(deps): update anomalyco/opencode action to v1.17.9 by @renovate[bot] in https://github.com/ipnet-mesh/meshcore-hub/pull/274\r\n* fix(web): stop pre-wrap inflating message table row height by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/276\r\n* chore(deps): update actions/cache action to v6 by @renovate[bot] in https://github.com/ipnet-mesh/meshcore-hub/pull/277\r\n* chore(deps): update anomalyco/opencode action to v1.17.10 by @renovate[bot] in https://github.com/ipnet-mesh/meshcore-hub/pull/278\r\n\r\n\r\n**Full Changelog**: https://github.com/ipnet-mesh/meshcore-hub/compare/v0.14.0...v0.15.0"
-  - version: v0.14.0
-    name: v0.14.0
-    datetime: '2026-06-19T18:22:39Z'
-    url: https://github.com/ipnet-mesh/meshcore-hub/releases/tag/v0.14.0
-    prerelease: false
-    notes: "## What's Changed\r\n* ci: prune old untagged GHCR package versions by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/256\r\n* Add optional PostgreSQL backend (v0.14.0) by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/243\r\n* Added migrate service to overlay network by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/259\r\n* chore(deps): update postgres docker tag to v18 by @renovate[bot] in https://github.com/ipnet-mesh/meshcore-hub/pull/258\r\n* Reverted to Postgres 17 by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/260\r\n* fix: sink NULL last_seen nodes to bottom of node list by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/263\r\n* fix: normalize date-bucket keys for Postgres dashboard charts by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/264\r\n* fix: normalize packets feature flag check to !== false by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/265\r\n* Added explicit pull policies for core services by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/266\r\n* fix: ensure CI required checks run on all PRs by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/268\r\n* docs: tidy database docs and deprecate SQLite by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/267\r\n* chore(deps): update anomalyco/opencode action to v1.17.8 by @renovate[bot] in https://github.com/ipnet-mesh/meshcore-hub/pull/269\r\n* docs: centralise env vars and split deployment/observer/maintenance docs by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/271\r\n\r\n\r\n**Full Changelog**: https://github.com/ipnet-mesh/meshcore-hub/compare/v0.13.4...v0.14.0"
