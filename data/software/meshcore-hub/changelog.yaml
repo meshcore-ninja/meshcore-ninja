@@ -1,7 +1,13 @@
 source: github
 repo: ipnet-mesh/meshcore-hub
-updatedAt: '2026-08-30T16:16:45.363Z'
+updatedAt: '2026-08-31T00:16:23.743Z'
 releases:
+  - version: v0.20.0
+    name: v0.20.0
+    datetime: '2026-08-30T21:31:25Z'
+    url: https://github.com/ipnet-mesh/meshcore-hub/releases/tag/v0.20.0
+    prerelease: false
+    notes: "## What's Changed\r\n* feat(api): make Redis a required cache dependency by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/379\r\n* chore(db): remove v0.19 Postgres-transition shims (v0.20) by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/380\r\n\r\n\r\n**Full Changelog**: https://github.com/ipnet-mesh/meshcore-hub/compare/v0.19.0...v0.20.0"
   - version: v0.19.0
     name: v0.19.0
     datetime: '2026-08-30T12:35:27Z'
@@ -116,9 +122,3 @@ releases:
     url: https://github.com/ipnet-mesh/meshcore-hub/releases/tag/v0.15.1
     prerelease: false
     notes: "## What's Changed\r\n* chore(deps): update anomalyco/opencode action to v1.17.11 by @renovate[bot] in https://github.com/ipnet-mesh/meshcore-hub/pull/279\r\n* feat(collector): observer allow/deny ingestion filter by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/281\r\n* fix(tests): introspect mounted paths via OpenAPI schema, unpin fastapi by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/282\r\n* chore(deps): update dependency daisyui to v5.6.6 by @renovate[bot] in https://github.com/ipnet-mesh/meshcore-hub/pull/283\r\n* chore(deps): update tailwindcss monorepo to v4.3.2 by @renovate[bot] in https://github.com/ipnet-mesh/meshcore-hub/pull/284\r\n* chore(deps): update dependency daisyui to v5.6.10 by @renovate[bot] in https://github.com/ipnet-mesh/meshcore-hub/pull/286\r\n* chore(deps): update anomalyco/opencode action to v1.17.13 by @renovate[bot] in https://github.com/ipnet-mesh/meshcore-hub/pull/285\r\n* UI cosmetic polish and IBM Plex typography by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/287\r\n* feat(web): panel accent redesign, mobile nav two-column, light-mode polish by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/288\r\n\r\n\r\n**Full Changelog**: https://github.com/ipnet-mesh/meshcore-hub/compare/v0.15.0...v0.15.1"
-  - version: v0.15.0
-    name: v0.15.0
-    datetime: '2026-06-25T13:04:07Z'
-    url: https://github.com/ipnet-mesh/meshcore-hub/releases/tag/v0.15.0
-    prerelease: false
-    notes: "## What's Changed\r\n* chore(deps): update actions/checkout action to v7 by @renovate[bot] in https://github.com/ipnet-mesh/meshcore-hub/pull/272\r\n* feat(spam): score messages at ingest and hide likely spam by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/275\r\n* chore(deps): update anomalyco/opencode action to v1.17.9 by @renovate[bot] in https://github.com/ipnet-mesh/meshcore-hub/pull/274\r\n* fix(web): stop pre-wrap inflating message table row height by @jinglemansweep in https://github.com/ipnet-mesh/meshcore-hub/pull/276\r\n* chore(deps): update actions/cache action to v6 by @renovate[bot] in https://github.com/ipnet-mesh/meshcore-hub/pull/277\r\n* chore(deps): update anomalyco/opencode action to v1.17.10 by @renovate[bot] in https://github.com/ipnet-mesh/meshcore-hub/pull/278\r\n\r\n\r\n**Full Changelog**: https://github.com/ipnet-mesh/meshcore-hub/compare/v0.14.0...v0.15.0"

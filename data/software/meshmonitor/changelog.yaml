@@ -1,7 +1,99 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-08-29T20:36:56.946Z'
+updatedAt: '2026-08-31T00:16:32.407Z'
 releases:
+  - version: v4.15.2-rc8
+    name: v4.15.2-rc8
+    datetime: '2026-08-30T22:03:05Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.15.2-rc8
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.15.2-rc8
+
+
+      > ⚠️ **Pre-release** — this is a release candidate for testing. Docker images are not tagged
+      `:latest`.
+
+
+      This candidate reworks the Mesh Issues Router Cluster rule after real-world feedback: clusters
+      are now mutually-audible cliques instead of transitive connected components, groups glued only
+      by shared-gateway co-reception downgrade to info, and a new tunable distance guard (default 30
+      km) filters MQTT-bridged traceroute "hops" that never happened over RF — on a live Florida
+      mesh this cut phantom clusters from 345 km spans to coherent metro pods. The B2 Redundant
+      Router rule gains the same range gate, so routers 40–120 km apart are no longer called
+      redundant coverage of each other. Router Cluster cards also gain a Show map toggle that plots
+      the members with the best-sited node highlighted. Purging telemetry from a node's charts works
+      again for every source type — the request was missing its sourceId and always failed. The Mesh
+      Issues report also picks up the A5 telemetry-cadence clause, wire-level pagination, and a
+      tunable auto-close setting.
+
+
+      ## Bug Fixes
+
+      - #4977 — Mesh Issues: Router clusters are mutually-audible cliques with a distance guard;
+      co-reception-only groups downgrade to info; B2 covered-by pairs range-gated (#4976)
+
+      - #4973 — Telemetry purge sends sourceId, fixing "Failed to purge telemetry data" for MeshCore
+      and all sources (#4963)
+
+
+      ## Features
+
+      - #4975 — Mesh Issues: map on Router Cluster findings with member markers and best-sited
+      highlight (#4974)
+
+      - #4972 — Mesh Issues post-epic follow-ups: A5 telemetry-cadence clause, wire-level
+      pagination, auto-close setting (#4964)
+
+
+      ## Chores
+
+      - #4980 — version bump to 4.15.2-rc8
+
+
+      ## Issues Resolved
+
+      - #4976 — B1 Router cluster merges far-apart routers via transitive chains
+
+      - #4974 — Mesh Issues: show a map on Router Cluster findings
+
+      - #4963 — Purge Telemetry fails for MeshCore sources
+
+      - #4964 — Mesh Issues epic (post-epic follow-ups)
+
+
+      **Full changelog:** https://github.com/Yeraze/meshmonitor/compare/v4.15.2-rc7...v4.15.2-rc8
+
+      ## 🚀 MeshMonitor v4.15.2-rc8
+
+
+      ### 📦 Installation
+
+
+      **Docker (recommended):**
+
+      ```bash
+
+      docker run -d \
+        --name meshmonitor \
+        -p 8080:3001 \
+        -v meshmonitor-data:/data \
+        ghcr.io/Yeraze/meshmonitor:4.15.2-rc8
+      ```
+
+
+      ### 🧪 Testing
+
+      ✅ All tests passed
+
+      ✅ TypeScript checks passed
+
+      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
+
+
+      ### 📋 Changes
+
+      See commit history for detailed changes.
   - version: v4.15.2-rc7
     name: v4.15.2-rc7
     datetime: '2026-08-29T17:42:04Z'
@@ -1843,124 +1935,3 @@ releases:
       ### 📋 Changes
 
       See commit history for detailed changes.
-  - version: v4.14.1-rc2
-    name: Theme Color Schemas
-    datetime: '2026-08-09T18:41:08Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.14.1-rc2
-    prerelease: true
-    notes: >-
-      # MeshMonitor v4.14.1-rc2 — Theme Color Schemas
-
-
-      > ⚠️ **Pre-release.** This is a release candidate for 4.14.1. It ships on the `:dev` Docker
-      tag, not `:latest`. Run it if you want the changes early and can tolerate rough edges; report
-      anything you hit.
-
-
-      ## Summary
-
-
-      This candidate is one piece of work: **custom themes are now defined by what a colour is
-      _for_, not which Catppuccin swatch it happens to be.**
-
-
-      Before, a theme was 26 palette names — `base`, `blue`, `mauve`, `peach`. To make the accent
-      red you had to write `blue: "#ff0000"`, and anyone reading that theme afterwards had to know
-      `blue` meant "the accent". A theme is now 26 roles:
-
-
-      ```jsonc
-
-      { "accent": "#ff0000", "bg": "#1e1e2e", "textFaint": "#6c7086", "error": "#f38ba8" }
-
-      ```
-
-
-      **Existing custom themes keep working.** Definitions stored in the old format are translated
-      when they're read — nothing is rewritten on disk, so downgrading is safe.
-
-
-      Getting there also fixed a family of bugs where colours were pinned to Catppuccin Mocha
-      regardless of the theme you'd selected. Tinted panel backgrounds, warning banners, badge fills
-      and drop shadows all rendered Mocha's palette on Nord, Gruvbox, Solarized and every other
-      theme. If you use a non-Catppuccin theme, this is the release where those surfaces finally
-      match it.
-
-
-      Two smaller wins fell out of the same work. Roles that used to share one swatch — faint text,
-      subtle borders and the inactive-element fill were all `overlay0` — can now be themed apart, so
-      a theme can lighten its chrome without also washing out timestamps. And chart colours are
-      drawn from a dedicated categorical scale chosen to stay mutually distinguishable in every
-      built-in theme, instead of borrowing role colours that could collide.
-
-
-      ## Features
-
-
-      - **Themes are authored by role** (`accent`, `bg`, `textFaint`, `error`) instead of by
-      Catppuccin swatch name, with the theme editor grouped and labelled to match (#4623). Closes
-      #4567.
-
-      - **Categorical colour scale** for charts and per-source tagging, kept distinct from the role
-      vocabulary so a theme's accent colour can never collide with a data series (#4605, #4606).
-
-      - **Sequential colour scale** for magnitude — distance histograms and hop-density ramps now
-      read as ordered rather than as a set of unrelated hues (#4611).
-
-
-      ## Bug Fixes
-
-
-      - **Tinted backgrounds ignored the active theme** — the variables behind them were never
-      defined, so every tint silently fell back to hardcoded Catppuccin Mocha in all 15 themes
-      (#4617).
-
-      - **87 hardcoded palette colours** written directly as `rgba()` values now follow the theme.
-      The worst of these put a Mocha-green background behind theme-coloured text on the same badge,
-      so the two halves disagreed on any other theme (#4620).
-
-      - **Chart backgrounds, gridlines and labels** read theme colours correctly (#4622).
-
-      - **Remaining hardcoded colours in components** — hover shades that shifted hue instead of
-      brightness, and status colours that had no theme-aware definition (#4619).
-
-      - **Estimated-position anchors** are written atomically, with the empty-input contract
-      documented (#4621). Closes #4614.
-
-
-      ## Documentation
-
-
-      - Theme gallery regenerated against the new stylesheet, so the screenshots come from code that
-      still exists (#4624).
-
-
-      ## Upgrade notes
-
-
-      - **Custom themes**: no action needed. Old swatch-keyed definitions are translated on read. If
-      you re-save a theme in the editor it will be written in the new role format; before that, the
-      stored row is untouched.
-
-      - **Built-in themes are visually unchanged.** This was verified rather than eyeballed — both
-      stylesheets were resolved through a real browser across 15 themes × 39 colour tokens, giving
-      585 comparisons and zero differences. The deliberate exceptions are two rules (timestamps and
-      small field labels) that moved to the faint-text role, which had no correct home before.
-
-
-      ## 🚀 MeshMonitor v4.14.1-rc2
-
-
-      ### 📦 Installation
-
-
-      **Docker (recommended):**
-
-      ```bash
-
-      docker run -d \
-        --name meshmonitor \
-        -p 8080:3001 \
-        -v meshmonitor-data:/data \
-        
-      …
