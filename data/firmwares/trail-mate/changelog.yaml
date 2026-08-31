@@ -1,7 +1,29 @@
 source: github
 repo: vicliu624/trail-mate
-updatedAt: '2026-08-28T06:00:25.975Z'
+updatedAt: '2026-08-31T17:26:50.268Z'
 releases:
+  - version: v0.1.44-alpha
+    name: v0.1.44-alpha
+    datetime: '2026-08-31T10:16:08Z'
+    url: https://github.com/vicliu624/trail-mate/releases/tag/v0.1.44-alpha
+    prerelease: true
+    notes: >-
+      ## [0.1.44-alpha] - 2026-08-31
+
+
+      ### Fixed
+
+
+      - Fixed T-LoRa Pager Walkie FSK interoperability between LR1121 and SX1262 radios by
+        using each chip family's TX/RX completion and timeout IRQ masks. Completed and timed-out
+        asynchronous transmissions now run the RadioLib transmit cleanup path, preventing the
+        voice queue from remaining permanently in flight and allowing a compatible receiver to
+        read and buffer incoming Codec2 packets.
+
+
+
+      **Full Changelog**:
+      https://github.com/vicliu624/trail-mate/compare/v0.1.43-alpha...v0.1.44-alpha
   - version: v0.1.43-alpha
     name: v0.1.43-alpha
     datetime: '2026-08-28T04:25:04Z'
@@ -327,75 +349,3 @@ releases:
       counts, packet log context, a
 
       …
-  - version: v0.1.24-alpha
-    name: v0.1.24-alpha
-    datetime: '2026-05-09T06:43:36Z'
-    url: https://github.com/vicliu624/trail-mate/releases/tag/v0.1.24-alpha
-    prerelease: true
-    notes: >-
-      ## [0.1.24-alpha] - 2026-05-09
-
-      ### Added / 新增
-
-      - Added a formal locale-pack release specification covering package versioning,
-      `min_firmware_version`, archive layout, catalog generation, review/release gating, rollback
-      behavior, and pre-release validation / 新增语言包发布规格，覆盖包版本、`min_firmware_version`、分发
-      archive、catalog 生成、review/release 闸门、回滚行为与发布前校验
-
-      - Added installable Arabic locale-pack assets with Noto Naskh Arabic font generation support
-      and RTL metadata, kept in review status until native-language and input review are complete /
-      新增可安装阿语语言包资源，包含 Noto Naskh Arabic 字体生成支持与 RTL 元数据，并在母语与输入法审查完成前保持 review 状态
-
-      - Added locale-pack structural validation tooling for key completeness, duplicate keys, empty
-      translations, placeholder consistency, release English fallback detection, dependency checks,
-      and fake IME rejection / 新增语言包结构校验工具，检查 key 完整性、重复 key、空翻译、占位符一致性、release 英文兜底、依赖关系与假 IME
-
-
-      ### Changed / 变更
-
-      - Language packs are now versioned as 1.1.0 packages for the 0.1.24-alpha release, with
-      `translation_status` metadata carried into `site/data/packs.json` so review packs can be
-      cataloged without being selectable as runtime UI languages / 语言包现以 1.1.0 包随 0.1.24-alpha 发布，并把
-      `translation_status` 写入 `site/data/packs.json`，使 review 包可被 catalog 收录但不会成为运行时可选 UI 语言
-
-      - Simplified Chinese remains the only release locale with the real built-in Pinyin IME;
-      Traditional Chinese (Taiwan), Arabic, Russian, European Latin, Japanese, and Korean packs are
-      cataloged as display-only review bundles / 简体中文仍是唯一带真实内建拼音输入法的 release
-      locale；台湾繁中、阿语、俄语、欧洲拉丁语、日语与韩语包以 display-only review bundle 形式进入目录
-
-      - The GitHub Pages language-pack section now surfaces review/release status and package
-      metadata so users can see language-pack maturity and update availability more clearly / GitHub
-      Pages 语言包区域现在展示 review/release 状态与包元数据，让用户更清楚地看到语言包成熟度与更新可见性
-
-      - Localization and IME specifications now explicitly distinguish locale, region, script, font
-      coverage, release quality, and real input backends, including the rule that Taiwan Traditional
-      Chinese must not default to Pinyin / 本地化与输入法规格现明确区分
-      locale、地区、脚本、字体覆盖、发布质量与真实输入后端，并写明台湾繁中不得默认使用拼音
-
-
-      ### Fixed / 修复
-
-      - Filled missing and English-fallback entries across non-English locale `strings.tsv` files
-      while keeping non-native-reviewed packages gated as `review` instead of pretending they are
-      release quality / 补齐非英语语言包中缺失或英文兜底的 `strings.tsv` 条目，同时将未完成母语审校的包保持在 `review` 闸门内，避免伪装为
-      release 质量
-
-      - Removed fake IME manifests and locale `ime_pack` dependencies for scripts without
-      implemented runtime input engines, preventing Settings from exposing unusable input methods /
-      移除尚无真实运行时输入引擎的假 IME manifest 与 locale `ime_pack` 依赖，避免 Settings 暴露不可用输入法
-
-      - Runtime locale discovery now skips non-release `translation_status` values, preserving
-      English fallback and preventing incomplete review packs from entering the normal language
-      picker / 运行时 locale 发现现在会跳过非 release 的 `translation_status`，保留英文兜底并防止未完成 review 包进入普通语言选择器
-
-
-
-
-      ## What's Changed
-
-      * Feature/cardputer zero by @vicliu624 in https://github.com/vicliu624/trail-mate/pull/27
-
-
-
-      **Full Changelog**:
-      https://github.com/vicliu624/trail-mate/compare/v0.1.22-alpha...v0.1.24-alpha
