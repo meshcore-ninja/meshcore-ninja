@@ -1,7 +1,129 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-08-31T00:16:32.407Z'
+updatedAt: '2026-09-01T04:09:09.807Z'
 releases:
+  - version: v4.15.2-rc9
+    name: v4.15.2-rc9
+    datetime: '2026-08-31T23:47:14Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.15.2-rc9
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.15.2-rc9
+
+
+      > ⚠️ **Pre-release** — this is a release candidate. Please test in a non-production
+      environment first and report issues.
+
+
+      ## Summary
+
+
+      This RC focuses on the Mesh Issues report and key-security correctness. The report page gets a
+      full reorganization — a dashboard-style landing, sortable per-type tables, a by-node view, and
+      bulk actions — plus a new test-reference doc explaining every A1/B2/C3 designator. Node
+      references in findings are now clickable everywhere they appear (headers, member chips,
+      "shared with" lists), open the DM thread on the right source, and a source picker fires when a
+      node exists on multiple sources. B1 Router Cluster is tightened twice: it now requires the
+      members' non-cluster clients to overlap significantly (a well-sited backbone stops flagging as
+      redundant), and edges must be within the configurable distance guard so MQTT can't glue
+      routers 100+ km apart into one finding. On the C1 side, source-blind reads in the key-mismatch
+      path were producing false-positive `keyMismatchDetected` warnings and leaving old flags stuck
+      forever; both are fixed, and migration 155 cleans up the stale rows. The 2.8-firmware renumber
+      suppressor now also fires on a temporal-handoff signal, catching the MQTT-replay case where a
+      gateway keeps rebroadcasting a node's pre-2.8 identity. Long free-text cells in the report now
+      wrap at 28rem instead of stretching the table into horizontal scroll. Elsewhere: MQTT
+      violations no longer false-positive on private brokers, MeshCore neighbours show a real "last
+      heard" age, map-analysis trails render cleaner and autozoom correctly, measuring distance no
+      longer intercepts map panning, and Indonesian joins the language picker.
+
+
+      ## Features
+
+
+      - feat(i18n): ship the Indonesian translation and offer it in the picker (#5003)
+
+      - feat(mesh-issues): clickable node references with source picker + Details-column wrap + 2.8
+      renumber MQTT-replay fix (#5002)
+
+      - feat(mesh-issues): reorganize the report — dashboard, tables, by-node view, bulk actions
+      (#4964) (#4981)
+
+
+      ## Bug Fixes
+
+
+      - fix(key-security): scope keyMismatch reads by source; clear stale flags (#5001)
+
+      - fix(mesh-issues): B1 requires client-overlap evidence, not just mutual audibility (#5000)
+
+      - fix(map-analysis): improve trail rendering and autozoom (#3788) (#4999)
+
+      - fix: preserve map panning while measuring distance (#4965) (#4998)
+
+      - fix(analysis): annotate ok_to_mqtt violations with broker classification (#4982) (#4996)
+
+      - fix(meshcore): age stored neighbour "last heard" instead of showing 0s ago (#4978) (#4979)
+
+      - fix(mesh-issues): B1 router clusters are mutually-audible cliques with a distance guard
+      (#4976) (#4977)
+
+
+      ## Docs
+
+
+      - docs: add mesh issues test reference page (#4997)
+
+      - docs: note known mqtt-proxy TLS field-name bug (#4995)
+
+
+      ## Dependencies
+
+
+      - chore(deps): bump maplibre-gl from 6.4.1 to 6.6.0 (#4993)
+
+      - chore(deps): bump the codeql-action group with 4 updates (#4992)
+
+      - chore(deps-dev): bump @tanstack/react-query-devtools from 5.101.4 to 5.102.8 (#4991)
+
+      - chore(deps): bump lucide-react from 1.33.0 to 1.35.0 (#4990)
+
+      - chore(deps-dev): bump @typescript-eslint/parser from 8.67.0 to 8.68.0 (#4989)
+
+      - chore(deps): bump @rollup/rollup-linux-arm64-musl from 4.62.5 to 4.63.1 (#4988)
+
+      - chore(deps): bump otplib from 13.4.1 to 13.5.0 (#4987)
+
+      - chore(deps): bump @rollup/rollup-linux-arm-gnueabihf from 4.62.5 to 4.63.0 (#4986)
+
+      - chore(deps): bump protobufjs from 8.7.2 to 8.8.0 (#4985)
+
+      - chore(deps): bump the production-dependencies group with 2 updates (#4984)
+
+      - chore(deps-dev): bump the development-dependencies group with 6 updates (#4983)
+
+
+      ## Chore
+
+
+      - chore: bump version to 4.15.2-rc9 (#5004)
+
+      - chore: bump version to 4.15.2-rc8 (#4980)
+
+
+      ## Issues Resolved
+
+
+      - #4994 [BUG] MQTT proxy does not recognize Meshtastic tls_enabled configuration
+
+      - #4982 ok_to_mqtt Violations report: false positives for private MQTT brokers
+
+      - #4978 [BUG] Meshcore Neighbors bug
+
+      - #4976 B1 Router cluster merges far-apart routers via transitive chains
+
+      - #4965 
+
+      …
   - version: v4.15.2-rc8
     name: v4.15.2-rc8
     datetime: '2026-08-30T22:03:05Z'
@@ -1811,115 +1933,6 @@ releases:
         -p 8080:3001 \
         -v meshmonitor-data:/data \
         ghcr.io/Yeraze/meshmonitor:4.14.1-rc4
-      ```
-
-
-      ### 🧪 Testing
-
-      ✅ All tests passed
-
-      ✅ TypeScript checks passed
-
-      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
-
-
-      ### 📋 Changes
-
-      See commit history for detailed changes.
-  - version: v4.14.1-rc3
-    name: MeshMonitor v4.14.1-rc3 — Movement Triggers
-    datetime: '2026-08-10T16:57:03Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.14.1-rc3
-    prerelease: true
-    notes: >-
-      # MeshMonitor v4.14.1-rc3 — Movement Triggers
-
-
-      > ⚠️ **Pre-release.** This is a release candidate for 4.14.1. It ships on the `:dev` Docker
-      tag, not `:latest`. Run it if you want the changes early and can tolerate rough edges; report
-      anything you hit.
-
-
-      ## Summary
-
-
-      This candidate adds two Automation Engine triggers built for **stationary GPS fleets** —
-      rooftops, towers, and gateways you want to hear about the moment they move. Pair either with a
-      Send-message or Notify action for a tamper / theft alert.
-
-
-      - **Left home** is the primary theft detector. It fires when a watched node drifts farther
-      than a threshold (default **300 m**) from a home anchor MeshMonitor learns per node and stores
-      in the database — so a restart never silently re-homes a node that was carried off. The anchor
-      is seeded from position-history inliers (dropping GPS spider-lines), gently self-corrects
-      while the node sits still, and can be reset from history at any time.
-
-      - **Became mobile** is a coarser companion: it fires when a hand-selected node's mobility flag
-      flips from stationary to moving.
-
-
-      Also in this candidate: you can now **set a node's private key from Device Configuration** —
-      for restoring an identity from backup or moving it to replacement hardware — and node purges
-      now clean up the automation bookkeeping they used to leave behind.
-
-
-      ## Features
-
-
-      - **Left-home / tamper trigger** — per-(automation, node) home anchors persisted across
-      restarts, history-inlier seeding, EMA self-correction near home, a **Reset homes from
-      history** action, a stationary-first node picker, and `{{ node.longName }}` / `{{ node.nodeId
-      }}` message tokens. (#4648)
-
-      - **Became-mobile trigger** — fires on a stationary → mobile flip (MeshMonitor's >100 m
-      position-history heuristic) for hand-selected nodes. (#4648)
-
-      - **Set a node's private key from Device Configuration** — local device only, X25519; on a
-      change MeshMonitor derives the matching public key and writes both, so the node can never be
-      left advertising a key that no longer matches its secret. Guarded behind a confirmation that
-      spells out the impersonation / duplicate-key risk. (#4632, #4654)
-
-
-      ## Fixes
-
-
-      - **Node purge now clears its automation bookkeeping** — auto-favorite targets and assignments
-      (#4633), and auto-traceroute / auto-time-sync allowlists (#4630), so a re-added node no longer
-      inherits stale state.
-
-      - **MeshCore:** a lost `out_path` acknowledgement is treated as success, not failure. (#4625)
-
-
-      ## Docs
-
-
-      The [CHANGELOG](https://github.com/Yeraze/meshmonitor/blob/main/CHANGELOG.md) now covers the
-      full 4.14.1 rc1 → rc3 history, and the feature guides were reconciled with what shipped across
-      the candidates (Analyzer Observer static MQTT auth, the new Device Configuration security
-      section, position-estimation anchors, and the theme chart color scales).
-
-
-      ## Upgrade
-
-
-      Docker `:dev` users receive this automatically.
-
-
-      ## 🚀 MeshMonitor v4.14.1-rc3
-
-
-      ### 📦 Installation
-
-
-      **Docker (recommended):**
-
-      ```bash
-
-      docker run -d \
-        --name meshmonitor \
-        -p 8080:3001 \
-        -v meshmonitor-data:/data \
-        ghcr.io/Yeraze/meshmonitor:4.14.1-rc3
       ```
 
 
