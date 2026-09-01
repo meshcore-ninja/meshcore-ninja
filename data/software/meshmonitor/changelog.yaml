@@ -1,7 +1,177 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-09-01T04:09:09.807Z'
+updatedAt: '2026-09-01T16:15:57.713Z'
 releases:
+  - version: v4.15.2
+    name: v4.15.2
+    datetime: '2026-09-01T13:20:45Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.15.2
+    prerelease: false
+    notes: >-
+      # MeshMonitor v4.15.2
+
+
+      MeshMonitor 4.15.2 lands the Mesh Issues Analysis report — a scheduled, passive health scan of
+      the mesh that turns telemetry, RF adjacency, and per-node flags into a triaged list of
+      findings you can act on. This release also finishes the unified map controls sidebar across
+      every map surface, expands the Automation Engine with five new device-health triggers plus a
+      one-click template, adds a portnum filter and content search to the Packet Monitor, and gives
+      the MeshCore side per-source path-hash defaults, an autopoll-neighbours scheduler, and a
+      separate infrastructure age timeout. Backup Restore is now a one-click button. The header
+      cycles the connection badge through status, battery, and airtime. Nodes render in their
+      Meshtastic-app color scheme. Site Planner explains when its coverage circle stops matching
+      terrain. B1 Router Cluster is tightened twice, first with a configurable distance guard so
+      MQTT can't glue routers 100 km apart into one finding, and again with a client-overlap
+      requirement so a well-sited backbone stops flagging as redundant. Key-security detection gains
+      proper per-source scoping, and migration 155 clears the false-positive `keyMismatchDetected`
+      rows that the old bug left behind. Indonesian joins the language picker.
+
+
+      ## Features
+
+
+      ### Mesh Issues Analysis (new report)
+
+
+      - Mesh Issues report — Phase 1 foundation + Tier A rules (#4966)
+
+      - Tier B RF-graph rules — Phase 2 (#4967)
+
+      - Coverage preface, dismiss UI, Tier C, settings — Phase 3 (#4968)
+
+      - Post-epic follow-ups — A5 cadence, pagination, auto-close setting (#4972)
+
+      - Map on Router Cluster findings (#4975)
+
+      - Report reorganization — dashboard, tables, by-node view, bulk actions (#4981)
+
+      - Clickable node references with source picker (#5002)
+
+
+      ### Unified map controls sidebar
+
+
+      - Phase 1 (DashboardMap) (#4914)
+
+      - Phase 2 NodesTab map controls (#4919)
+
+      - MapAnalysis floating panels into the unified sidebar (#4920)
+
+      - MeshCore map floating panels into the unified sidebar (#4921)
+
+
+      ### Automation device-health triggers
+
+
+      - Node lifecycle triggers — heartbeat-lost & recovery (#4873)
+
+      - nodeRebooted trigger — uptime-reset detection (#4874)
+
+      - nodePowerChanged trigger — external power lost/restored (#4876)
+
+      - Noise floor as a telemetry alert field (#4877)
+
+      - batteryTrend trigger — declining-battery / solar proxy (#4878)
+
+      - Device Health template — quick-create node health alerts (#4881)
+
+      - MeshCore parity for device-health triggers (#4887)
+
+
+      ### Packet Monitor
+
+
+      - Full portnum filter + free-text content search (#4961)
+
+      - Stop capturing control on all packet monitors (#4960)
+
+
+      ### Scripts
+
+
+      - Installed Scripts inventory in global settings (#4956)
+
+
+      ### MeshCore
+
+
+      - Per-source Default Path Hash Size setting (#4951)
+
+      - Autopoll Neighbours — per-node retrieval scheduler (#4884)
+
+      - Telemetry time window selector in node details (#4970)
+
+      - Separate age timeout for infrastructure nodes (#4901)
+
+      - Send truly-unscoped floods, not the node default region (#4937)
+
+
+      ### Maps
+
+
+      - Zoom to Fit on the Unified/Dashboard map (#4902)
+
+      - Support a Carto basemap API key (#4936)
+
+      - Per-node colors (Meshtastic app algorithm) for pins + node lists (#4924)
+
+
+      ### Nodes
+
+
+      - "Show all" (0 = never) option to Maximum Age of Active Nodes (#4949)
+
+
+      ### Header
+
+
+      - Cycle the connection badge through status, battery, airtime (#4927)
+
+      - Move Disconnect/Reconnect into the System Status popup (#4912)
+
+
+      ### Backup
+
+
+      - Restore button on Device Backup Management (#4933)
+
+
+      ### Firmware
+
+
+      - Add a Nightly channel for develop (2.8.x) builds (#4950)
+
+
+      ### i18n
+
+
+      - Ship the Indonesian translation and offer it in the picker (#5003)
+
+      - Translations update from Hosted Weblate (#4903)
+
+
+      ### Site Planner
+
+
+      - Grouped toolbar controls into labeled dropdown menus (#4886)
+
+
+      ### Messages
+
+
+      - Show seconds in the reception Heard column (#4870)
+
+
+      ## Bug Fixes
+
+
+      - fix(key-security): scope keyMismatch reads by source, clear stale flags (#5001)
+
+      - fix(mesh-issues): B1 requires client-overlap evidence, not just mutual audibility (#5000)
+
+      - fix(map-analys
+
+      …
   - version: v4.15.2-rc9
     name: v4.15.2-rc9
     datetime: '2026-08-31T23:47:14Z'
@@ -1836,103 +2006,6 @@ releases:
         -p 8080:3001 \
         -v meshmonitor-data:/data \
         ghcr.io/Yeraze/meshmonitor:4.14.1-rc5
-      ```
-
-
-      ### 🧪 Testing
-
-      ✅ All tests passed
-
-      ✅ TypeScript checks passed
-
-      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
-
-
-      ### 📋 Changes
-
-      See commit history for detailed changes.
-  - version: v4.14.1-rc4
-    name: v4.14.1-rc4
-    datetime: '2026-08-12T03:35:00Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.14.1-rc4
-    prerelease: true
-    notes: >-
-      # MeshMonitor v4.14.1-rc4
-
-
-      > ⚠️ **Pre-release** — release candidate for testing. Do not use in production.
-
-
-      Small quality-of-life pass over rc3: three new UI surfaces (packet detail on hop-count click,
-      per-node position freshness, unread-count bell), a MeshCore chat bugfix, and a Ko-fi Support
-      link in both the site nav and the app sidebar.
-
-
-      ### Features
-
-
-      - **Packet inspection detail on message hop-count click** (#4657, #4664) — click any message's
-      hop-count badge to open the underlying packet's full metadata (headers, encryption context,
-      route).
-
-      - **"Position updated" timestamp in Node Details + map popup** (#4662, #4663) — a subtle
-      "Updated 3h ago" line beneath the coordinates, distinct from the generic "Last Heard", so a
-      stale fix on an otherwise-chatty node reads at a glance.
-
-      - **Bell icon on channel-list unread badges** (#4660, #4669) — the unread count now renders
-      with a `🔔` glyph so it's obvious at a glance which channel has activity.
-
-      - **Ko-fi Support link in the app sidebar footer** (#4666) — heart icon next to the existing
-      Discord/GitHub/Website links.
-
-
-      ### Bug fixes
-
-
-      - **MeshCore chat now preserves newlines** (#4659, #4661) — multi-line messages no longer
-      collapse to a single line in the MeshCore stream.
-
-      - **Sidebar footer keeps its icons on one line after the Ko-fi addition** (#4667) —
-      narrow-rail regression fix.
-
-
-      ### Docs & site
-
-
-      - **Ko-fi donation link in the meshmonitor.org site nav** (#4665) — same heart icon next to
-      Discord/GitHub in the top-right.
-
-
-      ### Issues resolved
-
-
-      - #4657 Feature: packet inspection detail view on message hop count click
-
-      - #4659 [BUG] Meshcore new lines not being rendered
-
-      - #4660 [FEAT] Add unread message badges/counts to channel list
-
-      - #4662 Show when a node's position was last updated in Node Details
-
-
-      **Full changelog:** https://github.com/Yeraze/meshmonitor/compare/v4.14.1-rc3...v4.14.1-rc4
-
-
-      ## 🚀 MeshMonitor v4.14.1-rc4
-
-
-      ### 📦 Installation
-
-
-      **Docker (recommended):**
-
-      ```bash
-
-      docker run -d \
-        --name meshmonitor \
-        -p 8080:3001 \
-        -v meshmonitor-data:/data \
-        ghcr.io/Yeraze/meshmonitor:4.14.1-rc4
       ```
 
 
