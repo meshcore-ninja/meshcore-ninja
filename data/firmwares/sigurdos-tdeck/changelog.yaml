@@ -1,7 +1,76 @@
 source: github
 repo: hermes-gadget/SigurdOS-tdeck
-updatedAt: '2026-08-17T16:30:08.199Z'
+updatedAt: '2026-09-01T23:52:22.429Z'
 releases:
+  - version: main-1.0.0
+    name: main-1.0.0
+    datetime: '2026-09-01T23:25:32Z'
+    url: https://github.com/hermes-gadget/SigurdOS-tdeck/releases/tag/main-1.0.0
+    prerelease: false
+    notes: >-
+      **SigurdOS T-Deck Firmware** — main-1.0.0
+
+
+      ### Flash with esptool
+
+      ```bash
+
+      # Full flash (first install):
+
+      esptool.py --chip esp32s3 --port /dev/ttyACM0 write_flash 0x0 firmware-merged.bin
+
+
+      # App update (keep settings):
+
+      esptool.py --chip esp32s3 --port /dev/ttyACM0 \
+        write_flash 0x10000 firmware.bin
+      ```
+
+
+      ### Web Flasher
+
+      Use `manifest.json` with [ESP Web Tools](https://esphome.github.io/esp-web-tools/).
+
+
+      | File | Use |
+
+      |------|-----|
+
+      | `firmware.bin` | App only (flash at 0x10000) |
+
+      | `firmware-merged.bin` | Full flash (flash at 0x0) |
+
+      | `SigurdOS-tdeck-launcher.bin` | For bmorcelli/Launcher install |
+
+      | `firmware-debug.bin` | Debug build with verbose logging |
+
+      | `sbom.cdx.json` | CycloneDX firmware dependency inventory |
+
+      | `manifest.json` | Web flasher manifest |
+
+      | `build-metadata.json` | Build provenance and component hashes |
+
+      | `sigurdos-tdeck-bootloader.bin` | Bootloader (web flasher) |
+
+      | `sigurdos-tdeck-partitions.bin` | Partition table (web flasher) |
+
+      | `sigurdos-tdeck-boot_app0.bin` | Boot app0 (web flasher) |
+
+      | `sigurdos-tdeck-firmware.bin` | App firmware (web flasher) |
+
+      | `sigurdos-tdeck-full.bin` | Full image (web flasher) |
+
+
+
+      ## What's Changed
+
+      * fix: prevent no-SD reboot loop during BLE reconnect by @hermes-gadget in
+      https://github.com/hermes-gadget/SigurdOS-tdeck/pull/1570
+
+
+
+      **Full Changelog**:
+      https://github.com/hermes-gadget/SigurdOS-tdeck/compare/beta-0.1.48-RC10...main-1.0.0
   - version: beta-0.1.48-RC10
     name: beta-0.1.48-RC10
     datetime: '2026-08-16T23:58:29Z'
@@ -2027,83 +2096,3 @@ releases:
 
       **Full Changelog**:
       https://github.com/hermes-gadget/SlopOS-tdeck/compare/beta-0.1.30...beta-0.1.31
-  - version: beta-0.1.30
-    name: beta-0.1.30
-    datetime: '2026-05-24T01:25:25Z'
-    url: https://github.com/hermes-gadget/SigurdOS-tdeck/releases/tag/beta-0.1.30
-    prerelease: true
-    notes: >-
-      **SlopOS T-Deck Firmware** — beta-0.1.30
-
-
-      ### Flash with esptool
-
-      ```bash
-
-      # Full flash (first install):
-
-      esptool.py --chip esp32s3 --port /dev/ttyACM0 write_flash 0x0 firmware-merged.bin
-
-
-      # App update (keep settings):
-
-      esptool.py --chip esp32s3 --port /dev/ttyACM0 \\
-        write_flash 0x10000 firmware.bin
-      ```
-
-
-      ### Web Flasher
-
-      Use the manifest at `webflasher/manifest.json` with
-      [esptool.js](https://espressif.github.io/esptool-js/).
-
-
-      | File | Use |
-
-      |------|-----|
-
-      | `firmware.bin` | App only (flash at 0x10000) |
-
-      | `firmware-merged.bin` | Full flash (flash at 0x0) |
-
-      | `webflasher/slopos-tdeck-firmware.bin` | App update |
-
-      | `webflasher/slopos-tdeck-full.bin` | Full flash |
-
-      | `webflasher/slopos-tdeck-bootloader.bin` | Bootloader |
-
-      | `webflasher/slopos-tdeck-partitions.bin` | Partition table |
-
-      | `webflasher/manifest.json` | Web flasher manifest |
-
-
-
-      ## What's Changed
-
-      * fix: GT911 touch orientation — SWAP_XY, sensor bounds, remove calibration by @gadgethd in
-      https://github.com/hermes-gadget/SlopOS-tdeck/pull/1
-
-      * ui: remove icon tile borders, smaller font on home grid by @gadgethd in
-      https://github.com/hermes-gadget/SlopOS-tdeck/pull/2
-
-      * ui: full-screen grid layout, centered content, smaller fonts by @gadgethd in
-      https://github.com/hermes-gadget/SlopOS-tdeck/pull/3
-
-      * fix: restore display state after wake by @gadgethd in
-      https://github.com/hermes-gadget/SlopOS-tdeck/pull/4
-
-      * Fix chat rendering and MeshCore text payload follow-ups by @gadgethd in
-      https://github.com/hermes-gadget/SlopOS-tdeck/pull/12
-
-      * Add themed back buttons to secondary screens by @gadgethd in
-      https://github.com/hermes-gadget/SlopOS-tdeck/pull/13
-
-
-      ## New Contributors
-
-      * @gadgethd made their first contribution in
-      https://github.com/hermes-gadget/SlopOS-tdeck/pull/1
-
-
-      **Full Changelog**:
-      https://github.com/hermes-gadget/SlopOS-tdeck/compare/beta-0.1.29...beta-0.1.30
