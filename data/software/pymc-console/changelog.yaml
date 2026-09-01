@@ -1,46 +1,72 @@
 source: github
 repo: Treehouse-00/pymc_console-dist
-updatedAt: '2026-08-30T11:30:04.619Z'
+updatedAt: '2026-09-01T11:18:53.507Z'
 releases:
-  - version: v0.9.358
-    name: Release v0.9.358
-    datetime: '2026-08-28T09:01:22Z'
-    url: https://github.com/Treehouse-00/pymc_console-dist/releases/tag/v0.9.358
+  - version: v0.9.359
+    name: Release v0.9.359
+    datetime: '2026-09-01T07:20:16Z'
+    url: https://github.com/Treehouse-00/pymc_console-dist/releases/tag/v0.9.359
     prerelease: false
     notes: >-
       ### Added
 
-      - Channel headers now have a Regions button for adding, editing, removing, and selecting an
-      outgoing region override. A green outline and checkmark indicate an enabled, supported
-      override.
+      - The map is now a hardware instrument. The screen sits in a machined faceplate with a
+      silkscreen identity and pilot lamps, a key cluster beside it, and a readout bank below, and
+      each breakpoint gets its own plate rather than a reflowed copy of the desktop one.
 
-      - Scoped outgoing messages show their original `#region` before the repeat counter and a green
-      bubble outline. Local annotations survive reloads in both Frame and Companion API modes.
+      - Selecting a node opens a shelf inside the screen instead of a panel floating over the map.
+      It switches on in place like a tube rather than sliding in, and moving to another node
+      rehydrates it instead of closing and reopening.
+
+      - Display modes and class filters are banded across the top edge of the screen in the
+      display's own amber-on-glass voice. On a handheld the five class keys share a single row.
+
+      - The key is rooted to the bottom edge, collapses when you want the map back, and never runs
+      past two rows. It lists only what the map can actually show — each class appears once there is
+      one on screen.
+
+      - Zero-hop edges follow the class filter: with RPTR, COMP, ROOM or HUB selected, only that
+      class's direct edges are drawn. ALL is unchanged.
+
+      - The screen wears real glass — four graduated light passes taken from the design file, edge
+      backlight lamps shared with the I/O scope, and a CRT vignette. The whole reflection is baked
+      to a single image, so it costs nothing while the map is panned.
+
+      - Basemap place names read in the display's own ink: keycap red on the dark map, Casio LCD
+      grey on the light one.
+
+
+      ### Changed
+
+      - Keys latch. The master key is a red cap, the view cluster is square, and toggles behave as
+      push-push hardware instead of momentary buttons.
+
+      - Everything inside the screen speaks one pixel voice — hop, repeater, backbone and room chips
+      included. Node markers are square dies, and the key reads as a readout rather than a caption.
+
+      - The node shelf and the edge-hover reading share one readout grid, so a link and a node are
+      measured on the same rule.
+
+      - The screen's corner rounding matches the rail directly above it.
 
 
       ### Fixed
 
-      - Removing the selected region can be saved to return to the companion default, and edit
-      cancellation is clearly separate from canceling the whole dialog.
+      - Live Trace renders again.
 
-      - Region sends preserve their original scope on safe retries and never silently fall back to
-      an ordinary send. Uncertain Frame sends are not automatically retried.
+      - Every hub wears its ring, including hubs that have gone stale.
 
-      - Outgoing Companion API channel messages retain text before a colon instead of treating it as
-      a sender prefix.
+      - The readout bank takes a real track in the instrument panel, the handheld plate holds
+      together, and the deck plate's lower row no longer leaves a dead gap.
+
+      - The 3D key can be switched off again.
+
+      - Scalability benchmarks no longer flake under suite load.
 
 
-      ### Compatibility
+      ### Removed
 
-      - Per-message regions require a backend that explicitly advertises support. Frame support is
-      proposed in [openHop Repeater PR
-      #417](https://github.com/openhop-dev/openhop_repeater/pull/417); the Companion API fork
-      includes the corresponding scoped endpoint. Ordinary sends remain compatible with older
-      backends.
-
-      - Region choices and annotations are local to this browser. History without original region
-      metadata remains unmarked. No repeater database migration or shared radio-setting change is
-      required.
+      - The deprecated wardriving coverage overlay, along with the map controls that drove it.
 
 
 

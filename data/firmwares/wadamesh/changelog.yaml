@@ -1,7 +1,113 @@
 source: github
 repo: ALLFATHER-BV/wadamesh
-updatedAt: '2026-08-28T18:34:31.613Z'
+updatedAt: '2026-09-01T11:18:29.890Z'
 releases:
+  - version: beta_75
+    name: wadamesh beta_75
+    datetime: '2026-09-01T11:16:52Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_75
+    prerelease: true
+    notes: >-
+      **This is a test build.** Stable stays on `beta_65`. Flash it from
+      [wadamesh.com](https://wadamesh.com) with the Beta toggle on, or turn on "Get test builds
+      (beta)" on the device.
+
+
+      ## Your offline map pack was being deleted
+
+
+      **If you keep map tiles on an SD card, previous releases were permanently deleting files from
+      your own pack.** Every tile the firmware wanted but could not find as a `.jpg` erased the
+      `.png` sitting next to it. `SD.remove()` is not recoverable.
+
+
+      Found and fixed by [@cvhviz](https://github.com/cvhviz)
+      ([#354](https://github.com/ALLFATHER-BV/wadamesh/pull/354)), confirmed on M9 hardware with a
+      boot log.
+
+
+      The cleanup responsible was written for the firmware's own small tile cache, and it resolves
+      through `s_tile_fs`. But `UITask::begin` re-points that at the **SD card root** on every board
+      that caches tiles to the card: the M9 always, the V4-R8 with a card present, T-Deck and Pager
+      under Launcher, and anyone with "Tiles from SD card" enabled. The skip-check above it only
+      ever tested the `.jpg`. It is now limited to the cache partition it was written for.
+
+
+      **This release stops the damage but cannot undo it.** If you keep an offline pack, check
+      whether tiles are missing and re-copy that area.
+
+
+      ## Names
+
+
+      By **[@tun0](https://github.com/tun0)** (Ruben Laban), a first contribution, and in the right
+      order: make the problem visible, then remove it.
+
+
+      - **Long sender names are stored in full**
+      ([#377](https://github.com/ALLFATHER-BV/wadamesh/pull/377)). MeshCore names run to 31
+      characters and only the first 24 were kept, so anything longer was cut permanently on arrival.
+      Raised to exactly the wire width, with no migration and no wiped history.
+
+      - **A long name no longer pushes the message text out of shape**
+      ([#376](https://github.com/ALLFATHER-BV/wadamesh/pull/376)), and a colon inside an ordinary
+      message is no longer mistaken for an author name.
+
+
+      ## ThinkNode M9
+
+
+      All from [@cvhviz](https://github.com/cvhviz):
+
+
+      - The map opens in about **1.5 seconds instead of 2.6**
+      ([#355](https://github.com/ALLFATHER-BV/wadamesh/pull/355))
+
+      - **Back returns to the previous screen** rather than jumping out of where you were
+      ([#356](https://github.com/ALLFATHER-BV/wadamesh/pull/356))
+
+      - The **SD card remounts properly** after formatting it on the device
+      ([#359](https://github.com/ALLFATHER-BV/wadamesh/pull/359))
+
+      - Live-updating labels no longer overlap the rows beneath them
+      ([#357](https://github.com/ALLFATHER-BV/wadamesh/pull/357)), and hidden or inactive controls
+      are skipped when moving with the d-pad instead of trapping the cursor
+      ([#358](https://github.com/ALLFATHER-BV/wadamesh/pull/358))
+
+      - GPS acquisition is timed from when the search started, not from when you opened the page
+      ([#365](https://github.com/ALLFATHER-BV/wadamesh/pull/365))
+
+
+      ## Also
+
+
+      Notification indicators and modal focus behave correctly
+      ([#370](https://github.com/ALLFATHER-BV/wadamesh/pull/370)), and there is a command to check
+      MQTT connection status ([#371](https://github.com/ALLFATHER-BV/wadamesh/pull/371)), both by
+      [@oumike](https://github.com/oumike).
+
+
+      ## Still open, and not fixed here
+
+
+      Several of these are waiting on information from the people who reported them, and I would
+      rather say so than let them look forgotten:
+
+
+      - Chat history resetting to an older point on reboot
+      ([#363](https://github.com/ALLFATHER-BV/wadamesh/issues/363))
+
+      - A Tanmatsu whose chat store will not finish migrating
+      ([#372](https://github.com/ALLFATHER-BV/wadamesh/issues/372))
+
+      - A map that renders nothing since `beta_71`
+      ([#339](https://github.com/ALLFATHER-BV/wadamesh/issues/339))
+
+      - A screen that will not stay dark after a manual lock
+      ([#333](https://github.com/ALLFATHER-BV/wadamesh/issues/333))
+
+      - The web flasher hanging at "wrapping up" on the T-Display P4
+      ([#342](https://github.com/ALLFATHER-BV/wadamesh/issues/342))
   - version: beta_74
     name: wadamesh beta_74
     datetime: '2026-08-28T17:36:14Z'
@@ -1696,65 +1802,6 @@ releases:
 
 
       Full changelog: `beta_55...beta_56`
-
-
-      🤖 Generated with [Claude Code](https://claude.com/claude-code)
-  - version: beta_55
-    name: wadamesh beta_55
-    datetime: '2026-08-01T09:49:20Z'
-    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_55
-    prerelease: true
-    notes: >-
-      ## wadamesh beta_55 — test build
-
-
-      **The reliability release** — with two community contributions by @PixPMusic. Flash via
-      **[flasher.wadamesh.com](https://flasher.wadamesh.com)** (Beta toggle), the on-device updater,
-      or LauncherHub WADAMESH BETA.
-
-
-      ### Settings that stay put — by @PixPMusic (#195, #196)
-
-      An interrupted settings write could truncate the settings file: sound toggles reverting, the
-      setup wizard reappearing, phantom `#unknown` channels. Settings now persist through paired
-      CRC-checked snapshots written in the background — a torn write can only lose the newest
-      change, never your configuration. Saves also no longer hitch the UI.
-
-      *Downgrade note: older firmware reads the settings file, which can be one save behind after
-      running this build.*
-
-
-      ### 3-minute boots with an SD card fixed (#194)
-
-      A card that woke at a low clock kept that clock all session — contacts and history loading at
-      ~25 KB/s, the file manager showing an inserted card as 0 KB/empty, backups wedging. The mount
-      now raises the clock to full speed after a slow wake. Mostly hit T-Deck Launcher installs.
-      Thanks @scsirob for the decisive testing.
-
-
-      ### T-Pager UI size presets — by @PixPMusic (#197)
-
-      Small (current, default), Medium, Large — bigger text tuned for the 480×222 screen, encoder
-      scrolling for tall content. **Pager testers: please try Medium/Large and report anything that
-      clips.**
-
-
-      ### Heltec V4-R8
-
-      - **The buzzer works** — it shipped disabled because the Expansion Kit V2's driver-chip wiring
-      was unconfirmed; Heltec's schematic settled it (DIN = GPIO4, driver hardware-enabled). Still
-      silent? The small **SW1** switch on the expansion board is a hardware mute.
-
-      - Landscape touch fix from beta_54 confirmed by testers — thank you.
-
-
-      ### General
-
-      - Long-pressing the GPS tile in the control centre opens the GPS settings page (was: radio
-      page).
-
-
-      Full changelog: `beta_54...beta_55`
 
 
       🤖 Generated with [Claude Code](https://claude.com/claude-code)
