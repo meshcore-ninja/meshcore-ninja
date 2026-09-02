@@ -1,66 +1,78 @@
 source: github
 repo: Treehouse-00/pymc_console-dist
-updatedAt: '2026-09-02T08:33:27.623Z'
+updatedAt: '2026-09-02T22:27:01.344Z'
 releases:
-  - version: v0.9.362
-    name: Release v0.9.362
-    datetime: '2026-09-02T05:22:52Z'
-    url: https://github.com/Treehouse-00/pymc_console-dist/releases/tag/v0.9.362
+  - version: v0.9.363
+    name: Release v0.9.363
+    datetime: '2026-09-02T21:16:21Z'
+    url: https://github.com/Treehouse-00/pymc_console-dist/releases/tag/v0.9.363
     prerelease: false
     notes: >-
       ### Fixed
 
-      - The installer wires the dashboard in on a Repeater that still runs the pyMC-era layout.
-      `manage.sh` detected `/opt/pymc_repeater` and the `pymc-repeater` service but patched,
-      reported and hinted at `/etc/openhop_repeater/config.yaml` only, so on a system upstream had
-      not migrated the dashboard was installed and never reached, and the manual fix it printed
-      named a file the running service does not read. The config file is now resolved the way the
-      service already was: the openHop path first, then `/etc/pymc_repeater/config.yaml`, and when
-      neither exists the expected path follows whichever Repeater is installed.
+      - A PATH payload is an encrypted envelope, not a hop list. The console read its first byte as
+      a path length and the bytes after it as a route, which is the packet header's layout rather
+      than the payload's; the repeater's own handler decrypts the remainder with a per-client shared
+      secret before any hop list exists. The console holds no such secret, so it now reports what it
+      can genuinely read — the destination and source hashes, the cipher MAC, and the size of the
+      encrypted remainder — and says the route is encrypted. The packet detail, the byte breakdown,
+      the diagnostic export and both observatory views no longer show a fabricated route or announce
+      "0 hops" for a route they cannot see. A payload too short to hold an envelope is marked
+      malformed instead of shown as empty.
 
-      - `manage.sh uninstall` clears `web.web_path` when it still points at the dashboard, so the
-      Repeater falls back to its own UI instead of serving a directory that no longer exists. A
-      value set by hand to something else is left alone and named. Without `yq`, the exact command
-      is printed.
+      - A companion's paused and ever-connected flags were stored under its name, so when a name was
+      rebound to a different identity the new one inherited them: a companion the operator had
+      paused stayed paused for whoever held the name next. Both are now scoped by public key, as the
+      transport preference already was. Evicting another client, the one destructive action on that
+      page without a confirmation, now asks first and names the peer it would disconnect.
 
-      - The installer and the publishing workflow address the distribution repository by its current
-      owner rather than through a redirect.
+      - Five Configuration dialogs each drew their own overlay. They are one dialog now, so Escape,
+      focus trapping and a labelled heading behave the same in all five, each has the close control
+      it lacked, and dismissing by backdrop click no longer leaves a token name, a created token or
+      an editing region stale.
+
+      - The tooltip that follows the cursor over the mesh guard chart cost two renders per mouse
+      move in every component listening to it. Moving it now costs none. The anchored tooltip gained
+      the accessible description it never wired, and lost a scroll-offset adjustment that was wrong
+      on a fixed-position element.
+
+      - Switching theme rewrote a display attribute with the value it already had, and every live
+      chart redrew for it. It no longer does. The socket also sent its token twice, once in the
+      connect query and once as a frame the repeater has never read; the frame is gone, the query
+      stays, and that is what keeps the socket authorized.
+
+      - Status that was carried by colour or motion alone — two live-dot modes, a widget's status
+      word, the observatory's computing lamps — now carries text, visible or read aloud, so it
+      survives a screen reader and a monochrome display.
+
+      - The log facet bank scrolled sideways when the plate ran out of width. It breaks onto rows
+      now, at the kit's pitch, and the log register's screen well has its seat back.
+
+      - The terminal's own help lists what `get` and `set` actually handle: `af` under Timing,
+      `flood.advert.interval` under Repeater, `duty.max` and `repeat` as get-only, `prv.key` as
+      set-only, and no `log` parameter that never existed. `get mode` and the in-app guide admit
+      `no_tx`. The Configuration page stops printing a dashboard path that is only true of a source
+      install.
+
+      - The terminal wordmark existed twice and one copy sat off its grid; there is one now. Compact
+      node info no longer overflows its container.
+
+      - The distribution repository's Build Validation had failed on every run since 0.9.362,
+      because two installer-test steps ran a script that repository does not carry. They are guarded
+      now, and a gate keeps any step from running a private script unguarded.
 
 
       ### Changed
 
-      - The installer is now under test: fifteen contract tests run it against a sandboxed
-      filesystem in every Repeater layout, with the real `tar` and `yq`, on every push. Nothing in
-      the dashboard itself changed in this release.
+      - The distribution repository carries only what serves its README. The sync copies the
+      README's screenshots by allowlist and nothing else under `docs/`, checks its own tree
+      immediately before pushing, and the release lane runs the same gates before anything is
+      tagged. Planning records and wireframes that had been swept along are no longer published. The
+      release archives were never affected; they have only ever carried the built dashboard.
 
+      - The map's overlay controls are the console's own OSD buttons, with a real pressed state, in
+      place of tinted generic buttons.
 
-      ### Compatibility
+      - Five components that re-rendered on any store change
 
-      - No repeater database change and no schema migration. Existing installs pick up the new
-      installer on their next `manage.sh upgrade`, which refreshes the script before it does
-      anything else.
-
-
-
-      ---
-
-      Full history:
-      [CHANGELOG.md](https://github.com/Treehouse-00/pymc_console-dist/blob/main/CHANGELOG.md)
-
-
-      ## Installation
-
-      ```bash
-
-      sudo ./manage.sh install
-
-      ```
-
-
-      ## Upgrade
-
-      ```bash
-
-      sudo ./manage.sh upgrade
-
-      ```
+      …

@@ -1,6 +1,6 @@
 source: github
 repo: MarekWo/mc-webui
-updatedAt: '2026-09-02T19:16:39.068Z'
+updatedAt: '2026-09-02T22:26:46.167Z'
 releases:
   - version: v2.14.0
     name: mc-webui 2.14.0
@@ -8,6 +8,35 @@ releases:
     url: https://github.com/MarekWo/mc-webui/releases/tag/v2.14.0
     prerelease: false
     notes: >-
+      > [!IMPORTANT]
+
+      > **You need one command before you can install this release.** Updating currently stops at
+      `Username for 'https://github.com'` — your installation is fine and this repository is still
+      public, so a username or token will not help. Run this once on your server:
+
+      >
+
+      > ```bash
+
+      > git config --global http.version HTTP/1.1
+
+      > ```
+
+      >
+
+      > **Still asked for a username?** Then you update with `sudo`, and `--global` only covers the
+      user who ran it — root has its own. Run `sudo git config --global http.version HTTP/1.1` as
+      well.
+
+      >
+
+      > Then `mcupdate` as usual. This release carries the same setting inside `update.sh`, so it is
+      a one-off. Full explanation: [#33](https://github.com/MarekWo/mc-webui/issues/33)
+
+
+      ---
+
+
       ### Features
 
 
@@ -53,17 +82,7 @@ releases:
       Debian 12 — version 2.39, built against libcurl 7.88 — now gets a `401` back for a request
       that had always been allowed. Git reads any `401` as *credentials, please* and asks for a
       username, which is why typing one never helped and why a token would not have helped either.
-      The update script now asks git to speak HTTP/1.1 for its pull, which GitHub still answers
-      exactly as before, and it no longer waits on the keyboard when a fetch genuinely does fail —
-      it reports the error and stops, instead of leaving an unattended update hanging indefinitely.
-      If you are stuck on an older copy and so cannot update to pick this up, run `git config
-      --global http.version HTTP/1.1` once on the server and `mcupdate` will go through.
-
-
-      - **The same routing path can no longer be added to a contact twice.** Both path editors — the
-      one in a contact's info panel and the one under **My Repeaters → Paths** — took whatever they
-      were given, so an identical route could end up in the list two or three times: added by hand,
-      picked again from the repeater picker, or imported a second time from the d
+      The update script now asks git to speak HTTP/1.1 for its pull, which GitHub still answers 
 
       …
   - version: v2.13.0
