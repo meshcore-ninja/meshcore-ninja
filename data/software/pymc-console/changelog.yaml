@@ -1,83 +1,51 @@
 source: github
 repo: Treehouse-00/pymc_console-dist
-updatedAt: '2026-09-02T03:31:37.761Z'
+updatedAt: '2026-09-02T08:33:27.623Z'
 releases:
-  - version: v0.9.361
-    name: Release v0.9.361
-    datetime: '2026-09-02T01:56:36Z'
-    url: https://github.com/Treehouse-00/pymc_console-dist/releases/tag/v0.9.361
+  - version: v0.9.362
+    name: Release v0.9.362
+    datetime: '2026-09-02T05:22:52Z'
+    url: https://github.com/Treehouse-00/pymc_console-dist/releases/tag/v0.9.362
     prerelease: false
     notes: >-
-      ### Added
+      ### Fixed
 
-      - The map is a finished instrument. The screen sits in a brushed faceplate fastened at its
-      four corners with Torx screws, with vents, a legend under every key gang, a hop analyser
-      standing beside the picture, an RX lamp that flashes on receive, and a serial line on the
-      foot.
+      - The installer wires the dashboard in on a Repeater that still runs the pyMC-era layout.
+      `manage.sh` detected `/opt/pymc_repeater` and the `pymc-repeater` service but patched,
+      reported and hinted at `/etc/openhop_repeater/config.yaml` only, so on a system upstream had
+      not migrated the dashboard was installed and never reached, and the manual fix it printed
+      named a file the running service does not read. The config file is now resolved the way the
+      service already was: the openHop path first, then `/etc/pymc_repeater/config.yaml`, and when
+      neither exists the expected path follows whichever Repeater is installed.
 
-      - The local repeater's name is on the chassis, on an embossed tape label stuck across the
-      frame's bottom edge and bent over it, set in the Impact Label Reversed face (shipped with its
-      licence). The label maker cannot press an emoji, so a name like "Baldwin ⚡️ Observer" embosses
-      as BALDWIN OBSERVER.
+      - `manage.sh uninstall` clears `web.web_path` when it still points at the dashboard, so the
+      Repeater falls back to its own UI instead of serving a directory that no longer exists. A
+      value set by hand to something else is left alone and named. Without `yq`, the exact command
+      is printed.
 
-      - Stickers on the plate: a smiley, an alien, and a holographic MESHCORE die-cut, pinned beside
-      the pilot lamps in the reference composition. Each plate width finds its own place for them —
-      the grille under the analyser on a console, the free spans of the masters' row and the key row
-      on a phone — and they step aside rather than cover a control.
-
-      - The screen's glass carries a photographed room reflection under the glare, at its own alpha,
-      above the vignette and everything the screen draws.
-
-      - The readout bank's seven-segment tallies grow with the plate: three dies, chosen by the room
-      the rail has, so a wider plate gets taller digits rather than more empty rail.
+      - The installer and the publishing workflow address the distribution repository by its current
+      owner rather than through a redirect.
 
 
       ### Changed
 
-      - The glare on the screen steps back now that the room lies under it: the four light passes
-      sit at 40% of their former amplitude and the edge lamps at 60%, so labels under the top of the
-      glass read better.
-
-      - Light mode: the bank's wells are pockets cut into the plate, a shadowed grey rather than
-      black, while every key keeps its black die-cut housing, one key wide or two or three. Compact
-      silver keys take the same light finish as the full-size ones beside the screen. Dark mode is
-      unchanged.
-
-      - The tape bends over the frame's edge on a shoulder rather than a fold, and its embossed
-      letters are the face's own — no effects on top.
-
-      - Stickers carry only their own baked shadow; the foil die-cut throws a soft white halo where
-      it overlaps the plate instead of a shadow.
-
-      - No tallies on the phone's class keys.
-
-
-      ### Fixed
-
-      - Channels that share a hash byte are all kept. The discovery cache used to hold one channel
-      per hash, so the newest discovery replaced the others and a channel could silently stop
-      decrypting. Firmware keeps every channel under a hash and tries each; the console now does the
-      same.
-
-      - Legacy Frame lists channels up to the same 40-slot guard the Companion API uses on
-      companions that do not report their capacity. It stopped at 16, so slots 17 to 40 on an older
-      device were never listed over Frame.
-
-      - An imported hashtag channel's label and key are derived from one source, so the name written
-      to the device can no longer disagree with the key it was derived from.
+      - The installer is now under test: fifteen contract tests run it against a sandboxed
+      filesystem in every Repeater layout, with the real `tar` and `yq`, on every push. Nothing in
+      the dashboard itself changed in this release.
 
 
       ### Compatibility
 
-      - No repeater database change and no schema migration. Legacy Frame and Companion API v1
-      behave as before apart from the corrections above.
+      - No repeater database change and no schema migration. Existing installs pick up the new
+      installer on their next `manage.sh upgrade`, which refreshes the script before it does
+      anything else.
 
 
 
       ---
 
       Full history:
-      [CHANGELOG.md](https://github.com/dmduran12/pymc_console-dist/blob/main/CHANGELOG.md)
+      [CHANGELOG.md](https://github.com/Treehouse-00/pymc_console-dist/blob/main/CHANGELOG.md)
 
 
       ## Installation
