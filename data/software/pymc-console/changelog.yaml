@@ -1,67 +1,76 @@
 source: github
 repo: Treehouse-00/pymc_console-dist
-updatedAt: '2026-09-01T20:44:40.112Z'
+updatedAt: '2026-09-02T03:31:37.761Z'
 releases:
-  - version: v0.9.360
-    name: Release v0.9.360
-    datetime: '2026-09-01T20:05:54Z'
-    url: https://github.com/Treehouse-00/pymc_console-dist/releases/tag/v0.9.360
+  - version: v0.9.361
+    name: Release v0.9.361
+    datetime: '2026-09-02T01:56:36Z'
+    url: https://github.com/Treehouse-00/pymc_console-dist/releases/tag/v0.9.361
     prerelease: false
     notes: >-
-      ### Fixed
+      ### Added
 
-      - Adding a companion works again. Opening companion configuration replaced the page with "Page
-      failed to render", so the main way into the feature has been unusable since dual transports
-      landed in 0.9.347.
+      - The map is a finished instrument. The screen sits in a brushed faceplate fastened at its
+      four corners with Torx screws, with vents, a legend under every key gang, a hop analyser
+      standing beside the picture, an RX lamp that flashes on receive, and a serial line on the
+      foot.
 
-      - A single unreadable companion catalog reply no longer ends the session. One bad response
-      read as "this companion was removed": the connection dropped, cached contacts and history were
-      discarded, the saved selection was deleted, and getting back required picking the companion
-      again by hand. A missing entry now has to be confirmed by a second reading, while a changed
-      identity key still fails closed at once.
+      - The local repeater's name is on the chassis, on an embossed tape label stuck across the
+      frame's bottom edge and bent over it, set in the Impact Label Reversed face (shipped with its
+      licence). The label maker cannot press an emoji, so a name like "Baldwin ⚡️ Observer" embosses
+      as BALDWIN OBSERVER.
 
-      - Legacy Frame explains its failures instead of swallowing them. Eleven actions — status,
-      telemetry, repeater login and logout, path reset, contact removal, channel changes, ping and
-      others — said what went wrong on Companion API and failed in silence on Frame.
+      - Stickers on the plate: a smiley, an alien, and a holographic MESHCORE die-cut, pinned beside
+      the pilot lamps in the reference composition. Each plate width finds its own place for them —
+      the grille under the analyser on a console, the free spans of the masters' row and the key row
+      on a phone — and they step aside rather than cover a control.
 
-      - "Set Path" in the contact menu opens the path editor. It used to select the contact and
-      stop, leaving the one control named after the action as the only route that did not reach it.
-      It now appears only on a connection that can set a path.
+      - The screen's glass carries a photographed room reflection under the glare, at its own alpha,
+      above the vignette and everything the screen draws.
 
-      - The chat archive no longer claims a message was delivered when it never found out. A channel
-      message interrupted by a reload came back wearing a delivery tick; a direct message came back
-      spinning forever. Both now read as unconfirmed, which is what the record actually supports.
-
-      - "Connect anyway" takes the Frame listener only when Frame is the connection in use.
-      Answering it from a Companion API session used to move you onto the listener you had chosen to
-      leave free.
-
-      - A malformed reply from the repeater is reported as a mismatch rather than as "temporarily
-      unreachable" and retried forever.
+      - The readout bank's seven-segment tallies grow with the plate: three dies, chosen by the room
+      the rail has, so a wider plate gets taller digits rather than more empty rail.
 
 
       ### Changed
 
-      - Repeat counts on Companion API come from the repeater's own tally and the message's exact
-      packet hash. The console previously inferred them by matching a message to a capture on its
-      text and a thirty-second window, and kept doing so even on a connection that could answer
-      exactly.
+      - The glare on the screen steps back now that the room lies under it: the four light passes
+      sit at 40% of their former amplitude and the edge lamps at 60%, so labels under the top of the
+      glass read better.
 
-      - Both connections describe a failure in the same words and say which kind it is: refused,
-      outcome unknown, connection dropped, or unsupported here. Anything whose outcome is unknown is
-      never repeated on its own, and a read that times out reports a dropped connection rather than
-      an uncertain result.
+      - Light mode: the bank's wells are pockets cut into the plate, a shadowed grey rather than
+      black, while every key keeps its black die-cut housing, one key wide or two or three. Compact
+      silver keys take the same light finish as the full-size ones beside the screen. Dark mode is
+      unchanged.
 
-      - The per-channel region check runs only while a channel conversation is open and asks a given
-      connection once. It previously ran on every visit to the page and every reconnect, whether or
-      not a channel was ever opened.
+      - The tape bends over the frame's edge on a shoulder rather than a fold, and its embossed
+      letters are the face's own — no effects on top.
+
+      - Stickers carry only their own baked shadow; the foil die-cut throws a soft white halo where
+      it overlaps the plate instead of a shadow.
+
+      - No tallies on the phone's class keys.
+
+
+      ### Fixed
+
+      - Channels that share a hash byte are all kept. The discovery cache used to hold one channel
+      per hash, so the newest discovery replaced the others and a channel could silently stop
+      decrypting. Firmware keeps every channel under a hash and tries each; the console now does the
+      same.
+
+      - Legacy Frame lists channels up to the same 40-slot guard the Companion API uses on
+      companions that do not report their capacity. It stopped at 16, so slots 17 to 40 on an older
+      device were never listed over Frame.
+
+      - An imported hashtag channel's label and key are derived from one source, so the name written
+      to the device can no longer disagree with the key it was derived from.
 
 
       ### Compatibility
 
       - No repeater database change and no schema migration. Legacy Frame and Companion API v1
-      behave as before apart from the corrections above, and saved per-companion connection choices
-      are unaffected.
+      behave as before apart from the corrections above.
 
 
 
