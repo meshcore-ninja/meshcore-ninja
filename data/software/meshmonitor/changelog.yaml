@@ -1,7 +1,136 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-09-01T16:15:57.713Z'
+updatedAt: '2026-09-02T19:16:53.468Z'
 releases:
+  - version: v4.16.0-rc1
+    name: v4.16.0-rc1
+    datetime: '2026-09-02T14:48:21Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.16.0-rc1
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.16.0-rc1
+
+
+      > ⚠️ **Release candidate — not a stable release.** Please test and report issues before 4.16.0
+      ships.
+
+
+      First release candidate for 4.16.0. This is a minor rather than patch bump because it carries
+      two features and, more importantly, **a schema migration** — migration 156 adds three columns
+      to `meshcore_nodes` for the new per-node time-sync cadence. Both features are opt-in and
+      default to off, so upgrading changes nothing until you turn them on. MeshCore repeaters can
+      now have their clocks kept in sync automatically instead of by hand, on a deliberately slow
+      12-hour default cadence chosen because each sync costs four packets of LoRa airtime. Telemetry
+      graphs are now grouped by category with a Favorites section pinned on top. On the fixes side,
+      new dark-mode installs no longer see a basemap covered in "API KEY REQUIRED" watermarks, the
+      mobile header no longer pushes its actions off-screen, and the airtime cutoff now recognises
+      relayed routers as neighbours instead of waiting forever.
+
+
+      ## Features
+
+
+      - **#5009** — MeshCore: auto time-sync remote repeaters on a per-node cadence (#4916). Adds
+      **migration 156**. Opt-in per node, 12h default with a 1h floor; shares the existing 60s
+      per-source transmit spacing so it never collides with telemetry or neighbours polling.
+
+      - **#5010** — Telemetry graphs grouped by category, with a Favorites section on top (#4930).
+
+
+      ## Bug Fixes
+
+
+      - **#5019** — Dark basemap now defaults to a keyless tileset when no CARTO API key is
+      configured (#5015). CARTO retired its free keyless rasters and serves watermarked tiles as a
+      valid HTTP 200, so nothing downstream could detect it; new dark-mode installs now get a
+      keyless Esri Dark Gray basemap instead. The tileset picker warns if you select a CARTO style
+      without a key.
+
+      - **#5017** — Mobile header actions no longer overflow off-screen (#5016).
+
+      - **#5008** — Airtime cutoff allows relayed routers (CLIENT_BASE) to qualify as neighbours
+      (#4801), instead of stalling when there are too few 0-hop candidates.
+
+
+      ## Docs
+
+
+      - **#5007** — Mesh Issues report announcement and call for feedback.
+
+
+      ## Chores
+
+
+      - **#5020** — Version bump to 4.16.0-rc1.
+
+
+      ## Issues Resolved
+
+
+      - #5015 — Default basemap to OSM when no Carto API key is configured
+
+      - #5016 — [BUG] Login button in mobile
+
+      - #4930 — [FEAT] Order and group telemetry panels by module
+
+      - #4916 — MeshCore: auto time-sync remote repeaters on autopoll cycle
+
+      - #4801 — Nearby infrastructure channel utilization threshold stuck waiting when routers are
+      relayed
+
+
+      ## Upgrade Notes
+
+
+      **Migration 156** adds `timeSyncEnabled`, `timeSyncIntervalMinutes`, and `lastTimeSyncAt` to
+      `meshcore_nodes`. It is idempotent across SQLite, PostgreSQL, and MySQL, and performs no
+      backfill — time sync is off for every existing node, so no install starts transmitting as a
+      result of upgrading.
+
+
+      To use the new time sync, enable it per repeater in MeshCore node details. It requires a
+      **saved admin password** for that node (`time` is a privileged firmware verb, so a guest
+      session will not do); the panel warns when one is missing.
+
+
+      If your dark-mode map has been showing "API KEY REQUIRED" watermarks, this release fixes that
+      automatically for anyone who never explicitly picked a basemap. If you did pick CARTO
+      deliberately, your choice is preserved and the picker now tells you a key is needed.
+
+
+      **Full Changelog**: https://github.com/Yeraze/meshmonitor/compare/v4.15.2...v4.16.0-rc1
+
+
+      ## 🚀 MeshMonitor v4.16.0-rc1
+
+
+      ### 📦 Installation
+
+
+      **Docker (recommended):**
+
+      ```bash
+
+      docker run -d \
+        --name meshmonitor \
+        -p 8080:3001 \
+        -v meshmonitor-data:/data \
+        ghcr.io/Yeraze/meshmonitor:4.16.0-rc1
+      ```
+
+
+      ### 🧪 Testing
+
+      ✅ All tests passed
+
+      ✅ TypeScript checks passed
+
+      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
+
+
+      ### 📋 Changes
+
+      See commit history for detailed changes.
   - version: v4.15.2
     name: v4.15.2
     datetime: '2026-09-01T13:20:45Z'
@@ -1941,83 +2070,3 @@ releases:
       - Position
 
       …
-  - version: v4.14.1-rc5
-    name: v4.14.1-rc5
-    datetime: '2026-08-12T15:30:02Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.14.1-rc5
-    prerelease: true
-    notes: >-
-      # MeshMonitor v4.14.1-rc5
-
-
-      > ⚠️ **Pre-release** — release candidate for testing. Do not use in production.
-
-
-      Small focused bump over rc4 to get the proxy-auth session-fixation fix out to Windows desktop
-      users, plus one MeshCore Virtual Node delivery fix.
-
-
-      ### Security fixes
-
-
-      - **Regenerate session on proxy-auth identity binding** (#4672) — the proxy-auth path in
-      `authMiddleware` used to write user identity into whatever session came in with the request,
-      without rotating the session ID. On deployments with `PROXY_AUTH_ENABLED=true` (Authelia,
-      oauth2-proxy, Cloudflare Access, Authentik, etc.) this let an attacker who could plant a
-      `meshmonitor.sid` cookie on a victim's browser ride the post-authentication session. Now
-      regenerates the session ID on the first identity bind, mirroring what local/MFA/OIDC login
-      already did. CSRF token is preserved across regeneration. If `PROXY_AUTH_ENABLED=false` (the
-      default), no impact.
-
-
-      ### Bug fixes
-
-
-      - **MeshCore-VN: deliver MeshMonitor-originated channel messages to VN clients** (#4668,
-      external contribution from @pfmos) — closes #4535. When a MeshCore Virtual Node was running,
-      channel messages sent from MeshMonitor's web UI (or from another connected MeshCore app
-      client) were silently dropped for every other connected client. Per-client attribution now
-      delivers each message to every client *except* the one that originated it, so all connected
-      apps see the same conversation. DMs stay suppressed with an in-docs explanation of the
-      companion-protocol constraint.
-
-
-      ### Issues resolved
-
-
-      - #4535 [BUG] Messages sent to MeshCore Virtual Node app only work in one direction
-
-
-      **Full changelog:** https://github.com/Yeraze/meshmonitor/compare/v4.14.1-rc4...v4.14.1-rc5
-
-
-      ## 🚀 MeshMonitor v4.14.1-rc5
-
-
-      ### 📦 Installation
-
-
-      **Docker (recommended):**
-
-      ```bash
-
-      docker run -d \
-        --name meshmonitor \
-        -p 8080:3001 \
-        -v meshmonitor-data:/data \
-        ghcr.io/Yeraze/meshmonitor:4.14.1-rc5
-      ```
-
-
-      ### 🧪 Testing
-
-      ✅ All tests passed
-
-      ✅ TypeScript checks passed
-
-      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
-
-
-      ### 📋 Changes
-
-      See commit history for detailed changes.
