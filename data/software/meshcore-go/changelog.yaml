@@ -1,7 +1,98 @@
 source: github
 repo: meshcore-go/meshcore-go
-updatedAt: '2026-08-24T04:48:08.485Z'
+updatedAt: '2026-09-03T08:41:26.264Z'
 releases:
+  - version: v1.2.0
+    name: v1.2.0
+    datetime: '2026-09-03T03:40:18Z'
+    url: https://github.com/meshcore-go/meshcore-go/releases/tag/v1.2.0
+    prerelease: false
+    notes: >-
+      Tracks MeshCore firmware **v1.17.1**. This release is mostly interoperability repair: several
+      companion commands and responses did not match what the firmware actually sends, and a node
+      behind a companion radio was putting undecodable packets on air. Every fix was derived by
+      reading the firmware source side by side with this library, and each behavioural change
+      carries a test.
+
+
+      ## Breaking changes
+
+
+      Read this section before upgrading.
+
+
+      - **`node.Peer.OutPath` is now stored in send order.** Relays append their hash as a flood
+      advert travels towards us, but a direct packet consumes its path from the front, so the
+      previously stored route addressed the wrong first hop. `OutPathHashSize` is recorded alongside
+      it, and the new `node.ReverseHops` converts between the two orders. If you persist advert
+      paths, note which convention your column holds.
+
+      - **Direct packets with hops remaining are no longer delivered to local handlers.** They are
+      relayed only, matching `Mesh::onRecvPacket`. Handlers previously saw relay traffic.
+
+      - **`node.Option` changed its underlying type** to `func(*nodeConfig)`. Every `With*`
+      constructor is unchanged, but a hand-written `Option` closure will no longer compile. Options
+      are now order-independent, so `WithChannels` before `WithMaxChannels` is no longer discarded.
+
+      - **`meshcore.MACThenDecrypt` returns `ErrBadMAC`** on a MAC mismatch instead of `(nil, nil)`.
+      Code branching on a nil error must now check the error.
+
+      - **`companion.Cmd*`, `Resp*`, `StatsType*` and `AutoAdd*` constants are typed `byte`**
+      instead of untyped ints. Assignments to other integer types now need a conversion.
+
+      - **`companion.Err*` error codes are renamed `ErrCode*`** because they are protocol bytes, not
+      Go errors. The old names remain as deprecated aliases.
+
+      - **`Client.SendChannelTextMessage` returns an empty `SentResponse`** when the firmware
+      answers OK, which it does today. Check `HasAckCode` or `HasExtended` before reading the
+      fields.
+
+      - **`Client.OnPush` now returns an unsubscribe function.** Existing calls still compile if
+      they ignore the result.
+
+      - **`hardware.ErrTxBusy` is never returned.** Since firmware 1.17 the modem also raises
+      `HW_ERR_TX_BUSY` for host-output backpressure, so it no longer identifies a rejected transmit.
+      The sentinel stays exported and deprecated.
+
+      - **`hardware.KissModem.Flush` is test-only** and no longer available to external callers.
+
+
+      ## Interoperability fixes
+
+
+      **Companion**
+
+
+      - `CompanionModem` sent node packets with `CMD_SEND_RAW_DATA`, which the firmware wraps in a
+      new zero-hop `RAW_CUSTOM` packet, so no MeshCore node could decode or relay them. It now uses
+      `CMD_SEND_RAW_PACKET`. It also takes inbound packets from `PushLogRxData` only; `PushRawData`
+      carries a bare payload rather than a packet and was being handed to the node as one, and
+      delivered twice.
+
+      - Six calls waited for the wrong reply and timed out even though the firmware had executed the
+      command. Login, status, telemetry, binary and trace requests are acknowledged with
+      `RESP_CODE_SENT`; channel text answers a plain OK.
+
+      - `AddUpdateContact` sent a 65-byte frame where the firmware reads 136, so contact type, flags
+      and route were parsed out of the name bytes. `AddUpdateContactFull` exposes every stored
+      field.
+
+      - Channel datagrams could never flood, because the firmware floods only on `path_len` `0xFF`.
+      Use the new `SendChannelDataFlood`, or the `Flood` field on the command.
+
+      - `GetWaitingMessages` now drains `RESP_CODE_CHANNEL_DATA_RECV`, which previously wedged the
+      sync loop with the datagram stuck at the head of the queue.
+
+      - Advert-path, path-discovery and trace parsers decode the encoded `path_len` byte rather than
+      treating it as a raw count, so multi-byte hop hashes no longer fail to parse. Trace SNR bytes
+      are counted as `path_len >> (flags & 3)`.
+
+      - Signed plain text exposes its 4-byte sender prefix separately instead of leaving it at the
+      front of the message body.
+
+      - Device info, login success and end-of-contacts now expose the fields that were being d
+
+      …
   - version: v1.1.0
     name: v1.1.0
     datetime: '2026-08-24T03:10:03Z'

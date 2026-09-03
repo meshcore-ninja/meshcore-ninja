@@ -1,62 +1,30 @@
 source: github
 repo: Treehouse-00/pymc_console-dist
-updatedAt: '2026-09-03T03:32:20.775Z'
+updatedAt: '2026-09-03T08:41:38.735Z'
 releases:
-  - version: v0.9.365
-    name: Release v0.9.365
-    datetime: '2026-09-03T00:39:26Z'
-    url: https://github.com/Treehouse-00/pymc_console-dist/releases/tag/v0.9.365
+  - version: v0.9.368
+    name: Release v0.9.368
+    datetime: '2026-09-03T07:59:42Z'
+    url: https://github.com/Treehouse-00/pymc_console-dist/releases/tag/v0.9.368
     prerelease: false
     notes: >-
-      ### Added
+      ### Changed
 
-      - Reply to a message from the companion chat. Right-click a message, or hold it on a touch
-      screen, and a menu offers Reply; hovering a message shows a round reply key beside its bubble,
-      in the bubble's own surface ghosted. Either addresses the composer to the sender with the
-      mention syntax the channel already understands, `@[Name] `, and puts the cursor at the end so
-      typing continues the reply. Replying to the same sender twice does not stack; replying to
-      someone else re-addresses the draft and keeps its body.
+      - The hue fader is three knobs. HUE, SAT and LUM sit as one gang on the companion plate's
+      foot, each a knurled cap on a spindle sweeping between two end dots; the cap turns under a
+      light that stays in the room, and a push button at the foot's right returns the board to
+      amber. HUE and SAT set the display ink every readout on the board shares, in OKLCH at the
+      amber's own lightness: hue once around the wheel, saturation from grey to the most colour the
+      display can show there, measured against the widest colour Display P3 carries so every setting
+      reaches the screen as written, wide-gamut where the display allows and never mapped toward
+      grey. LUM is the screens' brightness: the white, the coloured outlines, the emoji and the ink
+      dim together as one lit surface, down to a dim screen you can still read and never to black.
+      The three settings persist across sessions and follow you to every page; at the amber they
+      ship at, the board's own amber stands.
 
+      - The companion screen's glass tint is a quarter dimmer.
 
-      ### Fixed
-
-      - The messages page fits any viewport and the composer never leaves the screen. It used to
-      size itself with viewport arithmetic and a 400px floor, so on a phone the composer sat under
-      the browser's bars, and on any short window the page had to be scrolled to type. The page now
-      fills the space under the header and only the timeline scrolls, at every size from a landscape
-      phone to a large display. On a phone, while a conversation is open, the header's control rows
-      step aside so the timeline has the room; the back arrow brings them back with the list.
-
-      - At the wider breakpoints the chat card ended one gap short of the right gridline that the
-      header and the counters sit on, because the closed detail panel still cost the row its gap. It
-      ends on the line now, open or closed.
-
-      - A message's time no longer stacks its meridiem on a second line under the avatar. It is
-      smaller and tighter, and always one line.
-
-      - The channel count in the companion header follows every add and delete. It read a count the
-      backend had reported when the companion list was last fetched, so it stood still until the
-      next background poll while the contacts count beside it moved at once. It now reads the live
-      channel list, which both transports keep current; a test pins that on each.
-
-      - A trace's "good" tier and the aurora widget's quiet-to-moderate band drew in a colour that
-      was never defined, so they rendered colourless. The palette gains lime, the step between green
-      and amber, in both sRGB and Display P3.
-
-      - The packet analyzer's node filter now treats an unconfident source resolution as the best
-      guess it is. It matched the guessed node exactly, which silently dropped every packet whose
-      guess landed on the wrong twin among nodes sharing a prefix; an unconfident resolution now
-      matches on the packet's source prefix, as the pipeline rules always said.
-
-      - If the browser's saved region settings cannot be read, channel sends are blocked to protect
-      an override, and there was no way out short of clearing site storage by hand. The Regions
-      dialog now offers a reset that discards the saved regions on that browser and lifts the block,
-      and says what it discards first.
-
-      - Display P3 colours apply again. The wide-gamut palette was declared before the sRGB palette
-      in the cascade at the same specificity, so the sRGB values won on every display and the P3
-      layer had never taken effect. The override now outranks the declaration, and every token
-      derived from the palette follows it.
+      - The parts kit gains the knob and the push button, and loses the fader.
 
 
       ### Compatibility
