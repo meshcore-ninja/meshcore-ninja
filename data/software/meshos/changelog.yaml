@@ -1,7 +1,60 @@
 source: github
 repo: andymux/meshos-releases
-updatedAt: '2026-09-03T14:14:32.940Z'
+updatedAt: '2026-09-03T19:11:04.770Z'
 releases:
+  - version: v1.0.16
+    name: MeshOS v1.0.16
+    datetime: '2026-09-03T15:14:30Z'
+    url: https://github.com/andymux/meshos-releases/releases/tag/v1.0.16
+    prerelease: false
+    notes: |-
+      ## MeshOS Companion v1.0.16
+
+      Wardriving comes to the phone: log signal coverage with your phone's GPS, share it
+      with the community, and see everyone's coverage on the map.
+
+      ### Wardriving
+      - **New Wardrive pill** on the map (top right). Switch it on to log the signal of
+        every packet your radio hears, stamped with your phone's GPS position, and see
+        the coverage heatmap. Uploads to the community map every 10 minutes.
+      - Logging keeps running with the screen off, so you can put the phone in your
+        pocket or leave it on the dash.
+      - **Blur / grid button** next to the pill switches between smooth predicted
+        coverage and sharp per-cell readings, matching the coverage map on the website.
+      - No radio connected? The heatmaps still display; only logging needs a radio.
+
+      ### Community map
+      - **New world button** on the map shows every node from the public MeshCore users
+        map as blue discs, over the coverage heatmaps. Zoom in and each disc is labelled
+        with the first byte of its public key.
+      - Map legend now reads "Nodes heard on RF" and "Community Map" with matching
+        coloured dots.
+
+      ### Map improvements
+      - The map now opens centred on **your** position instead of zoomed out to the
+        whole world.
+      - Your position marker and your radio's marker now update live as you move,
+        instead of lagging behind.
+      - The locate button gains a **follow-me mode** that keeps the map centred on you
+        while you drive; pan the map to release it.
+      - Node markers show the first byte of their public key once you zoom in.
+      - Tap a node on the map and you can jump straight to it in the Heard List.
+
+      ### Fixes
+      - **Fixed coverage cells being logged in the wrong place** (up to one cell north
+        of where they were recorded).
+      - **Fixed map tiles stuck showing "API key required".** Old cached tiles are now
+        cleared automatically on update, and there is a new **Clear Map Tiles** button in
+        Settings → Data if you ever need it again.
+      - Background GPS is now declared correctly for Android 14+, so wardriving keeps
+        logging reliably when the app is in the background.
+
+      ### Install
+      Download `MeshOS-v1.0.16.apk` and open it to install. Existing users upgrade in
+      place, keeping their messages and license.
+
+      APK SHA-256:
+      `8d504baad5f6882643d509a42ead91b6703b2a81655d9a064ef4994d12fd1027`
   - version: fw-v1.7.2
     name: MeshOS firmware v1.7.2
     datetime: '2026-09-03T09:43:44Z'
@@ -444,23 +497,3 @@ releases:
       - TDeck: a96356b479cce107d6359546592a49e88a61782e0407e42ade909513fb47c25a
 
       - M9: 576925cf23254c60fa877a664116742302b4ca6d8f8474669124e1a3d5413a2d
-  - version: fw-v1.5.6
-    name: MeshOS firmware v1.5.6
-    datetime: '2026-07-11T12:03:47Z'
-    url: https://github.com/andymux/meshos-releases/releases/tag/fw-v1.5.6
-    prerelease: false
-    notes: >-
-      License key now backed up to SD and auto-restored after flash erase. WiFi scanner and connect
-      dialog fixes. Bluetooth-off persists across reboots.
-
-
-      Device firmware for LilyGo T-Deck and ThinkNode M9.
-
-      Install via SD card (firmware.bin) or the in-firmware updater.
-
-
-      SHA-256:
-
-      - TDeck: af26586a4d6f7c991c5390827d7d80d0b3479f1b86e02d6054a180a2fec7d78a
-
-      - M9: 6f80d53b4d7b7743096a40331aedd261a6efeff8887921b540cdb00778553876

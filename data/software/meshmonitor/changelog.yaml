@@ -1,7 +1,85 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-09-02T19:16:53.468Z'
+updatedAt: '2026-09-03T19:11:04.507Z'
 releases:
+  - version: v4.16.0-rc2
+    name: v4.16.0-rc2
+    datetime: '2026-09-03T16:50:44Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.16.0-rc2
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.16.0-rc2
+
+
+      > ⚠️ **Release candidate — not a stable release.** Please test and report issues before 4.16.0
+      ships.
+
+
+      Second release candidate for 4.16.0. The headline is the **MeshMapper Observer** integration
+      landing in full: any MeshCore source can now publish coverage data to MeshMapper (or LetsMesh)
+      with a one-click preset and no extra hardware, because the Analyzer Observer can finally talk
+      to more than one broker at a time. Alongside that, this RC is mostly a fixes release for
+      problems that were misreporting reality — a Packet Monitor showing firmware 2.8's NodeDB
+      replays as if they were live receptions, Position Config claiming GPS was enabled when the
+      device had it disabled, and MeshBeacon broadcast targets that looked like they weren't saving
+      when in fact only the read-back was broken.
+
+
+      It also carries **one schema migration** (157) and one behaviour change worth knowing about
+      before you upgrade: a MeshCore room server with a saved password that no longer works will now
+      switch its own auto-sync off instead of retrying forever. See Upgrade Notes.
+
+
+      ## Features
+
+
+      - **#5022 + #5027** — **MeshMapper Observer** (#5014), in two phases. Phase 1 extends the
+      Analyzer Observer from one broker to N, with per-broker connection state, counters,
+      credentials and tokens; MeshMapper's MQTT ingestion already speaks the exact wire contract our
+      observer does, so contributing needed only multi-broker publishing. Phase 2 turns the fieldset
+      into a broker-list editor with verified one-click presets (MeshMapper, LetsMesh US/EU,
+      Custom), a per-broker status panel on the MeshCore Configuration view, and an `OBS c/N` badge
+      on the Dashboard source card. Legacy single-broker configs keep working and are migrated to
+      `brokers[0]` on first save — no DB migration, the observer config is a JSON blob.
+
+      - **#5026** — Duplicate button on automation rules (#5024).
+
+      - **#5021** — Save Security Config is re-enabled for remote nodes (#4736). The button had been
+      hard-disabled since #1602 behind a tooltip blaming "a firmware compatibility issue"; reading
+      `AdminModule.cpp` showed that premise — and a comment in our own code repeating it — was
+      wrong.
+
+
+      ## Bug Fixes
+
+
+      - **#5038** — Packet Monitor no longer shows firmware 2.8's NodeDB replays as live receptions
+      (#5034). Firmware 2.8 periodically re-delivers each NodeDB entry's cached position/telemetry
+      to the connected client, synthesizing POSITION_APP/TELEMETRY_APP packets from stored data.
+      Firmware PR #11014 stabilized the packet id and hop fields across replays (hence "same packet
+      id, different time"), and `transport_mechanism` is deliberately forced to `TRANSPORT_LORA` for
+      iOS compatibility, so a client could not tell them apart. This is the Packet Monitor face of
+      #4192.
+
+      - **#5037** — MeshCore: a refused room-server password is no longer retried every 60 seconds
+      forever, and can now be removed (#5036). Adds **migration 157**. The room-sync scheduler
+      stamped its clock only after a *successful* login, so a room with a stale password stayed
+      permanently overdue and was re-picked on every tick — on the order of 180 login floods an
+      hour, indefinitely, plus a matching stream of rejected logins in the room operator's own logs.
+      Every attempt now advances the clock; a refusal disables auto-sync at once and three
+      unanswered attempts do the same. A new **"Forget saved password"** button sits on the room
+      *login* card, reachable precisely when a bad password has locked you out — previously the only
+      control that could stop the retries was behind the login itself.
+
+      - **#5035** — MeshBeacon broadcast-target region and preset now persist across a save and
+      reboot (#5030). The device stored them correctly all along; MeshMonitor could not read them
+      back. `broadcast_targets` is the only *repeated message* field `/api/config/current` returns,
+      so its entries stayed protobufjs `Message` instances and were serialized through protobufjs's
+      own `toJSON()`, which emits enum **names** rather than numbers.
+
+      - **#5029** — Position Config 
+
+      …
   - version: v4.16.0-rc1
     name: v4.16.0-rc1
     datetime: '2026-09-02T14:48:21Z'
@@ -1972,101 +2050,3 @@ releases:
       ### 📋 Changes
 
       See commit history for detailed changes.
-  - version: v4.14.1
-    name: v4.14.1
-    datetime: '2026-08-13T12:27:59Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.14.1
-    prerelease: false
-    notes: >-
-      # MeshMonitor v4.14.1
-
-
-      The headline of this release is the **Meshtastic ↔ MeshCore Automation Bridge**, you can now
-      relay text between a Meshtastic channel and a MeshCore channel with a single click, built
-      entirely on the Automation Engine rather than a native bridge. A new in-app **Automation
-      Template Gallery** ships click-to-install templates (an **MT↔MC Bridge** and an **Auto-Ack**),
-      a new `{{ trigger.protocolShort }}` token tags relayed messages `MT@`/`MC@`, and layered
-      loop/flood safeguards (a per-automation rate limit, a MeshCore cross-source self-guard, and a
-      content guard) protect against the amplifying-loop failure mode. The release also completes a
-      large **theme-system overhaul**: colors are now named by *role* rather than by swatch, with
-      new categorical and sequential color scales and a full migration off hardcoded palette values.
-      MeshCore gains a **strict receive-only mode**, Analyzer Observer battery/uptime/noise
-      reporting, static MQTT auth, and several delivery/pathing fixes. Messaging picks up an unread
-      divider with jump-to-first-unread and channel-list unread badges. Rounding it out: position
-      "last updated" display and estimate-anchor rationale, a fistful of map and MQTT fixes, a
-      Windows startup fix, ESM/build hardening, and the usual dependency and translation updates.
-
-
-      ## 🌉 Meshtastic ↔ MeshCore Automation Bridge (#4577)
-
-      - In-app **Automation Template Gallery**, click-to-install templates that land disabled for
-      review (#4679)
-
-      - **MT↔MC Bridge** template, scaffolds a matched automation pair with a built-in loop guard
-      (#4681); wizard pickers scoped per-protocol (#4683)
-
-      - **Auto-Ack** template, acknowledge direct/zero-hop messages with a tapback or reply (#4679)
-
-      - `{{ trigger.protocolShort }}` token → `MT` / `MC` (#4675)
-
-      - Loop & flood safety: per-automation rate limit + MeshCore cross-source self-guard + content
-      guard (#4676)
-
-      - User docs & recipe with flood-safety guidance (#4682)
-
-
-      ## ✨ Features
-
-      - Automation Engine: **became-mobile** & **left-home** triggers for tamper/theft monitoring
-      (#4648, thanks @gztproject)
-
-      - Automation Engine: distinct reaction emoji for MQTT-sourced pings (#4601)
-
-      - MeshCore: **strict receive-only mode**, backend enforcement, frontend UX, and Virtual Node
-      gating (#4550, #4552, #4555)
-
-      - MeshCore: Analyzer Observer publishes battery / uptime / noise floor (#4557); static MQTT
-      username/password auth (#4602)
-
-      - Messages: unread divider + jump-to-first-unread for both protocols (#4615); channel-list
-      unread bell badge (#4669)
-
-      - Packet inspection detail view on message hop-count click (#4664)
-
-      - Show when a node's position was last updated (#4663); record & expose the anchors behind an
-      estimated position (#4613)
-
-      - Security: set a node's private key from Device Configuration (#4654)
-
-      - Themes: categorical color scale (#4605) and sequential scale (#4611)
-
-      - Ko-fi support links in the sidebar and site nav (#4666, #4665); User Scripts Gallery, Border
-      Wait Times (#4686)
-
-
-      ## 🐛 Bug Fixes
-
-      - MeshCore: deliver MeshMonitor-originated channel messages to app clients (#4668); preserve
-      newlines in message bodies (#4661); update contact Last Heard on incoming DM (#4554); treat a
-      lost out_path ack as success (#4628); hot-swap Analyzer Observer publisher on signing-key
-      change (#4544)
-
-      - MQTT: fire message events & alerts for MQTT-sourced messages so the Automation Engine and
-      alerts trigger (#4600)
-
-      - Map: single card shell for node popups (#4680); reduce statistical-route edge overlap
-      (#4678); gate marker clicks on density, not zoom alone (#4563); stop shading
-      pending-traceroute nodes as 0-hop/local (#4576); fit-bounds icon fix (#4564)
-
-      - Nodes: stop dropping distinct nodes with a non-numeric nodeNum in the unified view (#4578);
-      clear auto-favorite, auto-traceroute, and auto-time-sync allowlists on node purge (#4651,
-      #4630)
-
-      - Auto-ack: stop acknowledging tapbacks (#4574); key the tapback guard on the emoji flag, not
-      its presence (#4589)
-
-      - Neighbor Info: surface why a request was rejected (403/429) (#4575)
-
-      - Position
-
-      …
