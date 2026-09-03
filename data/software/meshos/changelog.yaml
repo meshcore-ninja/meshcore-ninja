@@ -1,7 +1,27 @@
 source: github
 repo: andymux/meshos-releases
-updatedAt: '2026-09-01T16:15:57.989Z'
+updatedAt: '2026-09-03T14:14:32.940Z'
 releases:
+  - version: fw-v1.7.2
+    name: MeshOS firmware v1.7.2
+    datetime: '2026-09-03T09:43:44Z'
+    url: https://github.com/andymux/meshos-releases/releases/tag/fw-v1.7.2
+    prerelease: false
+    notes: >-
+      WiFi scan fixes (no more reboot with Bluetooth on, works while connected), Connect button for
+      saved networks, own heatmap no longer doubles up.
+
+
+      Device firmware for LilyGo T-Deck and ThinkNode M9.
+
+      Install via SD card (firmware.bin) or the in-firmware updater.
+
+
+      SHA-256:
+
+      - TDeck: b6a3a50aec695b075eac43be2e4ac0a68fb20272ed35c0b0307d1af5fe436224
+
+      - M9: fc38153bfe148387059e29c92754b585f7b23f7c72f76659280f79ea71dfdb1f
   - version: v1.0.15
     name: MeshOS v1.0.15
     datetime: '2026-08-31T16:26:51Z'
@@ -444,24 +464,3 @@ releases:
       - TDeck: af26586a4d6f7c991c5390827d7d80d0b3479f1b86e02d6054a180a2fec7d78a
 
       - M9: 6f80d53b4d7b7743096a40331aedd261a6efeff8887921b540cdb00778553876
-  - version: fw-v1.5.5
-    name: MeshOS firmware v1.5.5
-    datetime: '2026-07-10T17:57:26Z'
-    url: https://github.com/andymux/meshos-releases/releases/tag/fw-v1.5.5
-    prerelease: false
-    notes: >-
-      CoreBrowser: smooth touch scrolling with momentum, trackball scrolls long pages (links still
-      step when visible), pages can always be cancelled while loading. Plus the 1.5.4 map and
-      heard-list overhaul for anyone updating from 1.5.3.
-
-
-      Device firmware for LilyGo T-Deck and ThinkNode M9.
-
-      Install via SD card (firmware.bin) or the in-firmware updater.
-
-
-      SHA-256:
-
-      - TDeck: 1e62805253cb8f87ad8c71ff9da90a8a3d04196aef619afcf270f130fbbcbade
-
-      - M9: e4232ca0b570b3966e4f3d219455bac4a8118b3215919092f6768b47d210c6a6

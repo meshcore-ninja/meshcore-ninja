@@ -1,10 +1,176 @@
 source: github
 repo: liquidraver/ZephCore
-updatedAt: '2026-08-25T14:49:01.476Z'
+updatedAt: '2026-09-03T14:14:08.912Z'
 releases:
+  - version: 1.17.4-zephcore
+    name: Firmware 1.17.4-zephcore
+    datetime: '2026-09-03T14:08:21Z'
+    url: https://github.com/liquidraver/ZephCore/releases/tag/1.17.4-zephcore
+    prerelease: false
+    notes: >-
+      # ZephCore 1.17.4-zephcore
+
+
+      Storage housekeeping, plus a listen-before-talk fix. The repeater's `erase` never actually
+      erased,
+
+      a node flashed from another firmware could start out with somebody else's leftovers underneath
+      it,
+
+      and switching a node between companion and repeater firmware quietly let the two share the
+      same
+
+      128 KB. Separately, the channel-activity detector was using the wrong reference table on
+      LR1110
+
+      boards, the companion's built-in `v` contact carried an unusable key on about half of all
+      nodes, and
+
+      a node that decided the channel was busy could stop transmitting and never start again.
+
+
+      > [!IMPORTANT]
+
+      > **Read the role-switching section before you flash a different role onto an existing node.**
+      A
+
+      > companion that gets repeater firmware — or the reverse — now erases itself on first boot.
+      That is
+
+      > intentional, but it is new. Export your identity first if you want to keep it.
+
+
+      > [!NOTE]
+
+      > A normal upgrade is unaffected. Repeater to repeater, or companion to companion, keeps your
+
+      > identity, settings, contacts and phone pairing exactly as before.
+
+
+      ---
+
+
+      ## `erase` now erases
+
+
+      On a repeater or room server, `erase` promised to format the entire filesystem. It deleted the
+      files
+
+      in its own folder and cleared the phone pairings, and left everything else where it was.
+
+
+      That only mattered when a node was unhealthy — which is precisely when somebody reaches for
+      `erase`.
+
+      If anything had written into the storage area from outside, deleting our own files could not
+      undo it,
+
+      and the command reported success while the problem stayed.
+
+
+      `erase` now wipes the storage area, the phone-pairing store, and external flash where a board
+      has it,
+
+      then reboots. The node comes back exactly like one out of the box.
+
+
+      > [!IMPORTANT]
+
+      > **This is a genuine factory reset now, and it takes the identity with it.** Anyone who had
+      your node
+
+      > in their contacts will need to add it again, and the admin password, ACL and region map go
+      too.
+
+
+      The companion's `erase` already worked this way. Repeater, room server and observer now share
+      its
+
+      implementation, so there is one behaviour to remember instead of two.
+
+
+      ---
+
+
+      ## Switching a node between roles now wipes it
+
+
+      Companion and repeater firmware keep their files in separate folders, and until now each left
+      the
+
+      other's alone. Flashing back and forth preserved both sets.
+
+
+      That sounds generous and was not. The two roles share a single 128 KB storage area, so a
+      companion's
+
+      few hundred contacts and full advert cache leave noticeably less room for a repeater's region
+      map and
+
+      access list — and a write that no longer fits simply fails. Nothing is corrupted; the node
+      just runs
+
+      out of space for reasons its owner cannot see, because half of what is stored belongs to
+      firmware that
+
+      is not running.
+
+
+      From 1.17.4 each role checks on first boot whether the storage belongs to it, and formats
+      everything
+
+      if not.
+
+
+      > [!IMPORTANT]
+
+      > **Export your identity before switching roles.** Identity, settings, contacts, channels,
+      access list,
+
+      > region map and phone pairings all go. There is no undo and no prompt — the first boot on the
+      new
+
+      > firmware has already done it by the time you see anything.
+
+
+      > [!NOTE]
+
+      > **Repeater, room server and observer still share.** Those three keep their files in the same
+      place
+
+      > and use the same settings layout, so moving between them keeps identity and configuration.
+      It is the
+
+      > companion that is now separate.
+
+
+      ---
+
+
+      ## A node coming from other firmware starts clean
+
+
+      Nothing about installing firmware erases storage. Dragging a UF2 writes the program and
+      nothing else,
+
+      and each firmware only clears the piece of flash it believes is its own. On the nRF52840
+      boards,
+
+      Arduino MeshCore's storage sits inside the region ZephCore uses, so whichever boots first
+      tidies its
+
+      own corner and leaves the rest. On one Seeed Solar Node that produced a repeater which came up
+      looking
+
+      perfectly healthy and silently refused to forward anything, because a single setting deep
+      inside its
+
+      configuration had been overwritten by another firmwa
+
+      …
   - version: 1.17.3-zephcore
     name: Firmware 1.17.3-zephcore
-    datetime: '2026-08-25T13:47:57Z'
+    datetime: '2026-09-03T13:38:59Z'
     url: https://github.com/liquidraver/ZephCore/releases/tag/1.17.3-zephcore
     prerelease: false
     notes: "# ZephCore 1.17.3-zephcore\r\n\r\nOne fix and two new settings. The antenna amplifier setting added in 1.17.2 switched the amplifier off\r\ncompletely instead of just its receive boost, leaving those nodes barely able to hear anything. And for\r\npeople who put their node in a case it did not come in, the screen can now be turned upside down and the\r\njoystick flipped to match.\r\n\r\n> [!NOTE]\r\n> Upgrading from 1.17.2 is straightforward — your contacts, settings and phone pairing all survive.\r\n> **If you never touched `radio.fem.rxgain`, nothing about your node changes.** The default is on, and\r\n> on behaves exactly as it did. Both new settings default to off, so a node you do not touch behaves\r\n> exactly as it did too.\r\n\r\n---\r\n\r\n## `radio.fem.rxgain 0` no longer makes a node deaf\r\n\r\nSome boards carry an extra amplifier chip between the radio and the antenna. 1.17.2 added\r\n`set radio.fem.rxgain 0` to switch off its receive boost and save the current that part draws, while\r\nleaving transmit untouched.\r\n\r\nIt switched off the entire amplifier instead. With the chip powered down, nothing reaches the receiver\r\n— not the boost, and not the signal either. Measured on a Heltec V4.3 that was about **69 dB** of loss,\r\nwhere the setting promised around 16 dB. One node could no longer hear its own repeater from 50 metres\r\naway.\r\n\r\nThe setting now does what it says. The signal goes **around** the amplifier's receive boost rather than\r\nthrough it, costing about **17 dB**, and the chip stays powered — so transmit, and everything else, are\r\nunaffected. If you deliberately switched it off to save power, it now costs you what it was always\r\nsupposed to cost.\r\n\r\nAvailable on the **Heltec T096**, **Wireless Tracker V2** and **WiFi LoRa 32 V4.3**.\r\n\r\n> [!IMPORTANT]\r\n> **The WiFi LoRa 32 V4 no longer has this setting.** Its amplifier is a different chip with no separate\r\n> receive-side control, so there was never a working version of this on the V4 — it only ever got the\r\n> broken behaviour. It now replies `Error: unsupported`. If you had switched it off on a V4, that node\r\n> gets its hearing back, and simply stops saving the current it was trying to save.\r\n\r\n> [!NOTE]\r\n> The 17 dB figure was measured on a V4.3. The T096 and Wireless Tracker V2 use the same amplifier and\r\n> are wired the same way, but were not measured — if the number looks different on yours, please say so.\r\n\r\n---\r\n\r\n## The screen can be turned upside down\r\n\r\nDIY builds and upgrade kits do not always hold the board the way the original case did. The\r\n**Meshnology N37E**, for instance, takes a Wio Tracker L1 and puts it in a different enclosure — one\r\nthat mounts the screen the other way up. Until now the only answer was to build your own firmware with\r\nthe panel flipped, which meant giving up the published builds everyone else uses.\r\n\r\n`set display.rotate on` turns the picture 180 degrees. It survives reboots, and the same firmware\r\neverybody else runs is now the firmware you run too.\r\n\r\nOn the boards with a joystick there is a menu entry as well — **System → Display → Rotate 180** — so it\r\ncan be set on the device without a cable.\r\n\r\nThe rotation costs nothing to keep on. It is not done by redrawing the screen the other way round; the\r\nfirmware asks the display chip itself to scan its rows and columns in reverse, which is two bytes sent\r\nonce. Every frame after that is drawn exactly as before.\r\n\r\n> [!IMPORTANT]\r\n> **This works on OLED screens only** — the SSD1306 and SH1106 panels, which covers the **RAK4631**,\r\n> **GAT562 30S**, **Heltec WiFi LoRa 32 V4** and **V4.3**, **LilyGo T3S3**, **Station G2** and\r\n> **Wio Tracker L1**.\r\n>\r\n> Boards with a colour screen or e-paper answer `Error: this panel cannot rotate`, and the setting is\r\n> not saved — so a stored value can never claim something the screen is not doing. Those panels can be\r\n> rotated in principle, but it would mean turning every frame around in software rather than asking the\r\n> chip to do it, and that is a different piece of work\n…"
@@ -405,9 +571,3 @@ releases:
     url: https://github.com/liquidraver/ZephCore/releases/tag/v20260514.205836
     prerelease: false
     notes: "- New experimental RX-busy latch: ZephCore now tracks an in-progress reception across the full packet, so the transmitter won't step on a packet that's already being decoded.\r\n- Improved CAD (Listen-Before-Talk) behavior: the radio re-enters listening mode faster between TX retries on busy channels, and a stuck channel-busy state recovers automatically instead of requiring a reset.\r\n- updated default prefs to advert less and loop detect moderate"
-  - version: v20260511.125830
-    name: Firmware v20260511.125830
-    datetime: '2026-05-11T12:58:40Z'
-    url: https://github.com/liquidraver/ZephCore/releases/tag/v20260511.125830
-    prerelease: false
-    notes: "- Channel deletion safety: fixed bug where deleting the public channel could wipe other channels after reboot.\r\n- LBT retry priority: preserved flood packet priority during LBT-based retransmissions.\r\n- CAD/LBT mode switching: fixed radio reconfiguration so mode changes are fully applied.\r\n- rx_boost init: set deterministic startup state to avoid undefined boot behavior.\r\n- Atomic contact saves (QSPI): contacts now use temp+sync+rename on external flash devices.\r\n- Atomic write refactor: unified temp-file atomic write flow used by datastore save paths.\r\n- promicro_sx1262 build support: fixed/added board build wiring and related project metadata.\r\n- Vanilla sync (CompanionMesh): aligned local logic with upstream baseline changes.\r\n- SX1262 patch updates: refined Zephyr SX126x native patch and related ignore rules."
