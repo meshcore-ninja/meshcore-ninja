@@ -1,30 +1,19 @@
 source: github
 repo: Treehouse-00/pymc_console-dist
-updatedAt: '2026-09-03T08:41:38.735Z'
+updatedAt: '2026-09-03T22:28:48.117Z'
 releases:
-  - version: v0.9.368
-    name: Release v0.9.368
-    datetime: '2026-09-03T07:59:42Z'
-    url: https://github.com/Treehouse-00/pymc_console-dist/releases/tag/v0.9.368
+  - version: v0.9.370
+    name: Release v0.9.370
+    datetime: '2026-09-03T21:49:32Z'
+    url: https://github.com/Treehouse-00/pymc_console-dist/releases/tag/v0.9.370
     prerelease: false
     notes: >-
       ### Changed
 
-      - The hue fader is three knobs. HUE, SAT and LUM sit as one gang on the companion plate's
-      foot, each a knurled cap on a spindle sweeping between two end dots; the cap turns under a
-      light that stays in the room, and a push button at the foot's right returns the board to
-      amber. HUE and SAT set the display ink every readout on the board shares, in OKLCH at the
-      amber's own lightness: hue once around the wheel, saturation from grey to the most colour the
-      display can show there, measured against the widest colour Display P3 carries so every setting
-      reaches the screen as written, wide-gamut where the display allows and never mapped toward
-      grey. LUM is the screens' brightness: the white, the coloured outlines, the emoji and the ink
-      dim together as one lit surface, down to a dim screen you can still read and never to black.
-      The three settings persist across sessions and follow you to every page; at the amber they
-      ship at, the board's own amber stands.
-
-      - The companion screen's glass tint is a quarter dimmer.
-
-      - The parts kit gains the knob and the push button, and loses the fader.
+      - The reading print is the companion screens' only voice. It shipped a release ago as a
+      parallel mode behind an ABC key; the key is gone, the pixel voice with it, and every screen
+      prints in GC Basic Inktrap Mono, light for copy and medium for names, with no grain or lamps
+      behind the text. The old toggle's saved setting is cleared on start.
 
 
       ### Compatibility
