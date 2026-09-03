@@ -1,78 +1,89 @@
 source: github
 repo: Treehouse-00/pymc_console-dist
-updatedAt: '2026-09-02T22:27:01.344Z'
+updatedAt: '2026-09-03T03:32:20.775Z'
 releases:
-  - version: v0.9.363
-    name: Release v0.9.363
-    datetime: '2026-09-02T21:16:21Z'
-    url: https://github.com/Treehouse-00/pymc_console-dist/releases/tag/v0.9.363
+  - version: v0.9.365
+    name: Release v0.9.365
+    datetime: '2026-09-03T00:39:26Z'
+    url: https://github.com/Treehouse-00/pymc_console-dist/releases/tag/v0.9.365
     prerelease: false
     notes: >-
+      ### Added
+
+      - Reply to a message from the companion chat. Right-click a message, or hold it on a touch
+      screen, and a menu offers Reply; hovering a message shows a round reply key beside its bubble,
+      in the bubble's own surface ghosted. Either addresses the composer to the sender with the
+      mention syntax the channel already understands, `@[Name] `, and puts the cursor at the end so
+      typing continues the reply. Replying to the same sender twice does not stack; replying to
+      someone else re-addresses the draft and keeps its body.
+
+
       ### Fixed
 
-      - A PATH payload is an encrypted envelope, not a hop list. The console read its first byte as
-      a path length and the bytes after it as a route, which is the packet header's layout rather
-      than the payload's; the repeater's own handler decrypts the remainder with a per-client shared
-      secret before any hop list exists. The console holds no such secret, so it now reports what it
-      can genuinely read — the destination and source hashes, the cipher MAC, and the size of the
-      encrypted remainder — and says the route is encrypted. The packet detail, the byte breakdown,
-      the diagnostic export and both observatory views no longer show a fabricated route or announce
-      "0 hops" for a route they cannot see. A payload too short to hold an envelope is marked
-      malformed instead of shown as empty.
+      - The messages page fits any viewport and the composer never leaves the screen. It used to
+      size itself with viewport arithmetic and a 400px floor, so on a phone the composer sat under
+      the browser's bars, and on any short window the page had to be scrolled to type. The page now
+      fills the space under the header and only the timeline scrolls, at every size from a landscape
+      phone to a large display. On a phone, while a conversation is open, the header's control rows
+      step aside so the timeline has the room; the back arrow brings them back with the list.
 
-      - A companion's paused and ever-connected flags were stored under its name, so when a name was
-      rebound to a different identity the new one inherited them: a companion the operator had
-      paused stayed paused for whoever held the name next. Both are now scoped by public key, as the
-      transport preference already was. Evicting another client, the one destructive action on that
-      page without a confirmation, now asks first and names the peer it would disconnect.
+      - At the wider breakpoints the chat card ended one gap short of the right gridline that the
+      header and the counters sit on, because the closed detail panel still cost the row its gap. It
+      ends on the line now, open or closed.
 
-      - Five Configuration dialogs each drew their own overlay. They are one dialog now, so Escape,
-      focus trapping and a labelled heading behave the same in all five, each has the close control
-      it lacked, and dismissing by backdrop click no longer leaves a token name, a created token or
-      an editing region stale.
+      - A message's time no longer stacks its meridiem on a second line under the avatar. It is
+      smaller and tighter, and always one line.
 
-      - The tooltip that follows the cursor over the mesh guard chart cost two renders per mouse
-      move in every component listening to it. Moving it now costs none. The anchored tooltip gained
-      the accessible description it never wired, and lost a scroll-offset adjustment that was wrong
-      on a fixed-position element.
+      - The channel count in the companion header follows every add and delete. It read a count the
+      backend had reported when the companion list was last fetched, so it stood still until the
+      next background poll while the contacts count beside it moved at once. It now reads the live
+      channel list, which both transports keep current; a test pins that on each.
 
-      - Switching theme rewrote a display attribute with the value it already had, and every live
-      chart redrew for it. It no longer does. The socket also sent its token twice, once in the
-      connect query and once as a frame the repeater has never read; the frame is gone, the query
-      stays, and that is what keeps the socket authorized.
+      - A trace's "good" tier and the aurora widget's quiet-to-moderate band drew in a colour that
+      was never defined, so they rendered colourless. The palette gains lime, the step between green
+      and amber, in both sRGB and Display P3.
 
-      - Status that was carried by colour or motion alone — two live-dot modes, a widget's status
-      word, the observatory's computing lamps — now carries text, visible or read aloud, so it
-      survives a screen reader and a monochrome display.
+      - The packet analyzer's node filter now treats an unconfident source resolution as the best
+      guess it is. It matched the guessed node exactly, which silently dropped every packet whose
+      guess landed on the wrong twin among nodes sharing a prefix; an unconfident resolution now
+      matches on the packet's source prefix, as the pipeline rules always said.
 
-      - The log facet bank scrolled sideways when the plate ran out of width. It breaks onto rows
-      now, at the kit's pitch, and the log register's screen well has its seat back.
+      - If the browser's saved region settings cannot be read, channel sends are blocked to protect
+      an override, and there was no way out short of clearing site storage by hand. The Regions
+      dialog now offers a reset that discards the saved regions on that browser and lifts the block,
+      and says what it discards first.
 
-      - The terminal's own help lists what `get` and `set` actually handle: `af` under Timing,
-      `flood.advert.interval` under Repeater, `duty.max` and `repeat` as get-only, `prv.key` as
-      set-only, and no `log` parameter that never existed. `get mode` and the in-app guide admit
-      `no_tx`. The Configuration page stops printing a dashboard path that is only true of a source
-      install.
-
-      - The terminal wordmark existed twice and one copy sat off its grid; there is one now. Compact
-      node info no longer overflows its container.
-
-      - The distribution repository's Build Validation had failed on every run since 0.9.362,
-      because two installer-test steps ran a script that repository does not carry. They are guarded
-      now, and a gate keeps any step from running a private script unguarded.
+      - Display P3 colours apply again. The wide-gamut palette was declared before the sRGB palette
+      in the cascade at the same specificity, so the sRGB values won on every display and the P3
+      layer had never taken effect. The override now outranks the declaration, and every token
+      derived from the palette follows it.
 
 
-      ### Changed
+      ### Compatibility
 
-      - The distribution repository carries only what serves its README. The sync copies the
-      README's screenshots by allowlist and nothing else under `docs/`, checks its own tree
-      immediately before pushing, and the release lane runs the same gates before anything is
-      tagged. Planning records and wireframes that had been swept along are no longer published. The
-      release archives were never affected; they have only ever carried the built dashboard.
+      - No repeater database change and no schema migration.
 
-      - The map's overlay controls are the console's own OSD buttons, with a real pressed state, in
-      place of tinted generic buttons.
 
-      - Five components that re-rendered on any store change
 
-      …
+      ---
+
+      Full history:
+      [CHANGELOG.md](https://github.com/Treehouse-00/pymc_console-dist/blob/main/CHANGELOG.md)
+
+
+      ## Installation
+
+      ```bash
+
+      sudo ./manage.sh install
+
+      ```
+
+
+      ## Upgrade
+
+      ```bash
+
+      sudo ./manage.sh upgrade
+
+      ```
