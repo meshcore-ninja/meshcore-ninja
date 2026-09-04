@@ -1,7 +1,27 @@
 source: github
 repo: danst0/fennek
-updatedAt: '2026-08-22T06:42:23.109Z'
+updatedAt: '2026-09-04T08:40:50.755Z'
 releases:
+  - version: v2.7.6
+    name: v2.7.6
+    datetime: '2026-09-04T04:46:28Z'
+    url: https://github.com/danst0/fennek/releases/tag/v2.7.6
+    prerelease: false
+    notes: >-
+      E-Ink-Controller-Deep-Sleep (Kommando 0x07) ist ab sofort standardmaessig aus.
+
+
+      Auf der T-Deck Pro V1.0 ist die EPD-RST-Leitung nicht verdrahtet (LilyGO: `BOARD_EPD_RST -1`)
+      — der Controller-Deep-Sleep ist dort eine Einbahnstrasse, das Panel bleibt bis zur
+      Selbstentladung mit aktivem BUSY stehen (Issue #2). Vor dem Standby wird jetzt nur noch
+      `powerOff()` gesendet: Booster aus, Bild steht stromlos weiter, Aufwachen braucht keinen
+      Hardware-Reset.
+
+
+      - Controller-Deep-Sleep nur noch opt-in ueber NVS `einkhib` (Konsole: `eink hib on|off`)
+
+      - Selbstheilung: haengt das Panel einmal an klemmender BUSY-Leitung, wird das Flag dauerhaft
+      geloescht
   - version: v2.7.5
     name: v2.7.5
     datetime: '2026-08-22T05:31:06Z'
@@ -292,29 +312,3 @@ releases:
     url: https://github.com/danst0/fennek/releases/tag/v2.5.0
     prerelease: false
     notes: '**Full Changelog**: https://github.com/danst0/fennek/compare/v2.4.9...v2.5.0'
-  - version: v2.4.8
-    name: Fennek v2.4.8
-    datetime: '2026-06-20T19:59:52Z'
-    url: https://github.com/danst0/fennek/releases/tag/v2.4.8
-    prerelease: false
-    notes: >-
-      ## Änderungen
-
-
-      - **OTA:** Semver-Vergleich für Update-Erkennung (`tag_name != FENNEK_VERSION` → korrekte
-      Versionslogik)
-
-      - **Akku:** Batterieanzeige-Fix in der Statuszeile
-
-
-      ## Flashen
-
-
-      ```
-
-      pio run -e fennek -t upload
-
-      ```
-
-
-      oder OTA via `fennek.local` → Firmware-Update.

@@ -1,25 +1,24 @@
 source: github
 repo: Treehouse-00/pymc_console-dist
-updatedAt: '2026-09-04T03:33:34.318Z'
+updatedAt: '2026-09-04T08:41:32.622Z'
 releases:
-  - version: v0.9.372
-    name: Release v0.9.372
-    datetime: '2026-09-04T03:28:32Z'
-    url: https://github.com/Treehouse-00/pymc_console-dist/releases/tag/v0.9.372
+  - version: v0.9.373
+    name: Release v0.9.373
+    datetime: '2026-09-04T03:37:44Z'
+    url: https://github.com/Treehouse-00/pymc_console-dist/releases/tag/v0.9.373
     prerelease: false
     notes: >-
       ### Changed
 
-      - A channel message now tells you whether the mesh has carried it. Once your radio has sent it
-      but no repeater has repeated it yet, the row shows a single yellow check; hovering it reads
-      "sent, not yet heard by any repeater". The first time a repeater repeats it, the mark turns
-      into the green double check and the repeat count appears. Before this, a sent message with no
-      repeats looked the same as one that had been carried, which read as a failed send. Direct
-      messages are unchanged: their double check still means the other side acknowledged.
+      - The channels, chat and contacts screens have their glass back. It was dropped with the pixel
+      voice in 0.9.370 and never returned: a matte pane over each screen with a faint reflection of
+      the room and the small lamps along the edge that show the panel is on. The reflection is a
+      little stronger than before (a tenth of the room rather than a twentieth), and every LED
+      screen in the console shares it.
 
-      - In light mode, the labels on the path map (the node prefixes over the map, and the counter
-      in the corner) were dark text on dark glass. They now sit on light glass with dark text; your
-      own node's cell and the map pin stay dark with white text.
+      - In the contacts list, a long name pushed the row's three-dot options key out of the row, so
+      only contacts with short names could be right-clicked or opened for options. Long names now
+      shorten with an ellipsis and the key stays at the right edge on every row.
 
 
       ### Compatibility
