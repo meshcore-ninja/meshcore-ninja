@@ -1,19 +1,25 @@
 source: github
 repo: Treehouse-00/pymc_console-dist
-updatedAt: '2026-09-03T22:28:48.117Z'
+updatedAt: '2026-09-04T03:33:34.318Z'
 releases:
-  - version: v0.9.370
-    name: Release v0.9.370
-    datetime: '2026-09-03T21:49:32Z'
-    url: https://github.com/Treehouse-00/pymc_console-dist/releases/tag/v0.9.370
+  - version: v0.9.372
+    name: Release v0.9.372
+    datetime: '2026-09-04T03:28:32Z'
+    url: https://github.com/Treehouse-00/pymc_console-dist/releases/tag/v0.9.372
     prerelease: false
     notes: >-
       ### Changed
 
-      - The reading print is the companion screens' only voice. It shipped a release ago as a
-      parallel mode behind an ABC key; the key is gone, the pixel voice with it, and every screen
-      prints in GC Basic Inktrap Mono, light for copy and medium for names, with no grain or lamps
-      behind the text. The old toggle's saved setting is cleared on start.
+      - A channel message now tells you whether the mesh has carried it. Once your radio has sent it
+      but no repeater has repeated it yet, the row shows a single yellow check; hovering it reads
+      "sent, not yet heard by any repeater". The first time a repeater repeats it, the mark turns
+      into the green double check and the repeat count appears. Before this, a sent message with no
+      repeats looked the same as one that had been carried, which read as a failed send. Direct
+      messages are unchanged: their double check still means the other side acknowledged.
+
+      - In light mode, the labels on the path map (the node prefixes over the map, and the counter
+      in the corner) were dark text on dark glass. They now sit on light glass with dark text; your
+      own node's cell and the map pin stay dark with white text.
 
 
       ### Compatibility
