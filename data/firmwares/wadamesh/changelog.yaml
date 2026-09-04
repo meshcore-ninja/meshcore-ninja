@@ -1,7 +1,113 @@
 source: github
 repo: ALLFATHER-BV/wadamesh
-updatedAt: '2026-09-01T11:18:29.890Z'
+updatedAt: '2026-09-04T14:04:26.023Z'
 releases:
+  - version: beta_76
+    name: wadamesh beta_76
+    datetime: '2026-09-04T09:07:01Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_76
+    prerelease: true
+    notes: >-
+      Test build. **Stable stays beta_65.**
+
+
+      Flash it at **[flasher.wadamesh.com](https://flasher.wadamesh.com)** (flip the Stable/Beta
+      toggle to Beta), or turn on "Get test builds (beta)" on the device and update over Wi-Fi.
+
+
+      A big drop from [@oumike](https://github.com/oumike), who wrote the themes, the new board and
+      the navigation fixes, and a lot of it comes straight from people filing precise reports. Thank
+      you.
+
+
+      ## Day and Night themes
+
+
+      The firmware has a light theme. **Settings, Display, Appearance** switches between Night and
+      Day, and the Theme chip in the control centre toggles it directly. Night is still the default
+      and looks exactly as it did.
+
+
+      Day is a full palette rather than an inverted one: text, panels, fields, borders, controls,
+      focus rings, charts, status colours and chat bubbles each got their own light values. Changing
+      it restarts the device so the whole interface is rebuilt from one set of colours instead of
+      half-repainted.
+
+
+      By [@oumike](https://github.com/oumike) (#375, closes #296).
+
+
+      ## A new board: Seeed Wio Tracker L2
+
+
+      Display, touch, GPS, microSD, battery and buttons were brought up on real hardware by the
+      contributor, and the board goes on sale next week.
+
+
+      Added and maintained by [@oumike](https://github.com/oumike) (#391), who has the hardware.
+      Treat it as new: if something is wrong on an L2, say so.
+
+
+      ## Your screen was still on when you thought it was off
+
+
+      On the **ThinkNode M9**, turning the screen off only turned the backlight off. The panel kept
+      refreshing the same image behind it, which is what actually burns an image into the glass, and
+      you could see the lock screen faintly in bright light. It now stops driving the panel.
+      Reported and photographed by [@Buko84](https://github.com/Buko84) (#390).
+
+
+      On the **T-Display P4**, Wi-Fi came back on by itself after a power cycle while every switch
+      said it was off, and the radio really was on. The co-processor rejoins your last network on
+      its own at power-on, and the firmware only ever acted when the setting *changed*, so a radio
+      that was already connected was never told to stop. Reported by
+      [@wb6zsu](https://github.com/wb6zsu) (#373).
+
+
+      ## Settings that restart now tell you first
+
+
+      Changing the theme, rotating the screen or switching remote mode restarts the device, and none
+      of them said so: the message was created but the restart happened before the screen could draw
+      it. All three now show the reason and restart a moment later.
+
+
+      ## Typing
+
+
+      - **Accented and Nordic letters on the M9.** The letters were always there; the picker needed
+      a touchscreen. Type a letter, then left and right walk the variants and Enter takes one.
+      Requested by [@leon699](https://github.com/leon699) (#387). This also fixed the last variant
+      in a set being unreachable on the T-Lora Pager, which happened to be the one Nordic users
+      want.
+
+      - **Wi-Fi passwords can be shown while you type them.** Entering a long passphrase blind on a
+      device keyboard is its own failure mode. Requested by
+      [@jesshampshire](https://github.com/jesshampshire) (#381).
+
+      - **A character count** as you approach the 160 character limit, and a mark when you reach it.
+      The limit used to be silent, so typing simply stopped. Requested by
+      [@jrote1](https://github.com/jrote1) (#350).
+
+
+      ## Fixed
+
+
+      - The Discovered list showed impossible hop counts like "255 hop". That value means *path
+      unknown*, which is what a flooded advert carries; it now says so, says "direct" for zero hops,
+      and pluralises. Reported by [@jesshampshire](https://github.com/jesshampshire) (#394).
+
+      - Your own position marker is readable on light maps. It was a white glyph with nothing behind
+      it. Reported by [@100monkeys](https://github.com/100monkeys) (#366).
+
+      - The app drawer's message count no longer stays stale after unlocking. Reported by
+      [@Buko84](https://github.com/Buko84) (#393).
+
+      - Moving through the colour swatches with the d-pad no longer turns the swatch you are on
+      white, which hid the colour you were choosing. Reported by
+      [@Buko84](https://github.com/Buko84) (#
+
+      …
   - version: beta_75
     name: wadamesh beta_75
     datetime: '2026-09-01T11:16:52Z'
@@ -1755,53 +1861,3 @@ releases:
 
 
       Full notes: `release-notes/beta_57.txt`.
-  - version: beta_56
-    name: wadamesh beta_56
-    datetime: '2026-08-01T10:38:29Z'
-    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_56
-    prerelease: true
-    notes: >-
-      ## wadamesh beta_56 — test build
-
-
-      **Update recommended for everyone who ever picked a region preset.**
-
-
-      Flash via **[flasher.wadamesh.com](https://flasher.wadamesh.com)** (Beta toggle), the
-      on-device updater, or LauncherHub WADAMESH BETA.
-
-
-      ### ⚠️ Duty-cycle fix (#161)
-
-      The region presets set the airtime limit **10× too loose**: a 10% preset actually allowed ~91%
-      duty — the home-screen meter reading "91% max duty cycle" was correctly reporting your radio's
-      real budget. This build fixes the preset math **and self-heals affected devices**: if your
-      radio parameters exactly match a preset and carry the old faulty limit, the correct one is
-      written automatically at boot. Hand-tuned airtime factors are never touched. Thanks
-      @Lankyalong for the report.
-
-
-      ### T-Pager
-
-      - **The SD card is used now (#193).** It mounted and browsed but nothing stored to it — the
-      storage feature was never switched on for this board. The Pager now has the same "Store data
-      on SD", boot storage selection and migration as the T-Deck. Thanks @AtomAlex12.
-
-
-      ### Fixes
-
-      - Message details show the region scope for scoped **direct** messages, and no longer show
-      `Scope 0000` when the sender carries the region in the alternate slot (#157, thanks
-      @D-Melhede).
-
-      - Discover app: long node names no longer push the last-heard time off screen (#191, thanks
-      @4nuts). Note: companions don't answer discover pings yet — only repeaters implement the
-      responder — so only repeaters appear, that's expected for now.
-
-      - The unlock animation says WADAMESH (#165 — the last MESHCOMOD leftover, thanks @D-Melhede).
-
-
-      Full changelog: `beta_55...beta_56`
-
-
-      🤖 Generated with [Claude Code](https://claude.com/claude-code)

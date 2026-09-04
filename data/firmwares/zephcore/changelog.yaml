@@ -1,10 +1,10 @@
 source: github
 repo: liquidraver/ZephCore
-updatedAt: '2026-09-04T08:41:10.332Z'
+updatedAt: '2026-09-04T14:04:27.478Z'
 releases:
   - version: 1.17.4-zephcore
     name: Firmware 1.17.4-zephcore
-    datetime: '2026-09-04T07:40:02Z'
+    datetime: '2026-09-04T10:31:49Z'
     url: https://github.com/liquidraver/ZephCore/releases/tag/1.17.4-zephcore
     prerelease: false
     notes: >-

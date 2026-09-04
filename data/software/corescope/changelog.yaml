@@ -1,7 +1,12 @@
 source: github
 repo: Kpa-clawbot/CoreScope
-updatedAt: '2026-08-17T16:30:11.532Z'
+updatedAt: '2026-09-04T14:04:28.251Z'
 releases:
+  - version: v3.10.1
+    name: v3.10.1
+    datetime: '2026-09-04T09:07:58Z'
+    url: https://github.com/Kpa-clawbot/CoreScope/releases/tag/v3.10.1
+    prerelease: false
   - version: v3.9.2
     name: CoreScope v3.9.2
     datetime: '2026-06-13T04:48:03Z'
@@ -1468,94 +1473,3 @@ releases:
     url: https://github.com/Kpa-clawbot/CoreScope/releases/tag/v3.0.0
     prerelease: false
     notes: "# v3.0.0 — The Go Rewrite\r\n\r\nMeshCore Analyzer is now powered by Go. The entire backend — MQTT ingestion, packet decoding, API server, WebSocket broadcast — has been rewritten from Node.js to Go. Same features, same UI, same database. Dramatically faster.\r\n\r\nThis is the biggest change in the project's history. Over 200 commits, 58 issues closed, and a ground-up reimplementation that delivers real, measurable performance gains on every endpoint.\r\n\r\n---\r\n\r\n## ⚡ Performance\r\n\r\nThese are real numbers from production with 56K+ packets:\r\n\r\n| Endpoint | Node.js | Go |\r\n|----------|---------|-----|\r\n| Packet queries | 30-100ms | **sub-millisecond** (in-memory store) |\r\n| GroupByHash | 437ms (9s before store) | **97ms** |\r\n| Analytics (RF, topology, distance) | 1-8 seconds | **all under 100ms** |\r\n| Node health calculation | 13 seconds | **instant** (precomputed) |\r\n| Server startup (56K packets) | ~9 seconds | **< 1 second** |\r\n| Memory (56K packets) | ~1.3 GB | **~300 MB** |\r\n\r\nThe Go server loads all packets into an in-memory store at startup and serves queries directly from RAM. Analytics are precomputed at ingest time — no more scanning the full packet table on every request. TTL caches protect expensive aggregations. The result: every page in the UI feels instant.\r\n\r\n---\r\n\r\n## 🆕 New Features\r\n\r\n### Protobuf API Contract\r\n10 `.proto` files define the exact shape of all 40+ API endpoints and WebSocket messages. Golden fixture tests ensure the Go server matches the Node.js response format byte-for-byte. API drift is caught in CI before it reaches production.\r\n\r\n### Go Runtime Metrics\r\nThe performance page now shows Go-specific runtime stats when connected to a Go backend: goroutine count, heap allocation, GC pause percentiles, and memory breakdown. The engine badge in the stats bar shows **[go]** or **[node]** so you always know which backend you're running.\r\n\r\n### Build Identity\r\nEvery API response from `/api/stats` and `/api/health` now includes `engine`, `version`, `commit`, and `buildTime` fields. The stats bar in the UI shows the commit hash as a clickable link to the exact source.\r\n\r\n### Observer Packet Comparison (#129)\r\nNew `#/compare` page lets you compare what different observers saw for the same packet — side-by-side diffs of paths, timestamps, and signal data.\r\n\r\n### Auto-Updating Nodes List\r\nThe Nodes tab now updates in real-time when ADVERT packets arrive via WebSocket. No more manual refresh to see new nodes.\r\n\r\n### Channel Improvements\r\n- Channel hash displayed for undecrypted GRP_TXT messages — you can see *which* channel even without the key\r\n- Sortable channels table with persistent column sort preferences\r\n- Garbage decryption detection — wrong keys no longer produce garbled \"decrypted\" text\r\n- AES-128-CTR channel decryption natively in Go\r\n\r\n### Node Pruning (#202)\r\nNodes past the retention window are automatically moved to an `inactive_nodes` table instead of polluting the active node list. Pruning runs hourly.\r\n\r\n### Correct Advert Counts\r\nAdvert counts now reflect unique transmissions, not total observations. A packet seen by 8 observers counts as 1 advert, not 8.\r\n\r\n---\r\n\r\n## 🐛 Bug Fixes\r\n\r\n- **Phantom nodes from hop prefixes** (#133) — `autoLearnHopNodes` no longer creates fake nodes from 1-byte repeater IDs. Active node counts, live page counter, and topology analytics all filtered to real nodes only.\r\n- **Offline nodes on map** (#126) — ambiguous hop prefixes excluded from path-seen tracking. Stale nodes dim on the live map instead of disappearing.\r\n- **Disappearing live map nodes** (#130) — stale nodes are dimmed, not removed, preventing the jarring vanish-and-reappear cycle.\r\n- **packetsLastHour always zero** (#182) — early `break` in observer loop prevented counting; fixed across all observers.\r\n- **Corrupted packet decoder crash** (#183) — bounds check on path hops prevents buffer overrun on malformed packets.\r\n- **Node detail rendering crashes** (#190) — `Number()` casts and `Array.isArray` guards \n…"
-  - version: v2.9.0
-    name: v2.9.0 — Database Optimization & Developer Experience
-    datetime: '2026-03-25T22:50:49Z'
-    url: https://github.com/Kpa-clawbot/CoreScope/releases/tag/v2.9.0
-    prerelease: false
-    notes: >-
-      ## 🗜️ Database Optimization
-
-
-      The observations table has been completely rearchitected for efficiency. Existing instances
-      **migrate automatically on startup** — no manual action needed.
-
-
-      - **70% smaller database** — 478MB → 141MB on a real-world instance with 950K observations
-
-      - Observer IDs stored as integer foreign keys instead of 64-char hex strings repeated per row
-
-      - Redundant columns removed (`hash`, `observer_name`, `created_at`)
-
-      - Timestamps stored as epoch integers instead of ISO strings
-
-      - In-memory dedup Set prevents expensive unique index lookups during ingestion
-
-
-      ### Migration Safety
-
-      - Timestamped backup created automatically before migration (never overwrites previous
-      backups)
-
-      - Detects already-migrated databases (safe to restart mid-migration)
-
-      - Falls back gracefully if migration fails — original data preserved
-
-      - `packets_v` view maintains full backward compatibility — no frontend changes needed
-
-
-      ### WAL Management
-
-      - Daily `TRUNCATE` checkpoint at 2:00 AM UTC reclaims WAL file space
-
-      - `VACUUM` + `TRUNCATE` checkpoint runs after migration completes
-
-
-      ## 📊 SQLite Observability
-
-
-      New section in the Performance Dashboard (`#/perf`) showing:
-
-      - DB file size, WAL size, freelist (wasted space)
-
-      - Row counts for all tables
-
-      - WAL busy pages — shows if checkpointing is keeping up
-
-      - Color-coded thresholds (green/yellow/red)
-
-
-      ## 🐛 Bug Fixes
-
-
-      - **`disambiguateHops`**: Restored `known` field that was dropped during a refactor — hop
-      resolution in analytics now correctly reports whether a prefix was resolved
-
-      - **E2E tests**: Fixed channel message queries for `#hashtag` channels (missing URL encoding)
-
-      - **MQTT in tests**: Tests no longer connect to real MQTT brokers — `NODE_ENV=test` skips MQTT
-      setup
-
-
-      ## 🏗️ Setup & Operations
-
-
-      - `manage.sh` — new idempotent setup wizard for Docker deployments
-
-      - Backup/restore now includes config, Caddyfile, and theme
-
-      - Deployment guide rewritten for beginners with Mermaid diagrams
-
-      - Live page packet rendering unified into `renderPacketTree()`
-
-
-      ## 🧪 Tests
-
-
-      839 tests across 9 suites, 0 failures:
-
-      - 30 new migration tests (schema upgrade, idempotency, backup safety, crash recovery)
-
-      - 19 new v3 schema tests (ingestion, dedup, view compatibility)
-
-      - All pre-existing test suites updated and passing
