@@ -1,7 +1,121 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-09-03T19:11:04.507Z'
+updatedAt: '2026-09-04T22:13:02.529Z'
 releases:
+  - version: v4.16.0-rc3
+    name: v4.16.0-rc3
+    datetime: '2026-09-04T21:56:40Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.16.0-rc3
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.16.0-rc3
+
+
+      > **Pre-release.** This is a release candidate for 4.16.0. It is not tagged `latest` and does
+      not publish `:latest` Docker tags. Run it on a mesh you can afford to have misbehave, and
+      please report anything odd.
+
+
+      This RC is dominated by two threads. The first is **adapting to Meshtastic 2.8**, whose
+      behavioral changes break assumptions MeshMonitor had baked in: node numbers are now derived
+      from a node's public key rather than its MAC, so an upgrading node reappears as a stranger
+      with its history orphaned; position and telemetry broadcast became opt-in, so previously
+      chatty nodes go quiet; and Range Test was removed from every 2.8 build. MeshMonitor now
+      detects key-verified identity changes and offers an operator-initiated history merge with a
+      dry-run preview and an undo journal, explains a silent 2.8 node instead of leaving you to
+      guess, and disables Range Test with a notice rather than failing quietly. The second thread is
+      **mobile landscape**, where five separate reports turned out to share one root cause: mobile
+      CSS gated on `max-width` alone silently switches off when a phone rotates, because a landscape
+      phone is wider than the 768px breakpoint. That single mistake was hiding the Sources drawer's
+      close control, misrendering the bottom nav, leaving the map frozen at the wrong size until
+      reload, and stranding the map sidebar as a cramped floating panel.
+
+
+      Also here: MeshBeacon transmit configuration is corrected twice over — once for a stale
+      module-config cache that made saves appear to revert, and once for firmware field removals
+      that made them genuinely impossible — the MeshCore MQTT ingest epic advances through four
+      phases, and a firmware-sourced audit corrects a batch of config help text that had been
+      quietly lying about firmware limits.
+
+
+      ## Features
+
+
+      - Detect Meshtastic 2.8 node-number identity changes (#5044) — pairs an old node to its new
+      number by CRC-32 of the public key, the firmware's own rule, so a rename does not break the
+      match
+
+      - Operator-initiated identity merge with dry run and undo (#5048)
+
+      - Warn when a node goes silent on Meshtastic 2.8+ (#5042)
+
+      - MeshCore MQTT ingest source, Phase 1 (#5043)
+
+      - MeshCore MQTT ingest — packet monitor, Phase 2 (#5046)
+
+      - Grouped packet monitor for MQTT ingest sources, Phase 2b (#5049)
+
+      - MeshCore node discovery from adverts on MQTT ingest, Phase 3 (#5050)
+
+      - MeshCore channel messages from an MQTT region feed, Phase 4 (#5063)
+
+
+      ## Bug Fixes
+
+
+      - Warn instead of silently failing on Range Test for firmware 2.8+ (#5041)
+
+      - Unbury the Sources drawer close control and the header chrome (#5058)
+
+      - Re-flow the map on landscape rotation and back (#5057)
+
+      - Give MapSidebar a real landscape treatment (#5067)
+
+      - Refresh the MeshBeacon module-config cache after a save (#5061)
+
+      - Drop the removed MeshBeacon `broadcast_on_*` fields, target the channel table (#5064)
+
+      - Clarify position broadcast interval limits (#5059) — thanks @temalo
+
+      - Correct stale firmware claims in config help text (#5066)
+
+
+      ## Testing / Infrastructure
+
+
+      - Isolate PG/MySQL fixtures per suite instead of serializing them (#5047) — eight suites
+      shared fixture table names in one test database and raced under parallel Vitest; each suite
+      now gets its own throwaway database
+
+
+      ## Issues Resolved
+
+
+      - #5031 Hide or warn on Range Test for Meshtastic 2.8+ nodes
+
+      - #5032 Handle node ID change on Meshtastic 2.8 upgrade
+
+      - #5033 Warn when node goes silent on 2.8+ due to opt-in position/telemetry change
+
+      - #5045 MeshBeacon single-transmit Region/Preset revert to UNSET after save
+
+      - #5051 Animated connection badge overflows/clips Sources button
+
+      - #5052 Map zoom control renders above Sources sidebar
+
+      - #5053 Mobile landscape: cannot close Sources menu
+
+      - #5054 Map and bottom nav break on landscape rotation
+
+      - #5055 Position Broadcast Interval help text states inaccurate 32s firmware minimum
+
+      - #5056 Help-text audit: stale/misleading firmware claims
+
+      - #5060 MapSidebar full-screen sheet never applies in landscape
+
+      - #5062 MeshBeacon `broadc
+
+      …
   - version: v4.16.0-rc2
     name: v4.16.0-rc2
     datetime: '2026-09-03T16:50:44Z'
@@ -1914,127 +2028,6 @@ releases:
         -p 8080:3001 \
         -v meshmonitor-data:/data \
         ghcr.io/Yeraze/meshmonitor:4.14.2-rc2
-      ```
-
-
-      ### 🧪 Testing
-
-      ✅ All tests passed
-
-      ✅ TypeScript checks passed
-
-      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
-
-
-      ### 📋 Changes
-
-      See commit history for detailed changes.
-  - version: v4.14.2-rc1
-    name: v4.14.2-rc1
-    datetime: '2026-08-13T18:33:48Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.14.2-rc1
-    prerelease: true
-    notes: >-
-      # MeshMonitor v4.14.2-rc1
-
-
-      > ⚠️ **Pre-release**, release candidate for testing. Do not use in production.
-
-
-      First release candidate of the 4.14.2 cycle. Two feature efforts landed: the
-
-      groundwork for **Reticulum** as a third protocol source, and the completion of
-
-      **Meshtastic 2.8** support, which closed the last three 2.8 tracking issues.
-
-
-      ### New features
-
-
-      - **Reticulum (RNS) source, Phase 1a: bridge + backend** (#4690, part of #3960), first phase
-      of adding Reticulum as a third first-class protocol source alongside Meshtastic and MeshCore.
-      Ships a `meshmonitor-rns-bridge` Python sidecar (its own `python:3.12-alpine` image; the main
-      `node:24` image is untouched) speaking versioned JSON over a loopback WebSocket to a Node
-      `ReticulumManager` implementing `ISourceManager`. Two connection modes, `attach` (client of a
-      running `rnsd`) and `tcp_peer`. Migrations 141/142 add `reticulum_destinations` and
-      `reticulum_interfaces`. Interface throughput history rides the shared `telemetry` table, so
-      Dashboard reuse comes for free. A Reticulum source is creatable via the API and fully
-      functional at the backend/bridge layer, **the source-creation UI lands in Phase 1b**, so there
-      is no frontend for it in this RC.
-
-
-      - **MeshBeacon is now configurable, not just decodable** (#4689, closes #3854), firmware 2.8's
-      `MESH_BEACON_APP` broadcast already decoded into the Packet Monitor; this adds a
-      `MeshBeaconConfig` editor on both surfaces that edit module configs (the Configuration page
-      and the Admin Commands tab). Listen/broadcast/legacy-split toggles, the beacon text, and what
-      network to advertise. Gated at firmware 2.8.0, so older devices show the section greyed out
-      rather than accepting a save the device silently drops.
-
-
-      - **MeshBeacon automation trigger** (#4689), a `trigger.meshBeacon` block, filterable by
-      beacon text or narrowed to beacons that actually advertise a network. Beacons are never stored
-      as messages, so they were previously invisible to the Automation Engine.
-
-
-      - **XEdDSA signing status on messages** (#4689, closes #3923), the signed-broadcast shield now
-      appears on messages, alongside the existing MQTT and store-and-forward indicators, completing
-      the packet-level shield that shipped in 4.14.1. Migration 140 persists the flag so it survives
-      a reload. MeshMonitor does not verify the signature itself; it surfaces what the node already
-      checked.
-
-
-      ### Under the hood
-
-
-      - **Firmware 2.8 NodeDB warm tier reviewed** (closes #3548), no code changes needed, verified
-      rather than assumed: MeshMonitor never parses `deviceonly.proto`, so the new `snr_q4` on-disk
-      encoding cannot affect it; a refused `set_favorite` already surfaces through the admin ACK
-      path without retrying; and the node-count drop on nRF52 plus blocked-node persistence were
-      already documented.
-
-
-      - Translations update from Hosted Weblate (#4684).
-
-
-      ### Issues resolved
-
-
-      - #3854 Track: MeshBeacon support (MESH_BEACON_APP, Meshtastic 2.8)
-
-      - #3923 Feature: display packet signing status (XEdDSA, firmware 2.8+)
-
-      - #3548 [2.8 tracking] NodeDB warm tier, node count changes, snr_q4 protobuf field, blocked
-      node persistence
-
-
-      ### Upgrade notes
-
-
-      Three new migrations (140, 141, 142) run automatically on first boot across
-
-      SQLite, PostgreSQL, and MySQL. All three are additive, a new nullable column on
-
-      `messages` and two new Reticulum tables, so no existing data is rewritten.
-
-
-      **Full changelog:** https://github.com/Yeraze/meshmonitor/compare/v4.14.1...v4.14.2-rc1
-
-
-      ## 🚀 MeshMonitor v4.14.2-rc1
-
-
-      ### 📦 Installation
-
-
-      **Docker (recommended):**
-
-      ```bash
-
-      docker run -d \
-        --name meshmonitor \
-        -p 8080:3001 \
-        -v meshmonitor-data:/data \
-        ghcr.io/Yeraze/meshmonitor:4.14.2-rc1
       ```
 
 
