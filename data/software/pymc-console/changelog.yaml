@@ -1,83 +1,77 @@
 source: github
 repo: Treehouse-00/pymc_console-dist
-updatedAt: '2026-09-05T08:10:12.780Z'
+updatedAt: '2026-09-05T23:37:37.546Z'
 releases:
-  - version: v0.9.378
-    name: Release v0.9.378
-    datetime: '2026-09-05T07:51:39Z'
-    url: https://github.com/Treehouse-00/pymc_console-dist/releases/tag/v0.9.378
+  - version: v0.9.380
+    name: Release v0.9.380
+    datetime: '2026-09-05T23:18:10Z'
+    url: https://github.com/Treehouse-00/pymc_console-dist/releases/tag/v0.9.380
     prerelease: false
     notes: >-
       ### Added
 
-      - **Neighbour Links page.** Under Statistics: every peer the repeater hears directly, with how
-      many packets it heard and how many were repeats, when it was last heard, and its smoothed
-      RSSI, SNR and RX score. Pick a link for its history over the last hour to seven days on three
-      LED screens, each packet a point where it was heard, with the repeater's own smoothing drawn
-      through. Needs a repeater from August 2026; older ones show a note.
+      - **The link scope shows one link at a time when you ask.** Choose a link and the scope draws
+      that link alone, its ray and its peer, with everything else hidden. Press the same marker
+      again, press empty glass, press anywhere on the plate that is not a control, or press the
+      CLEAR key that appears at the right end of the scope's head band, and every link comes back.
 
-      - **Direct adverts.** A Direct key beside Send Advert reaches only the neighbours that hear
-      this repeater first-hand; the terminal takes `advert direct`. The Configuration page gains a
-      Direct Advert Interval field and room servers gain both interval fields, shown only when the
-      repeater supports them.
+      - **Keys press down.** Every key in the console, keycaps, toggle keys and the round push
+      buttons, drops one pixel in its frame as its face darkens under the finger and comes back up
+      on release.
 
-      - **TX power checklist.** Raising TX power pauses on a short checklist (antenna, regional
-      limit, duty cycle, supply, neighbours) before it applies. Lowering it applies at once.
 
-      - **Discovered regions and a node's scopes.** The Regions module lists the regions neighbours
-      say they serve, with a count and a plus to add one. A node's map popup shows the regions it
-      reports and an ask-now key.
+      ### Changed
 
-      - **MQTT neighbours table.** The MQTT page shows the publication's phase, next run, interval
-      and last publish, with a Publish now key and a per-broker Publish neighbours table switch.
+      - **The scope is centred on its glass.** Its head band no longer takes a row of the screen, so
+      the drawing sits at the glass's middle instead of hanging low.
 
-      - **Manual CAD check.** The CAD Calibration page runs eight live detections at the current
-      thresholds, or at a sweep's best, and prints the rate.
+      - **The glass falls off on every edge.** The tube's darkening at the left and right edges of
+      reflective screens is half again as strong, and the top and bottom now fall off the same way,
+      so the map, the terminal, the scope and the history strip read as a tube turning away on all
+      four sides.
 
-      - **Terminal search.** A search key on the terminal: type to find in the output, Enter for the
-      next match, Shift+Enter for the previous, Escape to close.
 
-      - **Multi-radio selector.** On a repeater with several radios, a Radio selector on the
-      Configuration page's Radio module and the Radio Hardware page picks which one is edited; the
-      others are left as they are.
+      ### Fixed
 
-      - **Reduce-glare key.** In the map's View gang: every screen in the console drops to the matte
-      level the chat screens use, in one half-second fade, and the choice is remembered. If your
-      system reduces transparency, the glass comes off entirely.
+      - **A hard line inside every screen edge is gone.** The room reflection every screen carries
+      had a transparent margin and then an abrupt step a few pixels in from each edge, which
+      stretched onto the glass as a visible line. The reflection now stretches from inside that
+      border, so it meets the edge smoothly and keeps its soft dark rim.
 
-      - **A face on the map's screen.** A faint graph-paper grid fixed to the glass with a gentle
-      barrel bow, shown on its own while the map loads or when no contact has a position.
 
-      - **Modes band as a corner sheet.** Deep Analysis and Live Trace sit in a small ringed sheet
-      at the top-left of the screen; the position readout rises level with it.
+      ### Under the hood
 
-      - **Keys spring back.** Mode keys (3D terrain, light basemap, reduce glare, the class
-      selectors, the companion's round keys) depress only under your finger; the lamp says the mode
-      is on.
+      - Catalogue proposals for the openHop plugin catalogue are published through a scoped,
+      short-lived GitHub App token instead of a personal token, attributed to the publishing bot,
+      and opened ready for the catalogue's own certification to decide merging (contributed by
+      yellowcooln).
 
-      - **Edge shading on the map.** A soft second shading from the left and right edges, deepest at
-      the corners, that fades with the rest under reduce-glare.
 
-      - **Cleaner, sharper glass.** The reflection is dithered against banding, the room behind it
-      is stored losslessly, and it is drawn at up to 3× device pixels, all paid once when the glass
-      is baked.
+      ### Compatibility
 
-      - **The companion's screens on the same glass.** Their faint room reflection is baked with the
-      edge lamps, so the panels read as smooth black glass instead of blotches.
+      - No repeater database change and no schema migration.
 
-      - **One glass for every screen.** The map's picture screen is the reflective kind; the chat
-      panels, the I/O charts, the terminal, the logs and every other flat screen are the matte kind.
-      Each housing mounts its own glass, so no screen draws its own lamps or sheen.
 
-      - **The terminal on a tube.** Its screen takes the reflective glass; the command line and foot
-      sit on the plate under the bezel, outside the glass; the header bank is the compact height.
 
-      - **A terminal greeting.** WELCOME / EXPLORER in a block-and-shadow face, drawn in letter by
-      letter with a scanline and a sheen, then held in the shell's green. Printed straight away with
-      reduced motion on.
+      ---
 
-      - **The openhop egg.** Type `openhop` (or `bunny`) at the prompt: the screen shimmers away
-      pixel by pixel, a dithered rabbit hops across the bare glass, and the screen comes back
-      exactly as it was. Ctrl+C ends it
+      Full history:
+      [CHANGELOG.md](https://github.com/Treehouse-00/pymc_console-dist/blob/main/CHANGELOG.md)
 
-      …
+
+      ## Installation
+
+      ```bash
+
+      sudo ./manage.sh install
+
+      ```
+
+
+      ## Upgrade
+
+      ```bash
+
+      sudo ./manage.sh upgrade
+
+      ```

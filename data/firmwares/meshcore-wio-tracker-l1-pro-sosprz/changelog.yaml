@@ -1,7 +1,13 @@
 source: github
 repo: sosprz/Meshcore-Wio-Tracker-L1-Pro
-updatedAt: '2026-08-20T16:37:23.023Z'
+updatedAt: '2026-09-05T23:37:11.572Z'
 releases:
+  - version: v1.17.94
+    name: v1.17.94
+    datetime: '2026-09-05T21:18:47Z'
+    url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.17.94
+    prerelease: false
+    notes: "- **Persistent unread-message alerts** - Added `System -> Persistent alerts` with `OFF`, `1 min`, `5 min`, and `10 min` retry intervals. When enabled, the tracker repeats the message chirp while unread direct or non-muted channel messages remain; reminders stop when messages are read or the phone reconnects. The selected interval respects `Sound: OFF`.\r\n- **Per-channel notification modes** - Channel actions now cycle `All messages`, `Mentions only`, and `None`.\r\n- **White/Black keyboard fix** - OLED keyboard and T9 layouts now use the compact OLED geometry in both color themes."
   - version: v1.17.93
     name: v1.17.93
     datetime: '2026-08-20T16:32:41Z'
@@ -132,9 +138,3 @@ releases:
     url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.15.75
     prerelease: false
     notes: "- **Mainstream sync (v1.15 backend)** - Integrated upstream companion protocol/backend changes for v1.15 without adding new on-device UI screens.\r\n- **Default flood scope compatibility** - Added persisted default flood scope name/key handling and companion protocol commands for get/set default scope, while keeping scope editing out of the local UI.\r\n- **GROUP_DATA binary packets** - Added backend send/receive support for channel binary datagrams (`CMD_SEND_CHANNEL_DATA` / `RESP_CODE_CHANNEL_DATA_RECV`) so companion apps can use the new group-data protocol.\r\n- **Protocol/version update** - Bumped companion protocol metadata to firmware protocol code `11` / `v1.15.0` and aligned radio frequency validation with upstream lower-frequency support."
-  - version: v1.14.1.73
-    name: v1.14.1.73
-    datetime: '2026-03-27T18:43:07Z'
-    url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.14.1.73
-    prerelease: false
-    notes: "- **Tracker -> phone message replay fix** - Messages sent from the Wio Tracker / companion device are now queued for companion-app sync as well, so outgoing DMs and channels show up in the mobile app and can also be replayed after reconnect.\r\n- **Muted channels survive reboot** - Channel mute/unmute state is now persisted and restored after restart, so accidental Wio Tracker L1 side-button reboots do not clear muted channels.\r\n- **Private/group message mix fix** - Fixed channel history/state corruption where removing or reordering channels could let a different hashtag/private group inherit old slot history, unread state, or mute state from another channel.\r\n- **Channel send text corruption fix** - Fixed channel send/local-echo handling for app-framed messages so private/group messages no longer pick up random garbage characters from non-null-terminated payload bytes."
