@@ -1,46 +1,83 @@
 source: github
 repo: Treehouse-00/pymc_console-dist
-updatedAt: '2026-09-05T03:32:20.939Z'
+updatedAt: '2026-09-05T08:10:12.780Z'
 releases:
-  - version: v0.9.377
-    name: Release v0.9.377
-    datetime: '2026-09-05T01:11:02Z'
-    url: https://github.com/Treehouse-00/pymc_console-dist/releases/tag/v0.9.377
+  - version: v0.9.378
+    name: Release v0.9.378
+    datetime: '2026-09-05T07:51:39Z'
+    url: https://github.com/Treehouse-00/pymc_console-dist/releases/tag/v0.9.378
     prerelease: false
     notes: >-
-      ### Fixed
+      ### Added
 
-      - When the repeater is set to use the waev:outpost plugin as its main web interface, the page
-      came up blank at the root address; only the longer `/plugins/waev.outpost/` address worked.
-      The console now works at both, and deep links such as `/system/logs` work at both too. Nothing
-      about the plugin package's layout or the repeater's settings changed.
+      - **Neighbour Links page.** Under Statistics: every peer the repeater hears directly, with how
+      many packets it heard and how many were repeats, when it was last heard, and its smoothed
+      RSSI, SNR and RX score. Pick a link for its history over the last hour to seven days on three
+      LED screens, each packet a point where it was heard, with the repeater's own smoothing drawn
+      through. Needs a repeater from August 2026; older ones show a note.
 
+      - **Direct adverts.** A Direct key beside Send Advert reaches only the neighbours that hear
+      this repeater first-hand; the terminal takes `advert direct`. The Configuration page gains a
+      Direct Advert Interval field and room servers gain both interval fields, shown only when the
+      repeater supports them.
 
-      ### Compatibility
+      - **TX power checklist.** Raising TX power pauses on a short checklist (antenna, regional
+      limit, duty cycle, supply, neighbours) before it applies. Lowering it applies at once.
 
-      - No repeater database change and no schema migration.
+      - **Discovered regions and a node's scopes.** The Regions module lists the regions neighbours
+      say they serve, with a count and a plus to add one. A node's map popup shows the regions it
+      reports and an ask-now key.
 
+      - **MQTT neighbours table.** The MQTT page shows the publication's phase, next run, interval
+      and last publish, with a Publish now key and a per-broker Publish neighbours table switch.
 
+      - **Manual CAD check.** The CAD Calibration page runs eight live detections at the current
+      thresholds, or at a sweep's best, and prints the rate.
 
-      ---
+      - **Terminal search.** A search key on the terminal: type to find in the output, Enter for the
+      next match, Shift+Enter for the previous, Escape to close.
 
-      Full history:
-      [CHANGELOG.md](https://github.com/Treehouse-00/pymc_console-dist/blob/main/CHANGELOG.md)
+      - **Multi-radio selector.** On a repeater with several radios, a Radio selector on the
+      Configuration page's Radio module and the Radio Hardware page picks which one is edited; the
+      others are left as they are.
 
+      - **Reduce-glare key.** In the map's View gang: every screen in the console drops to the matte
+      level the chat screens use, in one half-second fade, and the choice is remembered. If your
+      system reduces transparency, the glass comes off entirely.
 
-      ## Installation
+      - **A face on the map's screen.** A faint graph-paper grid fixed to the glass with a gentle
+      barrel bow, shown on its own while the map loads or when no contact has a position.
 
-      ```bash
+      - **Modes band as a corner sheet.** Deep Analysis and Live Trace sit in a small ringed sheet
+      at the top-left of the screen; the position readout rises level with it.
 
-      sudo ./manage.sh install
+      - **Keys spring back.** Mode keys (3D terrain, light basemap, reduce glare, the class
+      selectors, the companion's round keys) depress only under your finger; the lamp says the mode
+      is on.
 
-      ```
+      - **Edge shading on the map.** A soft second shading from the left and right edges, deepest at
+      the corners, that fades with the rest under reduce-glare.
 
+      - **Cleaner, sharper glass.** The reflection is dithered against banding, the room behind it
+      is stored losslessly, and it is drawn at up to 3× device pixels, all paid once when the glass
+      is baked.
 
-      ## Upgrade
+      - **The companion's screens on the same glass.** Their faint room reflection is baked with the
+      edge lamps, so the panels read as smooth black glass instead of blotches.
 
-      ```bash
+      - **One glass for every screen.** The map's picture screen is the reflective kind; the chat
+      panels, the I/O charts, the terminal, the logs and every other flat screen are the matte kind.
+      Each housing mounts its own glass, so no screen draws its own lamps or sheen.
 
-      sudo ./manage.sh upgrade
+      - **The terminal on a tube.** Its screen takes the reflective glass; the command line and foot
+      sit on the plate under the bezel, outside the glass; the header bank is the compact height.
 
-      ```
+      - **A terminal greeting.** WELCOME / EXPLORER in a block-and-shadow face, drawn in letter by
+      letter with a scanline and a sheen, then held in the shell's green. Printed straight away with
+      reduced motion on.
+
+      - **The openhop egg.** Type `openhop` (or `bunny`) at the prompt: the screen shimmers away
+      pixel by pixel, a dithered rabbit hops across the bare glass, and the screen comes back
+      exactly as it was. Ctrl+C ends it
+
+      …
