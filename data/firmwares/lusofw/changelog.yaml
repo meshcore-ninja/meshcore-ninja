@@ -1,7 +1,115 @@
 source: github
 repo: Meshcore-Portugal/lusofw
-updatedAt: '2026-08-17T16:29:56.200Z'
+updatedAt: '2026-09-05T03:31:46.803Z'
 releases:
+  - version: v2026.9.1-rc4-10985c1
+    name: v2026.9.1-rc4-10985c1
+    datetime: '2026-09-04T23:56:14Z'
+    url: https://github.com/Meshcore-Portugal/lusofw/releases/tag/v2026.9.1-rc4-10985c1
+    prerelease: true
+    notes: >-
+      Automated dev prerelease of dev@10985c1 for v2026.9.1-rc4.
+
+
+
+      Based on MeshCore v1.17.1
+
+      main@d92964352441e53b93e8667b802e04f6e072b39e
+
+
+      ### Funcionalidades
+
+
+      - REPETIDOR: Atribuição automática de regiões geográficas a partir da localização do nó
+      (coordenadas das preferências ou GPS).
+
+      - RÁDIO: Novo modo automático para o limiar de interferência (`set int.thresh 255`, `get
+      int.thresh` responde `auto`), guardado pela flag de build `LUSOFW_RADIO_INT_THR_AUTO`.
+
+      - REPETIDOR: Adicionada proteção de adverts (`ENABLE_ADVERT_PROTECT`): o advert de cada
+      repetidor remoto é repetido no máximo uma vez a cada 12 horas (por chave pública); os adverts
+      duplicados continuam a ser processados localmente, mas já não são retransmitidos. Motivado por
+      firmware muito antigo que entra frequentemente em boot loop e gera advert storms durante
+      horas.
+
+
+      ### Segurança
+
+
+      - REPETIDOR: A sincronização de hora por rede aceita agora correções do relógio em qualquer
+      direção (incluindo para trás).
+
+      - REPETIDOR: Adicionado limite de sanidade contra saltos impossíveis para a frente (timekeeper
+      com bug ou comprometido).
+
+
+      ### Correções
+
+
+      - CLIENTE: A página inicial do GPS agora fica oculta no carrossel quando nenhum GPS é
+      detectado na porta série no arranque, em vez de aparecer sempre quando `ENV_INCLUDE_GPS` está
+      ativado.
+
+      - REPETIDOR: Corrigido o envio de flood adverts: agora respeita o `default_scope` e o modo de
+      hash de caminho (`path_hash_mode` nas preferências).
+
+      - REPETIDOR: Removida a redução probabilística de flood adverts.
+
+      - REPETIDOR: Corrigido um *buffer overflow* no acumulador de comandos série.
+
+      - NRF52: Limpo o registo de retenção GPREGRET (0) no arranque e antes do SYSTEMOFF, evitando
+      que um valor mágico de DFU residual faça o dispositivo arrancar no modo bootloader.
+
+
+      #### Melhorias
+
+
+      - CLIENTE: Extraídos para `src/lusofw/` os módulos comuns `BootScreen` (logótipo de arranque),
+      `BatteryCurve` (curva de descarga LiPo) e `SmartAdverts` (agendamento determinístico de
+      adverts), eliminando código duplicado entre as UIs; sem alteração de comportamento.
+
+      - RÁDIO: Os logs de RSSI/CAD em `isChannelActive()` e o log de conclusão de TX no `Dispatcher`
+      passaram a estar guardados pela flag `LUSOFW_RADIO_DEBUG`.
+
+      - CLI: Adicionada a leitura do motivo de arranque do ESP32 (`get pwrmgt.bootreason`).
+
+      - CLI: Reforçada a cópia segura de strings no tratamento de comandos.
+
+      - RÁDIO: Ajustado o atraso de retentativa CAD para um intervalo entre 120 e 360 ms.
+
+
+      #### Observabilidade
+
+
+      - DISPATCHER: Adicionados logs de debug para conclusão de TX.
+
+      - ESTATÍSTICAS: Removidos parâmetros não usados na formatação de respostas.
+
+
+      #### Build e Configuração
+
+
+      - BUILD: Adicionadas as flags `LUSOFW_LIPO_CURVE` e `LUSOFW_BOOT_LOGO_PT`, que permitem
+      reverter a curva de bateria LiPo e o logótipo de arranque para o comportamento upstream sem
+      editar código.
+
+      - BUILD: Convertidos os blocos mortos `#if 0` das UIs (ui-new/ui-orig) em guards nomeados e
+      removido código de referência duplicado.
+
+      - BUILD: `examples/simple_room_server/MyMesh.cpp` revertido para o conteúdo upstream: novas
+      instalações de room server passam a utilizar o intervalo de flood advert predefinido do
+      MeshCore (47 h); as instalações existentes não são afetadas.
+
+      - BUILD: Removidas divergências cosméticas face ao conteúdo upstream e normalizados os
+      fins-de-linha CRLF nos variants `minewsemi_me25ls01` e `wio_wm1110`, reduzindo conflitos em
+      futuras sincronizações.
+
+      - BUILD: Adicionada a variável `DISABLE_DEBUG` ao processo de build.
+
+      - BUILD: Reorganizadas as build flags no platformio.ini.
+
+      - BUILD: Adicionado o ambiente de build da ponte RS232 (`heltec_v4_repeater_bridge_rs232`)
+      para o Heltec v4.
   - version: v2026.7.2-rc3-bdd8e64
     name: v2026.7.2-rc3-bdd8e64
     datetime: '2026-08-06T13:05:47Z'

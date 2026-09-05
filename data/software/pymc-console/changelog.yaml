@@ -1,24 +1,19 @@
 source: github
 repo: Treehouse-00/pymc_console-dist
-updatedAt: '2026-09-04T08:41:32.622Z'
+updatedAt: '2026-09-05T03:32:20.939Z'
 releases:
-  - version: v0.9.373
-    name: Release v0.9.373
-    datetime: '2026-09-04T03:37:44Z'
-    url: https://github.com/Treehouse-00/pymc_console-dist/releases/tag/v0.9.373
+  - version: v0.9.377
+    name: Release v0.9.377
+    datetime: '2026-09-05T01:11:02Z'
+    url: https://github.com/Treehouse-00/pymc_console-dist/releases/tag/v0.9.377
     prerelease: false
     notes: >-
-      ### Changed
+      ### Fixed
 
-      - The channels, chat and contacts screens have their glass back. It was dropped with the pixel
-      voice in 0.9.370 and never returned: a matte pane over each screen with a faint reflection of
-      the room and the small lamps along the edge that show the panel is on. The reflection is a
-      little stronger than before (a tenth of the room rather than a twentieth), and every LED
-      screen in the console shares it.
-
-      - In the contacts list, a long name pushed the row's three-dot options key out of the row, so
-      only contacts with short names could be right-clicked or opened for options. Long names now
-      shorten with an ellipsis and the key stays at the right edge on every row.
+      - When the repeater is set to use the waev:outpost plugin as its main web interface, the page
+      came up blank at the root address; only the longer `/plugins/waev.outpost/` address worked.
+      The console now works at both, and deep links such as `/system/logs` work at both too. Nothing
+      about the plugin package's layout or the repeater's settings changed.
 
 
       ### Compatibility
