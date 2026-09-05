@@ -1,6 +1,6 @@
 source: github
 repo: andymux/meshos-releases
-updatedAt: '2026-09-03T19:11:04.770Z'
+updatedAt: '2026-09-05T16:37:49.070Z'
 releases:
   - version: v1.0.16
     name: MeshOS v1.0.16
@@ -55,6 +55,16 @@ releases:
 
       APK SHA-256:
       `8d504baad5f6882643d509a42ead91b6703b2a81655d9a064ef4994d12fd1027`
+
+
+      ### macOS
+      Download `MeshOS-v1.0.16.dmg`, open it and drag MeshOS into Applications. Needs
+      macOS 11 or later. The app is not notarised, so the first time you run it
+      right-click MeshOS and choose Open, then Open again in the warning. The in-app
+      update checker is Android only; new macOS builds are posted here.
+
+      DMG SHA-256:
+      `42a704a2923483c078b43e4aea9e69ccb59780d87ee72bb8a3715d69bbbeafca`
   - version: fw-v1.7.2
     name: MeshOS firmware v1.7.2
     datetime: '2026-09-03T09:43:44Z'
