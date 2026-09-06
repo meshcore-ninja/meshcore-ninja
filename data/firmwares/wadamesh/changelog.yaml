@@ -1,7 +1,104 @@
 source: github
 repo: ALLFATHER-BV/wadamesh
-updatedAt: '2026-09-04T14:04:26.023Z'
+updatedAt: '2026-09-06T16:45:49.739Z'
 releases:
+  - version: beta_77
+    name: wadamesh beta_77
+    datetime: '2026-09-06T16:36:48Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_77
+    prerelease: true
+    notes: >-
+      Test build. **Stable stays beta_65.**
+
+
+      Flash it at **[flasher.wadamesh.com](https://flasher.wadamesh.com)** (Beta toggle), or turn on
+      "Get test builds (beta)" on the device and reboot.
+
+
+      **If you are on beta_76, this is the one to take**: it fixes two things beta_76 broke.
+
+
+      ## Two things beta_76 broke
+
+
+      A **Lua app was covered by the app drawer** whenever a message arrived. The app kept running
+      underneath, but most of its screen vanished. Apps opened from the drawer deliberately leave it
+      open behind them, and the badge refresh added in beta_76 rebuilt it on every change of the
+      unread count, which put it back in front. Reported by Jade, reproduced by mysterywavi (#415).
+      The same change was also resetting the drawer's scroll position on every message; fixed too.
+
+
+      On the **ThinkNode M9, accented letters can now be selected**. beta_76 made the picker appear
+      on that board for the first time, but the arrow keys were taken by the text cursor before
+      reaching it, so the letters were visible and unreachable. Reported by
+      [@DenRalle](https://github.com/DenRalle) (#410).
+
+
+      ## New
+
+
+      **Browser file transfer.** Copy files on and off the card from a browser, protected by a six
+      digit code shown on screen. Uploads are checksummed and committed atomically, so an
+      interrupted transfer cannot leave a half written file, and three wrong codes lock attempts out
+      for thirty seconds. On the boards with a removable card. By
+      [@oumike](https://github.com/oumike) (#413, closes #400).
+
+
+      **Advertise a position without advertising your address.** Settings, GPS: exact, or displaced
+      by up to 100 m, 250 m or 1 km. Only what you broadcast moves; your own map keeps the real fix.
+      The displacement is the same every time rather than random per advert, which is the point: a
+      fresh offset each time would scatter points around where you really are and averaging them
+      would recover your true location. Requested by [@Danie10](https://github.com/Danie10) (#399).
+
+
+      **Set the clock by hand.** Settings, Clock, in local time. With no GPS, no network and no
+      phone there was previously no way to set it at all, and message timestamps are built from it.
+      Requested by [@dreirund](https://github.com/dreirund) (#105).
+
+
+      ## ThinkNode M9
+
+
+      Control centre navigation, message actions and the unlock gesture, all by
+      [@oumike](https://github.com/oumike) (#412, #407). Replying no longer needs a five second
+      hold: Enter on a selected message does it, and unlocking is a double press of the d-pad
+      centre. Requested by [@Buko84](https://github.com/Buko84) (#402).
+
+
+      The app drawer no longer jumps to the settings gear when moving up from the middle of the list
+      (#405, #404).
+
+
+      **The card could stop responding until a reboot.** Opening Settings, About at the wrong moment
+      could park the tile worker and the SD recovery path against each other, and nothing could then
+      break the deadlock. Traced from the code by [@cvhviz](https://github.com/cvhviz) without being
+      able to reproduce it, which was the right call: no user could have reported this usefully
+      (#364).
+
+
+      ## Fixed
+
+
+      On the **T-Display P4**, a Lua app's first line is no longer cut in half by the status bar,
+      and the drawer options fit the screen (#236, #238,
+      [@D-Melhede](https://github.com/D-Melhede)). Both were fixed pixel sizes in an interface whose
+      text scales, so both also affected any board at Large or Huge text size, not only the P4.
+      Sweeping for the same pattern found eight more panels, all now scaled.
+
+
+      **Wio Tracker L2** wake and screen controls (#406, [@oumike](https://github.com/oumike)).
+
+
+      **Download mode** says what it is for and how to leave it. It waits for a USB flash with the
+      interface stopped, which read as a freeze; the entry now says "wait for USB flash" and the
+      message says RESET cancels. Reported by [@dreirund](https://github.com/dreirund) (#104), who
+      was right that a state you cannot leave without already knowing the way out is a bug even when
+      the code is correct.
+
+
+      The theme chip keeps one icon in both states, matching Do Not Disturb: the chip's own f
+
+      …
   - version: beta_76
     name: wadamesh beta_76
     datetime: '2026-09-04T09:07:01Z'
@@ -1778,86 +1875,3 @@ releases:
 
 
       Full notes: `release-notes/beta_58.txt`.
-  - version: beta_57
-    name: wadamesh beta_57
-    datetime: '2026-08-03T15:18:09Z'
-    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_57
-    prerelease: true
-    notes: >-
-      Test build. Stable stays **beta_50**.
-
-
-      Flash it from **https://flasher.wadamesh.com** (flip the Beta toggle), or on-device via
-      Settings → Firmware with "Get test builds (beta)" enabled.
-
-
-      Most of this beta is contributed work: **@PixPMusic** (storage and Pager fixes) and
-      **@mikecarper** (the new send retry). Thank you both.
-
-
-      ---
-
-
-      ### Sends retry until the mesh has heard them
-
-
-      Until now a message was transmitted exactly once. If that single transmission collided with
-      other traffic or a repeater was mid-hop, it was simply gone — the app showed it as sent, the
-      mesh never saw it. Built by **@mikecarper** (#207): the device now listens for evidence its
-      message went out (a repeater echoing it, or the delivery ACK) and retransmits on a growing
-      backoff until something confirms it was heard — direct and flood sends alike, including sends
-      from the phone app. If you prefer the old single-shot behaviour, there is a new toggle under
-      **Settings → Radio & Mesh → "Retry sends until heard"** (on by default).
-
-
-      ### Saving settings on SD storage was broken
-
-
-      If your device stores data on the SD card (T-Deck, V4-R8, Pager, Launcher installs), every
-      settings save has been failing with "Couldn't save name to storage" and quietly surviving only
-      through a recovery file. The commit step renamed a file onto itself because both rename
-      arguments shared one path buffer, so it could never succeed. Found and fixed by **@PixPMusic**
-      (#211).
-
-
-      Two more storage fixes from the same series: watchdog state is now preserved around long
-      SD/flash work instead of being blindly re-armed afterwards, which removes a cause of spurious
-      watchdog reboots (#213), and preference reads no longer hand out pointers into a shared cache
-      that another task could invalidate mid-read (#212).
-
-
-      ### Pager radio: the oscillator voltage was wrong
-
-
-      The SX1262 T-Lora Pager drove its radio oscillator at a generic 1.6 V fallback; LilyGo's own
-      reference code uses 3.0 V for this exact board. The result was a weak link — transmissions
-      nearby nodes missed, ACKs that never arrived. **@PixPMusic** confirmed on hardware that the
-      voltage was the difference (#209).
-
-
-      ### Fixes
-
-
-      - **Discover froze when a node name contains an emoji or a `#`.** The scanner list colours
-      each row with text markup, and a name cut mid-emoji (or a stray hash) broke that markup for
-      every row after it — the list looked frozen from that point on. Names are now cleaned and
-      escaped before display, here and in the message-info repeat list. Reported by **@4nuts** with
-      the exact culprit name, "Ouderkerk☀️" (#223).
-
-      - **Formatting an SD card on the V4-R8 or ThinkNode M9 hung forever.** The Format button
-      exists on both boards, but the code that performs the format was only compiled for the T-Deck
-      — the "this can take up to a minute" notice stayed up with nothing running behind it, and the
-      card stayed unusable until a reboot. Reported by **@TrustYourTechnoLust** (#172).
-
-      - **Files-app Copy/Paste silently did nothing except on the T-Deck** — same root cause as the
-      format hang, fixed the same way.
-
-
-      ---
-
-
-      Both P4 panel variants are built fresh for this tag: `wadamesh-tdisplay-p4*` (AMOLED) and
-      `wadamesh-tdisplay-p4-lcd*` (TFT-LCD).
-
-
-      Full notes: `release-notes/beta_57.txt`.

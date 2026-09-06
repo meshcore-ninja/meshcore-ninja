@@ -1,7 +1,125 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-09-04T22:13:02.529Z'
+updatedAt: '2026-09-06T16:46:07.108Z'
 releases:
+  - version: v4.16.0-rc4
+    name: v4.16.0-rc4
+    datetime: '2026-09-06T16:03:00Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.16.0-rc4
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.16.0-rc4
+
+
+      > **Pre-release.** A release candidate for 4.16.0. Not tagged `latest`, and no `:latest`
+      Docker tags. Please report anything odd.
+
+
+      This RC is mostly repair work, and three of the fixes were quietly destroying or wasting
+      things rather than merely looking wrong. The telemetry retention purge read two **per-source**
+      settings with their un-namespaced keys, found nothing on every 4.x install, and fell through
+      to the ordinary seven-day cutoff — so it had been deleting favourited nodes' history hourly,
+      which is precisely the history that setting exists to protect. Reset Traceroutes tripped a
+      source-scope guard and showed an error, but only after its unguarded sibling had already wiped
+      every source's traceroutes; the same defect meant a global node purge wiped them silently,
+      with no error at all. And a single dropped MQTT connection could start a reconnect loop that
+      outlived the original fault, rebuilding sockets against a third-party broker indefinitely —
+      measured at 216 rebuilds in ten minutes where there should have been one.
+
+
+      The rest is the mobile-landscape family. Five separately reported bugs shared one cause:
+      mobile CSS gated on `max-width` alone silently switches off when a phone rotates, because a
+      landscape phone is *wider* than the 768px breakpoint. That single mistake was hiding the
+      Sources drawer's close control, collapsing the bottom nav to a 48px stub with two tabs
+      unreachable, leaving the map frozen at the wrong size until reload, stranding the map sidebar
+      as a cramped floating panel, and giving the Device config form a 94px strip to render in. Also
+      fixed: the Network Survey panel had never requested its own endpoint correctly, Remote Admin's
+      Save Security Config button could never enable, and channel/room names were near-invisible in
+      High Contrast Dark.
+
+
+      ## Bug Fixes
+
+
+      - Telemetry retention purge read favourites from the wrong settings namespace (#5082)
+
+      - Scope traceroute purges, and guard the sibling that never did (#5089)
+
+      - Stop the upstream MQTT broker connection storm (#5081)
+
+      - Request the network survey under `/api` so it reaches the API router (#5086)
+
+      - Stamp the security load gate from the per-section load too (#5091)
+
+      - Offset content by the header's real height, not a constant (#5075)
+
+      - Give the Device config form the screen in landscape (#5073)
+
+      - Re-flow the map on landscape rotation and back (#5057)
+
+      - Give MapSidebar a real landscape treatment (#5067)
+
+      - Unbury the Sources drawer close control and the header chrome (#5058)
+
+      - Stop a long source name from running into the connection dot (#5074)
+
+      - Scope the non-scrollable-page rule to the channels tab (#5084)
+
+      - Use theme text color for channel/room row buttons (#5072)
+
+
+      ## Features
+
+
+      - MeshCore observer device stats from the `/status` topic, Phase 5 (#5076)
+
+      - MeshCore shared read surfaces see an MQTT ingest source, Phase 5.5 (#5083)
+
+      - Persist MeshCore observer noise floor as telemetry (#5090)
+
+
+      ## Documentation
+
+
+      - Document the MeshCore MQTT ingest source (#5085)
+
+
+      ## Issues Resolved
+
+
+      - #5051 Animated connection badge overflows/clips Sources button
+
+      - #5052 Map zoom control renders above Sources sidebar
+
+      - #5053 Mobile landscape: cannot close Sources menu
+
+      - #5054 Map and bottom nav break on landscape rotation
+
+      - #5069 Device config category picker eats most of the usable space
+
+      - #5070 Info page heading clipped behind fixed top bar
+
+      - #5071 Channel/room name text colour accessibility
+
+      - #5077 Save Security Config never enables after loading
+
+      - #5078 Network Survey fails with "Could not build the survey"
+
+      - #5079 MQTT connection storm floods logs
+
+      - #5080 Telemetry Dashboard shows only ~7 days for favourited nodes
+
+      - #5088 Reset Traceroutes throws from the per-source Danger Zone
+
+
+      ## Upgrade Notes
+
+
+      **Two fixes stop ongoing data loss but cannot undo it.** Telemetry history already purged by
+      the favourites bug (#5080), and traceroute history already wiped by either path in #5088, are
+      unrecoverable. After upgrading, retention is honoured going forward — a 
+
+      …
   - version: v4.16.0-rc3
     name: v4.16.0-rc3
     datetime: '2026-09-04T21:56:40Z'
@@ -1929,105 +2047,6 @@ releases:
         -p 8080:3001 \
         -v meshmonitor-data:/data \
         ghcr.io/Yeraze/meshmonitor:4.14.2-rc3
-      ```
-
-
-      ### 🧪 Testing
-
-      ✅ All tests passed
-
-      ✅ TypeScript checks passed
-
-      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
-
-
-      ### 📋 Changes
-
-      See commit history for detailed changes.
-  - version: v4.14.2-rc2
-    name: v4.14.2-rc2
-    datetime: '2026-08-14T19:33:20Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.14.2-rc2
-    prerelease: true
-    notes: >-
-      ## What's Changed
-
-      * feat(reticulum): Phase 1b — frontend + deployment (#3960) by @Yeraze in
-      https://github.com/Yeraze/meshmonitor/pull/4698
-
-      * fix(automation): let MT↔MC bridge relay the operator's own messages by @Yeraze in
-      https://github.com/Yeraze/meshmonitor/pull/4695
-
-      * fix(unified): gate telemetry on nodes:read, fetch MeshCore nodes by publicKey by @Yeraze in
-      https://github.com/Yeraze/meshmonitor/pull/4701
-
-      * fix(docker): skip puppeteer's Chrome download in the main image by @Yeraze in
-      https://github.com/Yeraze/meshmonitor/pull/4707
-
-      * chore(deps-dev): bump @types/better-sqlite3 from 7.6.13 to 9.6.0 by @dependabot[bot] in
-      https://github.com/Yeraze/meshmonitor/pull/4652
-
-      * chore(deps): bump lucide-react from 1.29.0 to 1.30.0 by @dependabot[bot] in
-      https://github.com/Yeraze/meshmonitor/pull/4653
-
-      * feat(reticulum): Phase 2 — LXMF messaging (#3960) by @Yeraze in
-      https://github.com/Yeraze/meshmonitor/pull/4706
-
-      * fix(automation): mark tapback/reply text on the MT→MC bridge by @Yeraze in
-      https://github.com/Yeraze/meshmonitor/pull/4699
-
-      * Translations update from Hosted Weblate by @weblate in
-      https://github.com/Yeraze/meshmonitor/pull/4688
-
-      * docs(add-ons): list CardMesh and document the REST API integration path by @Yeraze in
-      https://github.com/Yeraze/meshmonitor/pull/4708
-
-      * feat(reticulum): Phase 3 — position, telemetry & own-mode radio (#3960) by @Yeraze in
-      https://github.com/Yeraze/meshmonitor/pull/4713
-
-      * feat(admin): warn when position precision exceeds the public-channel clamp (#4705) by
-      @Yeraze in https://github.com/Yeraze/meshmonitor/pull/4710
-
-      * fix(tcp): propagate asynchronous socket write failures by @gdiciocco in
-      https://github.com/Yeraze/meshmonitor/pull/4692
-
-      * fix(pkg): declare the supported Node range in engines (#4703) by @Yeraze in
-      https://github.com/Yeraze/meshmonitor/pull/4714
-
-      * Fix traceroute channel resolution: 3 bypassing paths + PSK/name gaps by @Yeraze in
-      https://github.com/Yeraze/meshmonitor/pull/4712
-
-      * feat(reticulum): Phase 4 — topology & remote monitoring (#3960) by @Yeraze in
-      https://github.com/Yeraze/meshmonitor/pull/4715
-
-      * docs(reticulum): close out epic — Phase 4 done, Phase 5 (desktop parity) descoped (#3960) by
-      @Yeraze in https://github.com/Yeraze/meshmonitor/pull/4717
-
-      * chore(release): 4.14.2-rc2 by @Yeraze in https://github.com/Yeraze/meshmonitor/pull/4719
-
-
-      ## New Contributors
-
-      * @gdiciocco made their first contribution in https://github.com/Yeraze/meshmonitor/pull/4692
-
-
-      **Full Changelog**: https://github.com/Yeraze/meshmonitor/compare/v4.14.2-rc1...v4.14.2-rc2
-
-      ## 🚀 MeshMonitor v4.14.2-rc2
-
-
-      ### 📦 Installation
-
-
-      **Docker (recommended):**
-
-      ```bash
-
-      docker run -d \
-        --name meshmonitor \
-        -p 8080:3001 \
-        -v meshmonitor-data:/data \
-        ghcr.io/Yeraze/meshmonitor:4.14.2-rc2
       ```
 
 
