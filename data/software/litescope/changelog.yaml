@@ -1,7 +1,13 @@
 source: github
 repo: RikoDEV/litescope
-updatedAt: '2026-08-17T16:30:12.736Z'
+updatedAt: '2026-09-06T13:27:44.054Z'
 releases:
+  - version: v1.0.4
+    name: liteScope v1.0.4
+    datetime: '2026-09-06T08:54:47Z'
+    url: https://github.com/RikoDEV/litescope/releases/tag/v1.0.4
+    prerelease: false
+    notes: "### Other\r\n\r\n- Update @mui/material to 9.4.0 for improved accessibility behavior and component fixes (#75). (#75)\r\n- Update i18next to 26.4.0 with faster translation hierarchy resolution and dependency security updates (#70). (#70)\r\n- Update Vitest to 4.1.11 with fixes for test concurrency, browser cleanup, and redirect mock handling (#68). (#68)\r\n- Update Vite to 8.2.2 with development-server, sourcemap, and dependency compatibility fixes (#67). (#67)\r\n- Update @vitejs/plugin-react to 6.1.0 with optional experimental React Compiler support (#66). (#66)\r\n- Update the SQLite driver to modernc.org/sqlite 1.57.0 (#65). (#65)\r\n- Update React type definitions to 19.2.18 (#62). (#62)\r\n- Update React DOM type definitions to 19.2.4 (#61). (#61)\r\n- Update Node.js type definitions to 26.2.0 (#60). (#60)\r\n- Update Node.js type definitions to 26.1.2 (#45). (#45)\r\n- Update the SQLite driver to modernc.org/sqlite 1.56.0 (#51). (#51)\r\n- Update Leaflet type definitions to 1.9.22 (#52). (#52)\r\n- Update Vite to 8.2.1 with build and development-server fixes (#53). (#53)\r\n- Update @vitejs/plugin-react to 6.0.5 with a faster React Compiler preset filter (#47). (#47)\r\n- Update Vite to 8.2.0 with development-server and build improvements (#48). (#48)\r\n- Update the SQLite driver to modernc.org/sqlite 1.55.0 (#44). (#44)\r\n\r\n### Frontend\r\n\r\n- Update react-i18next to 17.0.12 so keyless ICU translation components render their default text correctly (#69). (#69)\r\n- Update Material UI icons to 9.3.1 (#59). (#59)\r\n- Update react-router-dom to 7.18.2 (#46). (#46)\r\n- Update @mui/material to 9.3.1 with accessibility, navigation, and transition fixes (#54). (#54)\r\n- Show the channel hash in the packet list for undecrypted GRP_TXT packets (#50). (#50)\r\n\r\n### Docker / deployment\r\n\r\n- Update the backend Docker image to Go 1.27 Alpine (#64). (#64)\r\n\r\n### Server / API\r\n\r\n- Introduce versioned golang-migrate database migrations so schema creation and upgrades remain predictable across the ingestor and server processes (#49). (#49)"
   - version: v1.0.3
     name: liteScope v1.0.3
     datetime: '2026-07-26T16:53:05Z'
