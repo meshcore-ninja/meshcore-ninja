@@ -1,54 +1,27 @@
 source: github
 repo: Treehouse-00/pymc_console-dist
-updatedAt: '2026-09-06T08:27:47.049Z'
+updatedAt: '2026-09-06T23:36:19.828Z'
 releases:
-  - version: v0.9.381
-    name: Release v0.9.381
-    datetime: '2026-09-06T05:27:44Z'
-    url: https://github.com/Treehouse-00/pymc_console-dist/releases/tag/v0.9.381
+  - version: v0.9.382
+    name: Release v0.9.382
+    datetime: '2026-09-06T22:48:16Z'
+    url: https://github.com/Treehouse-00/pymc_console-dist/releases/tag/v0.9.382
     prerelease: false
     notes: >-
-      ### Added
+      ### Fixed
 
-      - **A plugin browser and installer.** Configuration has a Plugins tab. It shows the openHop
-      plugin catalogue and whatever is installed on the repeater as one rack of modules, each in the
-      console's instrument grammar: a fastened plate carrying a screen with the plugin's picture and
-      its category burned into the corner, a display printing its name, id and description, three
-      pilot lamps (power, service, page) with a state annunciator and a version window, and the
-      actions its state allows as keycaps under a printed bracket. The console you are reading marks
-      its own module with a red tape. Install or update from the catalogue, enable or disable,
-      restart a stopped service, open an application plugin's own page, or remove one after a
-      confirm. A key in the header installs a wheel file from your computer. A filter narrows the
-      roll, and a tally counts plugins, installs and updates.
+      - **The packet detail's byte breakdown is back.** Newer repeater builds no longer include a
+      packet's raw bytes in the packet lists, so a packet that arrived while the console was on
+      another page opened to an empty left column. The console now fetches the bytes for any packet
+      it opens without them, once per packet, and says so plainly if the repeater no longer has them
+      either.
 
-      - **Pictures that fit whatever a plugin brings.** Every card has one 16:9 frame. A share card
-      fills it; a square icon stands centred on a field made of its own colours; a plugin with no
-      picture prints its initials. The frame decides from the picture's own proportions when it
-      loads, so a new plugin looks right without anyone declaring how.
-
-      - **Says what the repeater can do.** On a repeater from before the plugin manager the tab says
-      so. On a repeater whose plugin manager service is not running it says that instead, with what
-      to do about it.
-
-
-      - **The sidebar's controls as hardware.** The block at the foot of the sidebar is one fastened
-      plate. Its top row is the front of a drawer: an illuminated pushbutton switch in the style of
-      a tape transport's, CONTROLS printed on its lens. Pressing the switch lights it and slides a
-      tray up from behind the plate carrying the advert keys (FLOOD and DIRECT, their pilot lenses
-      blinking while an advert is on the air), the repeater mode as three latching keys (FWD, MON,
-      NO TX) instead of a key that cycles, and the airtime limit as a key beside its percentage, all
-      on one three-column grid. Pushing the front lowers the tray back in. Sessions and the noise
-      floor read on seven-segment dies, the noise floor's samples draw as a scatter of readings on
-      an LED screen the way the statistics page draws them, and the repeater's version prints in a
-      pixel window that copies on a press or, when an update is ready, opens the updater. The noise
-      floor now reads on every page rather than only the dashboard, map and statistics.
-
-
-      ### Compatibility
-
-      - Needs an openHop Repeater from September 2026 or newer for the plugin manager; older
-      repeaters get the notice above and nothing else changes. No repeater database change and no
-      schema migration.
+      - **Packet history keeps its decoders.** The console asks the repeater's packet lists to
+      include each packet's raw bytes, which restores sender resolution for adverts, trace signal
+      paths and channel decryption on history loaded after a page reload. A repeater without that
+      option answers once and is not asked again, so older builds lose nothing. This pairs with a
+      change proposed to openHop Repeater (pull request 444); until it is installed the console
+      behaves as before.
 
 
 
