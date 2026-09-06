@@ -1,55 +1,54 @@
 source: github
 repo: Treehouse-00/pymc_console-dist
-updatedAt: '2026-09-05T23:37:37.546Z'
+updatedAt: '2026-09-06T08:27:47.049Z'
 releases:
-  - version: v0.9.380
-    name: Release v0.9.380
-    datetime: '2026-09-05T23:18:10Z'
-    url: https://github.com/Treehouse-00/pymc_console-dist/releases/tag/v0.9.380
+  - version: v0.9.381
+    name: Release v0.9.381
+    datetime: '2026-09-06T05:27:44Z'
+    url: https://github.com/Treehouse-00/pymc_console-dist/releases/tag/v0.9.381
     prerelease: false
     notes: >-
       ### Added
 
-      - **The link scope shows one link at a time when you ask.** Choose a link and the scope draws
-      that link alone, its ray and its peer, with everything else hidden. Press the same marker
-      again, press empty glass, press anywhere on the plate that is not a control, or press the
-      CLEAR key that appears at the right end of the scope's head band, and every link comes back.
+      - **A plugin browser and installer.** Configuration has a Plugins tab. It shows the openHop
+      plugin catalogue and whatever is installed on the repeater as one rack of modules, each in the
+      console's instrument grammar: a fastened plate carrying a screen with the plugin's picture and
+      its category burned into the corner, a display printing its name, id and description, three
+      pilot lamps (power, service, page) with a state annunciator and a version window, and the
+      actions its state allows as keycaps under a printed bracket. The console you are reading marks
+      its own module with a red tape. Install or update from the catalogue, enable or disable,
+      restart a stopped service, open an application plugin's own page, or remove one after a
+      confirm. A key in the header installs a wheel file from your computer. A filter narrows the
+      roll, and a tally counts plugins, installs and updates.
 
-      - **Keys press down.** Every key in the console, keycaps, toggle keys and the round push
-      buttons, drops one pixel in its frame as its face darkens under the finger and comes back up
-      on release.
+      - **Pictures that fit whatever a plugin brings.** Every card has one 16:9 frame. A share card
+      fills it; a square icon stands centred on a field made of its own colours; a plugin with no
+      picture prints its initials. The frame decides from the picture's own proportions when it
+      loads, so a new plugin looks right without anyone declaring how.
 
-
-      ### Changed
-
-      - **The scope is centred on its glass.** Its head band no longer takes a row of the screen, so
-      the drawing sits at the glass's middle instead of hanging low.
-
-      - **The glass falls off on every edge.** The tube's darkening at the left and right edges of
-      reflective screens is half again as strong, and the top and bottom now fall off the same way,
-      so the map, the terminal, the scope and the history strip read as a tube turning away on all
-      four sides.
-
-
-      ### Fixed
-
-      - **A hard line inside every screen edge is gone.** The room reflection every screen carries
-      had a transparent margin and then an abrupt step a few pixels in from each edge, which
-      stretched onto the glass as a visible line. The reflection now stretches from inside that
-      border, so it meets the edge smoothly and keeps its soft dark rim.
+      - **Says what the repeater can do.** On a repeater from before the plugin manager the tab says
+      so. On a repeater whose plugin manager service is not running it says that instead, with what
+      to do about it.
 
 
-      ### Under the hood
-
-      - Catalogue proposals for the openHop plugin catalogue are published through a scoped,
-      short-lived GitHub App token instead of a personal token, attributed to the publishing bot,
-      and opened ready for the catalogue's own certification to decide merging (contributed by
-      yellowcooln).
+      - **The sidebar's controls as hardware.** The block at the foot of the sidebar is one fastened
+      plate. Its top row is the front of a drawer: an illuminated pushbutton switch in the style of
+      a tape transport's, CONTROLS printed on its lens. Pressing the switch lights it and slides a
+      tray up from behind the plate carrying the advert keys (FLOOD and DIRECT, their pilot lenses
+      blinking while an advert is on the air), the repeater mode as three latching keys (FWD, MON,
+      NO TX) instead of a key that cycles, and the airtime limit as a key beside its percentage, all
+      on one three-column grid. Pushing the front lowers the tray back in. Sessions and the noise
+      floor read on seven-segment dies, the noise floor's samples draw as a scatter of readings on
+      an LED screen the way the statistics page draws them, and the repeater's version prints in a
+      pixel window that copies on a press or, when an update is ready, opens the updater. The noise
+      floor now reads on every page rather than only the dashboard, map and statistics.
 
 
       ### Compatibility
 
-      - No repeater database change and no schema migration.
+      - Needs an openHop Repeater from September 2026 or newer for the plugin manager; older
+      repeaters get the notice above and nothing else changes. No repeater database change and no
+      schema migration.
 
 
 
