@@ -1,7 +1,50 @@
 source: github
 repo: andymux/meshos-releases
-updatedAt: '2026-09-05T16:37:49.070Z'
+updatedAt: '2026-09-07T15:36:15.378Z'
 releases:
+  - version: v1.0.17
+    name: MeshOS v1.0.17
+    datetime: '2026-09-07T13:45:10Z'
+    url: https://github.com/andymux/meshos-releases/releases/tag/v1.0.17
+    prerelease: false
+    notes: |-
+      ## MeshOS Companion v1.0.17
+
+      ### Battery optimisations
+      - A round of battery fixes across GPS, Bluetooth scanning and background
+        networking. If MeshOS has been draining your phone, especially with the
+        Wardrive pill left on, this release should make a big difference.
+
+      ### Tools
+      - New Tools screen: tap the spanner in the top bar for Trace Path and Scan for
+        Nodes without digging through Settings.
+
+      ### Channels
+      - Fixed an issue where channel messages could be shown under the wrong channel
+        after connecting a different radio.
+      - Internet-enabled channels no longer vanish when you connect a radio that does
+        not have them. They stay in your list as an internet-only channel, and you can
+        keep chatting over the internet until you add the channel to that radio.
+
+      ### Other
+      - The update checker now only runs on Android. The iOS and macOS apps no longer
+        point you at the Android download.
+      - macOS: the app now needs macOS 11 or later.
+
+      ### Install
+      Download `MeshOS-v1.0.17.apk` and open it to install. Existing users upgrade in
+      place, keeping their messages and settings.
+
+      APK SHA-256:
+      `fc7111d3afdd802e7e25dcd486d7e839efad9d99316593b4a5666efca63d37f0`
+
+      ### macOS
+      Download `MeshOS-v1.0.17.dmg`, open it and drag MeshOS into Applications. Needs
+      macOS 11 or later. The app is not notarised, so the first time you run it
+      right-click MeshOS and choose Open, then Open again in the warning.
+
+      DMG SHA-256:
+      `81182e1dab0acdb0d066d55f4482a81eb9efc44e934de61ed8666adecf592f1c`
   - version: v1.0.16
     name: MeshOS v1.0.16
     datetime: '2026-09-03T15:14:30Z'
@@ -486,24 +529,3 @@ releases:
       - TDeck: 5a7da903153d2ba4790585b1a692ad443021f85c47798afe18015ac3a7115622
 
       - M9: b44357a68874adc43e9b0d3a579006d8a5d7e726b61df39ce81510878dfe003b
-  - version: fw-v1.5.7
-    name: MeshOS firmware v1.5.7
-    datetime: '2026-07-12T17:40:58Z'
-    url: https://github.com/andymux/meshos-releases/releases/tag/fw-v1.5.7
-    prerelease: false
-    notes: >-
-      WiFi cold-scan reliability fix and connect-dialog improvements. New map tools: drop a pin to
-      navigate back to a saved spot, and show where the last mesh signal came from. JPG wallpaper
-      support with large images and faster boot. Room server bug fixes.
-
-
-      Device firmware for LilyGo T-Deck and ThinkNode M9.
-
-      Install via SD card (firmware.bin) or the in-firmware updater.
-
-
-      SHA-256:
-
-      - TDeck: a96356b479cce107d6359546592a49e88a61782e0407e42ade909513fb47c25a
-
-      - M9: 576925cf23254c60fa877a664116742302b4ca6d8f8474669124e1a3d5413a2d

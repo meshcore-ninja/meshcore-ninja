@@ -1,7 +1,116 @@
 source: github
 repo: ALLFATHER-BV/wadamesh
-updatedAt: '2026-09-06T16:45:49.739Z'
+updatedAt: '2026-09-07T15:35:57.269Z'
 releases:
+  - version: beta_78
+    name: wadamesh beta_78
+    datetime: '2026-09-07T15:03:06Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_78
+    prerelease: true
+    notes: >-
+      Test build. **Stable stays beta_65.**
+
+
+      Flash it at **[flasher.wadamesh.com](https://flasher.wadamesh.com)** (Beta toggle), or turn on
+      "Get test builds (beta)" on the device and reboot.
+
+
+      ## A crash at startup
+
+
+      A device could crash **while starting up**, before it finished booting, which on an unlucky
+      unit means it never comes up at all. Found by decoding a crash dump from a Heltec V4-R8 on
+      beta_77.
+
+
+      The cause was a race in the Arduino Wi-Fi stack: `WiFi.onEvent()` appends to a list that the
+      core walks from its own task, with no lock on either side. We were registering handlers
+      *after* the radio had started, one of them after `WiFi.begin()`, so a disconnect arriving in
+      that window could be dispatched while the list was being reallocated underneath, and the event
+      task then called through a freed pointer. All handlers now register before the radio starts,
+      which closes the window rather than narrowing it. A failed first association is ordinary,
+      which is why this could happen at all.
+
+
+      ## The location privacy setting was on the wrong page
+
+
+      beta_77 added the option to advertise a position near you rather than your exact one, and put
+      it in a settings section most devices do not show. Two people went looking and correctly
+      concluded it was not there. **It was not.**
+
+
+      It is now in **Settings, GPS**, at the bottom, called **Location privacy** rather than
+      "Position in adverts", and it shows four buttons (Exact, 100 m, 250 m, 1 km) so every choice
+      and the current one are visible without tapping anything. Thanks to
+      [@Buko84](https://github.com/Buko84) and gadgeteerza for pushing on it rather than assuming
+      they had missed it.
+
+
+      ## Lock screen notifications
+
+
+      A message arriving on a dark screen now says **who sent it and how far away they are**, not
+      just which conversation it was in. A channel post shows the channel, the sender and the hop
+      count; a direct message shows the contact, and "direct" when they are one hop away. A count
+      alone tells you nothing you can act on.
+
+
+      **Messages in a muted channel no longer light the screen.** Muting silenced the chime but
+      still woke the display and printed the message in large type, which was the louder half of the
+      notification rather than the quieter one. Mentions keep their own mute bit, so a channel muted
+      for chatter still surfaces an @-mention.
+
+
+      ## ThinkNode M9
+
+
+      All by [@oumike](https://github.com/oumike), from reports by
+      [@Buko84](https://github.com/Buko84):
+
+
+      - special characters can be selected (#429, #410)
+
+      - contact search navigation (#440, #438)
+
+      - the contacts menu delay (#444, #433)
+
+      - the composer is focused when a chat opens (#442, #436)
+
+      - the battery saver shows in the status icons (#441, #437)
+
+
+      The **colour picker in Display settings** no longer turns the swatch you are on white, which
+      hid the colour you were choosing (#431). Same defect as the lock-screen picker, in a second
+      place.
+
+
+      The **notification text on a dark screen is smaller** (#446), so the message has room. It was
+      sized to be legible from across a room, which crowds a 240x320 panel.
+
+
+      ## Also
+
+
+      A shortcut to the special-character picker on the **T-Lora Pager** (#445, #435), and several
+      **Attaky** usability fixes (#439, #423). Both by [@oumike](https://github.com/oumike).
+
+
+      ## For testers
+
+
+      If you use lock screen notifications, the two things worth confirming are that a **muted
+      channel stays dark** and that an **@-mention in that same channel still comes through**.
+
+
+      **Two things remain unverified on hardware**, both off by default and unchanged: DS3231 clock
+      module support, written from the datasheet with nobody having wired one up, and the louder
+      chime, whose pitch has not been measured on an M9.
+
+
+      Still open and not fixed here: a reboot when pressing d-pad down past the bottom of a chat on
+      the M9 (#428) which needs a crash dump to place, a screen that will not stay dark after a
+      manual lock (#333), and the web flasher hanging at "wrapping up" on the T-Display P4 (#342).
   - version: beta_77
     name: wadamesh beta_77
     datetime: '2026-09-06T16:36:48Z'
@@ -1795,83 +1904,3 @@ releases:
       description. This also fixes every board for languages whose tex
 
       …
-  - version: beta_58
-    name: wadamesh beta_58
-    datetime: '2026-08-04T09:08:26Z'
-    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_58
-    prerelease: true
-    notes: >-
-      Test build. Stable stays **beta_50**.
-
-
-      **Update strongly recommended if you ran beta_57** — this fixes the upgrade bug that left
-      devices booting into remote mode with the screen frozen on the boot logo.
-
-
-      Flash it from **https://flasher.wadamesh.com** (flip the Beta toggle), or on-device via
-      Settings → Firmware with "Get test builds (beta)" enabled.
-
-
-      ---
-
-
-      ### The beta_57 upgrade bug
-
-
-      Updating from beta_56 to beta_57 corrupted part of the stored settings. beta_57's new retry
-      preference was inserted into the middle of the persisted settings layout instead of appended
-      at the end; the settings blob is a raw byte copy, so every later value shifted by one on
-      upgrade. The worst casualty: the remote-mode flag inherited a neighbouring value that an old
-      migration forces to 1 on every install — so upgraded devices enabled Remote Mode without
-      consent, which renders the interface off-screen for a browser and stops drawing to the
-      physical panel. From the outside that looked like a device frozen on a half-drawn boot logo,
-      on the T-Display P4 as much as the Pager. The map's developer debug overlay switched on the
-      same way, and a chat-history safety flush was silently disabled.
-
-
-      Independently found, byte-for-byte analysed, and fixed by **@PixPMusic** (#229, #230) —
-      including compile-time guards that make this class of mistake a build error from now on, and a
-      test suite over the migration paths. Affected devices repair themselves on this update: a
-      normal install, no erase. On devices that ran beta_57, the repaired settings (web control
-      panel, remote mode and its orientation, web terminal, map debug overlay, history-flush tuning)
-      return to their defaults — the pre-beta_57 values were overwritten and cannot be recovered.
-      Everything else, including your language, radio settings and per-chat history limits, is
-      preserved. Devices coming straight from beta_56 or older upgrade losslessly.
-
-
-      ### Auto-retry is now opt-in
-
-
-      beta_57 turned "retry sends until heard" on for everyone. That choice should be yours: it now
-      defaults **off**, and the toggle lives in **Settings → Radio & Mesh** if you want your sends
-      retransmitted until the mesh confirms them.
-
-
-      ### Magyar
-
-
-      Hungarian translation across the full interface, contributed by **@pisti87** (#227). Existing
-      language choices are preserved across the update. Köszönjük!
-
-
-      ### Fixes
-
-
-      - **The lock screen finally says WADAMESH.** The old MESHCOMOD was baked into the wallpaper
-      image itself rather than drawn as text, so the earlier branding fix missed it — both the
-      built-in wallpaper and the copy seeded to storage are replaced. Reported by **@smhawkes**
-      (#228).
-
-      - **T-Display P4: profile export and backups work again.** The backup writer still pointed at
-      the storage system beta_54 retired, so every save failed with "can't open file" — the backup
-      list and restore were equally affected. Reported by **@D-Melhede** (#231).
-
-
-      ---
-
-
-      Both P4 panel variants are built fresh for this tag: `wadamesh-tdisplay-p4*` (AMOLED) and
-      `wadamesh-tdisplay-p4-lcd*` (TFT-LCD).
-
-
-      Full notes: `release-notes/beta_58.txt`.
