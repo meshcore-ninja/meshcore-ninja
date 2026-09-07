@@ -1,7 +1,69 @@
 source: github
 repo: MarekWo/mc-webui
-updatedAt: '2026-09-05T13:18:15.076Z'
+updatedAt: '2026-09-07T09:04:53.274Z'
 releases:
+  - version: v2.16.0
+    name: mc-webui 2.16.0
+    datetime: '2026-09-07T05:43:30Z'
+    url: https://github.com/MarekWo/mc-webui/releases/tag/v2.16.0
+    prerelease: false
+    notes: >-
+      ### Features
+
+
+      - **Notification profiles — a channel can now alert you only about the messages that matter.**
+      Until now a channel had two settings: everything or nothing. A busy regional channel therefore
+      either buzzed all day or went silent, and the one message that named you got lost among the
+      rest. Under **Settings → Notifications** you can now define **profiles**: a named set of rules
+      such as *mentions my name*, *message contains "webui"* or *sender name contains "Kosu"*, with
+      a choice of whether *any* rule or *all* of them must match. Then, in **Manage Channels**, the
+      bell next to a channel opens a small menu instead of flipping a switch — **Off**, **Every
+      message** (what you had before) or one of your profiles by name. A channel on a profile counts
+      only matching messages: the red unread badge next to its name shows just those, the bell in
+      the navbar and the app-icon badge add up just those, and the browser or Android notification
+      is posted just for those. Everything else still arrives in the chat as before, it simply no
+      longer asks for your attention. Matching ignores letter case and diacritics, so `krakow` finds
+      *Kraków*, and a mention is your device name anywhere in the text, whether typed as `@[name]`
+      or plainly. Direct messages are untouched: a message addressed to you personally always
+      notifies. Deleting a profile puts the channels that used it back on *Every message* — louder,
+      never quieter, is the safe direction to fail in.
+
+
+      ### Android app
+
+
+      - **Notifications now keep arriving while the app is in the background.** Until
+        now they went quiet a few minutes after you switched away, and no setting on
+        the phone fixed it — Android freezes an app that has nothing running in the
+        foreground, and a frozen app holds no connection to your server and runs no
+        code to alert you with. "Unrestricted" battery use never helped because it
+        exempts an app from Doze, which is a different mechanism. The app now asks
+        Android to leave it running, which Android grants in exchange for a
+        **permanent, silent notice in the shade** — *Listening for new messages*. That
+        notice appears **only once you turn notifications on in mc-webui itself**, so
+        anyone who does not use them never sees it, and it disappears the moment you
+        turn them off. Its **Stop** button ends it for the rest of the session, and it
+        can be silenced permanently on its own in Android's notification settings,
+        under **Background delivery**. Nothing new is sent anywhere: the connection
+        held open is the one to your own server, and the alerts are still built by the
+        mc-webui page itself — which is why mutes, blocked senders, channel names,
+        translations and the tap-to-open-the-conversation behaviour all keep working
+        exactly as they already did.
+      - **The address screen remembers the servers you have used.** If you run more
+        than one instance — your own and the public demo, say, or a test box next to a
+        live one — switching between them meant typing the whole address again every
+        time. The screen behind **Back → Change server** now lists the six most recent
+        addresses under **Recent servers**; tap one and the app connects straight away,
+        with the username and password saved for that server still applying, since
+        those were always kept per address. The **✕** beside an entry forgets the
+        shortcut without touching the server you are on or its saved login, and only
+        addresses that actually answered are ever listed, so a typo never joins them.
+
+      > **Both need the new app version.** They are changes to the Android app, not to
+
+      > mc-webui itself — the app updates itself from Google Play, or can be
+
+      > reinstalled from the `.apk` in this repository.
   - version: v2.15.0
     name: mc-webui 2.15.0
     datetime: '2026-09-05T13:03:15Z'

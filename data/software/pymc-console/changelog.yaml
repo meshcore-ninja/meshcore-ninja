@@ -1,33 +1,30 @@
 source: github
 repo: Treehouse-00/pymc_console-dist
-updatedAt: '2026-09-07T03:32:59.573Z'
+updatedAt: '2026-09-07T09:05:10.626Z'
 releases:
-  - version: v0.9.384
-    name: Release v0.9.384
-    datetime: '2026-09-07T00:56:52Z'
-    url: https://github.com/Treehouse-00/pymc_console-dist/releases/tag/v0.9.384
+  - version: v0.9.385
+    name: Release v0.9.385
+    datetime: '2026-09-07T03:56:12Z'
+    url: https://github.com/Treehouse-00/pymc_console-dist/releases/tag/v0.9.385
     prerelease: false
     notes: >-
       ### Changed
 
-      - **The update module is a proper instrument.** The notice in What's new is now a fastened
-      plate: a lit band with a NEW lamp, an annunciator that reads UPDATE READY, INSTALLING,
-      RELOADING, FAILED or STILL WORKING, and a version window; a screen that names the release in
-      the reading face; and two keys in one well, NOTES to open the release and UPDATE to install
-      it. While it installs, the screen lists the three steps with a clock beside the one in
-      progress, and when the repeater streams its installer's output (a change proposed to openHop
-      Repeater, pull request 445) the last five lines print under the steps as they arrive.
+      - **The screens ship in phosphor green.** The display ink's default moves from the warm
+      near-white to a green at hue 141, half saturation, brightness 94. If you never touched the
+      three colour knobs on the Messages page, your screens follow the new default; if you only
+      dimmed them, the dimming is kept and the ink changes; if you turned the hue or saturation by
+      even one step, nothing changes for you. The reset key returns to the green.
 
-      - **A slow install is no longer called a failure.** The console now waits as long as the
-      repeater does for an install, fifteen minutes rather than three. If it still runs out of
-      patience the module says STILL WORKING with an amber lamp and offers to reload the page, and
-      if the repeater's stream is open and reports the install finished, the page reloads on its
-      own.
+      - **A newer console is announced in yellow.** The version pill in the header turns the
+      indicator yellow with a pulsing lamp when a newer waev:outpost is in the repeater's catalogue.
+      Green read as a go; a pending update is a warning.
 
       ### Fixed
 
-      - **Bold lead-ins and code in the release notes render as such**, and pip's indentation is
-      kept in the installer's lines.
+      - **The console's own update check waits a minute after startup** and is skipped while the tab
+      is hidden, so on a repeater without internet the thirty-second catalogue timeout never sits
+      inside the first burst of requests that loads a page.
 
 
 

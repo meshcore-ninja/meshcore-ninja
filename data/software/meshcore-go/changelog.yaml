@@ -1,7 +1,112 @@
 source: github
 repo: meshcore-go/meshcore-go
-updatedAt: '2026-09-03T08:41:26.264Z'
+updatedAt: '2026-09-07T09:04:57.593Z'
 releases:
+  - version: v1.3.0
+    name: v1.3.0
+    datetime: '2026-09-07T05:35:52Z'
+    url: https://github.com/meshcore-go/meshcore-go/releases/tag/v1.3.0
+    prerelease: false
+    notes: >-
+      Firmware fidelity release for the KISS modem, node timing and relay behaviour. Everything
+      below was checked against MeshCore firmware `companion-v1.17.1`.
+
+
+      ## Upgrade notes
+
+
+      - **Go 1.26.7 or newer is required.** The `go` directive moved from 1.26.1 to 1.26.7 in all
+      three modules. With `GOTOOLCHAIN=local` on an older 1.26.x that is a hard error rather than an
+      automatic toolchain download.
+
+      - **`hardware.DefaultTxTimeout` is now 15s, up from 5s.** The old value was shorter than the
+      firmware's own worst-case transmit budget from SF11 up, so sends that had in fact gone out
+      were reported as timeouts. For a tighter bound, pass `hardware.WithTxAirtimeEstimator` and the
+      wait is derived from the firmware budget: TXDELAY + 1.5x airtime(255) + 1.5x airtime(len) +
+      1s.
+
+      - **A flood packet is re-flooded after local dispatch**, not during routing. A handler that
+      calls `Packet.MarkDoNotRetransmit` now suppresses the relay.
+
+      - **`hardware.WithHandlerWorkers` parallelizes non-DATA callbacks only.** DATA callbacks stay
+      serial and in receive order on the drain goroutine, which node handlers require. If you used
+      the worker pool to isolate a slow data handler, move that work to your own goroutine.
+
+      - **`KissModem.Connect` always pushes the signal-report setting.** Firmware enables RX
+      metadata by default, so a modem built without `WithSignalReport` previously left it streaming
+      metadata that was then discarded.
+
+      - An unresolved transmit blocks later sends with `ErrTxPending` until the firmware reports,
+      and `Connect` clears it. An interrupted send returns `ErrModemClosed` or `ErrDisconnected`
+      rather than success.
+
+
+      ## Fixed
+
+
+      - **Two nodes on one radio relayed each other's traffic.** Dedup caches are per-`Node`, so a
+      packet one node originated was re-flooded by another node sharing the same modem once a
+      neighbour bounced it back, seen as one antenna sending an advert at 0 hops and again at 2
+      hops. `RadioMux` now records what it transmits and flags a returning copy do-not-retransmit,
+      reproducing the firmware's markSeen-on-send at device granularity. Found in OwlShack bench
+      testing.
+
+      - **`Packet.AppendPathHash` corrupted parsed payloads.** It grew a `Path` slice that aliases
+      the buffer the packet was parsed from, overwriting the first payload byte.
+
+      - **A timed-out or failed transmit stranded the modem**, refusing every later send until the
+      process restarted.
+
+      - **`TX_DONE` could be lost** to inbound queue overflow, and a data handler calling `SendData`
+      could deadlock. Completion now runs before user callbacks and bypasses the queue.
+
+      - **Large hardware responses were dropped.** The transport resynced at 512 bytes, below the
+      firmware's 1,030-byte encoded maximum, so a heavily escaped reply split across reads was
+      discarded.
+
+      - **TRACE bypassed the router**, so it was neither relayed nor counted.
+
+      - **Airtime estimates were low.** `LoRaAirtimeEstimator` assumed an 8-symbol preamble;
+      firmware uses 32 at SF5 to SF8 and 16 above.
+
+      - **Hardware error frames were silent**, so a rejected command timed out instead of reporting
+      why.
+
+
+      ## Added
+
+
+      `node`:
+
+
+      - `WithRxDelay` with `RxDelayForScore` reproduces the firmware's `Dispatcher::calcRxDelay`,
+      holding a weakly received flood packet so a stronger relay wins the channel. Pair it with
+      `hardware.PacketScore`.
+
+      - `WithFloodRetransmitDelay`, `WithDirectRetransmitDelay` and `WithExtraAckTransmitCount`.
+
+      - TRACE relay with our SNR appended at `TracePriority`, plus multipart ACK relay and local
+      delivery.
+
+      - `Node.RouteStats` reporting received, duplicate, relayed and delivered counts, split by
+      flood and direct.
+
+      - `RegionMap.IsWildcard`, which `Wildcard` cannot do because it returns a copy.
+
+
+      `hardware`:
+
+
+      - `PacketScore`, matching `RadioLibWrapper::packetScoreInt`.
+
+      - `KissModem.SendKissCommand` for the standard KISS parameters (TXDELAY, PERSISTENCE,
+      SLOTTIME, TXTAIL, FULLDUPLEX), and `KissModem.GetMCUTemp`.
+
+      - `HwErrorFor`, with `ModemStats.HwErrors` and `ModemStats.TxOutcomeLost`.
+
+      - `ErrTxPending`, `ErrModemClosed`, `ErrDisconnected` and `Er
+
+      …
   - version: v1.2.0
     name: v1.2.0
     datetime: '2026-09-03T03:40:18Z'
