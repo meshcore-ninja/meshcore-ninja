@@ -1,30 +1,33 @@
 source: github
 repo: Treehouse-00/pymc_console-dist
-updatedAt: '2026-09-07T09:05:10.626Z'
+updatedAt: '2026-09-07T19:41:32.694Z'
 releases:
-  - version: v0.9.385
-    name: Release v0.9.385
-    datetime: '2026-09-07T03:56:12Z'
-    url: https://github.com/Treehouse-00/pymc_console-dist/releases/tag/v0.9.385
+  - version: v0.9.386
+    name: Release v0.9.386
+    datetime: '2026-09-07T16:22:57Z'
+    url: https://github.com/Treehouse-00/pymc_console-dist/releases/tag/v0.9.386
     prerelease: false
     notes: >-
+      ### Added
+
+      - **Every console learns about its own update.** The plugin build is recognised by how it was
+      built, so a repeater that serves it as its main page at the root now checks the plugin
+      catalogue and installs from What's new like any other plugin install. The standalone install,
+      put in place with manage.sh, now reads the console's public release feed from your browser
+      once a minute after start and every half hour; when a newer release is out, the version pill
+      turns yellow and What's new names the release with a NOTES key and says that manage.sh upgrade
+      on the repeater is the way to get it. A browser without internet sees nothing.
+
       ### Changed
 
-      - **The screens ship in phosphor green.** The display ink's default moves from the warm
-      near-white to a green at hue 141, half saturation, brightness 94. If you never touched the
-      three colour knobs on the Messages page, your screens follow the new default; if you only
-      dimmed them, the dimming is kept and the ink changes; if you turned the hue or saturation by
-      even one step, nothing changes for you. The reset key returns to the green.
+      - **The plugin card's keys are in two gangs.** What moves a plugin forward, install, update,
+      open, restart, stands at the left; disable or enable and remove share one well at the right
+      under MANAGE. The update key is blue with a download glyph that breathes in the cap's own
+      light until it is pressed, and the console's own card no longer offers Open, since that page
+      is the one you are reading. Wells are exactly as wide as their keys.
 
-      - **A newer console is announced in yellow.** The version pill in the header turns the
-      indicator yellow with a pulsing lamp when a newer waev:outpost is in the repeater's catalogue.
-      Green read as a go; a pending update is a warning.
-
-      ### Fixed
-
-      - **The console's own update check waits a minute after startup** and is skipped while the tab
-      is hidden, so on a repeater without internet the thirty-second catalogue timeout never sits
-      inside the first burst of requests that loads a page.
+      - **A blinking keycap legend breathes** over a slow 2.8-second cycle instead of flashing every
+      half second.
 
 
 
