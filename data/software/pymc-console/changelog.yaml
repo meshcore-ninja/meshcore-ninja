@@ -1,33 +1,25 @@
 source: github
 repo: Treehouse-00/pymc_console-dist
-updatedAt: '2026-09-07T19:41:32.694Z'
+updatedAt: '2026-09-07T22:37:46.214Z'
 releases:
-  - version: v0.9.386
-    name: Release v0.9.386
-    datetime: '2026-09-07T16:22:57Z'
-    url: https://github.com/Treehouse-00/pymc_console-dist/releases/tag/v0.9.386
+  - version: v0.9.388
+    name: Release v0.9.388
+    datetime: '2026-09-07T21:23:16Z'
+    url: https://github.com/Treehouse-00/pymc_console-dist/releases/tag/v0.9.388
     prerelease: false
     notes: >-
-      ### Added
+      ### Fixed
 
-      - **Every console learns about its own update.** The plugin build is recognised by how it was
-      built, so a repeater that serves it as its main page at the root now checks the plugin
-      catalogue and installs from What's new like any other plugin install. The standalone install,
-      put in place with manage.sh, now reads the console's public release feed from your browser
-      once a minute after start and every half hour; when a newer release is out, the version pill
-      turns yellow and What's new names the release with a NOTES key and says that manage.sh upgrade
-      on the repeater is the way to get it. A browser without internet sees nothing.
+      - **The console notices its own update.** The repeater's plugin manager keeps a ten-minute
+      copy of the catalogue, and the console's timed checks were reading that copy, so a new release
+      only showed after pressing refresh on the Plugins page. Every check now asks for a fresh
+      catalogue, so the yellow pill and What's new light up on their own within a few seconds of the
+      console settling and every half hour after.
 
-      ### Changed
-
-      - **The plugin card's keys are in two gangs.** What moves a plugin forward, install, update,
-      open, restart, stands at the left; disable or enable and remove share one well at the right
-      under MANAGE. The update key is blue with a download glyph that breathes in the cap's own
-      light until it is pressed, and the console's own card no longer offers Open, since that page
-      is the one you are reading. Wells are exactly as wide as their keys.
-
-      - **A blinking keycap legend breathes** over a slow 2.8-second cycle instead of flashing every
-      half second.
+      - **The page reloads when the install finishes.** The console used to wait for its own request
+      to answer before reloading, and on a real repeater that answer could arrive late or not at
+      all. It now reloads the moment the repeater's progress stream reports the install complete,
+      whatever the request is doing.
 
 
 
