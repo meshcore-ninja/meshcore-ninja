@@ -1,7 +1,130 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-09-06T16:46:07.108Z'
+updatedAt: '2026-09-08T03:38:14.667Z'
 releases:
+  - version: v4.16.0-rc5
+    name: v4.16.0-rc5
+    datetime: '2026-09-08T02:29:49Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.16.0-rc5
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.16.0-rc5
+
+
+      > ⚠️ **Pre-release.** This is a release candidate for 4.16.0. It does not carry the `:latest`
+      Docker tag. Please report anything you hit against the 4.16.0 milestone.
+
+
+      Nine issues fixed since rc4, weighted heavily toward MeshCore stability. The headline is a
+      crash: a `code=142` frame from a native MeshCore source could reject with no argument, and the
+      resulting `TypeError` inside the `catch` block became an unhandled rejection that terminated
+      the whole process — supervised restarts made it look like nothing more than a brief 503.
+      MeshCore also gains two RepeaterStats counters the pinned library had been silently
+      truncating, a corrected Companion queue depth (it had been reading the low byte of the error
+      counter), and an end to false "inactive node" alerts for nodes that answer telemetry polls but
+      rarely advert. Two `meshcore_mqtt` regressions are fixed: those sources were excluded from
+      dashboard nodes and rendered the Meshtastic app shell instead of a MeshCore page. On the
+      Meshtastic side, Traffic Management is rebuilt on the 2.8 non-zero-enables schema — nine
+      controls that silently did nothing against 2.8 firmware are gone, and the settings that remain
+      are documented as "0 disables". The Helm chart repository is repaired: every previously
+      released archive it advertised had been 404ing, and older releases are downloadable again.
+      Rounding out the release, chart panels no longer overflow the viewport in portrait on mobile,
+      and received MeshBeacon offers now warn when the advertised region and preset are regulatorily
+      non-compliant.
+
+
+      ## Bug Fixes
+
+
+      - **MeshCore:** guard the unhandled-rejection crash from bare library rejects — #5104 (fixes
+      #5102)
+
+      - **MeshCore:** decode the RepeaterStats and Core stats fields the pinned library dropped —
+      #5127 (fixes #5125)
+
+      - **MeshCore:** refresh `lastHeard` on a telemetry round-trip, not just adverts — #5132 (fixes
+      #5131)
+
+      - **MeshCore MQTT:** give ingest sources their own page, and let data routes reach them —
+      #5098 (fixes #5096)
+
+      - **MeshCore MQTT:** route ingest sources through every MeshCore read path — #5095 (fixes
+      #5094)
+
+      - **Config:** move Traffic Management to the v2.8 non-zero-enables schema — #5128 (fixes
+      #5123)
+
+      - **Helm:** re-fetch previously published chart archives on redeploy — #5120 (fixes #5119)
+
+      - **Telemetry UI:** stop chart panels overflowing the viewport in portrait — #5133 (fixes
+      #5093)
+
+      - **TCP:** scope the connect timeout to its own attempt and name every teardown — #5130
+
+
+      ## Features
+
+
+      - **Beacons:** warn on regulator-non-compliant preset/region combinations in received offers —
+      #5129 (closes #5103)
+
+
+      ## Dependencies
+
+
+      - Production group with 9 updates — #5106
+
+      - Development group with 4 updates — #5105
+
+      - `express-rate-limit` 8.6.2 → 8.7.0 — #5113
+
+      - `@tanstack/react-query` 5.101.4 → 5.102.8 — #5116
+
+      - `lucide-react` 1.35.0 → 1.40.0 — #5117
+
+      - `morgan` 1.11.0 → 1.12.0 — #5111
+
+      - `@typescript-eslint/eslint-plugin` — #5115
+
+      - `puppeteer` 25.8.0 → 25.10.0 — #5109
+
+      - `docker/setup-qemu-action` 4.2.0 → 4.3.0 — #5112
+
+      - `actions/deploy-pages` 5.0.0 → 5.0.1 — #5110
+
+      - `softprops/action-gh-release` 3.0.2 → 3.0.3 — #5108
+
+
+      ## Issues Resolved
+
+
+      - #5093 — Node Info chart panels overflow horizontally in portrait
+
+      - #5094 — `meshcore_mqtt` sources excluded from dashboard nodes
+
+      - #5096 — `meshcore_mqtt` sources render the Meshtastic App shell
+
+      - #5102 — Native MeshCore `code=142` frame crashes MeshMonitor
+
+      - #5103 — MeshBeacon: warn on non-compliant preset/region combos
+
+      - #5119 — Helm repository index references non-existent files
+
+      - #5123 — TrafficManagement config UI still on the v2.7.22 schema
+
+      - #5125 — MeshCore remote stats: dropped counters and misread queue depth
+
+      - #5131 — MeshCore inactive-node alerts firing for active nodes
+
+
+      ## Still Open
+
+
+      **#5122** (repeated disconnects during initial config sync on a large mesh) is **not**
+      resolved by this release. #5130 removes a latent bug that matches the reported fingerprint — a
+      connect timeout that could outlive its own attempt and des
+
+      …
   - version: v4.16.0-rc4
     name: v4.16.0-rc4
     datetime: '2026-09-06T16:03:00Z'
@@ -1925,128 +2048,6 @@ releases:
         -p 8080:3001 \
         -v meshmonitor-data:/data \
         ghcr.io/Yeraze/meshmonitor:4.14.2-rc4
-      ```
-
-
-      ### 🧪 Testing
-
-      ✅ All tests passed
-
-      ✅ TypeScript checks passed
-
-      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
-
-
-      ### 📋 Changes
-
-      See commit history for detailed changes.
-  - version: v4.14.2-rc3
-    name: v4.14.2-rc3
-    datetime: '2026-08-15T19:42:23Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.14.2-rc3
-    prerelease: true
-    notes: >-
-      # MeshMonitor v4.14.2-rc3
-
-
-      > ⚠️ **Pre-release.** This is a release candidate for testing. It is not tagged `:latest` and
-      is not recommended for unattended production use.
-
-
-      Nine changes since rc2, dominated by a mobile-freeze fix and two new terrain/RF surfaces.
-      Opening a node with a large estimated-position history could lock the UI for about a minute on
-      mobile — that is fixed, and the fix bounds both halves of the cause rather than the one that
-      was reported. Predictive RF coverage arrives as a Fresnel + path-loss model with a radial
-      terrain sweep and a map layer, deliberately drawn to look unlike measured coverage so a
-      prediction is never mistaken for a measurement; note its control surface is not wired up yet,
-      so the layer is present but not reachable from the UI in this build. A passive network survey
-      now reports what a radio can actually hear — direct neighbours, signal, and reach by hop count
-      — generating no radio traffic to do it. MeshBeacon offers (firmware 2.8+) become actionable
-      invitation cards, with an explicit confirmation before any channel is written to a radio. Two
-      protocol-level bugs are fixed: MeshCore's implicit Public channel was being displaced when
-      adding a channel, and MeshBeacon module config failed to load with "Unknown config type".
-      Traditional Chinese joins the language selector — it was already the most complete translation
-      in the repository and simply had never been offered.
-
-
-      ## Features
-
-
-      - **Predictive RF coverage** — Fresnel + path-loss model, radial terrain sweep, API and map
-      layer (#4741, refs #4727)
-
-      - **Passive network survey** — reach, direct neighbours and hop distribution (#4737, closes
-      #4726)
-
-      - **Actionable MeshBeacon invitation card** — add / dismiss, with confirmation before any
-      device write (#4735, closes #4723)
-
-      - **Waypoint-anchored geofences** for enter/exit alerts (#4732, closes #4722)
-
-      - **Incomplete-NodeInfo badge** on nodes missing name or hardware info (#4730, closes #4720)
-
-      - **Traditional Chinese** in the language selector (#4742)
-
-
-      ## Bug Fixes
-
-
-      - **Map froze for ~1 minute** when opening a node with a large estimated-position history
-      (#4744, closes #4743)
-
-      - **MeshBeacon config load failed** with "Unknown config type: meshbeacon" (#4740, closes
-      #4739)
-
-      - **MeshCore Public channel displaced** when adding a new channel (#4734, closes #4733)
-
-      - **Automation Runs log** now shows the captured triggering message (#4716, closes #4711)
-
-
-      ## Issues Resolved
-
-
-      #4743, #4739, #4733, #4726, #4723, #4722, #4720, #4711
-
-
-      ## New Contributors
-
-
-      - @rncchen made their first contribution in #4742 — Traditional Chinese language support
-
-
-      ## Notes
-
-
-      - **Predictive RF coverage has no UI entry point in this build.** The model, sweep, API and
-      map layer are complete and tested; the site-planner control panel that drives them is still to
-      come, so #4727 stays open.
-
-      - Coverage predictions are modelled from terrain only — they account for free-space loss,
-      earth curvature and diffraction, but not buildings, foliage or multipath. Treat them as
-      planning aids, not measurements.
-
-      - Very dense position histories are now drawn simplified; the trail's reported time span
-      remains exact.
-
-
-      **Full changelog:** https://github.com/Yeraze/meshmonitor/compare/v4.14.2-rc2...v4.14.2-rc3
-
-
-      ## 🚀 MeshMonitor v4.14.2-rc3
-
-
-      ### 📦 Installation
-
-
-      **Docker (recommended):**
-
-      ```bash
-
-      docker run -d \
-        --name meshmonitor \
-        -p 8080:3001 \
-        -v meshmonitor-data:/data \
-        ghcr.io/Yeraze/meshmonitor:4.14.2-rc3
       ```
 
 

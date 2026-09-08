@@ -1,7 +1,13 @@
 source: github
 repo: mintylinux/Meshcore-Wardrive-Android
-updatedAt: '2026-08-18T20:27:05.890Z'
+updatedAt: '2026-09-08T03:38:12.111Z'
 releases:
+  - version: 1.0.44
+    name: Meshcore-Wardrive-Android-1.0.44
+    datetime: '2026-09-07T23:18:12Z'
+    url: https://github.com/mintylinux/Meshcore-Wardrive-Android/releases/tag/1.0.44
+    prerelease: false
+    notes: "# Changelog\r\n\r\n## v1.0.44 - 2026-09-07\r\n\r\n### Fixed\r\n- **Dark mode map tiles**: Replaced CARTO dark tiles (now requires API key) with OSM tiles + color inversion filter. No API key needed, works offline with cached tiles.\r\n- **Offline tile download**: Download now uses OSM tiles instead of CARTO, so cached tiles won't show watermarks."
   - version: 1.0.43
     name: Meshcore-Wardrive-Android-1.0.43
     datetime: '2026-08-18T19:16:47Z'
@@ -116,9 +122,3 @@ releases:
     url: https://github.com/mintylinux/Meshcore-Wardrive-Android/releases/tag/1.0.28
     prerelease: false
     notes: "## v1.0.28 - 2026-02-19\r\n\r\n### Added\r\n- **Configurable Discovery Timeout**: Users can now adjust ping timeout from 10-30 seconds in 5-second intervals\r\n  - Default: 20 seconds (changed from hardcoded 30)\r\n  - Available options: 10s, 15s, 20s, 25s, 30s\r\n  - Accessible in Settings menu under \"Discovery Timeout\"\r\n  - Different network conditions and repeater densities may benefit from different timeout values\r\n  - User feedback indicated 30s timeout was too long in some scenarios, causing worse results\r\n  - Shorter timeouts work better in dense repeater areas, longer timeouts help in sparse coverage\r\n\r\n### Changed\r\n- Default discovery timeout changed from 30 seconds to 20 seconds\r\n- LocationService now dynamically reads timeout setting instead of using hardcoded value"
-  - version: 1.0.27
-    name: Meshcore-Wardrive-Android-1.0.27
-    datetime: '2026-02-13T00:52:21Z'
-    url: https://github.com/mintylinux/Meshcore-Wardrive-Android/releases/tag/1.0.27
-    prerelease: false
-    notes: "# Changelog\r\n\r\n## v1.0.27 - 2026-02-13\r\n\r\n### Fixed\r\n- **WhisperOS Device Support**: Devices running WhisperOS now appear in Bluetooth scan list\r\n  - Added 'whisper' to device name filter in Bluetooth scanning\r\n  - Users with WhisperOS-based MeshCore devices can now connect to the app\r\n  - Line 152 in lora_companion_service.dart"

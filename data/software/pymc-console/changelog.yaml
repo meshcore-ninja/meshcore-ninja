@@ -1,25 +1,34 @@
 source: github
 repo: Treehouse-00/pymc_console-dist
-updatedAt: '2026-09-07T22:37:46.214Z'
+updatedAt: '2026-09-08T03:38:18.663Z'
 releases:
-  - version: v0.9.388
-    name: Release v0.9.388
-    datetime: '2026-09-07T21:23:16Z'
-    url: https://github.com/Treehouse-00/pymc_console-dist/releases/tag/v0.9.388
+  - version: v0.9.389
+    name: Release v0.9.389
+    datetime: '2026-09-08T02:27:13Z'
+    url: https://github.com/Treehouse-00/pymc_console-dist/releases/tag/v0.9.389
     prerelease: false
     notes: >-
-      ### Fixed
+      ### Added
 
-      - **The console notices its own update.** The repeater's plugin manager keeps a ten-minute
-      copy of the catalogue, and the console's timed checks were reading that copy, so a new release
-      only showed after pressing refresh on the Plugins page. Every check now asks for a fresh
-      catalogue, so the yellow pill and What's new light up on their own within a few seconds of the
-      console settling and every half hour after.
+      - **The console can hand the repeater's front door to the plugin.** Configuration → Web
+      Frontend now lists every interface the repeater can serve at its root: the repeater's own, the
+      hand-installed copy under /opt, and the waev:outpost plugin, each with its version. Pick one
+      and the repeater switches at once, no restart. On a repeater that cannot list them yet, the
+      two older choices remain.
 
-      - **The page reloads when the install finishes.** The console used to wait for its own request
-      to answer before reloading, and on a real repeater that answer could arrive late or not at
-      all. It now reloads the moment the repeater's progress stream reports the install complete,
-      whatever the request is doing.
+      - **One question after installing the plugin.** When the waev:outpost plugin finishes
+      installing from the Plugins page, a small plate asks whether to make it your default
+      experience. Yes makes the repeater serve it at the root and takes you there; No leaves things
+      as they are. The choice stays under Configuration → Web Frontend.
+
+      ### Changed
+
+      - **The hand-installed copy is marked as retiring.** Its row in Web Frontend carries an amber
+      DEPRECATED tag and says plainly that the files under /opt and the pymc_console-dist repository
+      will stop receiving releases, and that the plugin is the way forward.
+
+      - **The README leads with the plugin.** Install from the repeater's Plugins page in three
+      presses, and let it update itself; the hand install is documented as the fallback.
 
 
 
