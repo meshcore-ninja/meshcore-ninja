@@ -1,7 +1,13 @@
 source: github
 repo: burakcan/MeshCore-mishmesh
-updatedAt: '2026-08-28T18:34:23.595Z'
+updatedAt: '2026-09-08T19:18:55.776Z'
 releases:
+  - version: mishmesh-v1.5.0
+    name: mishmesh Firmware v1.5.0
+    datetime: '2026-09-08T18:15:29Z'
+    url: https://github.com/burakcan/MeshCore-mishmesh/releases/tag/mishmesh-v1.5.0
+    prerelease: false
+    notes: "<img width=\"600\" alt=\"telegram-cloud-photo-size-4-5836769760115363901-y\" src=\"https://github.com/user-attachments/assets/1a14af4f-a568-495c-b5da-2313ffd328c3\" />\r\n\r\n- E-ink support - the Wio Tracker L1 E-Ink is now a build target.\r\n- Portrait orientation and a Large interface size on the e-ink panel.\r\n- New Display settings group; screen sleep and brightness moved there from Home.\r\n- A single Back at the home screen sleeps the display; three in quick succession still lock it.\r\n- Sleep screen on e-ink: leave a clock or the logo on the panel while it sleeps.\r\n- Return to home when the screen has been asleep a while, configurable.\r\n- Fix: onboarding not triggering on a new device.\r\n\r\n\r\n\r\n## What's Changed\r\n* Improve rendering quality on e-paper displays by @ViezeVingertjes in https://github.com/burakcan/MeshCore-mishmesh/pull/3\r\n\r\n## New Contributors\r\n* @ViezeVingertjes made their first contribution in https://github.com/burakcan/MeshCore-mishmesh/pull/3\r\n\r\n**Full Changelog**: https://github.com/burakcan/MeshCore-mishmesh/compare/mishmesh-v1.4.0...mishmesh-v1.5.0"
   - version: mishmesh-v1.4.1
     name: mishmesh Firmware v1.4.1
     datetime: '2026-08-28T08:22:06Z'
