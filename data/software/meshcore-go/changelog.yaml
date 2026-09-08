@@ -1,7 +1,106 @@
 source: github
 repo: meshcore-go/meshcore-go
-updatedAt: '2026-09-07T09:04:57.593Z'
+updatedAt: '2026-09-08T08:42:32.848Z'
 releases:
+  - version: v1.4.0
+    name: v1.4.0
+    datetime: '2026-09-08T06:11:24Z'
+    url: https://github.com/meshcore-go/meshcore-go/releases/tag/v1.4.0
+    prerelease: false
+    notes: >-
+      ## SPI radios: the new `hardware/sx12xx` module
+
+
+      A node can now drive an SX126x or SX127x transceiver directly over SPI - a Pi with a LoRa hat,
+      no companion firmware in between. It is a separate module, so the `periph.io` dependency only
+      reaches you if you import it:
+
+
+      ```
+
+      go get github.com/meshcore-go/meshcore-go/hardware/sx12xx@v1.4.0
+
+      ```
+
+
+      It presents a radio as a `node.Modem`, and takes on the work the KISS firmware used to do for
+      us. The firmware's dispatcher is single-threaded: it drains the receiver before it starts a
+      transmit, and gates every path that leaves receive on `STATE_INT_READY`. This driver
+      reproduces that, because a packet that has landed but not yet been collected is lost the
+      moment the receiver is re-armed.
+
+
+      Beyond the transceiver basics:
+
+
+      - **`Dead()`** closes after three consecutive failures to re-arm the receiver, and
+      **`ErrRecvStuck`** separates that from the listen-before-talk errors raised on every send - so
+      a supervisor can act on the one signal that means the radio is gone, without matching log
+      strings.
+
+      - **The receive watchdog detects a chip that has browned out** back to its reset state.
+      Software state alone cannot see it: such a chip still reports itself armed, and re-arming
+      succeeds against default registers, leaving a node deaf while it reports healthy. On detection
+      the driver re-runs its own bring-up and the modem reapplies the radio configuration.
+
+      - **Activity LEDs** (`Opts.TxLedPin`, `Opts.RxLedPin`) live in the chip drivers, where
+      transmit completion and CRC-failed receives are both visible. An LED driven from a
+      pre-transmit hook shows attempts rather than sends, and shows nothing at all when the radio is
+      hearing only noise.
+
+      - **Listen-before-talk** follows `Dispatcher::checkSend`, including the randomised backoff and
+      the 4-second ceiling after which it transmits anyway rather than let a wedged receiver silence
+      the node forever. Hardware CAD is available via `WithCADEnabled` and, as in firmware, off by
+      default.
+
+      - **`Opts.FEMRxPatch`** for boards with an external front-end module, matching the firmware's
+      `SX126X_REGISTER_PATCH`.
+
+
+      Register semantics follow the RadioLib build MeshCore vendors rather than the datasheets where
+      the two disagree, because that is what every MeshCore node runs. Three cases where that
+      matters: the SX127x TX-path IQ bit is inverted relative to the datasheet's wording, the SX1262
+      power table is RadioLib's measured `paOptTable`, and bring-up enables the LNA boost that
+      RadioLib applies through a defaulted argument.
+
+
+      ### What is tested, and what is not
+
+
+      The **SX1262** path is validated on hardware - two modules, two hosts, two architectures (E22P
+      on a Pi 4, E22 on a Pi Zero W), including recovery from a real brown-out induced by asserting
+      NRST.
+
+
+      The **SX127x** path has never run on hardware. Its registers were cross-checked line by line
+      against both RadioLib and Semtech's own LoRaMac-node driver, and two divergences were found
+      and fixed by that exercise, but no SX1276-family board was available to confirm any of it. If
+      you are the first to run it, please report what you find. The type documentation says the same
+      thing.
+
+
+      **FSK** configures the modem but has no packet path: `Transmit` refuses with `ErrNotLoRaModem`
+      rather than silently programming LoRa registers over an FSK configuration.
+
+
+      ### Note for anyone who vendored this module before release
+
+
+      There was no previous release, so this is not an upgrade hazard - but if you were building
+      against the module from a local checkout, transmit power changed. It now uses RadioLib's
+      measured PA table, where the datasheet's own optimal-settings table only reaches its stated
+      output with `SetTxParams` at +22. Every power except 22 dBm was previously under-delivering.
+      On boards configured below 22 dBm - which in practice are the ones driving an external PA -
+      the chip now supplies the drive level the configuration actually asks for, so radiated power
+      changes.
+
+
+      ## KISS hardware queries
+
+
+      `KissModem` gained a request/response API, so calle
+
+      …
   - version: v1.3.0
     name: v1.3.0
     datetime: '2026-09-07T05:35:52Z'
