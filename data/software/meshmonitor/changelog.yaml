@@ -1,7 +1,111 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-09-08T03:38:14.667Z'
+updatedAt: '2026-09-09T03:43:10.502Z'
 releases:
+  - version: v4.16.0-rc6
+    name: v4.16.0-rc6
+    datetime: '2026-09-08T22:44:05Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.16.0-rc6
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.16.0-rc6
+
+
+      > ⚠️ **Pre-release.** This is a release candidate for testing. It does not receive the
+      `:latest` Docker tag. Report problems on the issue tracker or Discord.
+
+
+      Eighteen changes since rc5, weighted toward hardening the Meshtastic TCP connection path. Two
+      config-sync bugs behind #5122 are fixed: the favorite write-back now happens outside the sync
+      so it can no longer wedge it, and a sync that stalls partway is detected and reported instead
+      of hanging indefinitely. A security fix stops device credentials being written to debug logs —
+      see the note below. On the map, route segments now honour the Show RF / UDP / MQTT toggles
+      rather than ignoring them, and the Leaflet attribution has room beside the packet monitor.
+      MeshCore gains the Philadelphia "MeshCore 500" preset following Philly Mesh's move to
+      FCC-compliant 500 kHz operation. The GPIO Pin Usage sidebar on the Configuration tab now stays
+      inside the viewport instead of scrolling off the bottom, and the MeshCore MQTT ingest inputs
+      pick up the active theme. Dependency maintenance covers nine packages, including vitest 5.0.0
+      — which is now grouped in Dependabot so the family upgrades together rather than as
+      individually-broken PRs.
+
+
+      ## 🔒 Security
+
+
+      - **Device credentials were being written to debug logs** — #5142 (fixes #5141). If you have
+      run an earlier build with debug logging enabled, treat existing log files as sensitive: rotate
+      or delete them, and rotate any device credentials that may have been captured.
+
+
+      ## ✨ Features
+
+
+      - MeshCore: Philadelphia "MeshCore 500" radio preset — 902.250 MHz / 500 kHz / SF11 / CR 4-5 —
+      #5155 (closes #5137). Note that Philly Mesh also standardises on a 2-byte path hash, which the
+      preset cannot set; the picker now tells you so.
+
+      - Map: route segments respect the Show RF / UDP / MQTT filters — #5144 (closes #5097)
+
+
+      ## 🐛 Bug Fixes
+
+
+      - Meshtastic TCP: defer the favorite write-back out of the config sync — #5138 (#5122)
+
+      - Meshtastic TCP: detect a stalled initial config sync instead of hanging — #5140 (#5122 Bug
+      B)
+
+      - Configuration: keep the GPIO Pin Usage sidebar inside the viewport — #5154 (closes #5100)
+
+      - Map: give the Leaflet credit room beside the packet monitor — #5139 (closes #5099)
+
+      - Dashboard: theme the MeshCore MQTT ingest inputs — #5136 (closes #5135)
+
+
+      ## 🔧 CI / DevOps
+
+
+      - Group vitest with its companions so majors travel together — #5126. `vitest`,
+      `@vitest/coverage-v8` and `@vitest/ui` pin each other exactly, so a major bump previously
+      arrived as separate, individually-unmergeable PRs.
+
+
+      ## 📦 Dependencies
+
+
+      - vitest group → 5.0.0 (vitest, @vitest/coverage-v8, @vitest/ui) — #5145
+
+      - eslint 10.9.1 → 10.10.0 — #5146
+
+      - openid-client — #5147
+
+      - emoji-picker-react 4.19.4 → 4.20.1 — #5148
+
+      - mysql2 3.23.4 → 3.24.3 — #5149
+
+      - maplibre-gl 6.6.0 → 6.7.0 — #5150
+
+      - globals 17.11.0 → 17.12.0 — #5151
+
+      - @typescript-eslint/parser 8.68.0 → 8.69.0 — #5152
+
+      - lucide-react 1.40.0 → 1.41.0 — #5153
+
+
+      ## Issues Resolved
+
+
+      #5099, #5100, #5122, #5135, #5137, #5141, #5097
+
+
+      ## Upgrade Notes
+
+
+      No schema migrations and no configuration changes are required. The only action item is the
+      log-hygiene step in the Security section above.
+
+
+      **Full changelog:** https://github.com/Yeraze/meshmonitor/compare/v4.16.0-rc5...v4.16.0-rc6
   - version: v4.16.0-rc5
     name: v4.16.0-rc5
     datetime: '2026-09-08T02:29:49Z'
@@ -1962,92 +2066,6 @@ releases:
         -p 8080:3001 \
         -v meshmonitor-data:/data \
         ghcr.io/Yeraze/meshmonitor:4.14.2-rc5
-      ```
-
-
-      ### 🧪 Testing
-
-      ✅ All tests passed
-
-      ✅ TypeScript checks passed
-
-      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
-
-
-      ### 📋 Changes
-
-      See commit history for detailed changes.
-  - version: v4.14.2-rc4
-    name: v4.14.2-rc4
-    datetime: '2026-08-17T04:22:59Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.14.2-rc4
-    prerelease: true
-    notes: >-
-      # MeshMonitor v4.14.2-rc4
-
-
-      > ⚠️ **Pre-release (release candidate).** Not tagged `:latest`. For testing ahead of the
-      4.14.2 final.
-
-
-      This release candidate rolls up six changes on top of rc3. On the feature side, the RF **site
-      planner UI** makes predictive coverage reachable — a Fresnel + path-loss tool with a dedicated
-      panel for estimating reach from a node or a map-click origin. Public-key mismatches now come
-      with a clear explanation instead of a bare assertion. Waypoint scheduled rebroadcasts keep
-      their off-by-default behavior and gain a warning about Android notification spam when you do
-      enable them. On the fix side, firmware region names now resolve correctly and MeshMonitor no
-      longer writes `UNSET` back to radios, Polish is offered as a UI language (with CI now failing
-      when a ready translation isn't listed), and messages that mention `areyoumeshingwith.us` no
-      longer vanish from the chat view. No database migrations or schema changes are included.
-
-
-      ## Features
-
-      - RF site planner UI — predictive coverage becomes reachable (#4727)
-
-      - Explain a public-key mismatch instead of asserting one (#4738)
-
-      - Warn about Android notification spam when enabling waypoint rebroadcast; still off by
-      default (#4752)
-
-
-      ## Bug Fixes
-
-      - Resolve every firmware region name; stop writing `UNSET` back to radios (#4749)
-
-      - Offer Polish, and fail CI when a ready translation is not listed (#4748)
-
-      - Stop hiding real messages that mention `areyoumeshingwith.us` when link previews are off
-      (#4751)
-
-
-      ## Issues Resolved
-
-      - #4751 — Messages with URLs vanish from chat when link previews disabled
-
-      - #4752 — Scheduled waypoint rebroadcasts: keep, default off, warn about Android notifications
-
-      - #4749 — Firmware region name resolution / UNSET write-back
-
-
-      **Full changelog:** https://github.com/Yeraze/meshmonitor/compare/v4.14.2-rc3...v4.14.2-rc4
-
-
-      ## 🚀 MeshMonitor v4.14.2-rc4
-
-
-      ### 📦 Installation
-
-
-      **Docker (recommended):**
-
-      ```bash
-
-      docker run -d \
-        --name meshmonitor \
-        -p 8080:3001 \
-        -v meshmonitor-data:/data \
-        ghcr.io/Yeraze/meshmonitor:4.14.2-rc4
       ```
 
 
