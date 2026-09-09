@@ -1,7 +1,99 @@
 source: github
 repo: ALLFATHER-BV/wadamesh
-updatedAt: '2026-09-07T15:35:57.269Z'
+updatedAt: '2026-09-09T14:14:29.719Z'
 releases:
+  - version: beta_79
+    name: wadamesh beta_79
+    datetime: '2026-09-09T11:23:19Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_79
+    prerelease: true
+    notes: >-
+      Test build. Stable stays beta_65.
+
+
+      Flash it at **[flasher.wadamesh.com](https://flasher.wadamesh.com)** (flip the toggle to
+      Beta), or update on the device if you have "Get test builds (beta)" switched on.
+
+
+      Six of the changes here are @oumike's, each tested on his own hardware, and they are the
+      reason the ThinkNode M9 is close to the point where its keyboard navigation stops being
+      something you work around. Thanks also to @Buko84, @jrote1, @DenRalle, @jesshampshire,
+      @Piguyraspberry, PD0RCM, museifu696, thesupergeek, honza_87628 and Leon P, whose reports are
+      most of what follows.
+
+
+      ## A Lua app could reset the device
+
+
+      Running a Lua app could reboot the device outright. Decoding a crash dump from a T-Deck put it
+      inside Lua's own panic path: the firmware never told Lua what to do when an error escapes a
+      protected call, so Lua fell back to its default, which is to abort the program. On a phone
+      that closes an app; here it resets the radio.
+
+
+      An app's own faults were already caught and turned into a message plus a clean close. The gap
+      was everything that runs *before* that safety net is armed, including the lookup of the app's
+      callback, which an app could make run its own code. That lookup is now raw, stack space for
+      the arguments is reserved in advance where failure can be reported instead of raised, and if
+      anything still escapes, the error text is printed rather than lost along with the device.
+
+
+      ## ThinkNode M9
+
+
+      - **Contacts no longer stalls partway through opening.** While adverts were arriving the whole
+      list was torn down and rebuilt every 2.5 s, which costs over a second on a large list. Only
+      what an advert actually changes is updated now. Reported by @Buko84, whose note that it was
+      smooth until something was discovered is what found it (#463).
+
+      - **Leaving a channel returns the cursor to that channel.** Reading unread messages rebuilds
+      the list, and the cursor was remembered by an address that no longer pointed at the same row
+      (#467). @oumike extended the fix so the D-pad also walks messages in order inside a
+      conversation, and dropped the two floating jump arrows, which only made sense with a
+      touchscreen (#468).
+
+      - **A new selection cursor**, an accent outline instead of the old block of reverse video that
+      hid whatever it landed on. Every keyboard-driven board gets it, so the Pager, Tanmatsu and
+      T-Deck trackball match the M9 now. By @oumike (#458, covering #427, #432, #434, #430).
+
+      - **Ctrl closes the Control Center** as well as opening it. By @oumike (#454, #456).
+
+      - **The charging icon appears.** Charge detection was compiled for two boards only; every
+      other one answered "not charging" whatever the hardware did (#473).
+
+
+      ## Sound
+
+
+      Notification sounds now behave the way the settings page claims. The sample chime, the volume
+      buttons and each switch played regardless of the master Sound switch and of Do Not Disturb,
+      while an arriving message respected both. With sound off, the page chimed at you the whole
+      time you configured it and nothing ever arrived audibly. A preview is now silent exactly when
+      a real notification would be, and says which of the two silenced it. Reported by PD0RCM on a
+      T-Deck Plus (#464).
+
+
+      ## Battery
+
+
+      - **The idle power saver works again.** It consulted a saved Wi-Fi setting that reads as "on"
+      when it has never been written, so anyone who had not explicitly switched Wi-Fi off inside
+      this firmware was blocked forever. It now checks whether the radio is actually powered, and
+      the radio is properly powered down when you turn Wi-Fi off, which a network scan could leave
+      running. Reported by @jrote1 (#450).
+
+      - **The Battery page says what is keeping the device awake**, for example "held by mesh busy
+      62%". A low "asleep" figure could mean the device parks badly or that it was rarely allowed to
+      park, with no way to tell which. Requested by @jrote1 (#465).
+
+
+      ## Location privacy
+
+
+      - **The displacement changes with the distance you pick.** It used to be the same direction
+      every time, so someone watching you switch between 100 m an
+
+      …
   - version: beta_78
     name: wadamesh beta_78
     datetime: '2026-09-07T15:03:06Z'
@@ -1798,109 +1890,3 @@ releases:
 
       Hungarian is at **v9** — a full sweep by **@pisti87**, with the one punctuation glyph our
       fonts lack swapped for its typographic twin.
-  - version: beta_59
-    name: wadamesh beta_59
-    datetime: '2026-08-04T22:50:01Z'
-    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_59
-    prerelease: true
-    notes: >-
-      Test build. Stable stays **beta_50**.
-
-
-      The big one: **WADAMESH runs apps written in Lua now**, installed from a Store on the device
-      and updated over the air without reflashing. The runtime, the API, the Store and the first
-      converted apps all ship together in this tag.
-
-
-      Flash it from **https://flasher.wadamesh.com** (flip the Beta toggle), or on-device via
-      Settings → Firmware with "Get test builds (beta)" enabled.
-
-
-      ---
-
-
-      ### Lua apps
-
-
-      An app is a single `.lua` file. It installs from the Store, appears in the app drawer beside
-      the built-ins, and updates when a newer version lands in the catalog — no firmware flash
-      involved.
-
-
-      **Store** lives in the app drawer, with three tabs:
-
-
-      - **Apps** — install, update or remove what the catalog offers.
-
-      - **Built-in** — hide the stock apps you never open, so the drawer holds what you actually
-      reach for. The MQTT bridge is hidden by default now.
-
-      - **Languages** — download translations (see below).
-
-
-      **RF Monitor** and **Airtime** are Lua apps rather than firmware pages, and they gained things
-      the native versions never had: RF Monitor scrolls the full packet list, Airtime has proper
-      Y-axis labels and a Reset button. **Snake** is a Lua app too. Removing one really removes it;
-      reinstalling brings it back with your scores intact.
-
-
-      **Write your own.** Drop a bare `.lua` file into `/apps/` on the card and it appears in the
-      drawer — no manifest needed. The API is about thirty functions covering the screen, input,
-      read-only mesh data, an HTTP fetch and a little per-app storage.
-
-
-      📖 **API reference: https://wadamesh.com/sdk.html**
-
-
-      Two constraints worth knowing up front. The mesh is **read-only** in v1 — an app can read
-      contacts, the packet log and radio statistics, but cannot transmit; a buggy or hostile app
-      must not be able to put packets on the air in your name. And `http_get` is plain HTTP, because
-      after Wi-Fi associates there is not enough internal heap left for a TLS handshake on the
-      smaller boards.
-
-
-      ### Languages are files now
-
-
-      Translations are no longer baked into the firmware. They download from the Store's Languages
-      tab as versioned files, so a translation can be fixed and shipped without waiting for a
-      firmware release — the device offers **Update** when a newer one exists.
-
-
-      Every language got a full sweep: roughly 150 strings that had quietly stayed English for
-      months — the channel settings sheets, the message menus, most buttons — are translated across
-      all 13 languages. Settings → Language opens the Languages tab directly, and switching one now
-      tells you it is restarting before it does, instead of rebooting under your finger.
-
-
-      ### Heltec V4
-
-
-      The V4 has 2 MB of PSRAM and very little free internal memory, which made the Store unreliable
-      there. It now ships **every language and every catalog app inside the firmware image** — the
-      apps are in the drawer on first boot and all 13 languages are already installed. Its Store is
-      a picker rather than a shop.
-
-
-      Around **17 KB of internal memory reclaimed** on the V4, measured step by step: the store and
-      Discover tables moved out of static memory, and the allocator now places ordinary allocations
-      in PSRAM instead of forcing everything under 4 KB into internal RAM.
-
-
-      ### Fixes
-
-
-      - **"Save update bin to SD" works again.** It failed with "SD write failed" at 1–7% on every
-      T-Deck and had been broken since the feature shipped in beta_36. The download buffer sat in
-      PSRAM, which the SD card cannot reliably DMA from, so the write died partway through at a
-      point that moved with the network. Nothing to do with card size or formatting. Reported by
-      **Marshal W7TER**, **df2080** and **Dennis**.
-
-      - The same defect is fixed in two places nobody had hit yet: copying any file to the SD card
-      from the Files app, and exporting a crash dump.
-
-      - **The Store fits narrow and high-DPI screens.** Cards measure their own text instead of
-      assuming two lines, so nothing is cut off and a long title no longer lands on top of the
-      description. This also fixes every board for languages whose tex
-
-      …
