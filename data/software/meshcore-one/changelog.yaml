@@ -1,7 +1,13 @@
 source: github
 repo: Avi0n/MeshCoreOne
-updatedAt: '2026-08-30T20:44:35.159Z'
+updatedAt: '2026-09-10T08:45:35.106Z'
 releases:
+  - version: v1.4.1
+    name: 1.4.1
+    datetime: '2026-09-10T04:35:18Z'
+    url: https://github.com/Avi0n/MeshCoreOne/releases/tag/v1.4.1
+    prerelease: false
+    notes: "## What's Changed\r\n- Added support for hierarchical regions in Repeater Management > Regions.\r\n- Change Default Scope in Repeater Management > Regions.\r\n- Moved \"Path Hash Size\" from Advanced Settings to Settings > Radio\r\n- Support default Path Hash Size via presets\r\n- Radio presets now populate based on your current location. If you haven't given MC1 location permissions, you can manually set a location in Settings > Radio.\r\n- Added PhillyMesh radio preset. This preset is only visible if you've given MC1 location permissions and your location is set to the following states: PA, NJ, DE, and MD.\r\n- Advanced radio configuration has been moved from \"Advanced Settings\" to Settings > Radio\r\n- Change language that messages are translated into in Settings > Language\r\n- Tapping \"Share\" in the \"Share Contact\" sheet now shares a meshcore:// style URI\r\n- Added missing gap between clustered room messages\r\n- Changed reaction format to put emoji after the mention\r\n- Restored soft liquid glass chat header on OS 27\r\n- On Chats and Nodes tabs, filters are hidden when scrolling\r\n\r\n## Bug Fixes\r\n- Adding more than one region in Repeater Management wouldn't work\r\n- Adding regions in Repeater Management did not respect hierarchies\r\n- Fix some messages not being detected for translation\r\n- Orphaned Bluetooth devices now show up in \"Connect Device\" picker sheet as \"MeshCore Device\". Orphaned means that the device is paired with the system, but not MC1. You must remove the device from the system before pairing it again with MC1.\r\n- When a Bluetooth device orphan existed, scanning for Bluetooth devices would ask you to remove the orphaned accessory instead of showing nearby radios.\r\n- Deleting a radio in MC1 would only remove it from MC1 and leave it paired with iPhone. \r\n- Clicking on links on macOS didn't work\r\n- Title layout issues on Chats and Nodes tabs\r\n- Max size sent messages were not receiving repeat details if a scope was attached\r\n\r\n\r\n**Full Changelog**: https://github.com/Avi0n/MeshCoreOne/compare/v1.4.0...v1.4.1"
   - version: v1.4.0
     name: 1.4.0
     datetime: '2026-08-30T17:17:00Z'
@@ -116,9 +122,3 @@ releases:
     url: https://github.com/Avi0n/MeshCoreOne/releases/tag/v0.4.3
     prerelease: false
     notes: "## Bug Fixes\r\n- Fix a bug where heard repeats were not showing under sent messages. \r\n- Fix bug on iOS 18 where the labels button, top toolbar, and bottom tab bar were invisible\r\n\r\n**Full Changelog**: https://github.com/Avi0n/PocketMesh/compare/v0.4.2...v0.4.3"
-  - version: v0.4.2
-    name: 0.4.2
-    datetime: '2026-01-19T07:32:23Z'
-    url: https://github.com/Avi0n/MeshCoreOne/releases/tag/v0.4.2
-    prerelease: false
-    notes: "## What's Changed\r\n- Chats: Swipe a DM/Channel/Room to the right to Favorite\r\n- Status Pill: Now has animations instead of just appearing/disappearing instantly\r\n- Status Pill: Removed Channels and Contacts from the pill status as it felt too busy for an Apple app\r\n- New \"Send Again\" button in long press menu for messages that failed to send or had 0 hear repeats\r\n- Added logging for radio settings (Frequency, Spreading Factor, etc.)\r\n\r\n## Bug Fixes\r\n- Fix a bug where swiping to delete a contact would cause a crash\r\n- Fix a bug where occasionally tapping on a node that was clustered would automatically zoom you out\r\n- Fix crashes during transitional states (closing sheets, backing out, opening the app launcher)\r\n- iPad now reflects the correct radio settings if you have Advanced Settings open and are looking at the Radio section in the main Settings panel at the same time\r\n- Fix invisible bottom tab bar on Maps (iOS 18)\r\n- Fix rooms not updating badge notifications reliably\r\n- Fix room notifications not clearing after reading\r\n- Fix room not sorting my last received time \r\n- Fix room message bubble text being black instead of white\r\n\r\n\r\n**Full Changelog**: https://github.com/Avi0n/PocketMesh/compare/v0.4.1...v0.4.2"
