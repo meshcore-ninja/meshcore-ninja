@@ -1,7 +1,12 @@
 source: github
 repo: MichTronics/MeshCoreNG
-updatedAt: '2026-08-17T16:30:03.640Z'
+updatedAt: '2026-09-10T22:20:08.416Z'
 releases:
+  - version: heltec-prerelease-v1.1.6
+    name: Heltec V3/V4 Prerelease Firmware v1.1.6
+    datetime: '2026-09-10T19:55:56Z'
+    url: https://github.com/MichTronics/MeshCoreNG/releases/tag/heltec-prerelease-v1.1.6
+    prerelease: true
   - version: room-server-v1.1.1
     name: Room Server Firmware v1.1.1
     datetime: '2026-06-30T23:35:47Z'
@@ -96,9 +101,4 @@ releases:
     name: ESPNow Bridge Firmware v1.1.1
     datetime: '2026-06-22T13:53:07Z'
     url: https://github.com/MichTronics/MeshCoreNG/releases/tag/bridge-espnow-v1.1.1
-    prerelease: false
-  - version: bridge-ble-v1.1.1
-    name: BLE Bridge Firmware v1.1.1
-    datetime: '2026-06-22T14:43:38Z'
-    url: https://github.com/MichTronics/MeshCoreNG/releases/tag/bridge-ble-v1.1.1
     prerelease: false
