@@ -1,7 +1,13 @@
 source: github
 repo: sosprz/Meshcore-Wio-Tracker-L1-Pro
-updatedAt: '2026-09-05T23:37:11.572Z'
+updatedAt: '2026-09-10T19:00:11.490Z'
 releases:
+  - version: v1.17.95
+    name: v1.17.95
+    datetime: '2026-09-10T14:30:06Z'
+    url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.17.95
+    prerelease: false
+    notes: "- **Persistent alert setting fix** - `System -> Notify again` is now stored in JSON preferences, so the selected repeat interval survives a restart.\r\n- **About screen** - Added `System -> About` to view the installed firmware version and build date without rebooting.\r\n- **Cardputer compose shortcut** - Cardputer builds now default to the hardware keyboard."
   - version: v1.17.94
     name: v1.17.94
     datetime: '2026-09-05T21:18:47Z'
@@ -132,9 +138,3 @@ releases:
       - **Repeater blank-password login** - Repeater guest login now opens a choice between `Blank
       password` and `Enter password`; the blank option sends an empty login directly for ACL-only
       re-login to repeaters that already know the companion device.
-  - version: v1.15.75
-    name: v1.15.75
-    datetime: '2026-05-17T18:35:35Z'
-    url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.15.75
-    prerelease: false
-    notes: "- **Mainstream sync (v1.15 backend)** - Integrated upstream companion protocol/backend changes for v1.15 without adding new on-device UI screens.\r\n- **Default flood scope compatibility** - Added persisted default flood scope name/key handling and companion protocol commands for get/set default scope, while keeping scope editing out of the local UI.\r\n- **GROUP_DATA binary packets** - Added backend send/receive support for channel binary datagrams (`CMD_SEND_CHANNEL_DATA` / `RESP_CODE_CHANNEL_DATA_RECV`) so companion apps can use the new group-data protocol.\r\n- **Protocol/version update** - Bumped companion protocol metadata to firmware protocol code `11` / `v1.15.0` and aligned radio frequency validation with upstream lower-frequency support."

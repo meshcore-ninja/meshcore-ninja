@@ -1,7 +1,134 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-09-09T03:43:10.502Z'
+updatedAt: '2026-09-10T19:00:33.934Z'
 releases:
+  - version: v4.16.0
+    name: v4.16.0
+    datetime: '2026-09-10T16:29:37Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.16.0
+    prerelease: false
+    notes: >-
+      # MeshMonitor 4.16.0
+
+
+      The first full release since 4.15.2, after six release candidates.
+
+
+      The headline work is reliability on large meshes. A reporter with a ~190-node NodeDB
+      packet-captured MeshMonitor dropping its TCP link partway through every config sync, and the
+      fix took four passes: a connect timeout that could outlive its own attempt and kill a healthy
+      socket, a favorite write-back that injected an admin packet into the middle of the NodeDB
+      stream, a stalled sync that hung with no detection at all, and finally a fast-retry ramp so
+      recovery takes ~16s instead of ~73s. Alongside that, map route segments now honour the Show RF
+      / UDP / MQTT toggles, the Sources list shows unread DM counts per source, and operators can
+      publish privacy, terms and contact documents from inside MeshMonitor. Device credentials are
+      no longer written to debug logs.
+
+
+      ## ⚠️ Upgrade notes
+
+
+      **Route segments will disappear from your maps.** Show MQTT and Show UDP default to *off*, and
+      as of this release those toggles filter traceroute route segments as well as node markers.
+      Nothing is deleted — turn **Show MQTT** on in the Map Features panel to get them back. See
+      [Transport filtering and route
+      segments](https://meshmonitor.org/features/maps#transport-filtering-and-route-segments).
+
+
+      **MeshCore TCP sources now default to port 5000.** That is where MeshCore's WiFi and Ethernet
+      companion builds listen. If you run a native-TCP build, it still uses `4403` — set the port
+      explicitly when adding the source.
+
+
+      **Two new migrations run on first boot** (160, 161) plus one from the privacy feature (162).
+      All are additive and idempotent. Traceroutes recorded before this release carry no transport
+      information and are treated as RF, so they stay visible under the default toggles.
+
+
+      ## Features
+
+
+      - Route segments respect the Show RF / UDP / MQTT map toggles (#5097)
+
+      - Per-source unread DM badge on the Sources list, with a per-user off switch (#5124)
+
+      - Operator privacy disclosures: hosted or linked privacy policy, terms and contact documents
+      (#5156)
+
+      - Philadelphia MeshCore 500 radio preset (#5137)
+
+      - MeshBeacon warns on regulator-non-compliant preset/region combinations in received offers
+      (#5103)
+
+      - MeshCore observer device stats and noise-floor telemetry from the `/status` topic (#5040)
+
+
+      ## Bug fixes
+
+
+      **Large-mesh TCP reliability (#5122)**
+
+      - Scope the connect timeout to its own attempt, and name every socket teardown
+
+      - Defer the favorite write-back out of the initial config sync
+
+      - Detect a stalled config sync instead of hanging indefinitely
+
+      - Retry sooner after a mid-sync disconnect, ramping 3s → 10s → 30s
+
+
+      **MeshCore**
+
+      - Default the TCP source port to 5000, not 4403 (#5160)
+
+      - Decode RepeaterStats and Core stats fields the pinned library dropped (#5125)
+
+      - Guard an unhandled-rejection crash from bare library rejects (#5102)
+
+      - Refresh `lastHeard` on telemetry round-trip, not just adverts (#5131)
+
+      - Route MQTT ingest sources through every MeshCore read path, and give them their own page
+      (#5094, #5096)
+
+      - Theme the MeshCore MQTT ingest inputs and channel/room row buttons (#5135, #5071)
+
+
+      **Maps and UI**
+
+      - Give the Leaflet credit room beside the packet monitor (#5099)
+
+      - Stop chart panels overflowing the viewport in portrait (#5093)
+
+      - Keep the GPIO Pin Usage sidebar inside the viewport (#5100)
+
+      - Scope the non-scrollable-page rule to the channels tab
+
+
+      **Configuration and data**
+
+      - Move Traffic Management to the v2.8 non-zero-enables schema (#5123)
+
+      - Scope traceroute purges, and guard the sibling that never did (#5088)
+
+      - Stamp the security load gate from the per-section load too (#5077)
+
+      - Request the survey under `/api` so it reaches the API router (#5078)
+
+
+      ## Security
+
+
+      - Device credentials are no longer written to debug logs in the clear (#5141). WiFi PSK, MQTT
+      password, private and admin keys are redacted; `publicKey` still prints in full by design.
+
+
+      ## Documentation
+
+
+      The docs were audited against every change since 4.15.2 before this release. The MeshCore
+      setup page named the wrong T
+
+      …
   - version: v4.16.0-rc6
     name: v4.16.0-rc6
     datetime: '2026-09-08T22:44:05Z'
@@ -1968,104 +2095,6 @@ releases:
         -p 8080:3001 \
         -v meshmonitor-data:/data \
         ghcr.io/Yeraze/meshmonitor:4.14.2-rc6
-      ```
-
-
-      ### 🧪 Testing
-
-      ✅ All tests passed
-
-      ✅ TypeScript checks passed
-
-      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
-
-
-      ### 📋 Changes
-
-      See commit history for detailed changes.
-  - version: v4.14.2-rc5
-    name: v4.14.2-rc5
-    datetime: '2026-08-17T23:24:31Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.14.2-rc5
-    prerelease: true
-    notes: >-
-      # MeshMonitor v4.14.2-rc5
-
-
-      > ⚠️ **Pre-release (release candidate).** Not tagged `:latest`. For testing ahead of the
-      4.14.2 final.
-
-
-      This candidate rolls up 19 commits since rc4. The headline is the **maplibre-gl 5 → 6**
-      upgrade — its lone blocker (the leaflet adapter's lack of v6 support) cleared upstream, and
-      the 3D terrain map was validated rendering correctly under software WebGL. On the feature
-      side, the map **age filter** gains non-linear steps reaching 30 days, telemetry graphs
-      **export to CSV**, and a **Prometheus `/api/v1/metrics`** endpoint exposes mesh health for
-      Grafana/alerting. Fixes include the long-standing Virtual Node bug where it advertised a
-      **stale local node number** (spawning an unpurgeable phantom duplicate and breaking MQTT),
-      three mobile/PWA/desktop **map & modal CSS quirks**, and a **MQTT device-telemetry**
-      node-metrics refresh. Rounded out with dependency bumps (`pg`, `lucide-react`, dev tooling),
-      the mesh-impact checklist added to contributor guidance, and updated translations. No database
-      migrations or schema changes.
-
-
-      ## Features
-
-      - maplibre-gl 5 → 6 upgrade; 3D render validated under SwiftShader WebGL (#4650)
-
-      - Non-linear map age filter with week/month reach, 720h cap (#4770)
-
-      - Export telemetry graphs as CSV (#4771)
-
-      - Prometheus `/api/v1/metrics` endpoint for mesh monitoring (#4757)
-
-
-      ## Bug Fixes
-
-      - Virtual Node stops advertising a stale local node number (#1390)
-
-      - Three mobile/map CSS quirks: search modal, iOS PWA offset, desktop popup scrollbar (#4774,
-      #4772, #4758)
-
-      - Refresh MQTT device-telemetry node metrics (#4755)
-
-
-      ## Dependencies / Docs / i18n
-
-      - `pg` + `@types/pg`, `lucide-react` 1.31.0, and several dev-dependency + CI-action bumps
-
-      - Mesh-impact checklist added to agent guidance (#4778)
-
-      - Weblate translations update (#4709)
-
-
-      ## Issues Resolved
-
-      - #1390 — V-Node creates its own ID (stale node number)
-
-      - #4650 — Deferred maplibre-gl 5 → 6 upgrade
-
-      - #4758, #4772, #4774 — map/modal CSS quirks
-
-
-      **Full changelog:** https://github.com/Yeraze/meshmonitor/compare/v4.14.2-rc4...v4.14.2-rc5
-
-
-      ## 🚀 MeshMonitor v4.14.2-rc5
-
-
-      ### 📦 Installation
-
-
-      **Docker (recommended):**
-
-      ```bash
-
-      docker run -d \
-        --name meshmonitor \
-        -p 8080:3001 \
-        -v meshmonitor-data:/data \
-        ghcr.io/Yeraze/meshmonitor:4.14.2-rc5
       ```
 
 
