@@ -1,7 +1,35 @@
 source: github
 repo: andymux/meshos-releases
-updatedAt: '2026-09-07T15:36:15.378Z'
+updatedAt: '2026-09-10T14:08:49.277Z'
 releases:
+  - version: fw-v1.7.3
+    name: MeshOS firmware v1.7.3
+    datetime: '2026-09-10T10:58:58Z'
+    url: https://github.com/andymux/meshos-releases/releases/tag/fw-v1.7.3
+    prerelease: false
+    notes: |-
+      MeshOS firmware v1.7.3
+
+      MeshOS app
+      - Fixes that improve reliability when using the radio with the MeshOS app.
+
+      T-Deck memory
+      - Around 80 KB of internal RAM freed by two fixes. With Bluetooth switched off, the
+        BLE stack is no longer started and torn down at every boot, and the notification
+        sound driver is now created only while a sound plays instead of holding 32 KB
+        permanently. Boot-time minimum free heap goes from under 10 KB to over 110 KB,
+        and companion (Bluetooth) mode has about five times the headroom it had.
+
+      Also
+      - /mem now reports the largest free block, and [HEAP] diagnostics are printed on the
+        serial console.
+
+      Device firmware for LilyGo T-Deck and ThinkNode M9.
+      Install via SD card (firmware.bin) or the in-firmware updater.
+
+      SHA-256:
+      - TDeck: 83ffeb343e430371b3913ebc4e9d39a9ca9e9eed8c2ab436e801c64d5d911978
+      - M9: c972a8206f6d6d62985ee9a31c6be033bc8af6d1e5c2d09c7d41344307aecbbf
   - version: v1.0.17
     name: MeshOS v1.0.17
     datetime: '2026-09-07T13:45:10Z'
@@ -509,23 +537,3 @@ releases:
       - TDeck: 2f9f587f41fc751e8f91900772f000c2aa1ef68eefd585bd604d407b2341a9d2
 
       - M9: a58f9a8b5cf2516022c26c8075d52ed97896c245945da519eeca40cd3c6420e7
-  - version: fw-v1.5.8
-    name: MeshOS firmware v1.5.8
-    datetime: '2026-07-13T16:07:20Z'
-    url: https://github.com/andymux/meshos-releases/releases/tag/fw-v1.5.8
-    prerelease: false
-    notes: >-
-      New Control Centre: quick-settings panel with WiFi, Sound, Bluetooth and GPS toggles plus
-      brightness and volume sliders. Persistent WiFi switch. Software updater reliability fixes.
-
-
-      Device firmware for LilyGo T-Deck and ThinkNode M9.
-
-      Install via SD card (firmware.bin) or the in-firmware updater.
-
-
-      SHA-256:
-
-      - TDeck: 5a7da903153d2ba4790585b1a692ad443021f85c47798afe18015ac3a7115622
-
-      - M9: b44357a68874adc43e9b0d3a579006d8a5d7e726b61df39ce81510878dfe003b
