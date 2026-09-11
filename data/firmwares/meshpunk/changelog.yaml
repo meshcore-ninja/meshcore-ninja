@@ -1,7 +1,13 @@
 source: github
 repo: PhilMo6/meshpunk
-updatedAt: '2026-09-11T03:38:36.428Z'
+updatedAt: '2026-09-11T19:02:28.107Z'
 releases:
+  - version: v0.4.2
+    name: 'v0.4.2 some fixes '
+    datetime: '2026-09-11T15:51:24Z'
+    url: https://github.com/PhilMo6/meshpunk/releases/tag/v0.4.2
+    prerelease: false
+    notes: "this update is to fix an issue with the launcher version from the ota update partition resize.\r\nalso riding along are a couple small fixes to the app library and firmware settings apps."
   - version: v0.4.1
     name: v0.4.1 OTA update
     datetime: '2026-09-11T02:58:12Z'
@@ -118,9 +124,3 @@ releases:
     url: https://github.com/PhilMo6/meshpunk/releases/tag/v0.2.1
     prerelease: false
     notes: "Changed how I build releases to be compatible with with https://github.com/bmorcelli/Launcher\r\nPutting a launcher.bin on the sd lets you install with the launcher!\r\nAll releases will now include \r\nmerged.bin for direct flashing using meshcore.io flasher\r\nlauncher.bin for the launcher install\r\nfirmware.bin just the firmware\r\nlittlefs.bin just the filesystem"
-  - version: v0.2.0
-    name: v0.2.0 alpha
-    datetime: '2026-06-26T00:21:28Z'
-    url: https://github.com/PhilMo6/meshpunk/releases/tag/v0.2.0
-    prerelease: false
-    notes: "Theme update!\r\nThemes have been added. They are ether a flat name.lua file or a folder with a theme.lua.\r\nCan be loaded from the filesystem or the sd card.\r\n10 themes are included.\r\n2 player local Scorched earth! Wind has also been added to the game to make it more interesting."
