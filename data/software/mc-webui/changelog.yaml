@@ -1,7 +1,39 @@
 source: github
 repo: MarekWo/mc-webui
-updatedAt: '2026-09-11T08:44:05.873Z'
+updatedAt: '2026-09-12T16:49:23.277Z'
 releases:
+  - version: v2.18.2
+    name: mc-webui 2.18.2
+    datetime: '2026-09-12T16:20:29Z'
+    url: https://github.com/MarekWo/mc-webui/releases/tag/v2.18.2
+    prerelease: false
+    notes: >-
+      ### Fixes
+
+
+      - **Optional HTTPS now works on installations made from the Docker image, not only on those
+      built from source.** mc-webui can be installed two ways, and they differ in one detail that
+      turned out to matter: an installation built from the repository uses the `docker-compose.yml`
+      that comes with it, while an installation from the published Docker image uses a
+      `docker-compose.yml` that the README told you to write yourself. The optional HTTPS proxy
+      ([HTTPS Setup](https-setup.md)) is defined in the project's file behind a Compose *profile*,
+      so adding `COMPOSE_PROFILES=https` to `.env` starts it — but a hand-written file never had
+      that definition, so the same line did nothing at all: the app started as before and no proxy
+      was mentioned, with no error to explain why. Pasting the proxy into the file by hand worked,
+      and then had to be redone by hand every time anything else was added to it. The same gap
+      silently swallowed `MC_TRUST_PROXY` and `MC_BIND_ADDRESS` — the two settings that let the app
+      see the real client address and close the plain-HTTP port — because those are passed to the
+      app by the compose file too.
+
+          The compose file for image installations is now maintained in the repository as `docker-compose.image.yml` and downloaded rather than typed, so it contains the proxy, both proxy-related settings, and demo mode, exactly like the one used when building from source:
+
+          ```bash
+          cd ~/mc-webui   # the folder with your docker-compose.yml
+          curl -fsSL https://raw.githubusercontent.com/MarekWo/mc-webui/main/docker-compose.image.yml -o docker-compose.yml
+          docker compose up -d
+          ```
+
+          If you installed from the image, that command is also the upgrade path: it replaces your compose file with the current one, which is safe because none of your settings live there — they are all in `.env`, which the download does not touch. Keep the file unedited from now on and the next addition to it is one download away again. The image tag moved into `.env` for the same reason: `MC_IMAGE=mawoj/mc-webui:dev` selects development builds, where previously you edited the tag inside the compose file — so if you had edited it to follow `dev`, add that line to `.env` when you replace the file, or the next pull brings the stable image back. Installations built from source are unaffected.
   - version: v2.18.1
     name: mc-webui 2.18.1
     datetime: '2026-09-11T06:51:48Z'
@@ -873,30 +905,3 @@ releases:
       Android suspends it — reopening the app catches you up. Requires app version **1.1**; see the
       [Android App guide](https://github.com/MarekWo/mc-webui/blob/main/docs/android-app.md) for how
       to update.
-  - version: v2.3.0
-    name: mc-webui 2.3.0
-    datetime: '2026-07-28T19:20:09Z'
-    url: https://github.com/MarekWo/mc-webui/releases/tag/v2.3.0
-    prerelease: false
-    notes: >-
-      ### New features
-
-
-      - **There is an Android app now.** A small companion app opens your own instance full screen —
-      no address bar, its own icon in the app drawer, and it looks like a proper Android app rather
-      than a page in a browser. It holds no mesh logic of its own: on first run it asks for the
-      address of your server (`http://192.168.1.100:5000` on the local network, or your `https://`
-      hostname behind a reverse proxy), remembers it, and from then on launches straight into
-      mc-webui. Everything still runs on your server and your MeshCore device. It is not on Google
-      Play, so you download the `.apk` from the repository and install it yourself — the new
-      [Android App guide](https://github.com/MarekWo/mc-webui/blob/main/docs/android-app.md) walks
-      through that, including the "unknown sources" permission and the Play Protect notice Android
-      shows for any app that didn't come from the Play Store. Scanning contact QR codes works (on
-      `https://` instances — over plain `http://` the camera is blocked by the same browser rule
-      that applies in Chrome), and database backups download to the phone's Downloads folder. One
-      thing stays with the browser: **notifications**, which the app has no access to — if you rely
-      on them, keep the Chrome "Add to Home Screen" install alongside it, the two work happily side
-      by side. The app's [source](https://github.com/MarekWo/mc-webui/tree/main/android/src) sits
-      next to the
-      [`.apk`](https://github.com/MarekWo/mc-webui/raw/main/android/mc-webui-wrapper.apk), so you
-      can read what you are installing or build it yourself.

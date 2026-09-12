@@ -1,7 +1,153 @@
 source: github
 repo: andymux/meshos-releases
-updatedAt: '2026-09-10T14:08:49.277Z'
+updatedAt: '2026-09-12T16:49:36.097Z'
 releases:
+  - version: v1.0.19
+    name: MeshOS v1.0.19
+    datetime: '2026-09-12T15:50:32Z'
+    url: https://github.com/andymux/meshos-releases/releases/tag/v1.0.19
+    prerelease: false
+    notes: |-
+      ## MeshOS Companion v1.0.19
+
+      Replaces v1.0.18 from earlier today. Same release plus one fix: profile
+      pictures now also show on channel messages that arrived over LoRa, so they no
+      longer disappear from the chat while a radio is connected.
+
+      ### Chat
+      - Pinch to zoom in any chat. Text, pictures, voice messages and map previews
+        all scale together, and the app remembers your size. There is also a Chat
+        text size setting in Settings > App.
+      - Message text now follows your phone's system font size.
+
+      ### Profile pictures
+      - Your picture and name now sit at the top of Settings > App. Change or remove
+        the picture there, and tap your name to change it.
+      - Profile pictures now show on internet channels too, including in
+        notifications and the participants list, so people on the internet side of a
+        channel see the same picture AirLink users do. A changed picture reaches other
+        phones within a couple of minutes.
+      - Pictures are stored at higher quality, so your own picture looks sharp in the
+        app.
+      - Choose a picture from your photo library or browse files. Use Browse files if
+        your phone's photo picker misbehaves.
+
+      ### Radio connection
+      - The app now keeps a foreground connection to your radio while it is connected,
+        with a light keep-alive, so Android is less likely to drop the Bluetooth link
+        when the screen is off. A new Keep CPU awake option in Settings is there for
+        phones that still struggle.
+      - If Android has MeshOS set to Restricted battery use, the app now warns you and
+        offers to open the setting. Restricted mode cuts the radio link a few minutes
+        after you leave the app.
+      - New Connection log in Settings for troubleshooting connection drops, with copy
+        and share.
+
+      ### Channels
+      - Fixed AirLink and LoRa Public channels showing as one merged channel when one
+        side was switched off.
+
+      ### Settings
+      - Colour coded icons across Settings and Tools make the lists easier to scan.
+      - Internet Messaging shows a simpler Connected status.
+
+      ### Install
+      Download `MeshOS-v1.0.19.apk` and open it to install. Existing users upgrade in
+      place, keeping their messages and settings.
+
+      APK SHA-256:
+      `ecb016d8fde99755d05b770942e931f8b1b294e3d5d6c361907e38424e6a7005`
+
+      ### macOS
+      Download `MeshOS-v1.0.19.dmg`, open it and drag MeshOS into Applications. Needs
+      macOS 11 or later. The app is not notarised, so the first time you run it
+      right-click MeshOS and choose Open, then Open again in the warning.
+
+      DMG SHA-256:
+      `44017aa1873f3d97fa2737108593c4f058622e9ebb0243c32fadcaacbbc50053`
+  - version: v1.0.18
+    name: MeshOS v1.0.18
+    datetime: '2026-09-12T14:51:25Z'
+    url: https://github.com/andymux/meshos-releases/releases/tag/v1.0.18
+    prerelease: false
+    notes: >-
+      ## MeshOS Companion v1.0.18
+
+
+      **Superseded by [v1.0.19](https://github.com/andymux/meshos-releases/releases/tag/v1.0.19)**,
+      which adds one fix: profile pictures on channel messages that arrived over LoRa. Please
+      install v1.0.19 instead.
+
+
+      ### Chat
+
+      - Pinch to zoom in any chat. Text, pictures, voice messages and map previews
+        all scale together, and the app remembers your size. There is also a Chat
+        text size setting in Settings > App.
+      - Message text now follows your phone's system font size.
+
+
+      ### Profile pictures
+
+      - Your picture and name now sit at the top of Settings > App. Change or remove
+        the picture there, and tap your name to change it.
+      - Profile pictures now show on internet channels too, including in
+        notifications and the participants list, so people on the internet side of a
+        channel see the same picture AirLink users do. A changed picture reaches other
+        phones within a couple of minutes.
+      - Pictures are stored at higher quality, so your own picture looks sharp in the
+        app.
+      - Choose a picture from your photo library or browse files. Use Browse files if
+        your phone's photo picker misbehaves.
+
+      ### Radio connection
+
+      - The app now keeps a foreground connection to your radio while it is connected,
+        with a light keep-alive, so Android is less likely to drop the Bluetooth link
+        when the screen is off. A new Keep CPU awake option in Settings is there for
+        phones that still struggle.
+      - If Android has MeshOS set to Restricted battery use, the app now warns you and
+        offers to open the setting. Restricted mode cuts the radio link a few minutes
+        after you leave the app.
+      - New Connection log in Settings for troubleshooting connection drops, with copy
+        and share.
+
+      ### Channels
+
+      - Fixed AirLink and LoRa Public channels showing as one merged channel when one
+        side was switched off.
+
+      ### Settings
+
+      - Colour coded icons across Settings and Tools make the lists easier to scan.
+
+      - Internet Messaging shows a simpler Connected status.
+
+
+      ### Install
+
+      Download `MeshOS-v1.0.18.apk` and open it to install. Existing users upgrade in
+
+      place, keeping their messages and settings.
+
+
+      APK SHA-256:
+
+      `b5a043f82a70a2551b8507f97b9c1a97038564536ae07f191a454d008a8291a8`
+
+
+      ### macOS
+
+      Download `MeshOS-v1.0.18.dmg`, open it and drag MeshOS into Applications. Needs
+
+      macOS 11 or later. The app is not notarised, so the first time you run it
+
+      right-click MeshOS and choose Open, then Open again in the warning.
+
+
+      DMG SHA-256:
+
+      `4cfd9280cdbe2a3afcee7f8bbcd93d0345aea09a53e5b78ddb52eec4fb06bc6f`
   - version: fw-v1.7.3
     name: MeshOS firmware v1.7.3
     datetime: '2026-09-10T10:58:58Z'
@@ -471,69 +617,3 @@ releases:
       - TDeck: 8d502ab43488484f74961c1ac22f9c2db77c18cb36a7f8db30342d1999cef1d5
 
       - M9: 4ff8408e574538deb098d3808871f67c13a38efbd3a945aba80191bfda0506e8
-  - version: fw-v1.6.0
-    name: MeshOS firmware v1.6.0
-    datetime: '2026-07-25T13:28:21Z'
-    url: https://github.com/andymux/meshos-releases/releases/tag/fw-v1.6.0
-    prerelease: false
-    notes: >-
-      ## MeshOS 1.6.0
-
-
-      **🌐 Internet Messaging (new!)** — a global "MeshOS" chat channel over WiFi. Turn it on in
-      **Settings → Internet Messaging** and chat with MeshOS users anywhere, even with no LoRa mesh
-      around you. Sent messages show a tick once the server relays them. (T-Deck & M9, WiFi
-      required.)
-
-
-      **⚡ Much faster, more reliable maps & browser** — map tiles and CoreBrowser now load
-      dramatically faster and no longer stall or stop working after heavy use. Big memory-stability
-      fix under the hood; tiles now served from our own fast cache.
-
-
-      **Improvements & fixes**
-
-      - Fixed the T-Deck slowly running out of memory (maps/browser would eventually stop until a
-      reboot).
-
-      - WiFi and Bluetooth now switch cleanly — turning one on turns the other off (they can't run
-      together). Fixed: enabling Bluetooth then rebooting could leave it off if WiFi was on.
-
-      - New WiFi On/Off toggle right in WiFi settings.
-
-      - The map now prompts you to turn on WiFi when tiles need downloading.
-
-      - Added a live "largest free memory block" readout on the System screen.
-
-
-      ---
-
-      Device firmware for LilyGo T-Deck and ThinkNode M9. Install via the in-firmware updater, or SD
-      card / configurator.
-
-
-      **SHA-256**
-
-      - T-Deck: `bee44943f9de3f57f796f8ff26a5f6f5144a6d09d6b43b54f19e8d8276b963cd`
-
-      - M9: `6c7f5b0bea71274eeefd96b85a312c5234f0d830da58517198f03e8f81683d8e`
-  - version: fw-v1.5.9
-    name: MeshOS firmware v1.5.9
-    datetime: '2026-07-16T15:09:53Z'
-    url: https://github.com/andymux/meshos-releases/releases/tag/fw-v1.5.9
-    prerelease: false
-    notes: >-
-      Smoother UI on busy meshes, chat input box fixes, WiFi and GPS toggles now respected
-      everywhere
-
-
-      Device firmware for LilyGo T-Deck and ThinkNode M9.
-
-      Install via SD card (firmware.bin) or the in-firmware updater.
-
-
-      SHA-256:
-
-      - TDeck: 2f9f587f41fc751e8f91900772f000c2aa1ef68eefd585bd604d407b2341a9d2
-
-      - M9: a58f9a8b5cf2516022c26c8075d52ed97896c245945da519eeca40cd3c6420e7

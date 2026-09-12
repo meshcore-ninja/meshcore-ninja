@@ -1,7 +1,13 @@
 source: github
 repo: sosprz/Meshcore-Wio-Tracker-L1-Pro
-updatedAt: '2026-09-10T19:00:11.490Z'
+updatedAt: '2026-09-12T16:49:14.113Z'
 releases:
+  - version: v1.17.96
+    name: v1.17.96
+    datetime: '2026-09-12T13:35:56Z'
+    url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.17.96
+    prerelease: false
+    notes: "- **Sound settings menu** - Home and System `Sound` now open one menu with a simple master `Sound: ON/OFF` switch and separate `Loudness` (`LOW / MED / HIGH`). It includes direct-message and channel sound controls, unread-message reminders (`OFF / 1 / 5 / 10 min`), advert sounds (`OFF / NEW / ALL`), and other sounds (countdown/UI feedback). Direct messages, channels, adverts, and other alerts each have a saved `Tone 1 / 2 / 3` selector with playback preview. With Sound `OFF`, all local audio is muted while the menu stays available to re-enable it.\r\n- **Sound notification behavior** - Per-channel `Notify: All / Mentions / Off` remains the channel-level filter for message sounds and repeating reminders. Adverts, reminders, and countdown completion now use distinct tones; existing advert-sound `ON` preferences keep their previous `ALL`-adverts behavior.\r\n- **Wio Tracker L1 EInk normal-colour fix** - Menu lists again use black text on a white page, with only the selected row inverted. This fixes the negative-looking Contacts, System, Sound, and other list screens in 1.17.x without changing OLED or Cardputer rendering."
   - version: v1.17.95
     name: v1.17.95
     datetime: '2026-09-10T14:30:06Z'
@@ -129,12 +135,3 @@ releases:
       - **Repeater admin blank-password login** - Repeater admin login now opens a choice between
       `Blank password` and `Enter password`; the blank option sends an empty admin login directly
       for ACL-only re-login to repeaters that already know the companion device.
-  - version: v1.15.76
-    name: v1.15.76
-    datetime: '2026-05-21T19:03:54Z'
-    url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.15.76
-    prerelease: false
-    notes: >-
-      - **Repeater blank-password login** - Repeater guest login now opens a choice between `Blank
-      password` and `Enter password`; the blank option sends an empty login directly for ACL-only
-      re-login to repeaters that already know the companion device.
