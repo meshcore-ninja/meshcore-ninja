@@ -1,7 +1,96 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-09-10T19:00:33.934Z'
+updatedAt: '2026-09-12T03:43:15.125Z'
 releases:
+  - version: v4.16.1-rc1
+    name: v4.16.1-rc1
+    datetime: '2026-09-12T03:17:57Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.16.1-rc1
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.16.1-rc1
+
+
+      > ⚠️ **Release candidate.** Not for production. Please test and report anything odd on
+      [Issues](https://github.com/Yeraze/meshmonitor/issues) or
+      [Discord](https://discord.gg/JVR3VBETQE).
+
+
+      The first RC for 4.16.1, a patch release made entirely of bug fixes reported against 4.16.0.
+      Three of them hit MeshCore. Serial sources can now be configured with a stable
+      `/dev/serial/by-id/...` path, the form a Proxmox LXC USB passthrough gives you — previously
+      that was rejected outright and the source reconnect-looped forever. MeshCore signal-to-noise
+      values are fractional (quarter-dB), but the `snr` columns were 32-bit integers, so on
+      PostgreSQL every affected message failed to persist with `invalid input syntax for type
+      integer: "-8.25"`, and on MySQL it silently truncated. And MeshCore Auto-Pathfinding never
+      cancelled a run already in progress, so every reconnect stacked another concurrent run on top
+      of the last, compounding mesh traffic until the container was restarted.
+
+
+      On the map, node markers are drawn at a deterministic offset *inside* a low-precision node's
+      accuracy cell so same-cell markers don't stack. That is intentional, but it made pins disagree
+      with the coordinates a node reports, and "Center on Map" panned to the reported point rather
+      than to the marker — up to half an accuracy cell away from the pin you clicked. Centring now
+      targets the marker, and a new **Spread Nodes** checkbox in Map Features turns the offset off
+      entirely, pinning every node exactly where it said it was. It defaults on, so nothing changes
+      unless you go looking for it.
+
+
+      ## Bug Fixes
+
+
+      - **fix(meshcore):** accept `/dev/serial/by-id` and `by-path` serial paths (#5174)
+
+      - **fix(meshcore):** check the Repeater serial path too, warn-only (#5179)
+
+      - **fix:** widen MeshCore `snr` columns to REAL/DOUBLE (#5176)
+
+      - **fix(meshcore):** cancel in-flight Auto-Pathfinding runs on stop/reconnect (#5171)
+
+      - **fix(map):** centre on the rendered marker, add a Spread Nodes toggle (#5181)
+
+
+      ## Chores
+
+
+      - **chore:** retire the "refresh the review token on every PR" rule (#5180)
+
+      - **chore(release):** bump to 4.16.1-rc1 (#5187)
+
+
+      ## Issues Resolved
+
+
+      - #5172 — Invalid serial port format (thanks @BlueSnake830)
+
+      - #5175 — Failed to persist message: `snr` integer vs fractional (thanks @javitab)
+
+      - #5177 — Nodes do not appear at the reported location (thanks @ogarcia)
+
+      - #5170 — Auto-Pathfinding in-flight runs never cancelled (thanks @pfmos)
+
+      - #5178 — Repeater connect path skipped serial-path validation
+
+
+      ## Upgrade Notes
+
+
+      **Migrations 163 and 164 run automatically on first boot.** 163 widens the two MeshCore `snr`
+      columns; on PostgreSQL and MySQL that is an `ALTER TABLE` on `meshcore_messages` and
+      `meshcore_heard_repeaters`, so allow a moment on a large database. SQLite is a no-op (INTEGER
+      affinity already stored the fractional value). 164 adds `user_map_preferences.spread_nodes`,
+      defaulting to true.
+
+
+      No breaking changes, no configuration changes required.
+
+
+      **Note for Repeater-mode MeshCore sources:** the serial path is now checked against the same
+      allow-list the Companion path uses, but **warn-only** — an unrecognised path logs a warning
+      and still connects. Nothing that works today stops working.
+
+
+      **Full changelog:** https://github.com/Yeraze/meshmonitor/compare/v4.16.0...v4.16.1-rc1
   - version: v4.16.0
     name: v4.16.0
     datetime: '2026-09-10T16:29:37Z'
@@ -1995,106 +2084,6 @@ releases:
         -p 8080:3001 \
         -v meshmonitor-data:/data \
         ghcr.io/Yeraze/meshmonitor:4.14.2-rc7
-      ```
-
-
-      ### 🧪 Testing
-
-      ✅ All tests passed
-
-      ✅ TypeScript checks passed
-
-      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
-
-
-      ### 📋 Changes
-
-      See commit history for detailed changes.
-  - version: v4.14.2-rc6
-    name: v4.14.2-rc6
-    datetime: '2026-08-19T03:59:40Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.14.2-rc6
-    prerelease: true
-    notes: >-
-      > ⚠️ **Pre-release (release candidate).** Not for production. Docker images are tagged
-      `4.14.2-rc6` only, the `:latest` tag is untouched.
-
-
-      This RC is headlined by a **map-improvements trio**: a new **Satellite + Labels** hybrid
-      tileset that layers ESRI reference labels over the satellite imagery (#4728); **3D terrain**
-      extended from Map Analysis to the per-source Mesh Map, the Unified Map, and the classic
-      `/nodes` map, each with a capability-gated toggle and a WebGL fallback (#4704); and a
-      brand-new **GPS/GNSS constellation overlay** (#4729) that computes the theoretical satellites
-      overhead from CelesTrak TLEs, a per-node sky plot with a reported-vs-theoretical
-      `sats_in_view` diagnostic, plus a DOP coverage heatmap with a time scrubber on Map Analysis.
-      Alongside the maps, this build fixes waypoint virtual-flag persistence on edit (#4795), keeps
-      the mobile bottom nav tappable under the search modal (#4774), resolves the token user in
-      notification handlers (#4785), accepts Bearer API tokens on admin routes (#4784), corrects the
-      EnvironmentMetrics current unit to mA (#4780), and preserves the hop-hash width in MeshCore
-      Trace Path (#4787). Auto Announce now notes the firmware-2.8 MeshBeacon alternative (#4731),
-      and translations were refreshed from Weblate (#4775).
-
-
-      ## ✨ Features
-
-      - **Satellite + Labels hybrid map tile**, ESRI reference-label overlay over the satellite
-      imagery, with its own attribution (#4791, closes #4728)
-
-      - **3D terrain on the Mesh Map, Unified Map, and classic `/nodes` map**, capability-gated
-      toggle, WebGL fallback to 2D (#4793, closes #4704)
-
-      - **GPS/GNSS satellite constellation overlay**, sky plot + reported-vs-theoretical
-      `sats_in_view`, DOP coverage heatmap with a time control (#4796, closes #4729)
-
-      - **Auto Announce:** note the firmware 2.8 MeshBeacon alternative in the config (#4790, closes
-      #4731)
-
-
-      ## 🐛 Bug Fixes
-
-      - **Waypoints:** persist the virtual flag on edit (PATCH) (#4798, closes #4795)
-
-      - **Mobile:** keep the bottom nav tappable under the search modal (#4789, closes #4774)
-
-      - **Notifications:** resolve the token user in notification handlers (#4785)
-
-      - **Auth:** accept Bearer API tokens on `requireAdmin` routes (#4784)
-
-      - **Telemetry:** label EnvironmentMetrics current as mA, not A (#4780)
-
-      - **MeshCore:** preserve hop hash width in Trace Path (#4787)
-
-
-      ## 🌍 Translations
-
-      - Translations update from Hosted Weblate (#4775)
-
-
-      ## 🔭 Known follow-ups (tracked, not in this build)
-
-      - 3D map polish, hide 2D-only controls in 3D, memoize `nodesWithPosition` (#4794)
-
-      - GNSS overlay, DOP-grid event-loop yielding, TLE parse resync, DOP panel time-anchor (#4797)
-
-
-      **Full changelog:** https://github.com/Yeraze/meshmonitor/compare/v4.14.2-rc5...v4.14.2-rc6
-
-
-      ## 🚀 MeshMonitor v4.14.2-rc6
-
-
-      ### 📦 Installation
-
-
-      **Docker (recommended):**
-
-      ```bash
-
-      docker run -d \
-        --name meshmonitor \
-        -p 8080:3001 \
-        -v meshmonitor-data:/data \
-        ghcr.io/Yeraze/meshmonitor:4.14.2-rc6
       ```
 
 

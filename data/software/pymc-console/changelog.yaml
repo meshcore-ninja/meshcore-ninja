@@ -1,34 +1,63 @@
 source: github
 repo: Treehouse-00/pymc_console-dist
-updatedAt: '2026-09-08T03:38:18.663Z'
+updatedAt: '2026-09-12T03:43:19.326Z'
 releases:
-  - version: v0.9.389
-    name: Release v0.9.389
-    datetime: '2026-09-08T02:27:13Z'
-    url: https://github.com/Treehouse-00/pymc_console-dist/releases/tag/v0.9.389
+  - version: v0.9.390
+    name: Release v0.9.390
+    datetime: '2026-09-11T23:27:38Z'
+    url: https://github.com/Treehouse-00/pymc_console-dist/releases/tag/v0.9.390
     prerelease: false
     notes: >-
       ### Added
 
-      - **The console can hand the repeater's front door to the plugin.** Configuration → Web
-      Frontend now lists every interface the repeater can serve at its root: the repeater's own, the
-      hand-installed copy under /opt, and the waev:outpost plugin, each with its version. Pick one
-      and the repeater switches at once, no restart. On a repeater that cannot list them yet, the
-      two older choices remain.
+      - **Messages on a phone: one list at a time.** The roster page used to stand channels and
+      contacts side by side, each half a screen wide, which left neither wide enough to read a name.
+      Now they stack: channels open to the full height and contacts folds to a single row under them
+      that names it, shows how many of its conversations have something unread, and opens with a
+      tap; opening contacts folds channels to its own row at the top the same way. Channels is open
+      every time you arrive. The swap moves like a machine: the two screens trade heights in one
+      short travel of eight detents that come closer as it ends, so the door slides with a
+      mechanism's cadence and stops dead, and with your system set to reduce motion it cuts straight
+      to the new state. On a desktop the three columns and the contacts fold to its icon column are
+      unchanged.
 
-      - **One question after installing the plugin.** When the waev:outpost plugin finishes
-      installing from the Plugins page, a small plate asks whether to make it your default
-      experience. Yes makes the repeater serve it at the root and takes you there; No leaves things
-      as they are. The choice stays under Configuration → Web Frontend.
+      - **Unread counts you can see.** In the Messages rosters the unread count is a lit cell now,
+      the number in the panel's black on the display's own colour, at the right of the name, and a
+      channel or contact with anything unread prints its name in the heavier weight. It was a faint
+      grey chip that read as furniture. The count is part of the row itself, so tapping it opens the
+      conversation rather than the remove key that used to share its spot, and every row reserves
+      one piece at the end of its name line for it, flush with the head's keys, holding the count
+      and, on a touch screen, the chevron under it, so the counts line up on one edge and nothing
+      runs under them (the remove and options keys no longer take a track of their own; on a pointer
+      screen they appear over that piece under the hand): a long channel name is cut with an
+      ellipsis instead of spilling over, the preview line under the name runs the row's full width,
+      and the Public channel's radio settings (frequency, spreading factor, bandwidth) move to a
+      line of their own under the name, so Public runs three lines where the others run two. That
+      line always stays one line: as the roster narrows the three chips take a smaller cut, and
+      narrower still only the frequency prints. On a touch screen every roster row also ends in a
+      small chevron, the way a phone's settings list says a row opens something, and a row with
+      something unread draws its chevron heavier and brighter to say the same thing as its count:
+      tap here.
+
 
       ### Changed
 
-      - **The hand-installed copy is marked as retiring.** Its row in Web Frontend carries an amber
-      DEPRECATED tag and says plainly that the files under /opt and the pymc_console-dist repository
-      will stop receiving releases, and that the plugin is the way forward.
+      - **The companion keys carry the radio's full name.** The keys that pick which companion radio
+      the console is holding were one narrow cap each and cut a name to a letter or three; they are
+      three units wide now, about eighteen letters, and the row of them breaks onto a second row
+      instead of running off the plate when there are more than two. On a phone the keys shrink a
+      little together so the row still fits.
 
-      - **The README leads with the plugin.** Install from the repeater's Plugins page in three
-      presses, and let it update itself; the hand install is documented as the fallback.
+      - **The bank's tallies stand as the screens do.** Channels before contacts, matching the
+      channels screen at the left and the contacts screen at the right below them.
+
+      - **A shorter bank on a phone.** The monitor drops its three lamps there and prints two lines,
+      the packet type and its channel on the first and the message under them, and shares the last
+      row with the RF bar, monitor at the left and bar at the right, so the bank stays three rows
+      tall with the wider keys.
+
+
+      ---
 
 
 
