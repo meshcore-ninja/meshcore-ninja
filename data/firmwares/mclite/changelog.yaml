@@ -1,7 +1,13 @@
 source: github
 repo: laserir/MCLite
-updatedAt: '2026-08-29T23:56:52.879Z'
+updatedAt: '2026-09-12T20:18:59.104Z'
 releases:
+  - version: v0.4.4
+    name: v0.4.4 — offgrid presets, 12-hour clock, translations that repair themselves
+    datetime: '2026-09-12T20:14:24Z'
+    url: https://github.com/laserir/MCLite/releases/tag/v0.4.4
+    prerelease: false
+    notes: '**Full Changelog**: https://github.com/laserir/MCLite/compare/v0.4.3...v0.4.4'
   - version: v0.4.3
     name: v0.4.3 - reactions, colour emoji, on-device permissions and admin lock
     datetime: '2026-08-29T21:53:20Z'
@@ -823,49 +829,5 @@ releases:
 
 
       Flash `mclite-v0.1.5.bin` via the [web
-      flasher](https://laserir.github.io/MCLite/tools/web-flasher/) or manually with esptool. Use
-      `mclite_config_tool.html` (offline, single file) to edit `config.json`.
-  - version: v0.1.4
-    name: v0.1.4
-    datetime: '2026-04-20T18:19:03Z'
-    url: https://github.com/laserir/MCLite/releases/tag/v0.1.4
-    prerelease: false
-    notes: >-
-      ## Highlights
-
-
-      - **Map view on telemetry modal** — tap a contact's name in the chat header → telemetry modal
-      → **Map** button (visible when the contact has fresh GPS and SD tiles are available).
-      Full-screen slippy-tile map centred on the contact, own-device marker, `+`/`-` zoom, scale
-      bar. Tile pack layout `/tiles/{z}/{x}/{y}.png` is compatible with upstream MeshCore T-Deck
-      firmware — existing tile packs work unchanged. See the updated README for how to prepare a
-      `/tiles` folder with [map-tiles-downloader](https://github.com/tekk/map-tiles-downloader).
-
-      - **Screen lock & auto-lock unified** — single `lock` / `auto_lock` config with deferred
-      click; backwards-compatible with older configs missing `auto_key_lock`.
-
-      - **Region scope transport codes** — optional per-radio / per-channel scope for repeater
-      filtering.
-
-      - **MeshCore dependency pinned** to commit `792f2999` for reproducible builds.
-
-
-      ## Changes since v0.1.3
-
-
-      - `444065d` Add map view on telemetry modal
-
-      - `89c3825` Add Map view to features list, drop OSM attribution note
-
-      - `b4598bb` Correct map-tiles-downloader description (TUI, not browser) and document GeoNames
-      region codes
-
-      - `6f378e0` Pin MeshCore dep to commit 792f2999 for reproducible builds
-
-
-      ## Install
-
-
-      Flash `mclite-v0.1.4.bin` via the [web
       flasher](https://laserir.github.io/MCLite/tools/web-flasher/) or manually with esptool. Use
       `mclite_config_tool.html` (offline, single file) to edit `config.json`.
