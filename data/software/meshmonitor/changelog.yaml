@@ -1,7 +1,118 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-09-12T03:43:15.125Z'
+updatedAt: '2026-09-13T18:37:01.639Z'
 releases:
+  - version: v4.16.1-rc2
+    name: v4.16.1-rc2
+    datetime: '2026-09-13T17:35:46Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.16.1-rc2
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.16.1-rc2
+
+
+      > ⚠️ **Pre-release.** This is a release candidate for testing. Docker images are published
+      without the `:latest` tag. Report anything you find on
+      [Discord](https://discord.gg/JVR3VBETQE) or as a GitHub issue.
+
+
+      A mobile-focused bugfix candidate. Most of this RC came from one reporter working through
+      MeshMonitor on an iPhone in portrait, and it fixes five separate ways the UI broke at that
+      width: Security page tables that clipped their right-hand columns and dragged the whole layout
+      sideways instead of scrolling, Packet Distribution time-range buttons with an unreachable "All
+      Data", telemetry charts whose fixed-size markers turned a day of samples into a solid band, a
+      donut tooltip cut off mid-value, and issue-card text printing on top of itself. The last of
+      those turned out not to be a Security page bug at all — `.node-info` and `.node-name` are
+      claimed by two other global stylesheets that both force `display: flex`, which collapsed the
+      node name to zero width on every issue-card type. On the backend, NodeInfo Enrichment no
+      longer oscillates: `hwModel: 0` is `HardwareModel.UNSET`, a value the nodes repository refuses
+      to store, so the analyzer kept offering a copy that was silently dropped and the count could
+      never reach zero. The same fix stops a mesh-visible symptom — with "Also push to device
+      NodeDB" enabled, every Fix All press re-sent a NodeInfo request per stuck target, addressed on
+      the donor's channel number rather than the target's, which produced a flood of `NO_CHANNEL
+      (6)` routing errors. Also in this RC: the Add Widget picker scrolls, Apprise survives an early
+      client disconnect, and the DM list falls back to sorting by `lastHeard`.
+
+
+      ## Bug Fixes
+
+
+      - **#5200** — Security issue cards printed their node name on top of the node ID on mobile.
+      Two global class collisions (`AppHeader.css` `.node-info`, `nodes.css` `.node-name`) forced a
+      flex row; the guard is now scoped to `.security-tab .issue-header`.
+
+      - **#5199** — Mobile layout and readability across three reports (#5194, #5195, #5196):
+      Security tables scroll inside their own cards, the Packet Distribution toolbar wraps, the
+      donut tooltip escapes its chart box, and telemetry markers scale to the space each point gets
+      — full size when sparse, small when tight, line-only when they would overlap.
+
+      - **#5198** — NodeInfo Enrichment count oscillated on repeated Fix All (#5193), and the device
+      push addressed the wrong channel.
+
+      - **#5192** — Add Widget picker modal is scrollable, so widgets past the first viewport are
+      reachable (#5191).
+
+      - **#5185** — Apprise swallows `BrokenPipeError` when a client disconnects early (#5184).
+
+      - **#5143** — DM list sorts nodes by `lastHeard` descending as a fallback. Thanks @joroses!
+
+
+      ## CI / DevOps
+
+
+      - **#5189** — Test suites no longer lose a console-RPC race in release and PR CI.
+
+
+      ## Issues Resolved
+
+
+      - #5196 — Info page telemetry charts nearly unreadable on mobile due to compressed X-axis
+
+      - #5195 — Info page Packet Distribution time-range buttons clip off viewport on mobile
+
+      - #5194 — Security page tables clip right-hand columns on mobile with no horizontal scroll
+
+      - #5193 — NodeInfo Enrichment count oscillates on repeated Fix All
+
+      - #5191 — Mobile: Add Widget picker modal cannot be scrolled
+
+      - #5184 — Apprise broken pipe error (embedded)
+
+
+      ## New Contributors
+
+
+      - @joroses made their first contribution in #5143 🎉
+
+
+      ## Upgrade Notes
+
+
+      No breaking changes, no migrations, no configuration changes. Upgrade in place.
+
+
+      Users who had been pressing **Fix All** on NodeInfo Enrichment against a count that would not
+      settle should see it converge now. If it still does not, the server log will say so directly —
+      a copy that does not survive the write is reported as `did not persist` rather than passing
+      silently.
+
+
+      **Full changelog:** https://github.com/Yeraze/meshmonitor/compare/v4.16.1-rc1...v4.16.1-rc2
+
+      ## 🚀 MeshMonitor v4.16.1-rc2
+
+
+      ### 📦 Installation
+
+
+      **Docker (recommended):**
+
+      ```bash
+
+      docker run -d \
+        --name meshmonitor \
+        -p 8080:3001 \
+      …
   - version: v4.16.1-rc1
     name: v4.16.1-rc1
     datetime: '2026-09-12T03:17:57Z'
@@ -1987,115 +2098,3 @@ releases:
       - Async TCP socket write failures propagat
 
       …
-  - version: v4.14.2-rc7
-    name: v4.14.2-rc7
-    datetime: '2026-08-21T03:53:03Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.14.2-rc7
-    prerelease: true
-    notes: >-
-      # MeshMonitor v4.14.2-rc7
-
-
-      > ⚠️ **Pre-release (release candidate).** For testing ahead of the 4.14.2 final. No `:latest`
-      Docker tags are published for this build.
-
-
-      Release candidate focused on message **Delivery Details** diagnostics and finishing 3D-map
-      parity. A new clickable Delivery Details view surfaces per-message protocol, route, hop, and
-      heard-by data — built up across five phases (diagnostics UI, exact RoutingError persistence, a
-      per-message event timeline, Meshtastic Heard-By correlation, and a user guide). The 3D terrain
-      map reaches visual parity with the 2D map: node markers now carry hop color, node-type glyphs,
-      and age dimming; neighbor/traceroute lines are gated to visible nodes; markers open the same
-      node popup; and MeshCore edge + MapAnalysis coloring follow-ups landed. This RC also adds
-      received node **Status Messages** (decode + display), a MeshBeacon broadcast-interval/region
-      control, an automation "Run Now" action, and an Uptime sort for the node list. Fixes include
-      the rc6 3D-marker regression (MapLibre v6 worker), the Traffic Management firmware gate (now
-      2.8.0), MeshCore telemetry temperature units, packet-monitor and NodeDB-sync deduplication,
-      invisible message links, and sign-in reachability on permission-scoped source pages.
-
-
-      ## Features
-
-      - **Message Delivery Details** (#4816): clickable delivery-status diagnostics (#4837), persist
-      exact Meshtastic RoutingError code (#4839), per-message event timeline (#4841), Meshtastic
-      Heard-By correlation (#4842), user guide + honest-labeling audit (#4843)
-
-      - Receive + display node **Status Messages** (#4834, closes #4818)
-
-      - 3D map parity with 2D — marker color/glyphs/age dimming (#4815), visible-node line gating
-      (#4817), click-to-open node popups (#4825), MeshCore edge gating + MapAnalysis coloring
-      (#4830) (#4808)
-
-      - MeshBeacon broadcast interval + transmit region / broadcast targets (#4804, closes #4802)
-
-      - Automation: **Run Now** to fire an automation's actions immediately (#4833, closes #4827)
-
-      - Uptime sort option in the map-view node list (#4820, closes #4814)
-
-      - Airtime: count CLIENT_BASE as infrastructure for neighbor averaging (#4831, closes #4822)
-
-
-      ## Bug Fixes
-
-      - 3D terrain showed no node markers — load the MapLibre v6 worker (#4806, closes #4800 rc6
-      regression)
-
-      - Traffic Management firmware gate too low → require 2.8.0 (#4807, closes #4792)
-
-      - MeshCore telemetry: honor the user's temperature unit (#4805, closes #3659)
-
-      - Keep sign-in reachable on a source without connection permission (#4829, closes #4828)
-
-      - Invisible links on sent message bubbles (#4821, closes #4819)
-
-      - Packet Monitor: drop exact-duplicate receptions (#4812, closes #4811)
-
-      - Stop re-recording NodeDB dump as duplicate position/telemetry history (#4810, closes #4809)
-
-      - Automation: accept `!hex` node IDs in deviceReboot target (#4832, closes #4826)
-
-
-      ## Other
-
-      - Enhance star-history display with responsive images (#4813)
-
-
-      ## Issues Resolved
-
-      #4818, #4816, #4808, #4802, #4827, #4814, #4822, #4800, #4792, #3659, #4828, #4819, #4811,
-      #4809, #4826
-
-
-      **Full changelog:** https://github.com/Yeraze/meshmonitor/compare/v4.14.2-rc6...v4.14.2-rc7
-
-
-      ## 🚀 MeshMonitor v4.14.2-rc7
-
-
-      ### 📦 Installation
-
-
-      **Docker (recommended):**
-
-      ```bash
-
-      docker run -d \
-        --name meshmonitor \
-        -p 8080:3001 \
-        -v meshmonitor-data:/data \
-        ghcr.io/Yeraze/meshmonitor:4.14.2-rc7
-      ```
-
-
-      ### 🧪 Testing
-
-      ✅ All tests passed
-
-      ✅ TypeScript checks passed
-
-      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
-
-
-      ### 📋 Changes
-
-      See commit history for detailed changes.
