@@ -1,7 +1,25 @@
 source: github
 repo: sosprz/Meshcore-Wio-Tracker-L1-Pro
-updatedAt: '2026-09-12T16:49:14.113Z'
+updatedAt: '2026-09-14T16:13:40.234Z'
 releases:
+  - version: v1.17.98
+    name: v1.17.98
+    datetime: '2026-09-14T14:53:42Z'
+    url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.17.98
+    prerelease: false
+    notes: >-
+      - **Message layout and timestamps** - Private messages show a local `HH:MM` header, with
+      received text on a white left-aligned card and sent text right-aligned on black. Channel
+      messages use `HH:MM Nick` headers, keep each header on its own line, alternate complete
+      message rows for readability, and collapse long text to two lines with `...`. A `?` marks a
+      selected collapsed message; Enter expands/collapses it in place. Channel history ends with
+      `New msg. [Enter]` for composing.
+  - version: v1.17.97
+    name: v1.17.97
+    datetime: '2026-09-14T10:10:37Z'
+    url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.17.97
+    prerelease: false
+    notes: "- **Experimental Navigation tool** - `Tools -> Navigation (test)` selects a contact with a saved GPS position and shows a north-up bearing arrow, distance, and, while moving, GPS course with an ETA. It does not require a compass and does not yet save waypoints or trails.\r\n- **Off-grid 869 profile choice** - `System -> Radio -> Repeat` now offers `Off-grid 869` (`BW62.5 / SF8 / CR8`), matching the MeshCore companion app, alongside the existing `Off-grid 869 Long` (`BW250 / SF11 / CR5`) profile. [#120](https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/issues/120)\r\n- **Time controls** - `System -> Time` now combines time zone, manual date/time entry, GPS sync now, and GPS sync at boot. `Time source` selects `AUTO`, `GPS`, `APP`, or `MANUAL`; `MANUAL` prevents GPS and app time updates until changed. [#102](https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/issues/102)"
   - version: v1.17.96
     name: v1.17.96
     datetime: '2026-09-12T13:35:56Z'
@@ -120,18 +138,3 @@ releases:
     notes: >-
       - **Greek text support** - Added `GR` as a message input language with Greek T9 and on-screen
       keyboard layouts, tonos variants for vowels.
-  - version: v1.15.78
-    name: v1.15.78
-    datetime: '2026-05-22T06:19:30Z'
-    url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.15.78
-    prerelease: false
-    notes: "- **Off-grid repeat frequency fix** - Client/off-grid repeat now matches upstream MeshCore presets and allows only `433.000`, `869.000`, and `918.000 MHz` instead of incorrectly blocking those bands.\r\n- **Repeat preset assist** - Enabling repeat from the Radio menu now opens an off-grid preset chooser, and disabling repeat restores the previous radio settings when available."
-  - version: v1.15.77
-    name: v1.15.77
-    datetime: '2026-05-22T04:53:46Z'
-    url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.15.77
-    prerelease: false
-    notes: >-
-      - **Repeater admin blank-password login** - Repeater admin login now opens a choice between
-      `Blank password` and `Enter password`; the blank option sends an empty admin login directly
-      for ACL-only re-login to repeaters that already know the companion device.
