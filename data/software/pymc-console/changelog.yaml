@@ -1,55 +1,16 @@
 source: github
 repo: Treehouse-00/pymc_console-dist
-updatedAt: '2026-09-14T21:38:11.762Z'
+updatedAt: '2026-09-15T07:24:23.005Z'
 releases:
-  - version: v0.9.391
-    name: Release v0.9.391
-    datetime: '2026-09-14T18:13:28Z'
-    url: https://github.com/Treehouse-00/pymc_console-dist/releases/tag/v0.9.391
+  - version: v0.9.393
+    name: Release v0.9.393
+    datetime: '2026-09-15T05:50:12Z'
+    url: https://github.com/Treehouse-00/pymc_console-dist/releases/tag/v0.9.393
     prerelease: false
     notes: >-
-      ### Added
-
-      - **Per-channel region overrides work now.** Sending one message to a named region, without
-      changing the region your node is otherwise on, needed matching support in openHop Core. That
-      has shipped, so a repeater running the current Core can do it and the console will use it. The
-      console checks each connection and says so plainly when a repeater is too old, rather than
-      sending the message somewhere you did not name.
-
-      - **A message sent to a region says so plainly.** A message you sent under a per-channel
-      region override now carries a filled tag naming that region, the same solid lit cell the
-      unread counts use, instead of a line of dim text beside the delivery marks. It went somewhere
-      other than your node's usual region, and that is the one thing about it worth not missing.
-
-
       ### Fixed
 
-      - **The message counter knows a region override costs room.** A message sent to a named region
-      carries that region's key, which leaves seven fewer bytes for your text than an ordinary
-      channel message. If your node's name was four characters or shorter, the composer would let
-      you write past what such a message can carry and the send would then fail. The counter now
-      stops the draft at the real wall.
-
-      - **A channel region keeps the capitals you typed.** Typing `#USA` as a per-channel region
-      used to save and send it as `#usa`. Those are two different regions on the mesh, and they
-      reach different people, so the console was quietly moving your messages somewhere you had not
-      asked for. Regions now keep their case exactly as entered, and `#USA` and `#usa` can both sit
-      in your saved list as the separate regions they are. Regions you saved before this are
-      unchanged, in the lowercase form the list has been showing you; add the capitalised name as a
-      new entry if that is the one you meant. A region name is still letters, digits and hyphens
-      only, and a lookalike letter from another alphabet is still refused.
-
-
-      ### Changed
-
-      - **A region now travels as its key rather than its name.** The agreed format for this changed
-      while the feature was being built on both sides, and the message now carries the region's key.
-      That is what makes the capitals above matter. The console asks each repeater which version of
-      the format it speaks and refuses to send an override to one that answers anything else, so a
-      mismatch leaves the feature unavailable rather than delivering to the wrong region.
-
-
-      ---
+      - refine regions hardware and screen hierarchy
 
 
 
