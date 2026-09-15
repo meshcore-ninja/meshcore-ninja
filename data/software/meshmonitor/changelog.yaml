@@ -1,7 +1,109 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-09-13T18:37:01.639Z'
+updatedAt: '2026-09-15T00:23:14.714Z'
 releases:
+  - version: v4.16.1-rc3
+    name: v4.16.1-rc3
+    datetime: '2026-09-14T23:37:42Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.16.1-rc3
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.16.1-rc3
+
+
+      > ⚠️ **Pre-release.** This is a release candidate for testing. Docker images are published
+      without the `:latest` tag. Report anything you find on
+      [Discord](https://discord.gg/JVR3VBETQE) or as a GitHub issue.
+
+
+      A security-led candidate. Four API endpoints checked permissions without a source id and then
+      answered for whatever source the caller named in `?sourceId=`, so an account holding a grant
+      on any one source could read another source's data — DM counts, oldest-unread timestamps, and
+      in the worst two cases the message bodies themselves. All four are fixed and each carries a
+      regression test that was verified to fail without its fix. Alongside that, configuration
+      search arrives across every settings page, waypoints can now raise an arrival alert with a
+      radius and deduplication, and the Sources sidebar gains a "Mark all read" action that clears
+      every source's unread DM badge in one request. On the build side the armv7 Docker image now
+      compiles its JavaScript natively instead of under QEMU, cutting that leg by about 42%, and a
+      new Retag workflow can re-point `:dev` at an already-built version in a minute rather than a
+      forty-minute rebuild. A long-standing `react-leaflet` mock gap that had been failing CI
+      intermittently for days is also closed. Eleven dependency bumps land too, including React
+      19.3.0 — now grouped in Dependabot so `react` and `react-dom` can never again be split into
+      two PRs that neither merge.
+
+
+      ## Security
+
+
+      Four cross-source permission leaks, all the same shape — `hasPermission` called with no
+      `sourceId` while the handler answered for a caller-supplied `?sourceId=`:
+
+
+      | PR | Endpoint | Exposed |
+
+      |---|---|---|
+
+      | **#5227** | `GET /api/messages` | direct-message **bodies** |
+
+      | **#5227** | `GET /api/messages/channel/:channel` | channel message bodies |
+
+      | **#5225** | `GET /api/messages/unread-counts` | unread DM counts |
+
+      | **#5225** | `GET /api/messages/first-unread` | oldest-unread timestamps |
+
+
+      Reproduced against a real install before fixing. Scoping these gates locks nobody out:
+      `messages` is a per-source resource, so a global (`sourceId = NULL`) grant never authorized
+      anything through that path anyway.
+
+
+      ## Features
+
+
+      - **#5226** — per-page and cross-page configuration search (#5182)
+
+      - **#5228** — waypoint arrival alerts with a radius trigger and deduplication (#4750)
+
+      - **#5224** — "Mark all read" in the Sources sidebar, clearing every source's unread DM badge
+      in one request (#5197). Added *beside* the existing visibility toggle rather than replacing it
+      — that toggle is its own only control and also gates the 15-second poll.
+
+
+      ## Bug Fixes
+
+
+      - **#5203** — MeshCore DM and channel retries reuse the original `senderTimestamp` instead of
+      minting a fresh one, so a retransmit is no longer delivered as a duplicate message (#5202).
+      Also stops a `NO_CHANNEL` routing-error flood: the device push was addressed on the donor
+      row's channel, which for an MQTT donor is a virtual channel number, not a radio slot.
+
+      - **#5219** — `DashboardMap.test.tsx` mocked `react-leaflet` without a `GeoJSON` export while
+      the test renders a visible coverage layer, so the overlay threw asynchronously and tore down
+      the React tree. It surfaced as an unrelated-looking "Unable to find a label with the text of:
+      3D Terrain" and had been failing CI intermittently for days.
+
+
+      ## CI / Build
+
+
+      - **#5207** — the armv7 image builds its JavaScript natively instead of under QEMU. Vite and
+      tsc emit platform-independent output, so emulating them bought nothing; measured locally,
+      18m25s → 10m44s (−42%), with the produced `dist/` verified byte-identical to the emulated
+      build.
+
+      - **#5205** — raised the armv7 Docker timeout, which had been failing and silently preventing
+      the multi-arch tag from publishing at all.
+
+      - **#5206** — new Retag workflow: re-point `:dev` (or any alias) at an already-built version
+      in about a minute, instead of a full rebuild.
+
+
+      ## Dependencies
+
+
+      Eleven bumps, including React and React DOM to 19.3.0 (**#5221**). Dependabot had 
+
+      …
   - version: v4.16.1-rc2
     name: v4.16.1-rc2
     datetime: '2026-09-13T17:35:46Z'
@@ -1981,120 +2083,3 @@ releases:
       ### 📋 Changes
 
       See commit history for detailed changes.
-  - version: v4.15.0
-    name: v4.15.0
-    datetime: '2026-08-21T16:58:38Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.15.0
-    prerelease: false
-    notes: >-
-      # MeshMonitor v4.15.0
-
-
-      A large feature release with **no breaking changes**. MeshMonitor 4.15 reaches past Meshtastic
-      and MeshCore to a third network, adds tools to plan and survey RF coverage, and tells you far
-      more about what happened to every message you send. Reticulum joins as a first-class monitored
-      network — LXMF messaging, position and telemetry, own-mode radio, and full topology / remote
-      monitoring. A new predictive RF coverage model and Site Planner estimate a node's reach from a
-      Fresnel-zone + path-loss model, while a passive network survey derives reach, neighbours, and
-      hop distribution from traffic you already received. Click any message for Delivery Details:
-      the exact routing result, a per-message event timeline, and a Heard-By correlation of which
-      nodes relayed it. Maps gain 3D terrain across every surface with markers that match the 2D
-      view, a GNSS satellite overlay, and a hybrid satellite tile. Rounding it out: a Prometheus
-      metrics endpoint, Node Status Messages, telemetry CSV export, completed MeshBeacon + XEdDSA
-      support, and a long list of fixes.
-
-
-      Full notes live in the
-      [CHANGELOG](https://github.com/Yeraze/meshmonitor/blob/main/CHANGELOG.md).
-
-
-      ## Features
-
-
-      - **Reticulum network support** — LXMF messaging, position/telemetry, own-mode radio, and
-      topology / remote monitoring (#3960)
-
-      - **Predictive RF coverage & Site Planner** — Fresnel-zone + path-loss model, sweep, API, and
-      map layer (#4727, #4741, #4746)
-
-      - **Passive network survey** — reach, neighbours, and hop distribution from received traffic
-      (#4726, #4737)
-
-      - **Message Delivery Details** — RoutingError codes, per-message timeline, Heard-By
-      correlation (#4816, #4837, #4839, #4841, #4842, #4855)
-
-      - **3D maps** — terrain on all map surfaces + 2D-matching node markers with clickable popups
-      (#4704, #4808)
-
-      - **GNSS satellite constellation overlay** — sky plot + DOP map (#4729)
-
-      - **Satellite + labels (hybrid) map tiles** (#4728)
-
-      - **Prometheus metrics endpoint** (#4757)
-
-      - **Node Status Messages** — receive + display (#4818)
-
-      - **MeshBeacon** — completed MeshBeacon + XEdDSA, invitation card, broadcast interval /
-      transmit region config (#4689, #4723, #4735, #4802)
-
-      - **Telemetry graph CSV export** (#4771)
-
-      - **Automation additions** — Run Now, waypoint-anchored geofence, triggering message in the
-      run log (#4827, #4722, #4716)
-
-      - **Map & node-list** — non-linear age filter, Uptime sort, incomplete-NodeInfo badge (#4770,
-      #4814, #4720)
-
-      - **MeshCore ⭐ favorite syncs to the firmware favourite bit** (#4838)
-
-      - **Notifications show service, channel, and instance** (#4845)
-
-      - **Public-key mismatch is explained, not asserted** (#4747)
-
-      - **Position-precision warning** for the public-channel clamp (#4710)
-
-      - **More languages** — Polish and Traditional Chinese (#4748, #4742)
-
-
-      ## Bug Fixes
-
-
-      - Relayed packets no longer attribute RSSI/SNR to the source node (#4857)
-
-      - ACK metadata persists for confirmed DMs (#4855)
-
-      - Node metrics refresh from MQTT telemetry (#4755)
-
-      - MeshCore: honour temperature unit (#4805), preserve hop hash width in Trace Path (#4787),
-      reserve channel 0 for Public (#4734)
-
-      - Traceroute channel resolution — three bypassing paths + PSK/name gaps (#4712)
-
-      - Firmware region names all resolve; stop writing UNSET to radios (#4749)
-
-      - EnvironmentMetrics current labelled mA, not A (#4780)
-
-      - Bearer API tokens accepted on requireAdmin routes (#4784)
-
-      - Sign-in reachable on a source without connection permission (#4829)
-
-      - Invisible links on sent message bubbles (#4821)
-
-      - Mobile bottom nav tappable under the search modal + CSS quirks (#4789, #4776)
-
-      - Waypoints persist their virtual flag on edit (#4798)
-
-      - Packet log drops exact-duplicate receptions (#4812)
-
-      - NodeInfo history recorded only for the local node (#4810)
-
-      - Virtual node stops advertising a stale local node number (#4779)
-
-      - Automation: `!hex` deviceReboot targets (#4832), MT↔MC bridge relays operator's own messages
-      (#4695, #4699)
-
-      - Position-history rendering/fetching bounded (#4744)
-
-      - Async TCP socket write failures propagat
-
-      …
