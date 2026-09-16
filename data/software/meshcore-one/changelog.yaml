@@ -1,7 +1,13 @@
 source: github
 repo: Avi0n/MeshCoreOne
-updatedAt: '2026-09-10T08:45:35.106Z'
+updatedAt: '2026-09-16T09:10:03.827Z'
 releases:
+  - version: v1.4.3
+    name: 1.4.3
+    datetime: '2026-09-16T06:14:46Z'
+    url: https://github.com/Avi0n/MeshCoreOne/releases/tag/v1.4.3
+    prerelease: false
+    notes: "## What's Changed\r\n- New map option to disable/enable node clustering. You can find this in the lower right map controls. \r\n- Dark mode icon updated\r\n- Temporarily removed PhillyMesh radio preset\r\n- Added LVMesh radio preset (PA and NJ)\r\n\r\n## Bug Fixes\r\n- Adding a new channel in the same radio slot as a previously deleted channel no longer shows the previous channel's messages\r\n- Importing app backup would occasionally crash when importing messages\r\n\r\n\r\n**Full Changelog**: https://github.com/Avi0n/MeshCoreOne/compare/v1.4.1...v1.4.3"
   - version: v1.4.1
     name: 1.4.1
     datetime: '2026-09-10T04:35:18Z'
@@ -116,9 +122,3 @@ releases:
     url: https://github.com/Avi0n/MeshCoreOne/releases/tag/v0.5.0
     prerelease: false
     notes: "## What's Changed\r\n- **Multilingual Support**: Added localization for 7 new languages: Dutch, French, German, Polish, Russian, Spanish, and Ukrainian. These were translated by AI, so expect some (many?) quirks. Want to fix them or add more? Check out TRANSLATIONS.md on GitHub. PRs are super welcome! :)\r\n- **Noise Floor Monitoring Tool**: Introduced a new tool to monitor noise floor with handy statistics.\r\n- **Total Distance in Trace Path**: Now view the total distance for successful traces in the Trace Path tool.\r\n- **Repeater Input Field**: Added a new field in Trace Path to easily type or paste repeaters.\r\n- **Repeater Favorites**: Added a new toggle in Trace Path to only show your favorite repeaters.\r\n- **Map Mode in Trace Path**: Check out the new Map mode in the Trace Path tool!\r\n- **Message Path Viewer**: Long press on a received message to see its incoming path (requires your node to be connected to PM at the time).\r\n- **Pinned Favorite Chats**: Favorites are now pinned right at the top of your chat list.\r\n- **Reply From Channel Notifications**: Added \"Reply\" to notification banners so you can reply without opening the app. Works on Apple Watch notifications too!\r\n- **Enhanced Sender Names**: In Channels and Rooms, sender names are now bigger, bolder, and more colorful.\r\n- **Grouped Messages**: Subsequent messages from the same sender are now neatly grouped together.\r\n- **Expanded Mention Picker**: Now includes recent channel senders for quicker mentions.\r\n- **Refreshed Color Palette**: Updated the overall color palette for a fresh look.\r\n- **Flexible Repeater Login**: Allow empty password login for ACL authentication.\r\n- **Auto-Zoom Location Setting**: When setting node or repeater location, it auto-zooms to your GPS spot if location permissions are enabled.\r\n- **Smart Button Disabling**: Buttons across the app are disabled when the radio is disconnected.\r\n- **Offline Data Browsing**: Browse data from previously connected devices even when disconnected.\r\n- **Haptic Feedback on Copies**: Added haptic vibes to all copy/paste buttons for better feel.\r\n- **Polished UI/UX**: A little smoother animation here, a little less jank there.\r\n\r\n## Bug Fixes\r\n- Fixed crash by validating lat/lon for contacts on the map.\r\n- Fixed crash by clamping initial camera zoom-out on the map.\r\n- Fixed rooms not sorting by last message received date in chats.\r\n- Fixed rooms lingering in the chats list after node deletion.\r\n- Fixed ability to create duplicate hashtag channels in chats.\r\n- Fixed contacts incorrectly matching in the \"Repeat Details\" sheet in chats.\r\n- Attempted fix for location not saving in settings, with added logging for troubleshooting.\r\n- Fixed inability to clear a location from the node in settings.\r\n- Fixed some repeaters not showing their name in Trace Results in tools.\r\n- Fixed chat input bar ignoring floating keyboard on iPad.\r\n- Fixed nodes not deleting from the database if removed in another app during sync.\r\n- Fixed incomplete contact sync by performing a full sync on first or manual connection.\r\n\r\n\r\n**Full Changelog**: https://github.com/Avi0n/PocketMesh/compare/v0.4.3...v0.5.0"
-  - version: v0.4.3
-    name: 0.4.3
-    datetime: '2026-01-19T16:51:15Z'
-    url: https://github.com/Avi0n/MeshCoreOne/releases/tag/v0.4.3
-    prerelease: false
-    notes: "## Bug Fixes\r\n- Fix a bug where heard repeats were not showing under sent messages. \r\n- Fix bug on iOS 18 where the labels button, top toolbar, and bottom tab bar were invisible\r\n\r\n**Full Changelog**: https://github.com/Avi0n/PocketMesh/compare/v0.4.2...v0.4.3"

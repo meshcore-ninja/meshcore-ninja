@@ -1,7 +1,13 @@
 source: github
 repo: vicliu624/trail-mate
-updatedAt: '2026-08-31T17:26:50.268Z'
+updatedAt: '2026-09-16T09:09:49.574Z'
 releases:
+  - version: v0.1.45-alpha
+    name: v0.1.45-alpha
+    datetime: '2026-09-16T07:24:38Z'
+    url: https://github.com/vicliu624/trail-mate/releases/tag/v0.1.45-alpha
+    prerelease: true
+    notes: "## [0.1.45-alpha] - Unreleased\r\n\r\n### Added\r\n\r\n- Added full-touch Wio Tracker L2 device support, including its board profile,\r\n  display and input integration, SD storage, and build configuration.\r\n- Added offline map annotations for the shared ESP32 Arduino map backend used by\r\n  T-LoRa Pager, Arduino T-Deck builds, and Wio Tracker L2. Compatible Center map\r\n  packs provide independently rendered road names, place names, and facility POIs\r\n  over text-free raster tiles. Pager LR1121 has been validated on hardware;\r\n  ESP-IDF builds, including Tab5 and T-Display P4, are not enabled by this change.\r\n- Added support for version 3 map annotation indexes with bounded road geometry,\r\n  while retaining legacy POI index compatibility. Map-specific font subsets use\r\n  the existing SD content-font package mechanism.\r\n- Added an eleven-language project website with native-device previews.\r\n\r\n### Changed\r\n\r\n- Map annotations now prioritize readable names with separate road, place, and\r\n  facility layout budgets, stable selection, UTF-8-safe name shortening, and\r\n  counts for clustered unnamed facilities. Text backgrounds are transparent,\r\n  without white label plates or halos.\r\n- Annotation loading reuses the existing map worker and SD access boundary.\r\n  Bounded candidate and display buffers allocate on demand in PSRAM, and failed\r\n  updates retain a valid frame when it still corresponds to the current view.\r\n- Removed gaps and contrasting backgrounds from two-pane UI layouts.\r\n\r\n### Fixed\r\n\r\n- Fixed annotation reads failing with `err=-1` while raster tiles still displayed\r\n  by explicitly aligning shared worker scratch and typed annotation payloads.\r\n- Deferred annotation layout when required glyphs are unavailable, preventing\r\n  missing-glyph placeholders from being used as valid text metrics.\r\n- Stabilized T-Deck Pro e-paper refresh scheduling.\r\n- Stabilized T-Display P4 power sequencing and keyboard backlight behavior.\r\n\r\n\n\n## What's Changed\n* Prepare 0.1.45-alpha: Wio Tracker L2 and dynamic map annotations by @vicliu624 in https://github.com/vicliu624/trail-mate/pull/91\n\n\n**Full Changelog**: https://github.com/vicliu624/trail-mate/compare/v0.1.44-alpha...v0.1.45-alpha"
   - version: v0.1.44-alpha
     name: v0.1.44-alpha
     datetime: '2026-08-31T10:16:08Z'
@@ -269,83 +275,3 @@ releases:
 
       **Full Changelog**:
       https://github.com/vicliu624/trail-mate/compare/v0.1.24-alpha...v0.1.26-alpha
-  - version: v0.1.25-alpha
-    name: v0.1.25-alpha
-    datetime: '2026-05-11T17:45:05Z'
-    url: https://github.com/vicliu624/trail-mate/releases/tag/v0.1.25-alpha
-    prerelease: true
-    notes: >-
-      ## [0.1.25-alpha] - 2026-05-11
-
-      ### Added / 新增
-
-      - Added GPS receiver bring-up controls under Settings, including receiver baud, probe window,
-      receiver profile, RXM/GNSS/NMEA init policy, and a non-blocking diagnostics view that reports
-      transport, traffic, fix, satellite, and polling state / 新增 Settings 中的 GPS
-      接收机启动控制，包含接收机波特率、探测窗口、接收机 profile、RXM/GNSS/NMEA 初始化策略，以及非阻塞诊断视图，用于报告传输、流量、定位、卫星与轮询状态
-
-      - Added shared GPS diagnostics and receiver-init runtime surfaces across ESP Arduino, ESP-IDF,
-      Linux, and UI bindings so Settings and board runtimes can observe the same GPS health model /
-      新增跨 ESP Arduino、ESP-IDF、Linux 与 UI 绑定的共享 GPS 诊断和接收机初始化 runtime 表面，使 Settings 与板级运行时能够观察同一套 GPS
-      健康模型
-
-      - Added Linux uConsole chat workspace smoke coverage and richer node detail views, including
-      nearby-node conversations, radio metadata, position details, and a compact node-centered map
-      preview / 新增 Linux uConsole 聊天工作区 smoke 覆盖与更丰富的节点详情视图，包括附近节点会话、无线元数据、位置详情和以节点为中心的紧凑地图预览
-
-      - Added a repository text-encoding integrity specification to make valid UTF-8 preservation an
-      explicit engineering requirement for source, docs, packaging metadata, and generated text
-      assets / 新增仓库文本编码完整性规格，将保持有效 UTF-8 明确列为源码、文档、打包元数据与生成文本资源的工程要求
-
-      - Added GPS Settings and ordinary T-Deck GPS UART/LoRa TX noise guides under `docs/devices/`,
-      covering recommended receiver profiles, diagnostics interpretation, self-check procedures,
-      TX-power correlation evidence, and hardware mitigation steps / 新增 `docs/devices/` 下的 GPS
-      设置指南与普通 T-Deck GPS UART/LoRa TX 噪声说明，覆盖推荐接收机 profile、诊断解读、自检流程、TX power 相关证据与硬件缓解步骤
-
-
-      ### Changed / 变更
-
-      - T-Deck GPS startup now follows a runtime-owned GPS path: board boot no longer performs early
-      GPS initialization, Auto baud preserves the 0.1.23-compatible 38400 baseline, and manual baud
-      selections still run UART probes for diagnostics / T-Deck GPS 启动现在改为运行时拥有的 GPS 路径：板级 boot
-      不再提前初始化 GPS，Auto 波特率保持兼容 0.1.23 的 38400 基线，手动波特率仍会执行 UART 探测用于诊断
-
-      - T-Deck default GPS Auto profile now restores the 0.1.23-style active RXM/GNSS/NMEA
-      configuration path, while explicit passive or legacy receiver profiles can still skip those
-      configuration writes / T-Deck 默认 GPS Auto profile 现恢复 0.1.23 风格的主动 RXM/GNSS/NMEA 配置路径，同时显式
-      passive 或 legacy 接收机 profile 仍可跳过这些配置写入
-
-      - GPS task logging now reports rolling UART traffic, post-config stream recovery, and health
-      summaries without printing raw mutex pointer addresses that confuse PlatformIO's ESP32
-      exception decoder / GPS task 日志现在报告滚动 UART 流量、配置后数据流恢复与健康摘要，并避免打印会误导 PlatformIO ESP32
-      exception decoder 的原始 mutex 指针地址
-
-      - uConsole map overlays now expose richer node telemetry, MQTT visibility behavior, selectable
-      node bubbles, last-seen ages, radio stats, altitude, and node-centered snapshots that can be
-      reused by chat node detail panels / uConsole 地图覆盖层现在展示更丰富的节点遥测、MQTT
-      可见性行为、可选择节点气泡、最后出现时间、无线统计、高度，以及可被聊天节点详情面板复用的节点中心快照
-
-
-      ### Fixed / 修复
-
-      - Fixed the T-Deck GPS regression where current builds could report the GPS UART ready but
-      never resume a steady NMEA stream under the default receiver-init policy / 修复 T-Deck GPS
-      回归：当前构建在默认接收机初始化策略下可能显示 GPS UART ready，但无法恢复稳定 NMEA 数据流
-
-      - Fixed GPS NMEA configuration coverage by enabling GSA alongside GGA/RMC/GSV for the internal
-      receiver stream so skyplot and satellite diagnostics have the sentences they need / 修复 GPS
-      NMEA 配置覆盖，内部接收机数据流现在会与 GGA/RMC/GSV 一起启用 GSA，使星图与卫星诊断获得所需语句
-
-      - Fixed GPS diagnostics blind spots by sampling initial NMEA sentences, capturing raw non-NMEA
-      bytes before a valid stream appears, tracking recent character counts, and surfacing
-      stalled-traffic states in UI diagnostics / 修复 GPS 诊断盲区，通过采样初始 NMEA 语句、在有效数据流出现前捕获原始非 NMEA
-      字节、跟踪近期字符数，并在 UI 诊断中暴露流量停滞状态
-
-      - Fixed T-Deck GPS noise handling by separating UART read counts from parser progress and
-      filtering non-NMEA bursts before they can be mistaken for valid receiver traffic / 修复 T-Deck
-      GPS 噪声处理，通过区分 UART 读取计数与 parser 进度，并在非 NMEA 突发噪声被误判为有效接收机流量前进行过滤
-
-      - Fixed Linux/uConsole node and map workspace gaps where nearby LoRa nodes, MQTT-hidden
-      counts, packet log context, a
-
-      …
