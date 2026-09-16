@@ -1,7 +1,130 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-09-15T00:23:14.714Z'
+updatedAt: '2026-09-16T03:55:12.396Z'
 releases:
+  - version: v4.16.1-rc4
+    name: v4.16.1-rc4
+    datetime: '2026-09-16T00:07:09Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.16.1-rc4
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.16.1-rc4
+
+
+      > ⚠️ **Pre-release.** This is a release candidate for testing. Docker images are published
+      without the `:latest` tag — pull `ghcr.io/yeraze/meshmonitor:4.16.1-rc4` explicitly.
+
+
+      Two surfaces got real attention this round. **Mesh invitations** move out of the channel list
+      into a Beacons button with a count: the old stacked cards grew with every beaconing neighbour
+      and squeezed the message list to a sliver on a phone, and because beacons re-advertise on
+      their own interval there was no end state where they stayed gone — so there is now a
+      searchable, sortable table behind that button, plus a permanent Mute for a mesh you never want
+      to hear from again. **Auto Traceroute** gains a per-filter AND/OR mode: its five node filters
+      were a hard-coded union, so ticking a channel could only ever widen the traced set, and an
+      operator running one preset per channel had no way to say "only trace LongTurbo". The channel
+      picker now shows channel names rather than raw ids.
+
+
+      On the fix side, MeshCore node discovery no longer works exactly once per connection — a
+      single unsettled radio op used to park the operation chain for the life of the connection, so
+      every later command silently never reached the serial port. `lastHeard` only moves forward
+      now, and every receive path stamps it. NodeInfo enrichment stops being undone by blank values,
+      which also restores the short names that had vanished from the map. Rounding out: channel
+      reorder works by touch on mobile, an unconfigured `MESHTASTIC_NODE_IP` is no longer dialled
+      forever, and a `sourceId` identifier is quoted properly in the packet-log delete.
+
+
+      ## Features
+
+
+      - Table-backed beacons list behind a button with a count — #5235
+
+      - Auto Traceroute: per-filter AND/OR modes and named channels — #5241
+
+
+      ## Bug Fixes
+
+
+      - MeshCore: bound `runExclusiveRadioOp` so a stuck radio op can't park the chain forever —
+      #5244
+
+      - MeshCore: `lastHeard` only moves forward, and every receive path stamps it — #5242
+
+      - NodeInfo: stop blank values from undoing enrichment, and un-stub map labels — #5234
+
+      - Channels: let the reorder handle be dragged on touch — #5240
+
+      - Sources: stop connecting to a `MESHTASTIC_NODE_IP` nobody configured — #5239
+
+      - Packet log: quote the `sourceId` identifier in the `clearPacketLogs` delete — #5238
+
+
+      ## Dependencies
+
+
+      - Bump lucide-react from 1.44.0 to 1.45.0 — #5222
+
+
+      ## Issues Resolved
+
+
+      - #5243 — MeshCore node discovery works exactly once per connection: one unsettled radio op
+      parks `radioOpChain` forever
+
+      - #5232 — Mobile: stacked Mesh Invitations cards eat viewport, block message list scroll
+
+      - #5231 — NodeInfo Enrichment leaves fields blank on v4.16.1-rc3; map short names vanish
+
+      - #5230 — Auto Traceroute: multi-select channel filter to scope eligible nodes
+
+      - #5237 — Not using Meshtastic but server continually tries to connect to default IP address
+
+      - #5233 — Mobile: cannot reorder Channels — drag handle long-press selects text instead of
+      starting drag
+
+
+      ## Thanks
+
+
+      - **@nate8088** for #5243 — a report with `strace` output on the serial fd, the decoded frame,
+      a timing table across three connections, and the root cause traced to the exact unsettled op.
+      The fix is essentially the one filed.
+
+      - **NullVoid** (Discord) for the Auto Traceroute channel-scoping request, and **NodeZero** for
+      the mobile invitation-card and NodeInfo reports.
+
+
+      ## Upgrade Notes
+
+
+      No breaking changes, no manual migration steps. One new database migration (166) adds a
+      nullable `mutedAt` column to `mesh_beacon_offers`; it runs automatically on first boot and is
+      idempotent on SQLite, PostgreSQL and MySQL.
+
+
+      Auto Traceroute's new per-filter modes default to **OR** — the behaviour every install already
+      had — so existing filter configurations are unchanged until you deliberately switch one to
+      AND.
+
+
+      **Full changelog:** https://github.com/Yeraze/meshmonitor/compare/v4.16.1-rc3...v4.16.1-rc4
+
+
+      ## 🚀 MeshMonitor v4.16.1-rc4
+
+
+      ### 📦 Installation
+
+
+      **Docker (recommended):**
+
+      ```bash
+
+      docker run -d \
+        --name meshmonitor \
+        -p 8080
+      …
   - version: v4.16.1-rc3
     name: v4.16.1-rc3
     datetime: '2026-09-14T23:37:42Z'
@@ -2011,63 +2134,6 @@ releases:
         -p 8080:3001 \
         -v meshmonitor-data:/data \
         ghcr.io/Yeraze/meshmonitor:4.15.2-rc2
-      ```
-
-
-      ### 🧪 Testing
-
-      ✅ All tests passed
-
-      ✅ TypeScript checks passed
-
-      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
-
-
-      ### 📋 Changes
-
-      See commit history for detailed changes.
-  - version: v4.15.1
-    name: v4.15.1
-    datetime: '2026-08-21T18:40:33Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.15.1
-    prerelease: false
-    notes: >-
-      # MeshMonitor v4.15.1
-
-
-      A patch release fixing the **Site Planner** (predictive RF coverage), which shipped broken in
-      4.15.0.
-
-
-      ## Bug Fixes
-
-
-      - **Site Planner no longer fails with a JSON parse error** — the predictive RF coverage
-      request was sent to `/rf/coverage` instead of `/api/rf/coverage`, so it fell through to the
-      single-page app and returned HTML, which the frontend then tried to parse as JSON (`Unexpected
-      token '<', "<!doctype "... is not valid JSON`). The request path now includes the `/api`
-      prefix like every other API call, and the regression test was corrected (it had asserted the
-      buggy path). (#4862)
-
-
-      **Full changelog:** https://github.com/Yeraze/meshmonitor/compare/v4.15.0...v4.15.1
-
-
-      ## 🚀 MeshMonitor v4.15.1
-
-
-      ### 📦 Installation
-
-
-      **Docker (recommended):**
-
-      ```bash
-
-      docker run -d \
-        --name meshmonitor \
-        -p 8080:3001 \
-        -v meshmonitor-data:/data \
-        ghcr.io/Yeraze/meshmonitor:4.15.1
       ```
 
 
