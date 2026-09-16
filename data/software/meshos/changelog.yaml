@@ -1,7 +1,61 @@
 source: github
 repo: andymux/meshos-releases
-updatedAt: '2026-09-12T16:49:36.097Z'
+updatedAt: '2026-09-16T14:42:12.740Z'
 releases:
+  - version: v1.0.20
+    name: MeshOS v1.0.20
+    datetime: '2026-09-16T11:06:45Z'
+    url: https://github.com/andymux/meshos-releases/releases/tag/v1.0.20
+    prerelease: false
+    notes: >-
+      # MeshOS app 1.0.20
+
+
+      ## Messages
+
+      - Press and hold a message to select it. The top bar then offers Reply, Copy, Path and Delete,
+      with Delete kept clear of the other buttons.
+
+      - Replies show a quote block with the person's name in their colour and the message you
+      replied to. Replies from other apps show the same block, and a reply that tags several people
+      lists them all.
+
+      - Return on the on-screen keyboard now starts a new line. Send is always the send button.
+
+
+      ## Delivery reports for LoRa channels
+
+      - Your own message bubbles now show how many repeaters you heard repeating your message and
+      how many MeshOS app users received it over LoRa.
+
+      - Tap Path on one of your own messages for the full picture: the repeaters that carried it,
+      other repeaters the copies passed through, and who heard it with their route and signal
+      strength.
+
+      - Reports travel over the internet link on bridged channels, and on Public Chat whenever
+      internet messaging is on, without putting Public messages themselves online.
+
+
+      ## Chat list and map
+
+      - No notifications while you are looking at the chat list.
+
+      - The map reopens where you left it.
+
+      - Hashtag channels can be given a nickname from the channel menu.
+
+
+      ## AirLink
+
+      - AirLink improvements and bug fixes.
+
+
+      ## Reliability
+
+      - A more reliable connection to the internet messaging service.
+
+      - Fixes that improve reliability when using the radio with the MeshOS app, including battery
+      use after closing the map and leaving the scan screen.
   - version: v1.0.19
     name: MeshOS v1.0.19
     datetime: '2026-09-12T15:50:32Z'
@@ -597,23 +651,3 @@ releases:
       - TDeck: aa56bb93fd24604b744d512d782d9194d29e42586375f6ed19ce248977d4f46a
 
       - M9: a08919490e01ad439c353ea4692f4db7177e901858029558353d7c6a065fd671
-  - version: fw-v1.6.1
-    name: MeshOS firmware v1.6.1
-    datetime: '2026-07-26T15:43:03Z'
-    url: https://github.com/andymux/meshos-releases/releases/tag/fw-v1.6.1
-    prerelease: false
-    notes: >-
-      Map tiles now work on a fresh SD card (folder auto-created). Internet Messaging: fixed
-      connection drops when multiple users are online.
-
-
-      Device firmware for LilyGo T-Deck and ThinkNode M9.
-
-      Install via SD card (firmware.bin) or the in-firmware updater.
-
-
-      SHA-256:
-
-      - TDeck: 8d502ab43488484f74961c1ac22f9c2db77c18cb36a7f8db30342d1999cef1d5
-
-      - M9: 4ff8408e574538deb098d3808871f67c13a38efbd3a945aba80191bfda0506e8

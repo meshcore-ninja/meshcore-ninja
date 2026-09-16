@@ -1,7 +1,111 @@
 source: github
 repo: ALLFATHER-BV/wadamesh
-updatedAt: '2026-09-09T14:14:29.719Z'
+updatedAt: '2026-09-16T14:41:54.077Z'
 releases:
+  - version: beta_80
+    name: wadamesh beta_80
+    datetime: '2026-09-16T10:36:32Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_80
+    prerelease: true
+    notes: >-
+      Test build. Stable stays beta_65.
+
+
+      Flash it at **[flasher.wadamesh.com](https://flasher.wadamesh.com)** (switch the toggle to
+      Beta), or update on the device if you have "Get test builds (beta)" turned on.
+
+
+      > **Seeed Wio Tracker L2 owners: update this one from the website over USB, not from the
+      device.** Earlier builds looked for the wrong file when updating themselves and would have
+      installed the Heltec V4 firmware. This build fixes that, so on-device updates are safe from
+      here on.
+
+
+      This release is almost entirely @oumike's: 54 of its 61 changes, gathered into one
+      consolidated PR (#517) so they could be reviewed as a whole, including a new board. Thanks
+      also to @aigarslv for the Latvian keyboard and @tmetz1987 for Wardrive 1.2, and to @Buko84,
+      @Danie10, @DenRalle and @Colni777, whose reports drove most of the fixes.
+
+
+      ## New board: LilyGo T-Deck Pro (experimental)
+
+
+      The T-Deck Pro can now be flashed from the website, marked experimental. By @oumike (#469).
+      The e-paper display, keyboard, touch, radio, GPS, microSD and battery all work, but it has
+      been tested on a single v1.1 unit so far. The screen redraws the way e-paper does rather than
+      updating instantly. Any report helps, including which hardware revision you have.
+
+
+      ## Wio Tracker L2
+
+
+      - **Self-updates fetch the right firmware.** A board's update file is chosen from a per-board
+      table that used to fall back to the Heltec V4 when a board was missing from it. The Wio L2 was
+      missing, and nothing checks that a downloaded image belongs to the board installing it. Every
+      board is now listed explicitly, and a board that is not listed no longer compiles, so this
+      cannot happen quietly again.
+
+      - **Backups go to the SD card.** The SD path had been left out of this board's build, so they
+      never did before. By @oumike (#499, #501).
+
+
+      ## ThinkNode M9
+
+
+      - **The jump-to-latest arrow is back in conversations** (#490). beta_79 removed it as a
+      touchscreen-only control, but on the M9 it was the quickest way to the newest message.
+
+      - **Up and down walk a conversation one message at a time**, in order (#492).
+
+      - **Scrolling works** in message info (#482, #488), the admin log (#483, #494) and discovered
+      contacts (#481, #487), and the text cursor stays inside the field (#474, #479).
+
+      - **Navigation shortcuts work from anywhere** (#485, #493), the selection cursor is easier to
+      see (#478), System Information and Memory detail can be navigated (#476), purge confirmations
+      keep focus (#477), and a new channel puts the cursor in the message field (#508, #509).
+
+      - **The file list shows when each file was written**, so the latest crash report is obvious.
+      Requested by @DenRalle (#475, #495).
+
+      - **"Lock home to drawer"** keeps the Home key on the app drawer when the drawer is your home
+      screen. Requested by @Buko84 (#491, #497).
+
+
+      All by @oumike, most of them from @Buko84's reports.
+
+
+      ## Fixes for everyone
+
+
+      - **The battery life estimate works after a restart.** Samples logged before the clock was set
+      made a normal discharge look flat, so it read "charging / steady". By @oumike, reported by
+      @Danie10 (#480, #498).
+
+      - **The lock-screen notification no longer shows a direct message as 64 hops away.** By
+      @oumike, reported by @Buko84 (#484, #489).
+
+      - **Telemetry polling stops on its own**, after 10 requests by default, instead of flooding
+      the mesh until someone notices. By @oumike, reported by @Colni777 (#512).
+
+      - **Quick replies can be longer.** By @oumike, requested by @Danie10 (#425, #502).
+
+      - **A Lua app that clears its screen while showing a map no longer frees the map twice.** By
+      @oumike, reported by @tmetz1987 (#511, #513).
+
+      - **The About page shows microSD diagnostics**, so a card that will not mount says why. By
+      @oumike (#514).
+
+      - **The System Information page title is translated again.** Its key had been renamed in the
+      generated translation table but not in the language files it is built from, so every build put
+      the old name back.
+
+
+      ## Keyboards and apps
+
+
+      - **Latvian keyboard layout**, and Romanian no longer labels itself as E
+
+      …
   - version: beta_79
     name: wadamesh beta_79
     datetime: '2026-09-09T11:23:19Z'
@@ -1793,100 +1897,3 @@ releases:
       The intermittent T-Lora Pager crash (#233, #251) is still open. Both dumps decode to a freed
       LVGL callback — the same underlying fault seen from two angles — and @PixPMusic's #234
       restructures exactly that teardown. It is not a 1.17 regression and predates beta_60.
-  - version: beta_60
-    name: wadamesh beta_60
-    datetime: '2026-08-09T16:19:17Z'
-    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_60
-    prerelease: true
-    notes: >-
-      Test build. Stable stays **beta_50** — but this one is different: **beta_60 is the build we
-      want to promote to stable as soon as it proves itself**, so tester feedback matters more than
-      for any beta before it.
-
-
-      The reason: **the MeshCore core under wadamesh moved from 1.16 to 1.17.** Every board in this
-      release is rebased on the new core — mesh routing, the seen-packet tables, radio drivers and
-      the companion protocol are all the current upstream generation, with our buffered LoRa receive
-      path carried over on top.
-
-
-      **If you run betas, please run this one as your daily build** and report anything that behaves
-      differently from beta_59 — radio range, message delivery, room servers, battery life, phone
-      pairing. Nothing you can send helps more right now than "ran it for two days, here is what
-      changed". Once feedback clears it, beta_60 becomes the new stable so every new user starts on
-      the 1.17 core.
-
-
-      Flash it from **https://flasher.wadamesh.com** (flip the Beta toggle), or on-device via
-      Settings → Firmware with "Get test builds (beta)" enabled.
-
-
-      ---
-
-
-      ### MeshCore 1.17
-
-
-      The whole core is the current upstream generation. Two things are worth knowing beyond
-      "everything underneath is newer":
-
-
-      - **Channel activity detection (listen-before-talk) groundwork is in.** The radio can check
-      the channel is clear before transmitting. It ships **disabled** in this build while upstream
-      finishes making it configurable — a Radio & Mesh toggle follows in a later beta.
-
-      - **Our local core additions survived the rebase** — buffered LoRa receive (the drain task and
-      the heard/read/late counters in About) is intact on 1.17.
-
-
-      About now reports **v1.17.0-touch**.
-
-
-      ### Fixes
-
-
-      - A white frame around the boot logo in the first seconds after power-on — a 1.17 side effect
-      caught on the bench: the early boot screen let the new core pick its background instead of
-      forcing black.
-
-      - A LoRa radio that fails to start now says so on screen — "LoRa radio not detected", with a
-      hint to check the module — instead of a silent boot with the only clue on serial (#244).
-
-      - Messages retried from the failed state appear in the open chat immediately, not after
-      reopening it (#248).
-
-      - **Favorites survive the contact-table cleanup.** The star only lived in the touch UI's
-      records, so the core's eviction could silently drop a starred contact when the table filled;
-      the star is now written through to the core's contact flags, which skip favorites (#178).
-
-      - Settings saves skip writes when nothing changed, ending bursts of identical snapshot writes
-      to flash (#246).
-
-      - The Files app shows each file's modified date and time (#185).
-
-      - Discover rows show the distance to a node when both sides have a position fix (#239).
-
-      - The Store no longer offers a language "update" that is older than the installed one (#247,
-      #232).
-
-      - The long-press accent picker gained æ/Æ on the A key for Danish and Norwegian (#237).
-
-
-      ### Community
-
-
-      The T-Pager stack in this release is by **@PixPMusic** — four merged PRs:
-
-
-      - **Wi-Fi/BLE coexistence** (#210): enabling Wi-Fi no longer reboots the board, BLE bonds
-      survive the handoff so the phone re-pairs without deleting the device, and BLE returns
-      automatically when Wi-Fi is unavailable.
-
-      - **SD arbitration + map tiles** (#206, #221): SD access from different parts of the firmware
-      no longer collides on the shared bus, and map tiles load reliably from the card.
-
-      - **Lock-screen brand mark** (#235).
-
-
-      Hungarian is at **v9** — a full sweep by **@pisti87**, with the one punctuation glyph our
-      fonts lack swapped for its typographic twin.
