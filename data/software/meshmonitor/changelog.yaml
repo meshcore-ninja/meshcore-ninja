@@ -1,7 +1,135 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-09-16T03:55:12.396Z'
+updatedAt: '2026-09-17T04:00:32.184Z'
 releases:
+  - version: v4.16.1-rc5
+    name: v4.16.1-rc5
+    datetime: '2026-09-17T01:50:57Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.16.1-rc5
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.16.1-rc5
+
+
+      > ⚠️ **Pre-release.** This is a release candidate for testing. Expect rough edges and report
+      problems before 4.16.1 ships.
+
+
+      ## Summary
+
+
+      This candidate gives operators finer control over how far MeshMonitor's own traffic travels.
+      The MQTT broker's single "set hop limit" override is now two independent knobs: a clamp that
+      only lowers `hop_limit` on packets handed to a radio, and an opt-in raise (capped at 3) for
+      managed backhaul. Both now also apply to TCP-linked devices, where the old override silently
+      did nothing. Automations, Auto-Announce and Auto-Acknowledge can pin their own hop limit, most
+      usefully to 0 for local-only messages, and it can never exceed the node's own limit.
+      Traceroutes, including Auto Traceroute, now go out at the node's configured hop limit instead
+      of a fixed 7, which cuts airtime on every run. The Solar Monitoring report lets you mark a
+      node as solar, or not, when detection gets it wrong. The official map pin style can now color
+      by hop count instead of node identity. Firmware updates accept a `.bin` uploaded from disk,
+      and the Custom URL option finally works as an install target. Several enum settings are now
+      validated the same way on both load paths, and a handful of map-popup and Unified Messages
+      display bugs are fixed.
+
+
+      **Upgrade notes**
+
+      - Migration **167** adds the `solar_node_overrides` table. It applies automatically on SQLite,
+      PostgreSQL and MySQL.
+
+      - **Traceroute reach changed:** a node on the default hop limit of 3 now traces 3 hops, not 7.
+      Raise the device hop limit if you need to trace further.
+
+      - MQTT broker sources saved with the older hop-limit override keep working unchanged. Opening
+      one in the editor shows it as a clamp and explains what saving changes.
+
+
+      ## Features
+
+      - feat(mqtt): split the hop-limit override into a raise and a clamp (#5188, #5190) — #5256
+
+      - feat(automation): per-automation hop-limit override for automated sends (#5121) — #5259
+
+      - feat(solar): let operators mark a node as solar, or not (#3195) — #5260
+
+      - feat(map): choose what the official pin's colour means (#5018) — #5258
+
+      - feat(firmware): flash a .bin uploaded from disk, not just a URL (#5249) — #5252
+
+
+      ## Bug Fixes
+
+      - fix(traceroute): send at the node's configured hop limit, not a fixed 7 — #5262
+
+      - fix(settings): validate enum settings on both load paths, from one list — #5261
+
+      - fix(firmware): make the custom URL an actual install target (#5011) — #5257
+
+      - fix(map): outline the popup badge and pin its actions below the scroll (#5247) — #5253
+
+      - fix(unified): preserve line breaks in the messages card and modal (#5250) — #5251
+
+
+      ## CI/DevOps
+
+      - chore(release): bump to 4.16.1-rc5 — #5263
+
+
+      ## Issues Resolved
+
+      - #5188 Operator-controlled hop_limit override on forwarded MQTT packets
+
+      - #5190 Operator-controlled hop_limit clamp-down on forwarded MQTT packets
+
+      - #5121 Per-automation hop_limit override (auto-announce / action.sendMessage / tapbacks)
+
+      - #3195 Ability to manually set the solar-powered option for a device
+
+      - #5018 Toggle for map pin coloring: official colors vs hop count
+
+      - #5011 Custom firmware URL silently fails
+
+      - #5249 Firmware Updates: upload a local .bin file from disk
+
+      - #5247 Map node info popup: badge contrast, button clipping, mobile overflow
+
+      - #5250 Line breaks not preserved in Unified Messages view
+
+
+      **Full Changelog**: https://github.com/Yeraze/meshmonitor/compare/v4.16.1-rc4...v4.16.1-rc5
+
+
+      ## 🚀 MeshMonitor v4.16.1-rc5
+
+
+      ### 📦 Installation
+
+
+      **Docker (recommended):**
+
+      ```bash
+
+      docker run -d \
+        --name meshmonitor \
+        -p 8080:3001 \
+        -v meshmonitor-data:/data \
+        ghcr.io/Yeraze/meshmonitor:4.16.1-rc5
+      ```
+
+
+      ### 🧪 Testing
+
+      ✅ All tests passed
+
+      ✅ TypeScript checks passed
+
+      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
+
+
+      ### 📋 Changes
+
+      See commit history for detailed changes.
   - version: v4.16.1-rc4
     name: v4.16.1-rc4
     datetime: '2026-09-16T00:07:09Z'
@@ -2056,84 +2184,6 @@ releases:
         -p 8080:3001 \
         -v meshmonitor-data:/data \
         ghcr.io/Yeraze/meshmonitor:4.15.2-rc3
-      ```
-
-
-      ### 🧪 Testing
-
-      ✅ All tests passed
-
-      ✅ TypeScript checks passed
-
-      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
-
-
-      ### 📋 Changes
-
-      See commit history for detailed changes.
-  - version: v4.15.2-rc2
-    name: v4.15.2-rc2
-    datetime: '2026-08-22T20:59:50Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.15.2-rc2
-    prerelease: true
-    notes: >-
-      # MeshMonitor v4.15.2-rc2
-
-
-      > ⚠️ **Release candidate.** For testing ahead of the 4.15.2 stable release.
-
-
-      First RC since 4.15.1. Bundles the **Device Health** automation epic (#4558) plus the map and
-      messages fixes merged since.
-
-
-      ## Added
-
-
-      - **Device Health automation triggers + template** (#4558) — five new Automation Engine
-      triggers built on data MeshMonitor already receives: **node silent** (heartbeat lost), **node
-      online** (recovery), **node rebooted** (uptime reset), **node power changed** (external power
-      lost/restored), and **battery declining** (a "not charging" trend proxy) — plus a selectable
-      **noise floor** telemetry field, and a **Device Health** starter template that quick-creates
-      the notifications (pick a source/node, toggle any of ten alerts with thresholds). All passive
-      (zero mesh airtime) and restart-safe. Caveats surfaced in the UI: noise floor is
-      local-node-only on Meshtastic; power/charging are heuristics; MeshCore reboot/power/trend
-      deferred. (#4873, #4874, #4876, #4877, #4878, #4881)
-
-      - **MeshCore neighbour autopoll** — per-node retrieval scheduler. (#4618)
-
-      - **Reception Heard column shows seconds** on the Unified Messages page. (#4869)
-
-      - **Unread bell in the mobile channel dropdown**. (#4660)
-
-
-      ## Fixed
-
-
-      - **3D node markers keep their role glyph across zoom** (#4863)
-
-      - **ESRI satellite basemap** — damped synthetic water-blue + fixed white halo on node labels.
-      (#4860)
-
-
-      **Full changelog:** https://github.com/Yeraze/meshmonitor/compare/v4.15.1...v4.15.2-rc2
-
-
-      ## 🚀 MeshMonitor v4.15.2-rc2
-
-
-      ### 📦 Installation
-
-
-      **Docker (recommended):**
-
-      ```bash
-
-      docker run -d \
-        --name meshmonitor \
-        -p 8080:3001 \
-        -v meshmonitor-data:/data \
-        ghcr.io/Yeraze/meshmonitor:4.15.2-rc2
       ```
 
 
