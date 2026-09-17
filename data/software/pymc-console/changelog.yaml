@@ -1,16 +1,48 @@
 source: github
 repo: Treehouse-00/pymc_console-dist
-updatedAt: '2026-09-15T07:24:23.005Z'
+updatedAt: '2026-09-17T22:44:09.362Z'
 releases:
-  - version: v0.9.393
-    name: Release v0.9.393
-    datetime: '2026-09-15T05:50:12Z'
-    url: https://github.com/Treehouse-00/pymc_console-dist/releases/tag/v0.9.393
+  - version: v0.9.394
+    name: Release v0.9.394
+    datetime: '2026-09-17T21:04:25Z'
+    url: https://github.com/Treehouse-00/pymc_console-dist/releases/tag/v0.9.394
     prerelease: false
     notes: >-
+      ### Added
+
+      - **Set a companion's Path Hash Size from the console.** Each companion the repeater hosts
+      stamps its outgoing paths with 1-, 2- or 3-byte route hashes, and until now only a phone app
+      could change that. Open the companion's Edit dialog (the pencil in Messages → CONFIG) or the
+      new Configuration → Companion Devices page and press the width you want. Leaving 1-byte asks
+      you to confirm first, because older repeaters cannot forward wider hashes; a line under the
+      keys shows the command being sent and the companion accepting it, and the next message you
+      send prints the new width on its row.
+
+      - **Companion Devices page.** A home in the Configuration workspace for the settings that live
+      on each companion itself, shown as an instrument in the same style as Regions Management. Pick
+      a companion, connect, and set.
+
+
+      ### Changed
+
+      - **The repeater's own Path Hash Size field now says whose radio it is.** It sets the
+      repeater's width only; each companion has its own, and the two never affect each other.
+      Dropdown settings across Configuration can now carry a help note and an info tooltip.
+
+
       ### Fixed
 
-      - refine regions hardware and screen hierarchy
+      - **Moving between Messages, Regions Management and Companion Devices no longer drops the
+      companion link.** The link was torn down and reopened on every move, and the repeater briefly
+      reported the console's own previous session as "another client". The link now stays up across
+      all companion pages.
+
+      - **Manual paths at 2- and 3-byte widths.** The contact path editor accepted only 1-byte hops
+      and could mis-encode a path on a companion set to a wider hash. Each hop can now be 2, 4 or 6
+      hex characters, all the same width, and the path is sent at the width you typed.
+
+      - **Bot path and test reports on wider hashes.** HOWL bot replies with 2- or 3-byte route
+      hashes were read as the wrong hops; they now parse whole.
 
 
 

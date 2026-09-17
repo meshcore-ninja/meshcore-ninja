@@ -1,7 +1,16 @@
 source: github
 repo: andymux/meshos-releases
-updatedAt: '2026-09-16T14:42:12.740Z'
+updatedAt: '2026-09-17T22:44:06.114Z'
 releases:
+  - version: v1.0.21
+    name: MeshOS v1.0.21
+    datetime: '2026-09-17T22:15:57Z'
+    url: https://github.com/andymux/meshos-releases/releases/tag/v1.0.21
+    prerelease: false
+    notes: |-
+      # MeshOS app 1.0.21
+
+      - Message delivery reliability and bug fixes for internet enabled channels.
   - version: v1.0.20
     name: MeshOS v1.0.20
     datetime: '2026-09-16T11:06:45Z'
@@ -631,23 +640,3 @@ releases:
       ---
 
       APK SHA-256: `13c3690607139ad40a540f59e8801469b6227e112d89f54d42e9b72013e10a59`
-  - version: fw-v1.6.2
-    name: MeshOS firmware v1.6.2
-    datetime: '2026-07-30T07:17:29Z'
-    url: https://github.com/andymux/meshos-releases/releases/tag/fw-v1.6.2
-    prerelease: false
-    notes: >-
-      Internet for your channels: enable Internet on any channel to chat over WiFi too. Merged
-      bubbles, double ticks, status dots. Plus channel reliability fixes.
-
-
-      Device firmware for LilyGo T-Deck and ThinkNode M9.
-
-      Install via SD card (firmware.bin) or the in-firmware updater.
-
-
-      SHA-256:
-
-      - TDeck: aa56bb93fd24604b744d512d782d9194d29e42586375f6ed19ce248977d4f46a
-
-      - M9: a08919490e01ad439c353ea4692f4db7177e901858029558353d7c6a065fd671

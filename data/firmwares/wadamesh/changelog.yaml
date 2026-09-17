@@ -1,7 +1,105 @@
 source: github
 repo: ALLFATHER-BV/wadamesh
-updatedAt: '2026-09-16T14:41:54.077Z'
+updatedAt: '2026-09-17T22:43:50.153Z'
 releases:
+  - version: beta_81
+    name: wadamesh beta_81
+    datetime: '2026-09-17T20:12:24Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_81
+    prerelease: true
+    notes: >-
+      Test build. Stable stays beta_65.
+
+
+      Flash it at **[flasher.wadamesh.com](https://flasher.wadamesh.com)** (switch the toggle to
+      Beta), or update on the device if you have "Get test builds (beta)" turned on.
+
+
+      Half of this drop is @oumike's again, gathered into one reviewable PR (#523), and most of the
+      rest came out of reports from @PD0RCM, @jesshampshire, @Steve8677 and @Buko84. Thanks also to
+      @comraderachel, @B0N3-GD and @wpawelczyk-wq, whose reports drove the PR.
+
+
+      ## Bluetooth keyboards, on every board with Bluetooth
+
+
+      Bluetooth now serves either the phone app or a keyboard, and Settings, Bluetooth is where you
+      choose. Pairing lists the keyboards that are in pairing mode and pairs with a code or without
+      one; the keyboard you paired reconnects by itself after that.
+
+
+      - **Keys are read from the keyboard's own report map**, the way a phone or a computer reads
+      them, so media keys and touchpads are left alone and the boot protocol is only a fallback.
+
+      - **Layouts**: US, UK, German, French and Belgian, including AltGr and the dead keys for
+      accents.
+
+      - **Touchscreen boards keep the on-screen keyboard down** while a keyboard is connected, and a
+      second tap on a field brings it up anyway.
+
+      - **The whole interface works from the keyboard**: arrows, Tab, Enter and Page Up/Down drive
+      the highlight, and the letter hotkeys over the tab bar switch pages.
+
+      - **Esc is the back button**, and for keyboards whose Esc key types a character instead, the
+      Back key setting captures whichever key you press and uses that.
+
+      - **Command tapped on its own** opens the emoji picker while you are writing, and the status
+      bar shows a keyboard instead of the Bluetooth glyph while one is connected.
+
+
+      Not on the Tanmatsu or the T-Display P4, which have no Bluetooth of their own. Both ESP32-P4
+      targets still build and ship as usual.
+
+
+      ## From @oumike's PR #523
+
+
+      - **T-Lora Pager: the microSD card mounts again** after the card has been read on a computer,
+      and powering off unmounts and powers it down. Reported by @comraderachel (#522).
+
+      - **At a glance: emoji render as emoji** instead of squares. Reported by @B0N3-GD (#521).
+
+      - **Transfer page: upload a folder of offline OSM tiles** straight to the SD card, with strict
+      path checks and resumable, atomic writes. Requested by @wpawelczyk-wq (#515).
+
+      - **LilyGo T-Deck Pro**: touch releases are debounced, holding a chat row is timed in
+      hardware, and typing a space no longer starts the screen lock.
+
+      - **Heltec V4 with the original Expansion Kit**: the IO button goes back on a tap and home on
+      a hold, larger keys with a magnified preview, and bigger status-bar targets. Reported by
+      @jesshampshire (#525).
+
+
+      ## Fixes for everyone
+
+
+      - **The web interface can unlock the screen again.** A locked screen absorbs every tap on
+      purpose, and unlocking on the device means holding the trackball or the button, so a browser
+      had no way back from a screen it had locked itself. The page now shows an Unlock button
+      whenever the device is locked. Reported by @PD0RCM (#506).
+
+      - **Console mode can be left without typing**: hold a finger on the screen for three seconds.
+      It also applies the "Older keyboard protocol" setting now, which it was ignoring, so a T-Deck
+      that needs that setting no longer types garbage in the console with no way out. A touch wakes
+      a dark console screen again as well, on the boards that have no keyboard. Reported by
+      @jesshampshire (#507).
+
+      - **Pasting a key takes the key out of the message**: the channel-secret and public-key fields
+      lift a 32 or 64 hex digit key out of whatever you copied instead of filling up with the words
+      around it. Reported by @Steve8677 (#526).
+
+      - **ThinkNode M9 shows a waiting firmware update** in its own notice row, next to the message
+      and contact notices. That board never had an update signal at all. Requested by @Buko84
+      (#443). The Settings tile in the app drawer carries the same mark on every board.
+
+
+      ## For testers
+
+
+      Bluetooth keyboards are new on every board. Worth reporting: which keyboard you used, whether
+      it paired wit
+
+      …
   - version: beta_80
     name: wadamesh beta_80
     datetime: '2026-09-16T10:36:32Z'
@@ -1824,76 +1922,3 @@ releases:
       The intermittent T-Lora Pager crash (#233, #251) is still open. Both dumps decode to a freed
       LVGL callback — the same fault from two angles — and @PixPMusic's #234 restructures that
       teardown. It predates beta_60 and is not a 1.17 regression.
-  - version: beta_61
-    name: wadamesh beta_61
-    datetime: '2026-08-10T11:15:20Z'
-    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_61
-    prerelease: true
-    notes: >-
-      Test build. Stable stays **beta_50**.
-
-
-      **If you are on beta_60, update.** It shipped with three regressions from the MeshCore 1.17
-      rebase, all fixed here. Flashing beta_61 over the top is enough — nothing needs erasing, and
-      no data was lost in any of them.
-
-
-      Flash it from **https://flasher.wadamesh.com** (flip the Beta toggle), or on-device via
-      Settings → Firmware with "Get test builds (beta)" enabled.
-
-
-      ---
-
-
-      ### The beta_60 regressions
-
-
-      **Boot loop on an empty contact list** (#249). A device with no contacts saved — a fresh
-      install, an erase-and-flash, or a card that had not mounted yet — crashed during startup and
-      rebooted forever. 1.17 reserved eight slots at the head of the contact table and claimed them
-      before the table was allocated, so a new startup routine walked a null pointer. Every board on
-      our bench had contacts on it, which is exactly why this got past testing; the release process
-      now checks that case. Reported by @Pierre747 and @rustinmyeye, whose boot log is what cracked
-      it.
-
-
-      **The newest contacts were unreachable** (#252). Same reserved slots, different consequence:
-      the contact list, the action sheets and the phone-app sync were still counting from the old
-      start of the table, so the eight most recently added contacts could not be shown or acted on.
-      A contact you had just added was invisible, and a room server's **Log in** silently did
-      nothing because it resolved to an empty reserved slot. Nothing was lost — those contacts were
-      in the table the whole time. Reported by myshoeisonfire.
-
-
-      **The T-Display P4 could send but never receive** (#253). No channel messages, no delivery
-      confirmations, no adverts, RX counters flat at zero — while the Monitor app still showed
-      signal, because it talks to the radio directly. The P4 is the one board whose radio interrupt
-      is not wired to the processor, so it has to ask the radio over SPI whether a packet arrived.
-      That polling code was never in the repository — it lived only in a generated directory that
-      gets rebuilt — so the 1.17 rebase erased it. It is rewritten and now version-controlled, with
-      a build-time check so it cannot vanish again. Reported by @D-Melhede.
-
-
-      ### Also fixed
-
-
-      - A contact that changes its node name no longer leaves two chat threads behind. The thread is
-      matched by key, but its title was never updated, while incoming messages are filed by sender
-      name — so the first message after a rename started a second thread. Reported by
-      myshoeisonfire.
-
-      - Release builds now derive the firmware version, build date and core version from the release
-      itself, and a release **aborts** if any board's image does not carry its own tag. beta_60
-      reported `v1.16.0-touch` in About because that value was maintained by hand.
-
-      - All 13 language files gained the 48 UI strings none of them had, so those stop being
-      permanently English and translators can see the gaps. New tool `scripts/build/audit-lang.py`
-      reports drift in both directions.
-
-
-      ### Known, not fixed here
-
-
-      The intermittent T-Lora Pager crash (#233, #251) is still open. Both dumps decode to a freed
-      LVGL callback — the same underlying fault seen from two angles — and @PixPMusic's #234
-      restructures exactly that teardown. It is not a 1.17 regression and predates beta_60.
