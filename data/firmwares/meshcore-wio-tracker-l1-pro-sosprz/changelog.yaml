@@ -1,7 +1,13 @@
 source: github
 repo: sosprz/Meshcore-Wio-Tracker-L1-Pro
-updatedAt: '2026-09-14T16:13:40.234Z'
+updatedAt: '2026-09-17T09:23:03.162Z'
 releases:
+  - version: v1.17.99
+    name: v1.17.99
+    datetime: '2026-09-17T05:55:33Z'
+    url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.17.99
+    prerelease: false
+    notes: "- **Flood advert path hashes** - Standalone flood adverts now honor the selected `1B` / `2B` / `3B` path-hash setting, including location-bearing adverts. [#131](https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/issues/131)\r\n- **GPS coordinate formats** - `GPS -> Coordinates` selects `DMS` or `Decimal` for the Home GPS card. `GPS Data` remains decimal/raw, while e-ink DMS output uses an ASCII `d` in place of the unavailable degree glyph. [#90](https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/issues/90)\r\n- **LoRaGotchi lifetime progress** - `Tools -> LoRaGotchi` now keeps aggregate RX, TX, flood, and direct packet counters across restarts, so earned XP, levels, and packet-based badges no longer reset with the live radio counters. Progress is checkpointed at most every five minutes and immediately when LoRaGotchi is opened. [#92](https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/issues/92)\r\n- **USB/BLE UI split** - USB companion builds no longer show Bluetooth pages or Bluetooth shortcut settings. A stale BLE preference from a previously flashed BLE image is ignored in USB builds, so it cannot disable USB after restart. BLE controls remain available only in `*_ble` firmware images. [#100](https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/issues/100)"
   - version: v1.17.98
     name: v1.17.98
     datetime: '2026-09-14T14:53:42Z'
@@ -130,11 +136,3 @@ releases:
     notes: >-
       - **Full sound mute on startup/reset** - Saved `Sound: OFF` is now applied before the startup
       tone is requested, so rebooting or resetting does not produce audio while muted.
-  - version: v1.15.79
-    name: v1.15.79
-    datetime: '2026-05-22T14:33:07Z'
-    url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.15.79
-    prerelease: false
-    notes: >-
-      - **Greek text support** - Added `GR` as a message input language with Greek T9 and on-screen
-      keyboard layouts, tonos variants for vowels.

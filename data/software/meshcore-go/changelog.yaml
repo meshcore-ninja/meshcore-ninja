@@ -1,7 +1,106 @@
 source: github
 repo: meshcore-go/meshcore-go
-updatedAt: '2026-09-08T08:42:32.848Z'
+updatedAt: '2026-09-17T09:23:15.756Z'
 releases:
+  - version: v1.5.0
+    name: v1.5.0
+    datetime: '2026-09-17T05:22:35Z'
+    url: https://github.com/meshcore-go/meshcore-go/releases/tag/v1.5.0
+    prerelease: false
+    notes: >-
+      ## openHop modems: the new `hardware/openhop` module
+
+
+      A node can now drive an [openHop Modem](https://github.com/openhop-dev/openhop_modem) - an
+      ESP32 or nRF52 board running that firmware in front of an SX1262 - over USB-CDC, its protocol
+      UART, or TCP. It is a separate module, so the `go.bug.st/serial` dependency only reaches you
+      if you import it:
+
+
+      ```
+
+      go get github.com/meshcore-go/meshcore-go/hardware/openhop@v1.5.0
+
+      ```
+
+
+      ```go
+
+      m := openhop.New(openhop.TCPDialer("192.168.1.50:5055", 0), openhop.Config{
+          Radio: openhop.RadioConfig{
+              FreqHz: 869_618_000, BandwidthHz: 62_500, SF: 8, CR: 8,
+              TxPower: 22, SyncWord: 0x12, PreambleLen: 16,
+          },
+      })
+
+      if err := m.Connect(ctx); err != nil { /* the worker keeps retrying */ }
+
+      mux := node.NewRadioMux(m, node.WithMuxAirtimeEstimator(m.AirtimeEstimator()))
+
+      ```
+
+
+      The modem owns the physical layer only - transmit, receive, CAD and the LoRa parameters -
+      while routing, encryption and retransmission stay here. `Modem` satisfies `node.Modem`, and
+      every command in the firmware's `protocol.h` is exposed, Wi-Fi provisioning, the debug
+      snapshot and the OTA set included.
+
+
+      It is not KISS and shares nothing with the `hardware` package: a different sync byte, CRC and
+      length field, and SNR arriving scaled by ten rather than MeshCore's quarter-dB.
+
+
+      Points worth knowing:
+
+
+      - **A reconnection re-runs the whole handshake.** A dropped link usually means the modem
+      rebooted, so the radio configuration, the CAD thresholds and the auto-CAD setting are all
+      re-pushed from what the host last asked for, whether that came from `Config` or a later
+      `SetConfig`, `SetCADParams` or `SetAutoCAD`. Backoff is 1, 2, 5, 10 then 30 seconds.
+
+      - **`Connect` reports the first handshake but starts the reconnection worker either way**, so
+      a modem that is not up yet is waited for rather than fatal. Commands return `ErrNotConnected`
+      until it answers, and a command in flight when the link drops ends with `ErrDisconnected`
+      rather than waiting out its timeout.
+
+      - **Listen-before-talk is bounded in time rather than attempts**, so an occupation longer than
+      the budget cannot leave two neighbours transmitting in lockstep: CAD scans with a jittered 200
+      ms retry for four seconds, then transmits anyway. With `WithAutoCAD` the modem runs its own
+      scan before every transmission and refuses a busy channel with `ERR_CHANNEL_BUSY`; that is
+      listen-before-talk feedback rather than a failure, so it is retried out of the same budget and
+      counted in `TxResult.ModemRefusals`.
+
+      - **Received packets and the firmware's asynchronous log lines are dispatched off the read
+      loop**, so a data handler can transmit, an ACK say, without deadlocking against its own
+      response. `WithInboundBuffer` sizes that queue, and a handler too slow to keep up costs the
+      oldest packets, counted in `Stats().InboundDropped`.
+
+      - **`AirtimeEstimator` corrects for the configured preamble.** The shared estimator assumes
+      the MeshCore firmware's own rule of 32 symbols at SF5-8, which overestimates by roughly 65 ms
+      at the modem's default preamble of 16.
+
+
+      Transactions are serialised, because the protocol carries no correlation id: a second
+      concurrent command could not tell whose answer had arrived. For the same reason a reply to a
+      command that has already timed out is discarded while nothing is outstanding, but is adopted
+      by the next command waiting on that response byte.
+
+
+      ### What is tested, and what is not
+
+
+      The driver has been run against modem hardware through OwlShack. Under that, the wire format
+      follows the firmware's `include/protocol.h`, `src/main.cpp` and `src/tcp_server.cpp`,
+      cross-checked against the reference host driver in openhop_core, and the package carries a
+      test suite that drives a scripted fake modem over an in-memory pipe: the handshake and its
+      order, a rejected token, reconnection and the settings it restores, the busy-channel retry
+      loop, a modem that answers nothing, malformed and truncated responses, and a data handler that
+      transmits from inside itself.
+
+
+      Two paths c
+
+      …
   - version: v1.4.0
     name: v1.4.0
     datetime: '2026-09-08T06:11:24Z'
