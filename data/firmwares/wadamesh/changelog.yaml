@@ -1,7 +1,67 @@
 source: github
 repo: ALLFATHER-BV/wadamesh
-updatedAt: '2026-09-17T22:43:50.153Z'
+updatedAt: '2026-09-18T14:12:06.719Z'
 releases:
+  - version: beta_82
+    name: wadamesh beta_82
+    datetime: '2026-09-18T11:47:01Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_82
+    prerelease: true
+    notes: >-
+      Test build. Stable stays beta_65.
+
+
+      Flash it at **[flasher.wadamesh.com](https://flasher.wadamesh.com)** (switch the toggle to
+      Beta), or update on the device if you have "Get test builds (beta)" turned on.
+
+
+      ## ThinkNode M9 SD cards: Windows malware
+
+
+      Some ThinkNode M9 cards shipped with a Windows worm on them ([Elecrow security
+      advisory](https://www.elecrow.com/Thinknode-M9-Security-Advisory-SD-Card-Malware-Risk.html),
+      September 2026). It cannot run on the radio, but it runs on the first Windows PC the card is
+      plugged into, which is exactly where you take the card to copy map tiles onto it.
+
+
+      On the infected cards seen so far it is a hidden `autorun.inf` in the top folder of the card
+      that launches a program called `xlfqf.pif` on open, explore and autoplay, with lines of random
+      junk in between to throw off simple scanners. That matches the pattern of the long-known
+      Sality worm, which disables antivirus software, steals credentials and infects other programs
+      on the PC.
+
+
+      - **New in the Store: SD Scan.** It looks through the SD card for Windows programs, scripts,
+      shortcuts and autorun files, shows what it found and why, and removes it after you confirm. A
+      mesh radio never uses any of these files, and nothing else on the card is touched. A quick
+      scan skips the deep map-tile folders; a full scan reads everything.
+
+      - **SD Scan only removes files it recognises.** If a card may be infected, the safest fix is
+      to copy off what you need and format it completely: in Files, hold the SD card row.
+
+      - **A startup warning.** When a card with Windows malware in its top folder is in the radio at
+      startup, or is inserted, wadamesh warns you and offers to open SD Scan.
+
+      - **Already used the card in a Windows PC?** Run a full virus scan on that PC as well.
+
+
+      ## For app authors
+
+
+      `wada.sd.check(path)` and `wada.sd.remove(path)` find and delete Windows malware on the card.
+      What counts is decided in firmware (`SdThreat.h`): `autorun.inf`, Windows program, script and
+      shortcut extensions, or a real Windows program header under any name. `remove` refuses
+      everything else, so no app can use it to delete map tiles, backups or chat history.
+      `wada.sd.list(path, start, max)` pages through big folders, and `caps().sd_clean` says whether
+      a board has all three. Documented at
+      [wadamesh.com/sdk.html](https://wadamesh.com/sdk.html#sd).
+
+
+      ## For testers
+
+
+      SD Scan and the removal are tested on a T-Deck. M9 owners: worth reporting whether the scan,
+      the removal and the startup warning all work with the M9's keys.
   - version: beta_81
     name: wadamesh beta_81
     datetime: '2026-09-17T20:12:24Z'
@@ -1830,95 +1890,3 @@ releases:
       - The chat list preview no longer shows an old message and 
 
       …
-  - version: beta_62
-    name: wadamesh beta_62
-    datetime: '2026-08-11T08:32:44Z'
-    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_62
-    prerelease: true
-    notes: >-
-      Test build. Stable stays **beta_50**.
-
-
-      Most of this release is community work — **@PixPMusic** wrote 22 of its 30 changes, and the
-      German, Dutch and Hungarian translations are **@pisti87**'s.
-
-
-      Flash it from **https://flasher.wadamesh.com** (flip the Beta toggle), or on-device via
-      Settings → Firmware with "Get test builds (beta)" enabled.
-
-
-      ---
-
-
-      ### The enlarged UI, by @PixPMusic (#198)
-
-
-      The large font presets are usable across the whole interface now, not just in chat.
-
-
-      Chat rows, the composer and the Pager's line spacing size themselves from the font's real
-      metrics instead of fixed pixel heights, so nothing clips or overlaps at the bigger presets.
-      Contact detail menus, the contact share panel, mentions, the overview header and its action
-      buttons, and the QR panel all scale with the preset instead of overflowing it. The
-      discovered-count badge is centred, the close button and the signal poll no longer strand a
-      focus outline, and app pages close from the back gesture.
-
-
-      New in the same pass: a full-width traffic detail chart, Jumbo chat text properly distinct
-      from Large, and the preset names kept as the ones you already know.
-
-
-      ### Open-licensed fonts, by @PixPMusic (#198)
-
-
-      The bundled fonts are rebuilt from their OFL sources. The set shipped before this was
-      generated from a proprietary system font, which was never ours to redistribute — the firmware
-      is GPL, so that needed correcting whether or not anyone had noticed. Glyph shapes shift very
-      slightly; nothing else about the text changes.
-
-
-      ### Accented and non-Latin characters render everywhere again
-
-
-      The rebuilt fonts carry their extended coverage in a fallback chain, and roughly eighty labels
-      across the interface pinned a base font directly rather than the chained one. On those, an ä,
-      a Hungarian ő or a Cyrillic character came out as an empty box while the identical string
-      rendered fine one screen over. Every label now takes the chained font, verified by a static
-      sweep of the UI source rather than by eye. Surfaced while checking @pisti87's Hungarian
-      translation.
-
-
-      ### The Heltec V4 no longer locks up when its contact list is full (#222)
-
-
-      Once the contact table is full, every advert from an unknown node evicts the oldest contact —
-      and the firmware deleted that contact's stored record on the spot, on the receive path. On the
-      V4 that store is internal flash, where a delete can trigger a garbage-collection pass, and
-      such a pass suspends the flash cache and stalls **both** processor cores: the whole device
-      goes dead, Bluetooth and TCP drop, the screen will not wake, and it comes back on its own a
-      moment later. It got steadily worse the fuller the list was — degrading around 350 contacts,
-      locking hard by 600, constant at 2000.
-
-
-      The delete is now queued and performed between packets, at most one every half second, so a
-      stream of adverts can no longer chain those pauses together. Reported by @Yoss101 and
-      @pisti87.
-
-
-      ### Also
-
-
-      - Downloading a firmware image to the SD card checks the card's free space first and says so,
-      instead of failing partway through the write with a bare "SD write failed".
-
-      - German, Dutch and Hungarian now translate all 48 interface strings that had been left
-      English in every language (@pisti87). The other ten have the strings listed and still fall
-      back to English — the files are in `deploy/apps/lang` and contributions are welcome.
-
-
-      ### Known, not fixed here
-
-
-      The intermittent T-Lora Pager crash (#233, #251) is still open. Both dumps decode to a freed
-      LVGL callback — the same fault from two angles — and @PixPMusic's #234 restructures that
-      teardown. It predates beta_60 and is not a 1.17 regression.

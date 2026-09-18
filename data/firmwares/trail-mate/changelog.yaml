@@ -1,7 +1,44 @@
 source: github
 repo: vicliu624/trail-mate
-updatedAt: '2026-09-16T09:09:49.574Z'
+updatedAt: '2026-09-18T14:12:06.163Z'
 releases:
+  - version: v0.1.47-alpha
+    name: v0.1.47-alpha
+    datetime: '2026-09-18T10:46:49Z'
+    url: https://github.com/vicliu624/trail-mate/releases/tag/v0.1.47-alpha
+    prerelease: true
+    notes: >-
+      ## [0.1.47-alpha] - 2026-09-18
+
+
+      ### Fixed
+
+
+      - Fixed GPS runtime initialization on Wio Tracker L2. The shared ESP GPS runtime previously
+      required a motion-sensor board to be present, causing GNSS initialization to be skipped
+      entirely on Wio Tracker L2. GPS can now initialize and run normally on targets without motion
+      hardware.
+
+
+
+
+      ## What's Changed
+
+      * Fix website dropdown visibility and English defaults by @vicliu624 in
+      https://github.com/vicliu624/trail-mate/pull/92
+
+      * docs: acknowledge Seeed Studio hardware support by @vicliu624 in
+      https://github.com/vicliu624/trail-mate/pull/93
+
+      * Codex/geocaching by @vicliu624 in https://github.com/vicliu624/trail-mate/pull/94
+
+      * fix(wio-l2): fix L76K GNSS power and NMEA initialization by @vicliu624 in
+      https://github.com/vicliu624/trail-mate/pull/95
+
+
+
+      **Full Changelog**:
+      https://github.com/vicliu624/trail-mate/compare/v0.1.45-alpha...v0.1.47-alpha
   - version: v0.1.45-alpha
     name: v0.1.45-alpha
     datetime: '2026-09-16T07:24:38Z'
@@ -219,59 +256,3 @@ releases:
 
       **Full Changelog**:
       https://github.com/vicliu624/trail-mate/compare/v0.1.26-alpha...v0.1.27-alpha
-  - version: v0.1.26-alpha
-    name: v0.1.26-alpha
-    datetime: '2026-05-19T08:28:56Z'
-    url: https://github.com/vicliu624/trail-mate/releases/tag/v0.1.26-alpha
-    prerelease: true
-    notes: >-
-      ## [0.1.26-alpha] - 2026-05-19
-
-      ### Added / 新增
-
-      - Treated the cross-platform UI/runtime ownership work from this branch as one
-      architecture-refactor feature, consolidating presentation models, UX packs, composition roots,
-      runtime ownership boundaries, legacy-source burn-down guardrails, target metadata, and
-      uConsole/GAT562 build ownership behind the post-refactor product architecture / 将本分支中的跨平台
-      UI/runtime ownership 工作作为一个架构重构 feature 归档，统一收敛 presentation model、UX pack、composition
-      root、runtime ownership 边界、legacy source 清理护栏、target metadata，以及 uConsole/GAT562 构建所有权
-
-      - Added SD-card-only settings backup and restore under Settings > Advanced for issue #32,
-      covering app/radio/chat/channel/GPS/map/privacy/APRS/UI settings without falling back to
-      internal NVS when no SD card is present / 针对 issue #32 在 Settings > Advanced 中新增仅使用 SD
-      卡的设置备份与还原，覆盖 app、无线、聊天、频道、GPS、地图、隐私、APRS 与 UI 设置；未插入 SD 卡时不会回退到内部 NVS
-
-
-      ### Changed / 变更
-
-      - Chat notification settings for issue #34 are now split into message alert enablement and
-      contact alert scope, so users can separately control whether messages make sound and whether
-      contact discovery alerts are disabled, contacts-only, or all alerts / 针对 issue #34 将 Chat
-      提醒设置细分为消息提醒开关与联系人提醒范围，使用户可以分别控制消息是否提示，以及联系人发现提示为不提示、仅联系人或全部提示
-
-      - Locale bundles are updated to package version 1.1.1 for the 0.1.26-alpha UI surface, adding
-      localized strings for the new chat alert controls and SD settings backup/restore prompts,
-      status text, and confirmation modal / 语言包随 0.1.26-alpha UI 表面更新到 1.1.1，补齐新的聊天提醒控制，以及 SD
-      设置备份/还原提示、状态文本和确认弹窗的本地化
-
-
-      ### Fixed / 修复
-
-      - Fixed Meshtastic channel sync behavior and added the MeshCore CN preset at 495.200 MHz,
-      including channel response handling that avoids leaving the phone app stuck at 100% while
-      preserving the device-side secondary-channel state / 修复 Meshtastic 频道同步行为并新增 495.200 MHz 的
-      MeshCore CN 预设，包括频道响应处理，避免手机 app 在 100% 进度处卡住，同时保持设备端 secondary channel 状态一致
-
-
-
-
-      ## What's Changed
-
-      * v0.1.25-alpha by @vicliu624 in https://github.com/vicliu624/trail-mate/pull/30
-
-      * Fix/uconsole by @vicliu624 in https://github.com/vicliu624/trail-mate/pull/36
-
-
-
-      **Full Changelog**:
-      https://github.com/vicliu624/trail-mate/compare/v0.1.24-alpha...v0.1.26-alpha
