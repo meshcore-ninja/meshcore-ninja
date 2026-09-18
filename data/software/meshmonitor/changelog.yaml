@@ -1,7 +1,128 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-09-17T04:00:32.184Z'
+updatedAt: '2026-09-18T03:47:16.210Z'
 releases:
+  - version: v4.16.1-rc6
+    name: v4.16.1-rc6
+    datetime: '2026-09-18T01:36:11Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.16.1-rc6
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.16.1-rc6
+
+
+      > ⚠️ **Pre-release.** This is a release candidate for testing. Expect rough edges and report
+      problems before 4.16.1 ships.
+
+
+      ## Summary
+
+
+      This candidate is mostly about scripts and channels. Script authors can now declare a
+      `version` in their script's `mm_meta` block, the User Scripts Gallery reads it straight from
+      the author's repository, and **Settings → Scripts** can ask each script's source which version
+      it publishes. When one is newer an admin sees the offer and presses **Update**; the replaced
+      file is kept so it can be rolled back. Nothing updates on its own, so third-party code never
+      changes under an operator without a click. Module config sections now follow the device's own
+      `excluded_modules` bitmask instead of a firmware version guess, so a reduced build no longer
+      offers settings for modules it does not carry. On the channels side, a channel that moved
+      slots no longer leaves its messages behind, edits made in MeshMonitor show up without a
+      restart, and the mobile Channels view gets its own action row and a one-line composer. Saving
+      an MQTT broker source no longer wedges for minutes when clients are connected. The MeshCore
+      admin console now explains itself when a proxy hands back a web page instead of JSON.
+
+
+      **Upgrade notes**
+
+      - No migration in this candidate.
+
+      - **Script updates are opt-in by hand.** A script is only checkable when MeshMonitor can tell
+      where it came from: a `source:` line in its `mm_meta`, a GitHub path an admin enters in
+      **Settings → Scripts**, or a gallery entry matched by filename.
+
+      - Updates and rollbacks need `settings:write`; seeing update status needs `settings:read`.
+
+
+      ## Features
+
+      - feat(scripts): check installed scripts for updates, and install one on request (#5255) —
+      #5274
+
+      - feat(scripts): show script versions in the gallery, read from the author's mm_meta (#5255) —
+      #5272
+
+      - feat(config): gate module sections on the device's excluded_modules bitmask (#5065) — #5273
+
+      - feat(channels): give mobile its own action row, collapse the composer to one line (#5265) —
+      #5267
+
+
+      ## Bug Fixes
+
+      - fix(channels): stop shared-key channels swallowing history; show local edits without a
+      restart (#5183) — #5269
+
+      - fix(mqtt): stop the broker without hanging on connected clients (#5264) — #5266
+
+      - fix(meshcore): surface a clear error when admin console gets HTML instead of JSON (#5268) —
+      #5270
+
+
+      ## CI/DevOps
+
+      - chore(release): bump to 4.16.1-rc6 — #5278
+
+
+      ## Issues Resolved
+
+      - #5065 Gate module config sections on DeviceMetadata.excluded_modules instead of firmware
+      version checks
+
+      - #5264 MQTT broker save wedges for ~6 min after repeated saves
+
+      - #5265 Mobile: re-layout Channels header + composer row for better fit
+
+      - #5268 Unexpected token '<', "<!DOCTYPE "... is not valid JSON
+
+
+      Still open: #5255 covers optional auto-update. This candidate ships the manual half only —
+      checking, updating on request, and rollback. Whether MeshMonitor should ever apply an update
+      without a human is still undecided.
+
+
+      **Full Changelog**: https://github.com/Yeraze/meshmonitor/compare/v4.16.1-rc5...v4.16.1-rc6
+
+
+      ## 🚀 MeshMonitor v4.16.1-rc6
+
+
+      ### 📦 Installation
+
+
+      **Docker (recommended):**
+
+      ```bash
+
+      docker run -d \
+        --name meshmonitor \
+        -p 8080:3001 \
+        -v meshmonitor-data:/data \
+        ghcr.io/Yeraze/meshmonitor:4.16.1-rc6
+      ```
+
+
+      ### 🧪 Testing
+
+      ✅ All tests passed
+
+      ✅ TypeScript checks passed
+
+      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
+
+
+      ### 📋 Changes
+
+      See commit history for detailed changes.
   - version: v4.16.1-rc5
     name: v4.16.1-rc5
     datetime: '2026-09-17T01:50:57Z'
@@ -2068,122 +2189,6 @@ releases:
         -p 8080:3001 \
         -v meshmonitor-data:/data \
         ghcr.io/Yeraze/meshmonitor:4.15.2-rc4
-      ```
-
-
-      ### 🧪 Testing
-
-      ✅ All tests passed
-
-      ✅ TypeScript checks passed
-
-      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
-
-
-      ### 📋 Changes
-
-      See commit history for detailed changes.
-  - version: v4.15.2-rc3
-    name: v4.15.2-rc3
-    datetime: '2026-08-24T17:57:09Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.15.2-rc3
-    prerelease: true
-    notes: >-
-      # MeshMonitor v4.15.2-rc3
-
-
-      > ⚠️ **Pre-release (release candidate).** For testing ahead of the 4.15.2 final. Docker
-      `:latest` is not updated by this build.
-
-
-      ## Summary
-
-
-      This RC builds on rc2 with a mix of MeshCore reliability fixes, map/UX improvements, and the
-      Device Health automation work. On the reliability side, MeshCore forward-path (`set_out_path`)
-      writes are now confirmed by re-reading the device contact rather than trusting the tag-less
-      companion ack, fixing paths that silently failed on WiFi-connected companions (#4631), and
-      `LogRxData` receptions are correlated by identity instead of hop count so slow USB companions
-      no longer lose scope/route/SNR (#4883). MeshCore repeaters and room servers get their own
-      configurable age window so they stop vanishing from the map between infrequent adverts
-      (#4899), and per-node neighbour retrieval plus device-health trigger parity round out the
-      MeshCore feature set. The Map Analysis toolbar is reorganised into labeled dropdown menus to
-      fit narrower screens (#4871), the Unified/Dashboard map gains a Zoom-to-Fit control (#4898),
-      and the MeshCore conversation view puts scope-override and toolbar controls on one row
-      (#4888). The GNSS constellation overlay picks up event-loop yielding, more robust TLE parsing,
-      and a corrected time anchor (#4797). Rounds out with a translations refresh and routine
-      dependency bumps.
-
-
-      ## Features
-
-      - **MeshCore infrastructure age timeout** — a separate, configurable age window for
-      repeaters/room servers so fixed infrastructure doesn't age off the Nodes list or map (#4901,
-      closes #4899)
-
-      - **Map Analysis grouped toolbar** — the layer/tool controls collapse into labeled dropdown
-      menus with active-count badges (#4886, closes #4871)
-
-      - **Zoom to Fit** on the Unified/Dashboard map (#4902, closes #4898)
-
-      - **MeshCore device-health trigger parity** for the automation engine (#4887, part of #4558)
-
-      - **MeshCore conversation toolbar** — scope-override and conversation controls on one
-      horizontal row (#4889, closes #4888)
-
-
-      ## Bug Fixes
-
-      - **MeshCore `set_out_path`** — verify the forward-path write by device read-back instead of
-      the uncorrelated `Ok`/`Err` ack, fixing paths that never set on WiFi companions (#4906, closes
-      #4631)
-
-      - **MeshCore `LogRxData`** — correlate receptions by node identity, not hop count, so slow USB
-      companions (T-Echo) keep scope/route/SNR (#4905, closes #4883)
-
-
-      ## Perf / Robustness
-
-      - **GNSS overlay** — DOP grid yields to the event loop, `parseTleText` resyncs past stray
-      lines, and the DOP time scrubber anchors to the real wall clock (#4904, closes #4797)
-
-
-      ## i18n
-
-      - Translations update from Hosted Weblate (#4850)
-
-
-      ## Dependencies
-
-      - i18next 26.3.6 → 26.4.0 (#4895), lucide-react 1.31.0 → 1.33.0 (#4896),
-      production-dependencies group (13) (#4891), development-dependencies group (3) (#4890),
-      codeql-action group (4) (#4892), @vitejs/plugin-react 6.0.5 → 6.1.0 (#4893), puppeteer 25.7.0
-      → 25.8.0 (#4897), docker/setup-buildx-action 4.2.0 → 4.3.0 (#4894)
-
-
-      ## Issues Resolved
-
-      #4631, #4797, #4871, #4883, #4888, #4898, #4899, and #4558 (device-health parity phase)
-
-
-      **Full changelog:** https://github.com/Yeraze/meshmonitor/compare/v4.15.2-rc2...v4.15.2-rc3
-
-
-      ## 🚀 MeshMonitor v4.15.2-rc3
-
-
-      ### 📦 Installation
-
-
-      **Docker (recommended):**
-
-      ```bash
-
-      docker run -d \
-        --name meshmonitor \
-        -p 8080:3001 \
-        -v meshmonitor-data:/data \
-        ghcr.io/Yeraze/meshmonitor:4.15.2-rc3
       ```
 
 
