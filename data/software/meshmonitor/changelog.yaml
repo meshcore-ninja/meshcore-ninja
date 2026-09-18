@@ -1,7 +1,123 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-09-18T03:47:16.210Z'
+updatedAt: '2026-09-18T18:56:33.016Z'
 releases:
+  - version: v4.16.1
+    name: v4.16.1
+    datetime: '2026-09-18T16:51:52Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.16.1
+    prerelease: false
+    notes: >-
+      # MeshMonitor 4.16.1
+
+
+      A patch release in name, a substantial one in content: 50 changes since 4.16.0, across six
+      release candidates.
+
+
+      It closes a **cross-source message leak** — three message endpoints checked permissions
+      without a source id, so a read grant on any one source returned another source's messages. If
+      you run a multi-source install with per-source permissions, upgrade. Alongside that, firmware
+      can now be flashed from a `.bin` on disk or a custom URL, settings gained a search that spans
+      every page, waypoints can raise arrival alerts, and the Scripts gallery reports which of your
+      installed scripts have a newer release. MeshCore gets a run of reliability fixes: retries no
+      longer read as duplicate messages, `lastHeard` only moves forward, and a stuck radio op can no
+      longer park the operation chain.
+
+
+      ## ⚠️ Security
+
+
+      **Cross-source message leak (#5225, #5227).** `GET /api/messages`, `GET
+      /api/messages/channel/:channel` and `GET /api/messages/unread-counts` checked permissions with
+      **no source id at all**, then answered for the caller-supplied `?sourceId=`. A `messages:read`
+      grant on any one source therefore returned another source's messages — bodies included on the
+      first two, counts on the third. All three now scope the check to the requested source.
+
+
+      This affects deployments that use per-source permissions to separate what different users can
+      read. A single-source install, or one where every user can read every source, is not exposed.
+      No credentials or keys were involved.
+
+
+      ## Features
+
+
+      - Configuration search, within a page and across all of them (#5182, #5226)
+
+      - Waypoint arrival alerts with a configurable radius and dedupe (#4750, #5228)
+
+      - Flash a `.bin` uploaded from disk (#5249, #5252), and make a custom firmware URL an actual
+      install target (#5011, #5257)
+
+      - Script update checks — versions read from the author's `mm_meta`, with install-on-request
+      (#5255, #5272, #5274)
+
+      - `@` mention autocomplete and chips in conversations (#5276, #5280)
+
+      - Per-automation hop-limit override for automated sends (#5121, #5259)
+
+      - MQTT hop-limit override split into a raise and a clamp (#5188, #5190, #5256)
+
+      - Table-backed beacons list behind a button with a count (#5232, #5235)
+
+      - Auto-traceroute per-filter AND/OR modes and named channels (#5230, #5241)
+
+      - Choose what the official map pin's colour means (#5018, #5258)
+
+      - Mark a node as solar, or not, overriding the automatic guess (#3195, #5260)
+
+      - Gate module settings on the device's `excluded_modules` bitmask (#5065, #5273)
+
+      - "Mark all read" beside the Sources unread toggle (#5197, #5224)
+
+      - Mobile channels layout — Beacons and the send actions get their own row, and the composer
+      collapses to one line (#5265, #5267)
+
+
+      ## Bug fixes
+
+
+      **MeshCore**
+
+      - DM and channel retries reuse the original `senderTimestamp` with an incrementing attempt, so
+      a retransmit no longer reads as a duplicate message (#5202, #5203)
+
+      - `lastHeard` only moves forward, and every receive path stamps it (#5242)
+
+      - Bound `runExclusiveRadioOp` so a stuck radio op cannot park the chain forever (#5244)
+
+      - Cancel in-flight Auto-Pathfinding runs on stop or reconnect (#5171)
+
+      - Accept `/dev/serial/by-id` and `by-path` serial paths (#5172, #5174), and check the Repeater
+      serial path too, warn-only (#5178, #5179)
+
+      - Report a clear error when the admin console receives HTML instead of JSON (#5268, #5270)
+
+      - Widen the snr columns to REAL/DOUBLE (#5175, #5176)
+
+
+      **Messaging and channels**
+
+      - Shared-key channels no longer swallow history, and local edits show without a restart
+      (#5183, #5269)
+
+      - Traceroutes are sent at the node's configured hop limit, not a fixed 7 (#5262)
+
+      - Preserve line breaks in the unified messages card and modal (#5250, #5251)
+
+      - The channel reorder handle can be dragged on touch (#5233, #5240)
+
+      - DM list falls back to sorting nodes by `lastHeard` descending (#5143)
+
+
+      **Data and configuration**
+
+      - Stop blank values undoing NodeInfo enrichment, and un-stub map labels (#5231, #5234)
+
+      - Stop the NodeInfo count oscillating on repeated Fix
+
+      …
   - version: v4.16.1-rc6
     name: v4.16.1-rc6
     datetime: '2026-09-18T01:36:11Z'
@@ -2083,112 +2199,6 @@ releases:
         -p 8080:3001 \
         -v meshmonitor-data:/data \
         ghcr.io/Yeraze/meshmonitor:4.15.2-rc5
-      ```
-
-
-      ### 🧪 Testing
-
-      ✅ All tests passed
-
-      ✅ TypeScript checks passed
-
-      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
-
-
-      ### 📋 Changes
-
-      See commit history for detailed changes.
-  - version: v4.15.2-rc4
-    name: v4.15.2-rc4
-    datetime: '2026-08-25T21:18:42Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.15.2-rc4
-    prerelease: true
-    notes: >-
-      # MeshMonitor v4.15.2-rc4
-
-
-      > ⚠️ **Pre-release / Release Candidate.** For testing ahead of the 4.15.2 stable release.
-      Docker `:latest` is not updated by this build.
-
-
-      Continues the 4.15.2 line with a UI-consolidation focus. The floating map control panels
-      across every map surface (Dashboard, Nodes, Map Analysis, MeshCore) are now unified into a
-      single collapsible right-edge sidebar (#4909). The header is tidier: the Disconnect/Reconnect
-      controls moved into the System Status popup (#4908), and the "Connected" badge now cycles
-      through connection status, battery, and airtime for the local node (#4917). Nodes gain
-      per-node coloring using the official Meshtastic app algorithm for both pins and lists (#4880),
-      with a follow-up pass ensuring text stays legible on every generated background across the
-      Nodes tab, DM list, and chat bubbles (#4924). A MeshCore USB unplug/replug now reconnects on
-      its own instead of holding the serial port until a container restart (#4922). Map Analysis is
-      fully theme-aware (no more hardcoded dark) (#4910/#4911), and a self-targeted `deviceReboot`
-      on a BLE-connected device is now handled as a local reboot (#4847).
-
-
-      ### Features
-
-      - Unified, collapsible map controls sidebar across all four map surfaces — #4914, #4919,
-      #4920, #4921 (epic #4909)
-
-      - Cycling connection badge (status → battery → airtime) — #4927 (#4917)
-
-      - Per-node colors (Meshtastic app algorithm) for pins + node lists — #4924 (#4880)
-
-      - Header: Disconnect/Reconnect moved into the System Status popup — #4912 (#4908)
-
-
-      ### Bug Fixes
-
-      - Keep node text legible on per-node colored rows (Nodes tab, DM list, chat bubbles) — #4928
-      (#4924)
-
-      - MeshCore: release the serial fd on a failed connect so a USB replug reconnects — #4923
-      (#4922)
-
-      - Map Analysis: theme via semantic tokens instead of hardcoded dark — #4913 (#4910/#4911)
-
-      - Automation: treat a self-targeted `deviceReboot` as a local reboot — #4915 (#4847)
-
-
-      ### CI / Release
-
-      - chore(release): 4.15.2-rc4 — #4931
-
-
-      ### Issues Resolved
-
-      - #4922 MeshCore node USB problems
-
-      - #4917 Local node battery voltage / percentage / power info
-
-      - #4911 Map Analysis toolbar icons unidentifiable on mobile
-
-      - #4910 Map Analysis view ignores light mode theme
-
-      - #4909 Consolidate floating map panels into unified sidebar
-
-      - #4908 Consolidate duplicate node name + connect/disconnect toggle
-
-      - #4847 Automation deviceReboot fails for BLE-connected device
-
-
-      **Full changelog:** https://github.com/Yeraze/meshmonitor/compare/v4.15.2-rc3...v4.15.2-rc4
-
-
-      ## 🚀 MeshMonitor v4.15.2-rc4
-
-
-      ### 📦 Installation
-
-
-      **Docker (recommended):**
-
-      ```bash
-
-      docker run -d \
-        --name meshmonitor \
-        -p 8080:3001 \
-        -v meshmonitor-data:/data \
-        ghcr.io/Yeraze/meshmonitor:4.15.2-rc4
       ```
 
 
