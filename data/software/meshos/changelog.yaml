@@ -1,7 +1,48 @@
 source: github
 repo: andymux/meshos-releases
-updatedAt: '2026-09-17T22:44:06.114Z'
+updatedAt: '2026-09-19T13:45:04.062Z'
 releases:
+  - version: fw-v1.7.4
+    name: MeshOS firmware v1.7.4
+    datetime: '2026-09-19T11:43:30Z'
+    url: https://github.com/andymux/meshos-releases/releases/tag/fw-v1.7.4
+    prerelease: false
+    notes: |-
+      MeshOS firmware v1.7.4
+
+      Storage
+      - New Tools > Storage screen: SD card type, size and free space, plus a malware scan
+        for the Windows autorun worm found on some factory-loaded ThinkNode M9 map cards
+        (it cannot run on the radio, only on a Windows PC). The clean-up removes only the
+        files the scan flags, after a confirmation, so map tiles and MeshOS data stay put.
+        Elecrow's explanation of the affected cards:
+        https://www.elecrow.com/Thinknode-M9-Security-Advisory-SD-Card-Malware-Risk.html
+      - Format SD card writes a fresh FAT32 file system. This erases everything on the
+        card, including maps.
+
+      Messages
+      - A long channel message no longer restarts the radio; the composer stops at the
+        160-byte LoRa limit.
+      - Room servers: posts are no longer duplicated when the radio logs in again, and
+        sync resumes from the last message.
+
+      M9 battery
+      - Correct percentage for the M9 cell, with steady readings while charging and
+        after unplugging.
+
+      Also
+      - The Contacts badge counts only current contacts, accented letters in names are
+        shown, and the clock is set from the internet when WiFi is connected.
+      - SD card writes tolerate slow cards better: the radio now waits out a card that
+        stalls during a write instead of giving up, and a card the driver lost is remounted
+        on its own.
+
+      Device firmware for LilyGo T-Deck and ThinkNode M9.
+      Install via SD card (firmware.bin) or the in-firmware updater.
+
+      SHA-256:
+      - TDeck: 2e2c2e1be1012bfe0f8978c0a58968aa1304ce94eb9bce439857416b23a8ede1
+      - M9: 3ca4aadde29f179bbd2e02598d9303e8bb2cc26487691be1f50be0bf2b74139e
   - version: v1.0.21
     name: MeshOS v1.0.21
     datetime: '2026-09-17T22:15:57Z'
@@ -589,54 +630,3 @@ releases:
 
 
       APK SHA-256: `dc080d474c152db8ada2a004317e8ea84d4b00e3e89dfaf4aa3c0223564bdaf7`
-  - version: v1.0.10
-    name: MeshOS v1.0.10
-    datetime: '2026-07-31T17:31:29Z'
-    url: https://github.com/andymux/meshos-releases/releases/tag/v1.0.10
-    prerelease: false
-    notes: >-
-      **Internet Messaging (new)**
-
-      Chat over the internet, with no radio needed. Turn it on in Settings and join the MeshOS
-      channel: a global room shared with MeshOS users and devices anywhere, over WiFi or mobile
-      data. The channel shows a live green/red connection dot. Works alongside your LoRa radio, and
-      when a node is connected you appear under its name.
-
-
-      **The app is now completely free**
-
-      No licence, no activation, no restrictions. Every feature is unlocked for everyone, with any
-      MeshCore radio. MeshOS device owners keep their "Activated" badge.
-
-
-      **New setup experience**
-
-      A proper first-run flow: choose whether to set up a MeshCore radio or go straight to internet
-      and phone-to-phone messaging. Setting up a new radio walks you through region settings and
-      your username, then offers the MeshOS channel.
-
-
-      **Send your location**
-
-      A pin button in every chat sends your current position to that channel or contact, in the same
-      format T-Deck and M9 devices use, so it shows on everyone's map.
-
-
-      **Redesigned message box**
-
-      Grows as you type, keeps the pin, emoji and voice buttons inside it, and sends on Enter with
-      hardware keyboards (Shift+Enter for a new line).
-
-
-      **Also in this release**
-
-      - New MeshOS app icon
-
-      - Cleaner chats screen
-
-      - Fixes: missing Public channel and a stuck refresh spinner after setting up a radio
-
-
-      ---
-
-      APK SHA-256: `13c3690607139ad40a540f59e8801469b6227e112d89f54d42e9b72013e10a59`
