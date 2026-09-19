@@ -1,7 +1,62 @@
 source: github
 repo: meshcore-dev/meshcore-ha
-updatedAt: '2026-08-17T16:30:18.218Z'
+updatedAt: '2026-09-19T08:40:02.169Z'
 releases:
+  - version: v2.10.0
+    name: v2.10.0
+    datetime: '2026-09-19T07:11:21Z'
+    url: https://github.com/meshcore-dev/meshcore-ha/releases/tag/v2.10.0
+    prerelease: false
+    notes: >-
+      ## Security and behavior changes
+
+
+      - Generic radio commands now require a Home Assistant admin account, including commands run
+      through the CLI button. This prevents non-admin users from exporting the connected radio’s
+      private key or changing its configuration. Caller context is preserved through UI controls.
+      HA’s standard handling of internal calls without a user ID is unchanged. (#350)
+
+      - Multi-hub UI messaging must specify `entry_id`. Helpers are resolved through the entity
+      registry, so renamed entities work and messages use the selected hub’s channel, contact and
+      radio. Single-hub UI calls can still omit `entry_id`. (#351)
+
+
+      ## Features
+
+
+      - Adds an on-demand **Refresh firmware version** button to each configured repeater. It
+      authenticates, queries the version and updates HA’s saved version and device metadata. Failed
+      queries retain the previous version. This does not install firmware. (#352)
+
+      - Adds **Retrieve queued incoming messages**, enabled by default. Turn it off when another
+      client should consume the companion’s queued messages. HA keeps polling status and telemetry
+      and can still send commands; text replies may remain queued for the other client. (#345)
+
+
+      ## Fixes and maintenance
+
+
+      - Failed self-telemetry requests now respect the configured interval instead of being retried
+      on every coordinator update. (#335)
+
+      - Corrects the outgoing reception automation example: final results arrive on
+      `meshcore_message`, while `meshcore_delivery_update` carries intermediate updates. (#353)
+
+      - Fixes the CLI console documentation build and updates CI/test dependencies. Runtime
+      dependency requirements are unchanged.
+
+
+      ## Notes
+
+
+      - Firmware refresh expects the stock CommonCLI `ver` response format. Saving a changed version
+      triggers the integration’s existing config-entry reload.
+
+      - Validation: 261 unit tests and 33 real Home Assistant integration tests passed with the code
+      changes combined. No live radio test was performed.
+
+
+      **Full changelog:** https://github.com/meshcore-dev/meshcore-ha/compare/v2.9.0...v2.10.0
   - version: v2.9.0
     name: v2.9.0
     datetime: '2026-07-22T04:37:59Z'
@@ -438,9 +493,3 @@ releases:
     url: https://github.com/meshcore-dev/meshcore-ha/releases/tag/v2.1.8
     prerelease: false
     notes: "- Improved call spacing to reduce collisions\r\n- Added more translation keys\r\n- Added flag to disable path resetting"
-  - version: v2.1.7
-    name: 2.1.7
-    datetime: '2025-10-03T22:48:02Z'
-    url: https://github.com/meshcore-dev/meshcore-ha/releases/tag/v2.1.7
-    prerelease: false
-    notes: "### Reliability Tracking Sensors\r\n  - **Request Success/Failure Counters**: New sensors track all over-the-wire communication attempts for\r\n  each monitored node\r\n  - **Complete Coverage**: Tracks login, status, and telemetry requests for comprehensive network health\r\n  monitoring\r\n  - **Troubleshooting**: Identify problematic nodes and routing issues with detailed success/failure\r\n  metrics\r\n\r\n  ### Flexible Update Intervals\r\n  - **Removed Maximum Limits**: Update intervals now support unlimited maximums \r\n  - **Unified Minimums**: Both repeaters and clients use consistent 300-second minimum intervals\r\n  - **Better Configuration**: Support for very long intervals (hours or days) for low-power scenarios\r\n\r\n  ### Enhanced Failure Handling\r\n  - **Smarter Backoff**: Dynamic base interval calculation ensures exactly 5 retries fit within configured\r\n   update windows\r\n  - **Faster Path Recovery**: Path reset now triggers after 3 failures (was 5) for quicker routing\r\n  recovery\r\n  - **Improved Login Logic**: Fixed bug where timeouts/unexpected responses were incorrectly counted as\r\n  successes\r\n\r\n  ## 🐛 Bug Fixes\r\n  - **Login Success Detection**: Now properly validates login responses instead of treating non-errors as\r\n  success\r\n- **path reset** - fixed an issue where path was not being set my the pubkey prefix arg"
