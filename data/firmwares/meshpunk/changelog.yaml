@@ -1,7 +1,13 @@
 source: github
 repo: PhilMo6/meshpunk
-updatedAt: '2026-09-11T19:02:28.107Z'
+updatedAt: '2026-09-19T17:03:13.139Z'
 releases:
+  - version: v0.4.3
+    name: v0.4.3 network update
+    datetime: '2026-09-19T16:28:22Z'
+    url: https://github.com/PhilMo6/meshpunk/releases/tag/v0.4.3
+    prerelease: false
+    notes: "This update enables full network access to lua apps! \r\nA text based web browser and an IRC client can now be found in the app library.\r\nThemes now have color options for highlight and accent colors.\r\nUser downloaded map tile folder can now be selected and used by the map app.\r\nMeshcore handling of contact buffers now uses less ram\r\nBug fixes\r\nText no longer jumps up and down while typing.\r\nwasd will no longer navigate you away from text input boxes."
   - version: v0.4.2
     name: 'v0.4.2 some fixes '
     datetime: '2026-09-11T15:51:24Z'
@@ -118,9 +124,3 @@ releases:
     url: https://github.com/PhilMo6/meshpunk/releases/tag/v0.2.2
     prerelease: false
     notes: "This release focused on memory fragmentation fixes and getting the launcher.bin to actually work!\r\nThe filesystem is now packed and included in the firmware. it is then unpacked and added on the first launch. if any updates are needed to the filesystem it will update based on the tag version being installed. \r\nNotifications are now on the c side so they work when lua is shut down and an elf app is running.\r\nChannel notifications are now set per channel in the notification settings. they can be set to mentions only, all, or off.\r\nThemes have been improved with 4 new themes as well as additional theme settings."
-  - version: v0.2.1
-    name: v0.2.1 alpha
-    datetime: '2026-06-26T05:03:14Z'
-    url: https://github.com/PhilMo6/meshpunk/releases/tag/v0.2.1
-    prerelease: false
-    notes: "Changed how I build releases to be compatible with with https://github.com/bmorcelli/Launcher\r\nPutting a launcher.bin on the sd lets you install with the launcher!\r\nAll releases will now include \r\nmerged.bin for direct flashing using meshcore.io flasher\r\nlauncher.bin for the launcher install\r\nfirmware.bin just the firmware\r\nlittlefs.bin just the filesystem"
