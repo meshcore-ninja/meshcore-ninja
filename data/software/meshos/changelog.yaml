@@ -1,7 +1,29 @@
 source: github
 repo: andymux/meshos-releases
-updatedAt: '2026-09-19T13:45:04.062Z'
+updatedAt: '2026-09-20T10:53:07.818Z'
 releases:
+  - version: fw-v1.7.5
+    name: MeshOS firmware v1.7.5
+    datetime: '2026-09-20T07:28:59Z'
+    url: https://github.com/andymux/meshos-releases/releases/tag/fw-v1.7.5
+    prerelease: false
+    notes: |-
+      MeshOS firmware v1.7.5
+
+      Storage
+      - The malware clean-up now removes files with long names. On some factory map cards
+        the worm's shortcut files carry long Chinese names, and 1.7.4 cut those names short
+        when it listed them, so they could be found but not removed. A scan now lists up
+        to 256 items per pass and says when more remain, so scan again after removing.
+      - If 1.7.4 left files behind on your card, update and run the scan once more.
+        Formatting the card is still the quickest way to a clean card if you prefer.
+
+      Device firmware for LilyGo T-Deck and ThinkNode M9.
+      Install via SD card (firmware.bin) or the in-firmware updater.
+
+      SHA-256:
+      - TDeck: c456640ba0b5477a441e6dd613dc2330b66efb87cf1b117e407a944d6ccee1b3
+      - M9: a1fdbf984d474fe242af4c155214a1ee7375af69cba53498ae5f2c3cde0a5ed8
   - version: fw-v1.7.4
     name: MeshOS firmware v1.7.4
     datetime: '2026-09-19T11:43:30Z'
@@ -586,47 +608,3 @@ releases:
       Stability and reliability improvements for messaging and internet connections.
 
       APK SHA-256: `005a4116b01723f8c9ae666119804cd6fbd4bd71a7651201eef9bc8d1f4c56bc`
-  - version: v1.0.11
-    name: MeshOS v1.0.11
-    datetime: '2026-08-02T20:42:48Z'
-    url: https://github.com/andymux/meshos-releases/releases/tag/v1.0.11
-    prerelease: false
-    notes: >-
-      ## Internet for your channels
-
-      - Turn on Internet Link for any LoRa channel from its menu. Your messages travel over LoRa and
-      the internet at the same time and arrive as one message, never duplicates.
-
-      - Create Internet Channels with the + button. They work anywhere with no radio needed, and
-      anyone with the same channel key joins the same room.
-
-      - Channels with Internet Link enabled keep working when your radio is disconnected.
-
-
-      ## Clearer delivery info
-
-      - Two delivery ticks: blue with a globe means delivered over the internet, green means your
-      message was heard back over LoRa. Repeat counts still show next to them.
-
-      - Received messages show a globe when they arrived via the internet, and "LoRa 2 hops" when
-      the radio copy lands too.
-
-
-      ## Maps in chat
-
-      - Shared locations now show a mini map right in the chat bubble. Tap it to open the full map
-      view.
-
-
-      ## Fixes and polish
-
-      - Fixed chat history disappearing from MeshOS and AirLink chats when connecting a LoRa radio.
-
-      - Internet Messaging now stays connected when using a WiFi or Ethernet radio.
-
-      - Settings screens reorganised with clear section dividers.
-
-      - Cleaner chat input styling.
-
-
-      APK SHA-256: `dc080d474c152db8ada2a004317e8ea84d4b00e3e89dfaf4aa3c0223564bdaf7`
