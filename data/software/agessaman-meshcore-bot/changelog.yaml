@@ -1,7 +1,95 @@
 source: github
 repo: agessaman/meshcore-bot
-updatedAt: '2026-08-07T22:38:16.521Z'
+updatedAt: '2026-09-20T22:15:50.288Z'
 releases:
+  - version: v1.1.0
+    name: v1.1.0
+    datetime: '2026-09-20T19:56:42Z'
+    url: https://github.com/agessaman/meshcore-bot/releases/tag/v1.1.0
+    prerelease: false
+    notes: >-
+      v1.1.0 builds on the v1.0.0 stable line. Nothing was removed or renamed, so your existing
+      `config.ini` keeps working.
+
+
+      ## Before you upgrade
+
+
+      **`meshcore` must be 2.3.14 or newer.** This one is not optional. Older versions reported
+      ACKed DMs as failures, so the bot logged "no ACK received after retries" for messages that had
+      in fact arrived. The installer and container paths handle this for you; a manual venv needs
+      `pip install -U -r requirements.txt`.
+
+
+      **Database migration 24** adds two new tables. Nothing existing is rewritten, and it is safe
+      to run more than once.
+
+
+      **Nothing new starts transmitting.** The one new command, `contact`, replies only when asked,
+      and the new region-warning feature ships turned off.
+
+
+      `docs/upgrade.md` has the full list, including every new configuration key.
+
+
+      ## What's new
+
+
+      **Run more of the bot from the web viewer.** Scheduled messages can now be created and edited
+      from a new Schedule page, so recurring posts no longer mean hand-editing `config.ini`. Local
+      commands and services you drop into `local/` show up on the Plugins page and save to
+      `local/config.ini`, with secrets rendered masked. The Radio page picks up node settings and
+      flood-scope cards. Everything settings-related now sits under one Settings menu instead of
+      scattered across the nav bar.
+
+
+      Thanks to **@hickey** for the local plugin settings, the masked password fields, and the
+      `contact` command.
+
+
+      **The bot speaks other languages properly now.** Scheduled weather posts, rain nowcasts and
+      alerts all go through the translator instead of hardcoded English, so they follow your
+      `language` setting the way `wx` and `gwx` already did. A full Russian catalog ships with this
+      release, and you can override any individual string from your own catalog without an upgrade
+      overwriting it. A batch of related bugs is fixed too: translation key paths leaking into
+      broadcasts, wrong units in metric locales, mangled month names, and replies overrunning the RF
+      byte limit because the length check counted characters rather than bytes.
+
+
+      Thanks to **@custardpy** for the weather localization and the Russian translation, and to
+      **@hickey** for local translation catalogs.
+
+
+      **Message attribution is much more accurate.** On a busy mesh the bot used to match a channel
+      message against whichever RF row arrived most recently, which is often a repeater's echo of a
+      different packet. That made `{path}`, `{hops}` and `{packet_hash}` report another packet's
+      route, and made `path` answer "No path information available" for messages it had decoded
+      perfectly well. Messages are now matched to their own packet. Related: `flood_scopes = *` no
+      longer drops every channel message.
+
+
+      **Fewer things get stuck.** A DM waiting for its ACK no longer holds the radio, so one slow DM
+      stops blocking channel replies and scheduled sends. A radio that comes back with no channel
+      data now fails the connection cleanly and lets the normal reconnect path retry, instead of
+      running a bot that cannot route replies. Daily weather forecasts retry when Open-Meteo returns
+      a temporary error. Installs on 32-bit ARM resolve to prebuilt wheels instead of failing on a
+      piwheels 403.
+
+
+      **Smaller additions.** Scheduled messages can embed command output with `{cmd:...}`. Response
+      templates got a real parser, so placeholders nest and filter arguments can be quoted, plus new
+      `shorten`, `if_nonempty` and `hops_min` filters. Shlink joins v.gd and is.gd as a URL
+      shortener. The generated command website can carry your own CSS and list your local commands.
+      There is a new guide for writing command plugins. And `[Region_Warnings]` can tally how much
+      channel traffic on your mesh carries no region code, with an optional warning to those senders
+      that is off by default and starts in dry run.
+
+
+      Thanks to **@CoderNemesis26** for the Shlink support and the response-template rewrite,
+      **@mysiar** for the hello-sender option, **@ajquick** for the packet-capture observer name,
+      **@dludwig** for the install-extras option, and **@hickey** for th
+
+      …
   - version: v1.0.0
     name: v1.0.0
     datetime: '2026-08-07T21:07:22Z'
