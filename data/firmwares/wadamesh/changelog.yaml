@@ -1,70 +1,187 @@
 source: github
 repo: ALLFATHER-BV/wadamesh
-updatedAt: '2026-09-19T13:44:49.208Z'
+updatedAt: '2026-09-21T16:19:30.983Z'
 releases:
-  - version: beta_83
-    name: wadamesh beta_83
-    datetime: '2026-09-19T10:30:08Z'
-    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_83
+  - version: beta_84
+    name: wadamesh beta_84
+    datetime: '2026-09-21T12:56:14Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_84
     prerelease: true
     notes: >-
-      Test build. Stable stays beta_65.
+      Test build. Stable is now **beta_83**.
 
 
       Flash it at **[flasher.wadamesh.com](https://flasher.wadamesh.com)** (switch the toggle to
       Beta), or update on the device if you have "Get test builds (beta)" turned on.
 
 
-      ## New: USB Files
+      Most of this drop is community work: 11 of its changes are
+      [@oumike](https://github.com/oumike)'s, the new board is
+      [@pelgraine](https://github.com/pelgraine)'s, and the Czech translation is
+      [@brebtatv](https://github.com/brebtatv)'s.
 
 
-      Manage the files on your device from a computer, over the USB cable. On the device, open **USB
-      Files** from the app drawer, connect it to the computer, and open
-      **[files.wadamesh.com](https://files.wadamesh.com)** in Chrome or Edge.
+      ## New board: LilyGo T-Deck Max, by @pelgraine (#545, #546, #547)
 
 
-      - Browse the SD card, internal storage and the map tiles. Upload files and whole folders;
-      download, rename and delete.
-
-      - The device carries out every file operation itself, so what it relies on stays safe:
-      identity, contacts, settings and chat history (on the SD card, the `meshcomod` folder) can be
-      downloaded but not changed or deleted.
-
-      - Files that SD Scan would flag (Windows programs, scripts, shortcuts and `autorun.inf`) show
-      in red, and downloading one asks you first. The device also checks a file's first bytes, so a
-      Windows program renamed to look like a photo is caught too.
-
-      - Your files go straight from the device to your computer over the cable. Nothing passes
-      through our server.
-
-      - While USB Files is open, the companion app can't use USB. Bluetooth, Wi-Fi and the radio
-      keep working.
+      The T-Deck Pro's hardware with the peripheral power rails and resets behind an I/O expander
+      and a fuel gauge for the battery. It reuses the Pro's display and touch drivers, so the Pro
+      build is unchanged.
 
 
-      Available on the **T-Deck** and the **Heltec V4** for now. Other boards follow once tested.
+      The e-paper screen gets its own handling: no fades, no black frame left on the glass when it
+      sleeps, a banner that says the screen is asleep, tap to wake, and the keyboard backlight on a
+      both-Shift chord. It boots with Wi-Fi off and Bluetooth on, because both at once leave this
+      board short of internal memory; the Settings toggle keeps whatever you choose.
 
 
-      ## Website
+      Experimental, tested by its contributor on one unit. Please report what works and what does
+      not.
 
 
-      The buttons on the sides of [wadamesh.com](https://wadamesh.com) now have labels, and a new
-      folder button opens USB Files.
+      ## Reading the screen outdoors (#544)
 
 
-      ## For developers
+      High contrast day and night themes, for sunlight where the normal palette washes out.
+      Settings, Display, Theme.
 
 
-      USB Files is plain framed messages over the USB serial port, one request at a time
-      ([`UsbFilesProtocol.h`](https://github.com/ALLFATHER-BV/wadamesh/blob/main/src/helpers/esp32/UsbFilesProtocol.h)).
-      `scripts/usbfiles.py` does everything the page does from the command line, including a
-      self-test.
+      ## Regions you can discover (#541)
+
+
+      The region page scans for repeaters you can hear and lists the regions they allow, and channel
+      scope offers them in a picker, so a region no longer has to be typed exactly.
+
+
+      ## Czech, by @brebtatv (#540)
+
+
+      A full Czech translation, 1270 strings. Settings, Language.
+
+
+      ## ThinkNode M9 (#528)
+
+
+      With the home drawer locked, Back (and Esc on a Bluetooth keyboard) stays on it instead of
+      escaping to the tabs behind it. The Language settings cursor returns where it was after
+      visiting the Store, and a channel keeps its unread colour.
+
+
+      ## Heltec V4 and V4-R8 (#536)
+
+
+      An M5Stack CardKB can be plugged into the board's I2C bus and used as a keyboard; it is
+      detected when present, so nothing changes without one. On the V4-R8 there are bigger text
+      sizes to choose from, and the top row of the screen no longer swallows taps meant for the
+      page.
+
+
+      ## Fixes
+
+
+      - Radio settings save again when the region field holds a name the new rules reject, such as
+      one with capitals. Only the region is skipped, instead of the frequency, bandwidth and power
+      going with it.
+
+      - The Show button on telemetry shows its label in Russian, Ukrainian, Bulgarian, Serbian and
+      Greek instead of empty boxes.
+
+      - Scanning for regions no longer leaves nameless entries behind in Contacts, and sends one
+      request per tick rather than sixteen at once.
+
+      - The V4-R8 image fits again: it no longer carries the compiled-in translations it inherited
+      from the V4, which it never needed.
+
+      - Wio Tracker L2: the SD card gets a power cycle and a second try when it does not mount at
+      boot.
 
 
       ## For testers
 
 
-      USB Files is tested on a T-Deck. Heltec V4 owners: worth reporting whether connecting,
-      uploading and downloading work.
+      Region discovery is new on-air traffic and has not been tested on a live mesh yet. Worth
+      reporting whether a scan finds your repeaters' regions.
+  - version: beta_83
+    name: wadamesh beta_83
+    datetime: '2026-09-19T10:30:08Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_83
+    prerelease: false
+    notes: >-
+      **Stable.** This is the same build as the beta_83 test release, promoted unchanged after
+      testing, and it replaces beta_65 as the recommended version.
+
+
+      Flash it at **[flasher.wadamesh.com](https://flasher.wadamesh.com)**, or update on the device.
+
+
+      Eighteen test builds went into this one, beta_66 through beta_83. Everything below is in it.
+
+
+      ## Read this first if you are coming from beta_65
+
+
+      - **If you keep an offline map pack on an SD card, older firmware was deleting tiles out of
+      it.** Every tile it wanted as a `.jpg` erased the `.png` sitting next to it. That is fixed,
+      but the deletions already made cannot be undone: check whether areas of your pack are missing
+      and re-copy them. Found and fixed by [@cvhviz](https://github.com/cvhviz) on a ThinkNode M9.
+
+      - **ThinkNode M9 owners: some of the SD cards Elecrow shipped carry a Windows worm** (their
+      advisory, September 2026). It cannot run on the radio, but it runs on the first Windows PC the
+      card is put into, which is exactly where you take it to copy map tiles. This firmware warns
+      you when such a card is in the device at startup or is inserted, and offers SD Scan. If your
+      card has already been in a PC, run a virus scan on that PC too.
+
+      - **Bluetooth now serves either the phone app or a Bluetooth keyboard**, and you choose which
+      under Settings, Bluetooth. The phone app stays the default.
+
+      - Changing the theme, rotating the screen or switching remote mode restarts the device. All
+      three now say why before they do it.
+
+
+      ## Two new boards
+
+
+      - **Seeed Wio Tracker L2.** Display, touch, GPS, microSD, battery and buttons brought up on
+      real hardware by [@oumike](https://github.com/oumike), who owns the board and maintains it.
+
+      - **LilyGo T-Deck Pro**, marked experimental. E-paper screen, keyboard and touch, with radio,
+      GPS, microSD and battery working. The screen redraws the way e-paper does rather than updating
+      instantly. By [@oumike](https://github.com/oumike), tested on one unit.
+
+
+      ## New things you can do
+
+
+      **USB Files**, on the T-Deck and the Heltec V4. Open it from the app drawer, connect the
+      device with a USB cable and go to [files.wadamesh.com](https://files.wadamesh.com) in Chrome
+      or Edge. Browse the SD card, internal storage and the map tiles, upload files and whole
+      folders, download, rename and delete. The device carries out every operation itself, so what
+      it relies on stays safe: identity, contacts, settings and chat history can be downloaded but
+      not changed or deleted. Files that SD Scan would flag show in red, and the device checks a
+      file's first bytes, so a Windows program under a harmless name is caught too. Your files go
+      straight from the device to your computer over the cable; nothing passes through our server.
+
+
+      **Files on and off the device over Wi-Fi**, by [@oumike](https://github.com/oumike). A browser
+      copies files to and from the card, protected by a six digit code shown on screen, with uploads
+      verified by checksum and committed atomically so an interrupted transfer cannot leave a half
+      written file. The page also lists crash reports, settings backups and screenshots, filters
+      them and can delete them, and it warns you that a settings backup contains your private key. A
+      folder of offline OSM tiles can be uploaded straight to the card, with resumable writes.
+
+
+      **Bluetooth keyboards on every board with Bluetooth.** Pairing lists keyboards in pairing mode
+      and pairs with a code or without one. Keys are read from the keyboard's own report map, the
+      way a phone or computer reads them, with US, UK, German, French and Belgian layouts including
+      AltGr and dead keys. The arrows, Tab, Enter and Page Up and Down drive the highlight, so the
+      whole interface works without touching the screen. Esc is back, and because some keyboards
+      type a character instead of sending Esc, the Back key setting captures whichever key you
+      press. Not on the Tanmatsu or the T-Display P4, which have no Bluetooth of their own.
+
+
+      **SD Scan**, in the Store. It looks through the SD card for Windows programs, scripts, shortc
+
+      …
   - version: beta_82
     name: wadamesh beta_82
     datetime: '2026-09-18T11:47:01Z'
@@ -1772,99 +1889,5 @@ releases:
       - A translated line whose **placeholders do not match** the English original is now ignored
       rather than used. Since language files download from the Store, this closes off a whole class
       of crash, including 
-
-      …
-  - version: beta_64
-    name: wadamesh beta_64
-    datetime: '2026-08-13T15:21:45Z'
-    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_64
-    prerelease: true
-    notes: >-
-      **Test build.** Stable stays
-      [beta_63](https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_63).
-
-
-      Flash it at **[flasher.wadamesh.com](https://flasher.wadamesh.com)** with the Beta toggle on,
-      or on-device via **Settings → Firmware** with "Get test builds (beta)" enabled.
-
-
-      ---
-
-
-      ## The Heltec V4 freeze — the rest of it
-
-
-      beta_62 took one storage delete off the packet path and that genuinely helped. Then @Yoss101
-      came back with the detail that mattered: the freezes had got **rarer and longer**. Rarer was
-      the fix working. Longer was the half nobody had measured.
-
-
-      Here is what was actually costing the time. A contact record is **152 bytes** and the table
-      holds up to **2000** of them, so saving contacts rewrote the whole **304 KB** file on *every*
-      change — and the crash-safe write keeps a second copy of the same size beside it while it
-      swaps. Roughly **600 KB of flash churn because one contact changed**. On a board with no card
-      that lands on internal flash, whose garbage collection suspends the flash cache and stalls
-      **both CPU cores**. That is why the entire device went away instead of dropping a packet.
-
-
-      But the table never changes in bulk. Replacing the oldest contact overwrites **one slot** —
-      the array is unsorted and never shifts — and hearing from a node you already know touches
-      **one entry**. So each record is now compared against what is already stored and only the
-      differing ones are written back.
-
-
-      **A new contact replacing an old one writes 152 bytes instead of 304,000.** A save with
-      nothing to change writes nothing at all.
-
-
-      Because that is a new way of writing the file, and because the data at stake is your contact
-      list, it checks its own work: every patched record is **read back and compared**, and on any
-      disagreement it falls through to the old whole-file write. A filesystem that accepts a
-      positioned write and quietly drops it cannot leave you with a half-written contact list.
-
-
-      Also: contact deletes that overflowed the queue used to leak their stored record permanently —
-      fixed, and the queue is 4× deeper. **About → System info** gained a **Contact store** panel
-      (contacts, space used, how full internal flash is, and what the last save cost). If you report
-      a freeze, that panel is the useful photograph.
-
-
-      @Yoss101 and @pisti87 — this is the one to test. Thank you both, and particularly @Yoss101 for
-      coming back to say a fix had only half worked; that report is what found the rest of it.
-
-
-      ## Apps got a lot more capable
-
-
-      Lua apps gained the real date and time, the buzzer, battery state, GPS position, a scoped and
-      rate-limited private folder each, hardware key presses, and the ability to send mesh messages
-      and receive replies (#245).
-
-
-      Anything reaching outside an app **asks you first, per app, once**. Sending and receiving are
-      separate permissions, so granting one does not grant the other, and a refusal is remembered
-      rather than nagged. New page: **Settings → App permissions** — every installed app, exactly
-      what it may do, and a switch to take any of it back.
-
-
-      The extended toolkit is limited to boards with the memory to carry it, so the Heltec V4 keeps
-      its resources for the mesh; apps can see which features exist and adapt. An **SDK Test** app
-      is in the Store — it exercises every new call and reports pass/fail per line.
-
-
-      ## Fixes
-
-
-      - Accented and non-Latin characters showed as **empty boxes in the grey hint text** inside
-      empty fields — the Wi-Fi password box, the MQTT bridge fields, and ~two dozen others. Fixed
-      everywhere, in every language. (Thanks @pisti87, who also found the last one.)
-
-      - A translated line whose placeholders **do not match the English original** is now ignored
-      rather than used. Since language files download from the Store, this closes off a whole class
-      of crash — including in files you write yourself.
-
-      - Channel messages could be **silently dropped** when an unused channel slot matched first.
-      Sends also match by name at the moment of transmission, so a message can no longer go out
-      encrypted to the wrong cha
 
       …
