@@ -1,7 +1,105 @@
 source: github
 repo: meshcore-dev/meshcore-ha
-updatedAt: '2026-09-19T08:40:02.169Z'
+updatedAt: '2026-09-21T03:57:32.594Z'
 releases:
+  - version: v3.0.0-beta.1
+    name: 3.0.0-beta.1
+    datetime: '2026-09-21T01:30:30Z'
+    url: https://github.com/meshcore-dev/meshcore-ha/releases/tag/v3.0.0-beta.1
+    prerelease: true
+    notes: >-
+      Pre-release of the internal architecture refactor. External contract (events, services, entity
+      ids, attributes, default polling timing) is unchanged and now pinned by fixtures. Install from
+      the `beta` branch / this pre-release only if you want to help test.
+
+
+      ## Requirements
+
+
+      - Home Assistant 2025.6.0 or newer (the code already needed APIs newer than the advertised
+      2023.8)
+
+      - meshcore 2.3.11 or newer
+
+
+      ## Behavior changes
+
+
+      - Radio session is owned by the integration: `auto_reconnect=False`, our own jittered
+      reconnect, `connected` flips on real link loss instead of ~100s later, and every subscription
+      survives a reconnect. The "goes deaf after a reconnect until reload" failure is gone. (#354)
+
+      - All radio commands go through one gate. Remote requests match their own reply on node prefix
+      + tag, so concurrent commands no longer steal each other's responses. (#354)
+
+      - Private key and channel secrets are redacted on the HA bus and raw-mode MQTT by default.
+      `expose_secrets` (Global Settings) restores the old payloads. (#356)
+
+      - Config edits apply in place. Only connection identity and the `cli_console_enabled` /
+      `self_diagnostics_enabled` toggles reload the entry. Adding, removing or editing a tracked
+      repeater/client, changing intervals, brokers, discovery settings and the firmware refresh
+      button no longer restart the radio session. (#355)
+
+      - `execute_command` refuses `request_factory_reset`, `confirm_factory_reset`,
+      `import_private_key`, `send_raw_packet`, `send_raw_data` and `_`-prefixed names.
+      `add_selected_contact` / `remove_selected_contact` are admin services. (#356)
+
+      - `select.meshcore_contact` defaults to "Select a contact..." instead of the first contact, so
+      a renamed or removed target cannot silently redirect a message. (#357)
+
+      - Outgoing channel `meshcore_message` fires immediately (`repeater_count: 0`, `collecting:
+      true`); the repeater count now arrives on `meshcore_delivery_update`, terminal one has
+      `progressive: false`. DMs get an immediate `meshcore_message_sent` plus a terminal
+      `meshcore_delivery_update`; the post-ACK `meshcore_message_sent` still fires as before. (#356)
+
+
+      ## Features
+
+
+      - `traffic_policy` option (Global Settings): `legacy` (default) keeps today's polling/retry
+      numbers exactly; `governed` is a flat per-radio budget split into flood / direct / message
+      lanes with deferral instead of failure, persisted across restarts, rates exposed on the
+      rate-limiter sensor and in the log. (#354)
+
+      - Every `meshcore_*` event carries `entry_id` and `device_id`. New
+      `meshcore_message_send_failed` event. Unknown-sender DMs are published with `sender_name:
+      null` instead of dropped. (#356)
+
+      - `messages_interval` is editable in Global Settings. Entries get a `unique_id`; adding the
+      same radio twice is refused. (#355)
+
+      - Telemetry entities for LPP types that never created any: accelerometer, colour, gyrometer
+      (per axis), barometer, altitude, frequency, percentage, load, concentration, distance, energy,
+      direction, time, switch. (#357)
+
+      - The six radio-identity sensors (tx power, lat/lon, frequency, bandwidth, SF) populate at
+      startup. (#357)
+
+      - Architecture diagram as code in `docs/architecture/` (squinch). (#354)
+
+
+      ## Fixes
+
+
+      - Reconnect no longer orphans subscriptions; failed connects no longer leak the transport;
+      disconnect is bounded; unload cancels in-flight node tasks. (#354)
+
+      - Login races `LOGIN_SUCCESS` vs `LOGIN_FAILED`; wrong password fails fast. Neighbour paging
+      is bounded. (#354)
+
+      - `send_message` without a recipient raises a clear error instead of `KeyError`. `trace`
+      accepts 6-char prefixes. `cleanup_unavailable_contacts` only removes contact diagnostic
+      sensors of the targeted entry. Unnamed channels render as their index. (#356)
+
+      - Adverts no longer write the whole discovered-contacts store per packet or reschedule the
+      tick; discovered FIFO loads once; contact sync has a failure backoff. (#357)
+
+      - MQTT uploader no longer blocks entry setup; map uploader stops re-exporting the private key
+      on every advert. (#357)
+
+      - Push-path telemetry fra
+
+      …
   - version: v2.10.0
     name: v2.10.0
     datetime: '2026-09-19T07:11:21Z'
@@ -487,9 +585,3 @@ releases:
     url: https://github.com/meshcore-dev/meshcore-ha/releases/tag/v2.1.9
     prerelease: false
     notes: "## What's Changed\r\n* Battery Percentage calc by @oliverl-21 in https://github.com/meshcore-dev/meshcore-ha/pull/77\r\n* Make all services translatable + update sk translation. by @jose1711 in https://github.com/meshcore-dev/meshcore-ha/pull/79\r\n* Add sensor support by @awolden in https://github.com/meshcore-dev/meshcore-ha/pull/84\r\n\r\n## New Contributors\r\n* @oliverl-21 made their first contribution in https://github.com/meshcore-dev/meshcore-ha/pull/77\r\n\r\n**Full Changelog**: https://github.com/meshcore-dev/meshcore-ha/compare/v2.1.8...v2.1.9"
-  - version: v2.1.8
-    name: v2.1.8
-    datetime: '2025-10-05T18:15:37Z'
-    url: https://github.com/meshcore-dev/meshcore-ha/releases/tag/v2.1.8
-    prerelease: false
-    notes: "- Improved call spacing to reduce collisions\r\n- Added more translation keys\r\n- Added flag to disable path resetting"
