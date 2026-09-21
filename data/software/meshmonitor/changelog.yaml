@@ -1,7 +1,106 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-09-18T18:56:33.016Z'
+updatedAt: '2026-09-21T21:48:57.697Z'
 releases:
+  - version: v4.16.2-rc1
+    name: v4.16.2-rc1
+    datetime: '2026-09-21T21:45:02Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.16.2-rc1
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.16.2-rc1
+
+
+      > **Pre-release.** Docker images are tagged `4.16.2-rc1` only — `:latest` still points at
+      v4.16.1.
+
+
+      A fix-driven RC. MQTT-only deployments now show their own data instead of an empty dashboard,
+      and large node sets are usable again: the node list is virtualized and map markers cluster at
+      low zoom, so a mesh fed from a public broker no longer drags scrolling and panning to a crawl.
+      Three iOS 27 mobile layout bugs are fixed — the header title no longer renders inside the
+      system status-bar blur, the collapsed node-list arrow no longer overlaps the Map controls
+      sheet, a long custom POSIX timezone stays inside its field, and MeshCore source pages use the
+      mobile layout in landscape. Map Analysis hop shading now counts only traceroutes the local
+      node took part in, so remote nodes stop rendering as 0-hop. A node's position is picked by the
+      freshest observation rather than the newest `lastHeard`, which also reconciles manual
+      position-request responses across sources. MeshCore MULTIPART and CONTROL payloads are decoded
+      rather than shown as unknown types. The rest is dependency maintenance.
+
+
+      ## Features
+
+      - feat(meshcore): decode MULTIPART and CONTROL payloads (#5308), building on the payload types
+      added in #5285
+
+
+      ## Bug Fixes
+
+      - fix(mqtt): let MQTT-only deployments see their own data (#5283)
+
+      - perf: make large node sets usable — virtualized node list, clustered map markers, one
+      `/api/poll` fetch at mount (#5284)
+
+      - fix(analysis): count hops only from traceroutes the local node took part in (#5290)
+
+      - fix(nodes): pick the unified position by observation, not by lastHeard (#5314)
+
+      - fix(header): keep top-bar text below iOS 27's home-screen status-bar blur (#5309)
+
+      - fix(mobile): hide the node-list arrow under the map sheet, contain long timezones (#5313)
+
+      - fix(meshcore): match the shell's bottom-bar query so landscape lays out (#5312)
+
+
+      ## Dependencies
+
+      - mqtt 5.16.0 (#5303), dotenv 18.0.0 (#5301), maplibre-gl 6.10.0 (#5299), lucide-react 1.47.0
+      (#5300), emoji-picker-react 4.22.2 (#5297)
+
+      - docker/build-push-action 7.4.0 (#5307), docker/setup-buildx-action 4.4.1 (#5306),
+      docker/setup-qemu-action 4.4.0 (#5305), codeql-action group (#5304)
+
+      - Dev dependencies: puppeteer 25.11.0 (#5298), vitest group (#5294),
+      @tanstack/react-query-devtools (#5302), production and development dependency groups (#5296,
+      #5295)
+
+
+      ## Issues Resolved
+
+      - #5286 — iOS 27 status-bar backdrop-blur bleeds into the fixed AppHeader
+
+      - #5291 — node-list arrow overlaps Map controls; custom POSIX timezone overflows its field
+
+      - #5289 — Map Analysis hop shading renders remote nodes as 0-hop
+
+      - #5292 — unified view position drift from newest-`lastHeard` selection
+
+      - #5293 — manual position-request responses stored per-source only
+
+      - #5311 — MeshCore source page keeps its desktop layout in landscape
+
+
+      ## Thanks
+
+      - @zvx-echo6 for the MQTT-only data fix (#5283) and the large-node-set performance work
+      (#5284), both first contributions here
+
+      - @bryan-arcus for the MeshCore MULTIPART and CONTROL payload types (#5285)
+
+      - NullVoid (`null_v0id` on Discord) for the iOS 27 reports and for testing fixes on a device
+
+
+      ## Known Issues
+
+      - **iOS 27 home-screen app:** on per-source pages the bottom nav bar does not reach the bottom
+      edge, leaving a band of background below it (#5310). Not fixed in this RC.
+
+      - The hardware system-test suite's reverse-proxy stage fails on our runner for an
+      environmental reason: it tears down the dev deployment it then depends on. All other checks
+      pass.
+
+
+      **Full Changelog**: https://github.com/Yeraze/meshmonitor/compare/v4.16.1...v4.16.2-rc1
   - version: v4.16.1
     name: v4.16.1
     datetime: '2026-09-18T16:51:52Z'
@@ -2120,85 +2219,6 @@ releases:
         -p 8080:3001 \
         -v meshmonitor-data:/data \
         ghcr.io/Yeraze/meshmonitor:4.15.2-rc6
-      ```
-
-
-      ### 🧪 Testing
-
-      ✅ All tests passed
-
-      ✅ TypeScript checks passed
-
-      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
-
-
-      ### 📋 Changes
-
-      See commit history for detailed changes.
-  - version: v4.15.2-rc5
-    name: v4.15.2-rc5
-    datetime: '2026-08-26T21:47:05Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.15.2-rc5
-    prerelease: true
-    notes: >-
-      # MeshMonitor v4.15.2-rc5
-
-
-      > ⚠️ **Pre-release (RC).** For testing. Not tagged `:latest`; use a specific image tag.
-
-
-      Release candidate 5 for 4.15.2, rolling up seven PRs since rc4. Adds a device-config
-      **Restore** button to Backup Management (#4933) with the reboot notice now driven by the
-      actual restore flag (#4935), and lands **Phase 1 of Carto basemap API-key** support (#4936)
-      with the key field relocated to the Map settings section (#4938). Fixes a MeshCore flood-scope
-      bug so truly-unscoped floods no longer fall back to the node's default region (#4937), hides
-      the MeshMonitor logo/wordmark on per-source pages (#4939), and makes the Site Planner panel
-      explain *why* a coverage prediction rendered as a plain circle instead of terrain-shaped
-      (#4940).
-
-
-      ## Features
-
-      - feat(backup): add Restore button to Device Backup Management (#4933)
-
-      - feat(map): support a Carto basemap API key — Phase 1 (#4936)
-
-
-      ## Bug Fixes
-
-      - fix(backup): surface restore reboot notice from the actual flag (#4935)
-
-      - fix(meshcore): send truly-unscoped floods, not the node default region (#4937)
-
-      - fix(settings): move Carto API key field to the Map section (#4938)
-
-      - fix(header): hide MeshMonitor logo/wordmark on per-source pages (#4939)
-
-      - fix(site-planner): surface why coverage is a circle in the panel (#4940)
-
-
-      ## Issues Resolved
-
-      - #4926, #4932, #4934 (Phase 1), #4727
-
-
-      **Full changelog:** https://github.com/Yeraze/meshmonitor/compare/v4.15.2-rc4...v4.15.2-rc5
-
-      ## 🚀 MeshMonitor v4.15.2-rc5
-
-
-      ### 📦 Installation
-
-
-      **Docker (recommended):**
-
-      ```bash
-
-      docker run -d \
-        --name meshmonitor \
-        -p 8080:3001 \
-        -v meshmonitor-data:/data \
-        ghcr.io/Yeraze/meshmonitor:4.15.2-rc5
       ```
 
 
