@@ -1,105 +1,13 @@
 source: github
 repo: meshcore-dev/meshcore-ha
-updatedAt: '2026-09-21T03:57:32.594Z'
+updatedAt: '2026-09-22T00:39:04.036Z'
 releases:
-  - version: v3.0.0-beta.1
-    name: 3.0.0-beta.1
-    datetime: '2026-09-21T01:30:30Z'
-    url: https://github.com/meshcore-dev/meshcore-ha/releases/tag/v3.0.0-beta.1
+  - version: v3.0.0-beta
+    name: 3.0.0-beta
+    datetime: '2026-09-21T22:49:05Z'
+    url: https://github.com/meshcore-dev/meshcore-ha/releases/tag/v3.0.0-beta
     prerelease: true
-    notes: >-
-      Pre-release of the internal architecture refactor. External contract (events, services, entity
-      ids, attributes, default polling timing) is unchanged and now pinned by fixtures. Install from
-      the `beta` branch / this pre-release only if you want to help test.
-
-
-      ## Requirements
-
-
-      - Home Assistant 2025.6.0 or newer (the code already needed APIs newer than the advertised
-      2023.8)
-
-      - meshcore 2.3.11 or newer
-
-
-      ## Behavior changes
-
-
-      - Radio session is owned by the integration: `auto_reconnect=False`, our own jittered
-      reconnect, `connected` flips on real link loss instead of ~100s later, and every subscription
-      survives a reconnect. The "goes deaf after a reconnect until reload" failure is gone. (#354)
-
-      - All radio commands go through one gate. Remote requests match their own reply on node prefix
-      + tag, so concurrent commands no longer steal each other's responses. (#354)
-
-      - Private key and channel secrets are redacted on the HA bus and raw-mode MQTT by default.
-      `expose_secrets` (Global Settings) restores the old payloads. (#356)
-
-      - Config edits apply in place. Only connection identity and the `cli_console_enabled` /
-      `self_diagnostics_enabled` toggles reload the entry. Adding, removing or editing a tracked
-      repeater/client, changing intervals, brokers, discovery settings and the firmware refresh
-      button no longer restart the radio session. (#355)
-
-      - `execute_command` refuses `request_factory_reset`, `confirm_factory_reset`,
-      `import_private_key`, `send_raw_packet`, `send_raw_data` and `_`-prefixed names.
-      `add_selected_contact` / `remove_selected_contact` are admin services. (#356)
-
-      - `select.meshcore_contact` defaults to "Select a contact..." instead of the first contact, so
-      a renamed or removed target cannot silently redirect a message. (#357)
-
-      - Outgoing channel `meshcore_message` fires immediately (`repeater_count: 0`, `collecting:
-      true`); the repeater count now arrives on `meshcore_delivery_update`, terminal one has
-      `progressive: false`. DMs get an immediate `meshcore_message_sent` plus a terminal
-      `meshcore_delivery_update`; the post-ACK `meshcore_message_sent` still fires as before. (#356)
-
-
-      ## Features
-
-
-      - `traffic_policy` option (Global Settings): `legacy` (default) keeps today's polling/retry
-      numbers exactly; `governed` is a flat per-radio budget split into flood / direct / message
-      lanes with deferral instead of failure, persisted across restarts, rates exposed on the
-      rate-limiter sensor and in the log. (#354)
-
-      - Every `meshcore_*` event carries `entry_id` and `device_id`. New
-      `meshcore_message_send_failed` event. Unknown-sender DMs are published with `sender_name:
-      null` instead of dropped. (#356)
-
-      - `messages_interval` is editable in Global Settings. Entries get a `unique_id`; adding the
-      same radio twice is refused. (#355)
-
-      - Telemetry entities for LPP types that never created any: accelerometer, colour, gyrometer
-      (per axis), barometer, altitude, frequency, percentage, load, concentration, distance, energy,
-      direction, time, switch. (#357)
-
-      - The six radio-identity sensors (tx power, lat/lon, frequency, bandwidth, SF) populate at
-      startup. (#357)
-
-      - Architecture diagram as code in `docs/architecture/` (squinch). (#354)
-
-
-      ## Fixes
-
-
-      - Reconnect no longer orphans subscriptions; failed connects no longer leak the transport;
-      disconnect is bounded; unload cancels in-flight node tasks. (#354)
-
-      - Login races `LOGIN_SUCCESS` vs `LOGIN_FAILED`; wrong password fails fast. Neighbour paging
-      is bounded. (#354)
-
-      - `send_message` without a recipient raises a clear error instead of `KeyError`. `trace`
-      accepts 6-char prefixes. `cleanup_unavailable_contacts` only removes contact diagnostic
-      sensors of the targeted entry. Unnamed channels render as their index. (#356)
-
-      - Adverts no longer write the whole discovered-contacts store per packet or reschedule the
-      tick; discovered FIFO loads once; contact sync has a failure backoff. (#357)
-
-      - MQTT uploader no longer blocks entry setup; map uploader stops re-exporting the private key
-      on every advert. (#357)
-
-      - Push-path telemetry fra
-
-      …
+    notes: "Beta of the internal rewrite. This release gets updated in place while it soaks. Same events, services, entity ids and default polling as 2.10. If you install it and something regresses, open an issue with the log.\r\n\r\n## Requirements\r\n\r\n- Home Assistant 2025.6 or newer. The code already needed APIs newer than the 2023.8 we advertised.\r\n- meshcore 2.3.11 or newer.\r\n\r\n## What changed\r\n\r\n**Radio**\r\n- The integration owns the radio session now. No SDK auto reconnect, our own backoff, and subscriptions survive a reconnect. Going deaf after a link drop until you reload is gone.\r\n- Every command goes through one gate. Remote requests match their own reply by node prefix + tag, so two commands in flight can't take each other's response.\r\n- `connected` goes false when the link actually drops, not ~100s later.\r\n- Login checks `LOGIN_FAILED`, wrong password fails fast. Neighbour paging is bounded.\r\n\r\n**Traffic**\r\n- New `traffic_policy` option in Global Settings. `legacy` (default) is exactly the old polling and retry numbers. `governed` is a flat per radio budget split into flood / direct / message lanes, deferral instead of failure, persisted across restarts. Rates show on the rate limiter sensor and in the log.\r\n\r\n**Config**\r\n- Edits apply in place. Only connection identity and the `cli_console_enabled` / `self_diagnostics_enabled` toggles reload the entry. Add/remove/edit a tracked node, change intervals, brokers, discovery, or press the firmware button and the radio session stays up.\r\n- Entries get a `unique_id`. Adding the same radio twice is refused. `messages_interval` is in Global Settings now.\r\n- Entry migrates v3 → v4 on load. Downgrade still works, the old data is kept.\r\n\r\n**Events and services**\r\n- Every `meshcore_*` event has `entry_id` and `device_id`.\r\n- Private key and channel secrets are redacted on the bus and raw MQTT. `expose_secrets` turns that off.\r\n- DMs fire `meshcore_message_sent` right away and a terminal `meshcore_delivery_update`. Channel sends fire `meshcore_message` at t=0, the repeater count arrives on `meshcore_delivery_update`. New `meshcore_message_send_failed`. Unknown sender DMs are published with `sender_name: null` instead of dropped.\r\n- `execute_command` refuses factory reset, key import and raw frames. `add_selected_contact` / `remove_selected_contact` are admin. `send_message` with no recipient errors cleanly. `trace` takes 6 char prefixes. `cleanup_unavailable_contacts` only touches contact sensors of that entry. Prefix args resolve for `send_login_sync` and the other sync helpers, and SDK errors come back as an error dict instead of a 500.\r\n\r\n**Entities**\r\n- Telemetry entities for LPP types that never got any: accelerometer, colour, gyro per axis, barometer, altitude, frequency, percentage, load, concentration, distance, energy, direction, time, switch.\r\n- Radio identity sensors (tx power, lat/lon, freq, bw, sf) populate at startup.\r\n- `select.meshcore_contact` defaults to the placeholder, so a renamed or removed target can't redirect a drafted message.\r\n- Adverts no longer write the whole contact store per packet or reschedule the tick. MQTT uploader starts in the background instead of blocking setup.\r\n\r\n## Notes\r\n\r\n- Architecture diagram lives in `docs/architecture/`."
   - version: v2.10.0
     name: v2.10.0
     datetime: '2026-09-19T07:11:21Z'
