@@ -1,7 +1,13 @@
 source: github
 repo: kybl/meshcore-signal-tester
-updatedAt: '2026-08-17T16:30:22.110Z'
+updatedAt: '2026-09-23T18:18:45.473Z'
 releases:
+  - version: v1.3.2
+    name: v1.3.2
+    datetime: '2026-09-23T14:55:55Z'
+    url: https://github.com/kybl/meshcore-signal-tester/releases/tag/v1.3.2
+    prerelease: false
+    notes: "### Fixed\r\n\r\n- **Android: the header no longer sits under the status bar on some devices** (the WebView reports zero safe-area insets; the real insets are now passed to and notched phones no longer letterbox in landscape.\r\n- **SNR/RSSI cell colors follow a theme switch** instead of keeping the previous theme's (barely readable) colors.\r\n- **Android: alerts and confirmations are native dialogs** instead of bare WebView pop-ups headed by an internal URL.\r\n- **Auto-reconnect no longer hangs**: a connection attempt that never answers is aborted and retried, while a reconnect waiting for the Bluetooth pairing PIN is given time; the reconnect also counts as successful only once the device is fully set up.\r\n- **Android: a declined notification or phone-location permission no longer blocks a Bluetooth connection**; each optional permission is asked at most once.\r\n- **CSV import is safe with untrusted files**: script injection through imported values is closed, malformed or truncated rows are skipped and reported instead of stalling the import, and the Import button always recovers.\r\n- **The capture is saved when the app goes to the background** or the tab is closed, instead of losing the last few seconds of packets.\r\n- **A duplicated browser tab gets its own session** instead of sharing (and overwriting) the original tab's capture.\r\n- **Old or imported sessions display correctly with a short Display window** (e.g. yesterday's capture with Display = 1 h): table, charts, map and stats are measured from the newest data, not from the wall clock.\r\n- **Device position for USB and WiFi companions** is refreshed like for Bluetooth.\r\n- **Contact sync is tracked per device**, so switching between radios no longer skips contacts.\r\n- **GPS positions at high speed** (motorway, train) are no longer held back to one fix in five.\r\n- Discover responses keep their identity across sessions and are no longer mis-decoded as Acks; a renamed repeater column no longer shows twice; a filtered export no longer clears the \"unsaved packets\" warning; packets arriving out of order no longer move a repeater's \"last seen\" backwards; corrupted serial frames resynchronise faster; a race while rebuilding the wide chart view no longer drops points.\r\n- Android: the background service no longer restarts itself after the app is killed, never loses its location type, survives more configuration changes (font size, display density, keyboard), and a crash in fullscreen video no longer leaves the app stuck in immersive mode."
   - version: v1.3.1
     name: v1.3.1
     datetime: '2026-08-11T12:20:59Z'

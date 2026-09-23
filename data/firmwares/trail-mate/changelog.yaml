@@ -1,7 +1,43 @@
 source: github
 repo: vicliu624/trail-mate
-updatedAt: '2026-09-21T09:49:57.517Z'
+updatedAt: '2026-09-23T18:18:30.481Z'
 releases:
+  - version: v0.1.50-alpha
+    name: v0.1.50-alpha
+    datetime: '2026-09-23T13:45:11Z'
+    url: https://github.com/vicliu624/trail-mate/releases/tag/v0.1.50-alpha
+    prerelease: true
+    notes: >-
+      ## [0.1.50-alpha] - 2026-09-23
+
+
+      ### Added
+
+
+      - Added SD-backed Agenda with event countdowns, recurring reminders, and location map previews
+      on T-LoRa Pager, T-Deck, and Wio Tracker L2.
+
+      - Added local waypoint saving and selection for Agenda events.
+
+
+      ### Changed
+
+
+      - Removed redundant PNG map tile pixel copies to reduce memory traffic and transient memory
+      usage.
+
+
+
+
+      ## What's Changed
+
+      * feat: SD-backed Agenda, waypoints and map markers (0.1.50-alpha) by @vicliu624 in
+      https://github.com/vicliu624/trail-mate/pull/99
+
+
+
+      **Full Changelog**:
+      https://github.com/vicliu624/trail-mate/compare/v0.1.49-alpha...v0.1.50-alpha
   - version: v0.1.49-alpha
     name: v0.1.49-alpha
     datetime: '2026-09-21T09:06:44Z'
@@ -254,9 +290,3 @@ releases:
     url: https://github.com/vicliu624/trail-mate/releases/tag/v0.1.30-alpha
     prerelease: true
     notes: "## [0.1.30-alpha] - 2026-06-24\r\n### Added / 新增\r\n- Added support for the T-Echo Lite keyboard kit, including the nRF52 build target, e-paper mono UI adaptation, physical keypad input with EN/123/CN modes, T9-style Chinese candidate input, device I/O settings, 10px Fusion Pixel font support, and TrailMate logo sleep page / 新增 T-Echo Lite 键盘套件支持，包括 nRF52 构建目标、电子纸 mono UI 适配、实体键盘 EN/123/CN 输入、九宫格中文候选输入、设备 I/O 设置、10px Fusion Pixel 字库支持，以及 TrailMate logo 息屏页面\r\n- Added nRF52 MeshCore discover entry points and protocol-aware chat send eligibility, so MC/MT channels and contacts can be browsed across protocol modes while sends stay limited to the active protocol / 新增 nRF52 MeshCore Discover 入口与协议感知的聊天发送资格控制，使 MC/MT 频道和联系人可跨协议查看，但发送仍限制在当前活动协议内\r\n- Added issue #33 support for firmware-provided Emoji input/display candidates and issue #61 support for firmware-provided Symbol candidates, replacing the earlier extension-pack-only route with built-in candidate sets for constrained devices / 针对 issue #33 新增固件内置 Emoji 输入/显示候选支持，并针对 issue #61 新增固件内置 Symbol 候选支持，用内置候选集替代此前仅依赖扩展包的路线，适配受限设备\r\n- Added issue #57 Pager-only main-menu keyboard backlight control, including a bottom Help hint and Help-modal shortcut documentation for adjusting keyboard backlight from the Pager main menu / 针对 issue #57 新增仅限 Pager 的主菜单键盘背光控制，包括底部 Help 提示，以及在 Pager 主菜单 Help 弹窗中说明调节键盘背光的快捷键\r\n- Added the European Cyrillic Extended language bundle with Russian locale coverage, Cyrillic external font coverage, and a Russian Cyrillic keyboard IME; the package remains installable through Extensions with locale, font, and IME metadata in the Pages pack catalog / 新增欧洲西里尔扩展语言包，包含俄语 locale 覆盖、西里尔外部字体覆盖和俄语西里尔键盘输入法；该包仍通过 Extensions 安装，并在 Pages 包目录中保留语言、字体和输入法 metadata\r\n- Added Walkie monitor mode controls and top-bar modulation/listen indicators, including LoRa/FSK modulation badges and a persistent monitor state surfaced outside the Walkie page / 新增对讲机守听模式控制与顶部栏调制/守听状态指示，包括 LoRa/FSK 调制标记，并在对讲机页面之外展示持续守听状态\r\n\r\n### Changed / 变更\r\n- Moved the protocol runtime closer to the 0.1.30 architecture target by routing MeshCore/Meshtastic UI actions, discover, text send, node actions, position sharing, traceroute/reply handling, and protocol effects through shared runtime/facade boundaries / 按 0.1.30 架构目标继续收敛协议 runtime，将 MeshCore/Meshtastic 的 UI 动作、discover、文本发送、节点动作、位置共享、traceroute/reply 处理和协议 effect 统一路由到共享 runtime/facade 边界\r\n- Reworked ESP shared SPI and storage ownership around a single SdFat/SdFs runtime, retaining the legacy `/chat/index.bin` plus `/chat/*.log` chat layout while removing the new `/chat_messages.bin` bypass and Arduino `SD.h`/`FS.h` storage backend paths / 围绕单一 SdFat/SdFs runtime 重做 ESP shared SPI 与存储所有权，保留旧的 `/chat/index.bin` + `/chat/*.log` 聊天布局，同时移除新的 `/chat_messages.bin` 旁路和 Arduino `SD.h`/`FS.h` 存储后端路径\r\n- Retired the unused T-LoRa Pager NFC runtime, build dependencies, board facts, power path, and shared-SPI CS participation, because NFC has no active product feature and was verified to interfere with reliable high-speed SD startup on the shared SPI bus / 移除未使用的 T-LoRa Pager NFC runtime、构建依赖、板级事实、电源路径和 shared SPI CS 参与；NFC 当前没有 active 产品功能，并经实机验证会干扰 shared SPI 上高速 SD 启动稳定性\r\n- Refined localization, IME, and language-pack handling for the 0.1.30 UI surface, including external CJK font-pack loading, manual language-load busy overlays, settings/team copy, and keyboard layout descriptor decoupling / 调整 0.1.30 UI 表面的本地化、输入法和语言包处理，包括外部 CJK 字体包加载、语言加载 busy overlay、设置/Team 文案，以及键盘布局描述符解耦\r\n- Updated Team, Contacts, and Nearby presentation to prefer short names and last-seen age semantics instead of online/offline labels where the protocol does not provide a reliable online state / 更新 Team、Contacts 与 Nearby 展示逻辑，在协议没有可靠在线状态时优先展示短名和 last-seen 时间语义，不再使用误导性的 online/offline 标签\r\n- Reworked Pager Walkie layout and input focus behavior so monitor controls no longer trap the rotary encoder as a volume-only control / 调整 Pager 对讲机布局和输入焦点行为，使守听控制不再让滚轮被音量控件单独吞掉\r\n- Updated GitHub Pages release co\n…"
-  - version: v0.1.29-alpha
-    name: v0.1.29-alpha
-    datetime: '2026-06-11T03:58:33Z'
-    url: https://github.com/vicliu624/trail-mate/releases/tag/v0.1.29-alpha
-    prerelease: true
-    notes: "## [0.1.29-alpha] - 2026-06-11\r\n### Added / 新增\n- Added shared ESP32 SD diagnostics for issue #54: Debug Logs now mirror startup/runtime notes to `/trailmate/debug/debug.log`, and ESP flash coredumps are exported to `/trailmate/coredumps/core-*.elf` on the next boot after a crash / 针对 issue #54 新增 ESP32 共享 SD 诊断：Debug Logs 会把启动/运行日志镜像到 `/trailmate/debug/debug.log`，ESP flash coredump 会在崩溃后的下一次启动导出到 `/trailmate/coredumps/core-*.elf`\n- Added a Cardputer Zero Linux Wayland APPLaunch Debian package route for version `0.1.29-alpha`, including private app libdir layout, desktop `X-Zero-Display=wayland` metadata, Wayland runtime dependencies, icon install rules, CI package build, Docker `linux/arm64` package validation, the `linux-cardputer-zero-deb` preset, and an explicit fbdev/evdev debug fallback binary / 新增 Cardputer Zero Linux Wayland APPLaunch Debian 打包路径，版本为 `0.1.29-alpha`，包括私有 app libdir 布局、桌面 `X-Zero-Display=wayland` 元数据、Wayland runtime 依赖、图标安装规则、CI 打包构建、Docker `linux/arm64` 包验证、`linux-cardputer-zero-deb` preset，以及显式 fbdev/evdev 调试后备可执行文件\r\n\r\n### Changed / 变更\r\n- Added M5Stack to the project acknowledgements for the Cardputer Zero hardware support that helped validate the Linux portable-device adaptation path / 在项目致谢中补充 M5Stack，感谢其为 Cardputer Zero 环境适配提供硬件支持，帮助验证 Linux 便携设备适配路径\r\n- Verified issue #53 against the current Team persistence path: Team membership remains persisted across reboot/crash recovery unless the user explicitly leaves or clears the team / 针对 issue #53 验证当前 Team 持久化路径：除非用户明确离开或清除队伍，重启/崩溃恢复不会清空队伍成员状态\r\n\r\n\n\n## What's Changed\n* Codex/cardputer zero by @vicliu624 in https://github.com/vicliu624/trail-mate/pull/56\n\n\n**Full Changelog**: https://github.com/vicliu624/trail-mate/compare/v0.1.28-alpha...v0.1.29-alpha"

@@ -1,7 +1,121 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-09-22T00:39:11.896Z'
+updatedAt: '2026-09-23T18:18:49.274Z'
 releases:
+  - version: v4.16.2-rc2
+    name: v4.16.2-rc2
+    datetime: '2026-09-23T15:01:55Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.16.2-rc2
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.16.2-rc2
+
+
+      > **Pre-release.** Docker images are tagged `4.16.2-rc2` only — `:latest` still points at
+      v4.16.1.
+
+
+      Two features and two fixes on top of rc1. You can now add a node straight from a Meshtastic
+      contact link and message it before it has ever been heard on the mesh; such nodes carry an
+      "Imported" badge until they are. NodeInfo Enrichment's "Fix All" can now run on a schedule
+      from Settings → Auto-Enrichment — it ships **off**, schedules are floored at one hour, and the
+      optional push to the device NodeDB is capped at 25 NodeInfo requests per run, 30 s apart. The
+      LoRa Radio Configuration panel reports the correct frequency for every preset that is not 250
+      kHz wide, where it previously used a stale bandwidth field, and shows presets 9–16 by name
+      instead of `Unknown (9)`. On iOS home-screen apps the node list now fills the phone, and the
+      status-bar blur gap from rc1 applies more reliably.
+
+
+      ## Features
+
+      - feat(nodes): add a node from a Meshtastic contact URL (#5318) — closes #5317
+
+      - feat(enrichment): run NodeInfo Enrichment Fix All on a schedule (#5322) — closes #5287
+
+
+      ## Bug Fixes
+
+      - fix(lora): follow use_preset for bandwidth, and name presets 9-16 (#5321) — closes #5320
+
+      - fix(mobile): node list fills the phone; blur gap without Version/NN (#5319) — #5316, #5286
+
+
+      ## Issues Resolved
+
+      - #5317 — add nodes using their contact URLs
+
+      - #5287 — schedule NodeInfo Enrichment Fix All
+
+      - #5320 — presets above SHORT_TURBO show "Unknown (N)" and report the wrong frequency
+
+      - #5316 — node list does not fill the phone in the iOS home-screen app
+
+
+      ## Thanks
+
+      - @zaepho for #5320/#5321 — a precise report, a bench-radio correction that changed the fix,
+      and the fix itself
+
+      - @ogarcia for the contact-URL request (#5317)
+
+      - NullVoid (`null_v0id` on Discord) for the scheduled-enrichment request and continued iOS 27
+      testing
+
+
+      ## Upgrade notes
+
+      - **Migration 168** adds `nodes.importedAt` on all three backends. Nullable, no backfill.
+
+      - **Auto-Enrichment is disabled by default.** Enabling it does not run immediately; the first
+      run lands one full period later, or use **Run now**.
+
+      - A device backup of a node on a preset above `SHORT_TURBO` now records the preset name
+      instead of a bare number, and restores it correctly.
+
+
+      ## Please test on iOS 27
+
+      - **Home-screen app layout** (#5316, #5310): the node list and bottom nav bar should now reach
+      the bottom of the screen on per-source pages.
+
+      - **Header blur** (#5286, reopened): the top bar should read sharply in the home-screen app,
+      including on devices whose user agent lacks a `Version/NN` token. The issue stays open until
+      confirmed on a device.
+
+
+      **Full Changelog**: https://github.com/Yeraze/meshmonitor/compare/v4.16.2-rc1...v4.16.2-rc2
+
+
+      ## 🚀 MeshMonitor v4.16.2-rc2
+
+
+      ### 📦 Installation
+
+
+      **Docker (recommended):**
+
+      ```bash
+
+      docker run -d \
+        --name meshmonitor \
+        -p 8080:3001 \
+        -v meshmonitor-data:/data \
+        ghcr.io/Yeraze/meshmonitor:4.16.2-rc2
+      ```
+
+
+      ### 🧪 Testing
+
+      ✅ All tests passed
+
+      ✅ TypeScript checks passed
+
+      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
+
+
+      ### 📋 Changes
+
+      See commit history for detailed changes.
   - version: v4.16.2-rc1
     name: v4.16.2-rc1
     datetime: '2026-09-21T21:45:02Z'
@@ -2178,79 +2292,6 @@ releases:
         -p 8080:3001 \
         -v meshmonitor-data:/data \
         ghcr.io/Yeraze/meshmonitor:4.15.2-rc7
-      ```
-
-
-      ### 🧪 Testing
-
-      ✅ All tests passed
-
-      ✅ TypeScript checks passed
-
-      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
-
-
-      ### 📋 Changes
-
-      See commit history for detailed changes.
-  - version: v4.15.2-rc6
-    name: v4.15.2-rc6
-    datetime: '2026-08-27T19:46:28Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.15.2-rc6
-    prerelease: true
-    notes: >-
-      # MeshMonitor v4.15.2-rc6
-
-
-      > ⚠️ **Pre-release (RC).** For testing. Not tagged `:latest`; use a specific image tag.
-
-
-      Release candidate 6 for 4.15.2, rolling up four PRs since rc5. Adds a **Nightly firmware
-      channel** so the updater can install the develop/2.8 build (the source of MeshBeacon) from the
-      same folder the official web flasher uses (#4950); makes the **Beacon Offers Panel** actually
-      work — it was fetching the wrong URL and showing nothing, and joining an offered channel into
-      an empty slot was wrongly blocked (#4952 / #4946); adds a **per-source Default Path Hash
-      Size** setting for MeshCore (#4951); and adds a **"show all" (0 = never)** option to the
-      Maximum Age of Active Nodes control (#4949).
-
-
-      ## Features
-
-      - feat(firmware): add a Nightly channel for develop (2.8.x) builds (#4950)
-
-      - feat(meshcore): add per-source Default Path Hash Size setting (#4951)
-
-      - feat(nodes): "show all" (0 = never) option for Maximum Age of Active Nodes (#4949)
-
-
-      ## Bug Fixes
-
-      - fix(beacons): Beacon Offers Panel fetched the wrong URL and showed nothing; also fixes
-      joining an offer into an empty channel slot (#4952, #4946)
-
-
-      ## Issues Resolved
-
-      - #4946, #4945, #4947
-
-
-      **Full changelog:** https://github.com/Yeraze/meshmonitor/compare/v4.15.2-rc5...v4.15.2-rc6
-
-      ## 🚀 MeshMonitor v4.15.2-rc6
-
-
-      ### 📦 Installation
-
-
-      **Docker (recommended):**
-
-      ```bash
-
-      docker run -d \
-        --name meshmonitor \
-        -p 8080:3001 \
-        -v meshmonitor-data:/data \
-        ghcr.io/Yeraze/meshmonitor:4.15.2-rc6
       ```
 
 
