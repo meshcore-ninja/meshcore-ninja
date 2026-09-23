@@ -1,7 +1,103 @@
 source: github
 repo: ALLFATHER-BV/wadamesh
-updatedAt: '2026-09-21T16:19:30.983Z'
+updatedAt: '2026-09-23T13:26:34.042Z'
 releases:
+  - version: beta_85
+    name: wadamesh beta_85
+    datetime: '2026-09-23T12:16:21Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_85
+    prerelease: true
+    notes: >-
+      Test build. Stable is **beta_83**.
+
+
+      Flash it at **[flasher.wadamesh.com](https://flasher.wadamesh.com)** (switch the toggle to
+      Beta), or update on the device if you have "Get test builds (beta)" turned on.
+
+
+      ## Read this first if you have a T-Deck Max
+
+
+      A Max that updates itself from the device will install **T-Deck Pro firmware**. The Max reuses
+      the Pro's display and touch drivers, and the table that picks the download file matched the
+      Pro first, so the update check found the right release and then fetched the wrong image for
+      it. beta_85 fixes the table, but it is the firmware you are running now that picks the file,
+      so **update to this one over USB from the flasher, not from the device**. Both are ESP32-S3,
+      so nothing stops the wrong image installing.
+
+
+      ## Tell us whether a build works, from the device
+
+
+      Settings, About now has **Send a test report**. Say whether it works on your board, tick what
+      you actually exercised, say how long you have run it, and send. What comes in lands on
+      **[wadamesh.com/beta](https://wadamesh.com/beta.html)**, and that is what the next stable
+      release gets promoted on, instead of a build being promoted because nobody complained.
+
+
+      The report carries the board, the version, your ticks and the free memory. No name, no
+      contacts, no position, and the device lists exactly what it will send before it sends it. Your
+      device is identified by a salted hash of its public key, so a second report replaces your
+      first rather than counting twice and nobody reading the page can work back to a node. It needs
+      Wi-Fi.
+
+
+      **Report a bug** on the same page draws a QR code. Scan it with your phone and a GitHub issue
+      form opens with your board, version and diagnostics already filled in, so you only type what
+      went wrong, and it is filed under your own account so the replies reach you.
+
+
+      Optional and off by default: **Count this device** lets the update check say which board and
+      build it is running, so a board nobody has reported on can be told apart from a board nobody
+      owns. Those need opposite responses and nothing could tell them apart before.
+
+
+      ## Community work, by @oumike
+
+
+      Eleven changes in one reviewed set (#550), each tested on his own hardware.
+
+
+      - The **screen timeout** is a slider with fixed stops from 30 seconds to an hour, plus Never,
+      instead of a free-text field (#560). **Existing settings move to the nearest stop and the
+      default is now 30 seconds**, so check it if your screen sleeps sooner or later than you
+      expect.
+
+      - The **keyboard backlight** in Auto follows your screen timeout instead of going dark after
+      about three seconds, which was too short to finish typing (#555).
+
+      - **Advert** can be left from the screen on every touch board, not just with a hardware key
+      (#537).
+
+      - **Export and Import** moved out of Profile into Backups, as one Export action with an
+      optional timestamp in the filename. Import finds the backups on internal storage and the card
+      by itself and only asks which one when there is more than one (#558, #559).
+
+      - **ThinkNode M9**: pressing down at the bottom of a conversation reveals the next message
+      instead of stopping (#548), Back stays in the app drawer when the drawer is your home screen
+      (#556), and a page title no longer sits on top of the lock screen (#553).
+
+      - **T-Deck Pro and Max**: the sender and the message no longer overdraw each other, first-run
+      setup can be driven from the keyboard (#532), Commander has two rows of controls, and the lock
+      screen is drawn for the screen it is actually on rather than a landscape bitmap.
+
+
+      ## Text size on the ThinkNode M9
+
+
+      Settings, Display, UI size, with Normal, Large text and Huge text. It grows the text and
+      leaves the layout alone, so rows, cards and controls keep their size and nothing becomes
+      unreachable, which is how the Heltec V4-R8 does it on the same size panel. Your current
+      setting is untouched by the update.
+
+
+      ## Landscape on the LilyGo T-Display P4
+
+
+      Settings, Display, Orientation, and it restarts to apply. The panel itself cannot rotate, so
+      the interface is 
+
+      …
   - version: beta_84
     name: wadamesh beta_84
     datetime: '2026-09-21T12:56:14Z'
@@ -1797,97 +1893,5 @@ releases:
       @oumike, [#275](https://github.com/ALLFATHER-BV/wadamesh/pull/275), reported by @AtomAlex12.
 
       - **Room login recovery**: a server that
-
-      …
-  - version: beta_65
-    name: wadamesh beta_65 (stable)
-    datetime: '2026-08-13T17:39:52Z'
-    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_65
-    prerelease: false
-    notes: >-
-      **This is now the stable release.** It supersedes
-      [beta_63](https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_63) and covers everything
-      from beta_64 and beta_65.
-
-
-      Flash it at **[flasher.wadamesh.com](https://flasher.wadamesh.com)**, or on-device via
-      **Settings → Firmware**.
-
-
-      ---
-
-
-      ## The Heltec V4 freeze, properly this time
-
-
-      V4 units that froze whenever a new contact arrived are fixed, and **both reporters have
-      confirmed it on their own devices**. beta_62 moved one storage delete off the packet path,
-      which helped but left the larger half in place.
-
-
-      A contact record is 152 bytes and the table holds up to 2000 of them, so saving contacts
-      rewrote the entire **304 KB** file on every change, and the crash-safe write keeps a second
-      copy of the same size beside it during the swap. Roughly **600 KB of flash churn because one
-      contact changed**. On a card-less board that lands on internal flash, whose garbage collection
-      suspends the flash cache and stalls **both CPU cores**. That is why the whole device went away
-      rather than dropping a packet.
-
-
-      But the table never changes in bulk: replacing the oldest contact overwrites one slot, and
-      hearing from a known node touches one entry. So each record is now compared against what is
-      stored and only the differences are written back. **A new contact replacing an old one writes
-      152 bytes instead of 304,000**, and a save with nothing to change writes nothing at all. Every
-      patched record is read back and compared, and on any disagreement the firmware falls through
-      to the old whole-file write, so your contact list cannot end up half-written by the new path.
-
-
-      Thanks to @Yoss101 and @pisti87 — and particularly to @Yoss101 for coming back to say a first
-      fix had only half worked, which is the report that found the rest of it.
-
-
-      ## Apps can do much more, and now ask permission
-
-
-      Lua apps gained the real date and time, the buzzer, battery state, GPS position, a scoped and
-      rate-limited private folder each, hardware key presses, and the ability to send mesh messages
-      and receive replies (#245).
-
-
-      Anything reaching outside an app **asks you first, per app, once**. Sending and receiving are
-      separate permissions, so granting one does not grant the other, and a refusal is remembered
-      rather than nagged. New page: **Settings → App permissions**, listing every installed app and
-      what it may do, with a switch to take any of it back. The extended toolkit is limited to
-      boards with the memory to carry it, so the Heltec V4 keeps its resources for the mesh.
-
-
-      **If you tried to write a Lua app and gave up, try again.** The SDK page was wrong about the
-      very first thing an app does: it said to define callbacks as globals named
-      `on_start`/`on_stop`, which the firmware has never called. An app is a table you build and
-      `return`, with `on_open`, `on_tick`, `on_input`, `on_message`, `on_close`. The old example
-      produced an app where nothing ran and nothing was reported. [The
-      page](https://wadamesh.com/sdk.html) is corrected and now documents all of the above. An **SDK
-      Test** app in the Store checks every call on your own board.
-
-
-      ## Share your position without broadcasting it
-
-
-      An advert broadcasts your position in the clear to every node in range. You can now instead
-      answer **on request**, encrypted to the contact that asked, and only for contacts you chose:
-      **Settings → Radio & Mesh → "Share my location when asked"** (Never / Chosen contacts only /
-      Anyone who asks), with the per-contact grant in each contact's own menu. No protocol change,
-      so it interoperates with the MeshCore app. Requested by @janmashat (#266).
-
-
-      ## Fixes
-
-
-      - Accented and non-Latin characters showed as **empty boxes in the grey hint text** of empty
-      fields — the Wi-Fi password box, the MQTT bridge fields, ~two dozen others. Fixed everywhere,
-      in every language.
-
-      - A translated line whose **placeholders do not match** the English original is now ignored
-      rather than used. Since language files download from the Store, this closes off a whole class
-      of crash, including 
 
       …
