@@ -1,7 +1,13 @@
 source: github
 repo: Avi0n/MeshCoreOne
-updatedAt: '2026-09-21T09:50:11.126Z'
+updatedAt: '2026-09-23T07:30:53.376Z'
 releases:
+  - version: v1.5.1
+    name: 1.5.1
+    datetime: '2026-09-23T00:50:15Z'
+    url: https://github.com/Avi0n/MeshCoreOne/releases/tag/v1.5.1
+    prerelease: false
+    notes: "The macOS crash fix was done by enabling the option to allow multiple windows of MC1. Please note that this is not supported and I do not recommend opening multiple windows of MC1 at this time. I'm planning on adding full support for multi-windows (like popped-out chats) in the future, but that won't come for a while. So for now, please refrain from opening multiple windows of MC1 on iPadOS/macOS :)\r\n\r\n## What's Changed\r\n- Added Korean translation (thanks @cammeresi)\r\n\r\n## Bug Fixes\r\n- macOS would crash if any search field was focused\r\n- Chat was able to scroll horizontally when in landscape on an iPhone\r\n- If Bluetooth device was removed from system settings, MC1 would incorrectly mark it as a ghost\r\n\r\n**Full Changelog**: https://github.com/Avi0n/MeshCoreOne/compare/v1.5.0...v1.5.1\r\n\r\nNote for sideloaders: This app's version says 1.5.2 because I accidentally pushed a version bump before creating the IPAs. This release is the same as the App Store 1.5.1 version."
   - version: v1.5.0
     name: 1.5.0
     datetime: '2026-09-21T04:52:11Z'
@@ -116,9 +122,3 @@ releases:
     url: https://github.com/Avi0n/MeshCoreOne/releases/tag/v0.6.0
     prerelease: false
     notes: "## What's Changed\r\nChat\r\n- Infinite scroll pagination for loading older messages\r\n- Improved message retry feedback showing attempt count\r\n\r\nDiscovery & Contacts\r\n- Node count displayed in search placeholder\r\n- Filtering, search, sorting, and clear functionality in the Discover page\r\n- Show all discovered nodes on discover page\r\n\r\nv1.12 Firmware Support\r\n- Auto-add settings and node storage UI\r\n- Contact deletion protocol support\r\n- Backward compatibility for pre-v1.12 firmware\r\n\r\nAdvanced Settings\r\n- Updated Node settings to include toggles for firmware v1.12 features\r\n\r\nNotifications\r\n- Tapping channel notifications now navigates directly to that channel\r\n\r\nCLI\r\n- New CLI tool for repeater administration\r\n- ZSH style text suggestions and tab completion\r\n- Sessions allow you to manage multiple repeaters/rooms at once\r\n\r\nLocalization\r\n- Added some missing UI translations\r\n- Improved date formatting using Apple's localized formats\r\n\r\nOther Improvements\r\n- Improved BLE state restoration handling\r\n- Better path display truncation for long hop lists in RX log\r\n\r\n## Bug Fixes\r\n- BLE: Resolved contact sync failures and race conditions (packet ordering, write pacing, continuation leaks)\r\n- Badge counts: Now correctly filtered by current device only (multi-device users saw wrong counts)\r\n- Messages: URLs within @mentions no longer incorrectly parsed as links or show link previews\r\n- Added repeater first byte collision handling. Helps with any screen that shows a list of repeaters. Selects repeaters in this order: Distance (if location services enabled) > Last advert time\r\n\r\n\r\n\r\n**Full Changelog**: https://github.com/Avi0n/PocketMesh/compare/v0.5.1...v0.6.0"
-  - version: v0.5.1
-    name: 0.5.1
-    datetime: '2026-01-27T07:00:17Z'
-    url: https://github.com/Avi0n/MeshCoreOne/releases/tag/v0.5.1
-    prerelease: false
-    notes: "## What's Changed\r\n- See incoming hops and path right under incoming messages. To enable, go to Settings > Advanced\r\n- Enable pairing support for Whisper OS devices\r\n- \"Node Discovered\" notifications now tell you what type of node it is e.g. \"New Repeater Discovered\"\r\n\r\n## Bug Fixes\r\n- Fix low battery notifications not firing if connecting after passing a percentage threshold\r\n\r\n\r\n**Full Changelog**: https://github.com/Avi0n/PocketMesh/compare/v0.5.0...v0.5.1"
