@@ -1,6 +1,6 @@
 source: github
 repo: MultiMote/meshcore-cardputer-adv
-updatedAt: '2026-08-17T16:29:59.949Z'
+updatedAt: '2026-09-24T09:05:55.013Z'
 releases:
   - version: 2026.7.3
     name: Firmware 2026.7.3
@@ -31,4 +31,4 @@ releases:
     datetime: '2026-05-15T16:13:48Z'
     url: https://github.com/MultiMote/meshcore-cardputer-adv/releases/tag/latest
     prerelease: true
-    notes: "Current - Meshcore v1.16.0\r\nNot updated - Meshcore v1.15.0"
+    notes: Current - Meshcore v1.17.1
