@@ -1,10 +1,10 @@
 source: github
 repo: Meshcore-Portugal/lusofw
-updatedAt: '2026-09-24T14:41:45.390Z'
+updatedAt: '2026-09-25T09:33:08.332Z'
 releases:
   - version: v2026.9.1
     name: v2026.9.1
-    datetime: '2026-09-24T10:45:33Z'
+    datetime: '2026-09-25T07:57:07Z'
     url: https://github.com/Meshcore-Portugal/lusofw/releases/tag/v2026.9.1
     prerelease: false
     notes: >-
