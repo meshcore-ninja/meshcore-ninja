@@ -1,7 +1,142 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-09-23T18:18:49.274Z'
+updatedAt: '2026-09-25T23:10:29.625Z'
 releases:
+  - version: v4.16.2-rc3
+    name: v4.16.2-rc3
+    datetime: '2026-09-25T20:21:44Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.16.2-rc3
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.16.2-rc3
+
+
+      > ⚠️ **This is a pre-release** for testing. It is not recommended for production use.
+
+
+      ## Summary
+
+      **Coverage Report** is new under Reports → Coverage. It is a passive replacement for the Range
+      Test module that firmware 2.8 removed. MeshMonitor sends nothing: it stores every position fix
+      your radios, MQTT gateways and MeshCore receivers hear, with SNR, RSSI and hop data, and plots
+      them on a map coloured by signal. The report has coverage gaps, a summary, a grid view,
+      export, deep links and saved surveys.
+
+
+      **The Info tab and Dashboard now split traffic by transport (RF / UDP / MQTT):**
+
+      - Network Survey, Packet Distribution, node and message totals, and per-transport
+      route-segment records.
+
+      - New "Traffic by Transport" charts.
+
+      - The counters the node's firmware reports itself are labelled as covering all transports.
+
+
+      **Other new features:**
+
+      - A preview-first **telemetry outlier purge**.
+
+      - A **`{{ trigger.packetHash }}`** automation token that links MeshCore messages to CoreScope
+      maps.
+
+      - A MeshCore **"Add to radio"** action.
+
+
+      **MeshCore adverts now default to zero-hop**, and automated flood adverts are capped at one
+      per hour per source.
+
+
+      **Fixes:** PostgreSQL restores (migration 174 repairs installs already restored), MeshCore
+      node lists and login errors, channel-frame matching, channel deletion and drag-reorder, and
+      Position History clicks.
+
+
+      **Watch for:** migrations 169–174 run on upgrade. The Longest Active and Record Holder cards
+      now need the `traceroute` permission on the source.
+
+
+      ## Features
+
+      - feat(coverage): Coverage Report — measured RF coverage map, Phase 1 (#5334)
+
+      - feat(coverage): MQTT gateway receivers for the Coverage Report, Phase 2 (#5336)
+
+      - feat(coverage): MeshCore receptions on the Coverage Report, Phase 3 (#5337)
+
+      - feat(coverage): gaps, summary, grid, export and deep links, Phase 4a (#5348)
+
+      - feat(coverage): saved surveys, Phase 4b (#5353)
+
+      - feat(info): per-transport breakdown, Phase 1 (#5329)
+
+      - feat(transport): per-transport route records and message split, Phase 2 (#5330)
+
+      - feat(telemetry): per-transport traffic series + device-counter labels, Phase 3 (#5332)
+
+      - feat(telemetry): purge telemetry outliers with preview (#5335)
+
+      - feat(automation): `{{ trigger.packetHash }}` for MeshCore messages; verify channel frames by
+      decryption (#5359)
+
+      - feat(meshcore): zero-hop adverts by default, hourly floor on automated floods (#5347)
+
+      - Add Discord Webhook DM/PUBLIC to User Scripts Gallery (#5346)
+
+
+      ## Bug Fixes
+
+      - fix(meshcore): stable node list, clear not-on-radio errors, unambiguous prefix lookups
+      (#5351)
+
+      - fix(restore): reset PostgreSQL sequences after restore; migration 174 repairs restored
+      installs (#5355)
+
+      - fix(channels): delete the channel row, and shift cards while dragging (#5326)
+
+      - fix(map): position-history heading triangle no longer blocks the dot beneath (#5358)
+
+
+      ## Release
+
+      - chore(release): bump to 4.16.2-rc3, and write its changelog section (#5360)
+
+
+      ## Issues Resolved
+
+      - #5101 Per-transport breakdown: Record Holder, Radio Statistics, Network Statistics
+
+      - #5277 MM-native Range Test (delivered as the passive Coverage Report)
+
+      - #5324 Deleted channel leaves an empty channel slot (partial: the two bugs found while
+      investigating are fixed; the issue stays open)
+
+      - #5333 Purge telemetry outliers
+
+      - #5345 User Script Submission: MeshMonitor-Discord
+
+      - #5349 MeshCore short-prefix collision symptoms
+
+      - #5356 Position History heading triangle blocks the circle beneath
+
+      - #5357 Expose the MeshCore on-wire packet hash on the message trigger
+
+
+      ## Thanks
+
+      Thanks to @coinraiser for contributing the MeshMonitor-Discord scripts to the User Scripts
+      Gallery, and to the Discord community members whose reports drove this RC.
+
+
+      ## Upgrade notes
+
+      - Migrations 169–174 run on first start: new transport columns on `route_segments` and
+      `messages`, a record-holder reclassify, the `coverage_receptions` table, and a PostgreSQL
+      sequence repair. All are idempotent.
+
+      - The Longest Active and Record Holder cards now need `tracerou
+
+      …
   - version: v4.16.2-rc2
     name: v4.16.2-rc2
     datetime: '2026-09-23T15:01:55Z'
@@ -2199,99 +2334,6 @@ releases:
         -p 8080:3001 \
         -v meshmonitor-data:/data \
         ghcr.io/Yeraze/meshmonitor:4.15.2-rc8
-      ```
-
-
-      ### 🧪 Testing
-
-      ✅ All tests passed
-
-      ✅ TypeScript checks passed
-
-      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
-
-
-      ### 📋 Changes
-
-      See commit history for detailed changes.
-  - version: v4.15.2-rc7
-    name: v4.15.2-rc7
-    datetime: '2026-08-29T17:42:04Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.15.2-rc7
-    prerelease: true
-    notes: >-
-      # MeshMonitor v4.15.2-rc7
-
-
-      > ⚠️ **Pre-release** — this is a release candidate for testing. Docker images are not tagged
-      `:latest`.
-
-
-      This candidate adds the new Mesh Issues analysis report, which scans the RF graph for role and
-      placement health problems across three rule tiers, with a coverage preface, per-issue
-      dismissal, and settings. The Packet Monitor gains a full portnum filter with free-text content
-      search, plus a Stop capturing control on every monitor view. MeshCore node details now offer
-      the same telemetry time-window selector (15m–7d) that Meshtastic already had. The new
-      Installed Scripts inventory appears in global settings, and the Scripts section is now
-      reachable from the settings nav.
-
-
-      ## Features
-
-      - #4966, #4967, #4968 — Mesh Issues analysis report: Phase 1 foundation + Tier A rules, Tier B
-      RF-graph rules, and Phase 3 coverage preface, dismiss UI, Tier C, and settings (#4964)
-
-      - #4970 — MeshCore: telemetry time window selector in node details, parity with Meshtastic
-      (#4969)
-
-      - #4961 — Packet Monitor: full portnum filter + free-text content search (#4958)
-
-      - #4956 — Installed Scripts inventory in global settings (#4942)
-
-
-      ## Bug Fixes
-
-      - #4960 — Packet Monitor: Stop capturing control on all packet monitors; capture no longer
-      persists through refresh (#4957)
-
-      - #4962 — Scripts section added to the settings nav (#4942)
-
-
-      ## Chores
-
-      - #4971 — version bump to 4.15.2-rc7
-
-
-      ## Issues Resolved
-
-      - #4969 — MeshCore telemetry time window selector
-
-      - #4964 — Epic: Mesh Issues analysis report
-
-      - #4958 — Filter and search beacon/status app in packet capture
-
-      - #4957 — Packet Monitor has no Stop button
-
-      - #4852 — No meshbeacon or status message in packet monitor
-
-
-      **Full changelog:** https://github.com/Yeraze/meshmonitor/compare/v4.15.2-rc6...v4.15.2-rc7
-
-      ## 🚀 MeshMonitor v4.15.2-rc7
-
-
-      ### 📦 Installation
-
-
-      **Docker (recommended):**
-
-      ```bash
-
-      docker run -d \
-        --name meshmonitor \
-        -p 8080:3001 \
-        -v meshmonitor-data:/data \
-        ghcr.io/Yeraze/meshmonitor:4.15.2-rc7
       ```
 
 
