@@ -1,7 +1,26 @@
 source: github
 repo: Meshcore-Portugal/lusofw
-updatedAt: '2026-09-25T09:33:08.332Z'
+updatedAt: '2026-09-26T16:01:05.685Z'
 releases:
+  - version: v2026.9.2
+    name: v2026.9.2
+    datetime: '2026-09-26T13:22:46Z'
+    url: https://github.com/Meshcore-Portugal/lusofw/releases/tag/v2026.9.2
+    prerelease: false
+    notes: >-
+      Based on MeshCore v1.17.1
+
+      main@d92964352441e53b93e8667b802e04f6e072b39e
+
+
+      #### Build e Configuração
+
+
+      - BUILD: Desativado o modo stealth (`LUSOFW_STEALTH_MODE`), que tinha ficado ativo por engano
+      na versão anterior.
+
+      - CI: Adicionado o variant `heltec_v4_repeater_bridge_rs232` aos fluxos de trabalho de
+      pré-lançamento e de lançamento.
   - version: v2026.9.1
     name: v2026.9.1
     datetime: '2026-09-25T07:57:07Z'
@@ -1081,9 +1100,3 @@ releases:
     url: https://github.com/Meshcore-Portugal/lusofw/releases/tag/v0.0.4
     prerelease: true
     notes: '**Full Changelog**: https://github.com/Meshcore-Portugal/lusofw/compare/v0.0.3...v0.0.4'
-  - version: v0.0.3
-    name: v0.0.3
-    datetime: '2026-02-21T12:12:33Z'
-    url: https://github.com/Meshcore-Portugal/lusofw/releases/tag/v0.0.3
-    prerelease: true
-    notes: '**Full Changelog**: https://github.com/Meshcore-Portugal/lusofw/compare/v0.0.2...v0.0.3'

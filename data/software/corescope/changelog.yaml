@@ -1,12 +1,98 @@
 source: github
 repo: Kpa-clawbot/CoreScope
-updatedAt: '2026-09-26T11:00:41.520Z'
+updatedAt: '2026-09-26T16:01:22.355Z'
 releases:
   - version: v3.12.0
     name: v3.12.0
     datetime: '2026-09-26T10:52:31Z'
     url: https://github.com/Kpa-clawbot/CoreScope/releases/tag/v3.12.0
     prerelease: false
+    notes: |-
+      # v3.12.0
+
+      29 commits since v3.11.0: 15 fixes, 5 test, 3 perf, 3 feat, 2 ci, 1 chore.
+
+      ## Read this before upgrading
+
+      **The first start after this release runs `ANALYZE` on your database, and ingest
+      stalls while it does.**
+
+      SQLite's query planner had no statistics at all, because `ANALYZE` had never run
+      against these databases and nothing in the code ever called it. Without
+      `sqlite_stat1` the planner guesses, and on the channel queries it guessed wrong:
+      it drove from the plain `idx_transmissions_payload_type` instead of
+      `idx_tx_channel_hash`, the partial index the schema already carries for exactly
+      that filter (#2058, reported with measurements by @anieto).
+
+      The ingestor now builds those statistics, once, on the first start against a
+      database that has none. Measured on a 9.4 GB database with 1,250,489
+      transmissions and 14,169,329 observations:
+
+      | | |
+      |---|---|
+      | `ANALYZE` duration, cold page cache | **3m43.9s** |
+      | ingest during that time | stalled, buffered, nothing dropped |
+      | rows written in the minute it finished | 1027, against ~130 either side |
+
+      It holds the single SQLite write connection throughout, so observations stop
+      arriving and queue in the ingest buffer, then land in one burst when it
+      completes. On the deployment measured, the ingest buffer absorbed all of it and
+      the log reported `0 dropped`. The log now warns before starting, so this is
+      distinguishable from a hang.
+
+      This happens **once per database**, not once per restart: `sqlite_stat1` is an
+      ordinary table and stays in the file. Every later start costs one query.
+
+      A deploy already restarts the service, so the stall overlaps an interruption you
+      were having anyway. It is still worth picking the moment on a busy instance.
+
+      To skip it entirely, set `db.analysisLimit` to a negative number. The statistics
+      then never get built and the channel queries keep the old plan.
+
+      What it buys, measured on the same database, region-filtered `GetChannels`:
+
+      | | pages read |
+      |---|---|
+      | before | 143,442 |
+      | after | 107,429 |
+
+      25% fewer pages, about 147 MB less per query at a 4 KB page. Wall time when the
+      OS page cache is warm does not change (0.80s either way); the gain is on the cold
+      path, which measured 56.7s on that file. The 3-4x improvement reported in #2058
+      was measured on a smaller database (464,667 transmissions) and did not reproduce
+      at this size.
+
+      `db.analysisLimit` defaults to 10000 rather than the 400 SQLite's documentation
+      suggests. 400 and 1000 were measured to leave the plan unchanged; 10000 produces
+      the same plan as an unbounded `ANALYZE` while costing 2.0s warm against that
+      one's 242.9s.
+
+      ## Features
+
+      - **CoreDrive RX region answers are stored** (#2047) - `node_declared_regions`
+        was read by `region_keys.go` and `config.go` but created by nothing, so the
+        Scope Audit page described a source that never arrived: the client-topic switch
+        handled packets and rf only and dropped `/regions` without a log line. The
+        table is now created at boot, and the answer is kept with position, the
+        repeater's own clock, and per-collector history bounded by age rather than one
+        row per target. Opt in through `clientRegions`, separate from
+        `clientRxCoverage`, so region answers do not require GPS-tagged reception
+        uploads. Measured on the instance CoreDrive RX publishes to, 2026-08-18 to
+        2026-09-19: 1840 answers about 275 repeaters from 51 collectors, of which 138
+        repeaters have answers from more than one collector and 40 have collectors that
+        disagree, which is the disagreement the Scope Audit exists to surface.
+      - **The running version is in the nav drawer** (#2068) - read from
+        `/api/health`, with commit and build time in the tooltip. A version-less or
+        failing health endpoint leaves the plain label rather than "CoreScope
+        undefined".
+      - **The IATA whitelist says when it drops a region** (#2067) - one throttled
+        warning per rejected region, so a misconfigured `observerIATAWhitelist` is
+        visible instead of silent.
+
+      ## Reception and node health
+
+      - **Zero-hop adverts
+      …
   - version: v3.11.0
     name: v3.11.0
     datetime: '2026-09-16T07:57:21Z'
