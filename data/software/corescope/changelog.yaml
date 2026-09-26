@@ -1,7 +1,12 @@
 source: github
 repo: Kpa-clawbot/CoreScope
-updatedAt: '2026-09-16T09:09:52.318Z'
+updatedAt: '2026-09-26T11:00:41.520Z'
 releases:
+  - version: v3.12.0
+    name: v3.12.0
+    datetime: '2026-09-26T10:52:31Z'
+    url: https://github.com/Kpa-clawbot/CoreScope/releases/tag/v3.12.0
+    prerelease: false
   - version: v3.11.0
     name: v3.11.0
     datetime: '2026-09-16T07:57:21Z'
@@ -1466,9 +1471,3 @@ releases:
 
       **Full changelog:**
       [`v3.1.0...v3.2.0`](https://github.com/Kpa-clawbot/CoreScope/compare/v3.1.0...v3.2.0)
-  - version: v3.1.0
-    name: CoreScope v3.1.0
-    datetime: '2026-03-31T08:01:07Z'
-    url: https://github.com/Kpa-clawbot/CoreScope/releases/tag/v3.1.0
-    prerelease: false
-    notes: "**152 commits · 240 files changed · 51K insertions / 55K deletions · 44 PRs merged · 7 contributors**\r\n\r\n## Highlights\r\n\r\n**Timestamp Controls** — Toggle between relative (\"3m ago\") and absolute timestamps across all pages. UTC/local timezone, format presets, admin-configurable defaults. New Display tab in customizer.\r\n\r\n**Channel Region Filtering** — Multi-region deployments no longer show cross-region message crosstalk. Server-side SQL prefilter + frontend WS guard.\r\n\r\n**Disable Internal Mosquitto** — `DISABLE_MOSQUITTO=true` in `.env` skips the built-in broker for users running their own.\r\n\r\n**Port Negotiation** — `manage.sh setup` detects port conflicts, suggests alternatives, persists choices to `.env`.\r\n\r\n**Packet Store Eviction** — In-memory packet store now has configurable memory limits with LRU eviction to prevent OOM on long-running instances.\r\n\r\n**Telemetry Decoding** — Battery voltage and temperature decoded from sensor adverts and displayed on node detail pages.\r\n\r\n**Observer Identity** — Go ingestor now persists model, firmware, client version, and radio from observer status messages.\r\n\r\n**Hash Size Analytics** — Dominant hash size computation (mode, not last-seen), multi-byte hash usage matrix with stats and tooltips, distribution by repeaters.\r\n\r\n**Performance** — O(n) slice prepend eliminated on packet ingest, parallel coverage collector (8min → 30-60s), packet store query optimizations.\r\n\r\n**Decoder Alignment** — Packet decoder aligned with MeshCore firmware spec, TRACE path hops parsed correctly.\r\n\r\n**manage.sh Overhaul** — Compose-only wrapper, `.env` as single source of truth, config migration from repo root to data directory, CRLF auto-fix, tilde expansion.\r\n\r\n**CI/CD** — Go server E2E tests replace Node.js, Playwright suite, `workflow_dispatch` for manual triggers, repo-wide LF normalization with blame history preservation.\r\n\r\n**Mobile Responsive** — Live bottom-sheet, perf layout, nodes column hiding for small screens.\r\n\r\n**Configurable Health Thresholds** — Node health thresholds now configurable in hours via config.json.\r\n\r\n**pprof Profiling** — Optional pprof endpoints controlled by `ENABLE_PPROF` env var for production debugging.\r\n\r\n## Breaking Changes\r\n\r\n- **Config location moved** — `config.json` now lives in the data directory (`~/meshcore-data/config.json`). `manage.sh` auto-migrates from repo root on `update`/`start`.\r\n- **Node.js backend fully removed** — all backend code is Go. If you were running the Node.js server directly, you must switch to the Docker image.\r\n\r\n## Known Issues\r\n\r\n- FAQ/home page customizer editing can cause steps to disappear — needs architectural fix (#284, #325)\r\n- Observer telemetry (battery, uptime, noise_floor) reads wrong JSON level (#320)\r\n- SNR/RSSI case-sensitive key lookup may miss lowercase variants (#321)\r\n- Repeater hash stats may not update after hash size change (#303)\r\n- VCR timeline ignores UTC/local timezone setting (#324)\r\n- Top nav bar controls invisible on narrow screens (#322)"

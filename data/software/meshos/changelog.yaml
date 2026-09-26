@@ -1,7 +1,80 @@
 source: github
 repo: andymux/meshos-releases
-updatedAt: '2026-09-20T10:53:07.818Z'
+updatedAt: '2026-09-26T11:00:58.556Z'
 releases:
+  - version: fw-v1.7.6
+    name: MeshOS firmware v1.7.6
+    datetime: '2026-09-26T10:54:11Z'
+    url: https://github.com/andymux/meshos-releases/releases/tag/fw-v1.7.6
+    prerelease: false
+    notes: >-
+      MeshOS firmware v1.7.6
+
+
+      Repeater Finder
+
+      - Pick a repeater in the finder to add it as a contact and go straight to the login, then its
+      management screen. The finder keeps the full key and both signal readings.
+
+      - The repeater whitelist is gone. The repeaters you add yourself are the ones you manage.
+
+
+      ThinkNode M9
+
+      - Detects which GPS module is fitted and configures it accordingly, and remembers the result.
+      GPS Status shows the module, and /gps redetect forgets it.
+
+
+      Device firmware for LilyGo T-Deck and ThinkNode M9.
+
+      Install via SD card (firmware.bin) or the in-firmware updater.
+
+
+      SHA-256:
+
+      - TDeck: a7150b93f5aa23d2855c5ec70036cf77faec0670e616a19a81b04bb7757b6e28
+
+      - M9: a0195a3f5db3307014d09f9e7405e096553dd4a988f442570d3f53ad2a13b582
+  - version: v1.0.22
+    name: MeshOS v1.0.22
+    datetime: '2026-09-26T10:17:24Z'
+    url: https://github.com/andymux/meshos-releases/releases/tag/v1.0.22
+    prerelease: false
+    notes: >-
+      # MeshOS app 1.0.22
+
+
+      ## Repeaters over Bluetooth
+
+      - Tools > Manage a repeater opens a MeshOS repeater's own settings page inside the app over
+      Bluetooth, so a repeater can be set up with nothing but your phone. It runs the first-time
+      setup wizard, shows the nearby nodes list and path trace, and switches the repeater between
+      Bluetooth and WiFi.
+
+      - Update a repeater's firmware over Bluetooth. The app fetches the release, checks it, sends
+      it to the repeater and reconnects once the repeater has restarted. Needs MeshOS repeater
+      firmware 1.5.2 or later.
+
+
+      ## Scan for Nodes
+
+      - Tools > Scan for Nodes lists the nearby repeaters and sensors that answer, and offers to add
+      one as a contact, or to add it and open its management screen over LoRa straight away.
+
+
+      ## Direct messages
+
+      - Optional automatic retry for direct messages that are not delivered. Turn on Direct Message
+      Retry in Settings.
+
+      - A message that was not delivered shows a red cross in the chat list instead of a tick.
+
+
+      ## Reliability
+
+      - Scanning for repeaters while connected to a radio no longer drops the connection.
+
+      - Fixes that improve reliability when using the radio with the MeshOS app.
   - version: fw-v1.7.5
     name: MeshOS firmware v1.7.5
     datetime: '2026-09-20T07:28:59Z'
@@ -578,33 +651,3 @@ releases:
       - TDeck: a5557389b81d3622966045cdcf1238a9acd8c207225dca05974509fe304710f7
 
       - M9: 3aaaae2b30820e92d6f88d275c3f5b97f1fc6802af70e9cab28b59ffc6c077b9
-  - version: fw-v1.6.3
-    name: MeshOS firmware v1.6.3
-    datetime: '2026-08-08T12:08:04Z'
-    url: https://github.com/andymux/meshos-releases/releases/tag/fw-v1.6.3
-    prerelease: false
-    notes: >-
-      Longer messages, smoother typing on busy meshes, open web links from chat in CoreBrowser,
-      shared photos now display correctly (Google Photos, meshpic and more), globe icon on internet
-      messages, plus stability fixes.
-
-
-      Device firmware for LilyGo T-Deck and ThinkNode M9.
-
-      Install via SD card (firmware.bin) or the in-firmware updater.
-
-
-      SHA-256:
-
-      - TDeck: d762b38b1ac57dd6f1d5d22ae2eb01237ade4887e731b401a015dc89f274b594
-
-      - M9: eb41a6f92663fdaa98735fd4e636ab3f348aeae279815b716c606154a14fb01b
-  - version: v1.0.12
-    name: MeshOS v1.0.12
-    datetime: '2026-08-04T19:25:11Z'
-    url: https://github.com/andymux/meshos-releases/releases/tag/v1.0.12
-    prerelease: false
-    notes: |-
-      Stability and reliability improvements for messaging and internet connections.
-
-      APK SHA-256: `005a4116b01723f8c9ae666119804cd6fbd4bd71a7651201eef9bc8d1f4c56bc`
