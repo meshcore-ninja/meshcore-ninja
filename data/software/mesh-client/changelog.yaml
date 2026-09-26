@@ -1,13 +1,141 @@
 source: github
 repo: Colorado-Mesh/mesh-client
-updatedAt: '2026-09-25T23:10:16.436Z'
+updatedAt: '2026-09-26T04:05:37.229Z'
 releases:
+  - version: untagged-873dd1b50e86655cd3be
+    name: 5.39.1
+    datetime: '2026-09-26T03:01:00Z'
+    url: https://github.com/Colorado-Mesh/mesh-client/releases/tag/untagged-873dd1b50e86655cd3be
+    prerelease: false
+    notes: "# Call to Action: Help Shape the New UI\r\nWe're thinking through what the new UI should look like. Review and comment on our mock-ups at https://github.com/Colorado-Mesh/mesh-client/issues/1062\r\n\r\n----\r\n\r\n<!-- mesh-client-macos-install -->\r\n### macOS install\r\n\r\n- Requires **macOS 13 Ventura** or later (Electron 44).\r\n- **Recommended:** open the **`.dmg`** and drag **Mesh-client** to **Applications**.\r\n- If you use the **`.zip`**: extract with **[Keka](https://www.keka.io/en/)** or `ditto -xk` — **do not use 7-Zip** (or Finder Archive Utility); they break framework symlinks and can crash at launch with `Library not loaded: Squirrel.framework`.\r\n- See [troubleshooting](https://github.com/Colorado-Mesh/mesh-client/blob/main/docs/troubleshooting.md#macos-library-not-loaded-squirrelframework-after-zip-extract) if the app will not open after a ZIP extract.\r\n<!-- mesh-client-macos-install -->\r\n\r\n<!-- mesh-client-schema-compare -->\r\n# Release build — database schema check\r\n\r\nThis build schema: **49**\r\nLast official release: **v5.39.0** (schema **49**)\r\n\r\nNo schema bump vs last official release.\r\n<!-- mesh-client-schema-compare -->\r\n\r\n## [v5.39.1] - 2026-09-25\r\n\r\n### Highlights\r\n- **Local TAK + EUDs:** Server certificates now include DNS + LAN IP in the Subject Alternative Name so iTAK / WinTAK / newer ATAK no longer reject data-package TLS as “certificate invalid.” Re-download the package after upgrading. (#1070)\r\n- **Language picker:** Scrolling the language list no longer dismisses the menu. (#1069)\r\n- **MECP Chat shortcuts removed:** One-tap MAYDAY, Quick Status presets, and roll-call above Chat (shipped in 5.39.0) are removed as unused; MECP compose and Incident Command remain. (#1069)\r\n\r\n### Breaking Changes\r\n*(None)*\r\n\r\n### Database schema\r\nSchema **49** — unchanged from v5.39.0. No migration runs on upgrade.\r\n\r\n---\r\n\r\n## TAK\r\n\r\n* **Server cert SAN** — Local TAK server certs include DNS name and LAN IPv4 in SAN; sticky certs auto-heal when identity drifts. Data packages still dial the LAN IP. (#1070)\r\n* **After upgrade** — Generate a new data package and re-import on EUDs that previously failed TLS. See [troubleshooting](https://github.com/Colorado-Mesh/mesh-client/blob/main/docs/troubleshooting.md). (#1070)\r\n\r\n---\r\n\r\n## App / MECP\r\n\r\n* **Language menu** — Wheel/trackpad scroll inside the portaled language list no longer closes the picker; scrolling outside still dismisses. (#1069)\r\n* **Removed Chat MECP shortcuts** — MAYDAY button, Quick Status bar, and roll-call helpers (plus related settings/docs) removed; MECP compose when enabled and Incident flows are unchanged. (#1069)\r\n\r\n### Full Changelog\r\n[`v5.39.0...v5.39.1`](https://github.com/Colorado-Mesh/mesh-client/compare/v5.39.0...v5.39.1)"
   - version: v5.39.0
     name: 5.39.0
     datetime: '2026-09-25T21:52:20Z'
     url: https://github.com/Colorado-Mesh/mesh-client/releases/tag/v5.39.0
     prerelease: false
-    notes: "# Call to Action: Help Shape the New UI\r\nWe're thinking through what the new UI should look like. Review and comment on our mock-ups at https://github.com/Colorado-Mesh/mesh-client/issues/1062 \r\n\r\n----\r\n\r\n<!-- mesh-client-macos-install -->\r\n### macOS install\r\n\r\n- Requires **macOS 13 Ventura** or later (Electron 44).\r\n- **Recommended:** open the **`.dmg`** and drag **Mesh-client** to **Applications**.\r\n- If you use the **`.zip`**: extract with **[Keka](https://www.keka.io/en/)** or `ditto -xk` — **do not use 7-Zip** (or Finder Archive Utility); they break framework symlinks and can crash at launch with `Library not loaded: Squirrel.framework`.\r\n- See [troubleshooting](https://github.com/Colorado-Mesh/mesh-client/blob/main/docs/troubleshooting.md#macos-library-not-loaded-squirrelframework-after-zip-extract) if the app will not open after a ZIP extract.\r\n<!-- mesh-client-macos-install -->\r\n\r\n<!-- mesh-client-schema-compare -->\r\n# Release build — database schema check\r\n\r\nThis build schema: **49**\r\nLast official release: **v5.38.0** (schema **49**)\r\n\r\nNo schema bump vs last official release.\r\n<!-- mesh-client-schema-compare -->\r\n\r\n## [v5.39.0] - 2026-09-25\r\n\r\n### Highlights\r\n- **EMCOMM / Incident Command:** New Incident sidebar tab, emergency outbox priority, honest MECP ACK/beacon lifecycle, field ops alerts, quick-status / roll-call / optional Chat MAYDAY, after-action export, and SAR map helpers (MGRS, measure, USGS Topo). (#1050, #1057)\r\n- **TAK everywhere + remote relay:** TAK panel and CoT on MeshCore and Reticulum (not just Meshtastic MQTT); replicate live positions from all three protocols; optional mutual-TLS relay to OpenTAKServer / FreeTAKServer / TAK Server. (#1060)\r\n- **Offline readiness:** Quiet update/GPS behavior when WAN is down; durable `mesh-tiles:` OSM/Carto cache with Layers → Offline maps region download; sharper MECP SAFETY / MAYDAY tones. (#1048)\r\n- **MeshCore DM delivery:** Bubbles stay Sending… until hop ACK (event 130), not merely radio accept — missed ACKs can fail instead of false “Delivered.” (#1058)\r\n\r\n### Breaking Changes\r\n*(None)*\r\n\r\n### Database schema\r\nSchema **49** — unchanged from v5.38.0. No migration runs on upgrade.\r\n\r\n---\r\n\r\n## EMCOMM / Incident Command\r\n\r\n* **Incident tab** — Common operating picture across Meshtastic, MeshCore, and Reticulum; merges MECP by fingerprint; severity escalates; open MAYDAY/URGENT badge the tab. Map overlays on LoRa Map and Reticulum Map (Layers → Emergency incidents). (#1050)\r\n* **Emergency outbox** — `priority: 'emergency'` skips normal age/attempt drains; soft-caps never delete distress rows; used by MECP compose and Incident ACK/Confirm. (#1050)\r\n* **ACK / beacon** — R01 general ACK vs B01/B02/B03 beacon lifecycle; counts are network-heard, not read receipts. Originator **Cancel beacon** sends MECP B03 so other stations clear the active beacon. (#1050, #1057)\r\n* **Ops alerts** — Watched-node silence, battery low, unexpected link-down (not manual disconnect / mid-reconnect); new notification sounds. (#1050)\r\n* **Field UX** — Quick-status presets + roll-call above Chat; separate App → MECP opt-ins for Chat MECP and Chat MAYDAY (both default off). (#1050)\r\n* **Exports / SAR** — After-action report assembler; MGRS grid + measure tool; USGS Topo basemap allowlisted. (#1050)\r\n\r\n---\r\n\r\n## TAK\r\n\r\n* **Multi-protocol CoT** — TAK tab on MeshCore and Reticulum; per-protocol CoT uid prefixes (`MESH-` / `MC-` / `RN-`); node cache keyed by `protocol:node_id`. ATAK plugin list remains Meshtastic-only. (#1060)\r\n* **Live positions** — Replicator feeds all three node maps (Reticulum: RMAP interfaces + app GPS); stale windows per protocol; 5‑minute refresh / throttled deltas. (#1060)\r\n* **Remote TAK server relay** — Mutual TLS to a remote TAK server with imported PEM/DER/PKCS#12 credentials; runs with or without the local TAK server; panel controls for address, port, verify, auto-connect, status. (#1060)\r\n\r\n---\r\n\r\n## Offline maps & MECP tones\r\n\r\n* **Wilderness offline** — Updat\n…"
+    notes: >-
+      # Call to Action: Help Shape the New UI
+
+      We're thinking through what the new UI should look like. Review and comment on our mock-ups at
+      https://github.com/Colorado-Mesh/mesh-client/issues/1062 
+
+
+      ----
+
+
+      <!-- mesh-client-macos-install -->
+
+      ### macOS install
+
+
+      - Requires **macOS 13 Ventura** or later (Electron 44).
+
+      - **Recommended:** open the **`.dmg`** and drag **Mesh-client** to **Applications**.
+
+      - If you use the **`.zip`**: extract with **[Keka](https://www.keka.io/en/)** or `ditto -xk` —
+      **do not use 7-Zip** (or Finder Archive Utility); they break framework symlinks and can crash
+      at launch with `Library not loaded: Squirrel.framework`.
+
+      - See
+      [troubleshooting](https://github.com/Colorado-Mesh/mesh-client/blob/main/docs/troubleshooting.md#macos-library-not-loaded-squirrelframework-after-zip-extract)
+      if the app will not open after a ZIP extract.
+
+      <!-- mesh-client-macos-install -->
+
+
+      <!-- mesh-client-schema-compare -->
+
+      # Release build — database schema check
+
+
+      This build schema: **49**
+
+      Last official release: **v5.38.0** (schema **49**)
+
+
+      No schema bump vs last official release.
+
+      <!-- mesh-client-schema-compare -->
+
+
+      ## [v5.39.0] - 2026-09-25
+
+
+      ### Highlights
+
+      - **EMCOMM / Incident Command:** New Incident sidebar tab, emergency outbox priority, honest
+      MECP ACK/beacon lifecycle, field ops alerts, quick-status / roll-call / optional Chat MAYDAY,
+      after-action export, and SAR map helpers (MGRS, measure, USGS Topo). (#1050, #1057)
+
+      - **TAK everywhere + remote relay:** TAK panel and CoT on MeshCore and Reticulum (not just
+      Meshtastic MQTT); replicate live positions from all three protocols; optional mutual-TLS relay
+      to OpenTAKServer / FreeTAKServer / TAK Server. (#1060)
+
+      - **Offline readiness:** Quiet update/GPS behavior when WAN is down; durable `mesh-tiles:`
+      OSM/Carto cache with Layers → Offline maps region download; sharper MECP SAFETY / MAYDAY
+      tones. (#1048)
+
+      - **MeshCore DM delivery:** Bubbles stay Sending… until hop ACK (event 130), not merely radio
+      accept — missed ACKs can fail instead of false “Delivered.” (#1058)
+
+      - **Dead code cleanup:** Unused exports, Reticulum/RRC helpers, Linux Web Bluetooth picker
+      stub, and unread MECP language-pack fields removed (no behavior change). (#1053–#1056)
+
+
+      ### Breaking Changes
+
+      *(None)*
+
+
+      ### Database schema
+
+      Schema **49** — unchanged from v5.38.0. No migration runs on upgrade.
+
+
+      ---
+
+
+      ## EMCOMM / Incident Command
+
+
+      * **Incident tab** — Common operating picture across Meshtastic, MeshCore, and Reticulum;
+      merges MECP by fingerprint; severity escalates; open MAYDAY/URGENT badge the tab. Map overlays
+      on LoRa Map and Reticulum Map (Layers → Emergency incidents). (#1050)
+
+      * **Emergency outbox** — `priority: 'emergency'` skips normal age/attempt drains; soft-caps
+      never delete distress rows; used by MECP compose and Incident ACK/Confirm. (#1050)
+
+      * **ACK / beacon** — R01 general ACK vs B01/B02/B03 beacon lifecycle; counts are
+      network-heard, not read receipts. Originator **Cancel beacon** sends MECP B03 so other
+      stations clear the active beacon. (#1050, #1057)
+
+      * **Ops alerts** — Watched-node silence, battery low, unexpected link-down (not manual
+      disconnect / mid-reconnect); new notification sounds. (#1050)
+
+      * **Field UX** — Quick-status presets + roll-call above Chat; separate App → MECP opt-ins for
+      Chat MECP and Chat MAYDAY (both default off). (#1050)
+
+      * **Exports / SAR** — After-action report assembler; MGRS grid + measure tool; USGS Topo
+      basemap allowlisted. (#1050)
+
+
+      ---
+
+
+      ## TAK
+
+
+      * **Multi-protocol CoT** — TAK tab on MeshCore and Reticulum; per-protocol CoT uid prefixes
+      (`MESH-` / `MC-` / `RN-`); node cache keyed by `protocol:node_id`. ATAK plugin list remains
+      Meshtastic-only. (#1060)
+
+      * **Live positions** — Replicator feeds all three node maps (Reticulum: RMAP interfaces + app
+      GPS); stale windows per protocol; 5‑minute refresh / throttled deltas. (#1060)
+
+      * **Remote TAK server relay** — Mutual TLS to a remote TAK server with imported
+      PEM/DER/PKCS#12 credentials; runs with or without the local TAK server; panel controls for add
+
+      …
   - version: v5.38.0
     name: 5.38.0
     datetime: '2026-09-24T17:17:36Z'
@@ -116,9 +244,3 @@ releases:
     url: https://github.com/Colorado-Mesh/mesh-client/releases/tag/v5.24.0
     prerelease: false
     notes: "## [v5.24.0] - 2026-07-18\r\n\r\n### Highlights\r\n\r\nReticulum grows into a full comms suite this release: a new **Relay Chat (RRC)** IRC-style multi-hub client, a **Remote** tab for `rnsh` shells and `rncp` file transfer, **watch-folder Nomad hosting** with an upgraded Micron renderer, **identity slots**, propagation-node rename/delete, and much faster **Peers** at large path-table sizes. A broad **protocol-parity** pass adds QR generation/scan, `lxm://` deep links, GPX export, LoRa signal metering, Meshtastic module event history, and per-send **MeshCore flood-scope presets** (now behind a split Send button). Messaging is more resilient (one-click location share, chat outbox drain on reconnect, extended reconnect budgets, humanized send-NAK errors), and cold-start BLE is serialized so an RNode connects before the RF radios. MeshCore MQTT now steers non-Colorado users to LetsMesh by default.\r\n\r\n### What's Changed\r\n\r\n### Features\r\n\r\n- **Reticulum Remote tab (rnsh + rncp)** — New Remote tab (Shell / Transfer / Saved / Settings) with an xterm shell, file send/fetch/listen, saved address book + inbound policy, and Chat DM `rncp` controls; trust-boundary hardening (picker-backed save dirs, size/offer caps, allow/block lists) ([#692](https://github.com/Colorado-Mesh/mesh-client/pull/692), implements [#688](https://github.com/Colorado-Mesh/mesh-client/issues/688), [#689](https://github.com/Colorado-Mesh/mesh-client/issues/689))\r\n- **Reticulum Relay Chat (RRC)** — IRC-style multi-pane client with up to 8 concurrent hub sessions, Favourites/Discovered hub picker, rooms + nicklist, `/`-command router, `@mention` unread badges + tray/toast notifications, and SQLite-persisted room history with retention pruning ([#680](https://github.com/Colorado-Mesh/mesh-client/pull/680), fixes [#648](https://github.com/Colorado-Mesh/mesh-client/issues/648))\r\n- **Watch-folder Nomad hosting + Micron rendering** — Host bounded static Nomad Network sites from a watched folder with auto-restore and filesystem watching; vendored RFnexus Micron parser adds table/anchor/partial support ([#683](https://github.com/Colorado-Mesh/mesh-client/pull/683), closes [#613](https://github.com/Colorado-Mesh/mesh-client/issues/613))\r\n- **Protocol parity tools** — Meshtastic module event history, LoRa signal metering, GPX export, MeshCore MCU temperature parsing, per-send flood-scope overrides, QR generation + camera/file ingest, custom `lxm://` deep links, cross-platform camera permissions, and Reticulum **identity slots** with restart-based switching + contact fingerprint verification ([`9890611e`](https://github.com/Colorado-Mesh/mesh-client/commit/9890611e), fixes [#218](https://github.com/Colorado-Mesh/mesh-client/issues/218), [#477](https://github.com/Colorado-Mesh/mesh-client/issues/477))\r\n- **MeshCore flood-scope presets** — User-managed scope list (seeded from the radio hashtag, cap 20) replacing Colorado/Denver hardcodes; scope now lives behind a chevron split-Send menu instead of an always-visible select ([#692](https://github.com/Colorado-Mesh/mesh-client/pull/692))\r\n- **Messaging resilience** — One-click chat location share (OSM text + optional Meshtastic waypoint) with outbox enqueue on failure, chat outbox drain on RF reconnect, extended BLE/serial reconnect budgets (8 attempts) with transport-aware \"reconnecting N/M\" banner, conservative/aggressive Store & Forward catch-up setting, and a hung-only Reticulum sidecar health watchdog ([#692](https://github.com/Colorado-Mesh/mesh-client/pull/692))\r\n- **Reticulum propagation node management** — Rename/delete remote propagation nodes with confirm dialog and persistence guards ([#679](https://github.com/Colorado-Mesh/mesh-client/pull/679))\r\n- **Scale Reticulum Peers** — Incremental `peers_updated` patches, path-table TTL, forced `?refresh=1` dumps, batched Map updates, and retention parity (hard 100k ceiling / 50k user cap) keep the UI responsive at ~50k peers ([#677](https://github.com/Colorado-Mesh/mesh-client/pull/677\n…"
-  - version: v5.23.0
-    name: 5.23.0
-    datetime: '2026-07-14T14:48:08Z'
-    url: https://github.com/Colorado-Mesh/mesh-client/releases/tag/v5.23.0
-    prerelease: false
-    notes: "## [v5.23.0] - 2026-07-14\r\n\r\n### Important: Reticulum contacts cleanup (one-time)\r\n\r\nIf you use Reticulum and see **non-contacts** (peers / announce-only destinations) listed under **Contacts**, that comes from an earlier bug that promoted announces into the contact list. This release stops that pollution going forward, but **existing bad rows are not removed automatically**.\r\n\r\n**One-time fix:** App tab → **Danger Zone** (Reticulum) → **Clear all LXMF contacts**.  \r\nPeers stay on the Peers tab with their names; chat history is kept. Real contacts return when you message someone or use **Save as contact**.\r\n\r\n---\r\n\r\n### Highlights\r\n\r\nReticulum gets much more reliable LXMF DMs (delivery announces, Direct/path-aware sends, saturation hardening), a safer contacts model, faster Peers at large path-table sizes, and interface UX fixes (TCP/UDP/I2P auto-restart, copy LXMF hash, mic for voice clips). Official macOS builds can now be **Developer ID signed and notarized**. Chat hop badges for MeshCore and Meshtastic are fixed, packaging/smoke and long-session stability are hardened, and several flasher / i18n / BT PIN nits land with it.\r\n\r\n### What's Changed\r\n\r\n### Features\r\n\r\n- **Apple code signing and notarization** — Official macOS artifacts can be Developer ID signed and notarized when repo secrets are set; fork/local builds still skip gracefully ([#657](https://github.com/Colorado-Mesh/mesh-client/pull/657))\r\n- **Reticulum interfaces and chat UX** — Auto-restart stack after TCP/UDP/I2P/pipe (and host/port) interface changes; copy full LXMF hash from Network identity; microphone permission path for LXMF voice clips; clearer DM egress badges; DM pills promoted into the main chat row; quieter propagation sync ([#674](https://github.com/Colorado-Mesh/mesh-client/pull/674))\r\n- **Reticulum DM path reachability** — Active DM destination probe / reachability indicator when the stack is live ([#672](https://github.com/Colorado-Mesh/mesh-client/pull/672))\r\n\r\n### Bug Fixes\r\n\r\n- **Reticulum LXMF delivery and inbound receive** — Emit LXMF delivery announces, register inbound destinations, prefer Direct/path-aware signed sends, mark stale queued rows failed ([#672](https://github.com/Colorado-Mesh/mesh-client/pull/672))\r\n- **Reticulum contacts vs announces** — Named announces no longer create contacts; App Danger Zone can clear all LXMF contacts while keeping Peers and chat ([#672](https://github.com/Colorado-Mesh/mesh-client/pull/672))\r\n- **Reticulum under transport saturation** — Path-request backoff, diagnostics for link/timeouts/`share_instance` conflicts, stuck Sending → failed, propagation-node Chat notice ([#669](https://github.com/Colorado-Mesh/mesh-client/pull/669))\r\n- **Reticulum identity / Peers / Nomad** — Restore Reticulum tab on launch; header shows Network display name; faster Peers at large tables and after announces; JSON/msgpack peer name parsing; stack restart race fixes ([#672](https://github.com/Colorado-Mesh/mesh-client/pull/672), [#666](https://github.com/Colorado-Mesh/mesh-client/pull/666), [#667](https://github.com/Colorado-Mesh/mesh-client/pull/667))\r\n- **Reticulum chat polish** — Unread badges clear after reading DMs; hop count restoration; identity/announce defaults ([#674](https://github.com/Colorado-Mesh/mesh-client/pull/674), [#667](https://github.com/Colorado-Mesh/mesh-client/pull/667))\r\n- **Chat hop badges (MeshCore + Meshtastic)** — Companion `pathLen` → hop count; wider raw-log correlation fallback; Meshtastic `viaMqtt` / `hopStart===0` aligned with node/diagnostics semantics ([#670](https://github.com/Colorado-Mesh/mesh-client/pull/670))\r\n- **RNode flasher resilience** — KISS command timeouts, ESP32/nRF52 stall watchdogs, BT pairing timeout, humanized errors ([#664](https://github.com/Colorado-Mesh/mesh-client/pull/664), [#665](https://github.com/Colorado-Mesh/mesh-client/pull/665))\r\n- **Packaging / CI smoke** — ZIP+DMG verification (mount before validate), AppImage extract cwd, no raw `.app` CI uploads, CodeQ\n…"

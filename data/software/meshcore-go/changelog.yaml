@@ -1,7 +1,23 @@
 source: github
 repo: meshcore-go/meshcore-go
-updatedAt: '2026-09-17T09:23:15.756Z'
+updatedAt: '2026-09-26T04:05:40.033Z'
 releases:
+  - version: v1.6.0
+    name: v1.6.0
+    datetime: '2026-09-26T01:16:09Z'
+    url: https://github.com/meshcore-go/meshcore-go/releases/tag/v1.6.0
+    prerelease: false
+    notes: >-
+      ## What's Changed
+
+      * release: update submodule dependencies to v1.6.0 by @tuzzmaniandevil in
+      https://github.com/meshcore-go/meshcore-go/pull/15
+
+      * v1.6.0 by @tuzzmaniandevil in https://github.com/meshcore-go/meshcore-go/pull/16
+
+
+
+      **Full Changelog**: https://github.com/meshcore-go/meshcore-go/compare/v1.5.0...v1.6.0
   - version: v1.5.0
     name: v1.5.0
     datetime: '2026-09-17T05:22:35Z'
