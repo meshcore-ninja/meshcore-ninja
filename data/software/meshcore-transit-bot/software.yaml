@@ -1,0 +1,69 @@
+# Source: https://gitlab.com/Maxb0tbeep/meshcore-transit-bot (verified 2026-09-10)
+name: MeshCore Transit Bot
+kind: bot
+status: active
+maturity: stable
+description: >-
+  A bot that announces public transit service alerts using the
+  GTFS-RT API, a standard used by most agencies around the world. 
+  Alerts can be announced from multiple agencies in separated channels.
+
+image: icon.png
+
+screenshots:
+  - file: startup.png
+    caption: Example transit agencies mapped to their corresponding channels
+  - file: muni.png
+    caption: A service alerts channel
+
+maintainers:
+  - name: Maxb0tbeep
+    url: https://gitlab.com/Maxb0tbeep
+
+repository: https://gitlab.com/Maxb0tbeep/meshcore-transit-bot
+license: GPL-3.0-only
+
+languages:
+  - python
+
+platforms:
+  - linux
+  - macos
+  - windows
+interfaces:
+  - cli
+  - headless
+connections:
+  - serial
+  - usb
+  - http
+node_roles:
+  - companion
+capabilities:
+  - messaging
+  - channels
+  - automation
+  - notifications
+
+install:
+  - type: source
+    url: https://gitlab.com/Maxb0tbeep/meshcore-transit-bot
+    command: pip install -r requirements.txt
+
+verification:
+  sourceAvailable: true
+  releasesAvailable: false
+  signedReleases: false
+  ciBuilds: false
+  hasDocumentation: true
+  lastChecked: 2026-09-10
+  notes:
+    - Requires a GTFS Realtime service-alert endpoint and any API key required by the transit agency.
+
+tags:
+  - transit
+  - gtfs-realtime
+  - service-alerts
+  - self-hosted
+
+last_reviewed: 2026-09-10
