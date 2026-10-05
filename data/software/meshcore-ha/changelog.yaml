@@ -1,13 +1,106 @@
 source: github
 repo: meshcore-dev/meshcore-ha
-updatedAt: '2026-09-22T00:39:04.036Z'
+updatedAt: '2026-10-05T08:35:50.522Z'
 releases:
-  - version: v3.0.0-beta
-    name: 3.0.0-beta
-    datetime: '2026-09-21T22:49:05Z'
-    url: https://github.com/meshcore-dev/meshcore-ha/releases/tag/v3.0.0-beta
-    prerelease: true
-    notes: "Beta of the internal rewrite. This release gets updated in place while it soaks. Same events, services, entity ids and default polling as 2.10. If you install it and something regresses, open an issue with the log.\r\n\r\n## Requirements\r\n\r\n- Home Assistant 2025.6 or newer. The code already needed APIs newer than the 2023.8 we advertised.\r\n- meshcore 2.3.11 or newer.\r\n\r\n## What changed\r\n\r\n**Radio**\r\n- The integration owns the radio session now. No SDK auto reconnect, our own backoff, and subscriptions survive a reconnect. Going deaf after a link drop until you reload is gone.\r\n- Every command goes through one gate. Remote requests match their own reply by node prefix + tag, so two commands in flight can't take each other's response.\r\n- `connected` goes false when the link actually drops, not ~100s later.\r\n- Login checks `LOGIN_FAILED`, wrong password fails fast. Neighbour paging is bounded.\r\n\r\n**Traffic**\r\n- New `traffic_policy` option in Global Settings. `legacy` (default) is exactly the old polling and retry numbers. `governed` is a flat per radio budget split into flood / direct / message lanes, deferral instead of failure, persisted across restarts. Rates show on the rate limiter sensor and in the log.\r\n\r\n**Config**\r\n- Edits apply in place. Only connection identity and the `cli_console_enabled` / `self_diagnostics_enabled` toggles reload the entry. Add/remove/edit a tracked node, change intervals, brokers, discovery, or press the firmware button and the radio session stays up.\r\n- Entries get a `unique_id`. Adding the same radio twice is refused. `messages_interval` is in Global Settings now.\r\n- Entry migrates v3 → v4 on load. Downgrade still works, the old data is kept.\r\n\r\n**Events and services**\r\n- Every `meshcore_*` event has `entry_id` and `device_id`.\r\n- Private key and channel secrets are redacted on the bus and raw MQTT. `expose_secrets` turns that off.\r\n- DMs fire `meshcore_message_sent` right away and a terminal `meshcore_delivery_update`. Channel sends fire `meshcore_message` at t=0, the repeater count arrives on `meshcore_delivery_update`. New `meshcore_message_send_failed`. Unknown sender DMs are published with `sender_name: null` instead of dropped.\r\n- `execute_command` refuses factory reset, key import and raw frames. `add_selected_contact` / `remove_selected_contact` are admin. `send_message` with no recipient errors cleanly. `trace` takes 6 char prefixes. `cleanup_unavailable_contacts` only touches contact sensors of that entry. Prefix args resolve for `send_login_sync` and the other sync helpers, and SDK errors come back as an error dict instead of a 500.\r\n\r\n**Entities**\r\n- Telemetry entities for LPP types that never got any: accelerometer, colour, gyro per axis, barometer, altitude, frequency, percentage, load, concentration, distance, energy, direction, time, switch.\r\n- Radio identity sensors (tx power, lat/lon, freq, bw, sf) populate at startup.\r\n- `select.meshcore_contact` defaults to the placeholder, so a renamed or removed target can't redirect a drafted message.\r\n- Adverts no longer write the whole contact store per packet or reschedule the tick. MQTT uploader starts in the background instead of blocking setup.\r\n\r\n## Notes\r\n\r\n- Architecture diagram lives in `docs/architecture/`."
+  - version: v3.0.0
+    name: v3.0.0
+    datetime: '2026-10-05T05:06:13Z'
+    url: https://github.com/meshcore-dev/meshcore-ha/releases/tag/v3.0.0
+    prerelease: false
+    notes: >-
+      3.0 rebuilds how the integration talks to the radio, protects the shared mesh from runaway
+      polling, and ships a rewritten documentation site. Read [Upgrade to
+      3.0](https://meshcore-dev.github.io/meshcore-ha/docs/ha/upgrade-3.0) before you update.
+
+
+      ## Upgrade notes
+
+
+      - Requires Home Assistant 2025.6.0 and meshcore 2.3.11 or later.
+
+      - Entries are migrated to a new version on first start. 2.x cannot load a migrated entry, so
+      take a backup if you may roll back.
+
+      - **Mesh traffic policy.** New installs use **Governed**. Existing installs keep **Legacy**,
+      which is now deprecated and logs a warning at startup. Switching to Governed is one-way. See
+      [Mesh Traffic Policy](https://meshcore-dev.github.io/meshcore-ha/docs/ha/traffic-policy) and
+      [Legacy traffic
+      policy](https://meshcore-dev.github.io/meshcore-ha/docs/ha/legacy-traffic-policy).
+
+      - **Events.** Every `meshcore_*` event carries `entry_id` and `device_id`. An outgoing channel
+      message fires `meshcore_message` when it is sent; the final repeat count arrives as
+      `meshcore_delivery_update` with `progressive: false`. A failed send fires
+      `meshcore_message_send_failed`.
+
+      - `execute_command` refuses factory reset, private key import and raw packet commands.
+      `add_selected_contact` and `remove_selected_contact` are admin-only and need `entry_id` when
+      you have two or more companions.
+
+      - Companion telemetry and GPS tracker entities created from now on include the companion key
+      prefix in their entity ID. Existing entities keep their IDs.
+
+      - Integrations that read the integration's internal objects (`coordinator._repeater_stats`,
+      `api.mesh_core`, `api._cache_self_info_event`) still work but log a deprecation warning. Use
+      the [supported
+      interface](https://meshcore-dev.github.io/meshcore-ha/docs/ha/companion-integration-api).
+
+
+      ## Features
+
+
+      - **Governed traffic policy**: separate flood, direct and message budgets per companion. Polls
+      wait for budget instead of failing, a broken route is repaired at once with up to 3 path
+      discoveries, and nodes that stop answering back off.
+
+      - Options apply without a reload, and tracked nodes can be added, edited and removed in place.
+
+      - Contact sensors show the route of the last advert (`adv_path`, `adv_path_len`,
+      `adv_path_time`). (#323, @jpettitt)
+
+      - The repeat window for outgoing channel messages is sized to the packet's airtime (4 to 20
+      s). (#366)
+
+      - Long channel messages whose repeats the companion cannot report show **Unconfirmed** instead
+      of **0 Repeaters**, and events carry `repeats_observable`. (#367)
+
+      - Secrets are redacted on the event bus, in MQTT raw payloads and in the CLI Console unless
+      **Expose Node Secrets in Events** is on.
+
+
+      ## Fixes
+
+
+      - MQTT: correct route letters (flood was published as direct), no empty packet records from
+      stats refreshes, connection sensors follow broker changes without a reload.
+
+      - The radio connection is owned by Home Assistant: reconnects, command serialization and a
+      released SDK instance after a failed connect. (#364, @jpettitt)
+
+      - Last Message Delivery reacts only to its own companion. Selected-contact services no longer
+      mix companions.
+
+      - Unsupported manual contact mode is asked once per connection and logged at info level.
+      (#368)
+
+      - Many smaller fixes to contacts, trace, neighbor aging, logbook labels and error responses.
+
+
+      ## Documentation
+
+
+      The documentation site is rewritten against the code in ASD-STE100 Simplified Technical
+      English, with new Concepts, First steps, Upgrade, Mesh Traffic Policy, Two or more companions
+      and Troubleshooting pages.
+
+
+      ## Notes
+
+
+      - Validation: 450 integration tests pass. The release ran on the maintainer's Home Assistant
+      with a live companion and LetsMesh MQTT; no regressions were found.
+
+
+      **Full changelog:** https://github.com/meshcore-dev/meshcore-ha/compare/v2.10.0...v3.0.0
   - version: v2.10.0
     name: v2.10.0
     datetime: '2026-09-19T07:11:21Z'

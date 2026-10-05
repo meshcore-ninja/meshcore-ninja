@@ -1,7 +1,126 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-10-03T22:45:08.014Z'
+updatedAt: '2026-10-05T08:35:59.302Z'
 releases:
+  - version: v4.17.0-rc4
+    name: v4.17.0-rc4
+    datetime: '2026-10-05T02:35:43Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.0-rc4
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.17.0-rc4
+
+
+      > [!WARNING]
+
+      > This is a **pre-release** for testing. It is not tagged `latest`. Use it on a test install
+      or with a recent backup.
+
+
+      ## Summary
+
+
+      This release candidate fixes the Windows desktop app, whose landing page loaded white on a
+      cold start: the Windows build shipped without its theme styles. System backups now cover every
+      table and stream the export, so large databases back up again; a backup is now a secret and
+      its download is admin-only. Message notifications get a user-set format with the source shown
+      once, each source keeps its own notification settings, and the Notifications page follows the
+      light theme. MeshCore gains plaintext for channel packets in the Packet Monitor, split or
+      truncated long auto-acknowledge replies, a serial health probe for repeaters, a faster-failing
+      Trace Path, and merged rows in Unified Messages when several sources hear one message.
+      Translation providers each keep their own API key, and OpenAI-compatible base URLs resolve
+      correctly. Traceroutes now read the same way everywhere, and source connection details no
+      longer reach viewers who lack the right grant.
+
+
+      ## Features
+
+      - MeshCore: decrypt GRP_TXT / GRP_DATA in the Packet Decode modal (#5583)
+
+      - MeshCore: split or truncate long Auto-Acknowledge replies (#5584)
+
+      - MeshCore: map toggle to hide nodes whose latest advert had no position (#5585)
+
+      - MeshCore: role, hops and last-heard tokens on node triggers (#5603)
+
+      - Map: traceroute-confirmed reciprocal links on the cross-source layer (#5586)
+
+      - Unified Messages: one row for a MeshCore message heard by several sources (#5590)
+
+      - Notifications: user-set message format and a lighter default (#5605)
+
+      - Translation: each provider owns its config fields; one API key per provider (#5600)
+
+      - Lint: guardrail against hardcoded colours in inline styles and CSS (#5606)
+
+
+      ## Bug Fixes
+
+      - Build: Windows desktop app ships its theme CSS again (#5599)
+
+      - Backup: back up every table, stream the export, allowlist restore on all backends (#5618)
+
+      - Sources: tighter config redaction for non-admins (#5619)
+
+      - Notifications: a source with no saved preferences uses built-in defaults, not another
+      source's (#5609)
+
+      - Notifications: page colours come from theme tokens (#5604)
+
+      - Traceroute: every reader gets requester-first rows (#5611)
+
+      - MQTT bridge: stop retrying a rejected broker login, per client (#5610)
+
+      - MeshCore MQTT ingest: stop login retries after 5 rejections; back up Observer keys; clear
+      key rows on source delete (#5602)
+
+      - MeshCore: repeater serial health probe and auto-reconnect (#5581)
+
+      - MeshCore: Trace Path waits per the firmware's suggested timeout (#5589)
+
+      - MeshCore: Virtual Node relays STATUS and TELEMETRY binary requests (#5598)
+
+      - MeshCore: Virtual Node sends the packed path length (#5608)
+
+      - MeshCore: ingest page header shows region and broker again (#5607)
+
+      - Packet Monitor: "Hide Own Packets" keeps TX rows and shows a hidden count (#5582)
+
+      - Translation: endpoint URL resolution for custom and versioned base URLs (#5545), by @Crim
+
+
+      ## Docs and Tests
+
+      - Coverage Report: "Why a survey looks sparse" (#5601)
+
+      - Tests: wall-clock and module-load cost taken out of flaky tests (#5617)
+
+
+      ## Issues Resolved
+
+      #5518, #5519, #5558, #5563, #5564, #5567, #5568, #5578, #5579, #5580, #5587, #5588, #5591,
+      #5592, #5593, #5594, #5595, #5597
+
+
+      ## Upgrade Notes
+
+      - **Migrations 194–197** run on first start.
+
+      - **Translation API keys:** the stored key moves to the active provider only. Enter keys for
+      any other provider again.
+
+      - **Translation URLs:** a custom URL with a sub-path and no version (for example
+      `http://host/libre`) is now used as written; earlier candidates appended the provider path to
+      it.
+
+      - **Backups:** a system backup now holds every table, including channel keys in the clear,
+      tokens and encrypted credentials. Store it like a secret. Download is admin-only; new backup
+      files are readable only by the server's user.
+
+      - **Notifications:** each source uses its own saved settings. A source you never saved
+      settings 
+
+      …
   - version: v4.17.0-rc3
     name: v4.17.0-rc3
     datetime: '2026-10-03T20:08:40Z'
@@ -2139,126 +2258,3 @@ releases:
 
 
       **Full changelog:** https://github.com/Yeraze/meshmonitor/compare/v4.16.0-rc5...v4.16.0-rc6
-  - version: v4.16.0-rc5
-    name: v4.16.0-rc5
-    datetime: '2026-09-08T02:29:49Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.16.0-rc5
-    prerelease: true
-    notes: >-
-      # MeshMonitor v4.16.0-rc5
-
-
-      > ⚠️ **Pre-release.** This is a release candidate for 4.16.0. It does not carry the `:latest`
-      Docker tag. Please report anything you hit against the 4.16.0 milestone.
-
-
-      Nine issues fixed since rc4, weighted heavily toward MeshCore stability. The headline is a
-      crash: a `code=142` frame from a native MeshCore source could reject with no argument, and the
-      resulting `TypeError` inside the `catch` block became an unhandled rejection that terminated
-      the whole process — supervised restarts made it look like nothing more than a brief 503.
-      MeshCore also gains two RepeaterStats counters the pinned library had been silently
-      truncating, a corrected Companion queue depth (it had been reading the low byte of the error
-      counter), and an end to false "inactive node" alerts for nodes that answer telemetry polls but
-      rarely advert. Two `meshcore_mqtt` regressions are fixed: those sources were excluded from
-      dashboard nodes and rendered the Meshtastic app shell instead of a MeshCore page. On the
-      Meshtastic side, Traffic Management is rebuilt on the 2.8 non-zero-enables schema — nine
-      controls that silently did nothing against 2.8 firmware are gone, and the settings that remain
-      are documented as "0 disables". The Helm chart repository is repaired: every previously
-      released archive it advertised had been 404ing, and older releases are downloadable again.
-      Rounding out the release, chart panels no longer overflow the viewport in portrait on mobile,
-      and received MeshBeacon offers now warn when the advertised region and preset are regulatorily
-      non-compliant.
-
-
-      ## Bug Fixes
-
-
-      - **MeshCore:** guard the unhandled-rejection crash from bare library rejects — #5104 (fixes
-      #5102)
-
-      - **MeshCore:** decode the RepeaterStats and Core stats fields the pinned library dropped —
-      #5127 (fixes #5125)
-
-      - **MeshCore:** refresh `lastHeard` on a telemetry round-trip, not just adverts — #5132 (fixes
-      #5131)
-
-      - **MeshCore MQTT:** give ingest sources their own page, and let data routes reach them —
-      #5098 (fixes #5096)
-
-      - **MeshCore MQTT:** route ingest sources through every MeshCore read path — #5095 (fixes
-      #5094)
-
-      - **Config:** move Traffic Management to the v2.8 non-zero-enables schema — #5128 (fixes
-      #5123)
-
-      - **Helm:** re-fetch previously published chart archives on redeploy — #5120 (fixes #5119)
-
-      - **Telemetry UI:** stop chart panels overflowing the viewport in portrait — #5133 (fixes
-      #5093)
-
-      - **TCP:** scope the connect timeout to its own attempt and name every teardown — #5130
-
-
-      ## Features
-
-
-      - **Beacons:** warn on regulator-non-compliant preset/region combinations in received offers —
-      #5129 (closes #5103)
-
-
-      ## Dependencies
-
-
-      - Production group with 9 updates — #5106
-
-      - Development group with 4 updates — #5105
-
-      - `express-rate-limit` 8.6.2 → 8.7.0 — #5113
-
-      - `@tanstack/react-query` 5.101.4 → 5.102.8 — #5116
-
-      - `lucide-react` 1.35.0 → 1.40.0 — #5117
-
-      - `morgan` 1.11.0 → 1.12.0 — #5111
-
-      - `@typescript-eslint/eslint-plugin` — #5115
-
-      - `puppeteer` 25.8.0 → 25.10.0 — #5109
-
-      - `docker/setup-qemu-action` 4.2.0 → 4.3.0 — #5112
-
-      - `actions/deploy-pages` 5.0.0 → 5.0.1 — #5110
-
-      - `softprops/action-gh-release` 3.0.2 → 3.0.3 — #5108
-
-
-      ## Issues Resolved
-
-
-      - #5093 — Node Info chart panels overflow horizontally in portrait
-
-      - #5094 — `meshcore_mqtt` sources excluded from dashboard nodes
-
-      - #5096 — `meshcore_mqtt` sources render the Meshtastic App shell
-
-      - #5102 — Native MeshCore `code=142` frame crashes MeshMonitor
-
-      - #5103 — MeshBeacon: warn on non-compliant preset/region combos
-
-      - #5119 — Helm repository index references non-existent files
-
-      - #5123 — TrafficManagement config UI still on the v2.7.22 schema
-
-      - #5125 — MeshCore remote stats: dropped counters and misread queue depth
-
-      - #5131 — MeshCore inactive-node alerts firing for active nodes
-
-
-      ## Still Open
-
-
-      **#5122** (repeated disconnects during initial config sync on a large mesh) is **not**
-      resolved by this release. #5130 removes a latent bug that matches the reported fingerprint — a
-      connect timeout that could outlive its own attempt and des
-
-      …

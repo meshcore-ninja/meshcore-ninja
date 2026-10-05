@@ -1,7 +1,13 @@
 source: github
 repo: laserir/MCLite
-updatedAt: '2026-09-12T20:18:59.104Z'
+updatedAt: '2026-10-05T08:35:23.103Z'
 releases:
+  - version: v0.4.5
+    name: v0.4.5 — clock sync without GPS, Discover Repeaters
+    datetime: '2026-10-05T06:24:03Z'
+    url: https://github.com/laserir/MCLite/releases/tag/v0.4.5
+    prerelease: false
+    notes: '**Full Changelog**: https://github.com/laserir/MCLite/compare/v0.4.4...v0.4.5'
   - version: v0.4.4
     name: v0.4.4 — offgrid presets, 12-hour clock, translations that repair themselves
     datetime: '2026-09-12T20:14:24Z'
@@ -781,53 +787,3 @@ releases:
 
 
       🤖 Generated with [Claude Code](https://claude.com/claude-code)
-  - version: v0.1.5
-    name: v0.1.5
-    datetime: '2026-04-21T09:31:28Z'
-    url: https://github.com/laserir/MCLite/releases/tag/v0.1.5
-    prerelease: false
-    notes: >-
-      ## Highlights
-
-
-      - **MeshCore upgraded to v1.15.0** (`companion-v1.15.0`) — catches up with upstream bug fixes,
-      new token-bucket duty-cycle dispatcher, and default-scope aligned wire format.
-      Binary-compatible with all MCLite v0.1.x peers.
-
-      - **SOS burst hardened** — 50ms inter-send pacing and dispatcher yield between each recipient
-      so the packet pool can drain. Fixes intermittent cases where SOS delivered to only some
-      contacts/channels in meshes with many targets.
-
-      - **SOS received → key lock auto-disengages** — when an incoming SOS alert appears, the device
-      automatically unlocks its keys so the user can respond immediately. **PIN lock stays engaged**
-      — no security compromise.
-
-      - **Configurable path hash mode** — new `radio.path_hash_mode` setting (0/1/2 → 1/2/3 bytes
-      per repeater fingerprint in the packet path). Larger sizes reduce path collisions in dense
-      meshes at the cost of a few extra bytes per hop. Defaults to 0 for wire-identical
-      compatibility with pre-v1.15 peers.
-
-      - **Admin screen shows active path hash size** plus per-channel scope overrides rendered as
-      `[scope:#name]`, distinct from the `[SOS]` / `[read-only]` capability flags.
-
-
-      ## Changes since v0.1.4
-
-
-      - `08ca1f7` Bump MeshCore to v1.15.0, harden SOS burst delivery
-
-      - `a90ad6e` Add configurable path hash mode and admin screen scope display
-
-      - `0f53de1` Bump version to 0.1.5
-
-      - `aba8ceb` Publish firmware v0.1.5 to web flasher
-
-      - `debad94` Document scope and path_hash_mode in example config
-
-
-      ## Install
-
-
-      Flash `mclite-v0.1.5.bin` via the [web
-      flasher](https://laserir.github.io/MCLite/tools/web-flasher/) or manually with esptool. Use
-      `mclite_config_tool.html` (offline, single file) to edit `config.json`.
