@@ -1,7 +1,103 @@
 source: github
 repo: ALLFATHER-BV/wadamesh
-updatedAt: '2026-10-03T19:05:23.844Z'
+updatedAt: '2026-10-05T19:08:02.314Z'
 releases:
+  - version: beta_88
+    name: wadamesh beta_88
+    datetime: '2026-10-05T12:05:30Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_88
+    prerelease: true
+    notes: >-
+      Test build. Stable is **beta_85**.
+
+
+      Flash it at **[flasher.wadamesh.com](https://flasher.wadamesh.com)** (switch the toggle to
+      Beta), or update on the device if you have "Get test builds (beta)" turned on.
+
+
+      Most of this drop is [@oumike](https://github.com/oumike)'s, with two fixes from
+      [@jcyrio](https://github.com/jcyrio).
+
+
+      ## Read this if you own a T-Display P4
+
+
+      **beta_86 and beta_87 do not boot on older P4 units.** If yours has been dark and restarting
+      since you updated, this build fixes it, and you are not alone: three people hit it.
+
+
+      The P4 ships with one of two different firmwares on its C6 radio co-processor. Newer units run
+      esp-hosted, which is what beta_86 switched to; older units still carry the factory ESP-AT, and
+      on those the two sides could never agree. That alone should have cost you Wi-Fi. Instead the
+      co-processor driver rebooted the whole board about ten seconds into every boot, and the Wi-Fi
+      handshake sat in front of the display, so the screen never got as far as drawing.
+
+
+      Two things changed. The screen, touch and LoRa now come up before anything talks to the C6, so
+      a co-processor that cannot be reached can no longer take the device with it. And the driver no
+      longer restarts the board, or spins retrying, when the link is never going to work.
+
+
+      **If you have an older unit, there is now a build that matches it.** Look for the entries
+      marked "older unit, ESP-AT C6" in the flasher, or the `-at` files below. Those restore Wi-Fi
+      as well. If you are not sure which you have, flash the normal one: it will work, and you will
+      know by whether Wi-Fi does.
+
+
+      Thanks to [@jalevdev](https://github.com/jalevdev) for the report and a log that named the
+      cause (#600).
+
+
+      ## A channel message could go out on the public channel
+
+
+      If a channel went missing while you had its chat open, and you sent from the web interface,
+      the message did not fail. It went out on the first channel on the device, which is normally
+      the public one, with nothing on screen to say so.
+
+
+      The web path did look the channel up by name before sending. It then fell back to the thread's
+      remembered slot when that lookup failed, which is exactly the thing the lookup existed to
+      protect against: after a channel is added or removed the slots shift, so the remembered one
+      points at a different, still valid channel. It now refuses and says so, which is what the
+      on-device composer already did. The check also moved to the one point every sender passes
+      through.
+
+
+      Reported by [@TippyLion28](https://github.com/TippyLion28) (#588, #589).
+
+
+      ## Fixes
+
+
+      - **Deleting a chat's history no longer deletes the chat.** The confirmation always said the
+      chat would stay. It does now, and Delete chat is still how you remove it. By
+      [@jcyrio](https://github.com/jcyrio) (#587).
+
+      - **The T-LoRa Pager stops losing half an hour a day.** The clock ran off the processor's own
+      timer and drifted, while the accurate clock chip beside it was only read at boot. It is read
+      back hourly now. [@jcyrio](https://github.com/jcyrio) diagnosed this from the source before
+      filing it (#583).
+
+      - **The ThinkNode M9's bottom icons have stopped flashing.** They carry a count now and show
+      only when they mean something. The new-nodes one used to blink forever because it counted
+      every node ever heard rather than the ones you had not looked at.
+
+      - **"100%" is no longer hidden behind the signal bars** on the M9 and the Heltec V4-R8, at any
+      text size, and it no longer jumps back when you plug in a charger. Reported by buko84 and
+      jd1227.
+
+      - **The status-bar clock no longer sits under the Bluetooth icon**, which
+      [@DenRalle](https://github.com/DenRalle) spotted while asking about something else (#594).
+
+      - **Map tiles cache again on a P4 with no SD card.** The cache was pointed at a filesystem
+      nothing had mounted.
+
+      - **The Secondary keyboards page named a key the Pager does not have.** T-LoRa Pager, T-Deck
+      Pro and T-Deck Max were told to tap an on-screen language key; double-tap SPACE is what
+      actually switches layout there. By [@jcyrio](https://
+
+      …
   - version: beta_87
     name: wadamesh beta_87
     datetime: '2026-10-03T18:04:57Z'
@@ -1775,94 +1871,5 @@ releases:
       - Lua apps can list the SD card, read only
       ([#312](https://github.com/ALLFATHER-BV/wadamesh/pull/312), closes
       [#309](https://github.com/ALLFATHER-BV/
-
-      …
-  - version: beta_68
-    name: wadamesh beta_68
-    datetime: '2026-08-21T20:08:52Z'
-    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_68
-    prerelease: true
-    notes: >-
-      **Test build.** Stable stays
-      [beta_65](https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_65). Flash it from the
-      web flasher at [wadamesh.com](https://wadamesh.com) with the Beta toggle on, or from the
-      device under Settings > Updates with "Get test builds (beta)" enabled.
-
-
-      This drop is almost entirely new **Lua SDK** surface. If you write apps, this is the one to
-      try. If you do not, the user-facing changes are a handful of fixes and two new Store apps.
-
-
-      ## Apps can now do the things the firmware does
-
-
-      The SDK gained the four capabilities that were keeping third-party apps a sketch of a built-in
-      one.
-
-
-      **`wada.map`** puts the real map on an app's page. Not a drawing of a map: the same
-      OpenStreetMap tiles, the same Web Mercator projection and the same on-disk cache the Map tab
-      uses. Markers and lines are placed by latitude and longitude, taps convert back to
-      coordinates, and `map:tiles()` reports how many tiles were actually placed so an app can say
-      "nothing cached here" rather than showing an empty rectangle that looks like open water. It
-      owns a small pool of its own rather than borrowing the Map tab's, so the two cannot evict each
-      other's tiles.
-
-
-      **`wada.ui.list`** is the "pick one of N" widget that did not exist. Every app needing one
-      drew rows by hand and tracked scrolling itself, which is most of why app screens looked worse
-      than the firmware's own. Rows are real buttons, so keyboard and trackball navigation walks
-      them on boards with no touchscreen.
-
-
-      **`app.on_packet`** delivers each received frame once, in arrival order. Polling `rx_log()`
-      sampled a 16-deep ring on a timer, so in real traffic an app saw a subset and could not count
-      anything.
-
-
-      **`wada.mesh.discover`** fires the active zero-hop discovery probe. A reply proves the link
-      works from where you are standing, which listening can never establish, and each reply carries
-      **both directions**: how well you heard them and how well they heard you. Those are rarely
-      equal, and "I can hear the repeater but it cannot hear me" is a different fact from "no
-      coverage". It sits behind its own permission, separate from sending messages, because a probe
-      spends airtime on every neighbour's radio and not only yours.
-
-
-      Everything those need to be useful came with them:
-
-
-      - Packets report **who sent them, only where the frame honestly says so**. An advert carries a
-      real public key and is reported as one; addressed frames carry one-byte hashes and are
-      reported as those; anything else stays anonymous. Nothing is inferred.
-
-      - **`wada.ui.input`** for a line of text, using the firmware's own dialog and keyboard, so it
-      behaves the same on touch, on a physical keyboard and on a trackball.
-
-      - **`wada.geo`** for distance, bearing and compass point, in C. A dozen trigonometry calls per
-      contact per tick was a real slice of an app's instruction budget. (It is not a compass: no
-      board here has a magnetometer, so this is the direction to steer, not the direction you are
-      facing.)
-
-      - **`wada.sys.env`** for temperature, humidity and pressure, gated on whether the board *has*
-      the sensors rather than on the memory limit that gates the rest of the extended SDK. Those are
-      different questions.
-
-      - **Named and one-shot timers.** An app had one clock; anything with a second cadence had to
-      be a counter inside it.
-
-      - **`wada.net.http_post`**, so a survey log or a sensor series can leave the device.
-
-      - **Exact coordinates.** Lua is built with 32-bit floats, so anything logging a track was
-      quietly losing about a metre. `lat_e6`/`lon_e6` are the same reading as exact integers,
-      alongside GPS altitude and satellite time.
-
-
-      Two new Store apps demonstrate the lot. **Wardrive** is a coverage survey: it probes on a
-      cadence, discards samples taken without a GPS fix rather than logging them at 0,0, and writes
-      a CSV with both link directions per node. **Nearby** puts your contacts on a real map sorted
-      by distance, with bearing, and counts frames live.
-
-
-      Full reference, including the instruction budget and what it costs: [wadames
 
       …

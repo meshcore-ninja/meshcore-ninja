@@ -1,7 +1,19 @@
 source: github
 repo: 868meshbot/Saitama
-updatedAt: '2026-10-03T11:16:57.457Z'
+updatedAt: '2026-10-05T19:08:00.221Z'
 releases:
+  - version: v1.4.3
+    name: v1.4.3
+    datetime: '2026-10-05T16:02:37Z'
+    url: https://github.com/868meshbot/Saitama/releases/tag/v1.4.3
+    prerelease: false
+    notes: '**Full Changelog**: https://github.com/868meshbot/Saitama/compare/v1.4.2...v1.4.3'
+  - version: v1.4.2
+    name: v1.4.2
+    datetime: '2026-10-05T09:06:12Z'
+    url: https://github.com/868meshbot/Saitama/releases/tag/v1.4.2
+    prerelease: false
+    notes: '**Full Changelog**: https://github.com/868meshbot/Saitama/compare/v1.4.1...v1.4.2'
   - version: v1.4.1
     name: v1.4.1
     datetime: '2026-10-03T08:47:11Z'
@@ -120,21 +132,3 @@ releases:
     notes: >-
       **Full Changelog**:
       https://github.com/868meshbot/Saitama/compare/v0.1.0-beta.12...v0.1.0-beta.13
-  - version: v0.1.0-beta.10
-    name: v0.1.0-beta.10
-    datetime: '2026-06-05T09:55:04Z'
-    url: https://github.com/868meshbot/Saitama/releases/tag/v0.1.0-beta.10
-    prerelease: false
-    notes: >-
-      ## What's Changed
-
-      * adds github actions CI build and artifacts archiving by @t413 in
-      https://github.com/868meshbot/Saitama/pull/3
-
-
-      ## New Contributors
-
-      * @t413 made their first contribution in https://github.com/868meshbot/Saitama/pull/3
-
-
-      **Full Changelog**: https://github.com/868meshbot/Saitama/commits/v0.1.0-beta.10
