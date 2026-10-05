@@ -1,0 +1,44 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "ShapeName":"OKI Mesh",
+        "id": 475,
+        "shape": "Polygon"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -87.498082,
+              40.930115
+            ],
+            [
+              -84.83981,
+              41.14557
+            ],
+            [
+              -82.37926,
+              39.96028
+            ],
+            [
+              -84.422395,
+              37.492294
+            ],
+            [
+              -88.09125,
+              37.405074
+            ],
+            [
+              -87.498082,
+              40.930115
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}
