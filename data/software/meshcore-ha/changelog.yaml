@@ -1,7 +1,34 @@
 source: github
 repo: meshcore-dev/meshcore-ha
-updatedAt: '2026-10-05T08:35:50.522Z'
+updatedAt: '2026-10-06T01:11:57.544Z'
 releases:
+  - version: v3.0.1
+    name: v3.0.1
+    datetime: '2026-10-06T00:22:09Z'
+    url: https://github.com/meshcore-dev/meshcore-ha/releases/tag/v3.0.1
+    prerelease: false
+    notes: >-
+      ## Fixes
+
+
+      - Channel messages: the name before the first `: ` is the sender again for every sender, as in
+      2.x. 3.0.0 only accepted it when the sender was a contact on the companion, so other senders
+      showed as `Unknown` and the name stayed in `message`. `pubkey_prefix` is filled when the name
+      matches an added or discovered contact. (#370)
+
+      - A tracked node whose contact is missing from the companion is retried on its own update
+      interval instead of every 5 seconds, with one warning per node until the contact returns.
+      (#369)
+
+
+      ## Notes
+
+
+      - Validation: 451 integration tests pass. Ran on the maintainer's Home Assistant with a live
+      companion.
+
+
+      **Full changelog:** https://github.com/meshcore-dev/meshcore-ha/compare/v3.0.0...v3.0.1
   - version: v3.0.0
     name: v3.0.0
     datetime: '2026-10-05T05:06:13Z'
@@ -580,9 +607,3 @@ releases:
     url: https://github.com/meshcore-dev/meshcore-ha/releases/tag/v2.1.10
     prerelease: false
     notes: "- Adds channel name support. Channel name will now be used in logs and sensors instead of the index\r\n- Fixes a bug with sensors going stale after an hour if the configured interval was longer than an hour\r\n- Updates the default refresh interval to be 2 hours"
-  - version: v2.1.9
-    name: v2.1.9
-    datetime: '2025-10-13T19:08:28Z'
-    url: https://github.com/meshcore-dev/meshcore-ha/releases/tag/v2.1.9
-    prerelease: false
-    notes: "## What's Changed\r\n* Battery Percentage calc by @oliverl-21 in https://github.com/meshcore-dev/meshcore-ha/pull/77\r\n* Make all services translatable + update sk translation. by @jose1711 in https://github.com/meshcore-dev/meshcore-ha/pull/79\r\n* Add sensor support by @awolden in https://github.com/meshcore-dev/meshcore-ha/pull/84\r\n\r\n## New Contributors\r\n* @oliverl-21 made their first contribution in https://github.com/meshcore-dev/meshcore-ha/pull/77\r\n\r\n**Full Changelog**: https://github.com/meshcore-dev/meshcore-ha/compare/v2.1.8...v2.1.9"

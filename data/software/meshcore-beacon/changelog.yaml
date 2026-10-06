@@ -1,7 +1,53 @@
 source: github
 repo: MeshCore-Beacon/beacon-server
-updatedAt: '2026-10-03T04:22:44.158Z'
+updatedAt: '2026-10-06T01:11:54.275Z'
 releases:
+  - version: v2.0.2
+    name: v2.0.2
+    datetime: '2026-10-05T22:39:54Z'
+    url: https://github.com/MeshCore-Beacon/beacon-server/releases/tag/v2.0.2
+    prerelease: false
+    notes: >-
+      ## New features
+
+      - Added an observer directory API with traffic or name sorting, regional and observer filters,
+      pagination, and configurable time windows. Traffic defaults to the trailing seven days and
+      remains available when history is incomplete.
+
+      - Added authenticated MeshMapper imports for zones, boundaries, transport scopes, and
+      channels.
+
+
+      ## Upgrade action: MeshMapper API key required
+
+      MeshMapper integration now requires an API key. The same keys that regional admins generate
+      per region or grouped region for coverage now work for these APIs too. Use a key covering
+      every region your Beacon instance imports.
+
+
+      Set `MESHMAPPER_API_KEY` in your deployment environment or private `.env`, then restart
+      Beacon. Do not use the mobile App key. Missing or rejected keys prevent fresh imports; Beacon
+      keeps running and retains previously imported data.
+
+
+      When using saved-config backups, keep the key in the environment and leave
+      `meshmapper.api_key` empty in YAML. Backup exports reject a key stored in that YAML file.
+
+
+      ## Fixes and improvements
+
+      - Observer traffic rankings combine hourly analytics with retained observations, including
+      exact time-window boundaries, and report history coverage.
+
+      - Failed MeshMapper refreshes retain the last successful data and expose authentication or
+      permission errors.
+
+      - MeshMapper scope refreshes prioritize the longest-waiting catalogue to prevent starvation.
+      The default scope refresh interval is now 24 hours. These changes were previously tagged in
+      the unpublished v2.0.1 draft.
+
+
+      **Full changelog:** https://github.com/MeshCore-Beacon/beacon-server/compare/v2.0.0...v2.0.2
   - version: v2.0.0
     name: v2.0.0
     datetime: '2026-10-03T02:55:50Z'

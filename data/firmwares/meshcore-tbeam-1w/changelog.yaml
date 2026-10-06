@@ -1,7 +1,15 @@
 source: github
 repo: mintylinux/Meshcore-T-beam-1W-Firmware
-updatedAt: '2026-08-28T06:00:21.185Z'
+updatedAt: '2026-10-06T01:11:40.940Z'
 releases:
+  - version: 1.17.1.1
+    name: Meshcore-T-Beam-1W-Firmware Ver 1.17.1 (FIXED OFFSET)
+    datetime: '2026-10-06T00:12:43Z'
+    url: https://github.com/mintylinux/Meshcore-T-beam-1W-Firmware/releases/tag/1.17.1.1
+    prerelease: false
+    notes: >-
+      The Firmware was being flashed to the wrong offset. Firmware for 1.17.1 does install correctly
+      with meshcore.io firmware flasher
   - version: 1.17.1
     name: Meshcore-T-Beam-1W-Firmware Ver 1.17.1
     datetime: '2026-08-28T01:11:49Z'
