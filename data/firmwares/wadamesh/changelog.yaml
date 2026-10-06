@@ -1,7 +1,13 @@
 source: github
 repo: ALLFATHER-BV/wadamesh
-updatedAt: '2026-10-05T19:08:02.314Z'
+updatedAt: '2026-10-06T22:28:23.741Z'
 releases:
+  - version: beta_89
+    name: wadamesh beta_89
+    datetime: '2026-10-06T22:13:18Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_89
+    prerelease: true
+    notes: "Test build. Stable stays **beta_85**.\r\n\r\nFlash it at **[flasher.wadamesh.com](https://flasher.wadamesh.com)** (switch the toggle to Beta), or update on the device if you have \"Get test builds (beta)\" turned on.\r\n\r\n## The UI overhaul\r\n\r\nBig changes! Every screen has been redesigned, and many of the base features underneath were reworked to fit: the status bar, Chats, the conversation screen, the lock screen, the screensaver, Home, Settings, notifications and the way text scales on every board.\r\n\r\n**Only install this beta if you want to test.** If you rely on your device every day, stay on the stable build (beta_85) until this has had a few rounds of fixes. Things have moved, there will be rough edges, and some less used pages still have the old look. If you do install it, please tell us what you find, with \"Send a test report\" in Settings > About or an issue here. Every report goes straight into the next fixes.\r\n\r\nIt was built and run on a LilyGo T-Deck. Every other board builds, and every screen was checked at each board's resolution and text size, but it has not run on the other hardware yet. If you own one of those boards, you are exactly who this test needs.\r\n\r\nText that is new in this build shows in English for now. The translations follow once the wording has settled.\r\n\r\n## One design, everywhere\r\n\r\nThe firmware had grown one screen at a time, and it showed: a single text weight across more than 750 uses, over a hundred hard-coded colours, one outlined button style for everything, and white LVGL text fields, dropdowns and switch tracks on a black screen. All of that now comes from one design system: one dark palette, a clear type scale (a light clock, SemiBold names, quieter secondary and meta text), line icons everywhere, and one style for every switch, text field, dropdown, checkbox, slider, list and button. It is applied where LVGL creates each widget, so pages nobody has rebuilt yet still lose the white boxes. The main action on a page is a solid teal button with dark text.\r\n\r\n**The status bar** is calmer: the clock in the middle, signal and battery on the right, unread messages on the left, Wi-Fi and Bluetooth small and grey. The scrolling node name stays on the Home tab.\r\n\r\n**Chats** has a new header with All, Channels and Direct filters, a + to add a channel, and a menu with Mark all as read and Share my contact. Every chat gets an avatar drawn from its key, a square for a channel and a circle for a person, instead of coloured initials. The gear on every row is gone: hold a chat, or use the menu in the conversation header, and its options come up as a plain list of actions (mute messages, mute mentions, reset the chat icon, mark as read, delete history, delete the chat).\r\n\r\n**The conversation screen** has a header with the avatar and how the last message reached you: direct, a number of hops, or for a channel how many nodes it heard from today. Bubbles are neutral and the sender's colour is on the name only. Under each message is how many hops it came over; under your own channel posts, \"Heard by N repeaters\", counting the repeats as they come back. A direct message shows Sent and then Delivered, and one that was not delivered says so and resends with a tap. The composer is a pill with a teal send button.\r\n\r\n**The lock screen** is new: the wadamesh mark, a large light clock and the date, a line of the mesh activity over the last 24 hours with the number of packets heard, up to two unread conversations, and how to unlock along the bottom beside the battery. A wallpaper you chose still shows, dimmed behind it. The view moves a few pixels every minute so nothing burns into the panel, and Settings > Lock screen > Message text on lock screen hides the message text in the unread cards.\r\n\r\n**The screensaver** is new too. Constellation puts your node in the middle and the nodes you have heard around it. A ring appears wherever a packet actually came from, light runs along the routes of nodes heard in the last ten minutes, \n…"
   - version: beta_88
     name: wadamesh beta_88
     datetime: '2026-10-05T12:05:30Z'
@@ -1771,105 +1777,5 @@ releases:
       ([#326](https://github.com/ALLFATHER-BV/wadamesh/pull/326)).
 
       - Tapping an already-focused chat composer reopens the keybo
-
-      …
-  - version: beta_69
-    name: wadamesh beta_69
-    datetime: '2026-08-22T22:07:24Z'
-    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_69
-    prerelease: true
-    notes: >-
-      **This is a test build.** Stable stays on `beta_65`. Flash it from
-      [wadamesh.com](https://wadamesh.com) with the Beta toggle on, or turn on "Get test builds
-      (beta)" on the device.
-
-
-      Half of this drop came from outside the project. [@cvhviz](https://github.com/cvhviz) wrote
-      the ThinkNode M9's compass support and the GPS Compass app, and
-      [@oumike](https://github.com/oumike) did the T-Lora Pager work, the region list and the SD
-      listing API. Between them that is 35 of the 68 commits since `beta_68`.
-
-
-      ## Console mode is new, and it is very early
-
-
-      Console mode boots the device into a plain text console with **no graphical interface at
-      all**: no LVGL, no widgets, no draw buffer. You type commands, you read replies, and the
-      memory and processor time the interface would have used are yours instead.
-
-
-      **Please read this as a first look, not a feature.** It has had one day on hardware. Most of
-      the graphical interface is simply not there: no map, no file manager, no Lua apps, no settings
-      editor. Expect missing commands, rough text layout and things you reach for that do not exist
-      yet.
-
-
-      - It is **off by default**, in Settings > General, marked experimental. Toggling it reboots.
-
-      - Type `ui` or `exit` to come back.
-
-      - If it ever crashes on the way up, the device notices and returns to the graphical interface
-      on its own, so you cannot strand yourself in it.
-
-      - What works today: contacts, channels, unread counts, reading a thread, sending to a contact
-      or channel, a live monitor of arriving messages, radio and battery and Wi-Fi readouts,
-      discovery, a numbered quick-launch menu, and anything the node CLI already answers.
-
-
-      The most useful thing you can send us is what you reached for and could not find.
-
-
-      ## ThinkNode M9 compass, GPS motion and a GPS Compass app, by @cvhviz
-      ([#292](https://github.com/ALLFATHER-BV/wadamesh/pull/292))
-
-
-      The M9's magnetometer was on the board and nothing had ever talked to it. The driver is
-      written from the chip's own register map rather than a library that writes the sample rate
-      into the wrong register, and the axis orientation was **measured on hardware** at four
-      headings ninety degrees apart rather than inherited from a declaration nobody had verified. A
-      calibrated device points north with no setup.
-
-
-      The new **GPS Compass** app in the Store gives you a dial with bearing and range to a chosen
-      contact, a satellite meter, hard-iron calibration and per-row imperial or metric units. On
-      boards without a magnetometer it falls back to GPS course over ground.
-
-
-      It also carries a set of fixes found while testing on real hardware, which affect every board:
-
-
-      - Opening the Map cost about 2.5 seconds **every single visit**, because leaving the tab threw
-      away every decoded tile. Boards with the memory now keep them: roughly ten times faster to
-      return.
-
-      - Lua apps opened on a white page on keyboard and trackball boards.
-
-      - An app closed mid-request could free the buffer the other processor core was still reading
-      from.
-
-      - The `icon` field in an app manifest finally does something. Every app had been drawing the
-      same generic glyph.
-
-
-      Apps can also read speed and heading from the GPS, and the raw field vector where there is a
-      magnetometer.
-
-
-      ## T-Lora Pager, regions and SD listing, by @oumike
-
-
-      - "Save update bin to SD" was half converted to the new capability flags, leaving the Pager
-      without it ([#291](https://github.com/ALLFATHER-BV/wadamesh/pull/291), closes
-      [#289](https://github.com/ALLFATHER-BV/wadamesh/issues/289)). A Pager with an unreadable card
-      now has a way back, and the board docs were corrected to match the hardware.
-
-      - Regions are a list you can add to, and a scoped message says which region it came from
-      ([#311](https://github.com/ALLFATHER-BV/wadamesh/pull/311), closes
-      [#271](https://github.com/ALLFATHER-BV/wadamesh/issues/271), reported by
-      [@D-Melhede](https://github.com/D-Melhede)).
-
-      - Lua apps can list the SD card, read only
-      ([#312](https://github.com/ALLFATHER-BV/wadamesh/pull/312), closes
-      [#309](https://github.com/ALLFATHER-BV/
 
       …
