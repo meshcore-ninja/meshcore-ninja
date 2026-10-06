@@ -1,7 +1,13 @@
 source: github
 repo: 868meshbot/Saitama
-updatedAt: '2026-10-05T19:08:00.221Z'
+updatedAt: '2026-10-06T16:33:46.172Z'
 releases:
+  - version: v1.4.4
+    name: v1.4.4
+    datetime: '2026-10-06T10:29:31Z'
+    url: https://github.com/868meshbot/Saitama/releases/tag/v1.4.4
+    prerelease: false
+    notes: '**Full Changelog**: https://github.com/868meshbot/Saitama/compare/v1.4.3...v1.4.4'
   - version: v1.4.3
     name: v1.4.3
     datetime: '2026-10-05T16:02:37Z'
@@ -124,11 +130,3 @@ releases:
     notes: >-
       **Full Changelog**:
       https://github.com/868meshbot/Saitama/compare/v0.1.0-beta.13...v0.1.0-beta.14
-  - version: v0.1.0-beta.13
-    name: v0.1.0-beta.13
-    datetime: '2026-06-09T12:36:14Z'
-    url: https://github.com/868meshbot/Saitama/releases/tag/v0.1.0-beta.13
-    prerelease: false
-    notes: >-
-      **Full Changelog**:
-      https://github.com/868meshbot/Saitama/compare/v0.1.0-beta.12...v0.1.0-beta.13
