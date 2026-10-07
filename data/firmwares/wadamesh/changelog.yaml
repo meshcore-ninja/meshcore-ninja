@@ -1,7 +1,122 @@
 source: github
 repo: ALLFATHER-BV/wadamesh
-updatedAt: '2026-10-06T22:28:23.741Z'
+updatedAt: '2026-10-07T12:52:49.834Z'
 releases:
+  - version: beta_90
+    name: wadamesh beta_90
+    datetime: '2026-10-07T10:00:07Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_90
+    prerelease: true
+    notes: >-
+      Test build, on top of the beta_89 redesign. Stable stays **beta_85**.
+
+
+      Flash it at **[flasher.wadamesh.com](https://flasher.wadamesh.com)** (switch the toggle to
+      Beta), or update on the device if you have "Get test builds (beta)" turned on.
+
+
+      ## Colour is back
+
+
+      Several of you said the colour was what set wadamesh apart, and the beta_89 redesign took most
+      of it out. This build puts it back as choices on a new **Theme** page, and turns **MORE
+      COLORS!** on for everyone in its Regular style. If you liked the calm look of beta_89, turn
+      MORE COLORS! off on the Theme page.
+
+
+      ## The Theme page
+
+
+      Settings > Theme, under Device. It opens on a **preview** of the launcher, a chat and the send
+      button in whatever you pick, so you see the result before anything restarts. Under it:
+
+
+      - **Mode:** Night and Day as two small screens, with High contrast under them.
+
+      - **Accent colour:** the swatches on the page, and Custom for any other colour.
+
+      - **Colour:** MORE COLORS! with its style right under it (Regular, Neon, Pastel), and Taste
+      the rainbow.
+
+      - **Chats:** chat icons (Glyphs or Initials), Colourful bubbles, and Compact messages.
+
+
+      The mode, the accent and the colours wait for one **Apply and restart** button on the preview.
+      Scroll past the preview and the button stays in reach in a slim bar under the title, beside
+      six dots in the colours you picked; tap the dots to go back up to the preview. The chat looks
+      apply at once. Holding the theme chip in the control panel opens the page. Appearance, High
+      contrast, the accent colour, Colourful chat bubbles and Compact messages moved here from
+      Display.
+
+
+      ## MORE COLORS!, three ways
+
+
+      One switch that turns the calm redesign up. The layout stays the same in all three styles;
+      what changes is how colour is used.
+
+
+      - **Regular** gives every section its own colour (the launcher, the Settings list, the tab
+      bar), shows the status icons in colour (signal by strength, battery by level, Wi-Fi and
+      Bluetooth tinted) and draws every name and glyph in its own hue.
+
+      - **Neon** is full cyberpunk: a near-black violet ground, electric cyan, hot magenta, laser
+      yellow and acid lime, with lit edges on tiles, buttons and bubbles. Your accent stays yours,
+      pushed to full brightness.
+
+      - **Pastel** is soft: mint, baby blue, lavender, peach and rose on a warm dark ground.
+
+
+      ## Taste the rainbow
+
+
+      Every app, Settings page and tab gets its own place on the colour wheel, in the style you
+      picked, and a few things move:
+
+
+      - the tab marker, the chats count and the keyboard focus ring slowly travel round the colour
+      wheel,
+
+      - buttons dip when you press them,
+
+      - a new message lands with a flash of its sender's colour,
+
+      - the lock screen mark, the boot mark and the screensaver's nodes light up in colour.
+
+
+      The motion only touches small things, and it rests while the screen is off, locked or showing
+      the screensaver. Turning it on still says "Taste the rainbow!", now with a burst of coloured
+      dots.
+
+
+      ## Chats
+
+
+      - **Chat icons:** Glyphs (the dot marks) or **Initials**, the old look of the first two
+      letters of the name in a coloured ball. It applies at once and reaches every icon: the chat
+      list, contacts, the conversation header, the lock screen cards and the new-message card. A
+      chat icon you picked yourself still wins.
+
+      - **Names are always in colour now.** The Colourful bubbles switch colours the bubbles too,
+      your own included, as it did before the redesign. Mentions of you keep their blue bubble.
+
+      - **Day mode** draws names and glyphs on its light lists in a deeper shade of their colour, so
+      they read on white, and keeps the bright one inside the dark bubbles.
+
+
+      High contrast keeps its own fixed colours, so the colour switches are greyed out while it is
+      on. The e-paper T-Deck Pro and Max show only the chat looks.
+
+
+      ## Smaller changes
+
+
+      - Every image is 30 KB smaller: the boot logo was stored in it twice. That also leaves the
+      Heltec V4 room for everything in this build, the motion included.
+
+      - Text that is new in this build shows in English for now. The translations fo
+
+      …
   - version: beta_89
     name: wadamesh beta_89
     datetime: '2026-10-06T22:13:18Z'
@@ -1680,102 +1795,3 @@ releases:
       [#333](https://github.com/ALLFATHER-BV/wadamesh/issues/333) and it is **not** fixed here. It
       is still being narrowed down and I would rather not change screen behaviour for everyone on a
       guess.
-  - version: beta_70
-    name: wadamesh beta_70
-    datetime: '2026-08-27T09:09:52Z'
-    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_70
-    prerelease: true
-    notes: >-
-      **This is a test build.** Stable stays on `beta_65`. Flash it from
-      [wadamesh.com](https://wadamesh.com) with the Beta toggle on, or turn on "Get test builds
-      (beta)" on the device.
-
-
-      ## The crash on the regions screen
-
-
-      Adding or removing known regions and then leaving that screen crashed the device. If you have
-      been stuck in Radio & mesh and had to reset to get out
-      ([#314](https://github.com/ALLFATHER-BV/wadamesh/issues/314)), this was why.
-
-
-      The cause is general rather than anything to do with regions. When LVGL destroys a text field
-      it sends that field one last `LV_EVENT_DEFOCUSED`, and seven fields in this firmware save
-      their value on losing focus. So a field was reading its own text and writing it back **from
-      inside its own destructor**, on memory that was already being freed. All seven now ignore a
-      blur that is really a deletion.
-
-
-      Decoded from the core dump attached to
-      [#330](https://github.com/ALLFATHER-BV/wadamesh/issues/330) against a beta_69 image rebuilt
-      from the tag. Sending that file is what made this findable, so thank you.
-
-
-      ## Translations: undoing damage we caused
-
-
-      Language file v18 shipped keys that exist nowhere in the firmware. `Paste (move)Paste (copy)`
-      and `Unblock  Block` are two separate buttons glued together, and one entry was a **Dutch**
-      phrase that appears only inside a source-code comment.
-
-
-      That was a bug in the tool that decides which text belongs in a language file, which I
-      introduced in the previous release. Fixed on both counts: it no longer joins the two halves of
-      a ternary into one key, and it no longer reads string literals out of comments. **202 invented
-      entries removed** from all thirteen files, with nothing that had actually been translated
-      touched.
-
-
-      Also: the curly quotes in the Hungarian map credits rendered as empty boxes, because no
-      bundled font carries U+201E/U+201D. Five more strings are translatable
-      ([@pisti87](https://github.com/pisti87) found them and gave line numbers). Language files are
-      at **v19**; v18 is withdrawn.
-
-
-      ## The Store stops offering apps your board cannot run
-
-
-      Wardrive and Nearby need the extended SDK, which the Heltec V4 does not have. The Store
-      offered both anyway, so the most common board in the mesh could download, install and open two
-      apps that then refused to do anything. Apps declare `requires` in the catalog now, and the
-      Store greys the button and says so on the row.
-
-
-      ## Community work
-
-
-      **[@oumike](https://github.com/oumike)** (11 commits this drop):
-
-
-      - **WAV and MP3 playback for Lua apps**
-      ([#316](https://github.com/ALLFATHER-BV/wadamesh/pull/316), closes
-      [#315](https://github.com/ALLFATHER-BV/wadamesh/issues/315)), from the SD card or from memory.
-
-      - **@-mention autocomplete** in the device chat and the web interface
-      ([#313](https://github.com/ALLFATHER-BV/wadamesh/pull/313)), suggesting people whose adverts
-      this device actually heard rather than your whole contact list.
-
-      - **Latching symbol and alt keys**
-      ([#320](https://github.com/ALLFATHER-BV/wadamesh/pull/320)): tap once for the next key, twice
-      to lock the layer. No more holding a modifier down.
-
-      - **A home page from the SD card** for the web reader
-      ([#317](https://github.com/ALLFATHER-BV/wadamesh/pull/317)), so a device with no internet
-      still has somewhere to start.
-
-      - **Wardrive survives emoji in node names**
-      ([#324](https://github.com/ALLFATHER-BV/wadamesh/pull/324), closes
-      [#323](https://github.com/ALLFATHER-BV/wadamesh/issues/323), reported by
-      [@4nuts](https://github.com/4nuts)). Names are cut on character boundaries, and text from an
-      app is validated before it reaches LVGL.
-
-      - **Screenshots from the Control Center** on the ThinkNode M9 and both Pagers, with a 0/3/10
-      second timer ([#328](https://github.com/ALLFATHER-BV/wadamesh/pull/328), closes
-      [#327](https://github.com/ALLFATHER-BV/wadamesh/issues/327)).
-
-      - M9 Home key works while typing, and Snake starts on the first direction pressed
-      ([#326](https://github.com/ALLFATHER-BV/wadamesh/pull/326)).
-
-      - Tapping an already-focused chat composer reopens the keybo
-
-      …
