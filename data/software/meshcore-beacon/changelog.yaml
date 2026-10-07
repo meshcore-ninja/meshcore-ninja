@@ -1,7 +1,37 @@
 source: github
 repo: MeshCore-Beacon/beacon-server
-updatedAt: '2026-10-06T01:11:54.275Z'
+updatedAt: '2026-10-07T04:56:51.786Z'
 releases:
+  - version: v2.0.3
+    name: v2.0.3
+    datetime: '2026-10-07T01:54:34Z'
+    url: https://github.com/MeshCore-Beacon/beacon-server/releases/tag/v2.0.3
+    prerelease: false
+    notes: >-
+      ## New features
+
+      - Added `GET /api/v1/info` for BEACON Mobile. It returns `minAppVersion` (the oldest app
+      version allowed to use this server, or `null`) and `serverVersion`. The endpoint is public,
+      rate-limited like other reads, and sent with `Cache-Control: no-cache`.
+
+      - Added the `mobile.min_app_version` config key. Set it to a plain `X.Y.Z` version to show an
+      "update required" screen in older app versions for this server. It is unset by default, which
+      means no requirement. Any other format prevents startup. `GET /admin/config` also reports it.
+
+
+      ## Upgrade notes
+
+      No action required. To require a minimum app version, add the key and restart Beacon:
+
+
+      ```yaml
+
+      mobile:
+        min_app_version: "0.1.1"
+      ```
+
+
+      **Full changelog:** https://github.com/MeshCore-Beacon/beacon-server/compare/v2.0.2...v2.0.3
   - version: v2.0.2
     name: v2.0.2
     datetime: '2026-10-05T22:39:54Z'
