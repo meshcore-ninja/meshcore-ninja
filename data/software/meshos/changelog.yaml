@@ -1,7 +1,86 @@
 source: github
 repo: andymux/meshos-releases
-updatedAt: '2026-10-04T11:57:05.104Z'
+updatedAt: '2026-10-08T23:04:26.952Z'
 releases:
+  - version: v1.0.25
+    name: MeshOS v1.0.25
+    datetime: '2026-10-08T18:35:01Z'
+    url: https://github.com/andymux/meshos-releases/releases/tag/v1.0.25
+    prerelease: false
+    notes: >-
+      # MeshOS app 1.0.25
+
+
+      ## Spam Blocker
+
+      - Spam Blocker in Settings brings it all together: blocked users, blocked repeaters and
+      routes, blocked channels, and your radio's spam control.
+
+      - Block the repeater a spammer gets onto the mesh through: open the path of one of their
+      messages and tap Block next to its first repeater. Their channel messages are hidden however
+      they reach you, and your phone stops passing them on over AirLink. Tap Blocked to undo it.
+
+      - Routes (two repeaters in a row) and channels can be blocked too, with the same rules as
+      MeshOS repeaters.
+
+
+      ## Message paths
+
+      - Path opens a full-size screen: every hop from the sender to you, with a Map tab.
+
+      - With 1-byte IDs, hops show by their ID, such as Repeater 07, because many repeaters share
+      each one. Turn on Show likely repeaters for the app's best guess at each hop, the distances,
+      and a button to try the next possible repeater.
+
+      - An AirLink message from a LoRa user says so, and shows which repeater bridged it.
+
+
+      ## AirLink contacts
+
+      - Share your AirLink contact with people who have never been in Bluetooth range of you: post
+      it in a channel (channel menu, Share my AirLink contact), or show your QR code or send the
+      link (Contacts, +, Share my AirLink contact).
+
+      - Add AirLink contacts from a contact card in a chat, by QR code, or from a copied link. You
+      are always asked first, and a card never changes a contact you already have.
+
+      - Once added, you can message each other over LoRa too, through MeshOS repeaters and phones
+      that bridge.
+
+      - Fixed AirLink messages not arriving from a contact whose short ID is the same as another
+      contact's.
+
+      - The heard list marks the nodes that are already in your contacts.
+
+      - Contacts, + is there without a radio connected, while AirLink is on.
+
+
+      ## Delivery reports
+
+      - Sent message lists the MeshOS repeaters that heard your channel message, with how many hops
+      it had made, the signal and the route. MeshOS repeaters with the observer turned on report
+      this, for Public and for channels with Internet Link on. Only the reports travel over the
+      internet, never your message.
+
+
+      ## Repeaters
+
+      - Tools > Manage a repeater > Network remembers the repeaters it found before: tap one to open
+      its page, Scan network looks again, long-press forgets one.
+
+
+      ## Downloads
+
+      - Android: MeshOS-v1.0.25.apk
+
+      - macOS: MeshOS-v1.0.25.dmg
+
+
+      SHA-256:
+
+      - MeshOS-v1.0.25.apk: 4d8ab2b1d9da1157780e6112259a7c1cba57958d300781c03f0cb3a8ad2fd182
+
+      - MeshOS-v1.0.25.dmg: c590bd202fc7f9879f38d6d383604f2816d1296f7eb6502b9f3889ba01af7d70
   - version: v1.0.24
     name: MeshOS v1.0.24
     datetime: '2026-10-04T11:39:56Z'
@@ -687,23 +766,3 @@ releases:
       - TDeck: 6b03705490ee569fc94d15739eacda1f7bbead1025e41e15a7b8fa8f10bce231
 
       - M9: 53897c105eb99aa8a17e5c96504a0c0c2a6e021a653da00357acc90404173639
-  - version: fw-v1.6.5
-    name: MeshOS firmware v1.6.5
-    datetime: '2026-08-12T15:38:00Z'
-    url: https://github.com/andymux/meshos-releases/releases/tag/fw-v1.6.5
-    prerelease: false
-    notes: >-
-      Picture messages: photos show right in the chat with thumbnails when WiFi is on. WiFi status
-      shows the connected network. Back button clears notifications. Fixes.
-
-
-      Device firmware for LilyGo T-Deck and ThinkNode M9.
-
-      Install via SD card (firmware.bin) or the in-firmware updater.
-
-
-      SHA-256:
-
-      - TDeck: 2331383412fe6558564970449ff60fdea3c2e88632bff1e13a6b013f9223e361
-
-      - M9: e257e7569be1f74c9594c23b0b901c6246ed34c73a9bdda197beef03b0bfcbbb

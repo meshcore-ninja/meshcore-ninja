@@ -1,7 +1,92 @@
 source: github
 repo: Kpa-clawbot/CoreScope
-updatedAt: '2026-10-04T16:42:28.854Z'
+updatedAt: '2026-10-08T23:04:08.210Z'
 releases:
+  - version: v3.14.0
+    name: v3.14.0
+    datetime: '2026-10-08T21:41:38Z'
+    url: https://github.com/Kpa-clawbot/CoreScope/releases/tag/v3.14.0
+    prerelease: false
+    notes: >-
+      # v3.14.0
+
+
+      23 commits since v3.13.1: 13 fix, 8 feat, 1 ci, 1 docs (these notes). Eight feats and no
+      breaking change, so minor.
+
+
+      The headline is optional user accounts (#2128). They are off by default: without a
+
+      `userManagement` block in `config.json`, nothing in this section changes anything.
+
+
+      ## Read this before upgrading
+
+
+      These change what a running instance does without being asked.
+
+
+      - **Limits on unauthenticated endpoints.** Requests above them now get an error instead
+        of an answer:
+        - `GET /api/packets?nodes=` takes at most 50 entries and answers 400 above that
+          (#2120). 12,000 entries took 1.3 s per request under the store's read lock.
+        - `POST /api/decode` and `POST /api/packets/observations` cap the request body
+          (#2119). One 100 MB request raised the process's memory on a test instance.
+        - `GET /api/nodes/{pubkey}/reach` runs at most 2 cold scans at once and answers 429
+          with `Retry-After: 5` beyond that (#2127). Cached answers are not affected.
+        - The ingestor truncates observer ids, names and other status fields to 128
+          characters and IATA codes to 16, and strips control characters (#2123). The
+          `/neighbors` report only accepts 64-hex pubkeys and a scope list of up to 256
+          bytes (#2122).
+      - **`traffic_share_score` drops after the upgrade** (#2117). The score counted a
+        transmission once per observation through a relay, so it grew with uptime until many
+        relays sat at 1.0. It now counts distinct transmissions. Expect lower values; they no
+        longer drift.
+      - **The `/api/nodes` region filter covers the packet store's window** (#2114), the same
+        window the rest of the UI shows, instead of all database history. A node heard in a
+        region only before that window no longer matches.
+      - **The geo-filter save keeps `config.json`'s file mode** (#2126). A 0600 config stayed
+        0600 only until the first save; now it stays 0600.
+
+      ## Optional user accounts
+
+
+      Turn them on with a `userManagement` block. Setup and every option are in
+
+      [`docs/user-guide/accounts.md`](https://github.com/Kpa-clawbot/CoreScope/blob/master/docs/user-guide/accounts.md).
+
+      Accounts live in a separate `users.db`; the server still opens the analyzer database
+
+      read-only.
+
+
+      - **Accounts and roles** (#2129). Register with an email address, activate through a
+        mailed link that also sets the password, log in. Roles `user` and `admin`. Admins
+        manage users and use the operator actions (geo-filter, backup, perf reset) without
+        the shared API key. Mail goes through Brevo, with delivery status.
+      - **Settings sync** (#2130). A logged-in user's own nodes, favorites, theme,
+        customizer settings and filters follow them to every device. Private channel keys
+        and decrypted messages are never synced.
+      - **Admin area** (#2138). `#/admin` with an overview of what needs attention (stuck
+        activations, bouncing mail, password guessing, a dropped MQTT source), the user
+        table, and an audit log that now records logins.
+      - **Hashtag channel proposals** (#2139, closes #2092). Logged-in users propose a
+        channel; after an admin approves it, the ingestor decrypts it without a restart and
+        it is listed for everyone. Opt in with `userManagement.channelProposals`. Every
+        approved key is tried on each GRP_TXT no key opens: 204 to 216 µs per packet with
+        320 keys, 272 to 320 µs with 128 approved keys added.
+      - **Mail notifications for watched nodes** (#2140). "Notify me" on a node page sends
+        one mail when that node goes offline, comes back or reports a low battery, using the
+        thresholds the node page uses. Admins can add new foreign nodes and observers going
+        offline. Bundled per user, 20 mails per user and 100 per instance per rolling 24
+        hours, one-click unsubscribe. Opt in with `userManagement.notifications`.
+      - **Data export and users.db backup** (#2141). "Download my data" gives a user one
+        JSON file with everything stored about their account, credentials excluded. The
+        server keeps daily `users.db` snapshots (7 by default) and admins can download one.
+
+      ## 
+
+      …
   - version: v3.13.1
     name: v3.13.1
     datetime: '2026-10-04T16:37:33Z'
@@ -1546,9 +1631,3 @@ releases:
       - 408K neighbor edges persisted
 
       - Cold start: ~4 min first run → ~15s subsequent
-  - version: v3.4.0
-    name: CoreScope v3.4.0 — Neighbor Affinity
-    datetime: '2026-04-03T08:56:39Z'
-    url: https://github.com/Kpa-clawbot/CoreScope/releases/tag/v3.4.0
-    prerelease: false
-    notes: "# CoreScope v3.4 Release Notes\r\n\r\n**The neighbor affinity release.** CoreScope now understands how nodes relate to each other — not just that they exist, but how strongly they're connected. This powers smarter hop resolution, richer node detail pages, and a new graph visualization in analytics.\r\n\r\n---\r\n\r\n## 🎯 Features\r\n\r\n### Neighbor Affinity System (7 milestones)\r\nA complete neighbor relationship engine, from backend graph building to frontend visualization:\r\n\r\n- **Affinity graph builder** — computes neighbor relationships and connection strength from packet traffic (#507)\r\n- **Affinity API endpoints** — REST endpoints to query neighbor data (#508)\r\n- **Show Neighbors via affinity API** — the existing Show Neighbors feature now uses real affinity data instead of raw packet heuristics (#512, fixes #484)\r\n- **Affinity-aware hop resolution** — hop resolver uses neighbor affinity to pick better paths (#511)\r\n- **Node detail neighbors section** — dedicated neighbors panel on the node detail page (#510)\r\n- **Affinity debugging tools** — inspect and troubleshoot affinity calculations (#521)\r\n- **Neighbor graph visualization** — interactive neighbor graph in the analytics tab (#513)\r\n\r\n### Customizer v2\r\n- Event-driven state management replaces the old imperative approach — cleaner, more predictable theme/config updates (#503)\r\n\r\n---\r\n\r\n## 🐛 Bug Fixes\r\n\r\n- **Stale parsed cache on observation packets** — observation packets now correctly invalidate the JSON parse cache (#505)\r\n- **Null-guard rAF callbacks** — live page no longer crashes when `requestAnimationFrame` callbacks fire after cleanup (#506)\r\n- **Customizer v2 phantom overrides** — fixed phantom config entries, missing defaults, and stale dark mode state (#520)\r\n- **Neighbor affinity empty results** — fixed pubKey field name mismatch causing empty affinity graphs (#524)\r\n- **Home defaults in server theme** — server-side theme config now includes home page defaults (#526)\r\n- **Neighbor UI crash + dark mode** — fixed Show Neighbors crash and improved dark mode contrast (#527)\r\n- **Home page steps + FAQ** — both steps AND FAQ now render correctly on the home page (#529)\r\n\r\n---\r\n\r\n## ⚡ Performance\r\n\r\n- **Cached JSON.parse for packet data** — packet payloads are parsed once and cached, avoiding redundant `JSON.parse` calls on repeated access (#400)\r\n\r\n---\r\n\r\n## Known Limitations\r\n\r\n- **Affinity graph scales with traffic volume** — networks with very low packet rates may show weak or missing neighbor relationships until enough data accumulates\r\n- **Debugging tools are developer-facing** — the affinity debug panel (#521) is functional but not polished for end-user consumption\r\n- **Customizer v2 migration** — custom themes saved under v1 may need to be re-applied after upgrade"

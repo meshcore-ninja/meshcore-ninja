@@ -1,7 +1,119 @@
 source: github
 repo: ALLFATHER-BV/wadamesh
-updatedAt: '2026-10-07T12:52:49.834Z'
+updatedAt: '2026-10-08T23:04:05.606Z'
 releases:
+  - version: beta_91
+    name: wadamesh beta_91
+    datetime: '2026-10-08T22:53:48Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_91
+    prerelease: true
+    notes: >-
+      Test build, on top of beta_90. Stable stays **beta_85**.
+
+
+      Flash it at **[flasher.wadamesh.com](https://flasher.wadamesh.com)** (switch the toggle to
+      Beta), or update on the device if you have "Get test builds (beta)" turned on.
+
+
+      **Home looks different in this build: it is made of widgets now.** Your old Home is still
+      there as the **Commander** preset, in Settings > Display > Home.
+
+
+      ## Home is widgets
+
+
+      Home is now a grid of widgets you arrange yourself. **Hold any widget** to arrange Home:
+
+
+      - drag a widget to move it, and pick its size: small, wide or large,
+
+      - add widgets from the catalog, or take them away,
+
+      - set each widget's own options (which chat, which node, which app, which switches).
+
+
+      Each orientation keeps its own layout. Start from a preset: **Glance** (the new default),
+      **Commander** (the old Home, rebuilt from widgets), **Radio**, **Minimal** or **Sensors**.
+
+
+      Twenty-four widgets: clock, sun and moon, system, note, unread, chat, mentions, heard,
+      nearest, remote sensor, radio, signal, airtime, GPS, position, battery, sensors (Expansion
+      Kit), links, advert, app, switches and app widgets, plus a **mesh radar** on the 8 MB boards
+      and a **compass** on the ThinkNode M9. Tapping a widget opens what it shows.
+
+
+      - **Unread, Chat and Mentions** have a large size that lists the messages themselves. Mentions
+      now shows the message that names you, not the chat's latest line, and counts messages instead
+      of chats.
+
+      - **Lua apps can put a widget on Home** with `wada.widget.set` (boards with the extended SDK).
+      Airtime 1.5 does.
+
+      - Keypad boards arrange Home from **Settings > Display > Home**; the M9 can also hold Enter.
+
+
+      ## A background behind every screen
+
+
+      **Settings > Theme > Background** has five choices:
+
+
+      - **Still aurora** (the default): soft light behind every screen in your accent colour, every
+      colour with Taste the rainbow.
+
+      - **Moving aurora**: the same, drifting in a slow loop. It only moves while you are not
+      touching anything, and stays still with the battery saver on.
+
+      - **Colour**: any colour from the picker.
+
+      - **Image**: open a JPEG in Files and tap **Set as background**.
+
+      - **None**: the plain black page (the light page by day).
+
+
+      A colour or a picture is darkened, or lightened by day, just enough for all text to stay
+      readable. Like the other colour settings it waits for Apply and restart. The Heltec V4 has no
+      picture option: a full-screen picture takes too much of its memory.
+
+
+      Over a background, **cards and Home widgets are glass**: the background shows through them.
+      The **top bar is smoked glass**, dark at night and light by day, and the dark band under the
+      tall bar on settings pages is gone.
+
+
+      ## GPS and battery
+
+
+      - **A GPS icon in the top bar:** a grey crosshair while it searches, a lit pin once it has a
+      position. It hides while GPS is off.
+
+      - **GPS battery saver**, in Settings > GPS > Battery: the GPS rests between position checks
+      (every 2, 5, 15 or 30 minutes) and stays awake while the map, the GPS page or Discover is
+      open. Boards with a GPS power switch turn it off; a u-blox receiver like the T-Deck Plus's is
+      told to stop instead, so switching GPS off on the T-Deck now saves power too.
+
+      - **The battery saver works with Bluetooth or Wi-Fi on.** It used to wait until both were off,
+      which was almost never; now only a connected phone app or someone watching the web view holds
+      it off. It also rests the GPS and keeps a moving background still.
+
+
+      ## Smaller changes
+
+
+      - **Navigation bar position:** bottom, top, left or right (Settings > Display > Navigation
+      bar). On the left or right it becomes a rail.
+
+      - Every settings page now uses the same cards and rows as the rest of the redesign.
+
+      - The app drawer scrolls more smoothly: Home was redrawn underneath it on every frame.
+
+      - The screensaver guards better against burn-in: the picture turns slowly (once an hour),
+      drifts a few pixels, and the status moves to another corner every two minutes.
+
+      - Text wraps only at spaces now, so a wrapped line no longer starts with a stray space after a
+      comm
+
+      …
   - version: beta_90
     name: wadamesh beta_90
     datetime: '2026-10-07T10:00:07Z'
@@ -1717,81 +1829,4 @@ releases:
       A screen that will not stay dark after a manual lock
       ([#333](https://github.com/ALLFATHER-BV/wadamesh/issues/333)) is **not** fixed here. It is
       still being narrowed down, and I would rather not change screen behaviour for everyone on a
-      guess.
-  - version: beta_71
-    name: wadamesh beta_71
-    datetime: '2026-08-27T12:07:06Z'
-    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_71
-    prerelease: true
-    notes: >-
-      **This is a test build.** Stable stays on `beta_65`. Flash it from
-      [wadamesh.com](https://wadamesh.com) with the Beta toggle on, or turn on "Get test builds
-      (beta)" on the device.
-
-
-      A small drop on top of `beta_70`, aimed almost entirely at people writing Lua apps. Three of
-      these came from developers hitting walls this week.
-
-
-      ## For people writing Lua apps
-
-
-      **Apps can clear their page.** `wada.ui.clear()`. There was no way to remove widgets an app
-      had already created, so anything with a second screen drew it on top of the first. Reported by
-      [@pisti87](https://github.com/pisti87), who had been working around it with buttons, and who
-      pointed out that `ui.list()` has a `clear()` while the page it sits on did not.
-
-
-      Any widget handle you still hold from before the clear becomes **inert rather than
-      dangerous**: calling a method on it does nothing instead of crashing. That is the reason this
-      is not simply a call to LVGL's `lv_obj_clean()`: widget handles are raw pointers, so a
-      variable still referring to a label from the previous screen would otherwise walk straight
-      into freed memory.
-
-
-      **Apps can reach all your contacts.** `wada.mesh.contacts()` stopped at 100, and only ever
-      scanned the first 200 in the first place, so on a device with 2000 contacts most were
-      unreachable and nothing indicated it had truncated. It takes an offset and a limit now
-      (default 100, maximum 250 per call, because each entry is an eight-field table and thousands
-      in one call would exhaust the app heap). New `wada.mesh.contact_count()` says how many there
-      are, so you can page without probing for the end.
-
-
-      **Apps can be three times larger.** The source limit was 64 KB, which an ordinary program can
-      reach. It is **192 KB**. The source only lives in memory until it is compiled, so this is a
-      transient cost rather than something each app carries; the real ceiling is still the 256 KB
-      per-app heap.
-
-
-      All three are documented at [wadamesh.com/sdk.html](https://wadamesh.com/sdk.html).
-
-
-      ## T-Deck keyboard
-
-
-      Modifier latching could fail to switch on **even with the correct keyboard firmware
-      installed** ([#332](https://github.com/ALLFATHER-BV/wadamesh/issues/332)). The firmware asked
-      the keyboard controller what it could do exactly once, on the first I2C read after boot, which
-      is the read most likely to come back short or garbled, because the controller is still
-      starting. One bad answer meant no latching for the rest of the session, and rebooting just
-      asked again at the same unlucky moment.
-
-
-      It now keeps asking for a second and a half before settling for the older protocol, still
-      delivers anything you type during that window, and reports what it actually saw when it does
-      give up, so the next report of this is one line to diagnose rather than a guess about
-      someone's firmware version.
-
-
-      ## For testers
-
-
-      This sits on top of `beta_70`, which carried the fix for the **crash when leaving the
-      known-regions screen**. If you have not tried that yet it is still the thing most worth
-      confirming: add and remove a few regions, leave the screen, check the device stays up.
-
-
-      If your screen is not going to sleep, that is
-      [#333](https://github.com/ALLFATHER-BV/wadamesh/issues/333) and it is **not** fixed here. It
-      is still being narrowed down and I would rather not change screen behaviour for everyone on a
       guess.
