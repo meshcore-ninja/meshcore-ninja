@@ -1,7 +1,84 @@
 source: github
 repo: meshcore-go/meshcore-go
-updatedAt: '2026-10-01T22:27:27.844Z'
+updatedAt: '2026-10-08T08:33:31.670Z'
 releases:
+  - version: v1.7.0
+    name: v1.7.0
+    datetime: '2026-10-08T01:42:48Z'
+    url: https://github.com/OwlShack/meshcore-go/releases/tag/v1.7.0
+    prerelease: false
+    notes: >-
+      Baseline `v1.6.0`.
+
+
+      Catches up with MeshCore firmware: every payload can be built and parsed, regions and the
+
+      companion CLI are supported, KISS modem commands are typed, and nodes confirm flooded DMs and
+      send
+
+      with firmware priorities. The module is now `github.com/OwlShack/meshcore-go`; see Upgrading.
+
+
+      ### Added
+
+
+      - **Nodes can send region-scoped traffic.** `WithDefaultRegion` scopes the node's own adverts,
+        channel messages and flooded DMs to a region. `SendGroupTextScoped` and `SendTextMessageScoped`
+        take the scope for a single send, and nil sends it unscoped even when the node has a default.
+        `Packet.SetScope` scopes a flood you build yourself, and `RegionMap.ReplyScope` picks the scope
+        for a flooded reply the way firmware repeaters do.
+      - **`meshcore.NewRegion` builds regions whose keys match firmware.** A bare name such as `nz`
+      is
+        keyed as `#nz`, as firmware has done since January 2026, and a `$` private name has no key, so it
+        never matches or scopes anything. A key derived from the bare name with `DeriveRegionKey` is one
+        firmware repeaters do not recognise.
+      - **Run CLI commands on a companion.** `Client.RunCLI(ctx, "get tx")` returns the companion's
+        reply. Firmware older than protocol v14 answers with a `DeviceError` whose code is
+        `ErrCodeUnsupportedCmd`. To run a command on another companion over the mesh, send a text
+        message with `TxtTypeCLICommand`; it only runs if that companion's contact for you has
+        `ContactFlagRemoteCLI` set.
+      - **Protocol constants in the `meshcore` package.** `ReqType*` for requests, `AnonReqType*`
+      for anon
+        requests, `PermACL*` for ACL permissions, `TelemPerm*` for telemetry sensor groups and `TxtType*`
+        for text message types, with the firmware's values. `companion.TxtType*` are now the same
+        constants.
+      - **`MakePathLen` and `PathLenFields` encode and decode a `path_len` byte** from bytes per hop
+        (1 to 3) and hop count.
+      - **Ask a repeater which regions it floods.** `BuildAnonRegionsRequest(replyPath, hashSize)`
+      builds
+        the request body to send direct after its 4-byte timestamp tag; a companion's `SendAnonReq` adds
+        the tag itself. `ParseAnonRegionsReply` decodes the answer, after its tag, into the repeater's
+        clock and region names, with `*` first when it floods unscoped traffic.
+      - **`meshcore.PublicChannel()` returns the Public channel**, and `PublicChannelPSK` is its
+      key.
+
+      - **`node.DeadNotifier` names the `Dead()` method** of a modem whose link can die. `KissModem`
+      and
+        the sx12xx `Modem` implement it; the openHop modem reconnects by itself.
+      - **`hardware.PreambleForSF` gives MeshCore's preamble length for a spreading factor.**
+        `sx12xx.PreambleForSF` is deprecated in its favour.
+      - **`meshcore.SNRToWire` converts an SNR to its on-wire byte.** It truncates as firmware does
+      and
+        clamps to the int8 range, so an SNR above +31.75 dB no longer wraps negative.
+      - **`meshcore.MaxRetryTextLen` is the longest DM text that fits every retry.** It is 158
+      bytes,
+        2 short of `MaxTextLen`, because DM attempts above 3 add a 2-byte tail.
+      - **Every encrypted packet type can be built, not just decoded.** `NewRequest`, `NewResponse`,
+        `NewAnonReq`, `NewPath` and `NewGroupData` encrypt a plaintext into a request, response,
+        anonymous request, returned path or channel datagram. `PathPayload.ToBytes` builds the path a
+        returned path carries.
+      - **Channel data has a typed body.** `BuildGroupDataPayload` and `ParseGroupDataPayload`
+      encode
+        and decode the data type and length firmware puts in a channel datagram, and
+        `GroupData.DecryptStruct` returns it.
+      - **Channels with 256-bit keys work.** `NewChannelFromPSK` accepts a 16- or 32-byte key.
+
+      - **Log in to repeaters, room servers and sensors.** `BuildLoginRequest` and `ParseLoginReply`
+        handle the login exchange, including an older repeater's bare "OK" reply.
+      - **Build and read the requests and replies that repeaters, rooms and sensors exchange.**
+      Status
+        (`RepeaterStats`, `RoomStats`), telemetry, access lists, neighbours, owner info, s
+      …
   - version: v1.6.0
     name: v1.6.0
     datetime: '2026-09-26T01:16:09Z'
