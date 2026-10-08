@@ -1,7 +1,90 @@
 source: github
 repo: MarekZegare4/MeshCore-Solo
-updatedAt: '2026-10-02T23:36:40.201Z'
+updatedAt: '2026-10-08T17:15:44.165Z'
 releases:
+  - version: v2.0-rc2
+    name: v2.0-rc2
+    datetime: '2026-10-08T12:55:38Z'
+    url: https://github.com/MarekZegare4/MeshCore-Solo/releases/tag/v2.0-rc2
+    prerelease: true
+    notes: >-
+      ## MeshCore Solo Companion Firmware v2.0-rc2
+
+
+
+      The second release candidate for 2.0. Settings carry over from rc1; coming from 1.x, read the
+      [v2.0-rc1 notes](https://github.com/MarekZegare4/MeshCore-Solo/releases/tag/v2.0-rc1) first.
+
+
+      > [!NOTE]
+
+      > **Wio Tracker L2: install this release by hand.** Settings › Firmware update only offers
+      final releases, never a release candidate.
+
+
+      ### What's new
+
+
+      - **A third Wio Tracker L1 E-ink build, for a 4.2" 400 × 300 panel** (`WioTrackerL1Eink42`),
+      with a 9 × 15 font, its own icons, and screens laid out for the room: tiles on the status
+      page, a node list with a detail pane, charts, the sky view and the clock tools.
+
+      - **Alerts drop in from the top** on the OLED and E-ink builds, as a banner that slides down
+      and away, instead of a box over the middle of the screen. A new-message alert lasts two
+      seconds; on E-ink it simply appears and goes.
+
+      - **A bolt beside the battery when USB power is connected.** Where the board can sense it (the
+      nRF52 boards, the Wio Tracker L2); the screen redraws as the cable goes in or out.
+
+      - **Message alert** in Settings › Display (OLED and E-ink): **Normal** is the banner,
+      **Compact** an envelope with the number of new messages beside the battery, blinking for a
+      moment, **Off** no alert at all.
+
+      - **The bytes a message has left**, on every screen, counted as it will go out: a channel post
+      less your name, placeholders as they will be filled in, an accented or Cyrillic letter as two.
+      It shows over the last 40 bytes, and nothing past the limit can be typed or sent.
+
+      - **The splash grows with the screen**, and the start-up "Loading..." is three dots in the
+      middle of the screen, so it needs no orientation.
+
+      - **Wio Tracker L2:**
+        - GPS on three tabs: Sky, Signal (a bar per satellite, with a dB-Hz scale) and Details.
+        - Charts with a value axis, a grid and a readout under your finger; the big clock in the splash's lettering.
+        - The USB-drive offer waits until the screen is unlocked, with a PIN or without.
+        - A pull-down quick panel from the status bar, and a faster screen fade.
+      - **A channel's scope can follow the default.** "Default" is the new start value for a
+      channel, and follows whichever scope the list marks as default; `*` still sends unscoped.
+
+      - **Home panels list the way in first:** "All settings", "All messages" and "All tools" head
+      their panels, the shortcuts after.
+
+      - **On / Off** are written the same way on every screen, and the GPS switch no longer looks
+      like a battery.
+
+
+      ### Fixes
+
+
+      - **Settings were lost on restart on a device that had run Meshtastic.** It leaves a `/prefs`
+      folder behind, which our settings file could neither be read from nor saved over, so no change
+      survived. The folder is now removed on start.
+
+      - **Bluetooth switched off stays off** over a reboot or hibernation.
+
+      - **A tool opened from the Tools page goes back to Home** on Back, not to the full tools list.
+
+      - **A change made in Settings is saved** on the way to a screen opened from it.
+
+      - **L2 GPS signal chart** spans its box from the first bar.
+
+      - **L2: a direct message waiting for delivery shows a dot per send**, as on the L1, so each
+      automatic resend adds one; it used to stay at "..." until it failed.
+
+      - **L2: the radio LED lights only while transmitting**; it was lit all the time and went dark
+      on transmit.
+
+      - **L2: the Nodes list and the scan results update** when a node starts or stops sharing its
+      location live, or when its name or signal report arrives later.
   - version: v2.0-rc1
     name: v2.0-rc1
     datetime: '2026-10-02T22:49:49Z'
@@ -116,9 +199,3 @@ releases:
     url: https://github.com/MarekZegare4/MeshCore-Solo/releases/tag/v1.15
     prerelease: false
     notes: "## Wio Tracker L1 — Solo Firmware v1.15\r\n\r\nAdds a full **GPS navigation suite** on top of Solo v1.14 — the L1 becomes a standalone off-grid navigator, no phone required.\r\n\r\n### Highlights\r\n\r\n- **Waypoints** — mark your current spot or type coordinates, give it a short label, then get live bearing + distance back to it. Ideal for car / camp / water / a meeting point.\r\n- **GPS compass** — *Tools › Compass*: a heads-up heading tape derived from GPS course-over-ground. No magnetometer needed.\r\n- **Navigate to anything** — a saved waypoint, the start of your trail (backtrack), a node from Nearby Nodes, or a location someone texts you.\r\n- **Share & save locations over the mesh** — send a waypoint in a message; on the other end, navigate to or save any shared location with one menu.\r\n- **Global Units setting** — one Metric / Imperial switch (Settings › System) drives every distance and speed in the UI.\r\n- **Advert sound** — an optional audible \"in range\" heartbeat: the device chirps when it receives an advert from another node — pair it with Auto-Advert to keep tabs on a buddy hands-free.\r\n\r\n### Changes\r\n\r\n**Navigation (new)**\r\n\r\n- **Waypoints** — *Tools › Trail › Hold Enter*: **Mark here** drops one at the current GPS fix; **Waypoints** opens the list, which carries a synthetic **Trail start** backtrack row, a usage counter (`WAYPOINTS 3/16`), and a **+ Add by coords** row to enter a point by lat/lon/label with no fix required (hemisphere chosen with LEFT/RIGHT since the keyboard has no minus key). Per-waypoint **Rename / Delete / Send**, plus **Clear waypoints**. Stored in their own `/waypoints` file (16 max) — independent of the trail and **not** cleared by Reset trail.\r\n- **Navigate-to-point view** — distance plus two *absolute* bearings, **To:** (target) and **Hdg:** (your course over ground), compared by eye. Reused by waypoints, trail backtrack, Nearby-node navigation and message-shared locations.\r\n- **GPS compass** — *Tools › Compass*: a scrolling N..E..S..W heading tape under a fixed travel-direction pointer, with a large degrees + cardinal readout. Works whether or not a trail is recording.\r\n- **Navigate to a node** — Nearby Nodes detail → **Hold Enter** now opens an Options menu (**Navigate** / **Ping**); Navigate opens the bearing/distance view targeting the node's last-known position.\r\n- **Trail map as a live view** — the Map draws your current position and all waypoints continuously, even with no trail recording. While a trail exists it frames the recorded route and clamps far-off waypoints to the nearest edge (a distant mark can't blow up the scale); with no trail it auto-fits to your waypoints and position. Markers show the first two label characters, placed edge-aware so labels stay on-map.\r\n- **Navigate / save a shared location** — any message carrying a `lat,lon` (what `{loc}` inserts) or a `[WAY]lat,lon label` share offers **Navigate** and **Save waypoint** from its **Hold Enter** menu — on the history row or in fullscreen, for DMs and channels. **Send** on a waypoint shares it to a contact or channel, pre-filling the message to confirm.\r\n- **Waypoints in GPX** — the GPX export now includes saved waypoints as `<wpt>` elements (label → `<name>`, plus `<time>`) alongside the track, so they import as pins in OsmAnd / Garmin / GPX Studio.\r\n\r\n**Units**\r\n\r\n- **Global Metric / Imperial** (Settings › System) drives every distance and speed: Nearby Nodes, Trail (Summary, List deltas, waypoint distances), the navigate-to-point view, the trail min-distance gate (5/10/25/100 m ↔ 15/30/75/300 ft) and the map scale bar.\r\n- **Trail readout** — the action menu's old four-way km/h·mph·min/km·min/mi cycle is now a **Speed / Pace** toggle; the unit follows the global setting.\r\n\r\n**Notifications**\r\n\r\n- **Advert sound** — Settings › Sound gains an **AD sound** entry (built-in / Melody 1 / Melody 2). The device plays it whenever it receives an advert from any node; combined with Auto-Advert on both ends it acts as a hands-free \"still i\n…"
-  - version: v1.14
-    name: Solo v1.14
-    datetime: '2026-05-29T10:59:08Z'
-    url: https://github.com/MarekZegare4/MeshCore-Solo/releases/tag/v1.14
-    prerelease: false
-    notes: "## Wio Tracker L1 — Solo Firmware v1.14\r\n\r\nBased on MeshCore upstream v1.15.\r\n\r\n### Highlights\r\n\r\n- **Renamed Plus → Solo** — to better reflect that this firmware is designed for *off-grid, standalone* use without needing a companion app on the phone; release artefacts are now `solo-v1.14-oled.uf2` and `solo-v1.14-eink.uf2`\r\n- **E-ink screenshot support** — `tools/screenshot.py` now works with both OLED and the e-ink panel; auto-detects rotation 0–3 and uses GxEPD2's visible dimensions; build with `-D ENABLE_SCREENSHOT`\r\n- **Battery percentage field** — new `Batt %` option for the Clock page dashboard, now sharing the same LiPo discharge curve and `low_batt_mv` cutoff as the top-bar indicator (so both readings agree)\r\n- **Channel favourites** — mark individual channels as favourites from the channel context menu; new Settings › Contacts filter to hide non-favourite channels\r\n- **Context menu cycling unified** — LEFT/RIGHT now cycles values everywhere (Notif, Melody, Fav, Duration, BPM) without closing the popup; ENTER reserved for one-shot actions\r\n- **Popup menus expand to fit the screen** — on portrait e-ink up to 16 items fit without scrolling; on OLED items are now hard-capped to what physically fits\r\n\r\n### Changes\r\n\r\n**New features**\r\n- **E-ink screenshot** — `WioTrackerL1Eink_companion_dual_dev` env enables capture; protocol header widened to 11 bytes (display type, rotation, uint16 width/height/chunk fields) so it scales to any GxEPD2 panel and rotation\r\n- **Dashboard `Batt %` field** — new Clock-page option computed from the same piecewise LiPo curve used by the top-bar battery indicator\r\n- **Channel favourites** — `ch_fav_bitmask` in prefs; toggle from Channel context menu; Settings › Contacts › Channels filter (all / favourites only)\r\n- **GPS trail — scale grid on map** — toggle from the Trail action menu (Grid row); cycles with LEFT/RIGHT now (previously ENTER only)\r\n- **Ringtone editor migrated to PopupMenu** — Duration and BPM now cycle in-place with LEFT/RIGHT; separate BPM+/BPM- rows removed\r\n\r\n**Fixes**\r\n- **OLED joystick rotation** — enforce reset moved after prefs load, so stale e-ink rotation values no longer reverse joystick mapping on OLED builds (`FEAT_JOYSTICK_ROTATION_SETTING=0`)\r\n- **First melody note duration** — preview-only side effect that shortened the first note in `playMelody()` no longer corrupts the stored sequence\r\n- **Home pages migration** — pages added in this release (Favourites, Trail) are appended to stored `page_order` instead of being hidden; SHUTDOWN is evicted from a full order to make room for required pages\r\n- **Pin picker fallback** — pressing `+` on an empty Favourites tile with no starred contacts and no recent DMs now lists all chat contacts instead of showing \"No fav contacts\"\r\n- **Popup menus on OLED** — height-clamped to what fits on screen (max 4 items at 64 px), so long context menus no longer draw outside the panel\r\n- **Trail action menu** — Grid toggle now also works with LEFT/RIGHT (not just ENTER); Export labels shortened to `Export (live)` / `Export (saved)` to fit\r\n- **E-ink default font** — unknown-character fallback rectangle aligned with the text cell baseline instead of one pixel below\r\n- **Build** — added `DisplayDriver::getBuffer`/`getBufferSize` virtuals so MyMesh no longer needs to know about concrete display types"
