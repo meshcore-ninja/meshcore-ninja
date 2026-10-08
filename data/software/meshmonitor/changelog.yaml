@@ -1,7 +1,114 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-10-06T01:12:06.766Z'
+updatedAt: '2026-10-08T00:03:48.491Z'
 releases:
+  - version: v4.17.0-rc6
+    name: v4.17.0-rc6
+    datetime: '2026-10-07T23:46:32Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.0-rc6
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.17.0-rc6
+
+
+      > [!WARNING]
+
+      > This is a **pre-release** for testing. It is not tagged `latest`. Use it on a test install
+      or with a recent backup.
+
+
+      ## Summary
+
+
+      This release candidate is mostly a permissions release. Until now, many routes checked a
+      per-source permission on *any* source, so a grant on one source could read, change or transmit
+      on another. Every such route now checks the source it acts on: device configuration, mesh
+      requests, messages, channels, nodes, settings, the poll, the v1 API, public embeds and the
+      live WebSocket feed. Admins are unaffected apart from a few replies that now name one source
+      instead of all of them; users with limited grants will see less than before, by design. On the
+      feature side, every number field can now be cleared while editing, the sender's name in a
+      channel or DM opens the node popup with its status, TAK team and role are configurable, and
+      the Reticulum source page works on phones. Saving a config section no longer turns a node's
+      "firmware default" position interval into a 32-second broadcast.
+
+
+      ## Features
+
+      - UI: number fields can be cleared; blank is outlined and blocks Save (#5652)
+
+      - Chat: sender name opens the node popup with status; status emoji badge on the avatar (#5651)
+
+      - Config: TAK team and role module settings (#5641)
+
+      - MQTT: source-card warning when client proxy has no linked broker (#5663)
+
+
+      ## Bug Fixes
+
+      - Permissions: device-config routes check the target source (#5655)
+
+      - Permissions: nodes, settings and message routes check the target source (#5656)
+
+      - Permissions: mesh-request, announce, connection and channel routes check the target source
+      (#5657)
+
+      - Permissions: optional-`sourceId` reads limited to the caller's sources; install-wide jobs
+      are admin only (#5658)
+
+      - Permissions: private positions checked per source; telemetry reads and `/api/status` scoped;
+      one rule for a source's address (#5660)
+
+      - Permissions: every section of `GET /api/poll` gated on its own source (#5661)
+
+      - Permissions: embeds and the v1 API scoped per source; MeshCore telemetry ids; restart is
+      admin only (#5664)
+
+      - Permissions: WebSocket events filtered per source and per grant (#5665)
+
+      - Config: a stored 0 interval is sent as 0; one channel read-back; dead desktop Virtual Node
+      checkboxes removed (#5662)
+
+      - Admin: a stored 0 is explained; one request per Owner/Channels Load; dead Virtual Node env
+      vars removed (#5659)
+
+      - Admin: per-section Load for Status Message, Traffic Management and MeshBeacon, local and
+      remote (#5644)
+
+      - Reticulum: phone tab bar docks under the content (#5648)
+
+
+      ## Docs
+
+      - MQTT: "Why don't I see MQTT traffic?" (#5663)
+
+      - Add-ons: Virtual Node sidecars and REST API clients described separately (#5653)
+
+      - Add-ons: Mesh Screensaver and Mesh Widget (Zebar) listed (#5650)
+
+
+      ## Issues Resolved
+
+      #5613, #5645, #5646, #5647, #5649
+
+
+      ## Upgrade Notes
+
+      - **No new migrations.**
+
+      - **Permissions are now enforced per source everywhere.** A user needs the grant on the source
+      a request acts on; with no `sourceId`, on the primary source. If a non-admin loses access
+      after upgrading, grant the permission on that source under Users.
+        - A request naming an unknown `sourceId` returns 404; it used to act on the primary source.
+        - A request with different `sourceId` values in the query and body returns 400.
+        - Lists read with no `sourceId` return only the sources the caller may read.
+      - **Admin only now:** the Auto-Enrichment and Position Estimation "run now" jobs, and Restart
+      Container.
+
+      - **Public and anonymous access:**
+        - `GET /api/status` no longer returns install-wide `statistics` without an admin login; `connection.localNode` needs `nodes:read` on the primary source. `connection.connected` still needs no login.
+        - The poll returns traceroutes only with `traceroute:read` on the source. Grant it to the anonymous account if a public map should draw route lines.
+        - Embeds leave out a node that has a private position override, is hidden from the map, or reports its position on a channel outside the profil
+      …
   - version: v4.17.0-rc5
     name: v4.17.0-rc5
     datetime: '2026-10-05T23:06:57Z'
@@ -2136,130 +2243,3 @@ releases:
 
 
       **Full changelog:** https://github.com/Yeraze/meshmonitor/compare/v4.16.0...v4.16.1-rc1
-  - version: v4.16.0
-    name: v4.16.0
-    datetime: '2026-09-10T16:29:37Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.16.0
-    prerelease: false
-    notes: >-
-      # MeshMonitor 4.16.0
-
-
-      The first full release since 4.15.2, after six release candidates.
-
-
-      The headline work is reliability on large meshes. A reporter with a ~190-node NodeDB
-      packet-captured MeshMonitor dropping its TCP link partway through every config sync, and the
-      fix took four passes: a connect timeout that could outlive its own attempt and kill a healthy
-      socket, a favorite write-back that injected an admin packet into the middle of the NodeDB
-      stream, a stalled sync that hung with no detection at all, and finally a fast-retry ramp so
-      recovery takes ~16s instead of ~73s. Alongside that, map route segments now honour the Show RF
-      / UDP / MQTT toggles, the Sources list shows unread DM counts per source, and operators can
-      publish privacy, terms and contact documents from inside MeshMonitor. Device credentials are
-      no longer written to debug logs.
-
-
-      ## ⚠️ Upgrade notes
-
-
-      **Route segments will disappear from your maps.** Show MQTT and Show UDP default to *off*, and
-      as of this release those toggles filter traceroute route segments as well as node markers.
-      Nothing is deleted — turn **Show MQTT** on in the Map Features panel to get them back. See
-      [Transport filtering and route
-      segments](https://meshmonitor.org/features/maps#transport-filtering-and-route-segments).
-
-
-      **MeshCore TCP sources now default to port 5000.** That is where MeshCore's WiFi and Ethernet
-      companion builds listen. If you run a native-TCP build, it still uses `4403` — set the port
-      explicitly when adding the source.
-
-
-      **Two new migrations run on first boot** (160, 161) plus one from the privacy feature (162).
-      All are additive and idempotent. Traceroutes recorded before this release carry no transport
-      information and are treated as RF, so they stay visible under the default toggles.
-
-
-      ## Features
-
-
-      - Route segments respect the Show RF / UDP / MQTT map toggles (#5097)
-
-      - Per-source unread DM badge on the Sources list, with a per-user off switch (#5124)
-
-      - Operator privacy disclosures: hosted or linked privacy policy, terms and contact documents
-      (#5156)
-
-      - Philadelphia MeshCore 500 radio preset (#5137)
-
-      - MeshBeacon warns on regulator-non-compliant preset/region combinations in received offers
-      (#5103)
-
-      - MeshCore observer device stats and noise-floor telemetry from the `/status` topic (#5040)
-
-
-      ## Bug fixes
-
-
-      **Large-mesh TCP reliability (#5122)**
-
-      - Scope the connect timeout to its own attempt, and name every socket teardown
-
-      - Defer the favorite write-back out of the initial config sync
-
-      - Detect a stalled config sync instead of hanging indefinitely
-
-      - Retry sooner after a mid-sync disconnect, ramping 3s → 10s → 30s
-
-
-      **MeshCore**
-
-      - Default the TCP source port to 5000, not 4403 (#5160)
-
-      - Decode RepeaterStats and Core stats fields the pinned library dropped (#5125)
-
-      - Guard an unhandled-rejection crash from bare library rejects (#5102)
-
-      - Refresh `lastHeard` on telemetry round-trip, not just adverts (#5131)
-
-      - Route MQTT ingest sources through every MeshCore read path, and give them their own page
-      (#5094, #5096)
-
-      - Theme the MeshCore MQTT ingest inputs and channel/room row buttons (#5135, #5071)
-
-
-      **Maps and UI**
-
-      - Give the Leaflet credit room beside the packet monitor (#5099)
-
-      - Stop chart panels overflowing the viewport in portrait (#5093)
-
-      - Keep the GPIO Pin Usage sidebar inside the viewport (#5100)
-
-      - Scope the non-scrollable-page rule to the channels tab
-
-
-      **Configuration and data**
-
-      - Move Traffic Management to the v2.8 non-zero-enables schema (#5123)
-
-      - Scope traceroute purges, and guard the sibling that never did (#5088)
-
-      - Stamp the security load gate from the per-section load too (#5077)
-
-      - Request the survey under `/api` so it reaches the API router (#5078)
-
-
-      ## Security
-
-
-      - Device credentials are no longer written to debug logs in the clear (#5141). WiFi PSK, MQTT
-      password, private and admin keys are redacted; `publicKey` still prints in full by design.
-
-
-      ## Documentation
-
-
-      The docs were audited against every change since 4.15.2 before this release. The MeshCore
-      setup page named the wrong T
-
-      …
