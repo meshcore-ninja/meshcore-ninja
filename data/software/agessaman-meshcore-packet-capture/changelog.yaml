@@ -1,7 +1,47 @@
 source: github
 repo: agessaman/meshcore-packet-capture
-updatedAt: '2026-08-17T16:30:11.117Z'
+updatedAt: '2026-10-09T19:19:45.671Z'
 releases:
+  - version: v2.2.1
+    name: v2.2.1
+    datetime: '2026-10-09T13:05:10Z'
+    url: https://github.com/agessaman/meshcore-packet-capture/releases/tag/v2.2.1
+    prerelease: false
+    notes: >-
+      ## What's Changed
+
+      * Support per-broker WebSocket paths (`websocket_path` / `PACKETCAPTURE_MQTTn_WEBSOCKET_PATH`,
+      default `/`). The MeshOMatic preset now connects on `/mqtt` by @w33ts in
+      https://github.com/agessaman/meshcore-packet-capture/pull/45
+
+      * Add the NTXmesh MQTT preset (`ntxmesh.dhovin.me`, WebSocket on port 8883) by @Dhovin in
+      https://github.com/agessaman/meshcore-packet-capture/pull/46
+
+      * Add the MeshCore CZ MQTT preset (`mqtt1.meshcore.cz` and `mqtt2.meshcore.website`) by
+      @wamidev in https://github.com/agessaman/meshcore-packet-capture/pull/47
+
+      * Add the BSMesh MQTT preset (`mqtt.bsmesh.de`, WebSocket on port 8885)
+
+      * Drop the README's PyPI `pip` / `pipx` install instructions. Manual installs now use a git
+      checkout (#50)
+
+      * Set the package version to 2.2.1. The `v2.2.0` tag still reports 2.1.0 (#51)
+
+
+      ## New Contributors
+
+      * @w33ts made their first contribution in
+      https://github.com/agessaman/meshcore-packet-capture/pull/45
+
+      * @Dhovin made their first contribution in
+      https://github.com/agessaman/meshcore-packet-capture/pull/46
+
+      * @wamidev made their first contribution in
+      https://github.com/agessaman/meshcore-packet-capture/pull/47
+
+
+      **Full Changelog**:
+      https://github.com/agessaman/meshcore-packet-capture/compare/v2.2.0...v2.2.1
   - version: v2.2.0
     name: v2.2.0
     datetime: '2026-07-30T15:12:08Z'

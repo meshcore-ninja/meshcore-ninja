@@ -1,7 +1,113 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-10-08T00:03:48.491Z'
+updatedAt: '2026-10-09T19:20:04.867Z'
 releases:
+  - version: v4.17.0-rc7
+    name: v4.17.0-rc7
+    datetime: '2026-10-09T19:12:30Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.0-rc7
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.17.0-rc7
+
+
+      > [!WARNING]
+
+      > This is a **pre-release** for testing. It is not tagged `latest`. Use it on a test install
+      or with a recent backup.
+
+
+      ## Summary
+
+
+      This release candidate fixes a map bug present in rc6: vector maps drew without roads, water
+      or labels on pages that only use the 2D map. It also stops the whole app going blank in a
+      browser with no WebGL; a standard map is shown instead. Navigation is now the same on every
+      source type: **Device Configuration** (satellite icon) for settings that live on the device,
+      and **Settings** (gear) for MeshMonitor's own behaviour, with each control moved to the page
+      its name promises. Auto-Acknowledge now waits 5 to 30 seconds before answering a channel
+      message and stays quiet when enough other nodes have already answered. New this round: a
+      read-only estimate of what tighter Traffic Management settings would drop, a card that
+      explains hardware MeshMonitor cannot flash, Analyzer Observer presets for meshcore.ca and RF
+      Lab, and a "Sent to radio" mark on MeshCore channel sends. Three MeshCore permission gaps are
+      closed.
+
+
+      ## Features
+
+      - Auto-Acknowledge: wait 5-30 s and stay quiet when enough nodes have already answered (#5695)
+
+      - Traffic Management: read-only replay for position dedup and rate limit, and corrected docs
+      (#5681)
+
+      - Firmware: explain hardware that cannot be updated, in place of the update UI (#5680)
+
+      - Automations: `trigger.ageMinutes` on MeshCore node triggers (#5679)
+
+      - MeshCore: meshcore.ca and RF Lab presets for the Analyzer Observer (#5678)
+
+
+      ## Bug Fixes
+
+      - Map: 2D vector maps load their worker again, and a browser with no WebGL2 gets a raster map
+      instead of a blank app (#5688)
+
+      - Settings: each per-source control is on the page its name promises (#5694)
+
+      - Nav: one icon and one label for Device Configuration and Settings on every source type
+      (#5684)
+
+      - MeshCore: unrelayed channel sends are marked "Sent to radio" (#5693)
+
+      - MeshCore: per-section `/snapshot` grants, anonymous neighbour reads, and tabs that follow
+      their grant (#5674)
+
+
+      ## CI and Translations
+
+      - CI: bound the ClamAV install step and add job timeouts (#5673)
+
+      - Translations update from Hosted Weblate (#5475)
+
+
+      ## Issues Resolved
+
+      #5666, #5667, #5668, #5671, #5672, #5675, #5677, #5683
+
+
+      ## Upgrade Notes
+
+      - **No new migrations.**
+
+      - **Auto-Acknowledge now waits.** An acknowledgement to a channel message arrives 5 to 30
+      seconds after the message (about 17 on average), not at once. If two other nodes have already
+      replied or sent a tapback by then, MeshMonitor sends nothing. Change the count under
+      Automation → Auto Acknowledge → "Maximum number of responses" (0 = no limit). Direct messages
+      are answered as before. A Pre-Send Delay longer than 5 seconds adds to the wait. MeshCore
+      auto-acknowledge is unchanged.
+
+      - **Where things moved:**
+        - *Meshtastic:* Firmware update is now under Device Configuration; PKI DM decryption is under Settings.
+        - *MeshCore:* default path hash size, default region/scope, the radio contact list, and Refresh contacts / Advert / Discover are under Device Configuration.
+        - *MQTT bridge:* the bridge setup is the first section of that source's Settings; its separate nav entry is gone and old links redirect.
+        - *Reticulum:* the destination retention cap is under Global Settings.
+        - A pointer sits where each control used to be.
+      - **Labels:** the per-source entry that read "Device" (Meshtastic) or "Configuration"
+      (MeshCore, Reticulum) now reads "Device Configuration"; the dashboard gear reads "Global
+      Settings". Other languages show the English label until translated.
+
+      - **Maps:** a browser without WebGL2 shows a standard (raster) map and a note; the saved
+      tileset is not changed.
+
+      - **Firmware Updates pane:** nodes MeshMonitor cannot flash over Wi-Fi (meshtasticd, nRF52,
+      RP2040 and STM32 boards, and models with no mapped build) now show an explanation in place of
+      the update controls. The server answers such a request with a 400 and a code, not a 500.
+
+      - **Config saves:** unchanged from rc6.
+
+      - **
+
+      …
   - version: v4.17.0-rc6
     name: v4.17.0-rc6
     datetime: '2026-10-07T23:46:32Z'
@@ -2154,92 +2260,3 @@ releases:
         --name meshmonitor \
         -p 8080:3001 \
       …
-  - version: v4.16.1-rc1
-    name: v4.16.1-rc1
-    datetime: '2026-09-12T03:17:57Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.16.1-rc1
-    prerelease: true
-    notes: >-
-      # MeshMonitor v4.16.1-rc1
-
-
-      > ⚠️ **Release candidate.** Not for production. Please test and report anything odd on
-      [Issues](https://github.com/Yeraze/meshmonitor/issues) or
-      [Discord](https://discord.gg/JVR3VBETQE).
-
-
-      The first RC for 4.16.1, a patch release made entirely of bug fixes reported against 4.16.0.
-      Three of them hit MeshCore. Serial sources can now be configured with a stable
-      `/dev/serial/by-id/...` path, the form a Proxmox LXC USB passthrough gives you — previously
-      that was rejected outright and the source reconnect-looped forever. MeshCore signal-to-noise
-      values are fractional (quarter-dB), but the `snr` columns were 32-bit integers, so on
-      PostgreSQL every affected message failed to persist with `invalid input syntax for type
-      integer: "-8.25"`, and on MySQL it silently truncated. And MeshCore Auto-Pathfinding never
-      cancelled a run already in progress, so every reconnect stacked another concurrent run on top
-      of the last, compounding mesh traffic until the container was restarted.
-
-
-      On the map, node markers are drawn at a deterministic offset *inside* a low-precision node's
-      accuracy cell so same-cell markers don't stack. That is intentional, but it made pins disagree
-      with the coordinates a node reports, and "Center on Map" panned to the reported point rather
-      than to the marker — up to half an accuracy cell away from the pin you clicked. Centring now
-      targets the marker, and a new **Spread Nodes** checkbox in Map Features turns the offset off
-      entirely, pinning every node exactly where it said it was. It defaults on, so nothing changes
-      unless you go looking for it.
-
-
-      ## Bug Fixes
-
-
-      - **fix(meshcore):** accept `/dev/serial/by-id` and `by-path` serial paths (#5174)
-
-      - **fix(meshcore):** check the Repeater serial path too, warn-only (#5179)
-
-      - **fix:** widen MeshCore `snr` columns to REAL/DOUBLE (#5176)
-
-      - **fix(meshcore):** cancel in-flight Auto-Pathfinding runs on stop/reconnect (#5171)
-
-      - **fix(map):** centre on the rendered marker, add a Spread Nodes toggle (#5181)
-
-
-      ## Chores
-
-
-      - **chore:** retire the "refresh the review token on every PR" rule (#5180)
-
-      - **chore(release):** bump to 4.16.1-rc1 (#5187)
-
-
-      ## Issues Resolved
-
-
-      - #5172 — Invalid serial port format (thanks @BlueSnake830)
-
-      - #5175 — Failed to persist message: `snr` integer vs fractional (thanks @javitab)
-
-      - #5177 — Nodes do not appear at the reported location (thanks @ogarcia)
-
-      - #5170 — Auto-Pathfinding in-flight runs never cancelled (thanks @pfmos)
-
-      - #5178 — Repeater connect path skipped serial-path validation
-
-
-      ## Upgrade Notes
-
-
-      **Migrations 163 and 164 run automatically on first boot.** 163 widens the two MeshCore `snr`
-      columns; on PostgreSQL and MySQL that is an `ALTER TABLE` on `meshcore_messages` and
-      `meshcore_heard_repeaters`, so allow a moment on a large database. SQLite is a no-op (INTEGER
-      affinity already stored the fractional value). 164 adds `user_map_preferences.spread_nodes`,
-      defaulting to true.
-
-
-      No breaking changes, no configuration changes required.
-
-
-      **Note for Repeater-mode MeshCore sources:** the serial path is now checked against the same
-      allow-list the Companion path uses, but **warn-only** — an unrecognised path logs a warning
-      and still connects. Nothing that works today stops working.
-
-
-      **Full changelog:** https://github.com/Yeraze/meshmonitor/compare/v4.16.0...v4.16.1-rc1
