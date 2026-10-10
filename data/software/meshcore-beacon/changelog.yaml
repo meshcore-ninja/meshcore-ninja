@@ -1,7 +1,19 @@
 source: github
 repo: MeshCore-Beacon/beacon-server
-updatedAt: '2026-10-10T04:55:33.887Z'
+updatedAt: '2026-10-10T18:17:30.205Z'
 releases:
+  - version: v2.0.5
+    name: v2.0.5
+    datetime: '2026-10-10T14:09:29Z'
+    url: https://github.com/MeshCore-Beacon/beacon-server/releases/tag/v2.0.5
+    prerelease: false
+    notes: |-
+      - feat(stats): rank top advertisers by flood or direct (#218)
+        - `/stats/top-advertisers` requires `sort=flood|direct` (400 otherwise); the sort is applied before `limit`
+        - ties broken by total adverts, then public key; `sort` is part of the cache key
+      - chore(api): built-in client floors raised to app 2.0.0 and web 2.0.4 (#218, #219)
+
+      Breaking for older clients. Deploy with Beacon Web 2.0.4 and BEACON Mobile 2.0.0.
   - version: v2.0.4
     name: v2.0.4
     datetime: '2026-10-10T03:14:01Z'

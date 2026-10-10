@@ -1,7 +1,108 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-10-09T19:20:04.867Z'
+updatedAt: '2026-10-10T18:17:40.882Z'
 releases:
+  - version: v4.17.0-rc8
+    name: v4.17.0-rc8
+    datetime: '2026-10-10T14:48:33Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.0-rc8
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.17.0-rc8
+
+
+      > [!WARNING]
+
+      > This is a **pre-release** for testing. It is not tagged `latest`. Use it on a test install
+      or with a recent backup.
+
+
+      ## Summary
+
+
+      This release candidate changes how the Docker image runs: every process inside the container
+      now runs as the unprivileged `node` user, the image no longer ships development packages
+      (about 0.5 GB smaller), and the base images are patched. Existing installs upgrade in place;
+      the first start fixes the ownership of `/data` once. New features: **Reliable PKI** (off by
+      default) sends a node your node info before an encrypted request when the last one failed,
+      **local map markers** let you plan on the map without sending anything to the mesh, and MQTT
+      settings gain a **broker preset** for the official Meshtastic broker. Several MQTT saves no
+      longer turn off fields they did not show, automations warn when a step would send nothing, and
+      the Site Planner and Map Analysis work on phones.
+
+
+      ## Features
+
+      - PKI: Reliable PKI — send node info first when a node stops answering encrypted requests, at
+      most once an hour per node and 10 an hour per source (#5702)
+
+      - Map: local map markers, per source, never transmitted (#5717)
+
+      - MQTT: broker preset chooser with the official Meshtastic broker, plain and TLS (#5700)
+
+
+      ## Bug Fixes
+
+      - Docker: prune dev dependencies, run every process as `node`, bump base images, patch runtime
+      CVEs (#5701)
+
+      - Automations: "Use suggested template", a warning when a step sends nothing, and "nothing
+      sent" in Runs and Trace (#5716)
+
+      - Admin: a remote MQTT save keeps client proxy, map reporting and TLS, and reads encryption
+      correctly (#5707)
+
+      - Config: a local MQTT save keeps location consent and map report settings; a precision of 0
+      stays 0 (#5713)
+
+      - Config: every config save updates the right cache, so a reload shows what you saved (#5714)
+
+      - Site Planner: folds after Predict on phones so the ring shows (#5698); clears the old ring
+      on a new origin and sits beside the map controls (#5706)
+
+      - Map Analysis: tool panels stay clear of the map controls and survive a phone/desktop switch
+      (#5710); the detail pane and time slider fit phones (#5712)
+
+
+      ## CI
+
+      - Fix the `onUserConsoleLog` teardown flake that failed rc7's pipeline (#5703)
+
+      - Pull test database images from `mirror.gcr.io` (#5705)
+
+
+      ## Issues Resolved
+
+      #5686, #5687, #5689, #5690, #5691, #5692, #5697
+
+
+      ## Upgrade Notes
+
+      - **Two new migrations:** 198 (`pki_exchange_state`) and 199 (`map_markers`). Both create
+      empty tables.
+
+      - **Docker runs as `node` (uid/gid 1000, or your `PUID`/`PGID`).**
+        - The first start after upgrading fixes the ownership of `/data` once and records it; later starts only check the top level. On a large volume the first start takes longer. `MESHMONITOR_FORCE_CHOWN=true` re-runs the pass.
+        - **USB serial devices:** the entrypoint grants `node` the group of each mapped `/dev/ttyUSB*` / `/dev/ttyACM*` automatically. If you start the container with `user:`, add the device's group with `group_add` instead.
+        - `cap_drop: [ALL]` now needs `user:` as well.
+        - `RUN_AS_ROOT=true` restores the old behaviour while you troubleshoot.
+        - Helm: `runAsGroup` and `fsGroupChangePolicy: OnRootMismatch` are set. The LXC template is unchanged.
+        - See *Upgrading to 4.17* in the Updating docs.
+      - **Reliable PKI is off.** Turn it on under Global Settings → Security, or per source under
+      that source's Settings. Each priming NodeInfo uses airtime: at most one per node per hour, and
+      at most 10 per source per hour.
+
+      - **Automations:** saving an automation whose message, notification or tapback is empty now
+      asks "Save anyway?". Saved automations are not changed. The API's create, update and import
+      responses carry a `warnings` list.
+
+      - **MQTT saves:** a remote-admin MQTT save is disabled until that node's MQTT config is
+      loaded. Saves from Device Configuration and Admin Commands now send client proxy, map
+      reporting, map report settings and location consent instead of resetting them.
+
+      - **Local markers** use the source's Waypoints
+
+      …
   - version: v4.17.0-rc7
     name: v4.17.0-rc7
     datetime: '2026-10-09T19:12:30Z'
@@ -2148,115 +2249,4 @@ releases:
 
       Eleven bumps, including React and React DOM to 19.3.0 (**#5221**). Dependabot had 
 
-      …
-  - version: v4.16.1-rc2
-    name: v4.16.1-rc2
-    datetime: '2026-09-13T17:35:46Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.16.1-rc2
-    prerelease: true
-    notes: >-
-      # MeshMonitor v4.16.1-rc2
-
-
-      > ⚠️ **Pre-release.** This is a release candidate for testing. Docker images are published
-      without the `:latest` tag. Report anything you find on
-      [Discord](https://discord.gg/JVR3VBETQE) or as a GitHub issue.
-
-
-      A mobile-focused bugfix candidate. Most of this RC came from one reporter working through
-      MeshMonitor on an iPhone in portrait, and it fixes five separate ways the UI broke at that
-      width: Security page tables that clipped their right-hand columns and dragged the whole layout
-      sideways instead of scrolling, Packet Distribution time-range buttons with an unreachable "All
-      Data", telemetry charts whose fixed-size markers turned a day of samples into a solid band, a
-      donut tooltip cut off mid-value, and issue-card text printing on top of itself. The last of
-      those turned out not to be a Security page bug at all — `.node-info` and `.node-name` are
-      claimed by two other global stylesheets that both force `display: flex`, which collapsed the
-      node name to zero width on every issue-card type. On the backend, NodeInfo Enrichment no
-      longer oscillates: `hwModel: 0` is `HardwareModel.UNSET`, a value the nodes repository refuses
-      to store, so the analyzer kept offering a copy that was silently dropped and the count could
-      never reach zero. The same fix stops a mesh-visible symptom — with "Also push to device
-      NodeDB" enabled, every Fix All press re-sent a NodeInfo request per stuck target, addressed on
-      the donor's channel number rather than the target's, which produced a flood of `NO_CHANNEL
-      (6)` routing errors. Also in this RC: the Add Widget picker scrolls, Apprise survives an early
-      client disconnect, and the DM list falls back to sorting by `lastHeard`.
-
-
-      ## Bug Fixes
-
-
-      - **#5200** — Security issue cards printed their node name on top of the node ID on mobile.
-      Two global class collisions (`AppHeader.css` `.node-info`, `nodes.css` `.node-name`) forced a
-      flex row; the guard is now scoped to `.security-tab .issue-header`.
-
-      - **#5199** — Mobile layout and readability across three reports (#5194, #5195, #5196):
-      Security tables scroll inside their own cards, the Packet Distribution toolbar wraps, the
-      donut tooltip escapes its chart box, and telemetry markers scale to the space each point gets
-      — full size when sparse, small when tight, line-only when they would overlap.
-
-      - **#5198** — NodeInfo Enrichment count oscillated on repeated Fix All (#5193), and the device
-      push addressed the wrong channel.
-
-      - **#5192** — Add Widget picker modal is scrollable, so widgets past the first viewport are
-      reachable (#5191).
-
-      - **#5185** — Apprise swallows `BrokenPipeError` when a client disconnects early (#5184).
-
-      - **#5143** — DM list sorts nodes by `lastHeard` descending as a fallback. Thanks @joroses!
-
-
-      ## CI / DevOps
-
-
-      - **#5189** — Test suites no longer lose a console-RPC race in release and PR CI.
-
-
-      ## Issues Resolved
-
-
-      - #5196 — Info page telemetry charts nearly unreadable on mobile due to compressed X-axis
-
-      - #5195 — Info page Packet Distribution time-range buttons clip off viewport on mobile
-
-      - #5194 — Security page tables clip right-hand columns on mobile with no horizontal scroll
-
-      - #5193 — NodeInfo Enrichment count oscillates on repeated Fix All
-
-      - #5191 — Mobile: Add Widget picker modal cannot be scrolled
-
-      - #5184 — Apprise broken pipe error (embedded)
-
-
-      ## New Contributors
-
-
-      - @joroses made their first contribution in #5143 🎉
-
-
-      ## Upgrade Notes
-
-
-      No breaking changes, no migrations, no configuration changes. Upgrade in place.
-
-
-      Users who had been pressing **Fix All** on NodeInfo Enrichment against a count that would not
-      settle should see it converge now. If it still does not, the server log will say so directly —
-      a copy that does not survive the write is reported as `did not persist` rather than passing
-      silently.
-
-
-      **Full changelog:** https://github.com/Yeraze/meshmonitor/compare/v4.16.1-rc1...v4.16.1-rc2
-
-      ## 🚀 MeshMonitor v4.16.1-rc2
-
-
-      ### 📦 Installation
-
-
-      **Docker (recommended):**
-
-      ```bash
-
-      docker run -d \
-        --name meshmonitor \
-        -p 8080:3001 \
       …
