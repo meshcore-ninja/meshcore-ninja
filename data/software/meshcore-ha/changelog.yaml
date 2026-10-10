@@ -1,7 +1,46 @@
 source: github
 repo: meshcore-dev/meshcore-ha
-updatedAt: '2026-10-06T01:11:57.544Z'
+updatedAt: '2026-10-10T23:20:03.154Z'
 releases:
+  - version: v3.0.2
+    name: v3.0.2
+    datetime: '2026-10-10T20:18:28Z'
+    url: https://github.com/meshcore-dev/meshcore-ha/releases/tag/v3.0.2
+    prerelease: false
+    notes: >-
+      ## Changes
+
+
+      - `send_channel_message` now fails with an error when the text is longer than the firmware can
+      send: 160 bytes (UTF-8) for the companion name, `: ` and the text together. Before, the
+      firmware cut the text without an error. The call also fires `meshcore_message_send_failed`
+      with `reason: too_long`. Automations that send longer channel messages must shorten them.
+      (#376)
+
+
+      ## Fixes
+
+
+      - `repeats_observable` uses the 176-byte serial frame of companion firmware 1.16.0 and later.
+      Channel messages of 140 to 155 bytes (name, `: ` and text) showed **Unconfirmed** although
+      their repeats were counted. On firmware older than 1.16.0, such a message can show **0
+      Repeaters**. (#375)
+
+      - The companion device shows its firmware version and model. They stayed at `Unknown` and
+      `Mesh Radio` on installs where no entity was added after the companion answered. (#306)
+
+
+      ## Notes
+
+
+      - Validation: 453 integration tests and 373 unit tests pass. Runs on the maintainer's Home
+      Assistant.
+
+      - Test requirements updated: meshcore 2.3.15, cachetools 7.2.0, pycryptodome 3.24.0, ruff
+      0.16.10.
+
+
+      **Full changelog:** https://github.com/meshcore-dev/meshcore-ha/compare/v3.0.1...v3.0.2
   - version: v3.0.1
     name: v3.0.1
     datetime: '2026-10-06T00:22:09Z'
@@ -601,9 +640,3 @@ releases:
     url: https://github.com/meshcore-dev/meshcore-ha/releases/tag/v2.1.11
     prerelease: false
     notes: "## What's Changed\r\n* Fix issue with nodes not resetting by @awolden in https://github.com/meshcore-dev/meshcore-ha/pull/89"
-  - version: v2.1.10
-    name: v2.1.10
-    datetime: '2025-10-15T15:12:10Z'
-    url: https://github.com/meshcore-dev/meshcore-ha/releases/tag/v2.1.10
-    prerelease: false
-    notes: "- Adds channel name support. Channel name will now be used in logs and sensors instead of the index\r\n- Fixes a bug with sensors going stale after an hour if the configured interval was longer than an hour\r\n- Updates the default refresh interval to be 2 hours"

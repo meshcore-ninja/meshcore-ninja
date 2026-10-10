@@ -1,7 +1,102 @@
 source: github
 repo: ALLFATHER-BV/wadamesh
-updatedAt: '2026-10-09T12:47:48.850Z'
+updatedAt: '2026-10-10T23:19:52.957Z'
 releases:
+  - version: beta_93
+    name: wadamesh beta_93
+    datetime: '2026-10-10T20:35:41Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_93
+    prerelease: true
+    notes: >-
+      Test build, on top of beta_92. Stable stays **beta_85**.
+
+
+      Flash it at **[flasher.wadamesh.com](https://flasher.wadamesh.com)** (switch the toggle to
+      Beta), or update on the device if you have "Get test builds (beta)" turned on.
+
+
+      ## New
+
+
+      - **Contact nicknames.** Contact options > Nickname gives a contact a name of your own. It
+      shows wherever that contact appears: Contacts, Chats, the chat header, sender names in
+      channels and rooms, the lock screen, notifications, Home widgets and the map. Contact options
+      keeps the name it advertises under it, and Contacts search finds either name. Nicknames stay
+      on the device: the mesh, the phone app and Lua apps keep the real name. Clear the text and
+      press OK to go back.
+
+      - **A new control panel**, in the launcher's style: square tiles coloured by their Settings
+      group, filled while on, and a new **Battery saver** tile.
+
+      - **Tooltips.** Icon buttons say what they are. With a keyboard, the selected button shows a
+      small card after a moment; on touch, hold a button to see it, and lifting never taps it. On a
+      control panel tile, keep holding to open its settings.
+
+      - **An amber keyboard cursor**, so the selected control stands out on every background.
+
+      - **Emoji chat icons** (#640, an idea from @jesshampshire): a contact's chat without an icon
+      of its own uses the first emoji in its name.
+
+      - **Default wallpaper** (#626, asked for by @neoemit): Lock screen > Default wallpaper takes
+      you back from a picture of your own.
+
+
+      ## T-LoRa Pager
+
+
+      - **Shortcuts:** M, C, A and S work from Home again; hold H for the launcher options and S for
+      the control panel; H on the app drawer switches to the widgets. Backspace goes back when
+      nothing is being typed, N jumps to the first new message in a chat, and holding Enter is a
+      long press.
+
+      - **Navigation:** each tab remembers where you were, Contacts opens on the first contact, a
+      chat opens on its first unread message, and Power off asks first.
+
+      - **Faster:** the screen draws quicker, tabs switch at once, and the keyboard is only read
+      when a key is waiting, so the Pager does far less while idle.
+
+      - **Battery:** the GPS rests in standby between position checks and is switched off completely
+      when GPS is off; the display panel sleeps with the screen off; the speaker amplifier only runs
+      while a sound plays; and Power off now also puts the radio to sleep and switches off the GPS,
+      the panel and the keyboard light.
+
+      - Map labels show their copyright sign and arrows again instead of boxes.
+
+
+      ## Fixes
+
+
+      - **Direct-message retries from the phone app** (#636, traced by @guidokok): the app's retries
+      keep the time and count up an attempt number, and wadamesh took them for a resent copy, so
+      nothing went out, flood fallback included, while the app was told the message had been
+      flooded. The direct-send timeout also read a packed path byte as 76 hops instead of 12, and
+      the web remote shows real hop counts now.
+
+      - **Changelog on the T-Deck Pro** (#638, reported by @jesshampshire): it loads over plain http
+      now, since the Pro has no memory to spare for the secure handshake.
+
+      - **A sending budget for Lua apps** (#606, reported by @TransientOddity): all apps share it
+      and restarting an app does not refill it. Channel posts three in a row, then one a minute;
+      direct messages six, then one every ten seconds; the same text to the same channel twice
+      within ten minutes is refused. Documented in the [SDK guide](https://wadamesh.com/sdk.html).
+
+      - **GPS speed setting** (#613, reported by @D-Melhede): on the T-LoRa Pager, T-Deck Pro and
+      Max and T-Display P4 the device finds the speed itself, and the setting now says it is only
+      where it starts.
+
+      - **ThinkNode M9 builds** with RadioLib 7.8.1 (#633, by @oumike).
+
+      - **Translations** for the background and battery settings from beta_90 and beta_91 (#632, by
+      @jcyrio), plus this build's new texts, in all 14 languages.
+
+
+      ## Heltec V4
+
+
+      - To make room, the V4 keeps **Snake** as its only built-in game: Tetris, 2048 and Breakout
+      are no longer built in (they stay in the Store on every 
+
+      …
   - version: beta_92
     name: wadamesh beta_92
     datetime: '2026-10-09T10:21:53Z'
@@ -1734,96 +1829,3 @@ releases:
       preview text. Turning
 
       …
-  - version: beta_73
-    name: wadamesh beta_73
-    datetime: '2026-08-28T08:46:42Z'
-    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_73
-    prerelease: true
-    notes: >-
-      **This is a test build.** Stable stays on `beta_65`. Flash it from
-      [wadamesh.com](https://wadamesh.com) with the Beta toggle on, or turn on "Get test builds
-      (beta)" on the device.
-
-
-      **If your T-Deck has been typing the wrong letters, this is the fix.** One change matters
-      here; the rest is a footnote.
-
-
-      ## Older T-Decks could not be typed on
-
-
-      Pressing `a` produced `q ` and `m` produced `qa `, which makes the keyboard useless for
-      writing, navigating, or locking the screen. Reported by [@Vybo](https://github.com/Vybo) in
-      [#341](https://github.com/ALLFATHER-BV/wadamesh/issues/341), and it has been broken since
-      `beta_70`.
-
-
-      It affects the **older T-Deck keyboards**, the ones without the controllable backlight. At
-      startup the firmware asks the keyboard whether it speaks the newer column protocol that
-      modifier latching needs. An older keyboard answers a five-byte read with the pressed character
-      in the first byte and padding after it, and every lowercase letter has its high bit clear, so
-      that answer passed the test. Read as a key-position report it is nonsense:
-
-
-      ```
-
-      'a' = 0x61 -> bits 0,5,6 of column 0 -> "q "
-
-      'm' = 0x6d -> bits 0,2,3,5,6         -> "qa "
-
-      ```
-
-
-      **Nothing can tell the two keyboards apart while nobody is typing**: idle, both answer with
-      zeros. Requiring proof before committing sounds right and is useless: proof only arrives when
-      someone types, nobody types during boot, so every device falls back and silently loses
-      modifier latching. That was measured, not assumed.
-
-
-      So the initial guess stays optimistic and becomes reversible. Raw mode now inspects each
-      frame, and three or more bits in the first byte with a printable value and every other column
-      empty is not something a key matrix can report, but is exactly an ASCII character. On that,
-      the firmware switches to the older protocol, delivers the character, and carries on.
-
-
-      Checked against the real key tables: **all 26 lowercase letters trigger it, so any letter
-      corrects the device on the first press.** Going the other way needs three or more of `q`, `w`,
-      `a`, space held simultaneously and nothing else, which the printable-range test narrows
-      further.
-
-
-      Newer keyboards are unaffected and keep latching, verified on hardware.
-
-
-      One more thing worth saying: **the `beta_72` change meant to make this detection more reliable
-      made it worse**, because retrying gave an older keyboard more chances to look like a newer
-      one. That is why upgrading to 72 did not help anyone affected.
-
-
-      ## Translations
-
-
-      Two Hungarian strings from [@pisti87](https://github.com/pisti87)
-      ([#340](https://github.com/ALLFATHER-BV/wadamesh/issues/340)): `Mark read`, which had never
-      been translated, and a shorter wording for joining the public channel so it fits its button.
-      Already on devices, since language files publish separately from firmware.
-
-
-      ## For testers
-
-
-      If your keyboard was typing nonsense, you should be able to install this normally rather than
-      needing a cable.
-
-
-      A reminder while it is fresh, because it caught someone this week: **two separate settings**
-      control whether an arriving message lights a dark or locked screen. **Message flash** wakes
-      the screen; **At a glance** draws the preview text on it. Both live in Options > Display, and
-      turning off At a glance alone will not stop the screen lighting up.
-
-
-      Still open and **not** fixed here: a map that renders nothing after `beta_71`
-      ([#339](https://github.com/ALLFATHER-BV/wadamesh/issues/339)), a screen that will not stay
-      dark after a manual lock ([#333](https://github.com/ALLFATHER-BV/wadamesh/issues/333)), and
-      the web flasher hanging at "wrapping up" on the T-Display P4
-      ([#342](https://github.com/ALLFATHER-BV/wadamesh/issues/342)).

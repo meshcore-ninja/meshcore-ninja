@@ -1,7 +1,153 @@
 source: github
 repo: liquidraver/ZephCore
-updatedAt: '2026-09-27T18:06:46.793Z'
+updatedAt: '2026-10-10T23:19:54.435Z'
 releases:
+  - version: 1.17.7-zephcore
+    name: Firmware 1.17.7-zephcore
+    datetime: '2026-10-10T21:48:03Z'
+    url: https://github.com/liquidraver/ZephCore/releases/tag/1.17.7-zephcore
+    prerelease: false
+    notes: >-
+      # ZephCore 1.17.7-zephcore
+
+
+      Faster GPS fixes on three trackers, a clock that survives a reboot, fixes for USB companions
+      that
+
+      could stop responding right after boot or when the port closed during a contact sync, a
+      contacts
+
+      import that no longer stalls every few seconds, more reliable detection of clock chips,
+      repeaters
+
+      that power down an external flash chip they do not use, a formatter that erases that chip on
+      every
+
+      board that has one, ESP32 repeaters with the WiFi uplink and observers that run much cooler
+      and keep
+
+      their broker connection, light sleep for XIAO ESP32-S3 and Station G2 repeaters, optional
+      light
+
+      sleep for ESP32-S3 companions, and a few fixes ported from upstream MeshCore.
+
+
+      > [!NOTE]
+
+      > A normal upgrade keeps your identity, settings, contacts and phone pairing. One exception:
+
+      > companions on the Heltec V3 and the Heltec Wireless Tracker now hold 120 and 110 contacts
+
+      > instead of 140 and 130; see "Companions can light-sleep" below.
+
+
+      ---
+
+
+      ## GPS: a fix in seconds instead of minutes
+
+
+      On some boards the GPS receiver lost its satellite data every time it went to sleep, so each
+      wake was
+
+      a search from scratch. Three boards now keep that data:
+
+
+      - **SenseCAP T1000-E and MeshTracker X1**: the receiver uses its low-power backup sleep. On a
+        T1000-E, a fix after a minute asleep took about 9 seconds instead of about 77.
+      - **SenseCAP Solar**: the receiver stays in standby between fixes instead of being switched
+      off,
+        which makes a fix in marginal reception more likely.
+
+      Keeping that data uses a little power all the time, so it is only done when the GPS interval
+      is one
+
+      hour or less. Longer intervals (a repeater's default is 48 hours) switch the receiver off
+      completely,
+
+      and the next fix is a search from scratch. The limit can be changed with `set gps standby
+      <seconds>`
+
+      (`0` = always switch off, `default` = one hour); `get gps standby` shows it.
+
+
+      `gps off` also switches the receiver off completely, on every board.
+
+
+      A fix that starts from scratch needs more time, most of all in poor reception. So whenever the
+
+      receiver was switched off completely (a GPS interval above the limit, `gps off` then `gps on`,
+      a
+
+      boot), a companion gives the next fix 5 minutes instead of 2 before it gives up until the next
+
+      interval. Repeaters and room servers already allow 5 minutes every time.
+
+
+      These rules are the same on every board, and a board added later follows them without any
+      extra
+
+      work. A board with only one way to switch its GPS off uses that way on both sides of the
+      limit.
+
+
+      > [!NOTE]
+
+      > **T1000-E and MeshTracker X1:** until now the receiver kept its clock supply through every
+      sleep,
+
+      > whatever the interval, and through `gps off`. With a GPS interval above one hour, and after
+
+      > `gps off`, it is now switched off completely, so the next fix takes longer.
+
+      > `set gps standby 604800` keeps the old behaviour for intervals up to a week.
+
+
+      ## The clock survives a reboot
+
+
+      A reboot no longer sends the clock back to 1970 on boards without a clock chip. The time is
+      restored
+
+      at boot and is at most a few seconds behind. A full power loss still resets it until the next
+      GPS fix
+
+      or phone sync.
+
+
+      ## Clock chips are recognised more reliably
+
+
+      Some boards carry a battery-backed clock chip (DS3231/DS3232/DS1307, PCF8563, RV-3028,
+      RX8130CE). At
+
+      boot the firmware checks that the device answering at the chip's address really is that chip,
+      because
+
+      other parts can share the address. That check had two faults:
+
+
+      - **A real clock chip could be skipped.** If another firmware had left it in 12-hour mode, or
+      with a
+        year out of range, it was treated as "not a clock": no time was read from it and none was ever
+        written back, so it stayed that way.
+      - **An erased memory chip at the same address could be taken for a clock.**
+
+
+      The check now uses the bits each chip's data sheet defines as always zero, and a device is
+      passed over
+
+      only when two reads both rule it out. A time is restored only from a read in which every field
+      is
+
+      valid.
+
+
+      Thanks to **ptr727** for finding and fixing this
+
+      ([PR
+
+      …
   - version: 1.17.6-zephcore
     name: Firmware 1.17.6-zephcore
     datetime: '2026-09-27T15:16:50Z'
@@ -1016,9 +1162,3 @@ releases:
     url: https://github.com/liquidraver/ZephCore/releases/tag/v20260606.150211
     prerelease: false
     notes: Synced with upstream vanilla MeshCore v1.16.0
-  - version: v20260605.132226
-    name: Firmware v20260605.132226
-    datetime: '2026-06-05T13:22:43Z'
-    url: https://github.com/liquidraver/ZephCore/releases/tag/v20260605.132226
-    prerelease: false
-    notes: "## New\r\n\r\n**USB serial console for companions**\r\nConfigure companion devices (e.g. Wio Tracker L1) by typing commands over USB, no phone app needed.\r\nWorks in the flasher.meshcore.io serial console (or any terminal), just like the repeater CLI. Stays out of the way of the Bluetooth/USB app — only one connection is active at a time.\r\n\r\n**Battery gauge calibration (`adc.multiplier`)**\r\nCorrect the battery voltage reading so the % is accurate for your device:\r\n- `set adc.multiplier full` — calibrate at full charge (easiest)\r\n- `set adc.multiplier target <mV>` — calibrate to a multimeter reading (most accurate)\r\n- `set adc.multiplier 0` — reset to default\r\n- `get adc.multiplier` — show current\r\n\r\n**Per-device battery curves**\r\nBattery % now uses a real, device-specific voltage curve instead of a rough estimate, so readings are far more accurate.\r\nIncluded for Wio Tracker L1, T1000-E, SenseCAP Solar, ThinkNode M6, and RAK WisMesh Tag (others use a sensible default).\r\n\r\n**Low-battery auto-shutdown**\r\nBattery-powered companions now power down automatically when the cell runs low (default 3.3 V, ~10% on the new curves) to protect it from over-discharge.\r\nShows a brief \"Low Battery — Shutting Down\" notice first (3 s on OLED; e-paper just leaves it on screen), and is skipped while charging or on USB power so it never cuts out a plugged-in device.\r\nOn by default for nRF52 companions.\r\nTune it over the USB console:\r\n- `set autoshutdown <mV>` — set the cutoff (1–5000 mV)\r\n- `set autoshutdown 0` — turn it off\r\n- `get autoshutdown` — show current\r\n\r\n**Clock source indicator**\r\nThe time in the top bar now shows a tiny letter telling you where it was last synced from: **G** (GPS), **A** (phone app), **N** (network), or **L** (local).\r\nIf the device hasn't heard from GPS or the app in the last 12 hours, it falls back to **L** — the clock is just free-running on the device's own crystal at that point (drift is only a few seconds a day, so it stays accurate, but you know it isn't being checked against an outside source).\r\nAfter a restart it shows **L** until the first sync.\r\n\r\n## Fixed\r\n\r\n**Device name no longer overlaps the clock**\r\nOn the home screen, a long device name used to run underneath the time and battery in the top bar, making both unreadable.\r\nThe name is now trimmed to fit the space before the clock, on any screen size."
