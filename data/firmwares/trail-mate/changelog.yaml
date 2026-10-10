@@ -1,7 +1,13 @@
 source: github
 repo: vicliu624/trail-mate
-updatedAt: '2026-10-01T01:13:19.637Z'
+updatedAt: '2026-10-10T12:06:04.545Z'
 releases:
+  - version: v0.1.53-alpha
+    name: v0.1.53-alpha
+    datetime: '2026-10-10T05:12:46Z'
+    url: https://github.com/vicliu624/trail-mate/releases/tag/v0.1.53-alpha
+    prerelease: true
+    notes: "## [0.1.53-alpha] - 2026-10-10\r\n\r\n### Added\r\n\r\n- TMAP offline map packages for OSM, terrain and satellite imagery, with separate POI labels and generated map font resources.\r\n- Offline POI search from the Map search window, with names, administrative hierarchy and distance; selecting a result moves the map to the place and displays a target marker.\r\n\r\n### Changed\r\n\r\n- Map packages can cover different regions and zoom ranges together, replacing large collections of individual tile files with a small number of indexed files.\r\n- Native map pixels are read by indexed offsets without PNG decoding, while POI display data and search indexes are stored in the OSM package instead of separate JSON files.\r\n- Shared pixel ownership, a smaller PSRAM worker buffer, retained map-file handles and reuse of POIs across style changes reduce copying, decoding and repeated file access. Prefetching keeps nearby map data ready for panning."
   - version: v0.1.52-alpha
     name: v0.1.52-alpha
     datetime: '2026-10-01T00:07:02Z'
@@ -284,9 +290,3 @@ releases:
     url: https://github.com/vicliu624/trail-mate/releases/tag/v0.1.33-alpha
     prerelease: true
     notes: "## [0.1.33-alpha] - 2026-06-28\r\n### Fixed / 修复\r\n- Fixed Meshtastic Android/iOS peer identity projection for MQTT map-report nodes by decoding `MAP_REPORT_APP` through the shared node metadata path, preserving public-key state correctly, and preventing map reports from being retransmitted as normal LoRa downlink packets. / 修复 Meshtastic Android/iOS 中 MQTT 地图上报节点的对方身份展示：通过共享节点元数据路径解析 `MAP_REPORT_APP`，正确保留公钥状态，并防止地图上报被当成普通 LoRa 下行包转发。\r\n- Fixed route/track file loading so GPX and KML files are parsed through bounded streaming readers, including KML `<coordinates>` token parsing and active route overlay loading from `route_path`. / 修复路线/轨迹文件加载：GPX 与 KML 均通过有界流式读取解析，包括 KML `<coordinates>` token 流式解析，以及从 `route_path` 加载活动路线 overlay。\r\n\r\n\n\n**Full Changelog**: https://github.com/vicliu624/trail-mate/compare/v0.1.32-alpha...v0.1.33-alpha"
-  - version: v0.1.32-alpha
-    name: v0.1.32-alpha
-    datetime: '2026-06-28T05:37:25Z'
-    url: https://github.com/vicliu624/trail-mate/releases/tag/v0.1.32-alpha
-    prerelease: true
-    notes: "## [0.1.32-alpha] - 2026-06-27\n### Added / 新增\n- Added verified UF2 manual-flash release artifacts for both nRF52840 manual targets, `gat562_mesh_evb_pro` and `t-echo-lite`, checking the UF2 family ID `0xADA52840` while keeping `.hex` and `.zip` outputs as fallback/diagnostic assets alongside the existing ESP32 firmware targets. / 为两个 nRF52840 手动刷写目标 `gat562_mesh_evb_pro` 与 `t-echo-lite` 新增经过校验的 UF2 发布产物，检查 UF2 family ID `0xADA52840`，同时保留 `.hex` 与 `.zip` 作为备用和诊断产物，并随既有 ESP32 固件目标一起发布。\n- Added the T-Echo-Lite-KeyShield target to the project site device list so pre-release users can identify the matching manual firmware package from the latest GitHub Release. / 将 T-Echo-Lite-KeyShield 目标加入项目站设备列表，使预发布用户能从最新 GitHub Release 中识别匹配的手动刷写固件包。\n\n### Fixed / 修复\n- Fixed the T-LoRa Pager LR1121 MeshCore discovery/contact path from `459e8f52`, aligning MeshCore path descriptor handling and Android app contact/adverts projection with the shared protocol rules. / 修复 `459e8f52` 中 T-LoRa Pager LR1121 MeshCore 发现/联系人路径，统一 MeshCore path descriptor 处理，并让 Android app 联系人/advert 投影遵循共享协议规则。\r\n- Stabilized nRF52 local persistence for the pre-release by limiting node storage pressure, recovering UI settings writes when volatile cache files fill LittleFS, and adding a Settings action that clears local node/contact/message cache while preserving device and radio settings. / 为本次预发布稳定 nRF52 本地持久化：限制节点存储压力，在易失缓存文件占满 LittleFS 时恢复 UI 设置写入，并新增 Settings 动作，在保留设备与无线设置的同时清理本地节点、联系人和消息缓存。\n- Tightened the nRF52 Meshtastic BLE path for iOS by aligning fromRadio notification timing, restart state, and stale-consume recovery with the app protocol sequence. / 收紧 nRF52 Meshtastic BLE 的 iOS 路径，使 fromRadio 通知时序、重启状态和陈旧消费恢复与 App 协议时序对齐。\n\n\n\n## What's Changed\n* fix gpx track crash by @vicliu624 in https://github.com/vicliu624/trail-mate/pull/65\n* Fix pager lr1121 by @vicliu624 in https://github.com/vicliu624/trail-mate/pull/66\n* Prepare nRF52 BLE and UF2 prerelease by @vicliu624 in https://github.com/vicliu624/trail-mate/pull/67\n\n\n**Full Changelog**: https://github.com/vicliu624/trail-mate/compare/v0.1.30-alpha...v0.1.32-alpha"
