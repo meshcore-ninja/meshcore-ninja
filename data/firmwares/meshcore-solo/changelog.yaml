@@ -1,7 +1,69 @@
 source: github
 repo: MarekZegare4/MeshCore-Solo
-updatedAt: '2026-10-08T17:15:44.165Z'
+updatedAt: '2026-10-11T23:29:51.157Z'
 releases:
+  - version: v2.0-rc3
+    name: v2.0-rc3
+    datetime: '2026-10-11T20:01:10Z'
+    url: https://github.com/MarekZegare4/MeshCore-Solo/releases/tag/v2.0-rc3
+    prerelease: true
+    notes: >-
+      ## MeshCore Solo Companion Firmware v2.0-rc3
+
+
+      The third release candidate for 2.0. Settings carry over from rc1 and rc2; coming from 1.x,
+      read the [v2.0-rc1 notes](https://github.com/MarekZegare4/MeshCore-Solo/releases/tag/v2.0-rc1)
+      first.
+
+
+      > [!NOTE]
+
+      > **Wio Tracker L2: install this release by hand.** Settings › Firmware update only offers
+      final releases, never a release candidate.
+
+
+      ### What's new
+
+
+      - **The settings the phone app had to itself are on the device**, on every screen:
+        - **Privacy**: whether your adverts carry your position, and how exactly (**Exact**, or rounded to about 100 m, 500 m or 1 km, on a fixed grid so many adverts can't be averaged back to the spot); a fixed position, typed in or taken from a waypoint; who may ask for your status, location and sensors; the Bluetooth PIN. Precision contributed by @pmow.
+        - **Adding contacts**: all heard nodes or only some types, up to how many hops, and whether to replace the oldest when the list is full.
+        - **Advanced radio**, at the end of Radio: path hash size, double ACK, listen before talk, interference threshold, RX boost, RX delay and airtime.
+        - **Per contact**, in a node's options (the node card on the L2): who may ask for its telemetry, reset its path, share it with the nodes nearby.
+        - **Factory reset** in Settings › System, asked twice.
+      - **A console.** The phone app's console and the site's USB tools take upstream MeshCore's
+      companion commands (`get radio`, `set tx`, `set name` ...) plus a key for every setting:
+      `keys` lists them, `get` and `set` read and change them as the Settings screen shows them.
+
+      - **QR codes**: of this manual, and of your contact for another phone to add. Status › System,
+      Enter (Settings › About on the L2).
+
+      - **A conversation opens on its first unread message**, under a "New" line, and reads down to
+      the newest. Messages that arrive while the screen is dark or locked stay unread until you see
+      them.
+
+      - **A fourth Wio Tracker L1 E-ink build, for a 4.26" 800 × 480 panel** (`WioTrackerL1Eink426`,
+      Good Display GDEQ0426T82), laid out like the 4.2", with **Text size** and **Icon size** in
+      Settings › Display. Contributed by @pmow.
+
+      - **OLED and E-ink:**
+        - **Nearby › Map**: the nodes with a position and you on one view; Left / Right picks a node, Up / Down zooms on it.
+        - **A calendar** in Clock tools: the month, today and the alarm's days.
+        - **Cursor mode** in the keyboard marks the place between letters instead of pushing the text apart, and keeps the keys in view; Up / Down move a word.
+        - **CardKB keys typed during an E-ink refresh** aren't lost any more. Contributed by @pmow.
+      - **Wio Tracker L2:** a Message banner switch in Settings › Display.
+
+
+      ### Fixes
+
+
+      - **Sending no longer stutters** while the contact list is saved: contacts and paths are
+      written a while after a change, never while you are typing.
+
+      - **The clock survives a power loss**: it is saved every 30 minutes and restored on the next
+      start.
+
+      - **A hashtag channel's favourite tile** showed its name with two `#`.
   - version: v2.0-rc2
     name: v2.0-rc2
     datetime: '2026-10-08T12:55:38Z'
@@ -193,9 +255,3 @@ releases:
     url: https://github.com/MarekZegare4/MeshCore-Solo/releases/tag/v1.15.1
     prerelease: false
     notes: "## Wio Tracker L1 — Solo Firmware v1.15.1\r\n\r\nHotfix for Bluetooth pairing and buzzer regressions in v1.15 (introduced by the Advert-sound change). No schema change — upgrade in place from v1.15.\r\n\r\n### Fixes\r\n\r\n- **Bluetooth pairing PIN is shown again** — on the published OLED + e-ink (dual BLE+USB) builds the pairing PIN was never drawn, so the phone asked for a code that wasn't displayed and pairing failed. The PIN now appears on the **Bluetooth** home page while BLE is on and not yet bonded.\r\n- **Auto buzzer mute works again** — in v1.15 \"Auto\" was effectively always muted on dual builds (the connection state was hardcoded true). It now mutes only when a companion app is actually connected — **BLE bonded or a host holding the USB serial port open** — and stays audible on charge-only / no host. (Plain serial monitors that assert DTR count as connected.)\r\n- **Bluetooth status indicator** — the top-bar BT dot again reflects a real BLE connection instead of showing connected permanently.\r\n- **New-message display wake** — the screen wakes for an incoming message again when no app is connected.\r\n\r\n### Background\r\n\r\nv1.15's advert-sound feature broadened the internal \"connected\" flag from BLE-bonded to *any* transport, but the dual interface always reports its send-fallback as connected — so everything keyed off \"connected\" (PIN prompt, Auto mute, BT indicator, message-wake) misbehaved. This release splits the two notions: BLE-specific UI uses the BLE bond state, while Auto mute / message-wake use a new \"app connected over BLE or USB\" check (USB detected via the CDC DTR line)."
-  - version: v1.15
-    name: Solo v1.15
-    datetime: '2026-06-04T15:35:06Z'
-    url: https://github.com/MarekZegare4/MeshCore-Solo/releases/tag/v1.15
-    prerelease: false
-    notes: "## Wio Tracker L1 — Solo Firmware v1.15\r\n\r\nAdds a full **GPS navigation suite** on top of Solo v1.14 — the L1 becomes a standalone off-grid navigator, no phone required.\r\n\r\n### Highlights\r\n\r\n- **Waypoints** — mark your current spot or type coordinates, give it a short label, then get live bearing + distance back to it. Ideal for car / camp / water / a meeting point.\r\n- **GPS compass** — *Tools › Compass*: a heads-up heading tape derived from GPS course-over-ground. No magnetometer needed.\r\n- **Navigate to anything** — a saved waypoint, the start of your trail (backtrack), a node from Nearby Nodes, or a location someone texts you.\r\n- **Share & save locations over the mesh** — send a waypoint in a message; on the other end, navigate to or save any shared location with one menu.\r\n- **Global Units setting** — one Metric / Imperial switch (Settings › System) drives every distance and speed in the UI.\r\n- **Advert sound** — an optional audible \"in range\" heartbeat: the device chirps when it receives an advert from another node — pair it with Auto-Advert to keep tabs on a buddy hands-free.\r\n\r\n### Changes\r\n\r\n**Navigation (new)**\r\n\r\n- **Waypoints** — *Tools › Trail › Hold Enter*: **Mark here** drops one at the current GPS fix; **Waypoints** opens the list, which carries a synthetic **Trail start** backtrack row, a usage counter (`WAYPOINTS 3/16`), and a **+ Add by coords** row to enter a point by lat/lon/label with no fix required (hemisphere chosen with LEFT/RIGHT since the keyboard has no minus key). Per-waypoint **Rename / Delete / Send**, plus **Clear waypoints**. Stored in their own `/waypoints` file (16 max) — independent of the trail and **not** cleared by Reset trail.\r\n- **Navigate-to-point view** — distance plus two *absolute* bearings, **To:** (target) and **Hdg:** (your course over ground), compared by eye. Reused by waypoints, trail backtrack, Nearby-node navigation and message-shared locations.\r\n- **GPS compass** — *Tools › Compass*: a scrolling N..E..S..W heading tape under a fixed travel-direction pointer, with a large degrees + cardinal readout. Works whether or not a trail is recording.\r\n- **Navigate to a node** — Nearby Nodes detail → **Hold Enter** now opens an Options menu (**Navigate** / **Ping**); Navigate opens the bearing/distance view targeting the node's last-known position.\r\n- **Trail map as a live view** — the Map draws your current position and all waypoints continuously, even with no trail recording. While a trail exists it frames the recorded route and clamps far-off waypoints to the nearest edge (a distant mark can't blow up the scale); with no trail it auto-fits to your waypoints and position. Markers show the first two label characters, placed edge-aware so labels stay on-map.\r\n- **Navigate / save a shared location** — any message carrying a `lat,lon` (what `{loc}` inserts) or a `[WAY]lat,lon label` share offers **Navigate** and **Save waypoint** from its **Hold Enter** menu — on the history row or in fullscreen, for DMs and channels. **Send** on a waypoint shares it to a contact or channel, pre-filling the message to confirm.\r\n- **Waypoints in GPX** — the GPX export now includes saved waypoints as `<wpt>` elements (label → `<name>`, plus `<time>`) alongside the track, so they import as pins in OsmAnd / Garmin / GPX Studio.\r\n\r\n**Units**\r\n\r\n- **Global Metric / Imperial** (Settings › System) drives every distance and speed: Nearby Nodes, Trail (Summary, List deltas, waypoint distances), the navigate-to-point view, the trail min-distance gate (5/10/25/100 m ↔ 15/30/75/300 ft) and the map scale bar.\r\n- **Trail readout** — the action menu's old four-way km/h·mph·min/km·min/mi cycle is now a **Speed / Pace** toggle; the unit follows the global setting.\r\n\r\n**Notifications**\r\n\r\n- **Advert sound** — Settings › Sound gains an **AD sound** entry (built-in / Melody 1 / Melody 2). The device plays it whenever it receives an advert from any node; combined with Auto-Advert on both ends it acts as a hands-free \"still i\n…"
