@@ -1,7 +1,69 @@
 source: github
 repo: andymux/meshos-releases
-updatedAt: '2026-10-08T23:04:26.952Z'
+updatedAt: '2026-10-11T12:19:40.324Z'
 releases:
+  - version: v1.0.26
+    name: MeshOS v1.0.26
+    datetime: '2026-10-11T11:11:53Z'
+    url: https://github.com/andymux/meshos-releases/releases/tag/v1.0.26
+    prerelease: false
+    notes: >-
+      # MeshOS app 1.0.26
+
+
+      ## Signed messages
+
+      - Your channel messages can carry a signature, so people know they really came from you:
+      channel menu, Signed messages, Sign my messages. With a radio connected, your radio signs
+      them; on AirLink alone, your phone does.
+
+      - MeshOS checks everyone else's. A green tick means one of your contacts signed the message, a
+      grey one that the signature checks out but they are not a contact. Tap a tick to see who
+      signed it.
+
+      - Only messages from my contacts is a second switch in the same place. It is set for each
+      channel on its own, and starts off.
+        - Off: the channel shows every message, as before, with ticks on the signed ones.
+        - On: every message has to be signed by the person who sent it, and that person has to be one of your contacts, the way direct messages only come from your contacts. Unsigned messages, and messages signed by anyone else, are hidden and do not notify you.
+        - Nothing is deleted. Turn the switch off again, or add the sender as a contact, and their messages are back.
+      - Signed messages work over LoRa, AirLink and the internet, and across MeshOS repeaters and
+      phones that bridge. Other MeshCore apps and radios show them as normal messages. A signed
+      message can be up to 64 bytes, your name included.
+
+
+      ## Contacts
+
+      - Share my LoRa contact (channel menu, with a radio connected) posts your radio's contact card
+      in a channel, and others add it to their radio's contacts with one tap. It is MeshCore's own
+      contact link, so other MeshCore apps understand it too.
+
+      - Public Chat's menu now has Share my LoRa contact and Share my AirLink contact too.
+
+
+      ## Fixes
+
+      - Turning off a channel's Internet Link now really keeps your messages there off the internet,
+      even when you also have an internet room with the same key.
+
+      - The internet tick on a message you sent no longer goes missing when the internet is quicker
+      than AirLink.
+
+      - A radio reflashed from MeshOS repeater to companion firmware no longer shows, and opens, as
+      a repeater in the Bluetooth list.
+
+
+      ## Downloads
+
+      - Android: MeshOS-v1.0.26.apk
+
+      - macOS: MeshOS-v1.0.26.dmg
+
+
+      SHA-256:
+
+      - MeshOS-v1.0.26.apk: f96c4b4d0af9a51d38b82e4badd11cb0523cd43e39ccb54c404d2668b884caff
+
+      - MeshOS-v1.0.26.dmg: 56909224e41bcfd7290783c04eb5eb32b19a18c5ca9eecb068ed0d3c7966e090
   - version: v1.0.25
     name: MeshOS v1.0.25
     datetime: '2026-10-08T18:35:01Z'
@@ -743,26 +805,3 @@ releases:
       - TDeck: e7cb9ff8362da9de3fb034c75f3ed6455cbaa3710f2e06c0a3f6cea722cd54c0
 
       - M9: 02bf59bccd86a4c471ec0e1b2757f84b5dad2b1435110b727433d3274621f39f
-  - version: fw-v1.6.6
-    name: MeshOS firmware v1.6.6
-    datetime: '2026-08-20T16:23:53Z'
-    url: https://github.com/andymux/meshos-releases/releases/tag/fw-v1.6.6
-    prerelease: false
-    notes: >-
-      Typing feels instant: eliminated input stalls during busy mesh traffic, fixed phantom double
-      letters, and deferred background work off the keyboard. New: select words with the joypad or
-      trackball (left to select, backspace to delete), tap to place the cursor and edit mid-message
-      (T-Deck). Plus a globe icon for the MeshOS channel, international characters now sit correctly
-      in Modern font, and a clearer message when updating without an SD card.
-
-
-      Device firmware for LilyGo T-Deck and ThinkNode M9.
-
-      Install via SD card (firmware.bin) or the in-firmware updater.
-
-
-      SHA-256:
-
-      - TDeck: 6b03705490ee569fc94d15739eacda1f7bbead1025e41e15a7b8fa8f10bce231
-
-      - M9: 53897c105eb99aa8a17e5c96504a0c0c2a6e021a653da00357acc90404173639

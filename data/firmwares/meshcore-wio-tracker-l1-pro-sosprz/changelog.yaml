@@ -1,7 +1,13 @@
 source: github
 repo: sosprz/Meshcore-Wio-Tracker-L1-Pro
-updatedAt: '2026-09-17T09:23:03.162Z'
+updatedAt: '2026-10-11T12:19:18.252Z'
 releases:
+  - version: v1.17.101
+    name: v1.17.101
+    datetime: '2026-10-11T06:40:21Z'
+    url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.17.101
+    prerelease: false
+    notes: "- **Startup sound** - Fixed the startup melody playing when `Sound -> Other` is `OFF`.\r\n- **Per-channel region scopes** - Each channel has a `Scope` picker with `Default`, `Custom`, `Unscoped`.\r\n- **Contact path controls** - Contact actions now show the current path state and open a structured comma-separated multi-hop route editor. [#109](https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/issues/109)\r\n- **Compose cursor stability** - The blinking compose cursor is now drawn after text wrapping, so a word at the end of a full line no longer jumps between lines. [#140](https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/issues/140)\r\n- **Remote telemetry header** - Long repeater names are clipped to the available right-header space and no longer overlap `Remote Data`. [#138](https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/issues/138)\r\n- **Screen-lock hint** - The screen-lock confirmation now presents its unlock instructions across short, readable lines. [#137](https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/issues/137)\r\n- **USB sound alerts** - USB companion firmware no longer mistakes its USB serial session for a connected phone, so enabled message and advert sounds play locally. [#134](https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/issues/134)"
   - version: v1.17.99
     name: v1.17.99
     datetime: '2026-09-17T05:55:33Z'
@@ -128,11 +134,3 @@ releases:
     url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.15.81
     prerelease: false
     notes: "- **Time settings GPS sync now** - Added `Settings -> Time -> Sync now from GPS` to request a one-off GPS time sync on demand, with progress stages.\r\n- **GPS boot time sync** - Added `Settings -> GPS -> Boot time sync`; when enabled, startup temporarily turns GPS on, waits for GPS time to sync the RTC, shows `GPS time synced`, and silently turns GPS back off if it was only enabled for the boot sync attempt."
-  - version: v1.15.80
-    name: v1.15.80
-    datetime: '2026-05-25T13:49:01Z'
-    url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.15.80
-    prerelease: false
-    notes: >-
-      - **Full sound mute on startup/reset** - Saved `Sound: OFF` is now applied before the startup
-      tone is requested, so rebooting or resetting does not produce audio while muted.
