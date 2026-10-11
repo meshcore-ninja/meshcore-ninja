@@ -1,7 +1,128 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-10-10T18:17:40.882Z'
+updatedAt: '2026-10-11T04:43:12.159Z'
 releases:
+  - version: v4.17.0-rc9
+    name: v4.17.0-rc9
+    datetime: '2026-10-11T01:44:01Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.0-rc9
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.17.0-rc9
+
+
+      > [!WARNING]
+
+      > This is a **pre-release** for testing. It is not tagged `latest`. Use it on a test install
+      or with a recent backup.
+
+
+      ## Summary
+
+
+      This release candidate adds an **All Channels** view to Unified Messages, records every
+      MeshCore **TRACE** the radio hears with per-hop SNR history, and lets an automation **trace
+      MeshCore paths on a schedule**. **Avoid PKI** mode sends telemetry and neighbor requests
+      channel-encrypted instead of PKI-encrypted. Aircraft handling gains manual marks and an opt-in
+      position request. Map Analysis can add on-air waypoints, MQTT hop-raise has finer controls,
+      and several sources hearing one packet now raise one notification. Two migrations run on first
+      start (200, 201).
+
+
+      ## Features
+
+      - Unified Messages: **All Channels** view with a channel tag on each message; no DMs, pages
+      back through full history (#5736, builds on #5654)
+
+      - MeshCore: capture every TRACE the radio hears and keep per-hop SNR history, with a card
+      showing each link's trend (#5733)
+
+      - Automations: trace MeshCore paths on a schedule, each path on its own interval (#5735)
+
+      - PKI: **Avoid PKI** mode: telemetry, LocalStats and neighbor requests go channel-encrypted;
+      DMs are untouched (#5724)
+
+      - Aircraft: mark a node as aircraft or not aircraft by hand (#5725)
+
+      - Aircraft: ask a newly flagged aircraft for its position, opt-in (#5727)
+
+      - Map Analysis: add on-air waypoints, with a per-source picker (#5732)
+
+      - MQTT: per-bridge skip raise, text messages in the raise picker, subscription-scoped handling
+      (#5726)
+
+      - Notifications: one notification when several sources hear the same packet (#5731)
+
+
+      ## Bug Fixes
+
+      - MeshCore: own DMs and room posts show their real delivery state (#5730)
+
+      - Notifications: turning Emoji Reactions off also mutes protocol tapbacks and keycap emoji
+      (#5721)
+
+
+      ## Upgrade Notes
+
+      - **Migrations 200 and 201** run on first start: a manual aircraft mark on nodes, and the
+      `meshcore_hop_snr` table.
+
+      - **Scheduled traces transmit.** Limits: at least 10 minutes between traces of one path, at
+      most 12 traces per source per hour, at most 20 paths per action. The last-run times are
+      stored, so a restart or a save does not fire a burst.
+
+      - **Aircraft position requests are off.** When on, a newly flagged aircraft gets 3 requests
+      over 4 minutes, and at most 2 such sequences start per source per hour.
+
+      - **Avoid PKI is off** and has had no live radio check yet. Test it on a spare node before you
+      rely on it.
+
+      - **Trace history** is kept for 90 days and read with the source's Traceroute read permission.
+
+      - **Manual aircraft marks** need Nodes write on the source.
+
+      - **All Channels** follows the same permissions as a single channel: Messages read on a source
+      opens all of its channels; otherwise each channel needs its own read grant.
+
+
+      ## Thanks
+
+      Thanks to @Cryptoteep for the All Channels view (#5654).
+
+
+      **Full changelog:** https://github.com/Yeraze/meshmonitor/compare/v4.17.0-rc8...v4.17.0-rc9
+
+
+      ## 🚀 MeshMonitor v4.17.0-rc9
+
+
+      ### 📦 Installation
+
+
+      **Docker (recommended):**
+
+      ```bash
+
+      docker run -d \
+        --name meshmonitor \
+        -p 8080:3001 \
+        -v meshmonitor-data:/data \
+        ghcr.io/Yeraze/meshmonitor:4.17.0-rc9
+      ```
+
+
+      ### 🧪 Testing
+
+      ✅ All tests passed
+
+      ✅ TypeScript checks passed
+
+      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
+
+
+      ### 📋 Changes
+
+      See commit history for detailed changes.
   - version: v4.17.0-rc8
     name: v4.17.0-rc8
     datetime: '2026-10-10T14:48:33Z'
@@ -2147,106 +2268,4 @@ releases:
       docker run -d \
         --name meshmonitor \
         -p 8080
-      …
-  - version: v4.16.1-rc3
-    name: v4.16.1-rc3
-    datetime: '2026-09-14T23:37:42Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.16.1-rc3
-    prerelease: true
-    notes: >-
-      # MeshMonitor v4.16.1-rc3
-
-
-      > ⚠️ **Pre-release.** This is a release candidate for testing. Docker images are published
-      without the `:latest` tag. Report anything you find on
-      [Discord](https://discord.gg/JVR3VBETQE) or as a GitHub issue.
-
-
-      A security-led candidate. Four API endpoints checked permissions without a source id and then
-      answered for whatever source the caller named in `?sourceId=`, so an account holding a grant
-      on any one source could read another source's data — DM counts, oldest-unread timestamps, and
-      in the worst two cases the message bodies themselves. All four are fixed and each carries a
-      regression test that was verified to fail without its fix. Alongside that, configuration
-      search arrives across every settings page, waypoints can now raise an arrival alert with a
-      radius and deduplication, and the Sources sidebar gains a "Mark all read" action that clears
-      every source's unread DM badge in one request. On the build side the armv7 Docker image now
-      compiles its JavaScript natively instead of under QEMU, cutting that leg by about 42%, and a
-      new Retag workflow can re-point `:dev` at an already-built version in a minute rather than a
-      forty-minute rebuild. A long-standing `react-leaflet` mock gap that had been failing CI
-      intermittently for days is also closed. Eleven dependency bumps land too, including React
-      19.3.0 — now grouped in Dependabot so `react` and `react-dom` can never again be split into
-      two PRs that neither merge.
-
-
-      ## Security
-
-
-      Four cross-source permission leaks, all the same shape — `hasPermission` called with no
-      `sourceId` while the handler answered for a caller-supplied `?sourceId=`:
-
-
-      | PR | Endpoint | Exposed |
-
-      |---|---|---|
-
-      | **#5227** | `GET /api/messages` | direct-message **bodies** |
-
-      | **#5227** | `GET /api/messages/channel/:channel` | channel message bodies |
-
-      | **#5225** | `GET /api/messages/unread-counts` | unread DM counts |
-
-      | **#5225** | `GET /api/messages/first-unread` | oldest-unread timestamps |
-
-
-      Reproduced against a real install before fixing. Scoping these gates locks nobody out:
-      `messages` is a per-source resource, so a global (`sourceId = NULL`) grant never authorized
-      anything through that path anyway.
-
-
-      ## Features
-
-
-      - **#5226** — per-page and cross-page configuration search (#5182)
-
-      - **#5228** — waypoint arrival alerts with a radius trigger and deduplication (#4750)
-
-      - **#5224** — "Mark all read" in the Sources sidebar, clearing every source's unread DM badge
-      in one request (#5197). Added *beside* the existing visibility toggle rather than replacing it
-      — that toggle is its own only control and also gates the 15-second poll.
-
-
-      ## Bug Fixes
-
-
-      - **#5203** — MeshCore DM and channel retries reuse the original `senderTimestamp` instead of
-      minting a fresh one, so a retransmit is no longer delivered as a duplicate message (#5202).
-      Also stops a `NO_CHANNEL` routing-error flood: the device push was addressed on the donor
-      row's channel, which for an MQTT donor is a virtual channel number, not a radio slot.
-
-      - **#5219** — `DashboardMap.test.tsx` mocked `react-leaflet` without a `GeoJSON` export while
-      the test renders a visible coverage layer, so the overlay threw asynchronously and tore down
-      the React tree. It surfaced as an unrelated-looking "Unable to find a label with the text of:
-      3D Terrain" and had been failing CI intermittently for days.
-
-
-      ## CI / Build
-
-
-      - **#5207** — the armv7 image builds its JavaScript natively instead of under QEMU. Vite and
-      tsc emit platform-independent output, so emulating them bought nothing; measured locally,
-      18m25s → 10m44s (−42%), with the produced `dist/` verified byte-identical to the emulated
-      build.
-
-      - **#5205** — raised the armv7 Docker timeout, which had been failing and silently preventing
-      the multi-arch tag from publishing at all.
-
-      - **#5206** — new Retag workflow: re-point `:dev` (or any alias) at an already-built version
-      in about a minute, instead of a full rebuild.
-
-
-      ## Dependencies
-
-
-      Eleven bumps, including React and React DOM to 19.3.0 (**#5221**). Dependabot had 
-
       …
