@@ -1,7 +1,13 @@
 source: github
 repo: sosprz/Meshcore-Wio-Tracker-L1-Pro
-updatedAt: '2026-10-11T12:19:18.252Z'
+updatedAt: '2026-10-12T14:45:26.528Z'
 releases:
+  - version: v1.17.102
+    name: v1.17.102
+    datetime: '2026-10-12T11:56:00Z'
+    url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.17.102
+    prerelease: false
+    notes: "- **E-ink display palette** - Fixed blank home screens and inverted e-ink UI colours after the v1.17 display-color update. [#136](https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/issues/136)\r\n- **E-ink layout** - Restored the e-paper layout capability.\r\n- **Header clipping** - Long contact and room names are ellipsized in shared headers, preventing them from overlapping counters in room and telemetry actions. [#138](https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/issues/138#issuecomment-6034641837)"
   - version: v1.17.101
     name: v1.17.101
     datetime: '2026-10-11T06:40:21Z'
@@ -128,9 +134,3 @@ releases:
     url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.16.82
     prerelease: false
     notes: '**Aligned with latest companion v1.16.0 firmware**'
-  - version: v1.15.81
-    name: v1.15.81
-    datetime: '2026-06-03T13:06:32Z'
-    url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.15.81
-    prerelease: false
-    notes: "- **Time settings GPS sync now** - Added `Settings -> Time -> Sync now from GPS` to request a one-off GPS time sync on demand, with progress stages.\r\n- **GPS boot time sync** - Added `Settings -> GPS -> Boot time sync`; when enabled, startup temporarily turns GPS on, waits for GPS time to sync the RTC, shows `GPS time synced`, and silently turns GPS back off if it was only enabled for the boot sync attempt."

@@ -1,7 +1,64 @@
 source: github
 repo: burakcan/MeshCore-mishmesh
-updatedAt: '2026-09-08T19:18:55.776Z'
+updatedAt: '2026-10-12T14:45:23.090Z'
 releases:
+  - version: mishmesh-v1.6.1
+    name: mishmesh Firmware v1.6.1
+    datetime: '2026-10-12T12:30:00Z'
+    url: https://github.com/burakcan/MeshCore-mishmesh/releases/tag/mishmesh-v1.6.1
+    prerelease: false
+    notes: >-
+      - Fix: GPS is no longer missing on the GAT562 30S Mesh Kit (#36).
+
+
+
+
+      **Full Changelog**:
+      https://github.com/burakcan/MeshCore-mishmesh/compare/mishmesh-v1.6.0...mishmesh-v1.6.1
+  - version: mishmesh-v1.6.0
+    name: mishmesh Firmware v1.6.0
+    datetime: '2026-10-12T09:45:46Z'
+    url: https://github.com/burakcan/MeshCore-mishmesh/releases/tag/mishmesh-v1.6.0
+    prerelease: false
+    notes: >-
+      - GAT562 30S Mesh Kit support (128x64 OLED, joystick, buzzer). Thanks to @anieto.
+
+      - Hex keypad for private channel keys: only 0-9 and A-F, on a 4x5 grid (#34).
+
+      - Curly quotes, dashes, the ellipsis and bullets sent from phones now render instead of
+      showing as blocks (#32).
+
+      - Russian keyboard: Ё moved to the end of the ДЕЖЗ key, so three taps give Ж as the label
+      suggests (#21).
+
+      - Fix: message signing from the phone (MeshMapper, web portal) failing with ERR 4 after the
+      radio had been up a while (#28). Thanks to @jram0421.
+
+      - Fix: typing at a field's length limit could push the cursor past the end of the text.
+
+
+
+
+      ## What's Changed
+
+      * Add mishmesh companion radio envs for GAT562 30S Mesh Kit by @anieto in
+      https://github.com/burakcan/MeshCore-mishmesh/pull/23
+
+      * Decrease offline message queue to 128 to free up 20KB in RAM on Wio L1 devices. by @jram0421
+      in https://github.com/burakcan/MeshCore-mishmesh/pull/31
+
+
+      ## New Contributors
+
+      * @anieto made their first contribution in
+      https://github.com/burakcan/MeshCore-mishmesh/pull/23
+
+      * @jram0421 made their first contribution in
+      https://github.com/burakcan/MeshCore-mishmesh/pull/31
+
+
+      **Full Changelog**:
+      https://github.com/burakcan/MeshCore-mishmesh/compare/mishmesh-v1.5.0...mishmesh-v1.6.0
   - version: mishmesh-v1.5.0
     name: mishmesh Firmware v1.5.0
     datetime: '2026-09-08T18:15:29Z'
