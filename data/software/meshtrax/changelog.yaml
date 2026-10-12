@@ -1,7 +1,13 @@
 source: github
 repo: venamartin/meshtrax
-updatedAt: '2026-08-26T01:25:19.536Z'
+updatedAt: '2026-10-12T04:58:30.002Z'
 releases:
+  - version: v1.7.50
+    name: Release v1.7.50
+    datetime: '2026-10-12T03:41:24Z'
+    url: https://github.com/venamartin/meshtrax/releases/tag/v1.7.50
+    prerelease: false
+    notes: "## What's Changed\r\n\r\n* Room chat overhaul: replies, mentions, roles, announcements and admin tools\r\n* Rooms learn their route again by logging in; room passwords remembered\r\n* Reply quotes show the full original post and jump to it\r\n* Backup and restore: works with older firmware, choose radio-only or full restore\r\n* Routes keep their hash width; new \"Forget all routes\" action\r\n* Repeater routing dialog fixes and realistic command timeouts\r\n* TCP link stays alive in the background and reconnects on resume\r\n\r\n## New Contributors\r\n* @CPColin made their first contribution in https://github.com/venamartin/meshtrax/pull/96\r\n\r\n**Full Changelog**: https://github.com/venamartin/meshtrax/compare/v1.7.22...v1.7.50"
   - version: v1.7.22
     name: Release v1.7.22
     datetime: '2026-08-26T00:09:00Z'

@@ -1,7 +1,105 @@
 source: github
 repo: meshcore-go/meshcore-go
-updatedAt: '2026-10-08T08:33:31.670Z'
+updatedAt: '2026-10-12T04:58:20.526Z'
 releases:
+  - version: v1.8.0
+    name: v1.8.0
+    datetime: '2026-10-12T04:20:06Z'
+    url: https://github.com/OwlShack/meshcore-go/releases/tag/v1.8.0
+    prerelease: false
+    notes: >-
+      Baseline `v1.7.0`. Nodes can now answer as servers: anonymous request replies, discover and
+      advert
+
+      builders, and unique timestamps. Airtime now comes from the radio, as in firmware, so a node
+      no
+
+      longer relays with no delay because nobody passed it an estimator. Also fixes the flood relay
+
+      delay, a `ReverseHops` panic and an openHop `Connect` race.
+
+
+      ### Added
+
+
+      - **Servers can answer anonymous requests.** `ParseAnonRequest` reads a REGIONS, OWNER or
+      BASIC
+        request, and `BuildAnonRegionsReply`, `BuildAnonOwnerReply` and `BuildAnonBasicReply` encode the
+        replies. The regions reply drops a leading `#` and skips names that do not fit. Names stop at 152
+        bytes, the most a firmware companion can pass on to the app; firmware itself sends up to 159.
+      - **Discover builders.** `NewDiscoverRequest` and `NewDiscoverResponse` build the control
+      payloads
+        that `DiscoverRequest` and `DiscoverResponse` parse; a response to a prefix-only request carries
+        the first 8 bytes of the key.
+      - **`NewAdvert` builds a signed advert** from an identity, app data and timestamp.
+
+      - **`node.UniqueClock` and `Node.UniqueTimestamp`** hand out timestamps that always increase,
+      the
+        firmware's `getCurrentTimeUnique`, so two requests in the same second are not taken as replays.
+        They order the stamps only: concurrent senders must enqueue in stamp order, since firmware drops a
+        request older than the last one it took.
+      - **`RadioMux.TxQueueLen`** reports how many packets wait to transmit without opening a radio.
+
+      - **`node.WithAdvertPathHashSize` sets the hash size for periodic self-adverts.** Firmware
+      floods
+        its self-advert with `path_hash_mode + 1` bytes per hop; until now a node always used 1.
+
+      ### Changed
+
+
+      - **Airtime comes from the radio, as in firmware.** Every modem now has `EstAirtime`, built
+      from
+        its live radio config, and `RadioMux` and `Node` read it through the new `node.AirtimeSource`
+        interface. Before, a node needed `WithAirtimeEstimator` passed by hand, and one that went without
+        relayed with no delay, kept no TX budget and counted no airtime. The KISS modem learns its config
+        from `SetRadio`, `SetRadioWait` or `RadioConfiguration` and then sizes the TX_DONE wait from it.
+        The estimator options still override. A node whose radio gives no estimate logs one warning.
+      - **openHop's airtime follows `SetConfig`.** `AirtimeEstimator` used to keep the config it was
+        called under. It and the sx12xx one are deprecated, since nothing needs to pass them now.
+      - **`ParseLoginRequest` refuses an anonymous request.** A body starting with a control byte is
+      a
+        REGIONS, OWNER or BASIC request, not a password; room servers still read every body as a login.
+
+      ### Fixed
+
+
+      - **Flood relay delay matches firmware.** `FloodRetransmitDelay` picked from 0 to 5 slots
+      where
+        firmware picks 0 to 4, and now rounds the slot length to whole milliseconds as firmware does.
+      - **`node.ReverseHops` no longer panics on a hash size of 0**, which now means 1 as elsewhere.
+
+      - **openHop commands sent straight after `Connect` no longer fail.** `Connect` could return
+      before
+        the modem was ready, so a command issued immediately, such as `SetConfig`, returned
+        `ErrNotConnected`.
+
+      ### Upgrading
+
+
+      - **No code changes are needed.** The airtime estimator options can now be removed, since
+      modems
+        supply their own. On KISS the estimate starts once `SetRadio`, `SetRadioWait` or
+        `RadioConfiguration` has run; until then a node logs one warning.
+
+
+
+      ## What's Changed
+
+      * chore: merge main back into dev after v1.7.0 by @tuzzmaniandevil in
+      https://github.com/OwlShack/meshcore-go/pull/30
+
+      * docs: set the v1.7.0 version when changing the module path by @tuzzmaniandevil in
+      https://github.com/OwlShack/meshcore-go/pull/31
+
+      * fix(openhop): mark the modem ready before Connect returns by @tuzzmaniandevil in
+      https://github.com/OwlShack/meshcore-go/pull/32
+
+      * fix(node): match firmware flood delay, advert hash size and ReverseHops by @tuzzmaniandevil
+      in https://github.com/OwlShack/meshcore-go/pull/33
+
+      * feat: serv
+
+      …
   - version: v1.7.0
     name: v1.7.0
     datetime: '2026-10-08T01:42:48Z'
