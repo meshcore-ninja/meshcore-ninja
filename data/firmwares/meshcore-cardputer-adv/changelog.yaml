@@ -1,7 +1,13 @@
 source: github
 repo: MultiMote/meshcore-cardputer-adv
-updatedAt: '2026-09-24T09:05:55.013Z'
+updatedAt: '2026-10-13T21:02:08.397Z'
 releases:
+  - version: 2026.10.0
+    name: Firmware 2026.10.0
+    datetime: '2026-10-13T18:17:52Z'
+    url: https://github.com/MultiMote/meshcore-cardputer-adv/releases/tag/2026.10.0
+    prerelease: false
+    notes: "* Update MeshCore to 1.17.1\r\n* Fix tools actions order\r\n* `Ctrl+R` to reset path (instead of `R`)\r\n* Block keys if message is sending"
   - version: 2026.7.3
     name: Firmware 2026.7.3
     datetime: '2026-07-31T16:37:32Z'

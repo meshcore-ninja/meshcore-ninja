@@ -1,7 +1,115 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-10-13T05:59:25.304Z'
+updatedAt: '2026-10-13T21:02:48.977Z'
 releases:
+  - version: v4.17.1-rc1
+    name: v4.17.1-rc1
+    datetime: '2026-10-13T18:46:51Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.1-rc1
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.17.1-rc1
+
+
+      > ⚠️ **Pre-release.** This is the first release candidate of the 4.17.1 cycle. It is for
+      testing; it does not move the `latest` Docker tag. Back up before you upgrade a production
+      install.
+
+
+      ## Summary
+
+
+      The main change is **MeshCore emoji reactions**. MeshMonitor now reads the reactions that
+      MeshCore One and meshcore-open send, shows them as chips under the message they answer, and
+      can send its own in MeshCore One format. Reactions also show in Unified Messages, export to
+      CSV, and can fire an automation when a rule opts in. A companion radio's **contact list** gets
+      its auto-add options (mode, types, max hops, replace-oldest) and a bulk remove of
+      non-favourite contacts, for radios that fill up. Three MeshCore bugs are fixed: telemetry
+      sharing modes that silently reverted, room posts whose author never matched a contact, and a
+      misleading observer field label. On Meshtastic, a new opt-in setting re-applies the Status
+      Message when a node reboots and comes back without it, and the rebroadcast mode descriptions
+      now match what firmware does. Upgrading runs migration 203 automatically.
+
+
+      ## Features
+
+
+      - **MeshCore reactions** (epic #5759)
+        - Reaction codec for the MeshCore One and meshcore-open formats (#5771)
+        - Inbound reactions as chips, with a dim line for a reaction to a message this source never heard (#5775)
+        - Send reactions: react button, emoji picker, your own chips marked, automation tapback on MeshCore (#5776)
+        - Chips in Unified Messages, `reaction` and `reply_to_id` CSV columns, opt-in automation trigger (#5778)
+      - **MeshCore radio contact list**: auto-add mode and type filters, max hops, replace the
+      oldest non-favourite when full, and "Remove non-favourite contacts from the radio" (#5783)
+
+      - **Status Message**: opt-in, per-source "Re-apply after a reboot" (#5784)
+
+
+      ## Bug Fixes
+
+
+      - MeshCore: all three telemetry sharing modes now persist; saving them together used to keep
+      only one (#5781)
+
+      - MeshCore: room post authors resolve to the right contact; the author key was corrupted for
+      keys with high bytes (#5782)
+
+      - MeshCore: the observer field "Region (IATA)" is now "Observer location (IATA)", with help
+      text that says what it is (#5781)
+
+      - Meshtastic: rebroadcast mode descriptions follow firmware behaviour, not the stale protobuf
+      comments (#5780)
+
+
+      ## Dependencies
+
+
+      - maplibre-gl 6.11.2 → 6.13.0 (#5752)
+
+      - lucide-react 1.49.0 → 1.54.0 (#5754)
+
+      - vite-plugin-pwa 1.3.0 → 2.0.0 (#5751)
+
+      - @rollup/rollup-linux-arm64-musl 4.63.6 → 4.64.3 (#5756), @rollup/rollup-linux-arm-gnueabihf
+      (#5755)
+
+      - actions/setup-node 7.0.0 → 7.1.0 (#5758), actions/upload-artifact 7.0.1 → 7.0.2 (#5753)
+
+
+      ## Issues Resolved
+
+
+      #5759, #5760, #5761, #5762, #5763, #5764 (MeshCore reactions), #5772, #5773, #5774, #5777,
+      #5779.
+
+
+      #5745 (Status Message lost on reboot) stays open: the cause is in firmware. This release adds
+      a mitigation.
+
+
+      ## Upgrade notes
+
+
+      - **Migration 203** adds reaction columns to `meshcore_messages`. It runs on first start and
+      does not rewrite existing rows.
+
+      - **New settings and their defaults**
+        - Show MeshCore reactions: per source, **on**
+        - Send reactions from MeshMonitor: per source, **on**. Each reaction is one short packet; on a channel every repeater in range sends it again
+        - Auto-Acknowledge may answer reactions: global, **off**
+        - Re-apply the Status Message after a reboot: per source, **off**
+      - **Automations**: a MeshCore reaction fires a "message received" rule only when the rule
+      ticks **Also fire on MeshCore reactions**. No existing rule changes. A rule that sends a
+      message for every reaction has no built-in limit; set a cooldown.
+
+      - **CSV export**: two columns are appended (`reaction`, `reply_to_id`), and MeshCore rows now
+      fill `message_id`. MeshCore reactions are left out unless **Include emoji reactions** is
+      ticked. The first 13 columns keep their name and order.
+
+      - **Rooms**: posts stored before this release keep their corrupted author key. They show the
+      contact's name when it can be matched safely, and "Unkno
+
+      …
   - version: v4.17.0
     name: v4.17.0
     datetime: '2026-10-13T00:20:08Z'
@@ -2102,134 +2210,6 @@ releases:
         -p 8080:3001 \
         -v meshmonitor-data:/data \
         ghcr.io/Yeraze/meshmonitor:4.16.1-rc6
-      ```
-
-
-      ### 🧪 Testing
-
-      ✅ All tests passed
-
-      ✅ TypeScript checks passed
-
-      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
-
-
-      ### 📋 Changes
-
-      See commit history for detailed changes.
-  - version: v4.16.1-rc5
-    name: v4.16.1-rc5
-    datetime: '2026-09-17T01:50:57Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.16.1-rc5
-    prerelease: true
-    notes: >-
-      # MeshMonitor v4.16.1-rc5
-
-
-      > ⚠️ **Pre-release.** This is a release candidate for testing. Expect rough edges and report
-      problems before 4.16.1 ships.
-
-
-      ## Summary
-
-
-      This candidate gives operators finer control over how far MeshMonitor's own traffic travels.
-      The MQTT broker's single "set hop limit" override is now two independent knobs: a clamp that
-      only lowers `hop_limit` on packets handed to a radio, and an opt-in raise (capped at 3) for
-      managed backhaul. Both now also apply to TCP-linked devices, where the old override silently
-      did nothing. Automations, Auto-Announce and Auto-Acknowledge can pin their own hop limit, most
-      usefully to 0 for local-only messages, and it can never exceed the node's own limit.
-      Traceroutes, including Auto Traceroute, now go out at the node's configured hop limit instead
-      of a fixed 7, which cuts airtime on every run. The Solar Monitoring report lets you mark a
-      node as solar, or not, when detection gets it wrong. The official map pin style can now color
-      by hop count instead of node identity. Firmware updates accept a `.bin` uploaded from disk,
-      and the Custom URL option finally works as an install target. Several enum settings are now
-      validated the same way on both load paths, and a handful of map-popup and Unified Messages
-      display bugs are fixed.
-
-
-      **Upgrade notes**
-
-      - Migration **167** adds the `solar_node_overrides` table. It applies automatically on SQLite,
-      PostgreSQL and MySQL.
-
-      - **Traceroute reach changed:** a node on the default hop limit of 3 now traces 3 hops, not 7.
-      Raise the device hop limit if you need to trace further.
-
-      - MQTT broker sources saved with the older hop-limit override keep working unchanged. Opening
-      one in the editor shows it as a clamp and explains what saving changes.
-
-
-      ## Features
-
-      - feat(mqtt): split the hop-limit override into a raise and a clamp (#5188, #5190) — #5256
-
-      - feat(automation): per-automation hop-limit override for automated sends (#5121) — #5259
-
-      - feat(solar): let operators mark a node as solar, or not (#3195) — #5260
-
-      - feat(map): choose what the official pin's colour means (#5018) — #5258
-
-      - feat(firmware): flash a .bin uploaded from disk, not just a URL (#5249) — #5252
-
-
-      ## Bug Fixes
-
-      - fix(traceroute): send at the node's configured hop limit, not a fixed 7 — #5262
-
-      - fix(settings): validate enum settings on both load paths, from one list — #5261
-
-      - fix(firmware): make the custom URL an actual install target (#5011) — #5257
-
-      - fix(map): outline the popup badge and pin its actions below the scroll (#5247) — #5253
-
-      - fix(unified): preserve line breaks in the messages card and modal (#5250) — #5251
-
-
-      ## CI/DevOps
-
-      - chore(release): bump to 4.16.1-rc5 — #5263
-
-
-      ## Issues Resolved
-
-      - #5188 Operator-controlled hop_limit override on forwarded MQTT packets
-
-      - #5190 Operator-controlled hop_limit clamp-down on forwarded MQTT packets
-
-      - #5121 Per-automation hop_limit override (auto-announce / action.sendMessage / tapbacks)
-
-      - #3195 Ability to manually set the solar-powered option for a device
-
-      - #5018 Toggle for map pin coloring: official colors vs hop count
-
-      - #5011 Custom firmware URL silently fails
-
-      - #5249 Firmware Updates: upload a local .bin file from disk
-
-      - #5247 Map node info popup: badge contrast, button clipping, mobile overflow
-
-      - #5250 Line breaks not preserved in Unified Messages view
-
-
-      **Full Changelog**: https://github.com/Yeraze/meshmonitor/compare/v4.16.1-rc4...v4.16.1-rc5
-
-
-      ## 🚀 MeshMonitor v4.16.1-rc5
-
-
-      ### 📦 Installation
-
-
-      **Docker (recommended):**
-
-      ```bash
-
-      docker run -d \
-        --name meshmonitor \
-        -p 8080:3001 \
-        -v meshmonitor-data:/data \
-        ghcr.io/Yeraze/meshmonitor:4.16.1-rc5
       ```
 
 
