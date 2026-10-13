@@ -1,7 +1,106 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-10-11T04:43:12.159Z'
+updatedAt: '2026-10-13T05:59:25.304Z'
 releases:
+  - version: v4.17.0
+    name: v4.17.0
+    datetime: '2026-10-13T00:20:08Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.0
+    prerelease: false
+    notes: >-
+      # MeshMonitor v4.17.0
+
+
+      ## Summary
+
+
+      v4.17.0 is the full release after nine release candidates: 64 features and 64 fixes since
+      v4.16.2. MeshMonitor now works out when several of your sources heard the same packet, and
+      uses that for "heard here" map edges, merged rows and an **All Channels** view in Unified
+      Messages, and one notification per packet. MeshCore gains **Trace SNR history** with full
+      charts, a **Mentions** notification, a server-side channel database, and Repeater sources that
+      fill Nodes, Packet Monitor and channel Messages. Scheduled automations can carry a start, an
+      end and a time zone, with a five-minute minimum interval. **Reliable PKI**, **Avoid PKI**,
+      "Proven receipt" and a Protection Level picker extend key handling. The **Docker image is
+      hardened**: every process runs as `node`, development packages no longer ship, and the image
+      is a third smaller. **Per-source permissions are now checked on every route**, and system
+      backup download is admin only. Migrations 183 to 202 run on first start.
+
+
+      Read more: [release post](https://meshmonitor.org/blog/2026-10-12-v4.17.0-release) · [security
+      post](https://meshmonitor.org/blog/2026-10-12-docker-image-hardening) ·
+      [CHANGELOG](https://github.com/Yeraze/meshmonitor/blob/main/CHANGELOG.md)
+
+
+      ## Upgrade Notes
+
+
+      - **Back up first.** Migrations 183 to 202 run on first start.
+
+      - **Docker.** The first start fixes the ownership of `/data` once. A root start with
+      `cap_drop: [ALL]` now fails: set `user: "1000:1000"` as well. With `user:`, serial devices
+      need `group_add`. `RUN_AS_ROOT=true` restores the old process users for troubleshooting.
+
+      - **Non-admin users may lose access.** A user needs the grant on the source a request acts on.
+      Grant it on that source under Users. For a public map with route lines, grant
+      `traceroute:read` to the anonymous account.
+
+      - **Backups** now hold channel keys and password hashes. Only an admin can download one.
+
+      - **Notifications.** A source you never saved settings for notifies for direct messages only,
+      with Apprise off until you add URLs. New-node and traceroute alerts default to off.
+
+      - **Automations.** A scheduled rule faster than every 5 minutes keeps running but must be
+      slowed before it can be saved again (scheduled MeshCore path traces are exempt). A send whose
+      text renders empty is skipped.
+
+      - **Auto-Acknowledge** on a channel answers 5 to 30 seconds late, and not at all once two
+      other nodes have answered.
+
+      - **API clients.** An unknown `sourceId` returns 404; differing `sourceId` values in query and
+      body return 400. `fromNodeNum` in every traceroute response is the requester. A non-admin
+      WebSocket client must join a source.
+
+      - **Number fields.** Blank no longer means 0; type 0 where 0 means off.
+
+      - **MeshCore repeater capture** (Packet Monitor, adverts, Trace SNR) needs a firmware build
+      with `MESH_PACKET_LOGGING`.
+
+      - Scheduled traces, aircraft position requests and Reliable PKI transmit, and all are off
+      until you turn them on.
+
+
+      ## Features
+
+      - meshcore: full-size Trace SNR charts per link direction (#5767)
+
+      - messages: show the mesh protocol on message borders (#5768)
+
+      - meshcore: store TRACE hop SNRs heard by Repeater sources (#5766)
+
+      - automation: timed events: start, end and time zone on scheduled automations (#5743)
+
+      - metrics: export each node's last position time (#5699)
+
+      - meshcore: Mentions notification when a message names the source's own node (#5741)
+
+      - unified: All Channels view on Unified Messages, with channel tags (#5736)
+
+      - automation: trace MeshCore paths on a schedule, each path on its own interval (#5735)
+
+      - meshcore: capture every TRACE the radio hears and keep per-hop SNR history (#5733)
+
+      - map-analysis: add on-air waypoints from Map Analysis, with a per-source picker (#5732)
+
+      - notifications: one notification when several sources hear the same packet (#5731)
+
+      - pki: Avoid PKI mode — channel-encrypted data requests, DMs untouched (#5724)
+
+      - aircraft: mark a node as not aircraft / aircraft by hand (#5725)
+
+      - mqtt: per-bridge skip raise, text in the
+
+      …
   - version: v4.17.0-rc9
     name: v4.17.0-rc9
     datetime: '2026-10-11T01:44:01Z'
@@ -2146,126 +2245,3 @@ releases:
       ### 📋 Changes
 
       See commit history for detailed changes.
-  - version: v4.16.1-rc4
-    name: v4.16.1-rc4
-    datetime: '2026-09-16T00:07:09Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.16.1-rc4
-    prerelease: true
-    notes: >-
-      # MeshMonitor v4.16.1-rc4
-
-
-      > ⚠️ **Pre-release.** This is a release candidate for testing. Docker images are published
-      without the `:latest` tag — pull `ghcr.io/yeraze/meshmonitor:4.16.1-rc4` explicitly.
-
-
-      Two surfaces got real attention this round. **Mesh invitations** move out of the channel list
-      into a Beacons button with a count: the old stacked cards grew with every beaconing neighbour
-      and squeezed the message list to a sliver on a phone, and because beacons re-advertise on
-      their own interval there was no end state where they stayed gone — so there is now a
-      searchable, sortable table behind that button, plus a permanent Mute for a mesh you never want
-      to hear from again. **Auto Traceroute** gains a per-filter AND/OR mode: its five node filters
-      were a hard-coded union, so ticking a channel could only ever widen the traced set, and an
-      operator running one preset per channel had no way to say "only trace LongTurbo". The channel
-      picker now shows channel names rather than raw ids.
-
-
-      On the fix side, MeshCore node discovery no longer works exactly once per connection — a
-      single unsettled radio op used to park the operation chain for the life of the connection, so
-      every later command silently never reached the serial port. `lastHeard` only moves forward
-      now, and every receive path stamps it. NodeInfo enrichment stops being undone by blank values,
-      which also restores the short names that had vanished from the map. Rounding out: channel
-      reorder works by touch on mobile, an unconfigured `MESHTASTIC_NODE_IP` is no longer dialled
-      forever, and a `sourceId` identifier is quoted properly in the packet-log delete.
-
-
-      ## Features
-
-
-      - Table-backed beacons list behind a button with a count — #5235
-
-      - Auto Traceroute: per-filter AND/OR modes and named channels — #5241
-
-
-      ## Bug Fixes
-
-
-      - MeshCore: bound `runExclusiveRadioOp` so a stuck radio op can't park the chain forever —
-      #5244
-
-      - MeshCore: `lastHeard` only moves forward, and every receive path stamps it — #5242
-
-      - NodeInfo: stop blank values from undoing enrichment, and un-stub map labels — #5234
-
-      - Channels: let the reorder handle be dragged on touch — #5240
-
-      - Sources: stop connecting to a `MESHTASTIC_NODE_IP` nobody configured — #5239
-
-      - Packet log: quote the `sourceId` identifier in the `clearPacketLogs` delete — #5238
-
-
-      ## Dependencies
-
-
-      - Bump lucide-react from 1.44.0 to 1.45.0 — #5222
-
-
-      ## Issues Resolved
-
-
-      - #5243 — MeshCore node discovery works exactly once per connection: one unsettled radio op
-      parks `radioOpChain` forever
-
-      - #5232 — Mobile: stacked Mesh Invitations cards eat viewport, block message list scroll
-
-      - #5231 — NodeInfo Enrichment leaves fields blank on v4.16.1-rc3; map short names vanish
-
-      - #5230 — Auto Traceroute: multi-select channel filter to scope eligible nodes
-
-      - #5237 — Not using Meshtastic but server continually tries to connect to default IP address
-
-      - #5233 — Mobile: cannot reorder Channels — drag handle long-press selects text instead of
-      starting drag
-
-
-      ## Thanks
-
-
-      - **@nate8088** for #5243 — a report with `strace` output on the serial fd, the decoded frame,
-      a timing table across three connections, and the root cause traced to the exact unsettled op.
-      The fix is essentially the one filed.
-
-      - **NullVoid** (Discord) for the Auto Traceroute channel-scoping request, and **NodeZero** for
-      the mobile invitation-card and NodeInfo reports.
-
-
-      ## Upgrade Notes
-
-
-      No breaking changes, no manual migration steps. One new database migration (166) adds a
-      nullable `mutedAt` column to `mesh_beacon_offers`; it runs automatically on first boot and is
-      idempotent on SQLite, PostgreSQL and MySQL.
-
-
-      Auto Traceroute's new per-filter modes default to **OR** — the behaviour every install already
-      had — so existing filter configurations are unchanged until you deliberately switch one to
-      AND.
-
-
-      **Full changelog:** https://github.com/Yeraze/meshmonitor/compare/v4.16.1-rc3...v4.16.1-rc4
-
-
-      ## 🚀 MeshMonitor v4.16.1-rc4
-
-
-      ### 📦 Installation
-
-
-      **Docker (recommended):**
-
-      ```bash
-
-      docker run -d \
-        --name meshmonitor \
-        -p 8080
-      …

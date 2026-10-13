@@ -1,7 +1,13 @@
 source: github
 repo: sosprz/Meshcore-Wio-Tracker-L1-Pro
-updatedAt: '2026-10-12T14:45:26.528Z'
+updatedAt: '2026-10-13T05:58:59.916Z'
 releases:
+  - version: v1.17.103
+    name: v1.17.103
+    datetime: '2026-10-13T04:57:28Z'
+    url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.17.103
+    prerelease: false
+    notes: "- **Scheduled coordinate messages** - `GPS -> Send coordinates` can now send a valid GPS fix to one chosen channel or contact at an optional 2 / 5 / 10 / 15 / 30 / 60 minute interval. It is OFF by default, supports an optional minimum-movement threshold and two short text fields. [#135](https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/issues/135)\r\n- **GPS and sound navigation** - `GPS` and `Sound` menus now use Left/Right for display-sized page scrolling. GPS update rate is changed with Select."
   - version: v1.17.102
     name: v1.17.102
     datetime: '2026-10-12T11:56:00Z'
@@ -128,9 +134,3 @@ releases:
     notes: >-
       - updated the default EU off-grid repeat frequency from `869.000 MHz` to `869.495 MHz`,
       completing alignment with companion firmware v1.16.0.
-  - version: v1.16.82
-    name: v1.16.82
-    datetime: '2026-06-07T19:29:58Z'
-    url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.16.82
-    prerelease: false
-    notes: '**Aligned with latest companion v1.16.0 firmware**'
