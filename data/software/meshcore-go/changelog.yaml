@@ -1,7 +1,88 @@
 source: github
 repo: meshcore-go/meshcore-go
-updatedAt: '2026-10-12T04:58:20.526Z'
+updatedAt: '2026-10-13T14:03:37.794Z'
 releases:
+  - version: v1.9.0
+    name: v1.9.0
+    datetime: '2026-10-13T06:00:55Z'
+    url: https://github.com/OwlShack/meshcore-go/releases/tag/v1.9.0
+    prerelease: false
+    notes: >-
+      Baseline `v1.8.0`. A Go program can now be the companion device the MeshCore app connects to.
+      DMs
+
+      can be sent one attempt at a time as firmware sends them, and every transmitted packet reports
+      its
+
+      outcome. Airtime estimates now match firmware to the millisecond.
+
+
+      ### Added
+
+
+      - **The companion protocol now has its device side**, so a Go program can be the companion an
+        app connects to. `ParseCommand` and one `Parse<Name>Command` per command struct decode an app's
+        frames, and every response and push struct has `ToBytes`, laid out as firmware writes it. A
+        frame firmware refuses on its shape gives a `*CommandError` with the firmware's error code to
+        answer with. Checks that need the device's state, such as contacts, channels or the clock, stay
+        with the caller.
+      - **Optional command fields can be told apart from zero.** `AddUpdateContactCommand` gains
+        `HasLatLon` and `HasLastModified`, `SetAutoAddConfigCommand` gains `HasMaxHops`,
+        `SetOtherParamsCommand` gains `HasTelemetryModes` and `HasAdvertLocPolicy` for partial updates,
+        `SetAdvertLatLonCommand` gains `Altitude` and `HasAltitude`, and `ExportContactCommand` gains
+        `Self` to export the device's own advert. Each defaults to the frame sent before.
+      - **`Node.SendTextAttempt` sends one attempt of a DM or CLI command**, as firmware's
+      `sendMessage`
+        does: the caller's timestamp and attempt number, direct along a path or flooded, returning the
+        expected ACK and that attempt's estimated ACK time. A CLI command gets no ACK and no attempt tail,
+        as in `sendCommandData`. Retry policy stays with the caller.
+      - **`Node.SendStamped` keeps timestamps in send order.** It hands its function a unique
+      timestamp
+        under a lock, so concurrent requests join the transmit queue in stamp order. The queue still sends
+        direct before flood and retries a busy send later, as firmware does.
+      - **`meshcore.MaxCombinedPath`** is firmware's `MAX_COMBINED_PATH`, the most path and extra
+      bytes
+        one returned path can carry.
+      - **`Node.SendReciprocalPath` sends a peer the route a flood took to reach us.** The node
+      already
+        does this for a flood PATH; firmware chat nodes also resend it after 3 seconds to a peer that
+        keeps flooding, which a consumer can now do.
+      - **Each transmitted packet reports its outcome**, as firmware's `logTx` and `logTxFail` do.
+        `node.WithMuxTxResult`, `node.WithQueuedRadioTxResult` and `node.WithTxResult` (for a `Node`
+        that queues for its own radio) take a `TxResultFunc` called once per packet with its bytes and
+        `nil` when sent, the `SendData` error when it failed, `ErrTxBusyDropped` when the radio stayed
+        busy and the queue had no room to retry, `ErrTxStopped` when the queue stopped first, or
+        `ErrTxQueueFull` when it was refused at enqueue. It can run on the transmit goroutine, so it
+        must not block.
+
+      ### Changed
+
+
+      - **Airtime estimates match firmware to the millisecond.** They now follow RadioLib's integer
+        microsecond formula: truncated to milliseconds on an SX126x, as `getEstAirtimeFor` does, and
+        rounded up on an SX127x, as its driver does. They were up to 1 ms high, which firmware's
+        timeout factors turned into ACK timeouts 6 to 12 ms long. openHop uses its configured preamble.
+        The new `hardware.LoRaTimeOnAirMicros` gives the microseconds.
+      - **`SendTextMessage` numbers its attempts 0, 1, 2 and so on.** It skipped attempt 1 before. A
+        timeout of 0 now waits each attempt's estimated ACK time. A CLI command is sent once and
+        `onResult` is not called, since firmware does not ACK it; before, it was retried and reported
+        unconfirmed.
+
+      ### Fixed
+
+
+      - **The companion client refuses an empty text message.** `Client.SendTextMessage` with no
+      text
+        built a frame firmware refuses; it now returns an error before sending.
+
+      ### Upgrading
+
+
+      - **No code changes are needed**, with one exception. If you send a CLI command with
+        `SendTextMessage` and wait for `onResult`, stop waiting: firmware never ACKs a CLI command, so
+        it is no longer called. Wait for the reply instead.
+
+      …
   - version: v1.8.0
     name: v1.8.0
     datetime: '2026-10-12T04:20:06Z'
