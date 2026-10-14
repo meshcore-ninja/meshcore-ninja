@@ -1,7 +1,13 @@
 source: github
 repo: meshcore-dev/meshcore-cli
-updatedAt: '2026-10-04T04:53:39.319Z'
+updatedAt: '2026-10-14T18:23:04.570Z'
 releases:
+  - version: v1.6.6
+    name: v1.6.6
+    datetime: '2026-10-14T17:50:35Z'
+    url: https://github.com/meshcore-dev/meshcore-cli/releases/tag/v1.6.6
+    prerelease: false
+    notes: "* Adding path to `chan_data` and update to latest meshcore_py\r\n* **Breaking change:** nd's parameters now use commutator `-f` for full key and `-t` to filter nodes by type\r\n\r\n**Full Changelog**: https://github.com/meshcore-dev/meshcore-cli/compare/v1.6.5...v1.6.6"
   - version: v1.6.5
     name: v1.6.5
     datetime: '2026-10-04T00:55:24Z'
@@ -26,6 +32,18 @@ releases:
     url: https://github.com/meshcore-dev/meshcore-cli/releases/tag/v1.6.2
     prerelease: false
     notes: "## What's Changed\r\n\r\n* use ~ or / to get back to root quickly by @4nd3r in https://github.com/meshcore-dev/meshcore-cli/pull/69\r\n* `send_raw`\r\n* send cli commands through `cli` command or `:` prefix in im mode. If no command found in im, try cli\r\n* remote cli commands to companions (must set the `0x10` flag in contact to allow remote cli)\r\n\r\n**Full Changelog**: https://github.com/meshcore-dev/meshcore-cli/compare/v1.6.1...v1.6.2"
+  - version: v1.6.1
+    name: v1.6.1
+    datetime: '2026-10-14T17:44:34Z'
+    url: https://github.com/meshcore-dev/meshcore-cli/releases/tag/v1.6.1
+    prerelease: false
+    notes: "@4nd3r added the possibility to associate scopes to channels via `scopes` file in config dir, thanks it should help people in crowded meshes ;)\r\n\r\nSome little fixes got into since last week:\r\n- fixed a regression with quotes handling due to pipeline ...\r\n- completion of aliases work\r\n\r\n## What's Changed\r\n* make channel scopes configurable by @4nd3r in https://github.com/meshcore-dev/meshcore-cli/pull/68\r\n\r\n## New Contributors\r\n* @4nd3r made their first contribution in https://github.com/meshcore-dev/meshcore-cli/pull/68\r\n\r\n**Full Changelog**: https://github.com/meshcore-dev/meshcore-cli/compare/v1.6.0...v1.6.1"
+  - version: v1.6.0
+    name: v1.6.0
+    datetime: '2026-10-14T17:44:17Z'
+    url: https://github.com/meshcore-dev/meshcore-cli/releases/tag/v1.6.0
+    prerelease: false
+    notes: "This release has seen a big refactoring of the command processing to permit redirection of output. It is now possible to redirect the output of a command to a file or a unix process. Some mechanisms have been introduced to follow this change such as an alias mechanism.\r\n\r\nHere is a non exhaustive list of the new features:\r\n- redirections and pipes\r\n- aliases\r\n- process handlers\r\n- force unscope (and more generally better scope management)\r\n- better json output\r\n- better terminal use"
   - version: v1.5.0
     name: v1.5.0
     datetime: '2026-03-10T20:52:57Z'
