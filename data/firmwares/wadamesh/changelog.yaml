@@ -1,7 +1,107 @@
 source: github
 repo: ALLFATHER-BV/wadamesh
-updatedAt: '2026-10-10T23:19:52.957Z'
+updatedAt: '2026-10-14T13:25:42.069Z'
 releases:
+  - version: beta_94
+    name: wadamesh beta_94
+    datetime: '2026-10-14T09:09:39Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_94
+    prerelease: true
+    notes: >-
+      Test build, on top of beta_93. Stable stays **beta_85**.
+
+
+      Flash it at **[flasher.wadamesh.com](https://flasher.wadamesh.com)** (switch the toggle to
+      Beta), or update on the device if you have "Get test builds (beta)" turned on.
+
+
+      ## ThinkNode M9
+
+
+      - **Newer M9s work** (#662 by @Bfindlay, reported in #644 by @thejiraguy and on Discord). On
+      the Meshtastic edition the keyboard controller answers at a different address, so on beta_93
+      and earlier no key did anything and the first setup screen could not be passed. Both addresses
+      are found now.
+
+      - **Their GPS gets a fix** (#661 and #663 by @Thatindianbruh, measured on two units): the GPS
+      on those units is switched on the other way round, and the firmware now picks it from the
+      keyboard's address.
+
+      - **Keys no longer type twice** (#625) and the **chat header fits its text** (#627), both in
+      @oumike's #628.
+
+
+      ## New
+
+
+      - **Record your route.** Map options > Record track saves where you go as a GPX file on the SD
+      card (/meshcomod/tracks), the standard format other mapping software opens, with elevation and
+      time. It keeps recording with the screen off, the map shows the route as a red line, and the
+      corner shows the distance and climb while it records.
+
+      - **The Reader is a library.** Big text and markdown files on the SD card page through, 16 KB
+      at a time, and Files opens web pages and long texts on the card in the Reader. A new desktop
+      tool, `scripts/sdpack.py`, turns EPUB books and text files into pages on the card with a
+      library home page.
+
+      - **A failed SD card no longer costs your node its key.** The device keeps a copy of the key
+      in its own memory. A device that keeps its data on the card and starts without it says so and
+      offers to try the card again, instead of opening first-time setup.
+
+      - **Hashtags are links** (#580 by @TerryTel93): tap #mesh, or select the message with keys, to
+      open that channel or join it. The message menu gains Map, Web and Channel entries for the
+      coordinates, web addresses and hashtags in a message.
+
+      - **New board: Elecrow CrowPanel Advance 5.0** (#655 by @oumike, #651).
+
+      - **Map options > Favorites only** shows just your favourite contacts on the map, link lines
+      included.
+
+      - **Temperature in Fahrenheit** (Settings > Display). What is stored and sent stays in °C.
+
+      - **Contacts show their chat icon**, the one you picked or the first emoji in the name (#649
+      by @oumike, asked for in #646 by @Jess-39).
+
+      - **T-Deck Pro and Max text sizes**: Normal, Large and Huge, as on the T-Deck (#645 by
+      @oumike, asked for in #639 by @Jess-39).
+
+      - **Pick your advert position on the map** (#635 by @Confituurke).
+
+      - **T-LoRa Pager:** hold Fn and press Enter to paste the clipboard (#624 by @jcyrio).
+
+      - **Web app:** Reply on a channel message (#650 by @oumike, asked for in #642 by @Danie10).
+
+      - **New in the Store: MECP**, for emergency messages in the Mesh Emergency Communication
+      Protocol. Pick a severity and the codes, add the number of people and your position, and post
+      it to a channel; MECP messages you receive are shown in plain words. MECP and its code table
+      are by xiang-dev-1.
+
+      - **For app makers:** a Store app can ship its own files, such as sounds, by listing them in
+      its manifest ([SDK guide](https://wadamesh.com/sdk.html#format)). That is also the way to play
+      sounds on the T-Display P4.
+
+
+      ## Fixes
+
+
+      - **Radar widget:** a tap opens the radar screensaver until you touch the screen, instead of
+      flickering it. It also fits a two-cell space, and a full Home tells you how to make room.
+
+      - **Advert widget** readable again, laid out like the app tiles (#637, reported by
+      @Flyflinger).
+
+      - **Radio widget:** no more line through its text.
+
+      - **Chat icons:** a text symbol (a star, a heart) shows as the icon (#647, reported by
+      @Jess-39).
+
+      - **Day mode:** unread badge numbers are readable (#658 by @oumike). **Keyboard:** control
+      keys have readable labels (#656 by @oumike).
+
+      - **T-Display P4 Bluetooth** can be switched on again when it was off at start-up (#612).
+      Since beta_88 that failed every time, with a "not enough 
+
+      …
   - version: beta_93
     name: wadamesh beta_93
     datetime: '2026-10-10T20:35:41Z'
@@ -1727,105 +1827,3 @@ releases:
 
       - The web flasher hanging at "wrapping up" on the T-Display P4
       ([#342](https://github.com/ALLFATHER-BV/wadamesh/issues/342))
-  - version: beta_74
-    name: wadamesh beta_74
-    datetime: '2026-08-28T17:36:14Z'
-    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_74
-    prerelease: true
-    notes: >-
-      **This is a test build.** Stable stays on `beta_65`. Flash it from
-      [wadamesh.com](https://wadamesh.com) with the Beta toggle on, or turn on "Get test builds
-      (beta)" on the device.
-
-
-      ## If your T-Deck types the wrong letters, there is now a switch
-
-
-      **Settings > Keyboard > "Older keyboard protocol"** skips the automatic detection and uses the
-      protocol every T-Deck keyboard understands.
-
-
-      It exists because the detection cannot always be certain, and the failure is self-trapping:
-      when it guesses wrong your keyboard types the wrong letters, so **any remedy that requires
-      typing is not a remedy**. This switch is operated by touch and applies immediately, with no
-      reboot.
-
-
-      Turning it on costs modifier latching, which a keyboard that needs the switch cannot do
-      anyway. Automatic detection is unchanged and remains the default, so if `beta_73` fixed your
-      keyboard nothing here changes for you.
-
-
-      This is not a substitute for finding the cause on the devices where detection still gets it
-      wrong ([#351](https://github.com/ALLFATHER-BV/wadamesh/issues/351)). It stops people being
-      stuck while that continues, which is a different and more urgent thing.
-
-
-      ## The web settings page could quietly change your radio
-
-
-      Reported by [@bradhawkins85](https://github.com/bradhawkins85)
-      ([#345](https://github.com/ALLFATHER-BV/wadamesh/issues/345)). The remote page displayed a
-      bandwidth of 62.5 as **62**, and pressing Apply sent 62 back to the device. So opening the
-      page and applying anything reconfigured the radio onto a bandwidth the mesh was not using.
-
-
-      Two independent faults, both needed: the device serialised bandwidth with no decimal places,
-      and the form's bandwidth input had no `step` attribute so it would have rejected a decimal
-      anyway. The apply direction was never wrong, which is exactly why it looked cosmetic while
-      actually changing the radio.
-
-
-      ## Keyboard
-
-
-      **Shift latches** like symbol and alt already did
-      ([#344](https://github.com/ALLFATHER-BV/wadamesh/issues/344),
-      [@jrote1](https://github.com/jrote1)): tap once for the next letter, tap twice to lock until
-      you tap again. It was a plain "is shift held" test while the other two went through the
-      latching class, which is why they behaved differently. The two shift keys share one latch, so
-      either arms it and either releases it.
-
-
-      **The Attaky Mesh Deck's front D-pad and SELECT work**, by
-      [@oumike](https://github.com/oumike)
-      ([#346](https://github.com/ALLFATHER-BV/wadamesh/pull/346)). The board has nine buttons and
-      only POWER did anything. They hang off an expander rather than direct GPIO, so the driver
-      drains an expander queue in its own pump.
-
-
-      ## Reading a route
-
-
-      Each hop now shows its path prefix beside the repeater name
-      ([#348](https://github.com/ALLFATHER-BV/wadamesh/issues/348), @jrote1): `3A Repeater Name`
-      rather than the name alone. The prefix is what the node is keyed by on the wire, so it stays
-      true when a repeater is named misleadingly or two share a name, which is precisely when you
-      are reading a route.
-
-
-      ## Translations
-
-
-      "Known regions" and the Bluetooth pairing hint are translatable and translated, from
-      [@pisti87](https://github.com/pisti87)
-      ([#347](https://github.com/ALLFATHER-BV/wadamesh/issues/347)).
-
-
-      ## For testers
-
-
-      Still open and **not** fixed here: a map that renders nothing since `beta_71`
-      ([#339](https://github.com/ALLFATHER-BV/wadamesh/issues/339)), a screen that will not stay
-      dark after a manual lock ([#333](https://github.com/ALLFATHER-BV/wadamesh/issues/333)), the
-      web flasher hanging at "wrapping up" on the T-Display P4
-      ([#342](https://github.com/ALLFATHER-BV/wadamesh/issues/342)), and an M9 reporting no SD card
-      when formatting ([#343](https://github.com/ALLFATHER-BV/wadamesh/issues/343)).
-
-
-      A reminder, because it caught someone: **two separate settings** control whether an arriving
-      message lights a dark screen. **"Flash on new message"** is in Settings > **Keyboard** and is
-      the one that wakes the screen. **"At a glance"** is in Settings > **Display** and draws the
-      preview text. Turning
-
-      …
