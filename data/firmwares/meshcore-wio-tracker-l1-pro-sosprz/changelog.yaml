@@ -1,7 +1,13 @@
 source: github
 repo: sosprz/Meshcore-Wio-Tracker-L1-Pro
-updatedAt: '2026-10-13T05:58:59.916Z'
+updatedAt: '2026-10-15T08:58:13.625Z'
 releases:
+  - version: v1.17.104
+    name: v1.17.104
+    datetime: '2026-10-15T04:37:45Z'
+    url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.17.104
+    prerelease: false
+    notes: "- **Chat, channels, preference persistence settings fix**\r\n- **E-ink home-page spacing** - Moved the home-page dots above the carousel content and added clear spacing before page titles such as Messages, Channels, and Adverts."
   - version: v1.17.103
     name: v1.17.103
     datetime: '2026-10-13T04:57:28Z'
@@ -126,11 +132,3 @@ releases:
     url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.16.84
     prerelease: false
     notes: '- **Off-grid 869 Repeat menu fix**'
-  - version: v1.16.83
-    name: v1.16.83
-    datetime: '2026-06-08T19:28:32Z'
-    url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.16.83
-    prerelease: false
-    notes: >-
-      - updated the default EU off-grid repeat frequency from `869.000 MHz` to `869.495 MHz`,
-      completing alignment with companion firmware v1.16.0.
