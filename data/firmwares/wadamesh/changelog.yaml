@@ -1,7 +1,115 @@
 source: github
 repo: ALLFATHER-BV/wadamesh
-updatedAt: '2026-10-14T13:25:42.069Z'
+updatedAt: '2026-10-15T19:45:15.596Z'
 releases:
+  - version: beta_95
+    name: wadamesh beta_95
+    datetime: '2026-10-15T16:46:44Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_95
+    prerelease: true
+    notes: >-
+      Test build, on top of beta_94. Stable stays **beta_85**.
+
+
+      Flash it at **[flasher.wadamesh.com](https://flasher.wadamesh.com)** (switch the toggle to
+      Beta), or update on the device if you have "Get test builds (beta)" turned on.
+
+
+      ## MeshCore 1.18
+
+
+      wadamesh now runs on **MeshCore 1.18**, through **meshcomod v1.18.0.1**. Settings > About
+      shows it under Build.
+
+
+      - **The MeshCore app's Command Line works with the device:** name, Bluetooth PIN, Wi-Fi, radio
+      settings, airtime and duty cycle, transmit power, receive gain, path hash mode, board and
+      version.
+
+      - **Remote CLI:** a contact you give remote CLI permission in the app can run those commands
+      on your device over the mesh. Anyone else's command arrives in the chat as a message.
+
+      - Channel data, pushed sensor telemetry and raw sends over multi-byte paths now reach the app
+      as they do on MeshCore 1.18.
+
+      - A device without a clock source starts from 1 March 2026 instead of May 2024, and keeps its
+      time through a restart that was not a power cut.
+
+      - Boards without a GPS take up to 5 seconds longer to start: MeshCore 1.18 waits longer for a
+      GPS to answer, so slow modules are found.
+
+
+      ## New
+
+
+      - **Spectrum is redesigned:** tiles for the peak, the noise floor, your channel and how busy
+      it is, a filled trace with a peak hold line and a marker on your channel, and a waterfall that
+      stays dark until there is real signal. **Band / Channel** switches between the whole band and
+      your channel up close; **Live / 1 min / 10 min** sets the waterfall's history.
+
+      - **RF Monitor 1.4:** tiles, a filled signal chart and the recently heard packets with their
+      type and signal. Tap a packet for who sent it, its route, its margin above what your spreading
+      factor can still decode, its size and its time on the air.
+
+      - **Airtime 1.6:** the channel load as a big figure, average, peak and your own airtime, a
+      chart with the duty-cycle limit, and the receive / transmit split.
+
+      - **New in the Store: Music.** Plays the MP3 and WAV files in a `Music` folder on the SD card,
+      with shuffle and repeat, and keeps going through the list with the screen off. Runs on every
+      board with a speaker: T-Deck, T-LoRa Pager, T-Display P4, Tanmatsu and T-Deck Max.
+
+      - **The Store tile shows how many installed apps have an update waiting**, checked with the
+      firmware update check.
+
+      - **T-Deck Max sound** (#665 by @Ender436): notification sounds, your own sounds and app audio
+      play through its speaker.
+
+      - **Emoji (and # on the ThinkNode M9) sit next to Send** (#669 by @oumike, reported on
+      Discord), so on the M9 one press of Right from the end of your message reaches them.
+
+      - Store apps on the **T-Display P4, Tanmatsu and Wio Tracker L2 can read the SD card** and
+      play music from it.
+
+      - **For app makers:** rounded panels, bold and large figures, `app.on_audio` (also with the
+      screen off), and a corrected list of the input events apps receive ([SDK
+      guide](https://wadamesh.com/sdk.html)).
+
+
+      ## Fixes
+
+
+      - The **"SD card could not be read"** notice no longer appears when the card works (#667,
+      reported by @900steve). It showed on devices that keep their data on internal storage after an
+      unfinished copy to the card.
+
+      - The **control panel's clock** keeps time while the panel is open (#666, reported by
+      @900steve).
+
+      - **ThinkNode M9: keyboard light brightness** in Settings > Keyboard, like the T-Deck's (#664,
+      asked for by @Buko84).
+
+      - The **battery widget** no longer draws its percentage over a ring too small for it (reported
+      on Discord).
+
+      - A Store app that changed a button's text could crash the device; it no longer can.
+
+      - RF Monitor named some packet types wrongly, and its Margin tile turned red on a quiet
+      channel.
+
+      - **Translations:** this build's new texts in all 14 languages.
+
+
+      ## Heltec V4
+
+
+      - The V4 keeps its built-in translations compressed and unpacks only the language you use,
+      which gives it about 330 KB of room again.
+
+
+      Checked on a LilyGo T-Deck (MeshCore 1.18: app sync, the app's Command Line, sending and
+      receiving), and the Music app on a T-Display P4. Every other 
+
+      …
   - version: beta_94
     name: wadamesh beta_94
     datetime: '2026-10-14T09:09:39Z'
@@ -1721,109 +1829,3 @@ releases:
       [@Buko84](https://github.com/Buko84) (#
 
       …
-  - version: beta_75
-    name: wadamesh beta_75
-    datetime: '2026-09-01T11:16:52Z'
-    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_75
-    prerelease: true
-    notes: >-
-      **This is a test build.** Stable stays on `beta_65`. Flash it from
-      [wadamesh.com](https://wadamesh.com) with the Beta toggle on, or turn on "Get test builds
-      (beta)" on the device.
-
-
-      ## Your offline map pack was being deleted
-
-
-      **If you keep map tiles on an SD card, previous releases were permanently deleting files from
-      your own pack.** Every tile the firmware wanted but could not find as a `.jpg` erased the
-      `.png` sitting next to it. `SD.remove()` is not recoverable.
-
-
-      Found and fixed by [@cvhviz](https://github.com/cvhviz)
-      ([#354](https://github.com/ALLFATHER-BV/wadamesh/pull/354)), confirmed on M9 hardware with a
-      boot log.
-
-
-      The cleanup responsible was written for the firmware's own small tile cache, and it resolves
-      through `s_tile_fs`. But `UITask::begin` re-points that at the **SD card root** on every board
-      that caches tiles to the card: the M9 always, the V4-R8 with a card present, T-Deck and Pager
-      under Launcher, and anyone with "Tiles from SD card" enabled. The skip-check above it only
-      ever tested the `.jpg`. It is now limited to the cache partition it was written for.
-
-
-      **This release stops the damage but cannot undo it.** If you keep an offline pack, check
-      whether tiles are missing and re-copy that area.
-
-
-      ## Names
-
-
-      By **[@tun0](https://github.com/tun0)** (Ruben Laban), a first contribution, and in the right
-      order: make the problem visible, then remove it.
-
-
-      - **Long sender names are stored in full**
-      ([#377](https://github.com/ALLFATHER-BV/wadamesh/pull/377)). MeshCore names run to 31
-      characters and only the first 24 were kept, so anything longer was cut permanently on arrival.
-      Raised to exactly the wire width, with no migration and no wiped history.
-
-      - **A long name no longer pushes the message text out of shape**
-      ([#376](https://github.com/ALLFATHER-BV/wadamesh/pull/376)), and a colon inside an ordinary
-      message is no longer mistaken for an author name.
-
-
-      ## ThinkNode M9
-
-
-      All from [@cvhviz](https://github.com/cvhviz):
-
-
-      - The map opens in about **1.5 seconds instead of 2.6**
-      ([#355](https://github.com/ALLFATHER-BV/wadamesh/pull/355))
-
-      - **Back returns to the previous screen** rather than jumping out of where you were
-      ([#356](https://github.com/ALLFATHER-BV/wadamesh/pull/356))
-
-      - The **SD card remounts properly** after formatting it on the device
-      ([#359](https://github.com/ALLFATHER-BV/wadamesh/pull/359))
-
-      - Live-updating labels no longer overlap the rows beneath them
-      ([#357](https://github.com/ALLFATHER-BV/wadamesh/pull/357)), and hidden or inactive controls
-      are skipped when moving with the d-pad instead of trapping the cursor
-      ([#358](https://github.com/ALLFATHER-BV/wadamesh/pull/358))
-
-      - GPS acquisition is timed from when the search started, not from when you opened the page
-      ([#365](https://github.com/ALLFATHER-BV/wadamesh/pull/365))
-
-
-      ## Also
-
-
-      Notification indicators and modal focus behave correctly
-      ([#370](https://github.com/ALLFATHER-BV/wadamesh/pull/370)), and there is a command to check
-      MQTT connection status ([#371](https://github.com/ALLFATHER-BV/wadamesh/pull/371)), both by
-      [@oumike](https://github.com/oumike).
-
-
-      ## Still open, and not fixed here
-
-
-      Several of these are waiting on information from the people who reported them, and I would
-      rather say so than let them look forgotten:
-
-
-      - Chat history resetting to an older point on reboot
-      ([#363](https://github.com/ALLFATHER-BV/wadamesh/issues/363))
-
-      - A Tanmatsu whose chat store will not finish migrating
-      ([#372](https://github.com/ALLFATHER-BV/wadamesh/issues/372))
-
-      - A map that renders nothing since `beta_71`
-      ([#339](https://github.com/ALLFATHER-BV/wadamesh/issues/339))
-
-      - A screen that will not stay dark after a manual lock
-      ([#333](https://github.com/ALLFATHER-BV/wadamesh/issues/333))
-
-      - The web flasher hanging at "wrapping up" on the T-Display P4
-      ([#342](https://github.com/ALLFATHER-BV/wadamesh/issues/342))

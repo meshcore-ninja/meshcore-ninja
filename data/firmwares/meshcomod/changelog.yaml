@@ -1,7 +1,24 @@
 source: github
 repo: ALLFATHER-BV/meshcomod
-updatedAt: '2026-08-21T16:37:10.598Z'
+updatedAt: '2026-10-15T19:44:56.983Z'
 releases:
+  - version: companion-v1.18.0.1
+    name: Companion Firmware v1.18.0.1
+    datetime: '2026-10-15T15:02:55Z'
+    url: https://github.com/ALLFATHER-BV/meshcomod/releases/tag/companion-v1.18.0.1
+    prerelease: false
+    notes: >-
+      ## What's Changed
+
+      * Merge MeshCore v1.18.0 by @B0N3-GD in https://github.com/ALLFATHER-BV/meshcomod/pull/60
+
+      * Repeater and room server: build again with the one-palette display API by @B0N3-GD in
+      https://github.com/ALLFATHER-BV/meshcomod/pull/61
+
+
+
+      **Full Changelog**:
+      https://github.com/ALLFATHER-BV/meshcomod/compare/companion-v1.17.0.4...companion-v1.18.0.1
   - version: companion-v1.17.0.4
     name: Companion Firmware v1.17.0.4
     datetime: '2026-08-21T16:22:58Z'
@@ -52,30 +69,3 @@ releases:
 
       **Full Changelog**:
       https://github.com/ALLFATHER-BV/meshcomod/compare/companion-v1.17.0...companion-v1.17.0.1
-  - version: companion-v1.17.0
-    name: Companion Firmware v1.17.0
-    datetime: '2026-08-09T13:37:00Z'
-    url: https://github.com/ALLFATHER-BV/meshcomod/releases/tag/companion-v1.17.0
-    prerelease: false
-    notes: >-
-      ## What's Changed
-
-      * Reject all-blank client_id from CMD_APP_START by @pfmos in
-      https://github.com/ALLFATHER-BV/meshcomod/pull/44
-
-      * Treat associated-but-address-less as a dead WiFi link by @pfmos in
-      https://github.com/ALLFATHER-BV/meshcomod/pull/45
-
-      * Integrate MeshCore v1.17.0 into meshcomod by @B0N3-GD in
-      https://github.com/ALLFATHER-BV/meshcomod/pull/46
-
-
-      ## New Contributors
-
-      * @pfmos made their first contribution in https://github.com/ALLFATHER-BV/meshcomod/pull/44
-
-      * @B0N3-GD made their first contribution in https://github.com/ALLFATHER-BV/meshcomod/pull/46
-
-
-      **Full Changelog**:
-      https://github.com/ALLFATHER-BV/meshcomod/compare/companion-v1.16.0.4...companion-v1.17.0
