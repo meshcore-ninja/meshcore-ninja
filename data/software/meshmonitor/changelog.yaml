@@ -1,7 +1,91 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-10-14T23:02:58.632Z'
+updatedAt: '2026-10-15T03:45:55.386Z'
 releases:
+  - version: v4.17.1-rc3
+    name: v4.17.1-rc3
+    datetime: '2026-10-15T03:04:14Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.1-rc3
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.17.1-rc3
+
+
+      > [!WARNING]
+
+      > This is a **pre-release** for testing. It is not tagged `latest`. Use it on a test system
+      first.
+
+
+      ## Summary
+
+
+      rc3 replaces rc2, whose Docker build ran past its 40-minute limit three times and never
+      published images. It carries all of rc2 (see the [rc2
+      notes](https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.1-rc2)) plus two changes. The
+      Packet Monitor and packet counters now spot firmware 2.8 NodeDB replays by their packet id, so
+      the burst of fake "LoRa" rows on each reconnect is gone again, even for nodes heard a minute
+      ago. The Docker release build now has 70 minutes to finish.
+
+
+      ## Bug Fixes
+
+
+      - **Packet Monitor: recognise firmware 2.8 NodeDB replays by packet id** (#5803, refs #5426).
+      Firmware 2.8.0+ stamps a replay with the node's last-heard time, so an age check let it
+      through. MeshMonitor now recomputes the firmware's replay id from the sender and `rx_time`,
+      and also drops RF rows that carry neither RSSI nor a usable `rx_time`.
+
+
+      ## CI/DevOps
+
+
+      - **Docker: raise the amd64/arm64 release build timeout to 70 minutes** (#5804)
+
+      - Version bump to 4.17.1-rc3 (#5806)
+
+
+      ## Upgrade Notes
+
+
+      - Everything in the [rc2 upgrade
+      notes](https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.1-rc2) applies, including
+      migration 204 and the BLE bridge health check.
+
+
+      **Full changelog:** https://github.com/Yeraze/meshmonitor/compare/v4.17.1-rc2...v4.17.1-rc3
+
+
+      ## 🚀 MeshMonitor v4.17.1-rc3
+
+
+      ### 📦 Installation
+
+
+      **Docker (recommended):**
+
+      ```bash
+
+      docker run -d \
+        --name meshmonitor \
+        -p 8080:3001 \
+        -v meshmonitor-data:/data \
+        ghcr.io/Yeraze/meshmonitor:4.17.1-rc3
+      ```
+
+
+      ### 🧪 Testing
+
+      ✅ All tests passed
+
+      ✅ TypeScript checks passed
+
+      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
+
+
+      ### 📋 Changes
+
+      See commit history for detailed changes.
   - version: v4.17.1-rc2
     name: v4.17.1-rc2
     datetime: '2026-10-14T18:52:35Z'
@@ -2118,119 +2202,3 @@ releases:
       ### 📋 Changes
 
       See commit history for detailed changes.
-  - version: v4.16.1
-    name: v4.16.1
-    datetime: '2026-09-18T16:51:52Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.16.1
-    prerelease: false
-    notes: >-
-      # MeshMonitor 4.16.1
-
-
-      A patch release in name, a substantial one in content: 50 changes since 4.16.0, across six
-      release candidates.
-
-
-      It closes a **cross-source message leak** — three message endpoints checked permissions
-      without a source id, so a read grant on any one source returned another source's messages. If
-      you run a multi-source install with per-source permissions, upgrade. Alongside that, firmware
-      can now be flashed from a `.bin` on disk or a custom URL, settings gained a search that spans
-      every page, waypoints can raise arrival alerts, and the Scripts gallery reports which of your
-      installed scripts have a newer release. MeshCore gets a run of reliability fixes: retries no
-      longer read as duplicate messages, `lastHeard` only moves forward, and a stuck radio op can no
-      longer park the operation chain.
-
-
-      ## ⚠️ Security
-
-
-      **Cross-source message leak (#5225, #5227).** `GET /api/messages`, `GET
-      /api/messages/channel/:channel` and `GET /api/messages/unread-counts` checked permissions with
-      **no source id at all**, then answered for the caller-supplied `?sourceId=`. A `messages:read`
-      grant on any one source therefore returned another source's messages — bodies included on the
-      first two, counts on the third. All three now scope the check to the requested source.
-
-
-      This affects deployments that use per-source permissions to separate what different users can
-      read. A single-source install, or one where every user can read every source, is not exposed.
-      No credentials or keys were involved.
-
-
-      ## Features
-
-
-      - Configuration search, within a page and across all of them (#5182, #5226)
-
-      - Waypoint arrival alerts with a configurable radius and dedupe (#4750, #5228)
-
-      - Flash a `.bin` uploaded from disk (#5249, #5252), and make a custom firmware URL an actual
-      install target (#5011, #5257)
-
-      - Script update checks — versions read from the author's `mm_meta`, with install-on-request
-      (#5255, #5272, #5274)
-
-      - `@` mention autocomplete and chips in conversations (#5276, #5280)
-
-      - Per-automation hop-limit override for automated sends (#5121, #5259)
-
-      - MQTT hop-limit override split into a raise and a clamp (#5188, #5190, #5256)
-
-      - Table-backed beacons list behind a button with a count (#5232, #5235)
-
-      - Auto-traceroute per-filter AND/OR modes and named channels (#5230, #5241)
-
-      - Choose what the official map pin's colour means (#5018, #5258)
-
-      - Mark a node as solar, or not, overriding the automatic guess (#3195, #5260)
-
-      - Gate module settings on the device's `excluded_modules` bitmask (#5065, #5273)
-
-      - "Mark all read" beside the Sources unread toggle (#5197, #5224)
-
-      - Mobile channels layout — Beacons and the send actions get their own row, and the composer
-      collapses to one line (#5265, #5267)
-
-
-      ## Bug fixes
-
-
-      **MeshCore**
-
-      - DM and channel retries reuse the original `senderTimestamp` with an incrementing attempt, so
-      a retransmit no longer reads as a duplicate message (#5202, #5203)
-
-      - `lastHeard` only moves forward, and every receive path stamps it (#5242)
-
-      - Bound `runExclusiveRadioOp` so a stuck radio op cannot park the chain forever (#5244)
-
-      - Cancel in-flight Auto-Pathfinding runs on stop or reconnect (#5171)
-
-      - Accept `/dev/serial/by-id` and `by-path` serial paths (#5172, #5174), and check the Repeater
-      serial path too, warn-only (#5178, #5179)
-
-      - Report a clear error when the admin console receives HTML instead of JSON (#5268, #5270)
-
-      - Widen the snr columns to REAL/DOUBLE (#5175, #5176)
-
-
-      **Messaging and channels**
-
-      - Shared-key channels no longer swallow history, and local edits show without a restart
-      (#5183, #5269)
-
-      - Traceroutes are sent at the node's configured hop limit, not a fixed 7 (#5262)
-
-      - Preserve line breaks in the unified messages card and modal (#5250, #5251)
-
-      - The channel reorder handle can be dragged on touch (#5233, #5240)
-
-      - DM list falls back to sorting nodes by `lastHeard` descending (#5143)
-
-
-      **Data and configuration**
-
-      - Stop blank values undoing NodeInfo enrichment, and un-stub map labels (#5231, #5234)
-
-      - Stop the NodeInfo count oscillating on repeated Fix
-
-      …
