@@ -1,7 +1,143 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-10-15T03:45:55.386Z'
+updatedAt: '2026-10-15T22:56:56.368Z'
 releases:
+  - version: v4.17.1-rc4
+    name: v4.17.1-rc4
+    datetime: '2026-10-15T20:27:34Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.1-rc4
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.17.1-rc4
+
+
+      > [!WARNING]
+
+      > This is a **pre-release** for testing. Do not use it in production.
+
+
+      ## Summary
+
+
+      This RC brings the Meshtastic and MeshCore configuration screens onto one shared layout
+      (#5797). Auto Responder, Timer Triggers, Auto Acknowledge and Auto Announce now use the same
+      cards, field groups and test boxes on both protocols. Device Configuration uses the same
+      section shell, puts the danger zone at the bottom, asks for in-app confirmation, and goes
+      read-only without `configuration:write`. Saves that reboot the node now show the reboot
+      dialog; saves that only sometimes reboot say "may restart". Channels share one editing model,
+      with per-channel "Save to device" and a key field you can show, copy, generate or clear.
+      MeshCore Observer brokers are edited in MeshCore Configuration and each broker keeps its own
+      credentials. Meshtastic MQTT quick configure now waits for Save. Every password field gets a
+      show/hide toggle. Fixes include timers losing their last-run time on save, geofence results
+      written to the wrong source, and Observer credential clears wiping every broker.
+
+
+      ## Features
+
+      - feat(ui): shared config section shell for automation sections (#5809)
+
+      - feat(ui): one Auto Responder workflow for Meshtastic and MeshCore (#5811)
+
+      - feat(ui): one Timer Triggers workflow for Meshtastic and MeshCore (#5814)
+
+      - feat(ui): same field groups for Auto Acknowledge and Auto Announce on both protocols (#5817)
+
+      - feat(ui): Device Configuration pages on the shared section shell (#5819)
+
+      - feat(ui): shared password field with show/hide (#5837)
+
+      - feat(ui): one channel editing model for Meshtastic and MeshCore (#5838)
+
+      - feat(ui): danger zone last, in-app confirms, write gating on Device Configuration (#5839)
+
+      - feat(ui): edit the Observer in MeshCore Configuration; quick configure joins the save
+      (#5840)
+
+
+      ## Bug Fixes
+
+      - fix(channels): send sourceId with channel export (#5810)
+
+      - fix(config): SaveBar baselines follow successful saves and reloads (#5813)
+
+      - fix(mqtt): gate the device MQTT form on configuration:write (#5820)
+
+      - fix(meshcore): per-node schedule toggles roll back on a failed save and ignore stale replies
+      (#5822)
+
+      - fix(timers): keep the server's run state on save; one name, Timer Triggers (#5832)
+
+      - fix(geofence): record trigger results on the source's own key (#5833)
+
+      - fix(meshcore): Observer credentials are set and cleared per broker (#5834)
+
+      - fix(channels): clearable PSK, meshcore_mqtt guard, MeshCore Public slot, missing strings
+      (#5835)
+
+      - fix(config): expect the reboot that most Device Configuration saves cause (#5836)
+
+
+      ## Chores
+
+      - chore: bump version to 4.17.1-rc4 (#5843)
+
+
+      ## Issues Resolved
+
+      - #5807 Shared config section shell for automation sections
+
+      - #5808 Converge Auto Responder workflow across Meshtastic and MeshCore
+
+      - #5812 Converge Timer Triggers workflow across Meshtastic and MeshCore
+
+      - #5816 Align Auto Acknowledge and Auto Announce layouts
+
+      - #5818 Device Configuration pages on the shared section shell
+
+      - #5823 Device Configuration: most saves reboot the node, but the UI assumes they don't
+
+      - #5825 MeshCore Observer: per-broker credentials
+
+      - #5826 Channels: fix four existing bugs before the redesign
+
+      - #5827 Timer Triggers: keep the server's lastRun on save; one name across protocols
+
+      - #5828 Shared password field with show/hide
+
+      - #5829 Channels: one editing model on both protocols
+
+      - #5830 Device actions: danger zone at the bottom, in-app confirms, client gating
+
+      - #5831 MQTT / Observer: one place to edit, quick configure in the SaveBar, shared preset look
+
+
+      ## Upgrade Notes
+
+      - The MeshCore Observer's single credential block becomes per-broker credentials. Existing
+      credentials keep working.
+
+      - "Timed Events" is now "Timer Triggers" on Meshtastic.
+
+
+      **Full Changelog**: https://github.com/Yeraze/meshmonitor/compare/v4.17.1-rc3...v4.17.1-rc4
+
+
+      ## 🚀 MeshMonitor v4.17.1-rc4
+
+
+      ### 📦 Installation
+
+
+      **Docker (recommended):**
+
+      ```bash
+
+      docker run -d \
+        --name meshmonitor \
+        -p 8080:3001 \
+        -v meshmonitor-data:/data \
+        ghc
+      …
   - version: v4.17.1-rc3
     name: v4.17.1-rc3
     datetime: '2026-10-15T03:04:14Z'
@@ -2056,137 +2192,6 @@ releases:
         -p 8080:3001 \
         -v meshmonitor-data:/data \
         ghcr.io/Yeraze/meshmonitor:4.16.2-rc2
-      ```
-
-
-      ### 🧪 Testing
-
-      ✅ All tests passed
-
-      ✅ TypeScript checks passed
-
-      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
-
-
-      ### 📋 Changes
-
-      See commit history for detailed changes.
-  - version: v4.16.2-rc1
-    name: v4.16.2-rc1
-    datetime: '2026-09-21T21:45:02Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.16.2-rc1
-    prerelease: true
-    notes: >-
-      # MeshMonitor v4.16.2-rc1
-
-
-      > **Pre-release.** Docker images are tagged `4.16.2-rc1` only — `:latest` still points at
-      v4.16.1.
-
-
-      A fix-driven RC. MQTT-only deployments now show their own data instead of an empty dashboard,
-      and large node sets are usable again: the node list is virtualized and map markers cluster at
-      low zoom, so a mesh fed from a public broker no longer drags scrolling and panning to a crawl.
-      Three iOS 27 mobile layout bugs are fixed — the header title no longer renders inside the
-      system status-bar blur, the collapsed node-list arrow no longer overlaps the Map controls
-      sheet, a long custom POSIX timezone stays inside its field, and MeshCore source pages use the
-      mobile layout in landscape. Map Analysis hop shading now counts only traceroutes the local
-      node took part in, so remote nodes stop rendering as 0-hop. A node's position is picked by the
-      freshest observation rather than the newest `lastHeard`, which also reconciles manual
-      position-request responses across sources. MeshCore MULTIPART and CONTROL payloads are decoded
-      rather than shown as unknown types. The rest is dependency maintenance.
-
-
-      ## Features
-
-      - feat(meshcore): decode MULTIPART and CONTROL payloads (#5308), building on the payload types
-      added in #5285
-
-
-      ## Bug Fixes
-
-      - fix(mqtt): let MQTT-only deployments see their own data (#5283)
-
-      - perf: make large node sets usable — virtualized node list, clustered map markers, one
-      `/api/poll` fetch at mount (#5284)
-
-      - fix(analysis): count hops only from traceroutes the local node took part in (#5290)
-
-      - fix(nodes): pick the unified position by observation, not by lastHeard (#5314)
-
-      - fix(header): keep top-bar text below iOS 27's home-screen status-bar blur (#5309)
-
-      - fix(mobile): hide the node-list arrow under the map sheet, contain long timezones (#5313)
-
-      - fix(meshcore): match the shell's bottom-bar query so landscape lays out (#5312)
-
-
-      ## Dependencies
-
-      - mqtt 5.16.0 (#5303), dotenv 18.0.0 (#5301), maplibre-gl 6.10.0 (#5299), lucide-react 1.47.0
-      (#5300), emoji-picker-react 4.22.2 (#5297)
-
-      - docker/build-push-action 7.4.0 (#5307), docker/setup-buildx-action 4.4.1 (#5306),
-      docker/setup-qemu-action 4.4.0 (#5305), codeql-action group (#5304)
-
-      - Dev dependencies: puppeteer 25.11.0 (#5298), vitest group (#5294),
-      @tanstack/react-query-devtools (#5302), production and development dependency groups (#5296,
-      #5295)
-
-
-      ## Issues Resolved
-
-      - #5286 — iOS 27 status-bar backdrop-blur bleeds into the fixed AppHeader
-
-      - #5291 — node-list arrow overlaps Map controls; custom POSIX timezone overflows its field
-
-      - #5289 — Map Analysis hop shading renders remote nodes as 0-hop
-
-      - #5292 — unified view position drift from newest-`lastHeard` selection
-
-      - #5293 — manual position-request responses stored per-source only
-
-      - #5311 — MeshCore source page keeps its desktop layout in landscape
-
-
-      ## Thanks
-
-      - @zvx-echo6 for the MQTT-only data fix (#5283) and the large-node-set performance work
-      (#5284), both first contributions here
-
-      - @bryan-arcus for the MeshCore MULTIPART and CONTROL payload types (#5285)
-
-      - NullVoid (`null_v0id` on Discord) for the iOS 27 reports and for testing fixes on a device
-
-
-      ## Known Issues
-
-      - **iOS 27 home-screen app:** on per-source pages the bottom nav bar does not reach the bottom
-      edge, leaving a band of background below it (#5310). Not fixed in this RC.
-
-      - The hardware system-test suite's reverse-proxy stage fails on our runner for an
-      environmental reason: it tears down the dev deployment it then depends on. All other checks
-      pass.
-
-
-      **Full Changelog**: https://github.com/Yeraze/meshmonitor/compare/v4.16.1...v4.16.2-rc1
-
-
-      ## 🚀 MeshMonitor v4.16.2-rc1
-
-
-      ### 📦 Installation
-
-
-      **Docker (recommended):**
-
-      ```bash
-
-      docker run -d \
-        --name meshmonitor \
-        -p 8080:3001 \
-        -v meshmonitor-data:/data \
-        ghcr.io/Yeraze/meshmonitor:4.16.2-rc1
       ```
 
 
