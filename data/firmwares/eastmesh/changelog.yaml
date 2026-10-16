@@ -1,7 +1,255 @@
 source: github
 repo: xJARiD/MeshCore-EastMesh
-updatedAt: '2026-08-30T11:29:30.032Z'
+updatedAt: '2026-10-16T08:49:28.503Z'
 releases:
+  - version: repeater-bridge-espnow-v1.18.0
+    name: Repeater ESP-NOW Bridge Firmware v1.18.0
+    datetime: '2026-10-16T08:07:55Z'
+    url: https://github.com/xJARiD/MeshCore-EastMesh/releases/tag/repeater-bridge-espnow-v1.18.0
+    prerelease: false
+    notes: >-
+      ## MeshCore Repeater ESP-NOW Bridge
+
+
+      Repeater ESP-NOW bridge firmware built from the upstream `meshcore-dev/MeshCore` firmware
+      base.
+
+
+      This release updates the firmware base to upstream MeshCore `v1.18.0`.
+
+
+      ### What's Changed
+
+
+      - Updated the firmware base to upstream MeshCore `v1.18.0`.
+
+      - ACK forwarding in direct mode now uses the normal TX delay instead of none.
+
+      - Transport code 0 is treated the same as unscoped.
+
+      - Repeaters with adverts turned off no longer answer DISCOVER requests.
+
+      - `loop.detect` defaults to `minimal` on new installs, and `set af` input is validated.
+
+      - Fixed ESP32 clocks resetting to 1970 after a crash, watchdog or brownout reset.
+
+      - LilyGo T-Beam 1W fan control now uses upstream's thermal controller: `get fan`, `set fan
+      on|off|auto`, and new `set fan.lo <C>` / `set fan.hi <C>` thresholds (defaults 30C / 36C),
+      with a fixed 15-second post-TX cooldown.
+
+      - Included upstream board, radio, sensor, and platform fixes from MeshCore dev.
+
+
+      ### Breaking Changes
+
+
+      - **LilyGo T-Beam 1W:** the earlier `set fan timeout <Ns>` command has been removed. Fan mode
+      and timeout saved by earlier builds are not migrated, so the fan returns to `auto` with the
+      default thresholds after upgrading.
+
+
+      ### Flashing
+
+
+      - [flasher.meshcore.io](https://flasher.meshcore.io/)
+
+      - [flasher.eastmesh.au](https://flasher.eastmesh.au/)
+
+
+      ### Assets
+
+
+      - `.bin` - standard update image
+
+      - `-merged.bin` - full ESP32 image for flashing after erase
+  - version: observer-eastmesh-v2026.10.0
+    name: Observer EastMesh Firmware v1.18.0-eastmesh-v2026.10.0
+    datetime: '2026-10-16T08:08:01Z'
+    url: https://github.com/xJARiD/MeshCore-EastMesh/releases/tag/observer-eastmesh-v2026.10.0
+    prerelease: false
+    notes: >-
+      ## MeshCore EastMesh Observer
+
+
+      EastMesh `observer-eastmesh` firmware for MeshCore boards with secure MQTT uplink and optional
+      local web management, based on MeshCore firmware `v1.18.0` (as of 2026-10-15).
+
+
+      This release updates the firmware base to **upstream MeshCore `v1.18.0`**, fixes the **web
+      panel randomly logging out during active use**, and adopts upstream's **T-Beam 1W thermal fan
+      control**.
+
+
+      ### What's Changed
+
+
+      - **Updated to upstream MeshCore `v1.18.0`.** Includes: ACK forwarding in direct mode now uses
+      the normal TX delay instead of none; transport code 0 is treated as unscoped; repeaters with
+      adverts turned off no longer answer DISCOVER requests; `loop.detect` defaults to `minimal` on
+      new installs; `set af` input is validated; and ESP32 clocks no longer reset to 1970 after a
+      crash, watchdog or brownout reset.
+
+      - **Fixed: web panel randomly logging out during active use**
+      ([#85](https://github.com/xJARiD/MeshCore-EastMesh/issues/85)). A request arriving while the
+      main loop was checking the idle timer could make the elapsed time wrap around and look
+      expired, locking the session well before the 15-minute idle timeout. Activity newer than the
+      check is now treated as active; the same fix applies to the idle check used by web panel
+      self-healing.
+
+      - **Changed: LilyGo T-Beam 1W fan control now uses upstream's thermal controller.** `get fan`
+      reports mode, NTC temperature, fan state and TX cooldown; `set fan on|off|auto` is kept; new
+      `set fan.lo <C>` / `set fan.hi <C>` set the auto-mode thresholds (defaults 30C / 36C), and the
+      post-TX cooldown is a fixed 15 seconds. The EastMesh switching of the external LNA off before
+      TX is kept.
+
+      - The ESP32 clock now restores from upstream's RTC-memory backup after a soft reset, and falls
+      back to the EastMesh NVS-saved time after a power loss, so the clock survives both.
+
+      - Ported upstream sensor fixes onto the EastMesh I2C probe path: one driver instance per
+      sensor type (BMP/BME are probed at both 0x76 and 0x77), and an I2C address is claimed once a
+      sensor initializes so later entries can't claim the same device.
+
+      - The web panel region setup now saves the selected region with a single `region def au
+      <region>` command instead of separate `region put` and `region allowf` commands.
+
+
+      ### Breaking Changes
+
+
+      - **LilyGo T-Beam 1W:** the EastMesh `set fan timeout <Ns>` command has been removed. Fan mode
+      and timeout saved by earlier EastMesh builds are not migrated, so the fan returns to `auto`
+      with the default thresholds after upgrading; use `set fan on|off` or `set fan.lo` / `set
+      fan.hi` to adjust.
+
+
+      ### Notes
+
+
+      - **If the web panel kept sending you back to the login page shortly after logging in, this
+      release is the fix.**
+
+      - EastMesh no longer publishes a separate `companion-wifi` track. For Wi-Fi companion devices,
+      use the official upstream MeshCore `*_companion_radio_wifi` firmware, which now keeps Wi-Fi
+      settings natively.
+
+      - Web panel self-healing from 2026.8.3 remains in place: `heals:<n>` and `deferred:<n>` in
+      `get web.status` count heap-related restarts and deferred starts since boot.
+
+      - The Wi-Fi gateway connectivity watchdog remains in place: `gw:ok|lost` and `wd:<n>` in `get
+      wifi.status` show gateway health and forced reconnects, and `wifi reconnect` forces a rejoin
+      manually.
+
+      - `eastmesh-au` remains the recommended MQTT endpoint once `mqtt.iata` is configured;
+      `meshmapper` and `waev` are available as global second brokers.
+
+      - Select brokers from the Primary and Secondary dropdowns in the web panel, or toggle them
+      from the CLI (`set mqtt.eastmesh-au on`, `set mqtt.meshmapper on`, `set mqtt.waev on`, etc.).
+      A maximum of two brokers can be enabled at once.
+
+      - `waev` (`mqtt.waev.app`) uses a 1-hour auth token that the firmware refreshes automatically,
+      so no extra configuration is needed. Set your Waev account email with `set mqtt.email <email>`
+      so Waev can link the observer to your account.
+
+      - MQTT status messages report cumulative `packets_sent` and `packets_received` alongside the
+      existing radio sta
+
+      …
+  - version: observer-eastmesh-bridge-espnow-v2026.10.0
+    name: Observer EastMesh Firmware with ESP-NOW Bridge v1.18.0-eastmesh-v2026.10.0
+    datetime: '2026-10-16T08:07:57Z'
+    url: >-
+      https://github.com/xJARiD/MeshCore-EastMesh/releases/tag/observer-eastmesh-bridge-espnow-v2026.10.0
+    prerelease: false
+    notes: >-
+      ## MeshCore EastMesh Observer with ESP-NOW Bridge
+
+
+      EastMesh `observer-eastmesh-bridge-espnow` firmware for MeshCore boards that combine secure
+      MQTT uplink with ESP-NOW bridge support, based on MeshCore firmware `v1.18.0` (as of
+      2026-10-15).
+
+
+      This release includes the same Observer updates as `observer-eastmesh-v2026.10.0` — the
+      upstream MeshCore `v1.18.0` update, the fix for the web panel randomly logging out during
+      active use, and upstream's T-Beam 1W thermal fan control — with ESP-NOW bridge support
+      included.
+
+
+      ### What's Changed
+
+
+      - Same changes as `observer-eastmesh-v2026.10.0`:
+        - **Updated to upstream MeshCore `v1.18.0`.** Includes: ACK forwarding in direct mode now uses the normal TX delay instead of none; transport code 0 is treated as unscoped; repeaters with adverts turned off no longer answer DISCOVER requests; `loop.detect` defaults to `minimal` on new installs; `set af` input is validated; and ESP32 clocks no longer reset to 1970 after a crash, watchdog or brownout reset.
+        - **Fixed: web panel randomly logging out during active use** ([#85](https://github.com/xJARiD/MeshCore-EastMesh/issues/85)). A request arriving while the main loop was checking the idle timer could make the elapsed time wrap around and look expired, locking the session well before the 15-minute idle timeout. Activity newer than the check is now treated as active; the same fix applies to the idle check used by web panel self-healing.
+        - **Changed: LilyGo T-Beam 1W fan control now uses upstream's thermal controller.** `get fan` reports mode, NTC temperature, fan state and TX cooldown; `set fan on|off|auto` is kept; new `set fan.lo <C>` / `set fan.hi <C>` set the auto-mode thresholds (defaults 30C / 36C), and the post-TX cooldown is a fixed 15 seconds. The EastMesh switching of the external LNA off before TX is kept.
+        - The ESP32 clock now restores from upstream's RTC-memory backup after a soft reset, and falls back to the EastMesh NVS-saved time after a power loss, so the clock survives both.
+        - Ported upstream sensor fixes onto the EastMesh I2C probe path: one driver instance per sensor type (BMP/BME are probed at both 0x76 and 0x77), and an I2C address is claimed once a sensor initializes so later entries can't claim the same device.
+        - The web panel region setup now saves the selected region with a single `region def au <region>` command instead of separate `region put` and `region allowf` commands.
+      - Includes ESP-NOW bridge firmware targets using the `*_repeater_observer_espnow` PlatformIO
+      environment suffix.
+
+
+      ### Breaking Changes
+
+
+      - **LilyGo T-Beam 1W:** the EastMesh `set fan timeout <Ns>` command has been removed. Fan mode
+      and timeout saved by earlier EastMesh builds are not migrated, so the fan returns to `auto`
+      with the default thresholds after upgrading; use `set fan on|off` or `set fan.lo` / `set
+      fan.hi` to adjust.
+
+
+      ### Notes
+
+
+      - **If the web panel kept sending you back to the login page shortly after logging in, this
+      release is the fix.**
+
+      - Web panel self-healing from 2026.8.3 remains in place: `heals:<n>` and `deferred:<n>` in
+      `get web.status` count heap-related restarts and deferred starts since boot.
+
+      - The Wi-Fi gateway connectivity watchdog remains in place: `gw:ok|lost` and `wd:<n>` in `get
+      wifi.status` show gateway health and forced reconnects, and `wifi reconnect` forces a rejoin
+      manually.
+
+      - This track is separate from `observer-eastmesh`.
+
+      - Use `get wifi.status` to confirm the active 2.4 GHz Wi-Fi channel before setting
+      `bridge.channel`.
+
+      - `bridge.channel` should match the connected Wi-Fi channel for reliable ESP-NOW bridge
+      operation.
+
+      - For maximum heap headroom after setup, disable the web panel with `set web off`.
+
+      - `flood.max.advert` controls the hop limit for flooded advert packets.
+
+
+      ### Documentation
+
+
+      [xjarid.github.io/MeshCore-EastMesh](https://xjarid.github.io/MeshCore-EastMesh/)
+
+
+      ### Flashing
+
+
+      - [flasher.eastmesh.au](https://flasher.eastmesh.au/)
+
+      - [flasher.meshcore.io](https://flasher.meshcore.io/)
+
+
+      ### Assets
+
+
+      - `.
+
+      …
+  - version: observer-eastmesh-bridge-mqtt-v2026.10.0
+    name: Observer EastMesh Firmware with MQTT Bridge v1.18.0-eastmesh-v2026.10.0
+    datetime: '2026-10-16T08:07:59Z'
+    url: >-
+      https://github.com/xJARiD/MeshCore-EastMesh/releases/tag/observer-eastmesh-bridge-mqtt-v2026.10.0
+    prerelease: true
   - version: observer-eastmesh-v2026.8.3
     name: Observer EastMesh Firmware v1.17.1-eastmesh-v2026.8.3
     datetime: '2026-08-30T09:07:58Z'
@@ -103,29 +351,3 @@ releases:
       https://github.com/xJARiD/MeshCore-EastMesh/releases/tag/observer-eastmesh-bridge-espnow-v2026.6.6
     prerelease: false
     notes: "## MeshCore EastMesh Observer with ESP-NOW Bridge\r\n\r\nEastMesh `observer-eastmesh-bridge-espnow` firmware for MeshCore boards that combine secure MQTT uplink with ESP-NOW bridge support, based on MeshCore firmware `v1.16.0`.\r\n\r\nThis release includes the same Observer updates as `observer-eastmesh-v2026.6.6`, with ESP-NOW bridge support included.\r\n\r\n### What's Changed\r\n\r\n- Same changes as `observer-eastmesh-v2026.6.6`.\r\n- Includes ESP-NOW bridge firmware targets using the `*_repeater_observer_espnow` PlatformIO environment suffix.\r\n\r\n### Breaking Changes\r\n\r\n- `get mqtt.status` output changed from per-broker fields to `p:`/`s:` broker slots; update anything that parses the previous format.\r\n- Saved LetsMesh EU/US broker selections are cleared once on upgrade; re-enable a broker such as MeshMapper if you need a second uplink.\r\n\r\n### Notes\r\n\r\n- This track is separate from `observer-eastmesh`.\r\n- Use `get wifi.status` to confirm the active 2.4 GHz Wi-Fi channel before setting `bridge.channel`.\r\n- `bridge.channel` should match the connected Wi-Fi channel for reliable ESP-NOW bridge operation.\r\n- For maximum heap headroom after setup, disable the web panel with `set web off`.\r\n- `flood.max.advert` controls the hop limit for flooded advert packets.\r\n\r\n### Documentation\r\n\r\n[xjarid.github.io/MeshCore-EastMesh](https://xjarid.github.io/MeshCore-EastMesh/)\r\n\r\n### Flashing\r\n\r\n- [flasher.eastmesh.au](https://flasher.eastmesh.au/)\r\n- [flasher.meshcore.io](https://flasher.meshcore.io/)\r\n\r\n### Assets\r\n\r\n- `.bin` - standard update image\r\n- `-merged.bin` - full ESP32 image for flashing after erase"
-  - version: observer-eastmesh-v2026.6.5
-    name: Observer EastMesh Firmware v1.16.0-eastmesh-v2026.6.5
-    datetime: '2026-06-26T02:52:13Z'
-    url: https://github.com/xJARiD/MeshCore-EastMesh/releases/tag/observer-eastmesh-v2026.6.5
-    prerelease: false
-    notes: "## MeshCore EastMesh Observer\r\n\r\nEastMesh `observer-eastmesh` firmware for MeshCore boards with secure MQTT uplink and optional local web management, based on MeshCore firmware `v1.16.0`.\r\n\r\nThis release adds the **Waev** curated broker as a selectable MQTT uplink — with automatic short-lived auth tokens to satisfy Waev's requirements — and widens the Custom MQTT settings panel in the web panel.\r\n\r\n### What's Changed\r\n\r\n- Added the `waev` curated broker (`wss://mqtt.waev.app:443/mqtt`) using WSS, verified TLS, and MeshCore JWT authentication with the broker host as the token audience.\r\n- Added `get mqtt.waev` and `set mqtt.waev on|off` to toggle the Waev broker, and added Waev to the **Primary MQTT** and **Secondary MQTT** dropdowns in the web panel.\r\n- Added per-broker JWT auth token lifetimes; Waev receives a 1-hour token to match its shorter maximum token lifetime, while the other brokers keep the existing lifetime.\r\n- Fixed the web panel so the **Custom MQTT settings** panel spans the full width of the MQTT Servers card when Custom is selected.\r\n- Updated the README and custom CLI guides for the Waev broker.\r\n\r\n### Breaking Changes\r\n\r\n- None in this release.\r\n\r\n> If you are upgrading from before `2026.6.4`, that release's changes still apply: `get mqtt.status` switched from per-broker fields to `p:`/`s:` broker slots, and saved LetsMesh EU/US selections are cleared once on upgrade.\r\n\r\n### Notes\r\n\r\n- `eastmesh-au` remains the recommended MQTT endpoint once `mqtt.iata` is configured; `meshmapper` and `waev` are available as global second brokers.\r\n- Select brokers from the Primary and Secondary dropdowns in the web panel, or toggle them from the CLI (`set mqtt.eastmesh-au on`, `set mqtt.meshmapper on`, `set mqtt.waev on`, etc.). A maximum of two brokers can be enabled at once.\r\n- `waev` (`mqtt.waev.app`) uses a 1-hour auth token that the firmware refreshes automatically, so no extra configuration is needed. Set your Waev account email with `set mqtt.email <email>` so Waev can link the observer to your account.\r\n- LetsMesh EU/US are retired but still selectable for legacy use.\r\n- Custom MQTT is available for private broker deployments and uses username/password auth only. For TCP custom MQTT, use the broker host and port as before. For WSS custom MQTT, set the host and port, select WSS transport, and the firmware connects using `wss://host:port/mqtt`.\r\n- WSS uses TLS encryption and validates against the ESP-IDF x509 root CA bundle.\r\n- For maximum heap headroom on busy observers, use the web panel for setup and troubleshooting, then disable it with `set web off`.\r\n- Browsers may still require accepting the self-signed certificate warning on first HTTPS access.\r\n- `flood.max.unscoped` defaults to `64`; lower it only if you want to limit how far unscoped flood traffic repeats.\r\n- `flood.max.advert` controls the hop limit for flooded advert packets.\r\n\r\n### Documentation\r\n\r\n[xjarid.github.io/MeshCore-EastMesh](https://xjarid.github.io/MeshCore-EastMesh/)\r\n\r\n### Flashing\r\n\r\n- [flasher.eastmesh.au](https://flasher.eastmesh.au/)\r\n- [flasher.meshcore.io](https://flasher.meshcore.io/)\r\n\r\n### Assets\r\n\r\n- `.bin` - standard update image\r\n- `-merged.bin` - full ESP32 image for flashing after erase"
-  - version: observer-eastmesh-bridge-espnow-v2026.6.5
-    name: Observer EastMesh Firmware with ESP-NOW Bridge v1.16.0-eastmesh-v2026.6.5
-    datetime: '2026-06-26T02:50:06Z'
-    url: >-
-      https://github.com/xJARiD/MeshCore-EastMesh/releases/tag/observer-eastmesh-bridge-espnow-v2026.6.5
-    prerelease: false
-    notes: "## MeshCore EastMesh Observer with ESP-NOW Bridge\r\n\r\nEastMesh `observer-eastmesh-bridge-espnow` firmware for MeshCore boards that combine secure MQTT uplink with ESP-NOW bridge support, based on MeshCore firmware `v1.16.0`.\r\n\r\nThis release includes the same Observer updates as `observer-eastmesh-v2026.6.5`, with ESP-NOW bridge support included.\r\n\r\n### What's Changed\r\n\r\n- Same changes as `observer-eastmesh-v2026.6.5`.\r\n- Includes ESP-NOW bridge firmware targets using the `*_repeater_observer_espnow` PlatformIO environment suffix.\r\n\r\n### Breaking Changes\r\n\r\n- `get mqtt.status` output changed from per-broker fields to `p:`/`s:` broker slots; update anything that parses the previous format.\r\n- Saved LetsMesh EU/US broker selections are cleared once on upgrade; re-enable a broker such as MeshMapper if you need a second uplink.\r\n\r\n### Notes\r\n\r\n- This track is separate from `observer-eastmesh`.\r\n- Use `get wifi.status` to confirm the active 2.4 GHz Wi-Fi channel before setting `bridge.channel`.\r\n- `bridge.channel` should match the connected Wi-Fi channel for reliable ESP-NOW bridge operation.\r\n- For maximum heap headroom after setup, disable the web panel with `set web off`.\r\n- `flood.max.advert` controls the hop limit for flooded advert packets.\r\n\r\n### Documentation\r\n\r\n[xjarid.github.io/MeshCore-EastMesh](https://xjarid.github.io/MeshCore-EastMesh/)\r\n\r\n### Flashing\r\n\r\n- [flasher.eastmesh.au](https://flasher.eastmesh.au/)\r\n- [flasher.meshcore.io](https://flasher.meshcore.io/)\r\n\r\n### Assets\r\n\r\n- `.bin` - standard update image\r\n- `-merged.bin` - full ESP32 image for flashing after erase"
-  - version: observer-eastmesh-v2026.6.4
-    name: Observer EastMesh Firmware v1.16.0-eastmesh-v2026.6.4
-    datetime: '2026-06-23T00:27:09Z'
-    url: https://github.com/xJARiD/MeshCore-EastMesh/releases/tag/observer-eastmesh-v2026.6.4
-    prerelease: false
-    notes: "## MeshCore EastMesh Observer\r\n\r\nEastMesh `observer-eastmesh` firmware for MeshCore boards with secure MQTT uplink and optional local web management, based on MeshCore firmware `v1.16.0`.\r\n\r\nThis release replaces the retired LetsMesh brokers with the new MeshMapper broker and reworks broker selection into Primary and Secondary slots.\r\n\r\n### What's Changed\r\n\r\n- Added the `meshmapper` curated broker (`wss://mqtt.meshmapper.net:443/mqtt`) using WSS, verified TLS, and MeshCore JWT authentication with the broker host as the token audience.\r\n- Added `get mqtt.meshmapper` and `set mqtt.meshmapper on|off` to toggle the MeshMapper broker.\r\n- Reworked the web-panel broker section into **Primary MQTT** and **Secondary MQTT** dropdowns that enforce the two-broker maximum and reveal the custom host, username, and password fields when Custom is selected.\r\n- Retired the unmaintained LetsMesh EU/US brokers; they remain selectable but are marked retired, and saved selections are cleared once on upgrade so dead brokers stop retrying.\r\n- Shortened `get mqtt.status` to report the two active broker slots as `p:<broker>:<state>` and `s:<broker>:<state>` (for example `p:meshmapper:up`), keeping the reply within the LoRa text limit.\r\n- Custom MQTT remains username/password only; no JWT/web auth is used for custom brokers.\r\n- Updated the README, web panel, and custom CLI guides for MeshMapper and the Primary/Secondary broker layout.\r\n\r\n### Breaking Changes\r\n\r\n- `get mqtt.status` output changed from per-broker fields to `p:`/`s:` broker slots; update anything that parses the previous format.\r\n- Saved LetsMesh EU/US broker selections are cleared once on upgrade; re-enable a broker such as MeshMapper if you need a second uplink.\r\n\r\n### Notes\r\n\r\n- `eastmesh-au` remains the recommended MQTT endpoint once `mqtt.iata` is configured; `meshmapper` is available as a global second broker.\r\n- Select brokers from the Primary and Secondary dropdowns in the web panel, or toggle them from the CLI (`set mqtt.eastmesh-au on`, `set mqtt.meshmapper on`, etc.). A maximum of two brokers can be enabled at once.\r\n- LetsMesh EU/US are retired but still selectable for legacy use.\r\n- Custom MQTT is available for private broker deployments. For TCP custom MQTT, use the broker host and port as before. For WSS custom MQTT, set the host and port, select WSS transport, and the firmware connects using `wss://host:port/mqtt`.\r\n- WSS uses TLS encryption and validates against the ESP-IDF x509 root CA bundle.\r\n- For maximum heap headroom on busy observers, use the web panel for setup and troubleshooting, then disable it with `set web off`.\r\n- Browsers may still require accepting the self-signed certificate warning on first HTTPS access.\r\n- `flood.max.unscoped` defaults to `64`; lower it only if you want to limit how far unscoped flood traffic repeats.\r\n- `flood.max.advert` controls the hop limit for flooded advert packets.\r\n\r\n### Documentation\r\n\r\n[xjarid.github.io/MeshCore-EastMesh](https://xjarid.github.io/MeshCore-EastMesh/)\r\n\r\n### Flashing\r\n\r\n- [flasher.eastmesh.au](https://flasher.eastmesh.au/)\r\n- [flasher.meshcore.io](https://flasher.meshcore.io/)\r\n\r\n### Assets\r\n\r\n- `.bin` - standard update image\r\n- `-merged.bin` - full ESP32 image for flashing after erase"
-  - version: observer-eastmesh-bridge-espnow-v2026.6.4
-    name: Observer EastMesh Firmware with ESP-NOW Bridge v1.16.0-eastmesh-v2026.6.4
-    datetime: '2026-06-23T00:26:58Z'
-    url: >-
-      https://github.com/xJARiD/MeshCore-EastMesh/releases/tag/observer-eastmesh-bridge-espnow-v2026.6.4
-    prerelease: false
-    notes: "## MeshCore EastMesh Observer with ESP-NOW Bridge\r\n\r\nEastMesh `observer-eastmesh-bridge-espnow` firmware for MeshCore boards that combine secure MQTT uplink with ESP-NOW bridge support, based on MeshCore firmware `v1.16.0`.\r\n\r\nThis release includes the same Observer updates as `observer-eastmesh-v2026.6.4`, with ESP-NOW bridge support included.\r\n\r\n### What's Changed\r\n\r\n- Same changes as `observer-eastmesh-v2026.6.4`.\r\n- Includes ESP-NOW bridge firmware targets using the `*_repeater_observer_espnow` PlatformIO environment suffix.\r\n\r\n### Breaking Changes\r\n\r\n- `get mqtt.status` output changed from per-broker fields to `p:`/`s:` broker slots; update anything that parses the previous format.\r\n- Saved LetsMesh EU/US broker selections are cleared once on upgrade; re-enable a broker such as MeshMapper if you need a second uplink.\r\n\r\n### Notes\r\n\r\n- This track is separate from `observer-eastmesh`.\r\n- Use `get wifi.status` to confirm the active 2.4 GHz Wi-Fi channel before setting `bridge.channel`.\r\n- `bridge.channel` should match the connected Wi-Fi channel for reliable ESP-NOW bridge operation.\r\n- For maximum heap headroom after setup, disable the web panel with `set web off`.\r\n- `flood.max.advert` controls the hop limit for flooded advert packets.\r\n\r\n### Documentation\r\n\r\n[xjarid.github.io/MeshCore-EastMesh](https://xjarid.github.io/MeshCore-EastMesh/)\r\n\r\n### Flashing\r\n\r\n- [flasher.eastmesh.au](https://flasher.eastmesh.au/)\r\n- [flasher.meshcore.io](https://flasher.meshcore.io/)\r\n\r\n### Assets\r\n\r\n- `.bin` - standard update image\r\n- `-merged.bin` - full ESP32 image for flashing after erase"
