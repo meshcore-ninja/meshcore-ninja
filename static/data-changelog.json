@@ -1,43 +1,126 @@
 {
-  "generatedAt": "2026-07-05T17:09:27.872Z",
+  "generatedAt": "2026-10-05T01:06:50.229Z",
   "commits": [
     {
-      "hash": "275822c6ea0b1bab498b98a144ad62a3e1c5d06a",
-      "shortHash": "275822c6",
-      "date": "2026-07-05T18:16:10+02:00",
-      "author": "tree",
-      "subject": "feat: lot of new software, redirects",
+      "hash": "ac3eea4061b3d632bc70b03403dc77f11264e0ff",
+      "shortHash": "ac3eea40",
+      "date": "2026-10-04T21:06:47-04:00",
+      "author": "Lucas Burlingham",
+      "subject": "OKI Mesh is only part of usa-canada-recommended",
       "changes": [
         {
           "collection": "networks",
-          "id": "meshcore-catalunya",
+          "id": "oki-mesh",
+          "status": "M"
+        }
+      ],
+      "moreChanges": 0,
+      "other": []
+    },
+    {
+      "hash": "677ad206002b5b80b19e7530ac954461bdd111d9",
+      "shortHash": "677ad206",
+      "date": "2026-10-04T21:05:43-04:00",
+      "author": "Lucas Burlingham",
+      "subject": "Add OKI Mesh network info",
+      "changes": [
+        {
+          "collection": "networks",
+          "id": "oki-mesh",
+          "status": "M"
+        }
+      ],
+      "moreChanges": 0,
+      "other": []
+    },
+    {
+      "hash": "8130d60debd0a9ad935a49b4548d15b3838a39e7",
+      "shortHash": "8130d60d",
+      "date": "2026-10-04T21:05:05-04:00",
+      "author": "Lucas Burlingham",
+      "subject": "Add OKI Mesh area",
+      "changes": [
+        {
+          "collection": "networks",
+          "id": "oki-mesh",
+          "status": "A"
+        }
+      ],
+      "moreChanges": 0,
+      "other": []
+    },
+    {
+      "hash": "1e16f455c7de68e57bb4cc30589e54956ccbc208",
+      "shortHash": "1e16f455",
+      "date": "2026-10-04T15:19:46-04:00",
+      "author": "Lucas Burlingham",
+      "subject": "Add OKI Mesh network yaml",
+      "changes": [
+        {
+          "collection": "networks",
+          "id": "oki-mesh",
+          "status": "A"
+        }
+      ],
+      "moreChanges": 0,
+      "other": []
+    },
+    {
+      "hash": "bd9a1ffc4013f13aa677b830816f4f688096e47d",
+      "shortHash": "bd9a1ffc",
+      "date": "2026-10-04T16:42:49Z",
+      "author": "github-actions[bot]",
+      "subject": "chore: update firmware and software changelogs",
+      "changes": [
+        {
+          "collection": "software",
+          "id": "corescope",
+          "status": "M"
+        }
+      ],
+      "moreChanges": 0,
+      "other": []
+    },
+    {
+      "hash": "1fd1acae450b0922e869f8e58bd7bb3b89f0d0df",
+      "shortHash": "1fd1acae",
+      "date": "2026-10-04T11:57:11Z",
+      "author": "github-actions[bot]",
+      "subject": "chore: update firmware and software changelogs",
+      "changes": [
+        {
+          "collection": "firmwares",
+          "id": "meshcore-lowpower",
           "status": "M"
         },
         {
-          "collection": "devices",
-          "id": "generic-ebyte-e22",
+          "collection": "software",
+          "id": "meshos",
           "status": "M"
-        },
-        {
-          "collection": "devices",
-          "id": "ikoka-nano",
-          "status": "M"
-        },
-        {
-          "collection": "devices",
-          "id": "ikoka-stick",
-          "status": "M"
-        },
-        {
-          "collection": "devices",
-          "id": "lilygo-tlora-1-6",
-          "status": "M"
-        },
-        {
-          "collection": "devices",
-          "id": "rpi-picow",
-          "status": "M"
-        },
+        }
+      ],
+      "moreChanges": 0,
+      "other": []
+    },
+    {
+      "hash": "03326b6854061ec71e9741a43be6e52484960d36",
+      "shortHash": "03326b68",
+      "date": "2026-10-04T11:25:45Z",
+      "author": "github-actions[bot]",
+      "subject": "chore: update contributors",
+      "changes": [],
+      "moreChanges": 0,
+      "other": [
+        "contributors.json"
+      ]
+    },
+    {
+      "hash": "0512c6d95b401e09685c546dedaaa19cf00e81c5",
+      "shortHash": "0512c6d9",
+      "date": "2026-10-04T11:02:54Z",
+      "author": "github-actions[bot]",
+      "subject": "chore: update firmware & software enrichment data",
+      "changes": [
         {
           "collection": "firmwares",
           "id": "blackjack-os",
@@ -150,6 +233,11 @@
         },
         {
           "collection": "firmwares",
+          "id": "meshcore-mishmesh",
+          "status": "M"
+        },
+        {
+          "collection": "firmwares",
           "id": "meshcore-ng",
           "status": "M"
         },
@@ -176,7 +264,7 @@
         {
           "collection": "firmwares",
           "id": "meshcoretel",
-          "status": "A"
+          "status": "M"
         },
         {
           "collection": "firmwares",
@@ -231,7 +319,7 @@
         {
           "collection": "software",
           "id": "agessaman-meshcore-packet-capture",
-          "status": "A"
+          "status": "M"
         },
         {
           "collection": "software",
@@ -256,17 +344,17 @@
         {
           "collection": "software",
           "id": "jmead-meshcore-repeater-mqtt-gateway",
-          "status": "A"
+          "status": "M"
         },
         {
           "collection": "software",
           "id": "litescope",
-          "status": "A"
+          "status": "M"
         },
         {
           "collection": "software",
           "id": "lora-wideband-decoder",
-          "status": "A"
+          "status": "M"
         },
         {
           "collection": "software",
@@ -281,32 +369,37 @@
         {
           "collection": "software",
           "id": "mcsim",
-          "status": "A"
+          "status": "M"
+        },
+        {
+          "collection": "software",
+          "id": "meschatui",
+          "status": "M"
         },
         {
           "collection": "software",
           "id": "mesh-citadel",
-          "status": "A"
+          "status": "M"
         },
         {
           "collection": "software",
           "id": "mesh-client",
-          "status": "A"
+          "status": "M"
         },
         {
           "collection": "software",
           "id": "mesh-forge",
-          "status": "A"
+          "status": "M"
         },
         {
           "collection": "software",
           "id": "meshapp",
-          "status": "A"
+          "status": "M"
         },
         {
           "collection": "software",
           "id": "meshcore-bbs",
-          "status": "A"
+          "status": "M"
         },
         {
           "collection": "software",
@@ -316,7 +409,7 @@
         {
           "collection": "software",
           "id": "meshcore-cli",
-          "status": "A"
+          "status": "M"
         },
         {
           "collection": "software",
@@ -391,7 +484,7 @@
         {
           "collection": "software",
           "id": "meshcore-map",
-          "status": "A"
+          "status": "M"
         },
         {
           "collection": "software",
@@ -426,17 +519,17 @@
         {
           "collection": "software",
           "id": "meshcore-pi",
-          "status": "A"
+          "status": "M"
         },
         {
           "collection": "software",
           "id": "meshcore-proxy",
-          "status": "A"
+          "status": "M"
         },
         {
           "collection": "software",
           "id": "meshcore-same-eas-alerter",
-          "status": "A"
+          "status": "M"
         },
         {
           "collection": "software",
@@ -451,7 +544,7 @@
         {
           "collection": "software",
           "id": "meshcore-sim",
-          "status": "A"
+          "status": "M"
         },
         {
           "collection": "software",
@@ -486,17 +579,17 @@
         {
           "collection": "software",
           "id": "meshcorejs",
-          "status": "A"
+          "status": "M"
         },
         {
           "collection": "software",
           "id": "meshcoretomqtt",
-          "status": "A"
+          "status": "M"
         },
         {
           "collection": "software",
           "id": "meshcorium",
-          "status": "A"
+          "status": "M"
         },
         {
           "collection": "software",
@@ -506,7 +599,7 @@
         {
           "collection": "software",
           "id": "meshexplorer",
-          "status": "A"
+          "status": "M"
         },
         {
           "collection": "software",
@@ -521,7 +614,7 @@
         {
           "collection": "software",
           "id": "meshos",
-          "status": "A"
+          "status": "M"
         },
         {
           "collection": "software",
@@ -531,27 +624,27 @@
         {
           "collection": "software",
           "id": "meshpoint",
-          "status": "A"
+          "status": "M"
         },
         {
           "collection": "software",
           "id": "meshres",
-          "status": "A"
+          "status": "M"
         },
         {
           "collection": "software",
           "id": "meshtrax",
-          "status": "A"
+          "status": "M"
         },
         {
           "collection": "software",
           "id": "meshtui",
-          "status": "A"
+          "status": "M"
         },
         {
           "collection": "software",
           "id": "mycelium",
-          "status": "A"
+          "status": "M"
         },
         {
           "collection": "software",
@@ -561,7 +654,7 @@
         {
           "collection": "software",
           "id": "openhop-core",
-          "status": "R"
+          "status": "M"
         },
         {
           "collection": "software",
@@ -571,7 +664,7 @@
         {
           "collection": "software",
           "id": "overmesh",
-          "status": "A"
+          "status": "M"
         },
         {
           "collection": "software",
@@ -597,11 +690,6 @@
           "collection": "software",
           "id": "pymc-console",
           "status": "M"
-        },
-        {
-          "collection": "software",
-          "id": "pymc-repeater",
-          "status": "D"
         },
         {
           "collection": "software",
@@ -650,70 +738,18 @@
         }
       ],
       "moreChanges": 0,
-      "other": [
-        "RULES.md",
-        "contributors.json",
-        "redirects.yaml",
-        "translations"
-      ]
-    },
-    {
-      "hash": "61f9d78424cfdea8285c6f579d0c90119f4a7bcd",
-      "shortHash": "61f9d784",
-      "date": "2026-07-05T17:34:38+02:00",
-      "author": "tree",
-      "subject": "chore: remove 'part_of' field from meshcore-nz network.yaml and add new area.geojson for deprecated NZ network",
-      "changes": [
-        {
-          "collection": "networks",
-          "id": "meshcore-nz",
-          "status": "M"
-        },
-        {
-          "collection": "networks",
-          "id": "nz-deprecated",
-          "status": "R"
-        }
-      ],
-      "moreChanges": 0,
       "other": []
     },
     {
-      "hash": "1658d3e9d7fbf78b1b3df1ac21c9faa44d8a137c",
-      "shortHash": "1658d3e9",
-      "date": "2026-07-05T17:29:59+02:00",
-      "author": "tree",
-      "subject": "chore: mark old New Zealand preset as deprecated. close #6",
-      "changes": [
-        {
-          "collection": "networks",
-          "id": "meshcore-nz",
-          "status": "M"
-        },
-        {
-          "collection": "networks",
-          "id": "new-zealand",
-          "status": "M"
-        }
-      ],
-      "moreChanges": 0,
-      "other": []
-    },
-    {
-      "hash": "d95108981d8c9e62183bbf175e1fe06ec7ff7fad",
-      "shortHash": "d9510898",
-      "date": "2026-07-05T13:45:37Z",
+      "hash": "84a80faa313c7bd4cde2a4ede89ead3df9f1c993",
+      "shortHash": "84a80faa",
+      "date": "2026-10-04T04:53:54Z",
       "author": "github-actions[bot]",
       "subject": "chore: update firmware and software changelogs",
       "changes": [
         {
-          "collection": "firmwares",
-          "id": "meshcore-wio-tracker-l1-pro-sosprz",
-          "status": "M"
-        },
-        {
-          "collection": "firmwares",
-          "id": "wadamesh",
+          "collection": "software",
+          "id": "meshcore-cli",
           "status": "M"
         }
       ],
@@ -721,9 +757,25 @@
       "other": []
     },
     {
-      "hash": "17335802f7d365a4499f605130c0ae07147f7af8",
-      "shortHash": "17335802",
-      "date": "2026-07-05T10:17:41Z",
+      "hash": "128d92ffe2b559f71877230be434fa3e83a672a9",
+      "shortHash": "128d92ff",
+      "date": "2026-10-03T22:45:14Z",
+      "author": "github-actions[bot]",
+      "subject": "chore: update firmware and software changelogs",
+      "changes": [
+        {
+          "collection": "software",
+          "id": "meshmonitor",
+          "status": "M"
+        }
+      ],
+      "moreChanges": 0,
+      "other": []
+    },
+    {
+      "hash": "9c110c1e3dbd893574c84ac3e86a87358eeedeb3",
+      "shortHash": "9c110c1e",
+      "date": "2026-10-03T19:05:49Z",
       "author": "github-actions[bot]",
       "subject": "chore: update firmware and software changelogs",
       "changes": [
@@ -731,15 +783,41 @@
           "collection": "firmwares",
           "id": "wadamesh",
           "status": "M"
+        },
+        {
+          "collection": "software",
+          "id": "meshos",
+          "status": "M"
         }
       ],
       "moreChanges": 0,
       "other": []
     },
     {
-      "hash": "f0cba78a6af2e4fb1bafb2a5e5d6e288732b8d87",
-      "shortHash": "f0cba78a",
-      "date": "2026-07-05T08:37:09Z",
+      "hash": "5ad538995d05d7ed8437ea527963c1534dbef757",
+      "shortHash": "5ad53899",
+      "date": "2026-10-03T11:17:23Z",
+      "author": "github-actions[bot]",
+      "subject": "chore: update firmware and software changelogs",
+      "changes": [
+        {
+          "collection": "firmwares",
+          "id": "saitama",
+          "status": "M"
+        },
+        {
+          "collection": "software",
+          "id": "meshcore-proxy",
+          "status": "M"
+        }
+      ],
+      "moreChanges": 0,
+      "other": []
+    },
+    {
+      "hash": "e3e0be4652c3a04845d5813ff2211736c0948d6d",
+      "shortHash": "e3e0be46",
+      "date": "2026-10-03T10:44:17Z",
       "author": "github-actions[bot]",
       "subject": "chore: update contributors",
       "changes": [],
@@ -749,9 +827,9 @@
       ]
     },
     {
-      "hash": "37e144770a4a48083c0506ba02c653601d22c8fc",
-      "shortHash": "37e14477",
-      "date": "2026-07-05T08:06:14Z",
+      "hash": "8f23378573f3ee5414a7426ef5fc3deb3a911310",
+      "shortHash": "8f233785",
+      "date": "2026-10-03T10:18:49Z",
       "author": "github-actions[bot]",
       "subject": "chore: update firmware & software enrichment data",
       "changes": [
@@ -867,6 +945,11 @@
         },
         {
           "collection": "firmwares",
+          "id": "meshcore-mishmesh",
+          "status": "M"
+        },
+        {
+          "collection": "firmwares",
           "id": "meshcore-ng",
           "status": "M"
         },
@@ -888,6 +971,11 @@
         {
           "collection": "firmwares",
           "id": "meshcore-wio-tracker-l1-pro-sosprz",
+          "status": "M"
+        },
+        {
+          "collection": "firmwares",
+          "id": "meshcoretel",
           "status": "M"
         },
         {
@@ -942,6 +1030,11 @@
         },
         {
           "collection": "software",
+          "id": "agessaman-meshcore-packet-capture",
+          "status": "M"
+        },
+        {
+          "collection": "software",
           "id": "corescope",
           "status": "M"
         },
@@ -962,6 +1055,21 @@
         },
         {
           "collection": "software",
+          "id": "jmead-meshcore-repeater-mqtt-gateway",
+          "status": "M"
+        },
+        {
+          "collection": "software",
+          "id": "litescope",
+          "status": "M"
+        },
+        {
+          "collection": "software",
+          "id": "lora-wideband-decoder",
+          "status": "M"
+        },
+        {
+          "collection": "software",
           "id": "map-tiles-downloader",
           "status": "M"
         },
@@ -972,12 +1080,47 @@
         },
         {
           "collection": "software",
+          "id": "mcsim",
+          "status": "M"
+        },
+        {
+          "collection": "software",
           "id": "meschatui",
           "status": "M"
         },
         {
           "collection": "software",
+          "id": "mesh-citadel",
+          "status": "M"
+        },
+        {
+          "collection": "software",
+          "id": "mesh-client",
+          "status": "M"
+        },
+        {
+          "collection": "software",
+          "id": "mesh-forge",
+          "status": "M"
+        },
+        {
+          "collection": "software",
+          "id": "meshapp",
+          "status": "M"
+        },
+        {
+          "collection": "software",
+          "id": "meshcore-bbs",
+          "status": "M"
+        },
+        {
+          "collection": "software",
           "id": "meshcore-beacon",
+          "status": "M"
+        },
+        {
+          "collection": "software",
+          "id": "meshcore-cli",
           "status": "M"
         },
         {
@@ -1052,6 +1195,11 @@
         },
         {
           "collection": "software",
+          "id": "meshcore-map",
+          "status": "M"
+        },
+        {
+          "collection": "software",
           "id": "meshcore-map-uploader",
           "status": "M"
         },
@@ -1082,12 +1230,32 @@
         },
         {
           "collection": "software",
+          "id": "meshcore-pi",
+          "status": "M"
+        },
+        {
+          "collection": "software",
+          "id": "meshcore-proxy",
+          "status": "M"
+        },
+        {
+          "collection": "software",
+          "id": "meshcore-same-eas-alerter",
+          "status": "M"
+        },
+        {
+          "collection": "software",
           "id": "meshcore-sar",
           "status": "M"
         },
         {
           "collection": "software",
           "id": "meshcore-signal-tester",
+          "status": "M"
+        },
+        {
+          "collection": "software",
+          "id": "meshcore-sim",
           "status": "M"
         },
         {
@@ -1122,7 +1290,27 @@
         },
         {
           "collection": "software",
+          "id": "meshcorejs",
+          "status": "M"
+        },
+        {
+          "collection": "software",
+          "id": "meshcoretomqtt",
+          "status": "M"
+        },
+        {
+          "collection": "software",
+          "id": "meshcorium",
+          "status": "M"
+        },
+        {
+          "collection": "software",
           "id": "meshcute",
+          "status": "M"
+        },
+        {
+          "collection": "software",
+          "id": "meshexplorer",
           "status": "M"
         },
         {
@@ -1137,12 +1325,57 @@
         },
         {
           "collection": "software",
+          "id": "meshos",
+          "status": "M"
+        },
+        {
+          "collection": "software",
           "id": "meshpkt",
           "status": "M"
         },
         {
           "collection": "software",
+          "id": "meshpoint",
+          "status": "M"
+        },
+        {
+          "collection": "software",
+          "id": "meshres",
+          "status": "M"
+        },
+        {
+          "collection": "software",
+          "id": "meshtrax",
+          "status": "M"
+        },
+        {
+          "collection": "software",
+          "id": "meshtui",
+          "status": "M"
+        },
+        {
+          "collection": "software",
+          "id": "mycelium",
+          "status": "M"
+        },
+        {
+          "collection": "software",
           "id": "nrf-dfu-py",
+          "status": "M"
+        },
+        {
+          "collection": "software",
+          "id": "openhop-core",
+          "status": "M"
+        },
+        {
+          "collection": "software",
+          "id": "openhop-repeater",
+          "status": "M"
+        },
+        {
+          "collection": "software",
+          "id": "overmesh",
           "status": "M"
         },
         {
@@ -1168,16 +1401,6 @@
         {
           "collection": "software",
           "id": "pymc-console",
-          "status": "M"
-        },
-        {
-          "collection": "software",
-          "id": "pymc-core",
-          "status": "M"
-        },
-        {
-          "collection": "software",
-          "id": "pymc-repeater",
           "status": "M"
         },
         {
@@ -1230,131 +1453,41 @@
       "other": []
     },
     {
-      "hash": "09ca5d367efd973445eaa5704ef904de17b9723e",
-      "shortHash": "09ca5d36",
-      "date": "2026-07-05T07:29:47Z",
+      "hash": "d6403b83e0b2bcf5c4f3aadc07b143b9ec6145ad",
+      "shortHash": "d6403b83",
+      "date": "2026-10-03T04:23:00Z",
+      "author": "github-actions[bot]",
+      "subject": "chore: update firmware and software changelogs",
+      "changes": [
+        {
+          "collection": "software",
+          "id": "meshcore-beacon",
+          "status": "M"
+        }
+      ],
+      "moreChanges": 0,
+      "other": []
+    },
+    {
+      "hash": "f8fbe8c4face07ec45ed3146ae7fdefb36508127",
+      "shortHash": "f8fbe8c4",
+      "date": "2026-10-02T23:37:08Z",
       "author": "github-actions[bot]",
       "subject": "chore: update firmware and software changelogs",
       "changes": [
         {
           "collection": "firmwares",
-          "id": "meshcore-lowpower",
-          "status": "M"
-        }
-      ],
-      "moreChanges": 0,
-      "other": []
-    },
-    {
-      "hash": "f41cb1993d19dbc626aef428c2d3f0d0bbb2f917",
-      "shortHash": "f41cb199",
-      "date": "2026-07-04T23:00:35Z",
-      "author": "github-actions[bot]",
-      "subject": "chore: update firmware and software changelogs",
-      "changes": [
-        {
-          "collection": "firmwares",
-          "id": "zephcore",
-          "status": "M"
-        }
-      ],
-      "moreChanges": 0,
-      "other": []
-    },
-    {
-      "hash": "cc43a5af39a97cc699d5b620b5f0759cfaf87512",
-      "shortHash": "cc43a5af",
-      "date": "2026-07-04T19:16:33+02:00",
-      "author": "tree",
-      "subject": "feat: enhance configuration and layout behavior",
-      "changes": [
-        {
-          "collection": "networks",
-          "id": "le-mesh-dunkerquois",
-          "status": "M"
-        },
-        {
-          "collection": "networks",
-          "id": "meshcore-khv",
-          "status": "M"
-        }
-      ],
-      "moreChanges": 0,
-      "other": []
-    },
-    {
-      "hash": "4d0da4cf17ed7e8926f00ccb3af3d84fe52537c8",
-      "shortHash": "4d0da4cf",
-      "date": "2026-07-04T19:08:04+02:00",
-      "author": "tree",
-      "subject": "remove scandinavia mesh, duplicate",
-      "changes": [
-        {
-          "collection": "networks",
-          "id": "scandinavian-mesh",
-          "status": "D"
-        }
-      ],
-      "moreChanges": 0,
-      "other": []
-    },
-    {
-      "hash": "ead7ee8d288258748e849a119a9986111d2a27fc",
-      "shortHash": "ead7ee8d",
-      "date": "2026-07-04T15:08:09Z",
-      "author": "github-actions[bot]",
-      "subject": "chore: update firmware and software changelogs",
-      "changes": [
-        {
-          "collection": "firmwares",
-          "id": "zephcore",
+          "id": "meshcore-solo",
           "status": "M"
         },
         {
           "collection": "software",
-          "id": "meshcore-hub",
-          "status": "M"
-        }
-      ],
-      "moreChanges": 0,
-      "other": []
-    },
-    {
-      "hash": "cf6fd2b793efcbb797e7be7f2a7b6c479b8013a7",
-      "shortHash": "cf6fd2b7",
-      "date": "2026-07-04T13:39:28Z",
-      "author": "github-actions[bot]",
-      "subject": "chore: update firmware and software changelogs",
-      "changes": [
-        {
-          "collection": "firmwares",
-          "id": "trail-mate",
-          "status": "M"
-        },
-        {
-          "collection": "firmwares",
-          "id": "wadamesh",
-          "status": "M"
-        }
-      ],
-      "moreChanges": 0,
-      "other": []
-    },
-    {
-      "hash": "1a7e5376c3ad888fa64146eb9015acf7705eafcf",
-      "shortHash": "1a7e5376",
-      "date": "2026-07-04T10:13:20Z",
-      "author": "github-actions[bot]",
-      "subject": "chore: update firmware and software changelogs",
-      "changes": [
-        {
-          "collection": "firmwares",
-          "id": "trail-mate",
+          "id": "mc-webui",
           "status": "M"
         },
         {
           "collection": "software",
-          "id": "meshcore-hub",
+          "id": "meshmonitor",
           "status": "M"
         }
       ],
@@ -1362,9 +1495,25 @@
       "other": []
     },
     {
-      "hash": "f3d335ee5c9dbcdda63c984e4ebceecb70f647d5",
-      "shortHash": "f3d335ee",
-      "date": "2026-07-04T08:19:03Z",
+      "hash": "b77af12aa9ecf11a675f9e39702a1c44c9cfce74",
+      "shortHash": "b77af12a",
+      "date": "2026-10-02T19:03:24Z",
+      "author": "github-actions[bot]",
+      "subject": "chore: update firmware and software changelogs",
+      "changes": [
+        {
+          "collection": "firmwares",
+          "id": "saitama",
+          "status": "M"
+        }
+      ],
+      "moreChanges": 0,
+      "other": []
+    },
+    {
+      "hash": "e4c1b7bfa3bfbd3302ae025ba8bf8a24c74795b6",
+      "shortHash": "e4c1b7bf",
+      "date": "2026-10-02T11:28:28Z",
       "author": "github-actions[bot]",
       "subject": "chore: update contributors",
       "changes": [],
@@ -1374,9 +1523,9 @@
       ]
     },
     {
-      "hash": "0884568992f588339a9e1fa14acfcb8b08582f80",
-      "shortHash": "08845689",
-      "date": "2026-07-04T07:51:12Z",
+      "hash": "d666da9369e18ed16608e376c0b00b2128c70370",
+      "shortHash": "d666da93",
+      "date": "2026-10-02T10:59:10Z",
       "author": "github-actions[bot]",
       "subject": "chore: update firmware & software enrichment data",
       "changes": [
@@ -1492,6 +1641,11 @@
         },
         {
           "collection": "firmwares",
+          "id": "meshcore-mishmesh",
+          "status": "M"
+        },
+        {
+          "collection": "firmwares",
           "id": "meshcore-ng",
           "status": "M"
         },
@@ -1513,6 +1667,11 @@
         {
           "collection": "firmwares",
           "id": "meshcore-wio-tracker-l1-pro-sosprz",
+          "status": "M"
+        },
+        {
+          "collection": "firmwares",
+          "id": "meshcoretel",
           "status": "M"
         },
         {
@@ -1567,6 +1726,11 @@
         },
         {
           "collection": "software",
+          "id": "agessaman-meshcore-packet-capture",
+          "status": "M"
+        },
+        {
+          "collection": "software",
           "id": "corescope",
           "status": "M"
         },
@@ -1587,6 +1751,21 @@
         },
         {
           "collection": "software",
+          "id": "jmead-meshcore-repeater-mqtt-gateway",
+          "status": "M"
+        },
+        {
+          "collection": "software",
+          "id": "litescope",
+          "status": "M"
+        },
+        {
+          "collection": "software",
+          "id": "lora-wideband-decoder",
+          "status": "M"
+        },
+        {
+          "collection": "software",
           "id": "map-tiles-downloader",
           "status": "M"
         },
@@ -1597,12 +1776,47 @@
         },
         {
           "collection": "software",
+          "id": "mcsim",
+          "status": "M"
+        },
+        {
+          "collection": "software",
           "id": "meschatui",
           "status": "M"
         },
         {
           "collection": "software",
+          "id": "mesh-citadel",
+          "status": "M"
+        },
+        {
+          "collection": "software",
+          "id": "mesh-client",
+          "status": "M"
+        },
+        {
+          "collection": "software",
+          "id": "mesh-forge",
+          "status": "M"
+        },
+        {
+          "collection": "software",
+          "id": "meshapp",
+          "status": "M"
+        },
+        {
+          "collection": "software",
+          "id": "meshcore-bbs",
+          "status": "M"
+        },
+        {
+          "collection": "software",
           "id": "meshcore-beacon",
+          "status": "M"
+        },
+        {
+          "collection": "software",
+          "id": "meshcore-cli",
           "status": "M"
         },
         {
@@ -1677,6 +1891,11 @@
         },
         {
           "collection": "software",
+          "id": "meshcore-map",
+          "status": "M"
+        },
+        {
+          "collection": "software",
           "id": "meshcore-map-uploader",
           "status": "M"
         },
@@ -1707,12 +1926,32 @@
         },
         {
           "collection": "software",
+          "id": "meshcore-pi",
+          "status": "M"
+        },
+        {
+          "collection": "software",
+          "id": "meshcore-proxy",
+          "status": "M"
+        },
+        {
+          "collection": "software",
+          "id": "meshcore-same-eas-alerter",
+          "status": "M"
+        },
+        {
+          "collection": "software",
           "id": "meshcore-sar",
           "status": "M"
         },
         {
           "collection": "software",
           "id": "meshcore-signal-tester",
+          "status": "M"
+        },
+        {
+          "collection": "software",
+          "id": "meshcore-sim",
           "status": "M"
         },
         {
@@ -1747,7 +1986,27 @@
         },
         {
           "collection": "software",
+          "id": "meshcorejs",
+          "status": "M"
+        },
+        {
+          "collection": "software",
+          "id": "meshcoretomqtt",
+          "status": "M"
+        },
+        {
+          "collection": "software",
+          "id": "meshcorium",
+          "status": "M"
+        },
+        {
+          "collection": "software",
           "id": "meshcute",
+          "status": "M"
+        },
+        {
+          "collection": "software",
+          "id": "meshexplorer",
           "status": "M"
         },
         {
@@ -1762,12 +2021,57 @@
         },
         {
           "collection": "software",
+          "id": "meshos",
+          "status": "M"
+        },
+        {
+          "collection": "software",
           "id": "meshpkt",
           "status": "M"
         },
         {
           "collection": "software",
+          "id": "meshpoint",
+          "status": "M"
+        },
+        {
+          "collection": "software",
+          "id": "meshres",
+          "status": "M"
+        },
+        {
+          "collection": "software",
+          "id": "meshtrax",
+          "status": "M"
+        },
+        {
+          "collection": "software",
+          "id": "meshtui",
+          "status": "M"
+        },
+        {
+          "collection": "software",
+          "id": "mycelium",
+          "status": "M"
+        },
+        {
+          "collection": "software",
           "id": "nrf-dfu-py",
+          "status": "M"
+        },
+        {
+          "collection": "software",
+          "id": "openhop-core",
+          "status": "M"
+        },
+        {
+          "collection": "software",
+          "id": "openhop-repeater",
+          "status": "M"
+        },
+        {
+          "collection": "software",
+          "id": "overmesh",
           "status": "M"
         },
         {
@@ -1793,16 +2097,6 @@
         {
           "collection": "software",
           "id": "pymc-console",
-          "status": "M"
-        },
-        {
-          "collection": "software",
-          "id": "pymc-core",
-          "status": "M"
-        },
-        {
-          "collection": "software",
-          "id": "pymc-repeater",
           "status": "M"
         },
         {
@@ -1855,148 +2149,15 @@
       "other": []
     },
     {
-      "hash": "121d9059000eae640d2841ec7e4085afd296f6d8",
-      "shortHash": "121d9059",
-      "date": "2026-07-04T06:49:32Z",
+      "hash": "f7d8bb5374765eaaeb0bf0a1bd422d3ee928e3ad",
+      "shortHash": "f7d8bb53",
+      "date": "2026-10-01T22:27:44Z",
       "author": "github-actions[bot]",
       "subject": "chore: update firmware and software changelogs",
       "changes": [
-        {
-          "collection": "firmwares",
-          "id": "meshpunk",
-          "status": "M"
-        },
-        {
-          "collection": "firmwares",
-          "id": "wadamesh",
-          "status": "M"
-        }
-      ],
-      "moreChanges": 0,
-      "other": []
-    },
-    {
-      "hash": "56795210d451e21cb59327e96134ca73cac19939",
-      "shortHash": "56795210",
-      "date": "2026-07-04T03:23:53Z",
-      "author": "github-actions[bot]",
-      "subject": "chore: update firmware and software changelogs",
-      "changes": [
-        {
-          "collection": "firmwares",
-          "id": "trail-mate",
-          "status": "M"
-        },
-        {
-          "collection": "software",
-          "id": "meshcore-hub",
-          "status": "M"
-        },
-        {
-          "collection": "software",
-          "id": "meshmonitor",
-          "status": "M"
-        }
-      ],
-      "moreChanges": 0,
-      "other": []
-    },
-    {
-      "hash": "414098aa2e6efe08945efdf92728a5f7f1bf0a12",
-      "shortHash": "414098aa",
-      "date": "2026-07-03T22:14:14Z",
-      "author": "github-actions[bot]",
-      "subject": "chore: update firmware and software changelogs",
-      "changes": [
-        {
-          "collection": "software",
-          "id": "meshcore-beacon",
-          "status": "A"
-        },
         {
           "collection": "software",
           "id": "meshcore-go",
-          "status": "A"
-        },
-        {
-          "collection": "software",
-          "id": "meshcore-hub",
-          "status": "M"
-        },
-        {
-          "collection": "software",
-          "id": "meshcore-ninja",
-          "status": "M"
-        },
-        {
-          "collection": "software",
-          "id": "meshcore-one",
-          "status": "M"
-        },
-        {
-          "collection": "software",
-          "id": "meshcore-packet-tool",
-          "status": "A"
-        },
-        {
-          "collection": "software",
-          "id": "meshcore-signal-tester",
-          "status": "M"
-        },
-        {
-          "collection": "software",
-          "id": "meshmonitor",
-          "status": "M"
-        },
-        {
-          "collection": "software",
-          "id": "meshpkt",
-          "status": "A"
-        },
-        {
-          "collection": "software",
-          "id": "pommecore",
-          "status": "A"
-        },
-        {
-          "collection": "software",
-          "id": "potato-mesh",
-          "status": "M"
-        },
-        {
-          "collection": "software",
-          "id": "remoteterm",
-          "status": "M"
-        },
-        {
-          "collection": "software",
-          "id": "roadstr",
-          "status": "M"
-        }
-      ],
-      "moreChanges": 0,
-      "other": []
-    },
-    {
-      "hash": "db4463e0d3bc077841a57b395c8587aa9712eb64",
-      "shortHash": "db4463e0",
-      "date": "2026-07-03T15:47:19+02:00",
-      "author": "tree",
-      "subject": "feat: add MeshTexas network and area geojson, update analyzers for existing networks",
-      "changes": [
-        {
-          "collection": "networks",
-          "id": "meshcore-pl",
-          "status": "M"
-        },
-        {
-          "collection": "networks",
-          "id": "meshtexas",
-          "status": "A"
-        },
-        {
-          "collection": "networks",
-          "id": "salish-mesh",
           "status": "M"
         }
       ],
