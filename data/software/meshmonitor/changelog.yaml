@@ -1,7 +1,134 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-10-15T22:56:56.368Z'
+updatedAt: '2026-10-16T19:26:16.537Z'
 releases:
+  - version: v4.17.1-rc5
+    name: v4.17.1-rc5
+    datetime: '2026-10-16T17:35:47Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.1-rc5
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.17.1-rc5
+
+
+      > [!WARNING]
+
+      > This is a **pre-release** for testing. Use it on a test install before you upgrade
+      production.
+
+
+      ## Summary
+
+
+      This release candidate adds **passkey sign-in** for local accounts. You can sign in with a
+      device fingerprint, face or PIN, turn password sign-in off for a passkey-only account, and get
+      back in with one-time recovery codes. Admins can see and revoke a user's passkeys from the
+      Users page. Passkeys need HTTPS (or `http://localhost`) and bind to the hostname where you add
+      them; the optional `WEBAUTHN_RP_ID` and `WEBAUTHN_ORIGINS` settings cover reverse proxies and
+      multiple hostnames. Auto-Acknowledge gains a separate **IP (MQTT / UDP)** row, so messages
+      that arrived over the internet no longer use the 0-hop or multi-hop settings; the new row
+      starts **off**. MeshCore contacts can now take a manual location override, as Meshtastic nodes
+      already could. The MeshCore Configuration and Automations pages get the same search box and
+      section buttons as the Meshtastic pages. Show MQTT/Bridge Messages is now remembered per
+      source, and tapping a node in Traceroute mode draws its newest answered run again.
+
+
+      ## Upgrade notes
+
+
+      - **Auto-Acknowledge:** messages received over MQTT or multicast UDP now fall into the new IP
+      row, which starts off on every install. If you relied on the multi-hop (or 0-hop) row to
+      answer MQTT/UDP messages, turn on the IP row under Automation → Auto Acknowledge.
+
+      - **Passkeys** are optional. Nothing changes until a user adds one. See the [Passkeys
+      guide](https://meshmonitor.org/features/passkeys).
+
+
+      ## Features
+
+
+      - Passkey sign-in for local accounts (#5841):
+        - Passkey storage (#5849)
+        - Sign in with a passkey (#5850)
+        - Passkey-only accounts, recovery codes, admin revoke (#5851)
+        - Passkeys user guide (#5853)
+        - Design spec (#5847)
+      - Separate IP (MQTT/UDP) row in the Auto-Ack matrix (#5854)
+
+      - Override a MeshCore contact's location (#5848)
+
+      - Remember Show MQTT/Bridge Messages per source (#5844)
+
+      - Search and section buttons on MeshCore Configuration and Automations (#5855)
+
+
+      ## Bug Fixes
+
+
+      - Tapping a node in Traceroute mode draws its newest answered run (#5845)
+
+      - MeshCore Notifications section bar sits flush with the top of the pane (#5856)
+
+
+      ## Release
+
+
+      - Version bump to 4.17.1-rc5 (#5857)
+
+
+      ## Dependencies
+
+
+      - engine.io 6.6.11 and a single mysql2 for express-mysql-session (#5846)
+
+
+      ## Issues Resolved
+
+
+      - #5841 WebAuthn/passkey login as alternative to password (local auth)
+
+      - #5796 Auto-Ack for MQTT Messages
+
+      - #5842 MeshCore: override contact location (parity with Meshtastic)
+
+      - #5824 Make Show MQTT/Bridge Messages toggle per-source
+
+      - #5821 Per-source map: Show Traceroute toggle engages but clicking a node does nothing
+
+
+      **Full Changelog**: https://github.com/Yeraze/meshmonitor/compare/v4.17.1-rc4...v4.17.1-rc5
+
+
+      ## 🚀 MeshMonitor v4.17.1-rc5
+
+
+      ### 📦 Installation
+
+
+      **Docker (recommended):**
+
+      ```bash
+
+      docker run -d \
+        --name meshmonitor \
+        -p 8080:3001 \
+        -v meshmonitor-data:/data \
+        ghcr.io/Yeraze/meshmonitor:4.17.1-rc5
+      ```
+
+
+      ### 🧪 Testing
+
+      ✅ All tests passed
+
+      ✅ TypeScript checks passed
+
+      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
+
+
+      ### 📋 Changes
+
+      See commit history for detailed changes.
   - version: v4.17.1-rc4
     name: v4.17.1-rc4
     datetime: '2026-10-15T20:27:34Z'
@@ -2093,117 +2220,3 @@ releases:
       - The Longest Active and Record Holder cards now need `tracerou
 
       …
-  - version: v4.16.2-rc2
-    name: v4.16.2-rc2
-    datetime: '2026-09-23T15:01:55Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.16.2-rc2
-    prerelease: true
-    notes: >-
-      # MeshMonitor v4.16.2-rc2
-
-
-      > **Pre-release.** Docker images are tagged `4.16.2-rc2` only — `:latest` still points at
-      v4.16.1.
-
-
-      Two features and two fixes on top of rc1. You can now add a node straight from a Meshtastic
-      contact link and message it before it has ever been heard on the mesh; such nodes carry an
-      "Imported" badge until they are. NodeInfo Enrichment's "Fix All" can now run on a schedule
-      from Settings → Auto-Enrichment — it ships **off**, schedules are floored at one hour, and the
-      optional push to the device NodeDB is capped at 25 NodeInfo requests per run, 30 s apart. The
-      LoRa Radio Configuration panel reports the correct frequency for every preset that is not 250
-      kHz wide, where it previously used a stale bandwidth field, and shows presets 9–16 by name
-      instead of `Unknown (9)`. On iOS home-screen apps the node list now fills the phone, and the
-      status-bar blur gap from rc1 applies more reliably.
-
-
-      ## Features
-
-      - feat(nodes): add a node from a Meshtastic contact URL (#5318) — closes #5317
-
-      - feat(enrichment): run NodeInfo Enrichment Fix All on a schedule (#5322) — closes #5287
-
-
-      ## Bug Fixes
-
-      - fix(lora): follow use_preset for bandwidth, and name presets 9-16 (#5321) — closes #5320
-
-      - fix(mobile): node list fills the phone; blur gap without Version/NN (#5319) — #5316, #5286
-
-
-      ## Issues Resolved
-
-      - #5317 — add nodes using their contact URLs
-
-      - #5287 — schedule NodeInfo Enrichment Fix All
-
-      - #5320 — presets above SHORT_TURBO show "Unknown (N)" and report the wrong frequency
-
-      - #5316 — node list does not fill the phone in the iOS home-screen app
-
-
-      ## Thanks
-
-      - @zaepho for #5320/#5321 — a precise report, a bench-radio correction that changed the fix,
-      and the fix itself
-
-      - @ogarcia for the contact-URL request (#5317)
-
-      - NullVoid (`null_v0id` on Discord) for the scheduled-enrichment request and continued iOS 27
-      testing
-
-
-      ## Upgrade notes
-
-      - **Migration 168** adds `nodes.importedAt` on all three backends. Nullable, no backfill.
-
-      - **Auto-Enrichment is disabled by default.** Enabling it does not run immediately; the first
-      run lands one full period later, or use **Run now**.
-
-      - A device backup of a node on a preset above `SHORT_TURBO` now records the preset name
-      instead of a bare number, and restores it correctly.
-
-
-      ## Please test on iOS 27
-
-      - **Home-screen app layout** (#5316, #5310): the node list and bottom nav bar should now reach
-      the bottom of the screen on per-source pages.
-
-      - **Header blur** (#5286, reopened): the top bar should read sharply in the home-screen app,
-      including on devices whose user agent lacks a `Version/NN` token. The issue stays open until
-      confirmed on a device.
-
-
-      **Full Changelog**: https://github.com/Yeraze/meshmonitor/compare/v4.16.2-rc1...v4.16.2-rc2
-
-
-      ## 🚀 MeshMonitor v4.16.2-rc2
-
-
-      ### 📦 Installation
-
-
-      **Docker (recommended):**
-
-      ```bash
-
-      docker run -d \
-        --name meshmonitor \
-        -p 8080:3001 \
-        -v meshmonitor-data:/data \
-        ghcr.io/Yeraze/meshmonitor:4.16.2-rc2
-      ```
-
-
-      ### 🧪 Testing
-
-      ✅ All tests passed
-
-      ✅ TypeScript checks passed
-
-      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
-
-
-      ### 📋 Changes
-
-      See commit history for detailed changes.

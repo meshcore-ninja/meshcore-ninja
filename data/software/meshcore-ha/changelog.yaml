@@ -1,7 +1,50 @@
 source: github
 repo: meshcore-dev/meshcore-ha
-updatedAt: '2026-10-10T23:20:03.154Z'
+updatedAt: '2026-10-16T19:26:05.596Z'
 releases:
+  - version: v3.0.3
+    name: v3.0.3
+    datetime: '2026-10-16T16:14:44Z'
+    url: https://github.com/meshcore-dev/meshcore-ha/releases/tag/v3.0.3
+    prerelease: false
+    notes: >-
+      ## Fixes
+
+
+      - Faster on Home Assistant 2026.10 and later. The integration looked up its device with a
+      registry call that Home Assistant 2026.10 deprecated. Home Assistant now inspects the call
+      stack on every such call, and the integration made it for every event it fired, so event
+      handling took about twice as long. The integration now uses the per-entry lookup on newer Home
+      Assistant and the old one on older releases. This also removes the deprecation warnings that
+      said the integration "will stop working in Home Assistant 2027.8". (#381)
+
+      - Contacts are kept across a reconnect. A reconnect started with an empty contact table, so
+      every tracked node logged "Could not find ... contact" until the companion sent its table
+      again, which can take a long time on a large table or a weak link. The table is now carried
+      over and refreshed from the companion. (#381)
+
+      - A tracked repeater whose contact is not on the companion waits its update interval and warns
+      once, instead of retrying and warning every few seconds.
+
+
+      ## Features
+
+
+      - **Download diagnostics**: Settings > Devices & services > MeshCore > ⋮ > Download
+      diagnostics. One file per companion with the traffic policy and lane credits, each tracked
+      node's schedule, failures and route, and entity and cache counts. Passwords, keys, channel
+      secrets and MQTT credentials are removed. Attach it to an issue. See
+      [Troubleshooting](https://meshcore-dev.github.io/meshcore-ha/docs/ha/troubleshooting).
+
+
+      ## Notes
+
+
+      - Validation: 461 integration tests and 373 unit tests pass. Runs on the maintainer's Home
+      Assistant 2026.10.1.
+
+
+      **Full changelog:** https://github.com/meshcore-dev/meshcore-ha/compare/v3.0.2...v3.0.3
   - version: v3.0.2
     name: v3.0.2
     datetime: '2026-10-10T20:18:28Z'
@@ -634,9 +677,3 @@ releases:
     url: https://github.com/meshcore-dev/meshcore-ha/releases/tag/v2.1.12
     prerelease: false
     notes: "Add more decimal places to battery sensors\r\nAdd delay on server startup to avoid corrupting connections\r\nFix bug with repeater settings not persisting"
-  - version: v2.1.11
-    name: v2.1.11
-    datetime: '2025-10-19T03:13:31Z'
-    url: https://github.com/meshcore-dev/meshcore-ha/releases/tag/v2.1.11
-    prerelease: false
-    notes: "## What's Changed\r\n* Fix issue with nodes not resetting by @awolden in https://github.com/meshcore-dev/meshcore-ha/pull/89"

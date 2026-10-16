@@ -1,7 +1,90 @@
 source: github
 repo: andymux/meshos-releases
-updatedAt: '2026-10-14T18:23:16.694Z'
+updatedAt: '2026-10-16T19:26:16.898Z'
 releases:
+  - version: v1.0.28
+    name: MeshOS v1.0.28
+    datetime: '2026-10-16T17:34:56Z'
+    url: https://github.com/andymux/meshos-releases/releases/tag/v1.0.28
+    prerelease: false
+    notes: >-
+      # MeshOS app 1.0.28
+
+
+      ## Direct messages over the internet
+
+      - You can now send a direct message to another MeshOS app user over the internet, not only
+      over AirLink or LoRa. With internet messaging on, a direct message is sent both ways, so it
+      gets through on whichever path reaches them, and each message tells you how it arrived.
+
+      - A direct message from someone who is not one of your contacts now waits in Message requests,
+      so a stranger cannot land straight in your chats. You choose whether to accept.
+
+
+      ## Your identity
+
+      - Your app now has its own signed identity, so other users can recognise you and your messages
+      can be signed. You can let other internet users see you, which is on by default. Sharing your
+      location is a separate switch and is off by default.
+
+      - You can save an encrypted backup of your identity and restore it on another phone. The
+      backup is protected by a passphrase you choose, and without that passphrase it cannot be read.
+
+
+      ## Signed messages
+
+      - The MeshOS Global channel now shows the green tick on signed messages.
+
+      - Your internet channels now sign messages too and show the tick, and a signed message can be
+      longer on an internet channel.
+
+      - The message box now counts the space a message takes the same way the radio does, including
+      emoji, so you can see what will fit in a signed message before you send it.
+
+
+      ## Channels
+
+      - New Channel Info screen. Tap a channel's picture, or choose Channel info in the menu, to see
+      exactly what a channel is set to do and change it all in one place: signing, internet, mute,
+      the channel's name on this phone, and more. It also shows how the channel reaches other people
+      and names an AirLink repeater in range that could carry it.
+
+      - Channels now have clear, colour-coded icons across the chats list, the chat header and the
+      info screen, so you can tell at a glance what each one is.
+
+      - Tapping an AirLink repeater now opens an information page about it, instead of starting a
+      direct message.
+
+
+      ## Heard list
+
+      - A node you can reach over both AirLink and the internet now shows under both filters, each
+      with its own last-heard time, so its AirLink time stays right even after it goes out of range.
+
+      - Nodes you hear over the internet now show their profile picture, in the Heard list, in
+      Contacts and in direct messages.
+
+
+      ## Reliability
+
+      - A channel set to use the internet only could, with no radio connected, still try to send
+      over AirLink. It now sends only the way the channel is set to.
+
+      - A phone you hear over AirLink is now shown as AirLink rather than as a LoRa radio.
+
+
+      ## Downloads
+
+      - Android: MeshOS-v1.0.28.apk
+
+      - macOS: MeshOS-v1.0.28.dmg
+
+
+      SHA-256:
+
+      - MeshOS-v1.0.28.apk: cc12913ae7098b2dc83ebf3563c0b234fa110307ea3a9903e75f553c718ed448
+
+      - MeshOS-v1.0.28.dmg: 3dd730314077d4d6fe4b32945879ce6b03fcadfc198da239952c86254dc07ca1
   - version: fw-v1.7.8
     name: MeshOS firmware v1.7.8
     datetime: '2026-10-14T17:52:25Z'
@@ -882,24 +965,3 @@ releases:
       - TDeck: b6a3a50aec695b075eac43be2e4ac0a68fb20272ed35c0b0307d1af5fe436224
 
       - M9: fc38153bfe148387059e29c92754b585f7b23f7c72f76659280f79ea71dfdb1f
-  - version: v1.0.15
-    name: MeshOS v1.0.15
-    datetime: '2026-08-31T16:26:51Z'
-    url: https://github.com/andymux/meshos-releases/releases/tag/v1.0.15
-    prerelease: false
-    notes: >-
-      ## MeshOS Companion v1.0.15
-
-
-      Reliability improvements and bug fixes.
-
-
-      ### Install
-
-      Download `MeshOS-v1.0.15.apk` and open it to install. Existing users upgrade in place, keeping
-      their messages and license.
-
-
-      APK SHA-256:
-
-      `7f854a4c11852348d8bfa04a01ed6d0c9d8eab763e5dba04aadff6d8b5b72137`
