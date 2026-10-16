@@ -1,7 +1,143 @@
 source: github
 repo: liquidraver/ZephCore
-updatedAt: '2026-10-10T23:19:54.435Z'
+updatedAt: '2026-10-16T14:38:47.133Z'
 releases:
+  - version: 1.18.0-zephcore
+    name: Firmware 1.18.0-zephcore
+    datetime: '2026-10-16T13:10:15Z'
+    url: https://github.com/liquidraver/ZephCore/releases/tag/1.18.0-zephcore
+    prerelease: false
+    notes: >-
+      # ZephCore 1.18.0-zephcore
+
+
+      Safer off-grid mode, working buttons on four boards with a display, a WiFi page on the display
+      of
+
+      WiFi companions, a GPS clock fix, a new KISS modem role, and the changes from upstream
+      MeshCore 1.18.0.
+
+
+      > [!NOTE]
+
+      > A normal upgrade keeps your identity, settings, contacts and phone pairing.
+
+
+      ---
+
+
+      ## Off-grid mode stays off the live mesh
+
+
+      Off-grid mode makes a companion forward packets for nearby handhelds when no repeater is in
+      reach. It
+
+      belongs on 433.000, 869.495 or 918.000 MHz, but the display's Offgrid toggle turned forwarding
+      on
+
+      without changing the frequency, so the node repeated everything on your normal mesh.
+
+
+      - **Turning Offgrid on now moves the node** to the nearest off-grid frequency; turning it off
+      returns
+        to the frequency you came from. Bandwidth, SF, CR and TX power are kept.
+      - **A companion never forwards anywhere else.** If you enabled Offgrid from the display
+      before, it
+        shows as off after the update; turn it on again if you want it.
+      - **`set repeat on|off` works on a companion** and does the same as the toggle. The display
+      also
+        follows changes made from the app.
+
+      More in [OFFGRID.md](../docs/OFFGRID.md). Thanks to **N8HOP** for the report.
+
+
+      ## Buttons
+
+
+      - **Station G2:** the user button now works like on other one-button boards: one press for the
+      next
+        page, two for the previous page, hold for a second to run the item.
+      - **Heltec Mesh Node T1, both LR2021 LoRa Plus EVK kits:** Power Off, DFU and Offgrid can be
+        confirmed again.
+      - On all four boards the confirmation is a second **hold** within 3 seconds.
+
+
+      ## Display: WiFi page, and the right connection shown
+
+
+      - **New WiFi page** on WiFi companions with a one-button display (Heltec V3, V4, V4.3,
+      Wireless
+        Tracker, T3S3, Station G2 and others), next to the Bluetooth page. It shows whether WiFi is off,
+        joining or connected, and once connected the network, IP address and port to enter in the app,
+        and whether the app is connected over WiFi. On the ThinkNode M9 the same details are under
+        **System > Info > WiFi**.
+      - **The home page names the connection:** "WiFi OK", "USB OK" or "BLE OK" instead of always
+        "BLE OK", and "BLE OFF" when Bluetooth is turned off and no app is connected.
+      - **The Bluetooth page says "Connected" only for a Bluetooth connection.** An app connected
+      over
+        WiFi or USB used to show there too.
+
+      Thanks to **bisbille** for the report.
+
+
+      ## GPS no longer sets the clock to an old time
+
+
+      Just after waking, a GPS receiver can report its last position and its own, possibly stale,
+      clock
+
+      before any satellite confirms them. That was taken as a fix and could set a repeater's clock
+      hours
+
+      back. Now only satellite-solved positions count, five in a row. A fix takes about two seconds
+      longer.
+
+      This applies to every board with a GPS. Thanks to **Innocent Killer 101** for the report and
+      the
+
+      measurements.
+
+
+      ## No GPS fitted, no GPS searching
+
+
+      Boards with an optional GPS connector (Heltec V3, V4 and V4.3, RAK4631, XIAO nRF54L15 and
+      others)
+
+      searched for a GPS that was not there: for five minutes after boot on a repeater, and again
+      after
+
+      every telemetry request. On an ESP32 board that kept the processor out of light sleep the
+      whole
+
+      time.
+
+
+      - **The first time the GPS powers up after a reboot, the node listens for it for 10 seconds.**
+        That is at boot if your GPS is on, or when you first turn it on. If nothing answers, the GPS is
+        treated as not fitted until the next reboot, as upstream MeshCore does: `gps` answers
+        `Can't find GPS`, and telemetry no longer wakes it.
+      - Your GPS setting is kept, so a GPS you fit later is found at the next boot.
+
+
+      Thanks to **svenlange2** for the report.
+
+
+      ## New: KISS modem role
+
+
+      A ZephCore node can now act as a plain LoRa modem for a program on a computer, as upstream
+
+      MeshCore's `kiss_modem` does. The program sends and receives raw packets over USB, sets the
+
+      radio, and uses the node's key to sign, verify, encrypt and decrypt. There is no mesh, no
+
+      Bluetooth and no CLI on the node in this role.
+
+
+      - It sp
+
+      …
   - version: 1.17.7-zephcore
     name: Firmware 1.17.7-zephcore
     datetime: '2026-10-10T21:48:03Z'
@@ -1156,9 +1292,3 @@ releases:
     url: https://github.com/liquidraver/ZephCore/releases/tag/v20260608.105434
     prerelease: false
     notes: "## New\r\n\r\n### Hardware RTC auto-discovery\r\nOut-of-the-box nodes with a battery/cap-backed I2C RTC (**DS3231, PCF8563,\r\nRV3028, RX8130CE**) now restore the clock at boot — shown tagged **`L`** until\r\nthe next GPS / app / CLI sync — and write the time back on every sync so it\r\nsurvives power-off. Boards opt in via `boards/common/rtc-i2c.dtsi`; on boards\r\nwithout it, this compiles to nothing.\r\n\r\n> First wired up on **LilyGo T-Echo** and **ThinkNode M1**.\r\n\r\n### Buttonless BLE DFU (legacy Nordic/Adafruit OTA jump)\r\nA paired phone can now trigger the jump into the bootloader's BLE OTA mode\r\ndirectly from the DFU Firmware Upgrade app — no button press needed (**nRF52 only**). The\r\nservice exposes the full legacy DFU characteristic set (Control Point, Packet,\r\nRevision) so iOS's DFU library can discover and identify the device correctly.\r\n\r\nCompanion needs disconnecting from MeshCore app first!\r\n\r\nThis was only tested with a handful of nodes and an iOS! This change can introduce errors in other phones I'm not aware of. A BLE bond delete + re-pair should solve it.\r\n\r\n### BLE TX power bumped to +8 dBm\r\nRaised from **+4 dBm → +8 dBm**, the max output the nRF52840 / nRF54L\r\nhigh-power radio front-end supports — better range and link margin for the\r\ncompanion connection.\r\nThis is still under test, but should not cause excessive/noticeable battery drain.\r\n\r\n### MIT license formalized\r\nAdded `zephcore/LICENSE` (MIT, same as upstream MeshCore) and flipped the\r\n`SPDX-License-Identifier` header across the source tree from `Apache-2.0` to\r\n`MIT`. Vendored dependencies that carry their own compatible licenses\r\n(Monocypher, Zephyr patches) are noted at the bottom of the license file.\r\n\r\n## Fixed\r\n\r\n- **Companion startup races** — initial-advert handling and contact-table\r\n  iteration were running on `sysworkq` while the main thread mutated the same\r\n  mesh/contact state, a race that could corrupt state or wedge the contact\r\n  dump. Both now run on the main thread, driven through the event loop\r\n  (`MESH_EVENT_CONTACT_ITER`), same as the rest of the mesh state machine.\r\n\r\n- **Hardware-RTC writes no longer race the main loop** — `zephcore_rtc_save()`\r\n  is now routed through the same deferred-to-main-thread mechanism as prefs\r\n  flushes (`MESH_EVENT_RTC_SAVE`). GPS fixes land on the GNSS modem-chat thread\r\n  and just stash the latest epoch; the actual blocking I2C write happens on the\r\n  main thread, coalescing multiple pending fixes into one save.\r\n\r\n- **`MAX_ANON_CONTACTS` cap fixed** — transient/anon contact slots (e.g.\r\n  created for BLE direct-message lookups to non-contact pubkeys) were being\r\n  capped by `MAX_CONTACTS` instead of their own larger allotment, causing\r\n  premature slot exhaustion/eviction.\r\n\r\n- **XIAO nRF54L15 build fixed.**\r\n\r\n## Internals\r\n\r\n- **ZephyrCompanionUSB** — assembled V3 frames now wake the main thread via\r\n  `k_event` instead of `k_work_submit` on `sysworkq`, matching the BLE RX path\r\n  and removing a parse-vs-`loop()` race.\r\n\r\n- **Buttonless DFU** now hard-depends on `SOC_SERIES_NRF52` (was a soft\r\n  `default y`). Other nRF52-only paths (bootloader-version scan, VBUS detect,\r\n  formatter/updater tools) were cleaned up to drop the redundant\r\n  `SOC_SERIES_NRF52X` checks.\r\n\r\n- **West Update** — Zephyr updated to 4.4.1-rc1"
-  - version: v20260606.150211
-    name: Firmware v20260606.150211
-    datetime: '2026-06-06T15:02:26Z'
-    url: https://github.com/liquidraver/ZephCore/releases/tag/v20260606.150211
-    prerelease: false
-    notes: Synced with upstream vanilla MeshCore v1.16.0
