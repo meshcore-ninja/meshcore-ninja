@@ -1,7 +1,105 @@
 source: github
 repo: ALLFATHER-BV/wadamesh
-updatedAt: '2026-10-15T19:45:15.596Z'
+updatedAt: '2026-10-17T16:54:43.312Z'
 releases:
+  - version: beta_96
+    name: wadamesh beta_96
+    datetime: '2026-10-17T14:04:14Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_96
+    prerelease: true
+    notes: >-
+      Test build, on top of beta_95. Stable stays **beta_85**.
+
+
+      Flash it at **[flasher.wadamesh.com](https://flasher.wadamesh.com)** (switch the toggle to
+      Beta), or update on the device if you have "Get test builds (beta)" turned on.
+
+
+      ## Chat history keeps saving
+
+
+      - **Chat history keeps saving on a device with a lot of it.** Once the history reached its 24
+      files, a reboot could leave every new message in memory only, so it was gone after the next
+      restart, without any warning (reported on Discord). Full files are now merged to make room,
+      and a save that cannot land says so. Messages lost before this build cannot be recovered;
+      older history is untouched.
+
+      - **Messages that arrive in a chat you left open while the screen is off or locked stay
+      unread**, so the lock screen shows them. They count as read once you wake the device and see
+      the chat (reported on Discord).
+
+
+      ## New
+
+
+      - **Settings opens with a Device page:** what this unit is, its radio and hardware, and the
+      About information, with Run setup again and Reboot. The group with Display, Theme, Lock
+      screen, Sound and Keyboard is now called **Display & lock** (#630 by @oumike, asked for by
+      @Jess-39 in #596).
+
+      - **First-time setup keeps Bluetooth on** and shows a switch for it (#416, by @oumike).
+
+      - **T-Display P4:** a one-row status bar with the title on the left and the clock beside the
+      icons, and Settings in landscape uses two real columns (by @oumike).
+
+      - In a chat, the clock and battery stay at the height they have on every other screen (by
+      @oumike).
+
+      - **USB Files can put Lua apps on the device:** drop a `.lua` or `.json` file into the apps
+      folder (`meshcomod/apps` on the SD card) at [files.wadamesh.com](https://files.wadamesh.com),
+      no need to take the card out. It shows up the next time you open the app drawer (asked for on
+      Discord).
+
+      - **New in the Store: Blackjack**, with split, double down and your bankroll kept between
+      sessions (#681 by @halflive-743). Every Store app now has a page at
+      [wadamesh.com/apps.html](https://wadamesh.com/apps.html).
+
+      - The Store now lists more than 16 apps; it stopped at 16 before, so new apps would not have
+      shown up.
+
+
+      ## Fixes
+
+
+      - **ThinkNode M9 and other keypad boards:** Up and Down on a web page scroll the text instead
+      of jumping past it to the toolbar (#680 by @oumike, reported by @Buko84 in #677).
+
+      - A **lock screen PIN with a 0** (or any digit on the Sym layer) can be typed on the T-Deck
+      (#676 by @oumike, reported by @TerryTel93 in #675).
+
+      - Characters a font cannot draw show as one `*` everywhere, skin-tone modifiers are hidden,
+      and invisible marks in Arabic and Hebrew messages stay invisible (#679 by @oumike, reported by
+      @neoemit in #673).
+
+      - The **chats list shows the double tick** as soon as a direct message is delivered (reported
+      by @neoemit in #670).
+
+      - **ThinkNode M9:** the keyboard language code in the chat header no longer sits on top of the
+      GPS icon (reported by @neoemit in #672).
+
+      - The **contact popup** is wider on 320 pixel screens and gives a long name a second line, so
+      with Large Text it no longer runs under the buttons (reported by @Danie10 in #668).
+
+      - A **lock screen with your own picture** is no longer milky: a lighter dark tint and light
+      text on every theme (reported by @Flyflinger in #652).
+
+      - **Translations:** this build's new texts in all 14 languages.
+
+
+      ## For app makers
+
+
+      - Canvases larger than 480 pixels are fitted to the screen instead of stopping the app, so
+      apps that size their canvas from `on_open` work on the T-Display P4, Tanmatsu and CrowPanel 5
+      (reported on Discord).
+
+      - `button:bg(colour)` gives a button its own fill colour, and it stays reachable with the keys
+      and trackball ([SDK guide](https://wadamesh.com/sdk.html)).
+
+
+      Checked on a LilyGo T-Deck (boot, history load, the MeshCore app's Command Line, sending and
+      receiving). Every other board builds. Please report what you find with "Send a test report" in
+      Settings, or an issue here.
   - version: beta_95
     name: wadamesh beta_95
     datetime: '2026-10-15T16:46:44Z'
@@ -1721,111 +1819,5 @@ releases:
 
 
       The theme chip keeps one icon in both states, matching Do Not Disturb: the chip's own f
-
-      …
-  - version: beta_76
-    name: wadamesh beta_76
-    datetime: '2026-09-04T09:07:01Z'
-    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_76
-    prerelease: true
-    notes: >-
-      Test build. **Stable stays beta_65.**
-
-
-      Flash it at **[flasher.wadamesh.com](https://flasher.wadamesh.com)** (flip the Stable/Beta
-      toggle to Beta), or turn on "Get test builds (beta)" on the device and update over Wi-Fi.
-
-
-      A big drop from [@oumike](https://github.com/oumike), who wrote the themes, the new board and
-      the navigation fixes, and a lot of it comes straight from people filing precise reports. Thank
-      you.
-
-
-      ## Day and Night themes
-
-
-      The firmware has a light theme. **Settings, Display, Appearance** switches between Night and
-      Day, and the Theme chip in the control centre toggles it directly. Night is still the default
-      and looks exactly as it did.
-
-
-      Day is a full palette rather than an inverted one: text, panels, fields, borders, controls,
-      focus rings, charts, status colours and chat bubbles each got their own light values. Changing
-      it restarts the device so the whole interface is rebuilt from one set of colours instead of
-      half-repainted.
-
-
-      By [@oumike](https://github.com/oumike) (#375, closes #296).
-
-
-      ## A new board: Seeed Wio Tracker L2
-
-
-      Display, touch, GPS, microSD, battery and buttons were brought up on real hardware by the
-      contributor, and the board goes on sale next week.
-
-
-      Added and maintained by [@oumike](https://github.com/oumike) (#391), who has the hardware.
-      Treat it as new: if something is wrong on an L2, say so.
-
-
-      ## Your screen was still on when you thought it was off
-
-
-      On the **ThinkNode M9**, turning the screen off only turned the backlight off. The panel kept
-      refreshing the same image behind it, which is what actually burns an image into the glass, and
-      you could see the lock screen faintly in bright light. It now stops driving the panel.
-      Reported and photographed by [@Buko84](https://github.com/Buko84) (#390).
-
-
-      On the **T-Display P4**, Wi-Fi came back on by itself after a power cycle while every switch
-      said it was off, and the radio really was on. The co-processor rejoins your last network on
-      its own at power-on, and the firmware only ever acted when the setting *changed*, so a radio
-      that was already connected was never told to stop. Reported by
-      [@wb6zsu](https://github.com/wb6zsu) (#373).
-
-
-      ## Settings that restart now tell you first
-
-
-      Changing the theme, rotating the screen or switching remote mode restarts the device, and none
-      of them said so: the message was created but the restart happened before the screen could draw
-      it. All three now show the reason and restart a moment later.
-
-
-      ## Typing
-
-
-      - **Accented and Nordic letters on the M9.** The letters were always there; the picker needed
-      a touchscreen. Type a letter, then left and right walk the variants and Enter takes one.
-      Requested by [@leon699](https://github.com/leon699) (#387). This also fixed the last variant
-      in a set being unreachable on the T-Lora Pager, which happened to be the one Nordic users
-      want.
-
-      - **Wi-Fi passwords can be shown while you type them.** Entering a long passphrase blind on a
-      device keyboard is its own failure mode. Requested by
-      [@jesshampshire](https://github.com/jesshampshire) (#381).
-
-      - **A character count** as you approach the 160 character limit, and a mark when you reach it.
-      The limit used to be silent, so typing simply stopped. Requested by
-      [@jrote1](https://github.com/jrote1) (#350).
-
-
-      ## Fixed
-
-
-      - The Discovered list showed impossible hop counts like "255 hop". That value means *path
-      unknown*, which is what a flooded advert carries; it now says so, says "direct" for zero hops,
-      and pluralises. Reported by [@jesshampshire](https://github.com/jesshampshire) (#394).
-
-      - Your own position marker is readable on light maps. It was a white glyph with nothing behind
-      it. Reported by [@100monkeys](https://github.com/100monkeys) (#366).
-
-      - The app drawer's message count no longer stays stale after unlocking. Reported by
-      [@Buko84](https://github.com/Buko84) (#393).
-
-      - Moving through the colour swatches with the d-pad no longer turns the swatch you are on
-      white, which hid the colour you were choosing. Reported by
-      [@Buko84](https://github.com/Buko84) (#
 
       …
