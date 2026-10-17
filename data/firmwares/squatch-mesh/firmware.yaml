@@ -1,0 +1,74 @@
+name: Squatch Mesh
+type: custom
+maintainer: BamBam1121
+description: >
+  Standalone MeshCore firmware for the LilyGo T-Lora Pager: messaging, contacts, channels,
+  an offline map, NFC contact sharing and four themes, driven entirely from the pager's own
+  keyboard, wheel and screen. Runs a full MeshCore companion node underneath, so it still
+  pairs with the MeshCore phone app over Bluetooth. Installs from the browser and updates
+  itself over Wi-Fi. Built for the Inland Northwest mesh, usable on any MeshCore network.
+website: https://squatchmesh.com/
+repository: https://github.com/BamBam1121/inw-mesh
+license: GPL-3.0
+status: active
+scope: device-specific
+lifecycle: active
+maturity: beta
+distribution: community
+lineage:
+  # Not a fork: upstream MeshCore is pulled unmodified as a PlatformIO lib_deps
+  # dependency; the UI, storage, map, NFC and pager variant are this project's own.
+  kind: upstream
+  upstreamFirmwareId: meshcore
+  upstreamRepository: https://github.com/meshcore-dev/MeshCore
+runtime:
+  framework: arduino
+  language: cpp
+roles:
+  - companion
+  - standalone-ui
+features:
+  - Standalone UI - no phone needed
+  - Still pairs with the MeshCore phone app over BLE
+  - Offline map
+  - NFC contact and channel sharing
+  - Four themes (screen, sounds, vibration)
+  - Browser installer
+  - Wi-Fi OTA updates from the device
+  - SD card backup and restore
+capabilities:
+  protocol:
+    meshcoreCompatible: true
+  transports:
+    ble: true
+    usbSerial: true
+  operations:
+    webFlasher: true
+    ota: true
+    configurationBackup: true
+  networking:
+    repeater: false
+    roomServer: false
+    observer: false
+    kissModem: false
+  hardware:
+    gps: true
+    display: true
+    sensors: true
+verification:
+  sourceAvailable: true
+  releasesAvailable: true
+  signedReleases: true
+  ciBuilds: true
+  webFlasher: true
+  hasDocumentation: true
+  lastChecked: "2026-09-17"
+devices:
+  # Source: https://squatchmesh.com/install - both radio variants, chosen at boot
+  - id: lilygo-pager
+    status: supported
+    target: t-lora-pager
+    notes: >
+      Supports both the SX1262 and LR1121 radio variants of the pager, picked automatically
+      at boot. SX1262 is proven in the field; LR1121 support shipped in v1.1.17 and has not
+      yet been confirmed on LR1121 hardware.
