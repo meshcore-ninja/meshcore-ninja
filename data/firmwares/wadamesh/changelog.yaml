@@ -1,7 +1,56 @@
 source: github
 repo: ALLFATHER-BV/wadamesh
-updatedAt: '2026-10-17T16:54:43.312Z'
+updatedAt: '2026-10-17T20:17:15.044Z'
 releases:
+  - version: beta_97
+    name: wadamesh beta_97
+    datetime: '2026-10-17T19:52:16Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_97
+    prerelease: true
+    notes: >-
+      Test build, on top of beta_96. Stable stays **beta_85**.
+
+
+      Flash it at **[flasher.wadamesh.com](https://flasher.wadamesh.com)** (switch the toggle to
+      Beta), or update on the device if you have "Get test builds (beta)" turned on.
+
+
+      ## Fixes
+
+
+      - **Chat history never drops old messages to keep saving.** When the history files can no
+      longer be merged to make room, a new file is opened instead of retiring the oldest one.
+      beta_96 could still lose old messages on devices with a lot of history in many quiet chats.
+      Checked with a simulation of 60,000 messages, constant reboots and power cuts in the middle of
+      a merge (`test/history_segments/run.sh`).
+
+      - **Store installs complete.** A downloaded app could land cut off on the SD card, which
+      reported a network error and left an app that failed to start with "syntax error near <eof>"
+      (Blackjack, reported by @halflive-743 on Discord). Downloads are now written in pieces,
+      checked on the card and only then installed, so a failed install leaves nothing behind and a
+      failed update keeps the old version.
+
+      - **Repeater telemetry and status requests answer.** The device now asks directly first, the
+      way the MeshCore app does, and only logs in when that gets no reply. The old order (log in,
+      then ask) got an answer 2 times out of 8 from a repeater next to the device; this build 7 out
+      of 8 (#683, reported by @900steve).
+
+      - Lua apps that save larger files with `wada.fs.write` no longer risk a file that is cut off
+      on the SD card.
+
+
+      ## New board
+
+
+      - **Elecrow CrowPanel Advanced 10.1** (ESP32-P4, 1024 by 600) is in the web flasher as an
+      experimental board, with one image per board revision (V1.0, V1.1, V1.2, printed on the
+      board). It needs an SX1262 module in the wireless slot. It has not run on a real unit yet, so
+      please report what works (asked for on Discord).
+
+
+      Checked on a LilyGo T-Deck (boot, history, Store installs, repeater telemetry against a real
+      repeater). Every other board builds. Please report what you find with "Send a test report" in
+      Settings, or an issue here.
   - version: beta_96
     name: wadamesh beta_96
     datetime: '2026-10-17T14:04:14Z'
@@ -1724,100 +1773,3 @@ releases:
       Still open and not fixed here: a reboot when pressing d-pad down past the bottom of a chat on
       the M9 (#428) which needs a crash dump to place, a screen that will not stay dark after a
       manual lock (#333), and the web flasher hanging at "wrapping up" on the T-Display P4 (#342).
-  - version: beta_77
-    name: wadamesh beta_77
-    datetime: '2026-09-06T16:36:48Z'
-    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_77
-    prerelease: true
-    notes: >-
-      Test build. **Stable stays beta_65.**
-
-
-      Flash it at **[flasher.wadamesh.com](https://flasher.wadamesh.com)** (Beta toggle), or turn on
-      "Get test builds (beta)" on the device and reboot.
-
-
-      **If you are on beta_76, this is the one to take**: it fixes two things beta_76 broke.
-
-
-      ## Two things beta_76 broke
-
-
-      A **Lua app was covered by the app drawer** whenever a message arrived. The app kept running
-      underneath, but most of its screen vanished. Apps opened from the drawer deliberately leave it
-      open behind them, and the badge refresh added in beta_76 rebuilt it on every change of the
-      unread count, which put it back in front. Reported by Jade, reproduced by mysterywavi (#415).
-      The same change was also resetting the drawer's scroll position on every message; fixed too.
-
-
-      On the **ThinkNode M9, accented letters can now be selected**. beta_76 made the picker appear
-      on that board for the first time, but the arrow keys were taken by the text cursor before
-      reaching it, so the letters were visible and unreachable. Reported by
-      [@DenRalle](https://github.com/DenRalle) (#410).
-
-
-      ## New
-
-
-      **Browser file transfer.** Copy files on and off the card from a browser, protected by a six
-      digit code shown on screen. Uploads are checksummed and committed atomically, so an
-      interrupted transfer cannot leave a half written file, and three wrong codes lock attempts out
-      for thirty seconds. On the boards with a removable card. By
-      [@oumike](https://github.com/oumike) (#413, closes #400).
-
-
-      **Advertise a position without advertising your address.** Settings, GPS: exact, or displaced
-      by up to 100 m, 250 m or 1 km. Only what you broadcast moves; your own map keeps the real fix.
-      The displacement is the same every time rather than random per advert, which is the point: a
-      fresh offset each time would scatter points around where you really are and averaging them
-      would recover your true location. Requested by [@Danie10](https://github.com/Danie10) (#399).
-
-
-      **Set the clock by hand.** Settings, Clock, in local time. With no GPS, no network and no
-      phone there was previously no way to set it at all, and message timestamps are built from it.
-      Requested by [@dreirund](https://github.com/dreirund) (#105).
-
-
-      ## ThinkNode M9
-
-
-      Control centre navigation, message actions and the unlock gesture, all by
-      [@oumike](https://github.com/oumike) (#412, #407). Replying no longer needs a five second
-      hold: Enter on a selected message does it, and unlocking is a double press of the d-pad
-      centre. Requested by [@Buko84](https://github.com/Buko84) (#402).
-
-
-      The app drawer no longer jumps to the settings gear when moving up from the middle of the list
-      (#405, #404).
-
-
-      **The card could stop responding until a reboot.** Opening Settings, About at the wrong moment
-      could park the tile worker and the SD recovery path against each other, and nothing could then
-      break the deadlock. Traced from the code by [@cvhviz](https://github.com/cvhviz) without being
-      able to reproduce it, which was the right call: no user could have reported this usefully
-      (#364).
-
-
-      ## Fixed
-
-
-      On the **T-Display P4**, a Lua app's first line is no longer cut in half by the status bar,
-      and the drawer options fit the screen (#236, #238,
-      [@D-Melhede](https://github.com/D-Melhede)). Both were fixed pixel sizes in an interface whose
-      text scales, so both also affected any board at Large or Huge text size, not only the P4.
-      Sweeping for the same pattern found eight more panels, all now scaled.
-
-
-      **Wio Tracker L2** wake and screen controls (#406, [@oumike](https://github.com/oumike)).
-
-
-      **Download mode** says what it is for and how to leave it. It waits for a USB flash with the
-      interface stopped, which read as a freeze; the entry now says "wait for USB flash" and the
-      message says RESET cancels. Reported by [@dreirund](https://github.com/dreirund) (#104), who
-      was right that a state you cannot leave without already knowing the way out is a bug even when
-      the code is correct.
-
-
-      The theme chip keeps one icon in both states, matching Do Not Disturb: the chip's own f
-
-      …
