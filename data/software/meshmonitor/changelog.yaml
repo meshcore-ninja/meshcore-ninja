@@ -1,7 +1,138 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-10-16T19:26:16.537Z'
+updatedAt: '2026-10-18T03:37:27.690Z'
 releases:
+  - version: v4.17.1-rc6
+    name: v4.17.1-rc6
+    datetime: '2026-10-18T00:24:12Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.1-rc6
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.17.1-rc6
+
+
+      > [!WARNING]
+
+      > This is a **pre-release** for testing. Do not use it in production unless you want to help
+      test.
+
+
+      ## Summary
+
+
+      This RC fixes slow PostgreSQL and MySQL instances. Database Maintenance now shows and runs on
+      every backend, not just SQLite. It now prunes `audit_log` (90 days by default), and a new
+      migration adds a channel-list index and tunes Postgres autovacuum. MeshCore Companions on
+      firmware 1.18.0 gain a real text CLI: the local console uses the radio's native CLI, the
+      quick-action catalog grows, and you can run commands on a remote Companion and grant or revoke
+      its remote-CLI permission. Channels now support AEAD (AES-CCM): the server decrypts them, and
+      you can edit AEAD on device channels. Node Details shows a node's name history. Unified
+      Messages remembers your last channel. MQTT forwarders now show their own uplinked packets, and
+      push subscriptions renew correctly after rotation.
+
+
+      ## Features
+
+      - feat(meshcore): Companion text CLI on fw 1.18.0 (local, catalog, remote) (#5866, #5867,
+      #5868) #5869
+
+      - feat(nodes): track node renames and show them in Node Details (#5862) #5865
+
+      - feat(channels): decrypt AEAD (AES-CCM) channels server-side (#5248 Phase 2a) #5860
+
+      - feat(channels): edit AEAD on device channels (#5248 Phase 2b) #5861
+
+      - feat(unified-messages): remember the last selected channel per browser #5793
+      (@goodprogrammist)
+
+
+      ## Bug Fixes
+
+      - fix(db): run maintenance on PostgreSQL/MySQL, prune audit_log, tune PG (#5870) #5871
+
+      - fix(push): renew a rotated push subscription on its sources (#5863) #5864
+
+      - fix(mqtt): show a forwarder's own uplinked packets on its source (#5858) #5859
+
+
+      ## Translations
+
+      - Translations update from Hosted Weblate #5676
+
+
+      ## Issues Resolved
+
+      - #5870 Production DB performance: unused indexes, index bloat, no audit_log retention,
+      autovacuum lag
+
+      - #5868 MeshCore Local Console: expand Companion quick-action catalog for fw ≥ 1.18.0
+
+      - #5867 MeshCore Companion: UI for remote-CLI permission bit (fw ≥ 1.18.0)
+
+      - #5866 MeshCore Companion native CLI (fw ≥ 1.18.0)
+
+      - #5863 Service worker pushsubscriptionchange renewal silently fails: missing sourceId
+
+      - #5862 Track node name history with a log view in node details
+
+      - #5858 MQTT forwarder source does not display user's own outbound messages
+
+      - #5792 Unified Messages: configurable default channel
+
+      - #5013 MQTT Channel Messages Not Received Unless Relayed by Nearby LoRa Node
+
+
+      ## New Contributors
+
+      Thanks to @goodprogrammist for their first contribution (#5793)!
+
+
+      ## Upgrade Notes
+
+      - **PostgreSQL/MySQL users:** Database Maintenance is now visible on your backend but stays
+      off until you enable it. Open **Settings → Database Maintenance**, turn it on, and click **Run
+      Maintenance Now**. The first run may take a while on a large database.
+
+      - Large Postgres instances should also run the one-off `REINDEX TABLE CONCURRENTLY` / `VACUUM
+      (ANALYZE)` steps and review the memory settings in `docs/development/database.md`.
+
+      - Migration 210 runs on startup: it adds an index on `messages(sourceId, channel, timestamp)`
+      and, on Postgres, sets per-table autovacuum thresholds.
+
+
+      **Full Changelog**: https://github.com/Yeraze/meshmonitor/compare/v4.17.1-rc5...v4.17.1-rc6
+
+
+      ## 🚀 MeshMonitor v4.17.1-rc6
+
+
+      ### 📦 Installation
+
+
+      **Docker (recommended):**
+
+      ```bash
+
+      docker run -d \
+        --name meshmonitor \
+        -p 8080:3001 \
+        -v meshmonitor-data:/data \
+        ghcr.io/Yeraze/meshmonitor:4.17.1-rc6
+      ```
+
+
+      ### 🧪 Testing
+
+      ✅ All tests passed
+
+      ✅ TypeScript checks passed
+
+      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
+
+
+      ### 📋 Changes
+
+      See commit history for detailed changes.
   - version: v4.17.1-rc5
     name: v4.17.1-rc5
     datetime: '2026-10-16T17:35:47Z'
@@ -2083,140 +2214,5 @@ releases:
       - **Virtual Node PKI import** opt-in (`allowPkiImport`, off by default) for the MeshCore
       ImportPrivateKey command, and a Virtual Node card on the MeshCore Node Info view showing its
       status, admin and PKI settings. (#5350, #5372, #5380
-
-      …
-  - version: v4.16.2-rc3
-    name: v4.16.2-rc3
-    datetime: '2026-09-25T20:21:44Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.16.2-rc3
-    prerelease: true
-    notes: >-
-      # MeshMonitor v4.16.2-rc3
-
-
-      > ⚠️ **This is a pre-release** for testing. It is not recommended for production use.
-
-
-      ## Summary
-
-      **Coverage Report** is new under Reports → Coverage. It is a passive replacement for the Range
-      Test module that firmware 2.8 removed. MeshMonitor sends nothing: it stores every position fix
-      your radios, MQTT gateways and MeshCore receivers hear, with SNR, RSSI and hop data, and plots
-      them on a map coloured by signal. The report has coverage gaps, a summary, a grid view,
-      export, deep links and saved surveys.
-
-
-      **The Info tab and Dashboard now split traffic by transport (RF / UDP / MQTT):**
-
-      - Network Survey, Packet Distribution, node and message totals, and per-transport
-      route-segment records.
-
-      - New "Traffic by Transport" charts.
-
-      - The counters the node's firmware reports itself are labelled as covering all transports.
-
-
-      **Other new features:**
-
-      - A preview-first **telemetry outlier purge**.
-
-      - A **`{{ trigger.packetHash }}`** automation token that links MeshCore messages to CoreScope
-      maps.
-
-      - A MeshCore **"Add to radio"** action.
-
-
-      **MeshCore adverts now default to zero-hop**, and automated flood adverts are capped at one
-      per hour per source.
-
-
-      **Fixes:** PostgreSQL restores (migration 174 repairs installs already restored), MeshCore
-      node lists and login errors, channel-frame matching, channel deletion and drag-reorder, and
-      Position History clicks.
-
-
-      **Watch for:** migrations 169–174 run on upgrade. The Longest Active and Record Holder cards
-      now need the `traceroute` permission on the source.
-
-
-      ## Features
-
-      - feat(coverage): Coverage Report — measured RF coverage map, Phase 1 (#5334)
-
-      - feat(coverage): MQTT gateway receivers for the Coverage Report, Phase 2 (#5336)
-
-      - feat(coverage): MeshCore receptions on the Coverage Report, Phase 3 (#5337)
-
-      - feat(coverage): gaps, summary, grid, export and deep links, Phase 4a (#5348)
-
-      - feat(coverage): saved surveys, Phase 4b (#5353)
-
-      - feat(info): per-transport breakdown, Phase 1 (#5329)
-
-      - feat(transport): per-transport route records and message split, Phase 2 (#5330)
-
-      - feat(telemetry): per-transport traffic series + device-counter labels, Phase 3 (#5332)
-
-      - feat(telemetry): purge telemetry outliers with preview (#5335)
-
-      - feat(automation): `{{ trigger.packetHash }}` for MeshCore messages; verify channel frames by
-      decryption (#5359)
-
-      - feat(meshcore): zero-hop adverts by default, hourly floor on automated floods (#5347)
-
-      - Add Discord Webhook DM/PUBLIC to User Scripts Gallery (#5346)
-
-
-      ## Bug Fixes
-
-      - fix(meshcore): stable node list, clear not-on-radio errors, unambiguous prefix lookups
-      (#5351)
-
-      - fix(restore): reset PostgreSQL sequences after restore; migration 174 repairs restored
-      installs (#5355)
-
-      - fix(channels): delete the channel row, and shift cards while dragging (#5326)
-
-      - fix(map): position-history heading triangle no longer blocks the dot beneath (#5358)
-
-
-      ## Release
-
-      - chore(release): bump to 4.16.2-rc3, and write its changelog section (#5360)
-
-
-      ## Issues Resolved
-
-      - #5101 Per-transport breakdown: Record Holder, Radio Statistics, Network Statistics
-
-      - #5277 MM-native Range Test (delivered as the passive Coverage Report)
-
-      - #5324 Deleted channel leaves an empty channel slot (partial: the two bugs found while
-      investigating are fixed; the issue stays open)
-
-      - #5333 Purge telemetry outliers
-
-      - #5345 User Script Submission: MeshMonitor-Discord
-
-      - #5349 MeshCore short-prefix collision symptoms
-
-      - #5356 Position History heading triangle blocks the circle beneath
-
-      - #5357 Expose the MeshCore on-wire packet hash on the message trigger
-
-
-      ## Thanks
-
-      Thanks to @coinraiser for contributing the MeshMonitor-Discord scripts to the User Scripts
-      Gallery, and to the Discord community members whose reports drove this RC.
-
-
-      ## Upgrade notes
-
-      - Migrations 169–174 run on first start: new transport columns on `route_segments` and
-      `messages`, a record-holder reclassify, the `coverage_receptions` table, and a PostgreSQL
-      sequence repair. All are idempotent.
-
-      - The Longest Active and Record Holder cards now need `tracerou
 
       …
