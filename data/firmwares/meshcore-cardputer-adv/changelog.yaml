@@ -1,7 +1,13 @@
 source: github
 repo: MultiMote/meshcore-cardputer-adv
-updatedAt: '2026-10-13T21:02:08.397Z'
+updatedAt: '2026-10-18T17:08:29.168Z'
 releases:
+  - version: 2026.10.1
+    name: Firmware 2026.10.1
+    datetime: '2026-10-18T14:29:57Z'
+    url: https://github.com/MultiMote/meshcore-cardputer-adv/releases/tag/2026.10.1
+    prerelease: false
+    notes: "* Fix contact hop count display.\r\n* Fix direct message ACK handling.\r\n* Other small fixes."
   - version: 2026.10.0
     name: Firmware 2026.10.0
     datetime: '2026-10-13T18:17:52Z'
