@@ -1,7 +1,58 @@
 source: github
 repo: andymux/meshos-releases
-updatedAt: '2026-10-16T19:26:16.898Z'
+updatedAt: '2026-10-18T13:49:31.882Z'
 releases:
+  - version: v1.0.29
+    name: MeshOS v1.0.29
+    datetime: '2026-10-18T11:29:01Z'
+    url: https://github.com/andymux/meshos-releases/releases/tag/v1.0.29
+    prerelease: false
+    notes: >-
+      # MeshOS app 1.0.29
+
+
+      ## Photos over AirLink, no internet needed
+
+      - You can now send a photo over AirLink with no internet at either end, in AirLink channels
+      and in direct messages to AirLink contacts. The picture is shrunk to chat size and sent phone
+      to phone over Bluetooth in pieces, the same way a voice message goes. It takes a few seconds
+      to arrive.
+
+      - When Internet Messaging is on, photos continue to go as a private link so they reach
+      everyone on the channel, including internet-only contacts.
+
+      - A room set to contacts only shows signed text from your contacts, so photos and voice
+      messages sent over AirLink do not appear there yet.
+
+
+      ## Photos and voice in direct messages
+
+      - Direct messages to another MeshOS app user now have a photo button. With Internet Messaging
+      on, the picture goes as a private link that only the two of you can open; offline it goes over
+      AirLink as above.
+
+      - Voice messages in those direct messages now travel over the internet as well as over
+      AirLink. With Internet Messaging on, a voice message reaches a contact who is only online, and
+      it still works over AirLink when you are offline.
+
+      - Photos and voice messages are encrypted before they leave your phone. The server only ever
+      holds encrypted data.
+
+      - Direct messages to radio contacts over LoRa are unchanged in this release.
+
+
+      ## Downloads
+
+      - Android: MeshOS-v1.0.29.apk
+
+      - macOS: MeshOS-v1.0.29.dmg
+
+
+      SHA-256:
+
+      - MeshOS-v1.0.29.apk: fd3b8891907963661e38e52695b5451257e18580d90307d5dca11dda1561253e
+
+      - MeshOS-v1.0.29.dmg: 8ae92475462b22ca9592277001b73a6e425048cad78369b9635e4e8bac7332d3
   - version: v1.0.28
     name: MeshOS v1.0.28
     datetime: '2026-10-16T17:34:56Z'
@@ -945,23 +996,3 @@ releases:
 
       DMG SHA-256:
       `42a704a2923483c078b43e4aea9e69ccb59780d87ee72bb8a3715d69bbbeafca`
-  - version: fw-v1.7.2
-    name: MeshOS firmware v1.7.2
-    datetime: '2026-09-03T09:43:44Z'
-    url: https://github.com/andymux/meshos-releases/releases/tag/fw-v1.7.2
-    prerelease: false
-    notes: >-
-      WiFi scan fixes (no more reboot with Bluetooth on, works while connected), Connect button for
-      saved networks, own heatmap no longer doubles up.
-
-
-      Device firmware for LilyGo T-Deck and ThinkNode M9.
-
-      Install via SD card (firmware.bin) or the in-firmware updater.
-
-
-      SHA-256:
-
-      - TDeck: b6a3a50aec695b075eac43be2e4ac0a68fb20272ed35c0b0307d1af5fe436224
-
-      - M9: fc38153bfe148387059e29c92754b585f7b23f7c72f76659280f79ea71dfdb1f
