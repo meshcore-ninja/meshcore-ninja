@@ -1,6 +1,6 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-10-19T19:42:42.951Z'
+updatedAt: '2026-10-19T23:25:50.364Z'
 releases:
   - version: v4.17.1-rc7
     name: v4.17.1-rc7
@@ -115,6 +115,38 @@ releases:
 
 
       **Full Changelog**: https://github.com/Yeraze/meshmonitor/compare/v4.17.1-rc6...v4.17.1-rc7
+
+
+      ## 🚀 MeshMonitor v4.17.1-rc7
+
+
+      ### 📦 Installation
+
+
+      **Docker (recommended):**
+
+      ```bash
+
+      docker run -d \
+        --name meshmonitor \
+        -p 8080:3001 \
+        -v meshmonitor-data:/data \
+        ghcr.io/Yeraze/meshmonitor:4.17.1-rc7
+      ```
+
+
+      ### 🧪 Testing
+
+      ✅ All tests passed
+
+      ✅ TypeScript checks passed
+
+      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
+
+
+      ### 📋 Changes
+
+      See commit history for detailed changes.
   - version: v4.17.1-rc6
     name: v4.17.1-rc6
     datetime: '2026-10-18T00:24:12Z'
