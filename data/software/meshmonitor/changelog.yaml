@@ -1,7 +1,120 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-10-18T03:37:27.690Z'
+updatedAt: '2026-10-19T19:42:42.951Z'
 releases:
+  - version: v4.17.1-rc7
+    name: v4.17.1-rc7
+    datetime: '2026-10-19T19:29:25Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.1-rc7
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.17.1-rc7
+
+
+      > [!WARNING]
+
+      > This is a **pre-release** for testing. It is not tagged `latest`. Please report problems on
+      GitHub before the final 4.17.1 release.
+
+
+      ## Summary
+
+
+      This release candidate adds saved MQTT broker presets that every MQTT form can reuse (#5794
+      Phase 1). It also adds a stored, searchable history of MeshCore CLI commands, with a panel on
+      each console and a "MeshCore CLI activity" tab on the Audit Log page. CLI passwords and keys
+      are now masked before they are stored, which also stops them leaking into the audit log in
+      plain text. Auto Acknowledge can now send a 0-hop tapback other than `*️⃣` (for example
+      `0️⃣`), and a separate tapback for messages that came over MQTT; automations use the same
+      choices. Baremetal installs now honor `DATA_DIR` for every data path, including backups, the
+      access log, Apprise and map data, so the documented hardened systemd unit works. An
+      experimental, admin-only endpoint computes a tropospheric ducting forecast from NOAA GFS data
+      (backend spike for #5734; no UI yet). The rest is dependency updates, including Express 5.3,
+      emoji-picker-react 5 (Apple emoji style kept) and MapLibre GL 6.14.
+
+
+      ## Features
+
+      - feat(mqtt): saved broker presets, reusable across MQTT forms (#5794 Phase 1) (#5873)
+
+      - feat(meshcore): store CLI command history (#5892) (#5897)
+
+      - feat(autoack): choose the 0-hop and MQTT tapback glyphs (#5890) (#5894)
+
+      - feat(ducting): spike GFS tropospheric ducting forecast endpoint (#5734) (#5875)
+
+
+      ## Bug Fixes
+
+      - fix(config): honor DATA_DIR for every data path (#5889) (#5895)
+
+
+      ## Security
+
+      - MeshCore CLI command text and replies are redacted (passwords, `*.key`, `*.psk`, secrets)
+      before storage, in both the new CLI history and the existing audit log (#5897)
+
+
+      ## Dependencies
+
+      - build(deps): bump emoji-picker-react from 4.22.3 to 5.0.0 (#5887)
+
+      - build(deps): bump maplibre-gl from 6.13.0 to 6.14.0 (#5884)
+
+      - build(deps): bump node-notifier from 10.0.1 to 11.0.0 (#5888)
+
+      - build(deps): bump lucide-react from 1.54.0 to 1.57.0 (#5885)
+
+      - build(deps): bump express from 5.2.1 to 5.3.0 (#5886)
+
+      - build(deps): bump the production-dependencies group across 1 directory with 18 updates
+      (#5882)
+
+      - build(deps): bump the react group with 2 updates (#5879)
+
+      - build(deps-dev): bump puppeteer from 25.13.0 to 25.14.0 (#5883)
+
+      - build(deps-dev): bump the vitest group with 3 updates (#5878)
+
+      - build(deps-dev): bump the development-dependencies group with 2 updates (#5880)
+
+
+      ## CI/DevOps
+
+      - build(deps): bump the codeql-action group with 4 updates (#5881)
+
+      - chore: bump version to 4.17.1-rc7 (#5899)
+
+
+      ## Issues Resolved
+
+      - #5889 Baremetal - no DATA_DIR env
+
+      - #5890 Change Auto Ack tapback for direct channel messages
+
+      - #5892 Store full history of MeshCore CLI commands with timestamps
+      (Companion/Repeater/Remote)
+
+
+      Progress on #5794 (MQTT broker presets, Phase 1 of 3) and #5734 (tropospheric ducting, backend
+      spike).
+
+
+      ## Upgrade Notes
+
+      - **Database migration 212** adds the `meshcore_cli_history` table. It runs automatically on
+      all three backends.
+
+      - **Baremetal:** you can now set `DATA_DIR=/var/lib/meshmonitor/data` in the `.env` named by
+      your systemd unit (`EnvironmentFile=`), and every data path follows it. Explicit
+      `DATABASE_PATH`, `BACKUP_DIR`, `SYSTEM_BACKUP_DIR`, `ACCESS_LOG_PATH` and `APPRISE_CONFIG_DIR`
+      still win. Docker installs are unchanged.
+
+      - New setting: MeshCore CLI history retention (default 90 days, 7–365), next to Audit Log
+      Retention.
+
+
+      **Full Changelog**: https://github.com/Yeraze/meshmonitor/compare/v4.17.1-rc6...v4.17.1-rc7
   - version: v4.17.1-rc6
     name: v4.17.1-rc6
     datetime: '2026-10-18T00:24:12Z'
@@ -2142,77 +2255,5 @@ releases:
       custom TCP port. (#5424, #5428, #5432)
 
       - **OTA 
-
-      …
-  - version: v4.16.2-rc4
-    name: v4.16.2-rc4
-    datetime: '2026-09-27T03:24:18Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.16.2-rc4
-    prerelease: true
-    notes: >-
-      # MeshMonitor v4.16.2-rc4
-
-
-      > ⚠️ **Pre-release.** This is a release candidate for testing. Back up your database before
-      upgrading.
-
-
-      ## Summary
-
-      rc4 adds likely-aircraft detection: nodes flying well above the terrain are flagged, badged on
-      the map, kept out of Auto-Favorite, optionally aged out, and can draw flight trails. MQTT
-      sources now store position history, so Position History and trails work for nodes heard only
-      over MQTT. Nodes gain a per-source First Heard time, and the Nodes tab gains a quick age
-      filter that never changes the saved setting. MeshCore channels can be sorted in MeshMonitor
-      and, new in this release, reordered on the companion itself, with history and settings
-      following each channel. MQTT and MeshCore sources no longer borrow the primary Meshtastic
-      radio for sends, config writes or status, which also closes a hole that exposed the primary
-      node's private key on MQTT broker sources. Several MeshCore timing bugs are fixed: Last Heard
-      no longer advances for powered-off nodes, drifted clocks no longer break sorting, and new-node
-      notifications fire again. A max node age of 0 now means "all nodes" everywhere, and the local
-      node number is read correctly on every source. This release adds migrations 175–179.
-
-
-
-      ### Added
-
-      - **Likely-aircraft detection.** A node flying more than a set height above the terrain
-      beneath it (default 500 m; 5000 m above sea level when there is no terrain data) is flagged as
-      a likely aircraft. Mountaintop repeaters stay fixed. Per source, in Settings → Node Display.
-      Migrations 175–178. (#5364, #5365, #5386, #5391, #5396)
-        - The map shows a plane badge and popup line, with a Show / Mark / Hide control in both Map Features panels.
-        - Auto-Favorite skips likely aircraft by default, and a new automation trigger fires when a node becomes one.
-        - Optional age-out ignores (or, opt-in, deletes) aircraft not heard for N hours, and lifts the ignore when a live position arrives. A node that stays put is reclassified as fixed.
-        - Flight trails, off by default, draw each aircraft's recent path with a 1 h–7 day lookback.
-        - MQTT sources now store position history, so Position History and trails work for nodes heard only over MQTT.
-      - **First Heard** for Meshtastic and MeshCore nodes, per source: set once from the first
-      believable reception and never overwritten. Shown in node details, map popups and the node
-      export. Migration 179 fills it for existing nodes from the earlier of `createdAt` and Last
-      Heard. (#5390, #5395)
-
-      - **Nodes tab quick age filter** (Setting / 24h / 3d / 7d / 30d / All) in the Nodes header. It
-      changes the view only, never the saved setting, and applies to the Nodes list and its map for
-      Meshtastic and MeshCore. (#5387, #5394)
-
-      - **MeshCore channel order:** a sort dropdown on the Channels page (device order, name, last
-      message, custom), with drag-and-drop for the custom order. Stored per browser. (#5385, #5392)
-
-      - **Reorder MeshCore channel slots on the companion** from Channels settings. Each slot write
-      is read back, a failure restores the original layout, and message history, unread markers,
-      scope, per-channel permissions and MeshCore auto-ack / announce / responder / timer settings
-      follow each channel. Connected Virtual Node apps are disconnected so they re-read the list.
-      Automations that name a raw channel number are listed for review, not rewritten. (#5379,
-      #5397)
-
-      - **Unified Messages hop counts:** each source tag shows how many hops that source heard the
-      message at (`?` when unknown). (#5366, #5393)
-
-      - **Transmit target window** (Settings → Node Display, default 24 h, 1–720): when the node
-      window is 0 ("all"), auto-traceroute, the remote-admin scanner and remote LocalStats pick
-      targets from nodes heard within this window instead of none. (#5376, #5384)
-
-      - **Virtual Node PKI import** opt-in (`allowPkiImport`, off by default) for the MeshCore
-      ImportPrivateKey command, and a Virtual Node card on the MeshCore Node Info view showing its
-      status, admin and PKI settings. (#5350, #5372, #5380
 
       …
