@@ -1,7 +1,139 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-10-19T23:25:50.364Z'
+updatedAt: '2026-10-20T19:54:13.229Z'
 releases:
+  - version: v4.17.1-rc8
+    name: v4.17.1-rc8
+    datetime: '2026-10-20T15:46:47Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.1-rc8
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.17.1-rc8
+
+
+      > [!WARNING]
+
+      > This is a **pre-release** for testing. It is not tagged `latest`. Back up your data before
+      upgrading.
+
+
+      ## Summary
+
+      This RC closes two cross-source read leaks: traceroute history and unified telemetry now
+      return only sources the viewer may read. The Unified Telemetry page is now a cross-source
+      dashboard: one chart per favorited series, with one line per source and a Latest tab for
+      current values. The ADS-B features gain OpenSky Network as a feed (OAuth2 client credentials
+      required, honours its rate-limit pause). Aircraft matches are re-checked as a node moves, up
+      to six times per flagging. The traceroute permission is split into Read and Write, and
+      MeshCore trace-path now needs `traceroute:write`; a migration grants it to existing holders of
+      `nodes:write` on MeshCore sources. The position estimator now counts each anchor once, so a
+      node heard through one anchor no longer reports a false 50 m confidence, and Node Details
+      explains how an estimate was made. MeshCore can now name unknown route hops from other sources
+      you can read, including `meshcore_mqtt` feeds; this is off by default. The MQTT bridge gains
+      an optional `!hex` client ID for single mode, stops after repeated evictions, and counts
+      uplinks dropped while disconnected.
+
+
+      ## Features
+
+      - feat(meshcore): resolve unknown route hops from other sources (#5909) (#5911)
+
+      - feat(telemetry): cross-source Telemetry Dashboard on Unified Telemetry (#5896) (#5907)
+
+      - feat(adsb): add OpenSky Network as an ADS-B feed (#5877) (#5906)
+
+      - feat(adsb): re-check aircraft flight matches as the node moves (#5876) (#5905)
+
+      - feat(permissions): split traceroute into Read/Write; MeshCore trace-path takes
+      traceroute:write (#5898) (#5903)
+
+
+      ## Bug Fixes
+
+      - fix(estimator): count unique anchor positions; explain estimates on Node Details (#5900)
+      (#5904)
+
+      - fix(mqtt-bridge): single-mode client ID, eviction stop, uplink drop count (#5893) (#5902)
+
+
+      ## Security
+
+      - fix(security): scope traceroute history and unified telemetry to permitted sources (#5901)
+
+
+      ## Documentation
+
+      - docs(add-ons): list ShackScreen under REST API clients (#5908) (#5910)
+
+
+      ## Chores
+
+      - chore: bump version to 4.17.1-rc8 (#5912)
+
+
+      ## Issues Resolved
+
+      - #5909 MeshCore: resolve unknown path hops using nodes from other sources
+
+      - #5908 Community Add-on Submission: ShackScreen
+
+      - #5900 Position estimator: repeat observations from one anchor inflate nEff
+
+      - #5898 Split traceroute permission into read/write
+
+      - #5896 Rewrite Unified Telemetry page as a cross-source Telemetry Dashboard
+
+      - #5877 Add OpenSky Network as an additional ADS-B source
+
+      - #5876 Re-evaluate aircraft flight match when node position diverges
+
+
+      ## Upgrade Notes
+
+      - **Migrations 213–215** run on first boot: a `traceroute:write` backfill for MeshCore
+      sources, re-check columns on aircraft flight matches, and
+      `meshcore_nodes.advertSignatureVerified`.
+
+      - **Some estimated pins may disappear from the map.** Stale estimates are deleted, and
+      single-anchor estimates (5 km) are wider than the map's 2 km display limit.
+
+      - **Cross-source hop names** are off by default: Settings → MeshCore Messaging. MQTT nodes
+      become usable as each sends its next advert after you turn it on.
+
+
+      **Full Changelog**: https://github.com/Yeraze/meshmonitor/compare/v4.17.1-rc7...v4.17.1-rc8
+
+
+      ## 🚀 MeshMonitor v4.17.1-rc8
+
+
+      ### 📦 Installation
+
+
+      **Docker (recommended):**
+
+      ```bash
+
+      docker run -d \
+        --name meshmonitor \
+        -p 8080:3001 \
+        -v meshmonitor-data:/data \
+        ghcr.io/Yeraze/meshmonitor:4.17.1-rc8
+      ```
+
+
+      ### 🧪 Testing
+
+      ✅ All tests passed
+
+      ✅ TypeScript checks passed
+
+      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
+
+
+      ### 📋 Changes
+
+      See commit history for detailed changes.
   - version: v4.17.1-rc7
     name: v4.17.1-rc7
     datetime: '2026-10-19T19:29:25Z'
@@ -2206,86 +2338,5 @@ releases:
       ### Fixed
 
       - **Packet Monitor** logged firmware 2
-
-      …
-  - version: v4.16.2-rc5
-    name: v4.16.2-rc5
-    datetime: '2026-09-28T04:45:38Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.16.2-rc5
-    prerelease: true
-    notes: >-
-      # MeshMonitor v4.16.2-rc5
-
-
-      > ⚠️ **Pre-release.** This is a release candidate for testing. Back up your database before
-      upgrading.
-
-
-      ## Summary
-
-      rc5 adds asset tracking: flag a node as an asset to keep its history longer, see its whole
-      trail and replay the trip on a timeline. Likely aircraft can now be matched to a real flight
-      through a community ADS-B feed (off by default). Nodes whose coordinates were entered with the
-      wrong sign can be shown in the right place, and the MQTT bridge can keep MeshMonitor's own
-      automation traffic off the upstream broker (both off by default). MeshCore remote logins wait
-      longer, retry on silence and show progress with a Cancel button, and neighbour lists now fetch
-      the whole table instead of stopping at 10. OTA firmware updates now use the selected source
-      and its custom TCP port, find binaries in 2.8.0's platform folders, and match the board list
-      to the real release names, refusing boards that share several builds. The Helm chart can
-      expose Virtual Node ports and pin a LoadBalancer IP. This release adds migrations 180 and 181.
-
-
-
-      ### Added
-
-      - **Asset tracking.** Flag a node as an asset in Node Details → Asset tracking to keep its
-      telemetry for 1–365 days (default 90) on every source, always draw its trail, and exempt it
-      from automated cleanups. The Nodes map draws the asset's whole retained history, thinned to
-      keep its shape, and a playback bar replays the trip with a moving marker at 60×/600×/3600×.
-      Migration 181. (#5354, #5411, #5419, #5422)
-
-      - **ADS-B flight matching for likely aircraft**, off by default. When a node becomes a likely
-      aircraft, MeshMonitor asks a community ADS-B feed (adsb.lol or adsb.fi) which flight is there,
-      at most twice per flagging, and shows the match in the popup and details. Migration 180.
-      (#5374, #5410)
-
-      - **Sign-flipped position correction**, off by default, per source. A node whose latitude or
-      longitude sign was entered wrong is shown at its mirror point when exactly one mirror lands
-      within range (default 500 km) of the source's own node or a set point, with a notice showing
-      the reported coordinates. Stored data never changes. Distance auto-delete, MQTT geo-ignore,
-      automation geofences, traceroute snapshots and MeshCore contacts all use the corrected point.
-      (#5363, #5409, #5412)
-
-      - **Drop automation traffic at the MQTT bridge uplink**, a per-bridge option, off by default.
-      MeshMonitor's own automated sends (auto-ack, responders, announce, timers, geofences,
-      Automation Engine actions, auto-ping and similar) never reach the upstream broker; manual
-      sends still do. A drop counter shows beside the ok_to_mqtt counter. (#5414, #5418)
-
-      - **Map clustering toggle** in Settings → Map, separate from the Map Click Zoom Gate. On by
-      default. (#5404, #5407)
-
-      - **Helm: expose Virtual Node ports** with `service.extraPorts`, pin a LoadBalancer IP with
-      `service.annotations` (MetalLB, kube-vip, Cilium) or `loadBalancerIP`, and optionally put the
-      Virtual Node on its own `virtualNodeService` so the web UI can stay behind an Ingress. (#5416,
-      #5417)
-
-
-      ### Changed
-
-      - **MeshCore remote logins wait longer and retry.** Each attempt waits the longer of twice the
-      firmware's estimate or 10 s, and the admin buttons try up to 3 times on silence (never on a
-      refused password). Every login screen shows live progress and a Cancel button. Behind a
-      reverse proxy, a worst-case login can now take about 34 s. (#5400, #5405)
-
-      - **MeshCore neighbour lists show the whole table.** The repeater sends at most 10 neighbours
-      per reply, so the Contact Details button and "Poll Neighbours" now fetch up to 5 pages, each
-      spaced by the 60 s radio gap, with live progress and Cancel. The scheduled autopoll stays at 1
-      page (strongest first) and merges into the stored list instead of shrinking it. (#5413, #5425)
-
-      - **OTA firmware updates run on the selected source.** Disconnect, reconnect, verify, retry
-      and cancel act on the source the update was started from, not the primary radio, and use its
-      custom TCP port. (#5424, #5428, #5432)
-
-      - **OTA 
 
       …
