@@ -1,7 +1,90 @@
 source: github
 repo: meshcore-go/meshcore-go
-updatedAt: '2026-10-13T14:03:37.794Z'
+updatedAt: '2026-10-21T03:48:26.543Z'
 releases:
+  - version: v1.10.0
+    name: v1.10.0
+    datetime: '2026-10-21T00:21:08Z'
+    url: https://github.com/OwlShack/meshcore-go/releases/tag/v1.10.0
+    prerelease: false
+    notes: >-
+      Baseline `v1.9.0`. Synced to MeshCore firmware v1.18.0: relayed direct ACKs now wait the relay
+
+      delay, and a transport flood with code 0 counts as unscoped. KISS requests no longer stall
+      after the
+
+      firmware drops a reply, and the codecs, companion client and device side refuse what firmware
+      would.
+
+
+      ### Upgrading
+
+
+      - **`Packet.ToBytes` now refuses a packet `Validate` rejects**: a reserved or oversized path,
+      a
+        `Path` whose length does not match the path length byte, or a payload over 184 bytes. Packets
+        built by hand must set both path fields consistently.
+
+      ### Added
+
+
+      - **`node.WithoutFloodRegionGate` relays floods of any region**, as a firmware companion with
+      repeat
+        on does. By default a node still refuses to relay a flood that `Regions().FindFloodMatch` does not
+        match, as a firmware repeater does.
+      - **`node.WithFloodRelayDelay` and `node.WithDirectRelayDelay` give a relay delay hook the
+      packet
+        itself**, as firmware's `getRetransmitDelay` and `getDirectRetransmitDelay` get it, so a role
+        formula can use the route, type or path. The flood hook sees our hash already appended, the
+        direct hook the packet as received.
+      - **`Node.SetAirtimeFactor` and `RadioMux.SetAirtimeFactor` change the airtime budget factor
+      while
+        running**, as firmware's `set af` does.
+      - **`meshcore.ValidatePrivateKey` applies firmware's import checks** to an expanded private
+      key: no
+        reserved prefix, a clamped scalar and a working key exchange. `NewLocalIdentityFromExpandedKey`
+        still loads keys unchecked, as firmware loads its stored identity. `IsReservedPrefix` reports a
+        0x00 or 0xFF prefix. On the device side, `ImportPrivateKeyCommand.Validate` gives the
+        ILLEGAL_ARG `*CommandError` firmware answers for a key that fails it; a host with import
+        disabled answers `DisabledResponse` first. `client.ImportPrivateKey` returns
+        `client.ErrInvalidPrivateKey` without sending.
+      - **`client.(*Client).SetTxPowerDBm`, `SelfInfoResponse.TxPowerDBm` and `NewSetTxPowerCommand`
+        handle negative transmit power** down to -9 dBm, which firmware stores as signed.
+      - **`companion.NewDeviceFrameParser` reads frames at the device end of the link**: it takes
+      only
+        app-to-radio (`<`) frames and skips frames over 176 bytes, as firmware does. Set
+        `FrameParser.OnDiscard` on either parser to hear about skipped bytes, as `ErrNoFrameStart` or
+        `ErrFrameTooLarge`.
+      - **`sx12xx.Opts.SX1268` selects the SX1268 transmit power table**, so SX1268 boards (E22-400
+      and
+        similar) transmit at the power they are set to. **`sx12xx.Opts.CurrentLimit`** sets the PA
+        over-current limit in mA to match a board's `SX126X_CURRENT_LIMIT`; zero keeps 140 mA.
+      - **Firmware constants and helpers**: `companion.FirmwareVerCode` (14) and `FirmwareVersion`
+        (`v1.18.0`), `DefaultTCPPort`, `DefaultBaudRate`, `TelemMode*`, `AdvertLoc*`, `MaxSignDataLen`
+        and `MaxChannelDataLen`; `meshcore.PayloadVer1` to `PayloadVer4`, `MaxHashSize`,
+        `MaxPathHashCount`, `PrvKeySize`, `SeedSize`, `CipherBlockSize`, `CipherMACSize`,
+        `ControlZeroHopFlag`, the sensor ACL bits `PermRecvAlertsLo` and `PermRecvAlertsHi`,
+        `Packet.IsShare` for the {0,0} transport codes, and `IsGroupDataTypeReserved` and
+        `IsGroupDataTypeDev` for the GRP_DATA number ranges.
+
+      ### Changed
+
+
+      - **Relayed direct packets and ACKs wait one relay delay, worked out once on the packet as
+        received**, as firmware v1.18.0 does. A relayed ACK went out at once before; extra ACK copies now
+        go 300 ms apart after that delay, with the ACK itself last.
+      - **A transport flood with code 0 counts as unscoped**, as in firmware v1.18.0:
+      `FindFloodMatch`
+        returns the wildcard even when it denies floods, and replies go out unscoped.
+      - **The deprecated `WithFloodRetransmitDelay` and `WithDirectRetransmitDelay` hooks get path
+      bytes
+        plus payload plus 2 as the length**, as firmware roles use, without the 4 transport code bytes.
+      - **`GenerateLocalIdentity` regenerates a key whose prefix is 0x00 or 0xFF**, as every
+      firmware role
+        does.
+      - **`NewRequest`, `NewRespo
+
+      …
   - version: v1.9.0
     name: v1.9.0
     datetime: '2026-10-13T06:00:55Z'
