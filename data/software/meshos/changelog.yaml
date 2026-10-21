@@ -1,7 +1,61 @@
 source: github
 repo: andymux/meshos-releases
-updatedAt: '2026-10-21T14:56:13.907Z'
+updatedAt: '2026-10-21T19:58:19.738Z'
 releases:
+  - version: v1.0.31
+    name: MeshOS v1.0.31
+    datetime: '2026-10-21T16:40:02Z'
+    url: https://github.com/andymux/meshos-releases/releases/tag/v1.0.31
+    prerelease: false
+    notes: >-
+      # MeshOS 1.0.31
+
+
+      ## New messages divider
+
+      Channels now show a red "New messages" line where the messages you have not read yet begin,
+      with a button at the top of the chat to jump straight to them. Opening a channel still takes
+      you to the latest message, and nothing scrolls on its own.
+
+
+      ## Direct messages
+
+      - Tapping the notification for an AirLink or internet direct message now opens that chat. A
+      message from someone who is not yet a contact opens your Message requests.
+
+      - AirLink and internet direct messages now show the other person's photo, both on their
+      messages and in the chats list.
+
+
+      ## Channel colours
+
+      Channels are now coloured from their name, so they are easy to tell apart at a glance instead
+      of all sharing one colour. Public Chat and the MeshOS room keep their usual look.
+
+
+      ## Heard list
+
+      The AirLink filter now covers the phone-to-phone mesh and the internet together, so there is
+      no longer a separate Internet filter.
+
+
+      ## Other
+
+      Smaller wording tidy-ups and fixes.
+
+
+      ## Downloads
+
+      - Android: MeshOS-v1.0.31.apk
+
+      - macOS: MeshOS-v1.0.31.dmg
+
+
+      SHA-256:
+
+      - MeshOS-v1.0.31.apk: fd4970e1b1446ddb0d2985c3b54837857a970da663b212fdb3d3c1f07ac47103
+
+      - MeshOS-v1.0.31.dmg: 4ceba9a6d224adbed4a454746510ec76c0391fa14a1d8814215d1d7318e6e5bf
   - version: v1.0.30
     name: MeshOS v1.0.30
     datetime: '2026-10-21T10:55:33Z'
@@ -943,46 +997,3 @@ releases:
       SHA-256:
       - TDeck: 83ffeb343e430371b3913ebc4e9d39a9ca9e9eed8c2ab436e801c64d5d911978
       - M9: c972a8206f6d6d62985ee9a31c6be033bc8af6d1e5c2d09c7d41344307aecbbf
-  - version: v1.0.17
-    name: MeshOS v1.0.17
-    datetime: '2026-09-07T13:45:10Z'
-    url: https://github.com/andymux/meshos-releases/releases/tag/v1.0.17
-    prerelease: false
-    notes: |-
-      ## MeshOS Companion v1.0.17
-
-      ### Battery optimisations
-      - A round of battery fixes across GPS, Bluetooth scanning and background
-        networking. If MeshOS has been draining your phone, especially with the
-        Wardrive pill left on, this release should make a big difference.
-
-      ### Tools
-      - New Tools screen: tap the spanner in the top bar for Trace Path and Scan for
-        Nodes without digging through Settings.
-
-      ### Channels
-      - Fixed an issue where channel messages could be shown under the wrong channel
-        after connecting a different radio.
-      - Internet-enabled channels no longer vanish when you connect a radio that does
-        not have them. They stay in your list as an internet-only channel, and you can
-        keep chatting over the internet until you add the channel to that radio.
-
-      ### Other
-      - The update checker now only runs on Android. The iOS and macOS apps no longer
-        point you at the Android download.
-      - macOS: the app now needs macOS 11 or later.
-
-      ### Install
-      Download `MeshOS-v1.0.17.apk` and open it to install. Existing users upgrade in
-      place, keeping their messages and settings.
-
-      APK SHA-256:
-      `fc7111d3afdd802e7e25dcd486d7e839efad9d99316593b4a5666efca63d37f0`
-
-      ### macOS
-      Download `MeshOS-v1.0.17.dmg`, open it and drag MeshOS into Applications. Needs
-      macOS 11 or later. The app is not notarised, so the first time you run it
-      right-click MeshOS and choose Open, then Open again in the warning.
-
-      DMG SHA-256:
-      `81182e1dab0acdb0d066d55f4482a81eb9efc44e934de61ed8666adecf592f1c`

@@ -1,7 +1,109 @@
 source: github
 repo: ALLFATHER-BV/wadamesh
-updatedAt: '2026-10-18T20:16:50.703Z'
+updatedAt: '2026-10-21T19:57:59.152Z'
 releases:
+  - version: beta_99
+    name: wadamesh beta_99
+    datetime: '2026-10-21T16:56:13Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_99
+    prerelease: true
+    notes: >-
+      Test build, on top of beta_98. Stable stays **beta_85**.
+
+
+      Flash it at **[flasher.wadamesh.com](https://flasher.wadamesh.com)** (switch the toggle to
+      Beta), or update on the device if you have "Get test builds (beta)" turned on.
+
+
+      A big community round: most of this build is pull requests from **@oumike**, with fixes and
+      apps from **@tun0**, **@Ender436**, **@JackCortines**, **@halflive-743** and
+      **@samuelcoustet**. Thank you all.
+
+
+      ## New
+
+
+      - **Orientation: four choices** (Portrait, Portrait 180, Landscape, Landscape 180) on every
+      board that can rotate, including the T-Display P4, CrowPanel P4 10.1 and Wio Tracker L2 (#698,
+      #701 by @oumike). The Wio Tracker L2 and CrowPanel P4 10.1 start in landscape once after this
+      update.
+
+      - **"Fewest hops" sort** for Contacts and Discovered (#718, asked for by @mrickey, built by
+      @oumike).
+
+      - **USB Files on more boards, and about 30x faster.**
+      [files.wadamesh.com](https://files.wadamesh.com) now also works on the T-LoRa Pager, Heltec
+      V4-R8, RAK WisMesh Tap V2 and Wio Tracker L2 (every board whose USB socket is the ESP32-S3's
+      own). Uploads went from about 4 KB/s to about 120 KB/s: 1 reply in 5 sat in the USB chip's
+      buffer until the next write, and the page waited 3 seconds for it each time.
+
+      - **T-Deck: switch a damaged trackball off** (Settings, Keyboard, Navigation, "Use the
+      trackball"). With it off, Space still locks, Enter on the lit lock screen unlocks (or opens
+      the PIN screen), and a powered-off T-Deck wakes only with the reset button, so a phantom click
+      cannot switch it on.
+
+      - **T-Display P4 keyboard light separate from the screen.** They shared one PWM channel; now
+      F11 changes only the keyboard light, the brightness slider only the screen, and Settings,
+      Keyboard has its own keyboard light choice.
+
+      - **Wio Tracker L2 speaker** for notification chimes (#712, @oumike).
+
+
+      ## Fixes
+
+
+      - **P4 boards restart after a crash** instead of freezing on the last frame (which looked like
+      a blue screen after boot). The crash report is still saved. T-Display P4, CrowPanel P4 10.1
+      and Tanmatsu.
+
+      - **Wi-Fi switches itself off after crashes** on the T-Display P4 and CrowPanel P4 10.1 (a
+      crash within a minute of starting Wi-Fi, or two in half an hour), and the next boot says so.
+      Boards whose Wi-Fi chip runs very old firmware crashed every time Wi-Fi started.
+
+      - **Button captions shrink, then wrap** when a translation is too wide (#418, reported by
+      @B0N3-GD, built by @oumike).
+
+      - **Wallpapers and background pictures** load on SD_MMC / internal-storage boards like the
+      T-Display P4 (#691, reported by @zomgugoff, fixed by @oumike).
+
+      - A settings page opened from the control center stays in front of the app drawer (#696,
+      @oumike).
+
+      - Emoji in a settings field are drawn instead of empty boxes (#690 by @tun0).
+
+      - Lua apps draw correctly on e-paper (#704 by @Ender436).
+
+      - A message's region scope shows in its Info and under the bubble (#594, reported by
+      @DenRalle).
+
+      - Heltec V4-R8: chat bar buttons are easier to hit and a near miss no longer opens the control
+      center (#598, reported by @Jess-39).
+
+      - Slider drags save, avatar initials fit at large UI sizes, the keyboard's symbol keys are
+      readable in dark mode, the T-Deck Pro is easier to read on e-paper, and the Mesh Deck hides
+      the on-screen keyboard while its keyboard module is attached (@oumike).
+
+      - CrowPanel P4 10.1: the touch controller gets 300 ms after its reset before the first
+      command.
+
+
+      ## Apps (in the Store now)
+
+
+      - **Space Invaders** (#707 by @JackCortines), **Blackjack 1.2.2** (#705 by @halflive-743),
+      **ProTreck 1.2** with compass and three alarms (#648) and **Trip Odometer 1.1** with
+      return-to-home (#607), both by @samuelcoustet.
+
+
+      ## Also
+
+
+      - The touch UI now also builds for the browser from this same source:
+      **[app.wadamesh.com](https://app.wadamesh.com)** drives your own MeshCore node over USB or
+      Bluetooth, or a wadamesh or meshcomod node over Wi-Fi.
+
+
+      Please report what you find with "Send a test report" in Settings, or an issue here.
   - version: beta_98
     name: wadamesh beta_98
     datetime: '2026-10-18T18:30:07Z'
@@ -1650,97 +1752,5 @@ releases:
 
 
       - **Latvian keyboard layout**, and Romanian no longer labels itself as E
-
-      …
-  - version: beta_79
-    name: wadamesh beta_79
-    datetime: '2026-09-09T11:23:19Z'
-    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_79
-    prerelease: true
-    notes: >-
-      Test build. Stable stays beta_65.
-
-
-      Flash it at **[flasher.wadamesh.com](https://flasher.wadamesh.com)** (flip the toggle to
-      Beta), or update on the device if you have "Get test builds (beta)" switched on.
-
-
-      Six of the changes here are @oumike's, each tested on his own hardware, and they are the
-      reason the ThinkNode M9 is close to the point where its keyboard navigation stops being
-      something you work around. Thanks also to @Buko84, @jrote1, @DenRalle, @jesshampshire,
-      @Piguyraspberry, PD0RCM, museifu696, thesupergeek, honza_87628 and Leon P, whose reports are
-      most of what follows.
-
-
-      ## A Lua app could reset the device
-
-
-      Running a Lua app could reboot the device outright. Decoding a crash dump from a T-Deck put it
-      inside Lua's own panic path: the firmware never told Lua what to do when an error escapes a
-      protected call, so Lua fell back to its default, which is to abort the program. On a phone
-      that closes an app; here it resets the radio.
-
-
-      An app's own faults were already caught and turned into a message plus a clean close. The gap
-      was everything that runs *before* that safety net is armed, including the lookup of the app's
-      callback, which an app could make run its own code. That lookup is now raw, stack space for
-      the arguments is reserved in advance where failure can be reported instead of raised, and if
-      anything still escapes, the error text is printed rather than lost along with the device.
-
-
-      ## ThinkNode M9
-
-
-      - **Contacts no longer stalls partway through opening.** While adverts were arriving the whole
-      list was torn down and rebuilt every 2.5 s, which costs over a second on a large list. Only
-      what an advert actually changes is updated now. Reported by @Buko84, whose note that it was
-      smooth until something was discovered is what found it (#463).
-
-      - **Leaving a channel returns the cursor to that channel.** Reading unread messages rebuilds
-      the list, and the cursor was remembered by an address that no longer pointed at the same row
-      (#467). @oumike extended the fix so the D-pad also walks messages in order inside a
-      conversation, and dropped the two floating jump arrows, which only made sense with a
-      touchscreen (#468).
-
-      - **A new selection cursor**, an accent outline instead of the old block of reverse video that
-      hid whatever it landed on. Every keyboard-driven board gets it, so the Pager, Tanmatsu and
-      T-Deck trackball match the M9 now. By @oumike (#458, covering #427, #432, #434, #430).
-
-      - **Ctrl closes the Control Center** as well as opening it. By @oumike (#454, #456).
-
-      - **The charging icon appears.** Charge detection was compiled for two boards only; every
-      other one answered "not charging" whatever the hardware did (#473).
-
-
-      ## Sound
-
-
-      Notification sounds now behave the way the settings page claims. The sample chime, the volume
-      buttons and each switch played regardless of the master Sound switch and of Do Not Disturb,
-      while an arriving message respected both. With sound off, the page chimed at you the whole
-      time you configured it and nothing ever arrived audibly. A preview is now silent exactly when
-      a real notification would be, and says which of the two silenced it. Reported by PD0RCM on a
-      T-Deck Plus (#464).
-
-
-      ## Battery
-
-
-      - **The idle power saver works again.** It consulted a saved Wi-Fi setting that reads as "on"
-      when it has never been written, so anyone who had not explicitly switched Wi-Fi off inside
-      this firmware was blocked forever. It now checks whether the radio is actually powered, and
-      the radio is properly powered down when you turn Wi-Fi off, which a network scan could leave
-      running. Reported by @jrote1 (#450).
-
-      - **The Battery page says what is keeping the device awake**, for example "held by mesh busy
-      62%". A low "asleep" figure could mean the device parks badly or that it was rarely allowed to
-      park, with no way to tell which. Requested by @jrote1 (#465).
-
-
-      ## Location privacy
-
-
-      - **The displacement changes with the distance you pick.** It used to be the same direction
-      every time, so someone watching you switch between 100 m an
 
       …
