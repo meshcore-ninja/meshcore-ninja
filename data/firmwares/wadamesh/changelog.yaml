@@ -1,4 +1,1756 @@
 source: github
 repo: ALLFATHER-BV/wadamesh
-updatedAt: '2026-10-22T14:55:42.964Z'
-releases: []
+updatedAt: '2026-10-22T19:49:16.439Z'
+releases:
+  - version: beta_99
+    name: wadamesh beta_99
+    datetime: '2026-10-21T16:56:13Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_99
+    prerelease: true
+    notes: >-
+      Test build, on top of beta_98. Stable stays **beta_85**.
+
+
+      Flash it at **[flasher.wadamesh.com](https://flasher.wadamesh.com)** (switch the toggle to
+      Beta), or update on the device if you have "Get test builds (beta)" turned on.
+
+
+      A big community round: most of this build is pull requests from **@oumike**, with fixes and
+      apps from **@tun0**, **@Ender436**, **@JackCortines**, **@halflive-743** and
+      **@samuelcoustet**. Thank you all.
+
+
+      ## New
+
+
+      - **Orientation: four choices** (Portrait, Portrait 180, Landscape, Landscape 180) on every
+      board that can rotate, including the T-Display P4, CrowPanel P4 10.1 and Wio Tracker L2 (#698,
+      #701 by @oumike). The Wio Tracker L2 and CrowPanel P4 10.1 start in landscape once after this
+      update.
+
+      - **"Fewest hops" sort** for Contacts and Discovered (#718, asked for by @mrickey, built by
+      @oumike).
+
+      - **USB Files on more boards, and about 30x faster.**
+      [files.wadamesh.com](https://files.wadamesh.com) now also works on the T-LoRa Pager, Heltec
+      V4-R8, RAK WisMesh Tap V2 and Wio Tracker L2 (every board whose USB socket is the ESP32-S3's
+      own). Uploads went from about 4 KB/s to about 120 KB/s: 1 reply in 5 sat in the USB chip's
+      buffer until the next write, and the page waited 3 seconds for it each time.
+
+      - **T-Deck: switch a damaged trackball off** (Settings, Keyboard, Navigation, "Use the
+      trackball"). With it off, Space still locks, Enter on the lit lock screen unlocks (or opens
+      the PIN screen), and a powered-off T-Deck wakes only with the reset button, so a phantom click
+      cannot switch it on.
+
+      - **T-Display P4 keyboard light separate from the screen.** They shared one PWM channel; now
+      F11 changes only the keyboard light, the brightness slider only the screen, and Settings,
+      Keyboard has its own keyboard light choice.
+
+      - **Wio Tracker L2 speaker** for notification chimes (#712, @oumike).
+
+
+      ## Fixes
+
+
+      - **P4 boards restart after a crash** instead of freezing on the last frame (which looked like
+      a blue screen after boot). The crash report is still saved. T-Display P4, CrowPanel P4 10.1
+      and Tanmatsu.
+
+      - **Wi-Fi switches itself off after crashes** on the T-Display P4 and CrowPanel P4 10.1 (a
+      crash within a minute of starting Wi-Fi, or two in half an hour), and the next boot says so.
+      Boards whose Wi-Fi chip runs very old firmware crashed every time Wi-Fi started.
+
+      - **Button captions shrink, then wrap** when a translation is too wide (#418, reported by
+      @B0N3-GD, built by @oumike).
+
+      - **Wallpapers and background pictures** load on SD_MMC / internal-storage boards like the
+      T-Display P4 (#691, reported by @zomgugoff, fixed by @oumike).
+
+      - A settings page opened from the control center stays in front of the app drawer (#696,
+      @oumike).
+
+      - Emoji in a settings field are drawn instead of empty boxes (#690 by @tun0).
+
+      - Lua apps draw correctly on e-paper (#704 by @Ender436).
+
+      - A message's region scope shows in its Info and under the bubble (#594, reported by
+      @DenRalle).
+
+      - Heltec V4-R8: chat bar buttons are easier to hit and a near miss no longer opens the control
+      center (#598, reported by @Jess-39).
+
+      - Slider drags save, avatar initials fit at large UI sizes, the keyboard's symbol keys are
+      readable in dark mode, the T-Deck Pro is easier to read on e-paper, and the Mesh Deck hides
+      the on-screen keyboard while its keyboard module is attached (@oumike).
+
+      - CrowPanel P4 10.1: the touch controller gets 300 ms after its reset before the first
+      command.
+
+
+      ## Apps (in the Store now)
+
+
+      - **Space Invaders** (#707 by @JackCortines), **Blackjack 1.2.2** (#705 by @halflive-743),
+      **ProTreck 1.2** with compass and three alarms (#648) and **Trip Odometer 1.1** with
+      return-to-home (#607), both by @samuelcoustet.
+
+
+      ## Also
+
+
+      - The touch UI now also builds for the browser from this same source:
+      **[app.wadamesh.com](https://app.wadamesh.com)** drives your own MeshCore node over USB or
+      Bluetooth, or a wadamesh or meshcomod node over Wi-Fi.
+
+
+      Please report what you find with "Send a test report" in Settings, or an issue here.
+  - version: beta_98
+    name: wadamesh beta_98
+    datetime: '2026-10-18T18:30:07Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_98
+    prerelease: true
+    notes: >-
+      Test build, on top of beta_97. Stable stays **beta_85**.
+
+
+      Flash it at **[flasher.wadamesh.com](https://flasher.wadamesh.com)** (switch the toggle to
+      Beta), or update on the device if you have "Get test builds (beta)" turned on.
+
+
+      ## New
+
+
+      - **Repeater and room server admin.** The Admin button on a repeater or room server now opens
+      a full admin app instead of a password box and a raw console. Log in as admin or guest (a
+      remembered password logs in at once), then see the node's status, firmware and owner, its
+      neighbours (newest or strongest), telemetry and the access list, change roles, edit identity
+      and location, radio, repeating and limits, adverts, passwords and regions, and run actions: an
+      advert, a clock sync, discovering neighbours, resetting counters, a reboot or a firmware
+      update. The old console stays under Advanced.
+
+      - **wadamesh in your browser.** The same touch UI runs at
+      **[app.wadamesh.com](https://app.wadamesh.com)** and drives your own MeshCore node over USB or
+      Bluetooth (Chrome or Edge), or a wadamesh or meshcomod node over Wi-Fi from
+      [wifi.app.wadamesh.com](http://wifi.app.wadamesh.com). Map, Store and Lua apps, backups and
+      your device's location included, chats kept in the browser, portrait on phones, and a demo
+      mesh when no node is connected. More on
+      [wadamesh.com/webclient.html](https://wadamesh.com/webclient.html).
+
+      - Settings, Theme, Background has a **Glass tiles** switch (on by default); off draws the Home
+      tiles solid.
+
+      - Large screens in landscape (T-Display P4, Tanmatsu, CrowPanel 5.0 and 10.1): the empty
+      message box is one line tall and grows as you type.
+
+
+      ## Fixes
+
+
+      - **Firmware updates over Wi-Fi no longer stop at 0% and restart the device.** The download
+      waited without yielding, so a slow start tripped the task watchdog. The image is now copied in
+      small blocks, and the update gives up cleanly after 15 seconds without data (#689, reported by
+      @Hixsten on a T-Deck Plus).
+
+      - **Backups get one name, `meshcore-backup-<date>`,** and a device without a set clock numbers
+      them instead of overwriting an earlier one (#688 by @oumike, for #686 reported by @zomgugoff).
+      On the Tanmatsu the free name is found by opening the file, since its storage reports existing
+      files as missing.
+
+      - **T-Display P4: a Wi-Fi chip that stops answering is reset and rejoins on its own.** Units
+      running LilyGo's factory ESP-AT image lost Wi-Fi after about an hour, with empty scans and
+      Connect doing nothing until a reboot (#685, reported by @william-stearns). Not yet checked on
+      a unit that shows the problem, so please report.
+
+      - Companion sync: a node keeps a sync position for up to 8 apps. When all 8 were taken, a new
+      app was never synced at all; the slot of the app that synced longest ago is now reused.
+
+
+      ## Boards
+
+
+      - **SenseCAP Indicator D1L** is a new board in the web flasher (#682 by @Confituurke): ST7701S
+      screen, FT6336 touch and the SX1262 radio behind the TCA9535 expander. Power off is hidden, as
+      nothing on the board can wake it again.
+
+      - **CrowPanel Advanced 10.1: touch works.** The SD card driver claimed pin 45, the touch
+      controller's data line, and shut the touch bus down after the first card check. Map tiles are
+      kept on the board's own storage and the boot is quieter. Still experimental, so please report
+      what works.
+
+      - **T-Display P4:** Radio settings has "Always use the external antenna (MMCX)", which asks
+      first with a warning, and the control panel has an Antenna tile.
+
+
+      The admin app was checked on a LilyGo T-Deck against a real repeater (guest login). Every
+      other board builds. Please report what you find with "Send a test report" in Settings, or an
+      issue here.
+  - version: beta_97
+    name: wadamesh beta_97
+    datetime: '2026-10-17T19:52:16Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_97
+    prerelease: true
+    notes: >-
+      Test build, on top of beta_96. Stable stays **beta_85**.
+
+
+      Flash it at **[flasher.wadamesh.com](https://flasher.wadamesh.com)** (switch the toggle to
+      Beta), or update on the device if you have "Get test builds (beta)" turned on.
+
+
+      ## Fixes
+
+
+      - **Chat history never drops old messages to keep saving.** When the history files can no
+      longer be merged to make room, a new file is opened instead of retiring the oldest one.
+      beta_96 could still lose old messages on devices with a lot of history in many quiet chats.
+      Checked with a simulation of 60,000 messages, constant reboots and power cuts in the middle of
+      a merge (`test/history_segments/run.sh`).
+
+      - **Store installs complete.** A downloaded app could land cut off on the SD card, which
+      reported a network error and left an app that failed to start with "syntax error near <eof>"
+      (Blackjack, reported by @halflive-743 on Discord). Downloads are now written in pieces,
+      checked on the card and only then installed, so a failed install leaves nothing behind and a
+      failed update keeps the old version.
+
+      - **Repeater telemetry and status requests answer.** The device now asks directly first, the
+      way the MeshCore app does, and only logs in when that gets no reply. The old order (log in,
+      then ask) got an answer 2 times out of 8 from a repeater next to the device; this build 7 out
+      of 8 (#683, reported by @900steve).
+
+      - Lua apps that save larger files with `wada.fs.write` no longer risk a file that is cut off
+      on the SD card.
+
+
+      ## New board
+
+
+      - **Elecrow CrowPanel Advanced 10.1** (ESP32-P4, 1024 by 600) is in the web flasher as an
+      experimental board, with one image per board revision (V1.0, V1.1, V1.2, printed on the
+      board). It needs an SX1262 module in the wireless slot. It has not run on a real unit yet, so
+      please report what works (asked for on Discord).
+
+
+      Checked on a LilyGo T-Deck (boot, history, Store installs, repeater telemetry against a real
+      repeater). Every other board builds. Please report what you find with "Send a test report" in
+      Settings, or an issue here.
+  - version: beta_96
+    name: wadamesh beta_96
+    datetime: '2026-10-17T14:04:14Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_96
+    prerelease: true
+    notes: >-
+      Test build, on top of beta_95. Stable stays **beta_85**.
+
+
+      Flash it at **[flasher.wadamesh.com](https://flasher.wadamesh.com)** (switch the toggle to
+      Beta), or update on the device if you have "Get test builds (beta)" turned on.
+
+
+      ## Chat history keeps saving
+
+
+      - **Chat history keeps saving on a device with a lot of it.** Once the history reached its 24
+      files, a reboot could leave every new message in memory only, so it was gone after the next
+      restart, without any warning (reported on Discord). Full files are now merged to make room,
+      and a save that cannot land says so. Messages lost before this build cannot be recovered;
+      older history is untouched.
+
+      - **Messages that arrive in a chat you left open while the screen is off or locked stay
+      unread**, so the lock screen shows them. They count as read once you wake the device and see
+      the chat (reported on Discord).
+
+
+      ## New
+
+
+      - **Settings opens with a Device page:** what this unit is, its radio and hardware, and the
+      About information, with Run setup again and Reboot. The group with Display, Theme, Lock
+      screen, Sound and Keyboard is now called **Display & lock** (#630 by @oumike, asked for by
+      @Jess-39 in #596).
+
+      - **First-time setup keeps Bluetooth on** and shows a switch for it (#416, by @oumike).
+
+      - **T-Display P4:** a one-row status bar with the title on the left and the clock beside the
+      icons, and Settings in landscape uses two real columns (by @oumike).
+
+      - In a chat, the clock and battery stay at the height they have on every other screen (by
+      @oumike).
+
+      - **USB Files can put Lua apps on the device:** drop a `.lua` or `.json` file into the apps
+      folder (`meshcomod/apps` on the SD card) at [files.wadamesh.com](https://files.wadamesh.com),
+      no need to take the card out. It shows up the next time you open the app drawer (asked for on
+      Discord).
+
+      - **New in the Store: Blackjack**, with split, double down and your bankroll kept between
+      sessions (#681 by @halflive-743). Every Store app now has a page at
+      [wadamesh.com/apps.html](https://wadamesh.com/apps.html).
+
+      - The Store now lists more than 16 apps; it stopped at 16 before, so new apps would not have
+      shown up.
+
+
+      ## Fixes
+
+
+      - **ThinkNode M9 and other keypad boards:** Up and Down on a web page scroll the text instead
+      of jumping past it to the toolbar (#680 by @oumike, reported by @Buko84 in #677).
+
+      - A **lock screen PIN with a 0** (or any digit on the Sym layer) can be typed on the T-Deck
+      (#676 by @oumike, reported by @TerryTel93 in #675).
+
+      - Characters a font cannot draw show as one `*` everywhere, skin-tone modifiers are hidden,
+      and invisible marks in Arabic and Hebrew messages stay invisible (#679 by @oumike, reported by
+      @neoemit in #673).
+
+      - The **chats list shows the double tick** as soon as a direct message is delivered (reported
+      by @neoemit in #670).
+
+      - **ThinkNode M9:** the keyboard language code in the chat header no longer sits on top of the
+      GPS icon (reported by @neoemit in #672).
+
+      - The **contact popup** is wider on 320 pixel screens and gives a long name a second line, so
+      with Large Text it no longer runs under the buttons (reported by @Danie10 in #668).
+
+      - A **lock screen with your own picture** is no longer milky: a lighter dark tint and light
+      text on every theme (reported by @Flyflinger in #652).
+
+      - **Translations:** this build's new texts in all 14 languages.
+
+
+      ## For app makers
+
+
+      - Canvases larger than 480 pixels are fitted to the screen instead of stopping the app, so
+      apps that size their canvas from `on_open` work on the T-Display P4, Tanmatsu and CrowPanel 5
+      (reported on Discord).
+
+      - `button:bg(colour)` gives a button its own fill colour, and it stays reachable with the keys
+      and trackball ([SDK guide](https://wadamesh.com/sdk.html)).
+
+
+      Checked on a LilyGo T-Deck (boot, history load, the MeshCore app's Command Line, sending and
+      receiving). Every other board builds. Please report what you find with "Send a test report" in
+      Settings, or an issue here.
+  - version: beta_95
+    name: wadamesh beta_95
+    datetime: '2026-10-15T16:46:44Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_95
+    prerelease: true
+    notes: >-
+      Test build, on top of beta_94. Stable stays **beta_85**.
+
+
+      Flash it at **[flasher.wadamesh.com](https://flasher.wadamesh.com)** (switch the toggle to
+      Beta), or update on the device if you have "Get test builds (beta)" turned on.
+
+
+      ## MeshCore 1.18
+
+
+      wadamesh now runs on **MeshCore 1.18**, through **meshcomod v1.18.0.1**. Settings > About
+      shows it under Build.
+
+
+      - **The MeshCore app's Command Line works with the device:** name, Bluetooth PIN, Wi-Fi, radio
+      settings, airtime and duty cycle, transmit power, receive gain, path hash mode, board and
+      version.
+
+      - **Remote CLI:** a contact you give remote CLI permission in the app can run those commands
+      on your device over the mesh. Anyone else's command arrives in the chat as a message.
+
+      - Channel data, pushed sensor telemetry and raw sends over multi-byte paths now reach the app
+      as they do on MeshCore 1.18.
+
+      - A device without a clock source starts from 1 March 2026 instead of May 2024, and keeps its
+      time through a restart that was not a power cut.
+
+      - Boards without a GPS take up to 5 seconds longer to start: MeshCore 1.18 waits longer for a
+      GPS to answer, so slow modules are found.
+
+
+      ## New
+
+
+      - **Spectrum is redesigned:** tiles for the peak, the noise floor, your channel and how busy
+      it is, a filled trace with a peak hold line and a marker on your channel, and a waterfall that
+      stays dark until there is real signal. **Band / Channel** switches between the whole band and
+      your channel up close; **Live / 1 min / 10 min** sets the waterfall's history.
+
+      - **RF Monitor 1.4:** tiles, a filled signal chart and the recently heard packets with their
+      type and signal. Tap a packet for who sent it, its route, its margin above what your spreading
+      factor can still decode, its size and its time on the air.
+
+      - **Airtime 1.6:** the channel load as a big figure, average, peak and your own airtime, a
+      chart with the duty-cycle limit, and the receive / transmit split.
+
+      - **New in the Store: Music.** Plays the MP3 and WAV files in a `Music` folder on the SD card,
+      with shuffle and repeat, and keeps going through the list with the screen off. Runs on every
+      board with a speaker: T-Deck, T-LoRa Pager, T-Display P4, Tanmatsu and T-Deck Max.
+
+      - **The Store tile shows how many installed apps have an update waiting**, checked with the
+      firmware update check.
+
+      - **T-Deck Max sound** (#665 by @Ender436): notification sounds, your own sounds and app audio
+      play through its speaker.
+
+      - **Emoji (and # on the ThinkNode M9) sit next to Send** (#669 by @oumike, reported on
+      Discord), so on the M9 one press of Right from the end of your message reaches them.
+
+      - Store apps on the **T-Display P4, Tanmatsu and Wio Tracker L2 can read the SD card** and
+      play music from it.
+
+      - **For app makers:** rounded panels, bold and large figures, `app.on_audio` (also with the
+      screen off), and a corrected list of the input events apps receive ([SDK
+      guide](https://wadamesh.com/sdk.html)).
+
+
+      ## Fixes
+
+
+      - The **"SD card could not be read"** notice no longer appears when the card works (#667,
+      reported by @900steve). It showed on devices that keep their data on internal storage after an
+      unfinished copy to the card.
+
+      - The **control panel's clock** keeps time while the panel is open (#666, reported by
+      @900steve).
+
+      - **ThinkNode M9: keyboard light brightness** in Settings > Keyboard, like the T-Deck's (#664,
+      asked for by @Buko84).
+
+      - The **battery widget** no longer draws its percentage over a ring too small for it (reported
+      on Discord).
+
+      - A Store app that changed a button's text could crash the device; it no longer can.
+
+      - RF Monitor named some packet types wrongly, and its Margin tile turned red on a quiet
+      channel.
+
+      - **Translations:** this build's new texts in all 14 languages.
+
+
+      ## Heltec V4
+
+
+      - The V4 keeps its built-in translations compressed and unpacks only the language you use,
+      which gives it about 330 KB of room again.
+
+
+      Checked on a LilyGo T-Deck (MeshCore 1.18: app sync, the app's Command Line, sending and
+      receiving), and the Music app on a T-Display P4. Every other 
+
+      …
+  - version: beta_94
+    name: wadamesh beta_94
+    datetime: '2026-10-14T09:09:39Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_94
+    prerelease: true
+    notes: >-
+      Test build, on top of beta_93. Stable stays **beta_85**.
+
+
+      Flash it at **[flasher.wadamesh.com](https://flasher.wadamesh.com)** (switch the toggle to
+      Beta), or update on the device if you have "Get test builds (beta)" turned on.
+
+
+      ## ThinkNode M9
+
+
+      - **Newer M9s work** (#662 by @Bfindlay, reported in #644 by @thejiraguy and on Discord). On
+      the Meshtastic edition the keyboard controller answers at a different address, so on beta_93
+      and earlier no key did anything and the first setup screen could not be passed. Both addresses
+      are found now.
+
+      - **Their GPS gets a fix** (#661 and #663 by @Thatindianbruh, measured on two units): the GPS
+      on those units is switched on the other way round, and the firmware now picks it from the
+      keyboard's address.
+
+      - **Keys no longer type twice** (#625) and the **chat header fits its text** (#627), both in
+      @oumike's #628.
+
+
+      ## New
+
+
+      - **Record your route.** Map options > Record track saves where you go as a GPX file on the SD
+      card (/meshcomod/tracks), the standard format other mapping software opens, with elevation and
+      time. It keeps recording with the screen off, the map shows the route as a red line, and the
+      corner shows the distance and climb while it records.
+
+      - **The Reader is a library.** Big text and markdown files on the SD card page through, 16 KB
+      at a time, and Files opens web pages and long texts on the card in the Reader. A new desktop
+      tool, `scripts/sdpack.py`, turns EPUB books and text files into pages on the card with a
+      library home page.
+
+      - **A failed SD card no longer costs your node its key.** The device keeps a copy of the key
+      in its own memory. A device that keeps its data on the card and starts without it says so and
+      offers to try the card again, instead of opening first-time setup.
+
+      - **Hashtags are links** (#580 by @TerryTel93): tap #mesh, or select the message with keys, to
+      open that channel or join it. The message menu gains Map, Web and Channel entries for the
+      coordinates, web addresses and hashtags in a message.
+
+      - **New board: Elecrow CrowPanel Advance 5.0** (#655 by @oumike, #651).
+
+      - **Map options > Favorites only** shows just your favourite contacts on the map, link lines
+      included.
+
+      - **Temperature in Fahrenheit** (Settings > Display). What is stored and sent stays in °C.
+
+      - **Contacts show their chat icon**, the one you picked or the first emoji in the name (#649
+      by @oumike, asked for in #646 by @Jess-39).
+
+      - **T-Deck Pro and Max text sizes**: Normal, Large and Huge, as on the T-Deck (#645 by
+      @oumike, asked for in #639 by @Jess-39).
+
+      - **Pick your advert position on the map** (#635 by @Confituurke).
+
+      - **T-LoRa Pager:** hold Fn and press Enter to paste the clipboard (#624 by @jcyrio).
+
+      - **Web app:** Reply on a channel message (#650 by @oumike, asked for in #642 by @Danie10).
+
+      - **New in the Store: MECP**, for emergency messages in the Mesh Emergency Communication
+      Protocol. Pick a severity and the codes, add the number of people and your position, and post
+      it to a channel; MECP messages you receive are shown in plain words. MECP and its code table
+      are by xiang-dev-1.
+
+      - **For app makers:** a Store app can ship its own files, such as sounds, by listing them in
+      its manifest ([SDK guide](https://wadamesh.com/sdk.html#format)). That is also the way to play
+      sounds on the T-Display P4.
+
+
+      ## Fixes
+
+
+      - **Radar widget:** a tap opens the radar screensaver until you touch the screen, instead of
+      flickering it. It also fits a two-cell space, and a full Home tells you how to make room.
+
+      - **Advert widget** readable again, laid out like the app tiles (#637, reported by
+      @Flyflinger).
+
+      - **Radio widget:** no more line through its text.
+
+      - **Chat icons:** a text symbol (a star, a heart) shows as the icon (#647, reported by
+      @Jess-39).
+
+      - **Day mode:** unread badge numbers are readable (#658 by @oumike). **Keyboard:** control
+      keys have readable labels (#656 by @oumike).
+
+      - **T-Display P4 Bluetooth** can be switched on again when it was off at start-up (#612).
+      Since beta_88 that failed every time, with a "not enough 
+
+      …
+  - version: beta_93
+    name: wadamesh beta_93
+    datetime: '2026-10-10T20:35:41Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_93
+    prerelease: true
+    notes: >-
+      Test build, on top of beta_92. Stable stays **beta_85**.
+
+
+      Flash it at **[flasher.wadamesh.com](https://flasher.wadamesh.com)** (switch the toggle to
+      Beta), or update on the device if you have "Get test builds (beta)" turned on.
+
+
+      ## New
+
+
+      - **Contact nicknames.** Contact options > Nickname gives a contact a name of your own. It
+      shows wherever that contact appears: Contacts, Chats, the chat header, sender names in
+      channels and rooms, the lock screen, notifications, Home widgets and the map. Contact options
+      keeps the name it advertises under it, and Contacts search finds either name. Nicknames stay
+      on the device: the mesh, the phone app and Lua apps keep the real name. Clear the text and
+      press OK to go back.
+
+      - **A new control panel**, in the launcher's style: square tiles coloured by their Settings
+      group, filled while on, and a new **Battery saver** tile.
+
+      - **Tooltips.** Icon buttons say what they are. With a keyboard, the selected button shows a
+      small card after a moment; on touch, hold a button to see it, and lifting never taps it. On a
+      control panel tile, keep holding to open its settings.
+
+      - **An amber keyboard cursor**, so the selected control stands out on every background.
+
+      - **Emoji chat icons** (#640, an idea from @jesshampshire): a contact's chat without an icon
+      of its own uses the first emoji in its name.
+
+      - **Default wallpaper** (#626, asked for by @neoemit): Lock screen > Default wallpaper takes
+      you back from a picture of your own.
+
+
+      ## T-LoRa Pager
+
+
+      - **Shortcuts:** M, C, A and S work from Home again; hold H for the launcher options and S for
+      the control panel; H on the app drawer switches to the widgets. Backspace goes back when
+      nothing is being typed, N jumps to the first new message in a chat, and holding Enter is a
+      long press.
+
+      - **Navigation:** each tab remembers where you were, Contacts opens on the first contact, a
+      chat opens on its first unread message, and Power off asks first.
+
+      - **Faster:** the screen draws quicker, tabs switch at once, and the keyboard is only read
+      when a key is waiting, so the Pager does far less while idle.
+
+      - **Battery:** the GPS rests in standby between position checks and is switched off completely
+      when GPS is off; the display panel sleeps with the screen off; the speaker amplifier only runs
+      while a sound plays; and Power off now also puts the radio to sleep and switches off the GPS,
+      the panel and the keyboard light.
+
+      - Map labels show their copyright sign and arrows again instead of boxes.
+
+
+      ## Fixes
+
+
+      - **Direct-message retries from the phone app** (#636, traced by @guidokok): the app's retries
+      keep the time and count up an attempt number, and wadamesh took them for a resent copy, so
+      nothing went out, flood fallback included, while the app was told the message had been
+      flooded. The direct-send timeout also read a packed path byte as 76 hops instead of 12, and
+      the web remote shows real hop counts now.
+
+      - **Changelog on the T-Deck Pro** (#638, reported by @jesshampshire): it loads over plain http
+      now, since the Pro has no memory to spare for the secure handshake.
+
+      - **A sending budget for Lua apps** (#606, reported by @TransientOddity): all apps share it
+      and restarting an app does not refill it. Channel posts three in a row, then one a minute;
+      direct messages six, then one every ten seconds; the same text to the same channel twice
+      within ten minutes is refused. Documented in the [SDK guide](https://wadamesh.com/sdk.html).
+
+      - **GPS speed setting** (#613, reported by @D-Melhede): on the T-LoRa Pager, T-Deck Pro and
+      Max and T-Display P4 the device finds the speed itself, and the setting now says it is only
+      where it starts.
+
+      - **ThinkNode M9 builds** with RadioLib 7.8.1 (#633, by @oumike).
+
+      - **Translations** for the background and battery settings from beta_90 and beta_91 (#632, by
+      @jcyrio), plus this build's new texts, in all 14 languages.
+
+
+      ## Heltec V4
+
+
+      - To make room, the V4 keeps **Snake** as its only built-in game: Tetris, 2048 and Breakout
+      are no longer built in (they stay in the Store on every 
+
+      …
+  - version: beta_92
+    name: wadamesh beta_92
+    datetime: '2026-10-09T10:21:53Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_92
+    prerelease: true
+    notes: >-
+      Test build, on top of beta_91. Stable stays **beta_85**.
+
+
+      Flash it at **[flasher.wadamesh.com](https://flasher.wadamesh.com)** (switch the toggle to
+      Beta), or update on the device if you have "Get test builds (beta)" turned on.
+
+
+      ## Faster screens
+
+
+      The screens draw faster. Measured on a T-Deck with the still aurora, in milliseconds per
+      frame:
+
+
+      | | beta_91 | beta_92 |
+
+      |---|---|---|
+
+      | Home redraw | 126 | 85 |
+
+      | App drawer scroll | 102 | 69 |
+
+      | Chat list scroll | 70 | 49 |
+
+      | Settings scroll | 88 | 62 |
+
+      | Conversation scroll | 84 | 64 |
+
+
+      That is a third to a half more frames a second, with the same pixels. The T-Deck drew every
+      frame in 14 slices, each a walk through the whole screen, and now draws it in 6; the still
+      aurora is drawn once and copied instead of worked out again every frame; and the drawing code
+      is compiled for speed, with its busiest loops in the chip's fast memory.
+
+
+      The same treatment reaches the **ThinkNode M9, Attaky, RAK WisMesh Tap V2, Wio Tracker L2,
+      CrowPanel 3.5 and Heltec V4-R8**, and the **T-LoRa Pager** draws in fewer slices. Those were
+      not tested on their own hardware yet, so please report how scrolling feels there, and anything
+      that looks off. The **Heltec V4** gets the smaller part (rounded corners and gradients are
+      cached now); it has no flash left for the rest.
+
+
+      ## Fixes
+
+
+      - **Hop counts above 64** (#621, reported by @jesshampshire): with 2- and 3-byte path hashes
+      the hop count shares its byte with the hash size, and the Discovered list, the "auto-delete
+      above N hops" setting and the direct-neighbour checks read the whole byte. The auto-delete
+      setting could throw away nodes one hop away.
+
+      - **Arabic** (#582, thanks @jcyrio and a native-speaking tester): letters join properly (آ, ئ,
+      ة and the Persian digits were wrong in the graphics library), Shift gives the Arabic 101 shift
+      layer (أ إ آ, لأ لإ لآ, ، ؛ and the tashkeel), ك is on 8, ! $ @ type themselves again and ?
+      types ؟. Text leaves the device as standard Arabic letters, so a #channel name gives the same
+      channel as on a phone.
+
+      - **Info popup colours** (#602): a long repeater name that wraps no longer scrambles the
+      colours and lines after it. @NewtsLament found the cause.
+
+      - **Chat settings on keypad boards** (#623, reported by @bobbythefett): on the ThinkNode M9,
+      Tanmatsu and T-LoRa Pager, move up to the conversation header and press Enter for a chat's
+      settings, Region & scope included.
+
+      - **Browser start page** (#622, an idea from @jesshampshire): with no home page on the SD card
+      and Wi-Fi up, the browser opens the [changelog](https://wadamesh.com/changelog.html).
+
+      - **Theme > Background > Colour** changed the accent colour instead; it sets the background
+      now.
+
+      - **T-Display P4 with Wi-Fi that never connects** (#612): the flasher now offers "factory
+      Wi-Fi chip" images (the `-at` files below), for units whose Wi-Fi chip still runs LilyGo's
+      original firmware. Thanks @jalevdev for spotting the missing choice (#619).
+
+
+      Built and checked on a LilyGo T-Deck. Every other board builds. Please report what you find
+      with "Send a test report" in Settings > About, or an issue here.
+  - version: beta_91
+    name: wadamesh beta_91
+    datetime: '2026-10-08T22:53:48Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_91
+    prerelease: true
+    notes: >-
+      Test build, on top of beta_90. Stable stays **beta_85**.
+
+
+      Flash it at **[flasher.wadamesh.com](https://flasher.wadamesh.com)** (switch the toggle to
+      Beta), or update on the device if you have "Get test builds (beta)" turned on.
+
+
+      **Home looks different in this build: it is made of widgets now.** Your old Home is still
+      there as the **Commander** preset, in Settings > Display > Home.
+
+
+      ## Home is widgets
+
+
+      Home is now a grid of widgets you arrange yourself. **Hold any widget** to arrange Home:
+
+
+      - drag a widget to move it, and pick its size: small, wide or large,
+
+      - add widgets from the catalog, or take them away,
+
+      - set each widget's own options (which chat, which node, which app, which switches).
+
+
+      Each orientation keeps its own layout. Start from a preset: **Glance** (the new default),
+      **Commander** (the old Home, rebuilt from widgets), **Radio**, **Minimal** or **Sensors**.
+
+
+      Twenty-four widgets: clock, sun and moon, system, note, unread, chat, mentions, heard,
+      nearest, remote sensor, radio, signal, airtime, GPS, position, battery, sensors (Expansion
+      Kit), links, advert, app, switches and app widgets, plus a **mesh radar** on the 8 MB boards
+      and a **compass** on the ThinkNode M9. Tapping a widget opens what it shows.
+
+
+      - **Unread, Chat and Mentions** have a large size that lists the messages themselves. Mentions
+      now shows the message that names you, not the chat's latest line, and counts messages instead
+      of chats.
+
+      - **Lua apps can put a widget on Home** with `wada.widget.set` (boards with the extended SDK).
+      Airtime 1.5 does.
+
+      - Keypad boards arrange Home from **Settings > Display > Home**; the M9 can also hold Enter.
+
+
+      ## A background behind every screen
+
+
+      **Settings > Theme > Background** has five choices:
+
+
+      - **Still aurora** (the default): soft light behind every screen in your accent colour, every
+      colour with Taste the rainbow.
+
+      - **Moving aurora**: the same, drifting in a slow loop. It only moves while you are not
+      touching anything, and stays still with the battery saver on.
+
+      - **Colour**: any colour from the picker.
+
+      - **Image**: open a JPEG in Files and tap **Set as background**.
+
+      - **None**: the plain black page (the light page by day).
+
+
+      A colour or a picture is darkened, or lightened by day, just enough for all text to stay
+      readable. Like the other colour settings it waits for Apply and restart. The Heltec V4 has no
+      picture option: a full-screen picture takes too much of its memory.
+
+
+      Over a background, **cards and Home widgets are glass**: the background shows through them.
+      The **top bar is smoked glass**, dark at night and light by day, and the dark band under the
+      tall bar on settings pages is gone.
+
+
+      ## GPS and battery
+
+
+      - **A GPS icon in the top bar:** a grey crosshair while it searches, a lit pin once it has a
+      position. It hides while GPS is off.
+
+      - **GPS battery saver**, in Settings > GPS > Battery: the GPS rests between position checks
+      (every 2, 5, 15 or 30 minutes) and stays awake while the map, the GPS page or Discover is
+      open. Boards with a GPS power switch turn it off; a u-blox receiver like the T-Deck Plus's is
+      told to stop instead, so switching GPS off on the T-Deck now saves power too.
+
+      - **The battery saver works with Bluetooth or Wi-Fi on.** It used to wait until both were off,
+      which was almost never; now only a connected phone app or someone watching the web view holds
+      it off. It also rests the GPS and keeps a moving background still.
+
+
+      ## Smaller changes
+
+
+      - **Navigation bar position:** bottom, top, left or right (Settings > Display > Navigation
+      bar). On the left or right it becomes a rail.
+
+      - Every settings page now uses the same cards and rows as the rest of the redesign.
+
+      - The app drawer scrolls more smoothly: Home was redrawn underneath it on every frame.
+
+      - The screensaver guards better against burn-in: the picture turns slowly (once an hour),
+      drifts a few pixels, and the status moves to another corner every two minutes.
+
+      - Text wraps only at spaces now, so a wrapped line no longer starts with a stray space after a
+      comm
+
+      …
+  - version: beta_90
+    name: wadamesh beta_90
+    datetime: '2026-10-07T10:00:07Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_90
+    prerelease: true
+    notes: >-
+      Test build, on top of the beta_89 redesign. Stable stays **beta_85**.
+
+
+      Flash it at **[flasher.wadamesh.com](https://flasher.wadamesh.com)** (switch the toggle to
+      Beta), or update on the device if you have "Get test builds (beta)" turned on.
+
+
+      ## Colour is back
+
+
+      Several of you said the colour was what set wadamesh apart, and the beta_89 redesign took most
+      of it out. This build puts it back as choices on a new **Theme** page, and turns **MORE
+      COLORS!** on for everyone in its Regular style. If you liked the calm look of beta_89, turn
+      MORE COLORS! off on the Theme page.
+
+
+      ## The Theme page
+
+
+      Settings > Theme, under Device. It opens on a **preview** of the launcher, a chat and the send
+      button in whatever you pick, so you see the result before anything restarts. Under it:
+
+
+      - **Mode:** Night and Day as two small screens, with High contrast under them.
+
+      - **Accent colour:** the swatches on the page, and Custom for any other colour.
+
+      - **Colour:** MORE COLORS! with its style right under it (Regular, Neon, Pastel), and Taste
+      the rainbow.
+
+      - **Chats:** chat icons (Glyphs or Initials), Colourful bubbles, and Compact messages.
+
+
+      The mode, the accent and the colours wait for one **Apply and restart** button on the preview.
+      Scroll past the preview and the button stays in reach in a slim bar under the title, beside
+      six dots in the colours you picked; tap the dots to go back up to the preview. The chat looks
+      apply at once. Holding the theme chip in the control panel opens the page. Appearance, High
+      contrast, the accent colour, Colourful chat bubbles and Compact messages moved here from
+      Display.
+
+
+      ## MORE COLORS!, three ways
+
+
+      One switch that turns the calm redesign up. The layout stays the same in all three styles;
+      what changes is how colour is used.
+
+
+      - **Regular** gives every section its own colour (the launcher, the Settings list, the tab
+      bar), shows the status icons in colour (signal by strength, battery by level, Wi-Fi and
+      Bluetooth tinted) and draws every name and glyph in its own hue.
+
+      - **Neon** is full cyberpunk: a near-black violet ground, electric cyan, hot magenta, laser
+      yellow and acid lime, with lit edges on tiles, buttons and bubbles. Your accent stays yours,
+      pushed to full brightness.
+
+      - **Pastel** is soft: mint, baby blue, lavender, peach and rose on a warm dark ground.
+
+
+      ## Taste the rainbow
+
+
+      Every app, Settings page and tab gets its own place on the colour wheel, in the style you
+      picked, and a few things move:
+
+
+      - the tab marker, the chats count and the keyboard focus ring slowly travel round the colour
+      wheel,
+
+      - buttons dip when you press them,
+
+      - a new message lands with a flash of its sender's colour,
+
+      - the lock screen mark, the boot mark and the screensaver's nodes light up in colour.
+
+
+      The motion only touches small things, and it rests while the screen is off, locked or showing
+      the screensaver. Turning it on still says "Taste the rainbow!", now with a burst of coloured
+      dots.
+
+
+      ## Chats
+
+
+      - **Chat icons:** Glyphs (the dot marks) or **Initials**, the old look of the first two
+      letters of the name in a coloured ball. It applies at once and reaches every icon: the chat
+      list, contacts, the conversation header, the lock screen cards and the new-message card. A
+      chat icon you picked yourself still wins.
+
+      - **Names are always in colour now.** The Colourful bubbles switch colours the bubbles too,
+      your own included, as it did before the redesign. Mentions of you keep their blue bubble.
+
+      - **Day mode** draws names and glyphs on its light lists in a deeper shade of their colour, so
+      they read on white, and keeps the bright one inside the dark bubbles.
+
+
+      High contrast keeps its own fixed colours, so the colour switches are greyed out while it is
+      on. The e-paper T-Deck Pro and Max show only the chat looks.
+
+
+      ## Smaller changes
+
+
+      - Every image is 30 KB smaller: the boot logo was stored in it twice. That also leaves the
+      Heltec V4 room for everything in this build, the motion included.
+
+      - Text that is new in this build shows in English for now. The translations fo
+
+      …
+  - version: beta_89
+    name: wadamesh beta_89
+    datetime: '2026-10-06T22:13:18Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_89
+    prerelease: true
+    notes: "Test build. Stable stays **beta_85**.\r\n\r\nFlash it at **[flasher.wadamesh.com](https://flasher.wadamesh.com)** (switch the toggle to Beta), or update on the device if you have \"Get test builds (beta)\" turned on.\r\n\r\n## The UI overhaul\r\n\r\nBig changes! Every screen has been redesigned, and many of the base features underneath were reworked to fit: the status bar, Chats, the conversation screen, the lock screen, the screensaver, Home, Settings, notifications and the way text scales on every board.\r\n\r\n**Only install this beta if you want to test.** If you rely on your device every day, stay on the stable build (beta_85) until this has had a few rounds of fixes. Things have moved, there will be rough edges, and some less used pages still have the old look. If you do install it, please tell us what you find, with \"Send a test report\" in Settings > About or an issue here. Every report goes straight into the next fixes.\r\n\r\nIt was built and run on a LilyGo T-Deck. Every other board builds, and every screen was checked at each board's resolution and text size, but it has not run on the other hardware yet. If you own one of those boards, you are exactly who this test needs.\r\n\r\nText that is new in this build shows in English for now. The translations follow once the wording has settled.\r\n\r\n## One design, everywhere\r\n\r\nThe firmware had grown one screen at a time, and it showed: a single text weight across more than 750 uses, over a hundred hard-coded colours, one outlined button style for everything, and white LVGL text fields, dropdowns and switch tracks on a black screen. All of that now comes from one design system: one dark palette, a clear type scale (a light clock, SemiBold names, quieter secondary and meta text), line icons everywhere, and one style for every switch, text field, dropdown, checkbox, slider, list and button. It is applied where LVGL creates each widget, so pages nobody has rebuilt yet still lose the white boxes. The main action on a page is a solid teal button with dark text.\r\n\r\n**The status bar** is calmer: the clock in the middle, signal and battery on the right, unread messages on the left, Wi-Fi and Bluetooth small and grey. The scrolling node name stays on the Home tab.\r\n\r\n**Chats** has a new header with All, Channels and Direct filters, a + to add a channel, and a menu with Mark all as read and Share my contact. Every chat gets an avatar drawn from its key, a square for a channel and a circle for a person, instead of coloured initials. The gear on every row is gone: hold a chat, or use the menu in the conversation header, and its options come up as a plain list of actions (mute messages, mute mentions, reset the chat icon, mark as read, delete history, delete the chat).\r\n\r\n**The conversation screen** has a header with the avatar and how the last message reached you: direct, a number of hops, or for a channel how many nodes it heard from today. Bubbles are neutral and the sender's colour is on the name only. Under each message is how many hops it came over; under your own channel posts, \"Heard by N repeaters\", counting the repeats as they come back. A direct message shows Sent and then Delivered, and one that was not delivered says so and resends with a tap. The composer is a pill with a teal send button.\r\n\r\n**The lock screen** is new: the wadamesh mark, a large light clock and the date, a line of the mesh activity over the last 24 hours with the number of packets heard, up to two unread conversations, and how to unlock along the bottom beside the battery. A wallpaper you chose still shows, dimmed behind it. The view moves a few pixels every minute so nothing burns into the panel, and Settings > Lock screen > Message text on lock screen hides the message text in the unread cards.\r\n\r\n**The screensaver** is new too. Constellation puts your node in the middle and the nodes you have heard around it. A ring appears wherever a packet actually came from, light runs along the routes of nodes heard in the last ten minutes, \n…"
+  - version: beta_88
+    name: wadamesh beta_88
+    datetime: '2026-10-05T12:05:30Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_88
+    prerelease: true
+    notes: >-
+      Test build. Stable is **beta_85**.
+
+
+      Flash it at **[flasher.wadamesh.com](https://flasher.wadamesh.com)** (switch the toggle to
+      Beta), or update on the device if you have "Get test builds (beta)" turned on.
+
+
+      Most of this drop is [@oumike](https://github.com/oumike)'s, with two fixes from
+      [@jcyrio](https://github.com/jcyrio).
+
+
+      ## Read this if you own a T-Display P4
+
+
+      **beta_86 and beta_87 do not boot on older P4 units.** If yours has been dark and restarting
+      since you updated, this build fixes it, and you are not alone: three people hit it.
+
+
+      The P4 ships with one of two different firmwares on its C6 radio co-processor. Newer units run
+      esp-hosted, which is what beta_86 switched to; older units still carry the factory ESP-AT, and
+      on those the two sides could never agree. That alone should have cost you Wi-Fi. Instead the
+      co-processor driver rebooted the whole board about ten seconds into every boot, and the Wi-Fi
+      handshake sat in front of the display, so the screen never got as far as drawing.
+
+
+      Two things changed. The screen, touch and LoRa now come up before anything talks to the C6, so
+      a co-processor that cannot be reached can no longer take the device with it. And the driver no
+      longer restarts the board, or spins retrying, when the link is never going to work.
+
+
+      **If you have an older unit, there is now a build that matches it.** Look for the entries
+      marked "older unit, ESP-AT C6" in the flasher, or the `-at` files below. Those restore Wi-Fi
+      as well. If you are not sure which you have, flash the normal one: it will work, and you will
+      know by whether Wi-Fi does.
+
+
+      Thanks to [@jalevdev](https://github.com/jalevdev) for the report and a log that named the
+      cause (#600).
+
+
+      ## A channel message could go out on the public channel
+
+
+      If a channel went missing while you had its chat open, and you sent from the web interface,
+      the message did not fail. It went out on the first channel on the device, which is normally
+      the public one, with nothing on screen to say so.
+
+
+      The web path did look the channel up by name before sending. It then fell back to the thread's
+      remembered slot when that lookup failed, which is exactly the thing the lookup existed to
+      protect against: after a channel is added or removed the slots shift, so the remembered one
+      points at a different, still valid channel. It now refuses and says so, which is what the
+      on-device composer already did. The check also moved to the one point every sender passes
+      through.
+
+
+      Reported by [@TippyLion28](https://github.com/TippyLion28) (#588, #589).
+
+
+      ## Fixes
+
+
+      - **Deleting a chat's history no longer deletes the chat.** The confirmation always said the
+      chat would stay. It does now, and Delete chat is still how you remove it. By
+      [@jcyrio](https://github.com/jcyrio) (#587).
+
+      - **The T-LoRa Pager stops losing half an hour a day.** The clock ran off the processor's own
+      timer and drifted, while the accurate clock chip beside it was only read at boot. It is read
+      back hourly now. [@jcyrio](https://github.com/jcyrio) diagnosed this from the source before
+      filing it (#583).
+
+      - **The ThinkNode M9's bottom icons have stopped flashing.** They carry a count now and show
+      only when they mean something. The new-nodes one used to blink forever because it counted
+      every node ever heard rather than the ones you had not looked at.
+
+      - **"100%" is no longer hidden behind the signal bars** on the M9 and the Heltec V4-R8, at any
+      text size, and it no longer jumps back when you plug in a charger. Reported by buko84 and
+      jd1227.
+
+      - **The status-bar clock no longer sits under the Bluetooth icon**, which
+      [@DenRalle](https://github.com/DenRalle) spotted while asking about something else (#594).
+
+      - **Map tiles cache again on a P4 with no SD card.** The cache was pointed at a filesystem
+      nothing had mounted.
+
+      - **The Secondary keyboards page named a key the Pager does not have.** T-LoRa Pager, T-Deck
+      Pro and T-Deck Max were told to tap an on-screen language key; double-tap SPACE is what
+      actually switches layout there. By [@jcyrio](https://
+
+      …
+  - version: beta_87
+    name: wadamesh beta_87
+    datetime: '2026-10-03T18:04:57Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_87
+    prerelease: true
+    notes: >-
+      Test build. Stable is **beta_85**.
+
+
+      Flash it at **[flasher.wadamesh.com](https://flasher.wadamesh.com)** (switch the toggle to
+      Beta), or update on the device if you have "Get test builds (beta)" turned on.
+
+
+      Two fixes for Lua apps and nothing else. **If you do not write or run apps, this is the same
+      firmware as beta_86** and there is no reason to rush.
+
+
+      ## A memory leak in Lua apps
+
+
+      Apps leaked memory every time they redrew a screen, and the more the screen had on it the
+      faster it went.
+
+
+      Clearing a page destroyed the buttons and list rows but kept the code attached to each one.
+      The callbacks live in a table keyed by the widget's address, and nothing removed the entries
+      when the widgets were freed, so an app rebuilding a list of twenty contacts left twenty
+      closures behind on every redraw, each holding whatever it had captured. Nothing ever took them
+      out, so an app ran until it could not allocate and then failed to build a screen.
+
+
+      Clearing a page now releases those callbacks along with the widgets they belong to. Every
+      entry in that table describes a widget that has just been destroyed, so there is nothing in it
+      worth keeping.
+
+
+      It could also have made a button do the wrong thing. Addresses get reused, so a new button
+      created with nothing attached to it could land on an address a dead one had left behind and
+      run that instead on the next tap. That cannot happen now that nothing is left behind.
+
+
+      Reported by Jade while writing a one-time-pad app. If you have seen an app get slower, or
+      start failing to draw, the longer it ran, this is why.
+
+
+      ## wada.ui.emoji(cb)
+
+
+      Opens the emoji picker and gives you the chosen glyph back as UTF-8, or `nil` if it was
+      dismissed.
+
+
+      This is for an app that draws its own text entry and keeps the buffer itself. If you use
+      `wada.ui.input()` you do not need it: beta_86 put the picker on that field's long-press menu
+      already, beside Cut, Copy, Paste and Sym. The distinction matters because an app with its own
+      composer has no textarea to long-press, which is exactly the case this was asked for.
+
+
+      Documented at [wadamesh.com/sdk.html](https://wadamesh.com/sdk.html).
+  - version: beta_86
+    name: wadamesh beta_86
+    datetime: '2026-10-03T17:11:27Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_86
+    prerelease: true
+    notes: >-
+      Test build. Stable is now **beta_85**.
+
+
+      Flash it at **[flasher.wadamesh.com](https://flasher.wadamesh.com)** (switch the toggle to
+      Beta), or update on the device if you have "Get test builds (beta)" turned on.
+
+
+      Most of this is [@oumike](https://github.com/oumike)'s: a 50-commit set covering the T-Display
+      P4, the T-Deck Pro, the M9 and the shared UI, plus a new board. The five new Store apps are
+      [@samuelcoustet](https://github.com/samuelcoustet)'s, and the trackball fix is
+      [@samdems](https://github.com/samdems)'.
+
+
+      ## If you have a T-Display P4, this is the one to take
+
+
+      **Landscape works.** In beta_85 switching to landscape left the touch screen rotated and
+      offset, which meant the control to switch back could not be hit and the only way out was
+      reflashing over USB. Taps were being rotated twice, once by the touch driver and once by the
+      interface. If beta_85 left you stuck in landscape, this build is the way out.
+
+
+      The P4 also gains the **LR2021 radio variants** (#504), a clip-on keyboard, GPS that starts
+      reliably, Wi-Fi through the C6 coprocessor, and a clock that syncs over saved Wi-Fi on a cold
+      boot. Several screens that were cut off or overlapping in portrait are laid out properly, and
+      the Remote UI placeholder is drawn on the real panel.
+
+
+      ## A new board: Elecrow CrowPanel Advance 3.5"
+
+
+      ESP32-S3, ILI9488 display, GT911 touch (#561). Experimental, and new enough that anything you
+      report is useful.
+
+
+      ## T-Deck Pro owners: pick your hardware revision
+
+
+      There are now separate **v1.0** and **v1.1** builds. The touchscreen that did nothing on some
+      Pros was simply the wrong touch driver for that revision (#568). If you do not know which you
+      have, try v1.1: it is what the single Pro build always was, and updating from the device keeps
+      working without you choosing anything.
+
+
+      ## Fixes
+
+
+      - **#562** the terminal on the Pro and Max drew black text on a black background.
+
+      - **#563** compact chat messages ran into each other on the Pro and Max. The gap added in
+      beta_85 was measured in one place and drawn in another.
+
+      - **#132** the screen lock now holds the trackball as well as touch, so the map no longer pans
+      under a locked screen.
+
+      - **#574** a crash when tapping the accent popup after its text box had closed.
+
+      - **#570** leaving a profile field you did not edit no longer claims it saved, and scrolling
+      no longer says "saved" on every row.
+
+      - **#564** M9 back button. **#569** mark all chats and channels read. **#576** the map's side
+      buttons show which is selected. **#571** Wardrive naming. **#579** the lock screen shows the
+      battery, on every panel.
+
+      - Settings backups were exported as **invalid JSON**, so they could not be imported again.
+      They now also carry the screen and app preferences they were missing.
+
+      - ThinkNode M9: the battery percentage no longer overlaps the signal bars at the larger text
+      sizes added in beta_85.
+
+
+      ## Five new apps in the Store, by @samuelcoustet
+
+
+      **Tetris**, **Breakout**, **Trip Odometer**, **Ping** and **ProTreck**. Tetris, Breakout and
+      Ping are built into the boards that cannot reach the Store; Trip Odometer and ProTreck need
+      GPS and sensors, so they stay a download rather than spending flash on boards that cannot use
+      them.
+
+
+      ## Emoji in any text field
+
+
+      Long-press a field and the picker is there beside Cut, Copy, Paste and Sym. That includes the
+      text entry a Lua app opens with `wada.ui.input()`.
+
+
+      ## For people writing Lua apps
+
+
+      Two things that were asked for already existed and are now documented: **`wada.sys.epoch()`
+      and `wada.sys.datetime()`** give you the device clock, and the field `wada.ui.input()` opens
+      is the firmware's own, so it already has Cut, Copy, Paste, Sym and now Emoji on a long press.
+
+
+      The SDK page also had **the wrong path** for side-loading: on a device with an SD card it is
+      `/meshcomod/apps/`, not `/apps/` at the root of the card. Following the old wording silently
+      did nothing, which cost at least one person an evening.
+
+
+      ## For testers
+
+
+      The P4 landscape fix and the CrowPanel 3.5 are what want eyes. When
+
+      …
+  - version: beta_85
+    name: wadamesh beta_85
+    datetime: '2026-09-23T12:16:21Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_85
+    prerelease: false
+    notes: >-
+      **Stable.** This is the same build as the beta_85 test release, promoted unchanged after
+      testing, and it replaces beta_83 as the recommended version.
+
+
+      Flash it at **[flasher.wadamesh.com](https://flasher.wadamesh.com)**, or update on the device.
+
+
+      ## Read this first if you have a T-Display P4
+
+
+      **Do not switch the screen to landscape on this build.** Landscape arrived in beta_85 and the
+      touch screen comes back rotated and offset, so the control to switch back cannot be hit and
+      the only way out is reflashing over USB. It is fixed in the **beta_86** test build, which is
+      the way out if you have already hit it. Portrait is the default and is unaffected.
+
+
+      ## Read this first if you have a T-Deck Max
+
+
+      A Max running **beta_84** that updates itself installs **T-Deck Pro firmware**, because it is
+      the firmware you are running that picks which file to download. Update to this one **over
+      USB** from the flasher rather than from the device. From beta_85 onwards it is fixed.
+
+
+      ## Tell us whether a build works, from the device
+
+
+      Settings, About now has **Send a test report**. Say whether it works on your board, tick what
+      you actually exercised, say how long you have run it, and send. What comes in lands on
+      **[wadamesh.com/beta](https://wadamesh.com/beta.html)**, and that is what the next stable
+      release gets promoted on, instead of a build going out because nobody complained.
+
+
+      The report carries the board, the version, your ticks and the free memory. No name, no
+      contacts, no position, and the device lists exactly what it will send before it sends it. Your
+      device is identified by a salted hash of its public key, so a second report replaces your
+      first rather than counting twice and nobody reading the page can work back to a node. It needs
+      Wi-Fi.
+
+
+      **Report a bug** on the same page draws a QR code. Scan it with your phone and a GitHub issue
+      form opens with your board, version and diagnostics already filled in, so you only type what
+      went wrong, and it is filed under your own account so the replies reach you.
+
+
+      Optional and off by default: **Count this device** lets the update check say which board and
+      build it is running, so a board nobody has reported on can be told apart from a board nobody
+      owns.
+
+
+      ## New board: LilyGo T-Deck Max
+
+
+      Contributed and tested by [@pelgraine](https://github.com/pelgraine). The T-Deck Pro's
+      hardware with the peripheral power rails and resets behind an I/O expander, and a fuel gauge
+      for the battery. The e-paper screen gets its own handling: no fades, no black frame left on
+      the glass when it sleeps, tap to wake, and the keyboard backlight on a both-Shift chord. It
+      starts with Wi-Fi off and Bluetooth on, because both at once leave this board short of memory.
+      Experimental.
+
+
+      ## Things you can do now
+
+
+      - **High contrast day and night themes**, for sunlight where the normal palette washes out.
+
+      - **Channel regions can be discovered instead of typed**: the region page scans for repeaters
+      you can hear and lists the regions they allow, and channel scope offers them in a picker.
+
+      - **Text size presets on the ThinkNode M9**, under Settings, Display, UI size. It grows the
+      text and leaves the layout alone, so rows and controls keep their size and nothing becomes
+      unreachable. Your current setting is untouched by the update.
+
+      - **Coordinates in a chat message open on the map**, by
+      [@TerryTel93](https://github.com/TerryTel93). The message menu gains Map, tapping the message
+      does the same, and the spot is marked so you can find it again or remove it.
+
+      - **Czech**, by [@brebtatv](https://github.com/brebtatv).
+
+
+      ## Fixes
+
+
+      Radio settings save again when the region field holds a name the new rules reject, such as one
+      with capitals: only the region is skipped now, instead of the frequency, bandwidth and power
+      going with it. The Show button on telemetry shows its label in Russian, Ukrainian, Bulgarian,
+      Serbian and Greek instead of empty boxes. Scanning for regions no longer leaves nameless
+      entries in Contacts. The V4-R8 image fits again, having stopped carr
+
+      …
+  - version: beta_84
+    name: wadamesh beta_84
+    datetime: '2026-09-21T12:56:14Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_84
+    prerelease: true
+    notes: >-
+      Test build. Stable is now **beta_83**.
+
+
+      Flash it at **[flasher.wadamesh.com](https://flasher.wadamesh.com)** (switch the toggle to
+      Beta), or update on the device if you have "Get test builds (beta)" turned on.
+
+
+      Most of this drop is community work: 11 of its changes are
+      [@oumike](https://github.com/oumike)'s, the new board is
+      [@pelgraine](https://github.com/pelgraine)'s, and the Czech translation is
+      [@brebtatv](https://github.com/brebtatv)'s.
+
+
+      ## New board: LilyGo T-Deck Max, by @pelgraine (#545, #546, #547)
+
+
+      The T-Deck Pro's hardware with the peripheral power rails and resets behind an I/O expander
+      and a fuel gauge for the battery. It reuses the Pro's display and touch drivers, so the Pro
+      build is unchanged.
+
+
+      The e-paper screen gets its own handling: no fades, no black frame left on the glass when it
+      sleeps, a banner that says the screen is asleep, tap to wake, and the keyboard backlight on a
+      both-Shift chord. It boots with Wi-Fi off and Bluetooth on, because both at once leave this
+      board short of internal memory; the Settings toggle keeps whatever you choose.
+
+
+      Experimental, tested by its contributor on one unit. Please report what works and what does
+      not.
+
+
+      ## Reading the screen outdoors (#544)
+
+
+      High contrast day and night themes, for sunlight where the normal palette washes out.
+      Settings, Display, Theme.
+
+
+      ## Regions you can discover (#541)
+
+
+      The region page scans for repeaters you can hear and lists the regions they allow, and channel
+      scope offers them in a picker, so a region no longer has to be typed exactly.
+
+
+      ## Czech, by @brebtatv (#540)
+
+
+      A full Czech translation, 1270 strings. Settings, Language.
+
+
+      ## ThinkNode M9 (#528)
+
+
+      With the home drawer locked, Back (and Esc on a Bluetooth keyboard) stays on it instead of
+      escaping to the tabs behind it. The Language settings cursor returns where it was after
+      visiting the Store, and a channel keeps its unread colour.
+
+
+      ## Heltec V4 and V4-R8 (#536)
+
+
+      An M5Stack CardKB can be plugged into the board's I2C bus and used as a keyboard; it is
+      detected when present, so nothing changes without one. On the V4-R8 there are bigger text
+      sizes to choose from, and the top row of the screen no longer swallows taps meant for the
+      page.
+
+
+      ## Fixes
+
+
+      - Radio settings save again when the region field holds a name the new rules reject, such as
+      one with capitals. Only the region is skipped, instead of the frequency, bandwidth and power
+      going with it.
+
+      - The Show button on telemetry shows its label in Russian, Ukrainian, Bulgarian, Serbian and
+      Greek instead of empty boxes.
+
+      - Scanning for regions no longer leaves nameless entries behind in Contacts, and sends one
+      request per tick rather than sixteen at once.
+
+      - The V4-R8 image fits again: it no longer carries the compiled-in translations it inherited
+      from the V4, which it never needed.
+
+      - Wio Tracker L2: the SD card gets a power cycle and a second try when it does not mount at
+      boot.
+
+
+      ## For testers
+
+
+      Region discovery is new on-air traffic and has not been tested on a live mesh yet. Worth
+      reporting whether a scan finds your repeaters' regions.
+  - version: beta_83
+    name: wadamesh beta_83
+    datetime: '2026-09-19T10:30:08Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_83
+    prerelease: false
+    notes: >-
+      **Stable.** This is the same build as the beta_83 test release, promoted unchanged after
+      testing, and it replaces beta_65 as the recommended version.
+
+
+      Flash it at **[flasher.wadamesh.com](https://flasher.wadamesh.com)**, or update on the device.
+
+
+      Eighteen test builds went into this one, beta_66 through beta_83. Everything below is in it.
+
+
+      ## Read this first if you are coming from beta_65
+
+
+      - **If you keep an offline map pack on an SD card, older firmware was deleting tiles out of
+      it.** Every tile it wanted as a `.jpg` erased the `.png` sitting next to it. That is fixed,
+      but the deletions already made cannot be undone: check whether areas of your pack are missing
+      and re-copy them. Found and fixed by [@cvhviz](https://github.com/cvhviz) on a ThinkNode M9.
+
+      - **ThinkNode M9 owners: some of the SD cards Elecrow shipped carry a Windows worm** (their
+      advisory, September 2026). It cannot run on the radio, but it runs on the first Windows PC the
+      card is put into, which is exactly where you take it to copy map tiles. This firmware warns
+      you when such a card is in the device at startup or is inserted, and offers SD Scan. If your
+      card has already been in a PC, run a virus scan on that PC too.
+
+      - **Bluetooth now serves either the phone app or a Bluetooth keyboard**, and you choose which
+      under Settings, Bluetooth. The phone app stays the default.
+
+      - Changing the theme, rotating the screen or switching remote mode restarts the device. All
+      three now say why before they do it.
+
+
+      ## Two new boards
+
+
+      - **Seeed Wio Tracker L2.** Display, touch, GPS, microSD, battery and buttons brought up on
+      real hardware by [@oumike](https://github.com/oumike), who owns the board and maintains it.
+
+      - **LilyGo T-Deck Pro**, marked experimental. E-paper screen, keyboard and touch, with radio,
+      GPS, microSD and battery working. The screen redraws the way e-paper does rather than updating
+      instantly. By [@oumike](https://github.com/oumike), tested on one unit.
+
+
+      ## New things you can do
+
+
+      **USB Files**, on the T-Deck and the Heltec V4. Open it from the app drawer, connect the
+      device with a USB cable and go to [files.wadamesh.com](https://files.wadamesh.com) in Chrome
+      or Edge. Browse the SD card, internal storage and the map tiles, upload files and whole
+      folders, download, rename and delete. The device carries out every operation itself, so what
+      it relies on stays safe: identity, contacts, settings and chat history can be downloaded but
+      not changed or deleted. Files that SD Scan would flag show in red, and the device checks a
+      file's first bytes, so a Windows program under a harmless name is caught too. Your files go
+      straight from the device to your computer over the cable; nothing passes through our server.
+
+
+      **Files on and off the device over Wi-Fi**, by [@oumike](https://github.com/oumike). A browser
+      copies files to and from the card, protected by a six digit code shown on screen, with uploads
+      verified by checksum and committed atomically so an interrupted transfer cannot leave a half
+      written file. The page also lists crash reports, settings backups and screenshots, filters
+      them and can delete them, and it warns you that a settings backup contains your private key. A
+      folder of offline OSM tiles can be uploaded straight to the card, with resumable writes.
+
+
+      **Bluetooth keyboards on every board with Bluetooth.** Pairing lists keyboards in pairing mode
+      and pairs with a code or without one. Keys are read from the keyboard's own report map, the
+      way a phone or computer reads them, with US, UK, German, French and Belgian layouts including
+      AltGr and dead keys. The arrows, Tab, Enter and Page Up and Down drive the highlight, so the
+      whole interface works without touching the screen. Esc is back, and because some keyboards
+      type a character instead of sending Esc, the Back key setting captures whichever key you
+      press. Not on the Tanmatsu or the T-Display P4, which have no Bluetooth of their own.
+
+
+      **SD Scan**, in the Store. It looks through the SD card for Windows programs, scripts, shortc
+
+      …
+  - version: beta_82
+    name: wadamesh beta_82
+    datetime: '2026-09-18T11:47:01Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_82
+    prerelease: true
+    notes: >-
+      Test build. Stable stays beta_65.
+
+
+      Flash it at **[flasher.wadamesh.com](https://flasher.wadamesh.com)** (switch the toggle to
+      Beta), or update on the device if you have "Get test builds (beta)" turned on.
+
+
+      ## ThinkNode M9 SD cards: Windows malware
+
+
+      Some ThinkNode M9 cards shipped with a Windows worm on them ([Elecrow security
+      advisory](https://www.elecrow.com/Thinknode-M9-Security-Advisory-SD-Card-Malware-Risk.html),
+      September 2026). It cannot run on the radio, but it runs on the first Windows PC the card is
+      plugged into, which is exactly where you take the card to copy map tiles onto it.
+
+
+      On the infected cards seen so far it is a hidden `autorun.inf` in the top folder of the card
+      that launches a program called `xlfqf.pif` on open, explore and autoplay, with lines of random
+      junk in between to throw off simple scanners. That matches the pattern of the long-known
+      Sality worm, which disables antivirus software, steals credentials and infects other programs
+      on the PC.
+
+
+      - **New in the Store: SD Scan.** It looks through the SD card for Windows programs, scripts,
+      shortcuts and autorun files, shows what it found and why, and removes it after you confirm. A
+      mesh radio never uses any of these files, and nothing else on the card is touched. A quick
+      scan skips the deep map-tile folders; a full scan reads everything.
+
+      - **SD Scan only removes files it recognises.** If a card may be infected, the safest fix is
+      to copy off what you need and format it completely: in Files, hold the SD card row.
+
+      - **A startup warning.** When a card with Windows malware in its top folder is in the radio at
+      startup, or is inserted, wadamesh warns you and offers to open SD Scan.
+
+      - **Already used the card in a Windows PC?** Run a full virus scan on that PC as well.
+
+
+      ## For app authors
+
+
+      `wada.sd.check(path)` and `wada.sd.remove(path)` find and delete Windows malware on the card.
+      What counts is decided in firmware (`SdThreat.h`): `autorun.inf`, Windows program, script and
+      shortcut extensions, or a real Windows program header under any name. `remove` refuses
+      everything else, so no app can use it to delete map tiles, backups or chat history.
+      `wada.sd.list(path, start, max)` pages through big folders, and `caps().sd_clean` says whether
+      a board has all three. Documented at
+      [wadamesh.com/sdk.html](https://wadamesh.com/sdk.html#sd).
+
+
+      ## For testers
+
+
+      SD Scan and the removal are tested on a T-Deck. M9 owners: worth reporting whether the scan,
+      the removal and the startup warning all work with the M9's keys.
+  - version: beta_81
+    name: wadamesh beta_81
+    datetime: '2026-09-17T20:12:24Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_81
+    prerelease: true
+    notes: >-
+      Test build. Stable stays beta_65.
+
+
+      Flash it at **[flasher.wadamesh.com](https://flasher.wadamesh.com)** (switch the toggle to
+      Beta), or update on the device if you have "Get test builds (beta)" turned on.
+
+
+      Half of this drop is @oumike's again, gathered into one reviewable PR (#523), and most of the
+      rest came out of reports from @PD0RCM, @jesshampshire, @Steve8677 and @Buko84. Thanks also to
+      @comraderachel, @B0N3-GD and @wpawelczyk-wq, whose reports drove the PR.
+
+
+      ## Bluetooth keyboards, on every board with Bluetooth
+
+
+      Bluetooth now serves either the phone app or a keyboard, and Settings, Bluetooth is where you
+      choose. Pairing lists the keyboards that are in pairing mode and pairs with a code or without
+      one; the keyboard you paired reconnects by itself after that.
+
+
+      - **Keys are read from the keyboard's own report map**, the way a phone or a computer reads
+      them, so media keys and touchpads are left alone and the boot protocol is only a fallback.
+
+      - **Layouts**: US, UK, German, French and Belgian, including AltGr and the dead keys for
+      accents.
+
+      - **Touchscreen boards keep the on-screen keyboard down** while a keyboard is connected, and a
+      second tap on a field brings it up anyway.
+
+      - **The whole interface works from the keyboard**: arrows, Tab, Enter and Page Up/Down drive
+      the highlight, and the letter hotkeys over the tab bar switch pages.
+
+      - **Esc is the back button**, and for keyboards whose Esc key types a character instead, the
+      Back key setting captures whichever key you press and uses that.
+
+      - **Command tapped on its own** opens the emoji picker while you are writing, and the status
+      bar shows a keyboard instead of the Bluetooth glyph while one is connected.
+
+
+      Not on the Tanmatsu or the T-Display P4, which have no Bluetooth of their own. Both ESP32-P4
+      targets still build and ship as usual.
+
+
+      ## From @oumike's PR #523
+
+
+      - **T-Lora Pager: the microSD card mounts again** after the card has been read on a computer,
+      and powering off unmounts and powers it down. Reported by @comraderachel (#522).
+
+      - **At a glance: emoji render as emoji** instead of squares. Reported by @B0N3-GD (#521).
+
+      - **Transfer page: upload a folder of offline OSM tiles** straight to the SD card, with strict
+      path checks and resumable, atomic writes. Requested by @wpawelczyk-wq (#515).
+
+      - **LilyGo T-Deck Pro**: touch releases are debounced, holding a chat row is timed in
+      hardware, and typing a space no longer starts the screen lock.
+
+      - **Heltec V4 with the original Expansion Kit**: the IO button goes back on a tap and home on
+      a hold, larger keys with a magnified preview, and bigger status-bar targets. Reported by
+      @jesshampshire (#525).
+
+
+      ## Fixes for everyone
+
+
+      - **The web interface can unlock the screen again.** A locked screen absorbs every tap on
+      purpose, and unlocking on the device means holding the trackball or the button, so a browser
+      had no way back from a screen it had locked itself. The page now shows an Unlock button
+      whenever the device is locked. Reported by @PD0RCM (#506).
+
+      - **Console mode can be left without typing**: hold a finger on the screen for three seconds.
+      It also applies the "Older keyboard protocol" setting now, which it was ignoring, so a T-Deck
+      that needs that setting no longer types garbage in the console with no way out. A touch wakes
+      a dark console screen again as well, on the boards that have no keyboard. Reported by
+      @jesshampshire (#507).
+
+      - **Pasting a key takes the key out of the message**: the channel-secret and public-key fields
+      lift a 32 or 64 hex digit key out of whatever you copied instead of filling up with the words
+      around it. Reported by @Steve8677 (#526).
+
+      - **ThinkNode M9 shows a waiting firmware update** in its own notice row, next to the message
+      and contact notices. That board never had an update signal at all. Requested by @Buko84
+      (#443). The Settings tile in the app drawer carries the same mark on every board.
+
+
+      ## For testers
+
+
+      Bluetooth keyboards are new on every board. Worth reporting: which keyboard you used, whether
+      it paired wit
+
+      …
+  - version: beta_80
+    name: wadamesh beta_80
+    datetime: '2026-09-16T10:36:32Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_80
+    prerelease: true
+    notes: >-
+      Test build. Stable stays beta_65.
+
+
+      Flash it at **[flasher.wadamesh.com](https://flasher.wadamesh.com)** (switch the toggle to
+      Beta), or update on the device if you have "Get test builds (beta)" turned on.
+
+
+      > **Seeed Wio Tracker L2 owners: update this one from the website over USB, not from the
+      device.** Earlier builds looked for the wrong file when updating themselves and would have
+      installed the Heltec V4 firmware. This build fixes that, so on-device updates are safe from
+      here on.
+
+
+      This release is almost entirely @oumike's: 54 of its 61 changes, gathered into one
+      consolidated PR (#517) so they could be reviewed as a whole, including a new board. Thanks
+      also to @aigarslv for the Latvian keyboard and @tmetz1987 for Wardrive 1.2, and to @Buko84,
+      @Danie10, @DenRalle and @Colni777, whose reports drove most of the fixes.
+
+
+      ## New board: LilyGo T-Deck Pro (experimental)
+
+
+      The T-Deck Pro can now be flashed from the website, marked experimental. By @oumike (#469).
+      The e-paper display, keyboard, touch, radio, GPS, microSD and battery all work, but it has
+      been tested on a single v1.1 unit so far. The screen redraws the way e-paper does rather than
+      updating instantly. Any report helps, including which hardware revision you have.
+
+
+      ## Wio Tracker L2
+
+
+      - **Self-updates fetch the right firmware.** A board's update file is chosen from a per-board
+      table that used to fall back to the Heltec V4 when a board was missing from it. The Wio L2 was
+      missing, and nothing checks that a downloaded image belongs to the board installing it. Every
+      board is now listed explicitly, and a board that is not listed no longer compiles, so this
+      cannot happen quietly again.
+
+      - **Backups go to the SD card.** The SD path had been left out of this board's build, so they
+      never did before. By @oumike (#499, #501).
+
+
+      ## ThinkNode M9
+
+
+      - **The jump-to-latest arrow is back in conversations** (#490). beta_79 removed it as a
+      touchscreen-only control, but on the M9 it was the quickest way to the newest message.
+
+      - **Up and down walk a conversation one message at a time**, in order (#492).
+
+      - **Scrolling works** in message info (#482, #488), the admin log (#483, #494) and discovered
+      contacts (#481, #487), and the text cursor stays inside the field (#474, #479).
+
+      - **Navigation shortcuts work from anywhere** (#485, #493), the selection cursor is easier to
+      see (#478), System Information and Memory detail can be navigated (#476), purge confirmations
+      keep focus (#477), and a new channel puts the cursor in the message field (#508, #509).
+
+      - **The file list shows when each file was written**, so the latest crash report is obvious.
+      Requested by @DenRalle (#475, #495).
+
+      - **"Lock home to drawer"** keeps the Home key on the app drawer when the drawer is your home
+      screen. Requested by @Buko84 (#491, #497).
+
+
+      All by @oumike, most of them from @Buko84's reports.
+
+
+      ## Fixes for everyone
+
+
+      - **The battery life estimate works after a restart.** Samples logged before the clock was set
+      made a normal discharge look flat, so it read "charging / steady". By @oumike, reported by
+      @Danie10 (#480, #498).
+
+      - **The lock-screen notification no longer shows a direct message as 64 hops away.** By
+      @oumike, reported by @Buko84 (#484, #489).
+
+      - **Telemetry polling stops on its own**, after 10 requests by default, instead of flooding
+      the mesh until someone notices. By @oumike, reported by @Colni777 (#512).
+
+      - **Quick replies can be longer.** By @oumike, requested by @Danie10 (#425, #502).
+
+      - **A Lua app that clears its screen while showing a map no longer frees the map twice.** By
+      @oumike, reported by @tmetz1987 (#511, #513).
+
+      - **The About page shows microSD diagnostics**, so a card that will not mount says why. By
+      @oumike (#514).
+
+      - **The System Information page title is translated again.** Its key had been renamed in the
+      generated translation table but not in the language files it is built from, so every build put
+      the old name back.
+
+
+      ## Keyboards and apps
+
+
+      - **Latvian keyboard layout**, and Romanian no longer labels itself as E
+
+      …

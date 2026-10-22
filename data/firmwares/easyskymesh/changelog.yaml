@@ -1,7 +1,13 @@
 source: github
 repo: IoTThinks/EasySkyMesh
-updatedAt: '2026-10-17T03:29:41.532Z'
+updatedAt: '2026-10-22T19:48:57.043Z'
 releases:
+  - version: PowerSaving18
+    name: 'PowerSaving 18: For Power Users with More CLI Controls'
+    datetime: '2026-10-22T16:35:22Z'
+    url: https://github.com/IoTThinks/EasySkyMesh/releases/tag/PowerSaving18
+    prerelease: true
+    notes: "# This is BETA for TESTING. Please do NOT use it for deployment\r\nBased on MeshCore 1.18 with PowerSaving features\r\n* More features will be added in the next few days\r\n* More tests are in progress\r\n* Boards are built upon request. Ping us at https://discord.gg/MSBUDjBm5\r\n* Flash Custom Firmware as in [INSTRUCTION](https://github.com/IoTThinks/EasySkyMesh/blob/main/firmware/Instruction-to-flash-firmware.md)\r\n* Source code: https://github.com/IoTThinks/MeshCore/tree/PowerSaving-v18\r\n\r\nDefaults for NEW installs for repeaters, room servers, companions and sensors\r\n* powersaving on\r\n* set radio.fem.rxgain off\r\n* set radio.rxps balanced\r\n\r\nTest CLIs\r\n* PowerSaving: powersaving on, powersaving off, \r\n* RXPS: set radio.rxps balanced, set radio.rxps off, get radio.rxps\r\n* FEM RXGain (T096, V4.3, v4.3 R8, Tracker v2...): set radio.fem.rxgain on, set radio.fem.rxgain off, get radio.fem.rxgain off\r\n* GPS and PowerSaving GPS: gps, gps on, gps off, gps sync\r\n\r\nTODO:\r\n* Check TX power for RAK 1Ws in TX and in GPS on/off\r\n* Check to turn off FEM during poweroff for Heltec v4.3 and 4.3 R8\r\n* Check screen not on for Tracker v2\r\n* Add GPIO on/off/init sensors via CLI\r\n* Check sensor firmware for pub/sub telemetries\r\n* ..."
   - version: PowerSaving17.1
     name: 'PowerSaving 17.1: Ready for Winters - Down to 1 mA'
     datetime: '2026-08-15T14:33:01Z'

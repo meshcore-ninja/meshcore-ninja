@@ -1,4 +1,2355 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-10-22T14:56:21.841Z'
-releases: []
+updatedAt: '2026-10-22T19:49:35.947Z'
+releases:
+  - version: v4.17.1-rc9
+    name: v4.17.1-rc9
+    datetime: '2026-10-22T00:37:29Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.1-rc9
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.17.1-rc9
+
+
+      > ⚠️ **Pre-release.** This is a release candidate for testing. Use a stable release in
+      production.
+
+
+      This release candidate adds an overlay for tropospheric ducting on the Map tab and the
+      Dashboard map. It also round-trips the firmware's waypoint geofence fields (radius, bounding
+      box and enter/exit alerts). You can draw and edit them in the waypoint editor, and the map
+      shows them. Auto-Responder triggers now have a Pattern or Regex match mode on both Meshtastic
+      and MeshCore, and both source types share one matcher. Triggers now accept emoji and any
+      printable Unicode text. MeshCore pattern triggers gain `{param}` capture and
+      lookalike-character normalisation. The MeshCore Virtual Node sends a firmware-v3 DeviceInfo
+      frame, so MeshCore One and other apps read its capacities correctly. MeshCore traces to
+      direct-neighbour repeaters now route through the repeater's own hash. The Configuration tab
+      now refetches channels after Reload Config on Device. A node's channel is now recorded only
+      from its own key-decoded traffic, not from PKI, spoofed or replayed packets.
+
+
+      ## Features
+
+      - feat(map): tropospheric ducting overlay UI on the Map tab and Dashboard map (#5913)
+
+      - feat(waypoints): round-trip firmware waypoint geofence fields (#5925)
+
+      - feat(automation): one Auto-Responder trigger syntax for Meshtastic and MeshCore (#5930)
+
+
+      ## Bug Fixes
+
+      - fix(meshcore): trace direct-neighbour repeaters through their own hash (#5915)
+
+      - fix(meshcore): send a firmware-v3 DeviceInfo from the Virtual Node (#5917)
+
+      - fix(config): refetch channels after Reload Config on Device (#5920)
+
+      - fix(nodes): record a node's channel only from its own key-decoded traffic (#5926)
+
+
+      ## Chores
+
+      - chore: bump version to 4.17.1-rc9 (#5932)
+
+
+      ## Issues Resolved
+
+      #5734, #5914, #5916, #5919, #5922, #5923, #5924
+
+
+      ## Upgrade notes
+
+      - Migration 216 adds the waypoint geofence columns. It runs automatically.
+
+      - Forwarding-rule and MeshCore Auto-Acknowledge regexes now accept emoji and other non-ASCII
+      printable text. They still reject control characters, and the 100-character cap and ReDoS
+      checks still apply.
+
+
+      **Full Changelog**: https://github.com/Yeraze/meshmonitor/compare/v4.17.1-rc8...v4.17.1-rc9
+
+
+      ## 🚀 MeshMonitor v4.17.1-rc9
+
+
+      ### 📦 Installation
+
+
+      **Docker (recommended):**
+
+      ```bash
+
+      docker run -d \
+        --name meshmonitor \
+        -p 8080:3001 \
+        -v meshmonitor-data:/data \
+        ghcr.io/Yeraze/meshmonitor:4.17.1-rc9
+      ```
+
+
+      ### 🧪 Testing
+
+      ✅ All tests passed
+
+      ✅ TypeScript checks passed
+
+      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
+
+
+      ### 📋 Changes
+
+      See commit history for detailed changes.
+  - version: v4.17.1-rc8
+    name: v4.17.1-rc8
+    datetime: '2026-10-20T15:46:47Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.1-rc8
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.17.1-rc8
+
+
+      > [!WARNING]
+
+      > This is a **pre-release** for testing. It is not tagged `latest`. Back up your data before
+      upgrading.
+
+
+      ## Summary
+
+      This RC closes two cross-source read leaks: traceroute history and unified telemetry now
+      return only sources the viewer may read. The Unified Telemetry page is now a cross-source
+      dashboard: one chart per favorited series, with one line per source and a Latest tab for
+      current values. The ADS-B features gain OpenSky Network as a feed (OAuth2 client credentials
+      required, honours its rate-limit pause). Aircraft matches are re-checked as a node moves, up
+      to six times per flagging. The traceroute permission is split into Read and Write, and
+      MeshCore trace-path now needs `traceroute:write`; a migration grants it to existing holders of
+      `nodes:write` on MeshCore sources. The position estimator now counts each anchor once, so a
+      node heard through one anchor no longer reports a false 50 m confidence, and Node Details
+      explains how an estimate was made. MeshCore can now name unknown route hops from other sources
+      you can read, including `meshcore_mqtt` feeds; this is off by default. The MQTT bridge gains
+      an optional `!hex` client ID for single mode, stops after repeated evictions, and counts
+      uplinks dropped while disconnected.
+
+
+      ## Features
+
+      - feat(meshcore): resolve unknown route hops from other sources (#5909) (#5911)
+
+      - feat(telemetry): cross-source Telemetry Dashboard on Unified Telemetry (#5896) (#5907)
+
+      - feat(adsb): add OpenSky Network as an ADS-B feed (#5877) (#5906)
+
+      - feat(adsb): re-check aircraft flight matches as the node moves (#5876) (#5905)
+
+      - feat(permissions): split traceroute into Read/Write; MeshCore trace-path takes
+      traceroute:write (#5898) (#5903)
+
+
+      ## Bug Fixes
+
+      - fix(estimator): count unique anchor positions; explain estimates on Node Details (#5900)
+      (#5904)
+
+      - fix(mqtt-bridge): single-mode client ID, eviction stop, uplink drop count (#5893) (#5902)
+
+
+      ## Security
+
+      - fix(security): scope traceroute history and unified telemetry to permitted sources (#5901)
+
+
+      ## Documentation
+
+      - docs(add-ons): list ShackScreen under REST API clients (#5908) (#5910)
+
+
+      ## Chores
+
+      - chore: bump version to 4.17.1-rc8 (#5912)
+
+
+      ## Issues Resolved
+
+      - #5909 MeshCore: resolve unknown path hops using nodes from other sources
+
+      - #5908 Community Add-on Submission: ShackScreen
+
+      - #5900 Position estimator: repeat observations from one anchor inflate nEff
+
+      - #5898 Split traceroute permission into read/write
+
+      - #5896 Rewrite Unified Telemetry page as a cross-source Telemetry Dashboard
+
+      - #5877 Add OpenSky Network as an additional ADS-B source
+
+      - #5876 Re-evaluate aircraft flight match when node position diverges
+
+
+      ## Upgrade Notes
+
+      - **Migrations 213–215** run on first boot: a `traceroute:write` backfill for MeshCore
+      sources, re-check columns on aircraft flight matches, and
+      `meshcore_nodes.advertSignatureVerified`.
+
+      - **Some estimated pins may disappear from the map.** Stale estimates are deleted, and
+      single-anchor estimates (5 km) are wider than the map's 2 km display limit.
+
+      - **Cross-source hop names** are off by default: Settings → MeshCore Messaging. MQTT nodes
+      become usable as each sends its next advert after you turn it on.
+
+
+      **Full Changelog**: https://github.com/Yeraze/meshmonitor/compare/v4.17.1-rc7...v4.17.1-rc8
+
+
+      ## 🚀 MeshMonitor v4.17.1-rc8
+
+
+      ### 📦 Installation
+
+
+      **Docker (recommended):**
+
+      ```bash
+
+      docker run -d \
+        --name meshmonitor \
+        -p 8080:3001 \
+        -v meshmonitor-data:/data \
+        ghcr.io/Yeraze/meshmonitor:4.17.1-rc8
+      ```
+
+
+      ### 🧪 Testing
+
+      ✅ All tests passed
+
+      ✅ TypeScript checks passed
+
+      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
+
+
+      ### 📋 Changes
+
+      See commit history for detailed changes.
+  - version: v4.17.1-rc7
+    name: v4.17.1-rc7
+    datetime: '2026-10-19T19:29:25Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.1-rc7
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.17.1-rc7
+
+
+      > [!WARNING]
+
+      > This is a **pre-release** for testing. It is not tagged `latest`. Please report problems on
+      GitHub before the final 4.17.1 release.
+
+
+      ## Summary
+
+
+      This release candidate adds saved MQTT broker presets that every MQTT form can reuse (#5794
+      Phase 1). It also adds a stored, searchable history of MeshCore CLI commands, with a panel on
+      each console and a "MeshCore CLI activity" tab on the Audit Log page. CLI passwords and keys
+      are now masked before they are stored, which also stops them leaking into the audit log in
+      plain text. Auto Acknowledge can now send a 0-hop tapback other than `*️⃣` (for example
+      `0️⃣`), and a separate tapback for messages that came over MQTT; automations use the same
+      choices. Baremetal installs now honor `DATA_DIR` for every data path, including backups, the
+      access log, Apprise and map data, so the documented hardened systemd unit works. An
+      experimental, admin-only endpoint computes a tropospheric ducting forecast from NOAA GFS data
+      (backend spike for #5734; no UI yet). The rest is dependency updates, including Express 5.3,
+      emoji-picker-react 5 (Apple emoji style kept) and MapLibre GL 6.14.
+
+
+      ## Features
+
+      - feat(mqtt): saved broker presets, reusable across MQTT forms (#5794 Phase 1) (#5873)
+
+      - feat(meshcore): store CLI command history (#5892) (#5897)
+
+      - feat(autoack): choose the 0-hop and MQTT tapback glyphs (#5890) (#5894)
+
+      - feat(ducting): spike GFS tropospheric ducting forecast endpoint (#5734) (#5875)
+
+
+      ## Bug Fixes
+
+      - fix(config): honor DATA_DIR for every data path (#5889) (#5895)
+
+
+      ## Security
+
+      - MeshCore CLI command text and replies are redacted (passwords, `*.key`, `*.psk`, secrets)
+      before storage, in both the new CLI history and the existing audit log (#5897)
+
+
+      ## Dependencies
+
+      - build(deps): bump emoji-picker-react from 4.22.3 to 5.0.0 (#5887)
+
+      - build(deps): bump maplibre-gl from 6.13.0 to 6.14.0 (#5884)
+
+      - build(deps): bump node-notifier from 10.0.1 to 11.0.0 (#5888)
+
+      - build(deps): bump lucide-react from 1.54.0 to 1.57.0 (#5885)
+
+      - build(deps): bump express from 5.2.1 to 5.3.0 (#5886)
+
+      - build(deps): bump the production-dependencies group across 1 directory with 18 updates
+      (#5882)
+
+      - build(deps): bump the react group with 2 updates (#5879)
+
+      - build(deps-dev): bump puppeteer from 25.13.0 to 25.14.0 (#5883)
+
+      - build(deps-dev): bump the vitest group with 3 updates (#5878)
+
+      - build(deps-dev): bump the development-dependencies group with 2 updates (#5880)
+
+
+      ## CI/DevOps
+
+      - build(deps): bump the codeql-action group with 4 updates (#5881)
+
+      - chore: bump version to 4.17.1-rc7 (#5899)
+
+
+      ## Issues Resolved
+
+      - #5889 Baremetal - no DATA_DIR env
+
+      - #5890 Change Auto Ack tapback for direct channel messages
+
+      - #5892 Store full history of MeshCore CLI commands with timestamps
+      (Companion/Repeater/Remote)
+
+
+      Progress on #5794 (MQTT broker presets, Phase 1 of 3) and #5734 (tropospheric ducting, backend
+      spike).
+
+
+      ## Upgrade Notes
+
+      - **Database migration 212** adds the `meshcore_cli_history` table. It runs automatically on
+      all three backends.
+
+      - **Baremetal:** you can now set `DATA_DIR=/var/lib/meshmonitor/data` in the `.env` named by
+      your systemd unit (`EnvironmentFile=`), and every data path follows it. Explicit
+      `DATABASE_PATH`, `BACKUP_DIR`, `SYSTEM_BACKUP_DIR`, `ACCESS_LOG_PATH` and `APPRISE_CONFIG_DIR`
+      still win. Docker installs are unchanged.
+
+      - New setting: MeshCore CLI history retention (default 90 days, 7–365), next to Audit Log
+      Retention.
+
+
+      **Full Changelog**: https://github.com/Yeraze/meshmonitor/compare/v4.17.1-rc6...v4.17.1-rc7
+
+
+      ## 🚀 MeshMonitor v4.17.1-rc7
+
+
+      ### 📦 Installation
+
+
+      **Docker (recommended):**
+
+      ```bash
+
+      docker run -d \
+        --name meshmonitor \
+        -p 8080:3001 \
+        -v meshmonitor-data:/data \
+        ghcr.io/Yeraze/meshmonitor:4.17.1-rc7
+      ```
+
+
+      ### 🧪 Testing
+
+      ✅ All tests passed
+
+      ✅ TypeScript checks passed
+
+      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
+
+
+      ### 📋 Changes
+
+      See commit history for detailed changes.
+  - version: v4.17.1-rc6
+    name: v4.17.1-rc6
+    datetime: '2026-10-18T00:24:12Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.1-rc6
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.17.1-rc6
+
+
+      > [!WARNING]
+
+      > This is a **pre-release** for testing. Do not use it in production unless you want to help
+      test.
+
+
+      ## Summary
+
+
+      This RC fixes slow PostgreSQL and MySQL instances. Database Maintenance now shows and runs on
+      every backend, not just SQLite. It now prunes `audit_log` (90 days by default), and a new
+      migration adds a channel-list index and tunes Postgres autovacuum. MeshCore Companions on
+      firmware 1.18.0 gain a real text CLI: the local console uses the radio's native CLI, the
+      quick-action catalog grows, and you can run commands on a remote Companion and grant or revoke
+      its remote-CLI permission. Channels now support AEAD (AES-CCM): the server decrypts them, and
+      you can edit AEAD on device channels. Node Details shows a node's name history. Unified
+      Messages remembers your last channel. MQTT forwarders now show their own uplinked packets, and
+      push subscriptions renew correctly after rotation.
+
+
+      ## Features
+
+      - feat(meshcore): Companion text CLI on fw 1.18.0 (local, catalog, remote) (#5866, #5867,
+      #5868) #5869
+
+      - feat(nodes): track node renames and show them in Node Details (#5862) #5865
+
+      - feat(channels): decrypt AEAD (AES-CCM) channels server-side (#5248 Phase 2a) #5860
+
+      - feat(channels): edit AEAD on device channels (#5248 Phase 2b) #5861
+
+      - feat(unified-messages): remember the last selected channel per browser #5793
+      (@goodprogrammist)
+
+
+      ## Bug Fixes
+
+      - fix(db): run maintenance on PostgreSQL/MySQL, prune audit_log, tune PG (#5870) #5871
+
+      - fix(push): renew a rotated push subscription on its sources (#5863) #5864
+
+      - fix(mqtt): show a forwarder's own uplinked packets on its source (#5858) #5859
+
+
+      ## Translations
+
+      - Translations update from Hosted Weblate #5676
+
+
+      ## Issues Resolved
+
+      - #5870 Production DB performance: unused indexes, index bloat, no audit_log retention,
+      autovacuum lag
+
+      - #5868 MeshCore Local Console: expand Companion quick-action catalog for fw ≥ 1.18.0
+
+      - #5867 MeshCore Companion: UI for remote-CLI permission bit (fw ≥ 1.18.0)
+
+      - #5866 MeshCore Companion native CLI (fw ≥ 1.18.0)
+
+      - #5863 Service worker pushsubscriptionchange renewal silently fails: missing sourceId
+
+      - #5862 Track node name history with a log view in node details
+
+      - #5858 MQTT forwarder source does not display user's own outbound messages
+
+      - #5792 Unified Messages: configurable default channel
+
+      - #5013 MQTT Channel Messages Not Received Unless Relayed by Nearby LoRa Node
+
+
+      ## New Contributors
+
+      Thanks to @goodprogrammist for their first contribution (#5793)!
+
+
+      ## Upgrade Notes
+
+      - **PostgreSQL/MySQL users:** Database Maintenance is now visible on your backend but stays
+      off until you enable it. Open **Settings → Database Maintenance**, turn it on, and click **Run
+      Maintenance Now**. The first run may take a while on a large database.
+
+      - Large Postgres instances should also run the one-off `REINDEX TABLE CONCURRENTLY` / `VACUUM
+      (ANALYZE)` steps and review the memory settings in `docs/development/database.md`.
+
+      - Migration 210 runs on startup: it adds an index on `messages(sourceId, channel, timestamp)`
+      and, on Postgres, sets per-table autovacuum thresholds.
+
+
+      **Full Changelog**: https://github.com/Yeraze/meshmonitor/compare/v4.17.1-rc5...v4.17.1-rc6
+
+
+      ## 🚀 MeshMonitor v4.17.1-rc6
+
+
+      ### 📦 Installation
+
+
+      **Docker (recommended):**
+
+      ```bash
+
+      docker run -d \
+        --name meshmonitor \
+        -p 8080:3001 \
+        -v meshmonitor-data:/data \
+        ghcr.io/Yeraze/meshmonitor:4.17.1-rc6
+      ```
+
+
+      ### 🧪 Testing
+
+      ✅ All tests passed
+
+      ✅ TypeScript checks passed
+
+      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
+
+
+      ### 📋 Changes
+
+      See commit history for detailed changes.
+  - version: v4.17.1-rc5
+    name: v4.17.1-rc5
+    datetime: '2026-10-16T17:35:47Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.1-rc5
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.17.1-rc5
+
+
+      > [!WARNING]
+
+      > This is a **pre-release** for testing. Use it on a test install before you upgrade
+      production.
+
+
+      ## Summary
+
+
+      This release candidate adds **passkey sign-in** for local accounts. You can sign in with a
+      device fingerprint, face or PIN, turn password sign-in off for a passkey-only account, and get
+      back in with one-time recovery codes. Admins can see and revoke a user's passkeys from the
+      Users page. Passkeys need HTTPS (or `http://localhost`) and bind to the hostname where you add
+      them; the optional `WEBAUTHN_RP_ID` and `WEBAUTHN_ORIGINS` settings cover reverse proxies and
+      multiple hostnames. Auto-Acknowledge gains a separate **IP (MQTT / UDP)** row, so messages
+      that arrived over the internet no longer use the 0-hop or multi-hop settings; the new row
+      starts **off**. MeshCore contacts can now take a manual location override, as Meshtastic nodes
+      already could. The MeshCore Configuration and Automations pages get the same search box and
+      section buttons as the Meshtastic pages. Show MQTT/Bridge Messages is now remembered per
+      source, and tapping a node in Traceroute mode draws its newest answered run again.
+
+
+      ## Upgrade notes
+
+
+      - **Auto-Acknowledge:** messages received over MQTT or multicast UDP now fall into the new IP
+      row, which starts off on every install. If you relied on the multi-hop (or 0-hop) row to
+      answer MQTT/UDP messages, turn on the IP row under Automation → Auto Acknowledge.
+
+      - **Passkeys** are optional. Nothing changes until a user adds one. See the [Passkeys
+      guide](https://meshmonitor.org/features/passkeys).
+
+
+      ## Features
+
+
+      - Passkey sign-in for local accounts (#5841):
+        - Passkey storage (#5849)
+        - Sign in with a passkey (#5850)
+        - Passkey-only accounts, recovery codes, admin revoke (#5851)
+        - Passkeys user guide (#5853)
+        - Design spec (#5847)
+      - Separate IP (MQTT/UDP) row in the Auto-Ack matrix (#5854)
+
+      - Override a MeshCore contact's location (#5848)
+
+      - Remember Show MQTT/Bridge Messages per source (#5844)
+
+      - Search and section buttons on MeshCore Configuration and Automations (#5855)
+
+
+      ## Bug Fixes
+
+
+      - Tapping a node in Traceroute mode draws its newest answered run (#5845)
+
+      - MeshCore Notifications section bar sits flush with the top of the pane (#5856)
+
+
+      ## Release
+
+
+      - Version bump to 4.17.1-rc5 (#5857)
+
+
+      ## Dependencies
+
+
+      - engine.io 6.6.11 and a single mysql2 for express-mysql-session (#5846)
+
+
+      ## Issues Resolved
+
+
+      - #5841 WebAuthn/passkey login as alternative to password (local auth)
+
+      - #5796 Auto-Ack for MQTT Messages
+
+      - #5842 MeshCore: override contact location (parity with Meshtastic)
+
+      - #5824 Make Show MQTT/Bridge Messages toggle per-source
+
+      - #5821 Per-source map: Show Traceroute toggle engages but clicking a node does nothing
+
+
+      **Full Changelog**: https://github.com/Yeraze/meshmonitor/compare/v4.17.1-rc4...v4.17.1-rc5
+
+
+      ## 🚀 MeshMonitor v4.17.1-rc5
+
+
+      ### 📦 Installation
+
+
+      **Docker (recommended):**
+
+      ```bash
+
+      docker run -d \
+        --name meshmonitor \
+        -p 8080:3001 \
+        -v meshmonitor-data:/data \
+        ghcr.io/Yeraze/meshmonitor:4.17.1-rc5
+      ```
+
+
+      ### 🧪 Testing
+
+      ✅ All tests passed
+
+      ✅ TypeScript checks passed
+
+      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
+
+
+      ### 📋 Changes
+
+      See commit history for detailed changes.
+  - version: v4.17.1-rc4
+    name: v4.17.1-rc4
+    datetime: '2026-10-15T20:27:34Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.1-rc4
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.17.1-rc4
+
+
+      > [!WARNING]
+
+      > This is a **pre-release** for testing. Do not use it in production.
+
+
+      ## Summary
+
+
+      This RC brings the Meshtastic and MeshCore configuration screens onto one shared layout
+      (#5797). Auto Responder, Timer Triggers, Auto Acknowledge and Auto Announce now use the same
+      cards, field groups and test boxes on both protocols. Device Configuration uses the same
+      section shell, puts the danger zone at the bottom, asks for in-app confirmation, and goes
+      read-only without `configuration:write`. Saves that reboot the node now show the reboot
+      dialog; saves that only sometimes reboot say "may restart". Channels share one editing model,
+      with per-channel "Save to device" and a key field you can show, copy, generate or clear.
+      MeshCore Observer brokers are edited in MeshCore Configuration and each broker keeps its own
+      credentials. Meshtastic MQTT quick configure now waits for Save. Every password field gets a
+      show/hide toggle. Fixes include timers losing their last-run time on save, geofence results
+      written to the wrong source, and Observer credential clears wiping every broker.
+
+
+      ## Features
+
+      - feat(ui): shared config section shell for automation sections (#5809)
+
+      - feat(ui): one Auto Responder workflow for Meshtastic and MeshCore (#5811)
+
+      - feat(ui): one Timer Triggers workflow for Meshtastic and MeshCore (#5814)
+
+      - feat(ui): same field groups for Auto Acknowledge and Auto Announce on both protocols (#5817)
+
+      - feat(ui): Device Configuration pages on the shared section shell (#5819)
+
+      - feat(ui): shared password field with show/hide (#5837)
+
+      - feat(ui): one channel editing model for Meshtastic and MeshCore (#5838)
+
+      - feat(ui): danger zone last, in-app confirms, write gating on Device Configuration (#5839)
+
+      - feat(ui): edit the Observer in MeshCore Configuration; quick configure joins the save
+      (#5840)
+
+
+      ## Bug Fixes
+
+      - fix(channels): send sourceId with channel export (#5810)
+
+      - fix(config): SaveBar baselines follow successful saves and reloads (#5813)
+
+      - fix(mqtt): gate the device MQTT form on configuration:write (#5820)
+
+      - fix(meshcore): per-node schedule toggles roll back on a failed save and ignore stale replies
+      (#5822)
+
+      - fix(timers): keep the server's run state on save; one name, Timer Triggers (#5832)
+
+      - fix(geofence): record trigger results on the source's own key (#5833)
+
+      - fix(meshcore): Observer credentials are set and cleared per broker (#5834)
+
+      - fix(channels): clearable PSK, meshcore_mqtt guard, MeshCore Public slot, missing strings
+      (#5835)
+
+      - fix(config): expect the reboot that most Device Configuration saves cause (#5836)
+
+
+      ## Chores
+
+      - chore: bump version to 4.17.1-rc4 (#5843)
+
+
+      ## Issues Resolved
+
+      - #5807 Shared config section shell for automation sections
+
+      - #5808 Converge Auto Responder workflow across Meshtastic and MeshCore
+
+      - #5812 Converge Timer Triggers workflow across Meshtastic and MeshCore
+
+      - #5816 Align Auto Acknowledge and Auto Announce layouts
+
+      - #5818 Device Configuration pages on the shared section shell
+
+      - #5823 Device Configuration: most saves reboot the node, but the UI assumes they don't
+
+      - #5825 MeshCore Observer: per-broker credentials
+
+      - #5826 Channels: fix four existing bugs before the redesign
+
+      - #5827 Timer Triggers: keep the server's lastRun on save; one name across protocols
+
+      - #5828 Shared password field with show/hide
+
+      - #5829 Channels: one editing model on both protocols
+
+      - #5830 Device actions: danger zone at the bottom, in-app confirms, client gating
+
+      - #5831 MQTT / Observer: one place to edit, quick configure in the SaveBar, shared preset look
+
+
+      ## Upgrade Notes
+
+      - The MeshCore Observer's single credential block becomes per-broker credentials. Existing
+      credentials keep working.
+
+      - "Timed Events" is now "Timer Triggers" on Meshtastic.
+
+
+      **Full Changelog**: https://github.com/Yeraze/meshmonitor/compare/v4.17.1-rc3...v4.17.1-rc4
+
+
+      ## 🚀 MeshMonitor v4.17.1-rc4
+
+
+      ### 📦 Installation
+
+
+      **Docker (recommended):**
+
+      ```bash
+
+      docker run -d \
+        --name meshmonitor \
+        -p 8080:3001 \
+        -v meshmonitor-data:/data \
+        ghc
+      …
+  - version: v4.17.1-rc3
+    name: v4.17.1-rc3
+    datetime: '2026-10-15T03:04:14Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.1-rc3
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.17.1-rc3
+
+
+      > [!WARNING]
+
+      > This is a **pre-release** for testing. It is not tagged `latest`. Use it on a test system
+      first.
+
+
+      ## Summary
+
+
+      rc3 replaces rc2, whose Docker build ran past its 40-minute limit three times and never
+      published images. It carries all of rc2 (see the [rc2
+      notes](https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.1-rc2)) plus two changes. The
+      Packet Monitor and packet counters now spot firmware 2.8 NodeDB replays by their packet id, so
+      the burst of fake "LoRa" rows on each reconnect is gone again, even for nodes heard a minute
+      ago. The Docker release build now has 70 minutes to finish.
+
+
+      ## Bug Fixes
+
+
+      - **Packet Monitor: recognise firmware 2.8 NodeDB replays by packet id** (#5803, refs #5426).
+      Firmware 2.8.0+ stamps a replay with the node's last-heard time, so an age check let it
+      through. MeshMonitor now recomputes the firmware's replay id from the sender and `rx_time`,
+      and also drops RF rows that carry neither RSSI nor a usable `rx_time`.
+
+
+      ## CI/DevOps
+
+
+      - **Docker: raise the amd64/arm64 release build timeout to 70 minutes** (#5804)
+
+      - Version bump to 4.17.1-rc3 (#5806)
+
+
+      ## Upgrade Notes
+
+
+      - Everything in the [rc2 upgrade
+      notes](https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.1-rc2) applies, including
+      migration 204 and the BLE bridge health check.
+
+
+      **Full changelog:** https://github.com/Yeraze/meshmonitor/compare/v4.17.1-rc2...v4.17.1-rc3
+
+
+      ## 🚀 MeshMonitor v4.17.1-rc3
+
+
+      ### 📦 Installation
+
+
+      **Docker (recommended):**
+
+      ```bash
+
+      docker run -d \
+        --name meshmonitor \
+        -p 8080:3001 \
+        -v meshmonitor-data:/data \
+        ghcr.io/Yeraze/meshmonitor:4.17.1-rc3
+      ```
+
+
+      ### 🧪 Testing
+
+      ✅ All tests passed
+
+      ✅ TypeScript checks passed
+
+      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
+
+
+      ### 📋 Changes
+
+      See commit history for detailed changes.
+  - version: v4.17.1-rc2
+    name: v4.17.1-rc2
+    datetime: '2026-10-14T18:52:35Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.1-rc2
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.17.1-rc2
+
+
+      > [!WARNING]
+
+      > This is a **pre-release** for testing. It is not tagged `latest`. Use it on a test system
+      first.
+
+
+      ## Summary
+
+
+      This release candidate is mostly about MQTT. Two bridges attached to one embedded broker no
+      longer relay each other's upstream traffic. Before, upstream A's packets were published to
+      upstream B, and two upstreams that already shared traffic could pass a packet back and forth
+      without end. A new per-bridge option, **Relay traffic from other bridges** (off by default),
+      keeps that relaying for anyone who wants it. A bridge also no longer sends its own downlinked
+      packet back upstream. The broker's **Raise hop count for backhaul** now works on encrypted
+      uplinks from a phone's MQTT client proxy, so a "raise text messages" policy finally matches a
+      phone's text. **Don't uplink MeshMonitor automation traffic** now also covers a node linked
+      straight to a bridge. A new [MQTT Setup Guide](https://meshmonitor.org/features/mqtt-setups)
+      walks through the common broker and bridge layouts, and the MQTT settings pages link to it.
+      MeshCore remote admin now remembers admin logins, so the console can resume a session with
+      nothing sent over the air, and scheduled clock syncs drop from 4 packets to 2. Auto
+      Acknowledge channel replies now come first from MeshMonitor instances nearer the sender.
+
+
+      ## Features
+
+
+      - **MeshCore: remember and resume remote-admin sessions** (#5798, closes #5785). Admin logins
+      are stored per source and survive a restart. The console offers **Resume session** and **Log
+      out**, and scheduled jobs reuse the session, with one fresh login and one retry if the
+      repeater has dropped it.
+
+      - **Auto Acknowledge: nearer nodes answer a channel message first** (#5789, closes #5788)
+
+
+      ## Bug Fixes
+
+
+      - **MQTT: bridges stop relaying each other's upstream; close the echo race** (#5799, refs
+      #5013)
+
+      - **MQTT: raise encrypted uplinks by their real portnum** (#5795, closes #5791)
+
+      - **MQTT: drop automation uplinks on the client-proxy path too** (#5787, refs #5414)
+
+      - **Docker: the BLE bridge health check follows the BLE link, not the TCP port** (#5802). It
+      works with the bridge's new `HEALTH_FILE` (meshtastic-ble-bridge#20) in the Docker
+      Configurator and `docker-compose.ble.yml`.
+
+
+      ## Documentation
+
+
+      - **MQTT Setup Guide**, linked from the app (#5800, refs #5013)
+
+
+      ## CI/DevOps
+
+
+      - Version bump to 4.17.1-rc2 (#5801)
+
+
+      ## Issues Resolved
+
+
+      - #5785 MeshCore: Resume Admin Session
+
+      - #5788 Hop-weighted bias on Auto-Ack channel-reply delay
+
+      - #5791 Raise hop limit for text messages does not work on MQTT source
+
+
+      ## Upgrade Notes
+
+
+      - **Several bridges on one broker:** if you relied on one upstream being relayed into another
+      through MeshMonitor, tick **Relay traffic from other bridges** on the bridge that should carry
+      it. Everything that starts locally is uplinked as before.
+
+      - **BLE bridge users:** pull the latest `meshtastic-ble-bridge` image and add
+      `HEALTH_FILE=/tmp/ble-bridge.health` plus the new health check (or regenerate your compose
+      file with the [Docker Configurator](https://meshmonitor.org/configurator)). MeshMonitor now
+      depends on the bridge with `service_started`, so it starts even while the node is out of
+      range.
+
+      - **Migration 204** adds the `meshcore_admin_sessions` table on SQLite, PostgreSQL and MySQL.
+
+
+      **Full changelog:** https://github.com/Yeraze/meshmonitor/compare/v4.17.1-rc1...v4.17.1-rc2
+
+
+      ## 🚀 MeshMonitor v4.17.1-rc2
+
+
+      ### 📦 Installation
+
+
+      **Docker (recommended):**
+
+      ```bash
+
+      docker run -d \
+        --name meshmonitor \
+        -p 8080:3001 \
+        -v meshmonitor-data:/data \
+        ghcr.io/Yeraze/meshmonitor:4.17.1-rc2
+      ```
+
+
+      ### 🧪 Testing
+
+      ✅ All tests passed
+
+      ✅ TypeScript checks passed
+
+      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
+
+
+      ### 📋 Changes
+
+      See commit history for detailed changes.
+  - version: v4.17.1-rc1
+    name: v4.17.1-rc1
+    datetime: '2026-10-13T18:46:51Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.1-rc1
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.17.1-rc1
+
+
+      > ⚠️ **Pre-release.** This is the first release candidate of the 4.17.1 cycle. It is for
+      testing; it does not move the `latest` Docker tag. Back up before you upgrade a production
+      install.
+
+
+      ## Summary
+
+
+      The main change is **MeshCore emoji reactions**. MeshMonitor now reads the reactions that
+      MeshCore One and meshcore-open send, shows them as chips under the message they answer, and
+      can send its own in MeshCore One format. Reactions also show in Unified Messages, export to
+      CSV, and can fire an automation when a rule opts in. A companion radio's **contact list** gets
+      its auto-add options (mode, types, max hops, replace-oldest) and a bulk remove of
+      non-favourite contacts, for radios that fill up. Three MeshCore bugs are fixed: telemetry
+      sharing modes that silently reverted, room posts whose author never matched a contact, and a
+      misleading observer field label. On Meshtastic, a new opt-in setting re-applies the Status
+      Message when a node reboots and comes back without it, and the rebroadcast mode descriptions
+      now match what firmware does. Upgrading runs migration 203 automatically.
+
+
+      ## Features
+
+
+      - **MeshCore reactions** (epic #5759)
+        - Reaction codec for the MeshCore One and meshcore-open formats (#5771)
+        - Inbound reactions as chips, with a dim line for a reaction to a message this source never heard (#5775)
+        - Send reactions: react button, emoji picker, your own chips marked, automation tapback on MeshCore (#5776)
+        - Chips in Unified Messages, `reaction` and `reply_to_id` CSV columns, opt-in automation trigger (#5778)
+      - **MeshCore radio contact list**: auto-add mode and type filters, max hops, replace the
+      oldest non-favourite when full, and "Remove non-favourite contacts from the radio" (#5783)
+
+      - **Status Message**: opt-in, per-source "Re-apply after a reboot" (#5784)
+
+
+      ## Bug Fixes
+
+
+      - MeshCore: all three telemetry sharing modes now persist; saving them together used to keep
+      only one (#5781)
+
+      - MeshCore: room post authors resolve to the right contact; the author key was corrupted for
+      keys with high bytes (#5782)
+
+      - MeshCore: the observer field "Region (IATA)" is now "Observer location (IATA)", with help
+      text that says what it is (#5781)
+
+      - Meshtastic: rebroadcast mode descriptions follow firmware behaviour, not the stale protobuf
+      comments (#5780)
+
+
+      ## Dependencies
+
+
+      - maplibre-gl 6.11.2 → 6.13.0 (#5752)
+
+      - lucide-react 1.49.0 → 1.54.0 (#5754)
+
+      - vite-plugin-pwa 1.3.0 → 2.0.0 (#5751)
+
+      - @rollup/rollup-linux-arm64-musl 4.63.6 → 4.64.3 (#5756), @rollup/rollup-linux-arm-gnueabihf
+      (#5755)
+
+      - actions/setup-node 7.0.0 → 7.1.0 (#5758), actions/upload-artifact 7.0.1 → 7.0.2 (#5753)
+
+
+      ## Issues Resolved
+
+
+      #5759, #5760, #5761, #5762, #5763, #5764 (MeshCore reactions), #5772, #5773, #5774, #5777,
+      #5779.
+
+
+      #5745 (Status Message lost on reboot) stays open: the cause is in firmware. This release adds
+      a mitigation.
+
+
+      ## Upgrade notes
+
+
+      - **Migration 203** adds reaction columns to `meshcore_messages`. It runs on first start and
+      does not rewrite existing rows.
+
+      - **New settings and their defaults**
+        - Show MeshCore reactions: per source, **on**
+        - Send reactions from MeshMonitor: per source, **on**. Each reaction is one short packet; on a channel every repeater in range sends it again
+        - Auto-Acknowledge may answer reactions: global, **off**
+        - Re-apply the Status Message after a reboot: per source, **off**
+      - **Automations**: a MeshCore reaction fires a "message received" rule only when the rule
+      ticks **Also fire on MeshCore reactions**. No existing rule changes. A rule that sends a
+      message for every reaction has no built-in limit; set a cooldown.
+
+      - **CSV export**: two columns are appended (`reaction`, `reply_to_id`), and MeshCore rows now
+      fill `message_id`. MeshCore reactions are left out unless **Include emoji reactions** is
+      ticked. The first 13 columns keep their name and order.
+
+      - **Rooms**: posts stored before this release keep their corrupted author key. They show the
+      contact's name when it can be matched safely, and "Unkno
+
+      …
+  - version: v4.17.0
+    name: v4.17.0
+    datetime: '2026-10-13T00:20:08Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.0
+    prerelease: false
+    notes: >-
+      # MeshMonitor v4.17.0
+
+
+      ## Summary
+
+
+      v4.17.0 is the full release after nine release candidates: 64 features and 64 fixes since
+      v4.16.2. MeshMonitor now works out when several of your sources heard the same packet, and
+      uses that for "heard here" map edges, merged rows and an **All Channels** view in Unified
+      Messages, and one notification per packet. MeshCore gains **Trace SNR history** with full
+      charts, a **Mentions** notification, a server-side channel database, and Repeater sources that
+      fill Nodes, Packet Monitor and channel Messages. Scheduled automations can carry a start, an
+      end and a time zone, with a five-minute minimum interval. **Reliable PKI**, **Avoid PKI**,
+      "Proven receipt" and a Protection Level picker extend key handling. The **Docker image is
+      hardened**: every process runs as `node`, development packages no longer ship, and the image
+      is a third smaller. **Per-source permissions are now checked on every route**, and system
+      backup download is admin only. Migrations 183 to 202 run on first start.
+
+
+      Read more: [release post](https://meshmonitor.org/blog/2026-10-12-v4.17.0-release) · [security
+      post](https://meshmonitor.org/blog/2026-10-12-docker-image-hardening) ·
+      [CHANGELOG](https://github.com/Yeraze/meshmonitor/blob/main/CHANGELOG.md)
+
+
+      ## Upgrade Notes
+
+
+      - **Back up first.** Migrations 183 to 202 run on first start.
+
+      - **Docker.** The first start fixes the ownership of `/data` once. A root start with
+      `cap_drop: [ALL]` now fails: set `user: "1000:1000"` as well. With `user:`, serial devices
+      need `group_add`. `RUN_AS_ROOT=true` restores the old process users for troubleshooting.
+
+      - **Non-admin users may lose access.** A user needs the grant on the source a request acts on.
+      Grant it on that source under Users. For a public map with route lines, grant
+      `traceroute:read` to the anonymous account.
+
+      - **Backups** now hold channel keys and password hashes. Only an admin can download one.
+
+      - **Notifications.** A source you never saved settings for notifies for direct messages only,
+      with Apprise off until you add URLs. New-node and traceroute alerts default to off.
+
+      - **Automations.** A scheduled rule faster than every 5 minutes keeps running but must be
+      slowed before it can be saved again (scheduled MeshCore path traces are exempt). A send whose
+      text renders empty is skipped.
+
+      - **Auto-Acknowledge** on a channel answers 5 to 30 seconds late, and not at all once two
+      other nodes have answered.
+
+      - **API clients.** An unknown `sourceId` returns 404; differing `sourceId` values in query and
+      body return 400. `fromNodeNum` in every traceroute response is the requester. A non-admin
+      WebSocket client must join a source.
+
+      - **Number fields.** Blank no longer means 0; type 0 where 0 means off.
+
+      - **MeshCore repeater capture** (Packet Monitor, adverts, Trace SNR) needs a firmware build
+      with `MESH_PACKET_LOGGING`.
+
+      - Scheduled traces, aircraft position requests and Reliable PKI transmit, and all are off
+      until you turn them on.
+
+
+      ## Features
+
+      - meshcore: full-size Trace SNR charts per link direction (#5767)
+
+      - messages: show the mesh protocol on message borders (#5768)
+
+      - meshcore: store TRACE hop SNRs heard by Repeater sources (#5766)
+
+      - automation: timed events: start, end and time zone on scheduled automations (#5743)
+
+      - metrics: export each node's last position time (#5699)
+
+      - meshcore: Mentions notification when a message names the source's own node (#5741)
+
+      - unified: All Channels view on Unified Messages, with channel tags (#5736)
+
+      - automation: trace MeshCore paths on a schedule, each path on its own interval (#5735)
+
+      - meshcore: capture every TRACE the radio hears and keep per-hop SNR history (#5733)
+
+      - map-analysis: add on-air waypoints from Map Analysis, with a per-source picker (#5732)
+
+      - notifications: one notification when several sources hear the same packet (#5731)
+
+      - pki: Avoid PKI mode — channel-encrypted data requests, DMs untouched (#5724)
+
+      - aircraft: mark a node as not aircraft / aircraft by hand (#5725)
+
+      - mqtt: per-bridge skip raise, text in the
+
+      …
+  - version: v4.17.0-rc9
+    name: v4.17.0-rc9
+    datetime: '2026-10-11T01:44:01Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.0-rc9
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.17.0-rc9
+
+
+      > [!WARNING]
+
+      > This is a **pre-release** for testing. It is not tagged `latest`. Use it on a test install
+      or with a recent backup.
+
+
+      ## Summary
+
+
+      This release candidate adds an **All Channels** view to Unified Messages, records every
+      MeshCore **TRACE** the radio hears with per-hop SNR history, and lets an automation **trace
+      MeshCore paths on a schedule**. **Avoid PKI** mode sends telemetry and neighbor requests
+      channel-encrypted instead of PKI-encrypted. Aircraft handling gains manual marks and an opt-in
+      position request. Map Analysis can add on-air waypoints, MQTT hop-raise has finer controls,
+      and several sources hearing one packet now raise one notification. Two migrations run on first
+      start (200, 201).
+
+
+      ## Features
+
+      - Unified Messages: **All Channels** view with a channel tag on each message; no DMs, pages
+      back through full history (#5736, builds on #5654)
+
+      - MeshCore: capture every TRACE the radio hears and keep per-hop SNR history, with a card
+      showing each link's trend (#5733)
+
+      - Automations: trace MeshCore paths on a schedule, each path on its own interval (#5735)
+
+      - PKI: **Avoid PKI** mode: telemetry, LocalStats and neighbor requests go channel-encrypted;
+      DMs are untouched (#5724)
+
+      - Aircraft: mark a node as aircraft or not aircraft by hand (#5725)
+
+      - Aircraft: ask a newly flagged aircraft for its position, opt-in (#5727)
+
+      - Map Analysis: add on-air waypoints, with a per-source picker (#5732)
+
+      - MQTT: per-bridge skip raise, text messages in the raise picker, subscription-scoped handling
+      (#5726)
+
+      - Notifications: one notification when several sources hear the same packet (#5731)
+
+
+      ## Bug Fixes
+
+      - MeshCore: own DMs and room posts show their real delivery state (#5730)
+
+      - Notifications: turning Emoji Reactions off also mutes protocol tapbacks and keycap emoji
+      (#5721)
+
+
+      ## Upgrade Notes
+
+      - **Migrations 200 and 201** run on first start: a manual aircraft mark on nodes, and the
+      `meshcore_hop_snr` table.
+
+      - **Scheduled traces transmit.** Limits: at least 10 minutes between traces of one path, at
+      most 12 traces per source per hour, at most 20 paths per action. The last-run times are
+      stored, so a restart or a save does not fire a burst.
+
+      - **Aircraft position requests are off.** When on, a newly flagged aircraft gets 3 requests
+      over 4 minutes, and at most 2 such sequences start per source per hour.
+
+      - **Avoid PKI is off** and has had no live radio check yet. Test it on a spare node before you
+      rely on it.
+
+      - **Trace history** is kept for 90 days and read with the source's Traceroute read permission.
+
+      - **Manual aircraft marks** need Nodes write on the source.
+
+      - **All Channels** follows the same permissions as a single channel: Messages read on a source
+      opens all of its channels; otherwise each channel needs its own read grant.
+
+
+      ## Thanks
+
+      Thanks to @Cryptoteep for the All Channels view (#5654).
+
+
+      **Full changelog:** https://github.com/Yeraze/meshmonitor/compare/v4.17.0-rc8...v4.17.0-rc9
+
+
+      ## 🚀 MeshMonitor v4.17.0-rc9
+
+
+      ### 📦 Installation
+
+
+      **Docker (recommended):**
+
+      ```bash
+
+      docker run -d \
+        --name meshmonitor \
+        -p 8080:3001 \
+        -v meshmonitor-data:/data \
+        ghcr.io/Yeraze/meshmonitor:4.17.0-rc9
+      ```
+
+
+      ### 🧪 Testing
+
+      ✅ All tests passed
+
+      ✅ TypeScript checks passed
+
+      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
+
+
+      ### 📋 Changes
+
+      See commit history for detailed changes.
+  - version: v4.17.0-rc8
+    name: v4.17.0-rc8
+    datetime: '2026-10-10T14:48:33Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.0-rc8
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.17.0-rc8
+
+
+      > [!WARNING]
+
+      > This is a **pre-release** for testing. It is not tagged `latest`. Use it on a test install
+      or with a recent backup.
+
+
+      ## Summary
+
+
+      This release candidate changes how the Docker image runs: every process inside the container
+      now runs as the unprivileged `node` user, the image no longer ships development packages
+      (about 0.5 GB smaller), and the base images are patched. Existing installs upgrade in place;
+      the first start fixes the ownership of `/data` once. New features: **Reliable PKI** (off by
+      default) sends a node your node info before an encrypted request when the last one failed,
+      **local map markers** let you plan on the map without sending anything to the mesh, and MQTT
+      settings gain a **broker preset** for the official Meshtastic broker. Several MQTT saves no
+      longer turn off fields they did not show, automations warn when a step would send nothing, and
+      the Site Planner and Map Analysis work on phones.
+
+
+      ## Features
+
+      - PKI: Reliable PKI — send node info first when a node stops answering encrypted requests, at
+      most once an hour per node and 10 an hour per source (#5702)
+
+      - Map: local map markers, per source, never transmitted (#5717)
+
+      - MQTT: broker preset chooser with the official Meshtastic broker, plain and TLS (#5700)
+
+
+      ## Bug Fixes
+
+      - Docker: prune dev dependencies, run every process as `node`, bump base images, patch runtime
+      CVEs (#5701)
+
+      - Automations: "Use suggested template", a warning when a step sends nothing, and "nothing
+      sent" in Runs and Trace (#5716)
+
+      - Admin: a remote MQTT save keeps client proxy, map reporting and TLS, and reads encryption
+      correctly (#5707)
+
+      - Config: a local MQTT save keeps location consent and map report settings; a precision of 0
+      stays 0 (#5713)
+
+      - Config: every config save updates the right cache, so a reload shows what you saved (#5714)
+
+      - Site Planner: folds after Predict on phones so the ring shows (#5698); clears the old ring
+      on a new origin and sits beside the map controls (#5706)
+
+      - Map Analysis: tool panels stay clear of the map controls and survive a phone/desktop switch
+      (#5710); the detail pane and time slider fit phones (#5712)
+
+
+      ## CI
+
+      - Fix the `onUserConsoleLog` teardown flake that failed rc7's pipeline (#5703)
+
+      - Pull test database images from `mirror.gcr.io` (#5705)
+
+
+      ## Issues Resolved
+
+      #5686, #5687, #5689, #5690, #5691, #5692, #5697
+
+
+      ## Upgrade Notes
+
+      - **Two new migrations:** 198 (`pki_exchange_state`) and 199 (`map_markers`). Both create
+      empty tables.
+
+      - **Docker runs as `node` (uid/gid 1000, or your `PUID`/`PGID`).**
+        - The first start after upgrading fixes the ownership of `/data` once and records it; later starts only check the top level. On a large volume the first start takes longer. `MESHMONITOR_FORCE_CHOWN=true` re-runs the pass.
+        - **USB serial devices:** the entrypoint grants `node` the group of each mapped `/dev/ttyUSB*` / `/dev/ttyACM*` automatically. If you start the container with `user:`, add the device's group with `group_add` instead.
+        - `cap_drop: [ALL]` now needs `user:` as well.
+        - `RUN_AS_ROOT=true` restores the old behaviour while you troubleshoot.
+        - Helm: `runAsGroup` and `fsGroupChangePolicy: OnRootMismatch` are set. The LXC template is unchanged.
+        - See *Upgrading to 4.17* in the Updating docs.
+      - **Reliable PKI is off.** Turn it on under Global Settings → Security, or per source under
+      that source's Settings. Each priming NodeInfo uses airtime: at most one per node per hour, and
+      at most 10 per source per hour.
+
+      - **Automations:** saving an automation whose message, notification or tapback is empty now
+      asks "Save anyway?". Saved automations are not changed. The API's create, update and import
+      responses carry a `warnings` list.
+
+      - **MQTT saves:** a remote-admin MQTT save is disabled until that node's MQTT config is
+      loaded. Saves from Device Configuration and Admin Commands now send client proxy, map
+      reporting, map report settings and location consent instead of resetting them.
+
+      - **Local markers** use the source's Waypoints
+
+      …
+  - version: v4.17.0-rc7
+    name: v4.17.0-rc7
+    datetime: '2026-10-09T19:12:30Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.0-rc7
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.17.0-rc7
+
+
+      > [!WARNING]
+
+      > This is a **pre-release** for testing. It is not tagged `latest`. Use it on a test install
+      or with a recent backup.
+
+
+      ## Summary
+
+
+      This release candidate fixes a map bug present in rc6: vector maps drew without roads, water
+      or labels on pages that only use the 2D map. It also stops the whole app going blank in a
+      browser with no WebGL; a standard map is shown instead. Navigation is now the same on every
+      source type: **Device Configuration** (satellite icon) for settings that live on the device,
+      and **Settings** (gear) for MeshMonitor's own behaviour, with each control moved to the page
+      its name promises. Auto-Acknowledge now waits 5 to 30 seconds before answering a channel
+      message and stays quiet when enough other nodes have already answered. New this round: a
+      read-only estimate of what tighter Traffic Management settings would drop, a card that
+      explains hardware MeshMonitor cannot flash, Analyzer Observer presets for meshcore.ca and RF
+      Lab, and a "Sent to radio" mark on MeshCore channel sends. Three MeshCore permission gaps are
+      closed.
+
+
+      ## Features
+
+      - Auto-Acknowledge: wait 5-30 s and stay quiet when enough nodes have already answered (#5695)
+
+      - Traffic Management: read-only replay for position dedup and rate limit, and corrected docs
+      (#5681)
+
+      - Firmware: explain hardware that cannot be updated, in place of the update UI (#5680)
+
+      - Automations: `trigger.ageMinutes` on MeshCore node triggers (#5679)
+
+      - MeshCore: meshcore.ca and RF Lab presets for the Analyzer Observer (#5678)
+
+
+      ## Bug Fixes
+
+      - Map: 2D vector maps load their worker again, and a browser with no WebGL2 gets a raster map
+      instead of a blank app (#5688)
+
+      - Settings: each per-source control is on the page its name promises (#5694)
+
+      - Nav: one icon and one label for Device Configuration and Settings on every source type
+      (#5684)
+
+      - MeshCore: unrelayed channel sends are marked "Sent to radio" (#5693)
+
+      - MeshCore: per-section `/snapshot` grants, anonymous neighbour reads, and tabs that follow
+      their grant (#5674)
+
+
+      ## CI and Translations
+
+      - CI: bound the ClamAV install step and add job timeouts (#5673)
+
+      - Translations update from Hosted Weblate (#5475)
+
+
+      ## Issues Resolved
+
+      #5666, #5667, #5668, #5671, #5672, #5675, #5677, #5683
+
+
+      ## Upgrade Notes
+
+      - **No new migrations.**
+
+      - **Auto-Acknowledge now waits.** An acknowledgement to a channel message arrives 5 to 30
+      seconds after the message (about 17 on average), not at once. If two other nodes have already
+      replied or sent a tapback by then, MeshMonitor sends nothing. Change the count under
+      Automation → Auto Acknowledge → "Maximum number of responses" (0 = no limit). Direct messages
+      are answered as before. A Pre-Send Delay longer than 5 seconds adds to the wait. MeshCore
+      auto-acknowledge is unchanged.
+
+      - **Where things moved:**
+        - *Meshtastic:* Firmware update is now under Device Configuration; PKI DM decryption is under Settings.
+        - *MeshCore:* default path hash size, default region/scope, the radio contact list, and Refresh contacts / Advert / Discover are under Device Configuration.
+        - *MQTT bridge:* the bridge setup is the first section of that source's Settings; its separate nav entry is gone and old links redirect.
+        - *Reticulum:* the destination retention cap is under Global Settings.
+        - A pointer sits where each control used to be.
+      - **Labels:** the per-source entry that read "Device" (Meshtastic) or "Configuration"
+      (MeshCore, Reticulum) now reads "Device Configuration"; the dashboard gear reads "Global
+      Settings". Other languages show the English label until translated.
+
+      - **Maps:** a browser without WebGL2 shows a standard (raster) map and a note; the saved
+      tileset is not changed.
+
+      - **Firmware Updates pane:** nodes MeshMonitor cannot flash over Wi-Fi (meshtasticd, nRF52,
+      RP2040 and STM32 boards, and models with no mapped build) now show an explanation in place of
+      the update controls. The server answers such a request with a 400 and a code, not a 500.
+
+      - **Config saves:** unchanged from rc6.
+
+      - **
+
+      …
+  - version: v4.17.0-rc6
+    name: v4.17.0-rc6
+    datetime: '2026-10-07T23:46:32Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.0-rc6
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.17.0-rc6
+
+
+      > [!WARNING]
+
+      > This is a **pre-release** for testing. It is not tagged `latest`. Use it on a test install
+      or with a recent backup.
+
+
+      ## Summary
+
+
+      This release candidate is mostly a permissions release. Until now, many routes checked a
+      per-source permission on *any* source, so a grant on one source could read, change or transmit
+      on another. Every such route now checks the source it acts on: device configuration, mesh
+      requests, messages, channels, nodes, settings, the poll, the v1 API, public embeds and the
+      live WebSocket feed. Admins are unaffected apart from a few replies that now name one source
+      instead of all of them; users with limited grants will see less than before, by design. On the
+      feature side, every number field can now be cleared while editing, the sender's name in a
+      channel or DM opens the node popup with its status, TAK team and role are configurable, and
+      the Reticulum source page works on phones. Saving a config section no longer turns a node's
+      "firmware default" position interval into a 32-second broadcast.
+
+
+      ## Features
+
+      - UI: number fields can be cleared; blank is outlined and blocks Save (#5652)
+
+      - Chat: sender name opens the node popup with status; status emoji badge on the avatar (#5651)
+
+      - Config: TAK team and role module settings (#5641)
+
+      - MQTT: source-card warning when client proxy has no linked broker (#5663)
+
+
+      ## Bug Fixes
+
+      - Permissions: device-config routes check the target source (#5655)
+
+      - Permissions: nodes, settings and message routes check the target source (#5656)
+
+      - Permissions: mesh-request, announce, connection and channel routes check the target source
+      (#5657)
+
+      - Permissions: optional-`sourceId` reads limited to the caller's sources; install-wide jobs
+      are admin only (#5658)
+
+      - Permissions: private positions checked per source; telemetry reads and `/api/status` scoped;
+      one rule for a source's address (#5660)
+
+      - Permissions: every section of `GET /api/poll` gated on its own source (#5661)
+
+      - Permissions: embeds and the v1 API scoped per source; MeshCore telemetry ids; restart is
+      admin only (#5664)
+
+      - Permissions: WebSocket events filtered per source and per grant (#5665)
+
+      - Config: a stored 0 interval is sent as 0; one channel read-back; dead desktop Virtual Node
+      checkboxes removed (#5662)
+
+      - Admin: a stored 0 is explained; one request per Owner/Channels Load; dead Virtual Node env
+      vars removed (#5659)
+
+      - Admin: per-section Load for Status Message, Traffic Management and MeshBeacon, local and
+      remote (#5644)
+
+      - Reticulum: phone tab bar docks under the content (#5648)
+
+
+      ## Docs
+
+      - MQTT: "Why don't I see MQTT traffic?" (#5663)
+
+      - Add-ons: Virtual Node sidecars and REST API clients described separately (#5653)
+
+      - Add-ons: Mesh Screensaver and Mesh Widget (Zebar) listed (#5650)
+
+
+      ## Issues Resolved
+
+      #5613, #5645, #5646, #5647, #5649
+
+
+      ## Upgrade Notes
+
+      - **No new migrations.**
+
+      - **Permissions are now enforced per source everywhere.** A user needs the grant on the source
+      a request acts on; with no `sourceId`, on the primary source. If a non-admin loses access
+      after upgrading, grant the permission on that source under Users.
+        - A request naming an unknown `sourceId` returns 404; it used to act on the primary source.
+        - A request with different `sourceId` values in the query and body returns 400.
+        - Lists read with no `sourceId` return only the sources the caller may read.
+      - **Admin only now:** the Auto-Enrichment and Position Estimation "run now" jobs, and Restart
+      Container.
+
+      - **Public and anonymous access:**
+        - `GET /api/status` no longer returns install-wide `statistics` without an admin login; `connection.localNode` needs `nodes:read` on the primary source. `connection.connected` still needs no login.
+        - The poll returns traceroutes only with `traceroute:read` on the source. Grant it to the anonymous account if a public map should draw route lines.
+        - Embeds leave out a node that has a private position override, is hidden from the map, or reports its position on a channel outside the profil
+      …
+  - version: v4.17.0-rc5
+    name: v4.17.0-rc5
+    datetime: '2026-10-05T23:06:57Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.0-rc5
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.17.0-rc5
+
+
+      > [!WARNING]
+
+      > This is a **pre-release** for testing. It is not tagged `latest`. Use it on a test install
+      or with a recent backup.
+
+
+      ## Summary
+
+
+      This release candidate adds four admin features and closes several gaps found after rc4. Admin
+      Commands gains a **Power and reset** block: Shut down, Reboot into DFU mode, and two factory
+      resets labelled by what survives, each written to the audit log. Security settings gain a
+      **Protection Level** picker for the firmware 2.8 packet signature policy (Compatible,
+      Balanced, Strict), on local and remote nodes. A **status pill** in the header sets the node's
+      status message from a short list of presets. Automations can pass a script's result to later
+      steps in the same run with `{{ steps.<name>.output }}`, with no variable to define, and a send
+      whose text renders empty is now held back. On the fix side, saving Security settings on a
+      local node no longer resets its packet signature policy, non-admin source editors no longer
+      see stored credentials, MeshCore Repeater nodes open in Node Details and stay on the map, and
+      traceroutes store their position snapshot on every path.
+
+
+      ## Features
+
+      - Admin: Shut down, Reboot into DFU mode and two factory resets, with audit log (#5638)
+
+      - Security: Protection Level picker for `packet_signature_policy` (#5642)
+
+      - Status: quick-access status message pill with presets (#5639)
+
+      - Automation: run-scoped step outputs, the empty-send rule, and two variable-store fixes
+      (#5640)
+
+
+      ## Bug Fixes
+
+      - Security: a local Security save keeps the node's packet signature policy (#5637)
+
+      - Sources: mask credentials in source config for non-admin editors (#5635)
+
+      - MeshCore: Repeater-source nodes open in Node Details and stay on the map (#5634)
+
+      - Traceroute: write the position snapshot on every path; the auto-traceroute picker counts
+      either stored form (#5633)
+
+
+      ## Dependencies
+
+      - re2 1.27.0 (#5625), @tanstack/react-query 5.104.0 (#5629), lucide-react 1.49.0 (#5628),
+      production group (#5624), vitest group (#5622), development group (#5623), @typescript-eslint
+      parser and plugin (#5631, #5627), globals 17.13.0 (#5626), react-query-devtools (#5630)
+
+
+      ## Issues Resolved
+
+      #5612, #5614, #5615, #5616, #5632, #5636
+
+
+      ## Upgrade Notes
+
+      - **No new migrations.**
+
+      - **Power and reset:** Reboot into DFU and both factory resets work on the node MeshMonitor is
+      connected to only. Shut down also works on a remote node, with a typed confirm. Each action
+      sends one admin packet and cannot be undone from MeshMonitor. DFU works on nRF52, RP2040 and
+      STM32 boards; ESP32 ignores it.
+
+      - **Protection Level:** shown for firmware 2.8.0 and later. For a remote node, run Retrieve
+      Device Metadata first so MeshMonitor knows its firmware. Strict drops every packet that is
+      neither signed nor PKI-encrypted, which can cut a node off from peers older than 2.8; it needs
+      a typed confirm. Saving reboots the node. Each change is written to the audit log.
+
+      - **Status pill:** needs `configuration:write` on the source. The status text limit is 79
+      bytes. Firmware rebroadcasts the status about every 12 hours.
+
+      - **Automations:** a Send a message, tapback or notification whose text renders empty is now
+      skipped and logged, in every automation. A script step that cannot store its result in the
+      chosen variable now fails the step, so some runs that read "completed" before will read
+      "failed". Node-scoped variables now save on MeshCore triggers.
+
+      - **Security saves:** a local Security save reads the node's config first. If the node does
+      not answer (for example while it reboots after the last save), the save returns an error and
+      sends nothing; try again.
+
+      - **Source config:** a non-admin with edit rights sees credential fields masked; leaving a
+      masked field alone keeps the stored value.
+
+      - **Node list:** MeshCore rows returned by `/api/nodes` now pass the same permission check as
+      Meshtastic rows.
+
+
+      **Full changelog:** https://github.com/Yeraze/meshmonitor/compare/v4.17.0-rc4...v4.17.0-rc5
+
+
+      ## 🚀 MeshMonitor v4.17.0-rc5
+
+
+      ### 📦 
+
+      …
+  - version: v4.17.0-rc4
+    name: v4.17.0-rc4
+    datetime: '2026-10-05T02:35:43Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.0-rc4
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.17.0-rc4
+
+
+      > [!WARNING]
+
+      > This is a **pre-release** for testing. It is not tagged `latest`. Use it on a test install
+      or with a recent backup.
+
+
+      ## Summary
+
+
+      This release candidate fixes the Windows desktop app, whose landing page loaded white on a
+      cold start: the Windows build shipped without its theme styles. System backups now cover every
+      table and stream the export, so large databases back up again; a backup is now a secret and
+      its download is admin-only. Message notifications get a user-set format with the source shown
+      once, each source keeps its own notification settings, and the Notifications page follows the
+      light theme. MeshCore gains plaintext for channel packets in the Packet Monitor, split or
+      truncated long auto-acknowledge replies, a serial health probe for repeaters, a faster-failing
+      Trace Path, and merged rows in Unified Messages when several sources hear one message.
+      Translation providers each keep their own API key, and OpenAI-compatible base URLs resolve
+      correctly. Traceroutes now read the same way everywhere, and source connection details no
+      longer reach viewers who lack the right grant.
+
+
+      ## Features
+
+      - MeshCore: decrypt GRP_TXT / GRP_DATA in the Packet Decode modal (#5583)
+
+      - MeshCore: split or truncate long Auto-Acknowledge replies (#5584)
+
+      - MeshCore: map toggle to hide nodes whose latest advert had no position (#5585)
+
+      - MeshCore: role, hops and last-heard tokens on node triggers (#5603)
+
+      - Map: traceroute-confirmed reciprocal links on the cross-source layer (#5586)
+
+      - Unified Messages: one row for a MeshCore message heard by several sources (#5590)
+
+      - Notifications: user-set message format and a lighter default (#5605)
+
+      - Translation: each provider owns its config fields; one API key per provider (#5600)
+
+      - Lint: guardrail against hardcoded colours in inline styles and CSS (#5606)
+
+
+      ## Bug Fixes
+
+      - Build: Windows desktop app ships its theme CSS again (#5599)
+
+      - Backup: back up every table, stream the export, allowlist restore on all backends (#5618)
+
+      - Sources: tighter config redaction for non-admins (#5619)
+
+      - Notifications: a source with no saved preferences uses built-in defaults, not another
+      source's (#5609)
+
+      - Notifications: page colours come from theme tokens (#5604)
+
+      - Traceroute: every reader gets requester-first rows (#5611)
+
+      - MQTT bridge: stop retrying a rejected broker login, per client (#5610)
+
+      - MeshCore MQTT ingest: stop login retries after 5 rejections; back up Observer keys; clear
+      key rows on source delete (#5602)
+
+      - MeshCore: repeater serial health probe and auto-reconnect (#5581)
+
+      - MeshCore: Trace Path waits per the firmware's suggested timeout (#5589)
+
+      - MeshCore: Virtual Node relays STATUS and TELEMETRY binary requests (#5598)
+
+      - MeshCore: Virtual Node sends the packed path length (#5608)
+
+      - MeshCore: ingest page header shows region and broker again (#5607)
+
+      - Packet Monitor: "Hide Own Packets" keeps TX rows and shows a hidden count (#5582)
+
+      - Translation: endpoint URL resolution for custom and versioned base URLs (#5545), by @Crim
+
+
+      ## Docs and Tests
+
+      - Coverage Report: "Why a survey looks sparse" (#5601)
+
+      - Tests: wall-clock and module-load cost taken out of flaky tests (#5617)
+
+
+      ## Issues Resolved
+
+      #5518, #5519, #5558, #5563, #5564, #5567, #5568, #5578, #5579, #5580, #5587, #5588, #5591,
+      #5592, #5593, #5594, #5595, #5597
+
+
+      ## Upgrade Notes
+
+      - **Migrations 194–197** run on first start.
+
+      - **Translation API keys:** the stored key moves to the active provider only. Enter keys for
+      any other provider again.
+
+      - **Translation URLs:** a custom URL with a sub-path and no version (for example
+      `http://host/libre`) is now used as written; earlier candidates appended the provider path to
+      it.
+
+      - **Backups:** a system backup now holds every table, including channel keys in the clear,
+      tokens and encrypted credentials. Store it like a secret. Download is admin-only; new backup
+      files are readable only by the server's user.
+
+      - **Notifications:** each source uses its own saved settings. A source you never saved
+      settings 
+
+      …
+  - version: v4.17.0-rc3
+    name: v4.17.0-rc3
+    datetime: '2026-10-03T20:08:40Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.0-rc3
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.17.0-rc3
+
+
+      > [!WARNING]
+
+      > This is a **pre-release** for testing. It is not tagged `latest`. Use it on a test install
+      or with a recent backup.
+
+
+      ## Summary
+
+
+      This release candidate adds cross-source correlation: when one of your radios is heard by
+      another of your sources, MeshMonitor now says so. The Unified Packet Monitor tags those
+      packets and can filter on them, the Coverage Report marks fixes sent by your own sources, and
+      both maps gain an opt-in **Show Cross-Source Links** layer. MeshCore repeaters attached over
+      serial now turn the adverts they hear into Nodes and decrypt channel messages with keys you
+      already hold; a message is shown only to users who can read a channel with that key. The
+      Channel Database stores MeshCore channel secrets next to Meshtastic keys, with a one-time
+      import from a MeshCore device. Message Forwarding gets a per-source master switch, a **FWD**
+      pill on the source card, and an automation action. A new **Live Mesh Activity** dashboard
+      widget lists the remote nodes a source heard in the last few minutes.
+
+
+      LoRa modem presets are corrected and extended: LONG_TURBO shows CR 4/8, the TINY presets and
+      new regions are listed, firmware 2.8 per-region preset rules are enforced, and a LongModTurbo
+      recipe is offered for custom settings. Fixes cover appearance settings changing on their own,
+      CARTO keys on report maps, the map repeating the world when zoomed out, 3-byte MeshCore Define
+      Path, and coverage survey conflicts.
+
+
+      ## Features
+
+      - Cross-source correlation: Unified Packet Monitor tags and filter, Coverage Report flags
+      (#5573)
+
+      - Map: cross-source "heard here" links layer on both maps (#5575)
+
+      - MeshCore: repeater RAW ingest — adverts to Nodes, channel messages to gated Messages (#5574)
+
+      - MeshCore: virtual channels in the Channel Database, with import from a device (#5576)
+
+      - Forwarding: source-level master switch, sidebar FWD pill, automation action (#5572)
+
+      - Dashboard: Live Mesh Activity widget (#5570)
+
+
+      ## Bug Fixes
+
+      - LoRa: correct modem preset tables, add TINY presets, firmware 2.8 region rules, LongModTurbo
+      recipe (#5571)
+
+      - Settings: appearance and UI preferences are global-only (#5569)
+
+      - MeshCore: 3-byte Define Path, shared telemetry labels, local-node favorites (#5566)
+
+      - Map: CARTO key on report maps, one-world clamp, coverage overlap chooser (#5565)
+
+      - Coverage: select the blocking live survey on `SURVEY_ALREADY_LIVE` (#5562)
+
+
+      ## Issues Resolved
+
+      #5537, #5543, #5544, #5546, #5547, #5548, #5549, #5550, #5551, #5552, #5553, #5554, #5555,
+      #5556, #5557, #5558, #5559, #5560, #5561
+
+
+      ## Upgrade Notes
+
+      - Migrations 189–193 run on first start. 189 removes per-source copies of appearance and UI
+      preferences; if a source held a value that differed from the global one, the promotion rule in
+      #5569 decides which is kept.
+
+      - Cross-source map links start filling after the upgrade; there is no backfill.
+
+      - New MeshCore entries in the Channel Database start with no user access. Grant it under
+      Users.
+
+
+      **Full changelog:** https://github.com/Yeraze/meshmonitor/compare/v4.17.0-rc2...v4.17.0-rc3
+
+
+      ## 🚀 MeshMonitor v4.17.0-rc3
+
+
+      ### 📦 Installation
+
+
+      **Docker (recommended):**
+
+      ```bash
+
+      docker run -d \
+        --name meshmonitor \
+        -p 8080:3001 \
+        -v meshmonitor-data:/data \
+        ghcr.io/Yeraze/meshmonitor:4.17.0-rc3
+      ```
+
+
+      ### 🧪 Testing
+
+      ✅ All tests passed
+
+      ✅ TypeScript checks passed
+
+      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
+
+
+      ### 📋 Changes
+
+      See commit history for detailed changes.
+  - version: v4.17.0-rc2
+    name: v4.17.0-rc2
+    datetime: '2026-10-02T21:32:28Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.0-rc2
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.17.0-rc2
+
+
+      > [!WARNING]
+
+      > This is a **pre-release** for testing. It is not tagged `latest`. Use it on a test install
+      or with a recent backup.
+
+
+      ## Summary
+
+
+      This release brings inline message translation, contributed by @Crim. Translations are cached,
+      so a phrase is sent to the provider once and every viewer sees the stored result. MeshCore
+      repeaters attached over USB or serial now fill in their Nodes list, Packet Monitor and local
+      health telemetry from the serial CLI. Automations gain working **Node discovered** triggers on
+      both protocols and MeshCore **Node updated** triggers, plus new `packetId` and `packetHash`
+      tokens. The MeshCore channel list adds message-count sorting and last-message times. Other
+      MeshCore additions:
+
+      - resend for channel messages that no repeater echoed
+
+      - Discover Path feedback
+
+      - favoriting from Node Details
+
+      - a clearer contact auto-add view
+
+
+      Other new features:
+
+      - a Traceroute Explorer report
+
+      - a filtered CSV export for messages
+
+      - a one-click shortcut from a node's Remote Admin badge into Admin Commands
+
+
+      Fixes cover channel mutes on multi-source installs, vector basemaps crashing with clustering,
+      MeshCore message search in the v1 API, and migrations on shared MySQL/PostgreSQL servers. The
+      main JS bundle is split into lazy-loaded routes, and a new CI budget keeps it from growing
+      back.
+
+
+      ## Features
+
+      - Inline translation of messages (#5480), by @Crim
+
+      - Translation cache + stored translations for every viewer (#5527)
+
+      - MeshCore: populate a repeater source's Nodes and Packet Monitor from its serial CLI (#5505)
+
+      - MeshCore: local telemetry for directly-attached repeaters (#5539)
+
+      - MeshCore: message count sort and last-message times in the channel list (#5506)
+
+      - MeshCore: Discover Path countdown and response / no-response feedback (#5509)
+
+      - MeshCore: favorite a node from Node Details (#5510)
+
+      - MeshCore: show auto-add state, push contacts to the radio, explain the mismatch (#5513)
+
+      - MeshCore: resend channel messages no repeater echoed (#5525)
+
+      - Automations: node discovered/updated triggers for both protocols + packet tokens (#5540)
+
+      - Reports: Traceroute Explorer report card (#5514)
+
+      - Messages: filtered CSV export + search fixes (#5523)
+
+      - Notifications: per-source channel mute fix + MeshCore channel mute (#5522)
+
+      - Nodes: remote admin shortcut from node details (#5541)
+
+
+      ## Bug Fixes
+
+      - Map: vector basemaps crash with node clustering (#5521)
+
+      - Notifications: partial preference saves so the Notifications tab can't drop mutes (#5528)
+
+      - API: v1 message search reads MeshCore history from the database (#5529)
+
+      - DB: scope migration information_schema checks to the current database (#5531)
+
+      - Messages: enforce the 2-character search minimum on the server (#5536)
+
+
+      ## Performance / Build / CI
+
+      - Split the main bundle (#5530)
+
+      - Raise service-worker precache cap to 6 MiB (#5524)
+
+      - Track JS bundle size budgets in CI (#5538)
+
+      - Bump version to 4.17.0-rc2 (#5542)
+
+
+      ## Issues Resolved
+
+      #5487, #5500, #5502, #5503, #5507, #5508, #5511, #5512, #5516, #5517, #5520, #5526, #5533,
+      #5534, #5535
+
+
+      ## New Contributors
+
+      Thank you, @Crim, for your first contribution: inline message translation (#5480)!
+
+
+      ## Upgrade Notes
+
+      - New migrations (186–188) run automatically on start: a channel-mute merge, a MeshCore
+      message sender timestamp, and the translation cache tables.
+
+      - Repeater local telemetry (#5539) has not yet been tested against a real USB-attached
+      repeater. Reports welcome.
+
+
+      **Full Changelog**: https://github.com/Yeraze/meshmonitor/compare/v4.17.0-rc1...v4.17.0-rc2
+
+
+      ## 🚀 MeshMonitor v4.17.0-rc2
+
+
+      ### 📦 Installation
+
+
+      **Docker (recommended):**
+
+      ```bash
+
+      docker run -d \
+        --name meshmonitor \
+        -p 8080:3001 \
+        -v meshmonitor-data:/data \
+        ghcr.io/Yeraze/meshmonitor:4.17.0-rc2
+      ```
+
+
+      ### 🧪 Testing
+
+      ✅ All tests passed
+
+      ✅ TypeScript checks passed
+
+      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
+
+
+      ### 📋 Changes
+
+      See commit history for detailed changes.
+  - version: v4.17.0-rc1
+    name: v4.17.0-rc1
+    datetime: '2026-09-30T23:05:41Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.0-rc1
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.17.0-rc1
+
+
+      > ⚠️ **Pre-release.** This is a release candidate for testing. It does not move the `:latest`
+      Docker tags.
+
+
+      4.17.0-rc1 is the first candidate for the 4.17 line. It adds **ack proof** ("Proven receipt")
+      in Delivery Details and **AEAD channel support, Phase 1**, both built on a protobufs bump to
+      Meshtastic's untagged `master` ahead of firmware 2.8.1. The Automation Engine can now
+      **broadcast waypoints**, and every waypoint gets an optional hop limit. MeshCore gains **Trace
+      Path auto return**, the **Pin sidebar** control Meshtastic already had, and a **map glyph of
+      its own for Repeaters**, so they stop looking identical to Meshtastic ROUTERs on the Unified
+      map. Web Push subscribe and unsubscribe are now **per source**. Slow API requests now get a
+      `504 REQUEST_TIMEOUT` reply instead of a dropped socket, which ends browsers silently
+      resending them (one Trace Path click used to put a trace on air every 30 s). Waypoints and
+      data requests now use the node's configured hop limit. Migrations 183–185 run on first boot.
+
+
+      ## Upgrade notes
+
+      - **Hop limits:** waypoint sends (fixed 3), position, NodeInfo and telemetry requests (3) and
+      NeighborInfo requests (7) now all use the node's configured LoRa hop limit. On a node set
+      above 3 these reach further; NeighborInfo requests stop flooding to 7 hops.
+
+      - **API clients:** a request still running at 30 s now gets `504 REQUEST_TIMEOUT` ("may still
+      complete in the background; check before retrying") instead of a closed socket. Known-slow
+      routes get a longer timeout.
+
+      - **Protobufs** now track Meshtastic's untagged `master` (`2542e06`).
+
+      - **Migrations 183–185** run automatically (waypoint hop limit + automation key,
+      `messages.ackProofStatus`, `channels.useAead`).
+
+      - Ack proof and AEAD only light up with firmware 2.8.1, which has no release yet.
+
+
+      ## What's Changed
+
+
+      ### Features
+
+      - feat(delivery): show Meshtastic ack proof "Proven receipt" (#5279) #5489
+
+      - feat(channels): store and preserve ChannelSettings.use_aead (#5248 Phase 1) #5492
+
+      - feat(automation): broadcast waypoints with a hop limit (#5482) #5484
+
+      - feat(meshcore): auto return path for Trace Path (#5485) #5490
+
+      - feat(nav): Pin sidebar on MeshCore sources, shared with Meshtastic (#5481) #5483
+
+      - feat(map): give MeshCore Repeaters their own glyph, apart from Meshtastic routers (#5491)
+      #5501
+
+
+      ### Bug Fixes
+
+      - fix(http): stop browsers resending slow requests (RF re-transmits every 30 s) #5494
+
+      - fix(push): scope Web Push subscribe state and unsubscribe to the source (#5493) #5495
+
+      - fix(meshcore): show a repeater's TX power, position and preset (#5496) #5497
+
+      - fix(telemetry): keep the time range selector when the window is empty (#5498) #5499
+
+      - fix(meshtastic): send data requests at the node's configured hop limit #5488
+
+
+      ### Dependencies / Maintenance
+
+      - chore(protobufs): bump to master 2542e06, and plan AEAD channels (#5248) and ack proof
+      (#5279) #5486
+
+      - chore(release): bump to 4.17.0-rc1, and write its changelog section #5504
+
+
+      ## Issues Resolved
+
+      - #5279 [Track] Firmware #11877: Routing.ack_proof HMAC-verified explicit acks for PKI DMs
+
+      - #5481 [FEAT] Add Pin sidebar control to MeshCore main nav (parity with Meshtastic sidebar)
+
+      - #5482 [FEAT] Automation Engine action to broadcast waypoints with configurable hop limit
+
+      - #5485 [FEAT] MeshCore Trace Path: mirror outbound as return leg to match MeshCore One's Auto
+      Return Path
+
+      - #5491 [FEAT] Distinguish Meshtastic ROUTER from MeshCore Repeater on the Unified map
+
+      - #5493 [BUG] Web Push subscription state leaks across sources (subscribe indicator +
+      unsubscribe delete)
+
+      - #5496 MeshCore repeater Configuration page shows defaults for TX power / preset /
+      coordinates
+
+      - #5498 [BUG] MeshCore telemetry duration selector hidden when current window has no data
+
+
+      Partially addressed: #5248 (AEAD channels): Phase 1 ships here; Phase 2 waits for a firmware
+      2.8.1 build.
+
+
+      **Full Changelog**: https://github.com/Yeraze/meshmonitor/compare/v4.16.2...v4.17.0-rc1
+
+
+      ## 🚀 MeshMonitor v4.17.0-rc1
+
+
+      ### 📦 Installa
+
+      …
+  - version: v4.16.2
+    name: v4.16.2
+    datetime: '2026-09-29T20:40:37Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.16.2
+    prerelease: false
+    notes: >-
+      # MeshMonitor v4.16.2
+
+
+      The full release of the 4.16.2 line, after six release candidates. It adds a passive
+      **Coverage Report** that replaces the Range Test module firmware 2.8 removed,
+      **likely-aircraft detection** with age-out, flight trails and optional ADS-B flight matching,
+      and **asset tracking** with full-history trails and timeline playback. Nodes, messages, route
+      records and traffic charts now split by transport (RF, UDP, MQTT), and a per-source option
+      corrects sign-flipped positions without changing stored data. Per-source **Message
+      Forwarding** sits next to the Auto-Responder, and MeshCore gains client-side Ignore and Block,
+      channel sorting and slot reordering, and remote logins that retry and can be cancelled. CARTO
+      vector basemaps, a quick age filter and Group by Role on the Nodes tab, and adding a node from
+      a contact URL round out the UI. Firmware OTA now runs on the selected source with its own TCP
+      port and a board map that matches Meshtastic's release names. A security fix stops an MQTT
+      broker source's Info and Device Config tabs from showing, or writing to, the primary TCP node.
+      Many MeshCore, MQTT, mobile and iOS 27 fixes land as well.
+
+
+      **Release post:** https://meshmonitor.org/blog/2026-09-29-v4.16.2-release
+
+
+      ## Upgrade notes
+
+
+      - **MeshCore adverts default to zero-hop**, and automated flood adverts are limited to one per
+      hour per source. Saved configs with no mode set keep flooding but fall under the hourly limit.
+
+      - **MQTT and MeshCore sources no longer use the primary Meshtastic radio.** Sends, device
+      config and remote admin from those sources are refused with `SOURCE_NOT_MESHTASTIC`.
+
+      - **Longest Active and Record Holder cards need `traceroute:read`** on the source, and Clear
+      Record needs `traceroute:write` (previously `info`).
+
+      - **Fifteen migrations run on first boot (168–182).** Migration 174 repairs PostgreSQL
+      installs that were restored from a backup.
+
+
+      ## What's Changed
+
+
+      ### Features
+
+
+      - feat(meshcore): client-side Ignore/Block for nodes and text patterns (#5408) (#5469)
+
+      - feat: simple per-source message Forwarding next to Auto-Responder (#5446) (#5455)
+
+      - feat(automations): add action.setAutomationEnabled (#5445) (#5454)
+
+      - feat(map): CARTO vector basemaps + bundled CARTO Voyager Dark (#5448) (#5453)
+
+      - feat: asset tracking Phase 3 — timeline playback (#5354) (#5422)
+
+      - feat(mqtt): drop automation-originated packets at the bridge uplink (#5414) (#5418)
+
+      - feat: asset tracking Phase 2 — full-history trail with shape-preserving thinning (#5354)
+      (#5419)
+
+      - feat: sign-flip follow-ups — geofences, traceroute snapshots, MeshCore (#5363) (#5412)
+
+      - feat: asset tracking Phase 1 — asset flag, per-asset retention, forced trail (#5354) (#5411)
+
+      - feat: detect and correct sign-flipped node positions (#5363) (#5409)
+
+      - feat(map): separate clustering toggle from the Map Click Zoom Gate (#5407)
+
+      - feat: ADS-B flight matching for likely aircraft (#5374) (#5410)
+
+      - feat(meshcore): retry remote logins, wait longer, show progress, allow cancel (#5400)
+      (#5405)
+
+      - feat(meshcore): reorder channel slots on the companion (#5379) (#5397)
+
+      - feat(unified-messages): show per-source hop count inline (#5366) (#5393)
+
+      - feat(nodes): quick age filter on the Nodes tab (#5387) (#5394)
+
+      - feat(meshcore): channel list sort dropdown and custom display order (#5385, #5379) (#5392)
+
+      - feat: per-source First Heard for Meshtastic and MeshCore nodes (#5390) (#5395)
+
+      - feat: likely-aircraft flight trails + MQTT position history, Phase 3 (#5364, #5365) (#5396)
+
+      - feat: likely-aircraft age-out and reclassify as fixed, Phase 2 (#5364, #5365) (#5391)
+
+      - feat: likely-aircraft detection, Phase 1 (#5364, #5365) (#5386)
+
+      - feat(ui): name the three node-age controls by role and show the active window (#5344)
+      (#5373)
+
+      - feat(automation): {{ trigger.packetHash }} for MeshCore messages; verify channel frames by
+      decryption (#5357) (#5359)
+
+      - feat(coverage): saved surveys, Phase 4b (#5277) (#5353)
+
+      - feat(coverage): gaps, summary, grid, export and deep links, Phase 4a (#5277) (#5348
+
+      …

@@ -1,4 +1,206 @@
 source: github
 repo: agessaman/meshcore-bot
-updatedAt: '2026-10-22T14:55:44.768Z'
-releases: []
+updatedAt: '2026-10-22T19:49:18.361Z'
+releases:
+  - version: v1.1.0
+    name: v1.1.0
+    datetime: '2026-09-20T19:56:42Z'
+    url: https://github.com/agessaman/meshcore-bot/releases/tag/v1.1.0
+    prerelease: false
+    notes: >-
+      v1.1.0 builds on the v1.0.0 stable line. Nothing was removed or renamed, so your existing
+      `config.ini` keeps working.
+
+
+      ## Before you upgrade
+
+
+      **`meshcore` must be 2.3.14 or newer.** This one is not optional. Older versions reported
+      ACKed DMs as failures, so the bot logged "no ACK received after retries" for messages that had
+      in fact arrived. The installer and container paths handle this for you; a manual venv needs
+      `pip install -U -r requirements.txt`.
+
+
+      **Database migration 24** adds two new tables. Nothing existing is rewritten, and it is safe
+      to run more than once.
+
+
+      **Nothing new starts transmitting.** The one new command, `contact`, replies only when asked,
+      and the new region-warning feature ships turned off.
+
+
+      `docs/upgrade.md` has the full list, including every new configuration key.
+
+
+      ## What's new
+
+
+      **Run more of the bot from the web viewer.** Scheduled messages can now be created and edited
+      from a new Schedule page, so recurring posts no longer mean hand-editing `config.ini`. Local
+      commands and services you drop into `local/` show up on the Plugins page and save to
+      `local/config.ini`, with secrets rendered masked. The Radio page picks up node settings and
+      flood-scope cards. Everything settings-related now sits under one Settings menu instead of
+      scattered across the nav bar.
+
+
+      Thanks to **@hickey** for the local plugin settings, the masked password fields, and the
+      `contact` command.
+
+
+      **The bot speaks other languages properly now.** Scheduled weather posts, rain nowcasts and
+      alerts all go through the translator instead of hardcoded English, so they follow your
+      `language` setting the way `wx` and `gwx` already did. A full Russian catalog ships with this
+      release, and you can override any individual string from your own catalog without an upgrade
+      overwriting it. A batch of related bugs is fixed too: translation key paths leaking into
+      broadcasts, wrong units in metric locales, mangled month names, and replies overrunning the RF
+      byte limit because the length check counted characters rather than bytes.
+
+
+      Thanks to **@custardpy** for the weather localization and the Russian translation, and to
+      **@hickey** for local translation catalogs.
+
+
+      **Message attribution is much more accurate.** On a busy mesh the bot used to match a channel
+      message against whichever RF row arrived most recently, which is often a repeater's echo of a
+      different packet. That made `{path}`, `{hops}` and `{packet_hash}` report another packet's
+      route, and made `path` answer "No path information available" for messages it had decoded
+      perfectly well. Messages are now matched to their own packet. Related: `flood_scopes = *` no
+      longer drops every channel message.
+
+
+      **Fewer things get stuck.** A DM waiting for its ACK no longer holds the radio, so one slow DM
+      stops blocking channel replies and scheduled sends. A radio that comes back with no channel
+      data now fails the connection cleanly and lets the normal reconnect path retry, instead of
+      running a bot that cannot route replies. Daily weather forecasts retry when Open-Meteo returns
+      a temporary error. Installs on 32-bit ARM resolve to prebuilt wheels instead of failing on a
+      piwheels 403.
+
+
+      **Smaller additions.** Scheduled messages can embed command output with `{cmd:...}`. Response
+      templates got a real parser, so placeholders nest and filter arguments can be quoted, plus new
+      `shorten`, `if_nonempty` and `hops_min` filters. Shlink joins v.gd and is.gd as a URL
+      shortener. The generated command website can carry your own CSS and list your local commands.
+      There is a new guide for writing command plugins. And `[Region_Warnings]` can tally how much
+      channel traffic on your mesh carries no region code, with an optional warning to those senders
+      that is off by default and starts in dry run.
+
+
+      Thanks to **@CoderNemesis26** for the Shlink support and the response-template rewrite,
+      **@mysiar** for the hello-sender option, **@ajquick** for the packet-capture observer name,
+      **@dludwig** for the install-extras option, and **@hickey** for th
+
+      …
+  - version: v1.0.0
+    name: v1.0.0
+    datetime: '2026-08-07T21:07:22Z'
+    url: https://github.com/agessaman/meshcore-bot/releases/tag/v1.0.0
+    prerelease: false
+    notes: "v1.0.0 marks the first stable release. Major highlights include zero-hop neighbor discovery, a rebuilt snapshot-backed web-viewer dashboard, improved transport recovery, location and rain features, World Cup support, safer feed and outbound HTTP handling, command-prefix enhancements, and significant performance and security work on the web-viewer.\r\n\r\nThe configuration format, command syntax, service layout, and web-viewer API are now considered stable; breaking changes to these will only occur with a major version bump.\r\n\r\n### Added\r\n\r\n- Zero-hop neighbor discovery in the packet capture service, ported from `meshcore-packet-capture` (itself a port of the observer firmware’s neighbors feature). At a configurable interval (12–336 h, default 24), the bot discovers which repeaters it hears **directly** and logs confirmed links with measured SNR. `[PacketCapture] neighbors_enabled` toggles the feature (off by default); each enabled broker publishes the snapshot once this is on (`mqttN_neighbors` defaults true, so set false to exclude a broker). The neighbors topic is formed by swapping the last segment of each broker’s packets topic (templated as `meshcore/{IATA}/{PUBLIC_KEY}/neighbors`, matching firmware). If no `iata` is set, location-routed topics are skipped with warning, preventing publishing to `meshcore/XYZ/...`. Snapshots are not retained, since `heard_secs_ago` is relative.\r\n- Confirmed direct links now form the strongest evidence class in the database: both public keys (32 bytes each) plus a first-party RF measurement, as compared to path inference, which has only prefixes and no keys. Links are stored in `neighbor_links` (adjacency, migration 22) and `neighbor_observations` (per-cycle history, pruned by `neighbor_observations_retention_days`, default 365).\r\n- Mesh graph integration: a **Neighbors Only** evidence mode on the mesh page and in `GET /api/mesh/edges?evidence=neighbors`, deriving edges solely from `neighbor_links`. These edges carry complete public keys and real SNR, and render as heavier lines; confirmed neighbors are annotated and treated as provenance-trusted when initializing the map. If `neighbors_feed_mesh_graph` (default on) is enabled, these are also written to `mesh_connections`.\r\n- The `neighbors` DM command lets admins run discovery cycles on demand (the scheduled interval has a 12h floor, making testing impractical otherwise). The command acknowledges immediately and follows with a report DM after the listen window. Useful to add to `[Admin_ACL] admin_commands`, as each invocation spends airtime.\r\n- Optional region-scope collection (`neighbors_collect_scopes`, off by default): each request can lock the bot’s radio command for up to ~25s. For repeaters lacking a stored path, the library temporarily rewrites their contact path to reach zero-hop. The default cycle uses a single radio command plus a passive listen window, keeping the bot responsive.\r\n- Automatic reconnects for serial, BLE, and TCP transport, including plugin re-subscription after reconnect.\r\n- Minute-level rain/precipitation nowcasts, with optional proactive notifications.\r\n- World Cup command and live event announcement service.\r\n- Opt-in sender-language detection for greeting replies, using keyword-first detection; a `langdetect` extra is available for longer inputs.\r\n- Centralized location/geocoding helpers, now shared across weather, AQI, path, and related commands.\r\n- New web-viewer plugin settings, node settings, multi-byte evidence views, and paginated contacts APIs.\r\n- Database restore utilities and hardened migrations for config, state, logs, and local plugins.\r\n- Flexible command prefixes: support for single, multiple, or decorative prefixes; permissive/strict matching modes; and optional support for bare commands.\r\n- Per-channel flood scope configuration for granular message routing control.\r\n- Optional packet-capture payload decoding: `GRP_TXT` channel messages are decrypted and `ADVERT`s are parsed into a nested `decoded` \n…"
+  - version: v0.9.3
+    name: v0.9.3
+    datetime: '2026-05-31T00:34:40Z'
+    url: https://github.com/agessaman/meshcore-bot/releases/tag/v0.9.3
+    prerelease: false
+    notes: "It was discovered that if the bot webhook was feeding a Discord channel via a webhook, sending messages to `@everyone`, `@here`, etc. would tag all users in the Discord. This is fixed.\r\n\r\n**Full Changelog**: https://github.com/agessaman/meshcore-bot/compare/v0.9.2...v0.9.3"
+  - version: v0.9.2
+    name: v0.9.2
+    datetime: '2026-05-17T21:44:14Z'
+    url: https://github.com/agessaman/meshcore-bot/releases/tag/v0.9.2
+    prerelease: false
+    notes: "## What's Changed\r\n* Fix scope handling behavior and improve logging options for packet capture service. by @agessaman in https://github.com/agessaman/meshcore-bot/pull/185\r\n\r\n\r\n**Full Changelog**: https://github.com/agessaman/meshcore-bot/compare/v0.9.1...v0.9.2"
+  - version: v0.9.1
+    name: v0.9.1
+    datetime: '2026-05-16T19:55:44Z'
+    url: https://github.com/agessaman/meshcore-bot/releases/tag/v0.9.1
+    prerelease: false
+    notes: "## Highlights\r\n\r\nThis release has improvements to regions handling, fixes for a couple of deadlock issues in the scheduler that might cause the bot to become unresponsive, and bugfixes in various areas.\r\n\r\n- **Regions flood scope** end-to-end: per-service config, scheduled messages, webhook body override, and correct scope on keyword/RandomLine replies.\r\n- **Scheduler overhaul**: 5-field cron and `@` presets (HHMM deprecated), optional per-job `#scope`, stagger for colliding jobs, better concurrency.\r\n- **DARC MoWaS reliability**: bit-identical retransmits with stable timestamps; ascending timestamps on multi-chunk sends.\r\n- **Path & test commands**: optional reply prefix, gated repeater naming by bytes/hop, customizable `test`/`t` templates with pipe filters.\r\n\r\n## Features\r\n\r\n**Scheduling**\r\n- `[Scheduled_Messages]` supports cron (`0 8 * * *`), presets (`@daily`, `@hourly`, …); legacy `HHMM` still works with a warning. (*Note:* APScheduler Day of Week starts on Monday unlike Vixie cron, so Monday = 0.)\r\n- Per-job regional scope: `channel:#scope:message` (middle field must start with `#`).\r\n- Added optional `scheduled_message_max_stagger_seconds` to spread out jobs that fire at the same time; scheduled sends skip global `rate_limit_seconds` (channel and `bot_tx_rate_limit` still apply).\r\n\r\n**Flood scope**\r\n- `CommandManager.resolve_channel_send_scope()` with precedence: explicit arg → `message.reply_scope` → section `flood_scope` → `[Channels] outgoing_flood_scope_override`.\r\n- Optional `flood_scope` on Weather, Earthquake, Webhook, DARC MoWaS, and related services; webhook JSON may include `\"flood_scope\": \"#scope\"`.\r\n- Keyword and RandomLine channel replies use `send_response` so incoming regional scope is honored. #178\r\n\r\n**Commands**\r\n- **Path**: `reply_prefix` (first chunk only when split) allows you to add `@[{sender}]` or similar to first reply. `minimum_path_bytes` (2/3) defers DB name lookup on paths with single byte path hashes, this is useful to avoid returning inaccurate information in dense meshes with highly duplicated single-byte prefixes.\r\n- **Test**: `[Test_Command] response_format` overrides `[Keywords] test`; pipe filters (`pathbytes_min`, `prefix_if_nonempty`). This enables things like not returning values unless conditions are met. Example that only returns path distance if multibyte paths are used:\r\n\r\n```ini\r\nresponse_format = ack @[{sender}]{phrase_part} | {path}{path_distance|pathbytes_min:2|prefix_if_nonempty: | Path Dist: } | F/L Dist: {firstlast_distance} | Rec: {timestamp}\r\n```\r\n\r\n**Packet capture / MQTT**\r\n- Added global `jwt_ttl_seconds` and per-broker `mqttN_jwt_ttl_seconds` / `mqttN_jwt_renewal_interval` for token lifetime vs refresh cadence. This enables JWTs with a TTL shorter than 24 hours.\r\n\r\n**DARC MoWaS**\r\n- Retransmissions reuse the original timestamp for network deduplication; chunk sends get `base + index` second timestamps.\r\n\r\n**Other**\r\n- `send_channel_message(..., timestamp=...)` for bit-identical channel replays.\r\n- Service display names strip trailing underscores (e.g. `foo_Service` → `foo`, not `foo_`).\r\n\r\n---\r\n\r\n## Fixes\r\n\r\n- **DM routing**: responses use `sender_pubkey` when available (avoids misrouting when display names collide). Thanks for raising this @Tigro14 in #180\r\n- **Scheduler / feeds**: fire-and-forget scheduled processing; feed send lock avoids coroutine pileup; per-feed last-send tracking.\r\n- **Mesh graph**: `flush_needed` flag reduces redundant flush calls and a deadlock risk.\r\n- **Contact adverts**: `track_contact_advertisement` returns structured success/duplicate status for clearer handler logic.\r\n- **DARC MoWaS / webhook**: chunk timestamp ordering; webhook scope resolution cleanup.\r\n\r\n---\r\n\r\n## Configuration notes\r\n\r\n| Area | Action |\r\n|------|--------|\r\n| Scheduled messages | Prefer cron over `HHMM`; use `channel:#scope:body` for regional sends. |\r\n| MQTT brokers with short-lived tokens | Set `jwt_ttl_seconds` and renewal interval **below** TTL per broker. |\r\n…"
+  - version: v0.9.0
+    name: v0.9.0
+    datetime: '2026-05-03T05:20:07Z'
+    url: https://github.com/agessaman/meshcore-bot/releases/tag/v0.9.0
+    prerelease: false
+    notes: "# v0.9.0 Release Notes\r\n\r\nv0.9.0 is a release focused on stability and enhancing and refining existing features. It adds features to the web dashboard, rewrites the scheduler on APScheduler for improved reliability, and introduces radio-health monitoring. It also adds versioned database migrations, multi-arch Docker images, `.deb` packaging, async guard rails, and several new commands. **Python 3.9 is no longer supported; the minimum is now 3.10.**\r\n\r\nThanks to @KG7QIN for the work on adding tests and working on radio reliability.\r\n\r\n---\r\n\r\n## Web Viewer\r\n\r\n- Optional authentication for the admin dashboard\r\n- Updated live streams for packets, commands, messages, and logs.\r\n- Admin config editor lets operators view and edit `config.ini` from the browser, with automatic password redaction and CSRF protection.\r\n- Contact management, DB backup management, maintenance tools, and an API Explorer tab are all available from the viewer.\r\n- Zombie-radio and radio-offline banners surface hardware status on every page; channel-name validation and live update-feed controls added.\r\n- The viewer starts with an \"initializing\" banner during bot startup and polls for live status without blocking the bot.\r\n\r\n## Radio Reliability\r\n\r\n- Zombie-radio detection periodically probes the radio with a health check; unresponsive radios trigger a configurable alert and banner.\r\n- Radio-offline fail state suppresses outbound sends until the radio reconnects, then resumes normally.\r\n- `asyncio.wait_for` guards wrap `send_advert`, `disconnect_radio`, and `reboot_radio` to prevent event-loop lockups.\r\n- A debounce guard prevents the packet-capture service from storm-restarting during radio reconnects.\r\n- Radio debug logging can be toggled from the web UI at runtime without a restart.\r\n\r\n## Scheduler & Database\r\n\r\n- Scheduler rewritten on APScheduler; a new maintenance module handles housekeeping tasks independently.\r\n- Graceful shutdown and config reload are signal-driven (`SIGTERM` / `SIGHUP`).\r\n- Database layer migrated to `aiosqlite` with `AsyncDBManager` and versioned migrations; `ALTER TABLE` startup migrations run safely without data loss.\r\n- Background polling operations (feed polling, channel/radio ops) use fire-and-forget callbacks to avoid blocking the scheduler thread.\r\n\r\n## Commands\r\n\r\n- `!version` reports the running bot version; `!schedule` lists scheduled messages and the current advert interval.\r\n- `!path` gains a geographic scoring toggle and corrected multibyte chart rendering.\r\n- Weather: high/low temperatures, MQTT weather source, Open-Meteo model selection, configurable default city, multi-day forecasts, and location fallback.\r\n- Airplane results are configurable via `max_results`.\r\n- Additional keyword-triggered auto-responses via the RandomLine matcher; a BSD fortune file ships as default data.\r\n\r\n## Bridges & Integrations\r\n\r\n- Discord bridge now supports multiple webhooks per channel, configurable per channel key.\r\n- Discord and Telegram outbound helpers added for cross-service notification delivery.\r\n- Repeater discovery and collision alerts service with optional delivery to mesh or external notification services (Discord/Telegram).\r\n- Inbound webhook relay accepts external HTTP POST events with bearer-token authentication and forwards them to mesh channels.\r\n- MQTT packet publishing controls added with configurable path-length decoding.\r\n\r\n## Security & Rate Limiting\r\n\r\n- SSRF hardening added to all outbound HTTP calls, including an explicit CGN-network check; an `allow_local_smtp` flag enables opt-in local SMTP relay.\r\n- Log-injection sanitization applied to all user-supplied log lines; a CI regression check guards against regressions.\r\n- CSRF protection added to the web viewer admin editor.\r\n- Per-channel rate limiting and tightened per-user cooldown defaults; thread-safe rate limiter with LRU SNR/RSSI caches.\r\n\r\n## Packaging & Infrastructure\r\n\r\n- `.deb` packaging via `scripts/build-deb.sh` for systemd-based deployments.\r\n- Multi-ar\n…"
+  - version: v0.8.3
+    name: v0.8.3
+    datetime: '2026-03-12T03:57:19Z'
+    url: https://github.com/agessaman/meshcore-bot/releases/tag/v0.8.3
+    prerelease: false
+    notes: "This release adds support for parsing multi-byte paths across the bot.\r\n\r\n- Adds a `trace` command (and its companion `tracer`, trace reciprocal) that enables the bot to perform traces.\r\n- Adds a new RandomLine matcher for file-based command responses. Thanks Ian!\r\n- Adds data-retention rules for all databases and purges old records periodically.\r\n- Added Earthquake notification service. Thanks [davidkjackson54](https://github.com/davidkjackson54)!\r\n- Adds a Bot → Telegram bridge that enables messages from one or more channels to be posted to Telegram\r\n- Adds a profanity and hate symbol filter to prevent bad actors on the mesh from getting your Discord banned.\r\n- Adds support for local service plugins in a separate directory for easy backups. Thanks for the suggestion and testing [davidkjackson54](https://github.com/davidkjackson54)"
+  - version: v0.8.2.1
+    name: v0.8.2.1
+    datetime: '2026-02-22T20:04:15Z'
+    url: https://github.com/agessaman/meshcore-bot/releases/tag/v0.8.2.1
+    prerelease: false
+    notes: Small bugfix release that fixes a configparser error for users using Python 3.13+
+  - version: v0.8.2
+    name: v0.8.2
+    datetime: '2026-02-21T17:54:02Z'
+    url: https://github.com/agessaman/meshcore-bot/releases/tag/v0.8.2
+    prerelease: false
+    notes: "- Added a version indicator to the bottom of the Web Viewer\r\n- Added ability to filter by packet type in Packet Capture Service.\r\n- Improved mesh graph efficiency, added documentation for how to configure mesh graph calculations (or disable it) on lightweight nodes like Raspberry Pi Zero 2s.\r\n- Simplify contact removal logic. Occasional errors will still occur until race condition in meshcore_py \r\n- Improvements to documentation."
+  - version: v0.8.1
+    name: v0.8.1
+    datetime: '2026-02-18T18:01:33Z'
+    url: https://github.com/agessaman/meshcore-bot/releases/tag/v0.8.1
+    prerelease: false
+    notes: "A couple little fixes.\r\n\r\nFixed logic in multitest command to avoid having a subsequent request block both test requests.\r\nFixed issue with per-user rate limit that prevented second message responses from commands from being sent."
+  - version: v0.8
+    name: v0.8
+    datetime: '2026-02-17T00:50:31Z'
+    url: https://github.com/agessaman/meshcore-bot/releases/tag/v0.8
+    prerelease: false
+    notes: "## Release notes\r\n\r\n**New commands & features**\r\n\r\n- **Aurora** — New command for aurora/space weather (NOAA client).\r\n- **Airplanes** — Aircraft tracking command.\r\n- **Reload** — Admin command to reload configuration without restarting the bot.\r\n- **Command prefix** — Optional prefix for bot commands (e.g. `!path`).\r\n- **Sub-commands & help** — Commands can expose sub-commands and clearer usage/help; help respects channel restrictions and avoids truncation issues.\r\n- **Polish** — Polish translation added (with thanks to the contributor).\r\n\r\n**Path & mesh**\r\n\r\n- **Path command** — Graph-based path validation using observed mesh links; presets: `balanced`, `geographic`, `graph`. SNR integration, “prefix best location,” and improved multitest with per-user sessions and path tracking.\r\n- **Mesh graph** — New mesh graph logic and **mesh view in the web viewer** (connections, highlighting, sync).\r\n- **Contacts (web)** — Time filtering, path sorting, bulk delete, starred nodes, and automatic device name updates.\r\n\r\n**Weather**\r\n\r\n- **WXSIM** — Support for custom WXSIM weather sources in `wx_command` and international weather.\r\n- **Global weather** — ZIP code geocoding and companion location features.\r\n\r\n**Configuration & behavior**\r\n\r\n- **Config validation** — `validate_config.py` and validation in `modules/config_validation.py`; standardized command sections (e.g. `[Joke_Command]` with `enabled`); legacy `*_enabled` still supported.\r\n- **Rate limiting** — Per-user rate limiting for bot responses.\r\n- **Channel keyword filtering** — Configurable channel filtering for keyword responses.\r\n- **Banned users** — Prefix (starts-with) matching for banned user entries.\r\n- **Feed manager** — Dedicated `[Feed_Manager]` section; optional RSS/API feeds.\r\n- **Config file** — UTF-8 support and quoted values for monitor channels.\r\n\r\n**Web viewer**\r\n\r\n- Mesh graph view, improved error handling and database path handling, favicons, realtime view.\r\n- **Service health checks** — Optional checks and restart logic for the viewer.\r\n\r\n**Docker & deployment**\r\n\r\n- **Docker** — Dockerfile, `docker-compose.yml`, and `docker-setup.sh` for device detection, paths, and serial handling. Docs in `docs/DOCKER.md`.\r\n- **Install script** — `install-service.sh` supports Python venv and clearer echo formatting.\r\n- **CI** — GitHub Actions for Docker build, tests, and docs; `dev` branch supported.\r\n\r\n**Under the hood**\r\n\r\n- Command queuing for global cooldowns; escape sequence decoding for greetings and keyword responses; transmission and repeat tracking; unique advert packet tracking and leaderboard.\r\n- **Tests** — pytest suite (commands, config validation, rate limiter, mesh graph, path resolution, etc.).\r\n- **Docs** — MkDocs site and guides: getting started, configuration, path command config, upgrade, Docker, FAQ.\r\n- **Website generator** — `generate_website.py` with dynamic styling and sample generation.\r\n\r\n**Upgrade**\r\n\r\n- Existing configs remain valid. See **docs/UPGRADE.md** for optional migrations (e.g. `[Joke_Command]`, `[Feed_Manager]`, `[Path_Command]`) and the banned-users prefix-matching behavior.\r\n\r\n## Contributions\r\n* Feature: Add Polish translation (pl) 80% by @smithpl2000 in https://github.com/agessaman/meshcore-bot/pull/40\r\n* Web_Viewer: fix loading of db_path from config by @Mateusz-Krajewski in https://github.com/agessaman/meshcore-bot/pull/43\r\n* Respond to only `wx` and `gwx` command with usage. by @jeroenvermeulen in https://github.com/agessaman/meshcore-bot/pull/50\r\n\r\n## New Contributors\r\n* @smithpl2000 made their first contribution in https://github.com/agessaman/meshcore-bot/pull/40\r\n* @Mateusz-Krajewski made their first contribution in https://github.com/agessaman/meshcore-bot/pull/43\r\n* @jeroenvermeulen made their first contribution in https://github.com/agessaman/meshcore-bot/pull/50\r\n\r\n**Full Changelog**: https://github.com/agessaman/meshcore-bot/compare/v0.7...v0.8"
+  - version: v0.7
+    name: v0.7
+    datetime: '2026-01-11T19:35:35Z'
+    url: https://github.com/agessaman/meshcore-bot/releases/tag/v0.7
+    prerelease: false
+    notes: "# Release Notes\r\n\r\n## New Features\r\n\r\n- **Service Plugin Architecture**: Implemented service plugin system for background services that run alongside the bot\r\n- **Packet Capture Service**: Captures packets from MeshCore network and publishes to MQTT brokers for analyzer.letsmesh.net\r\n- **Map Uploader Service**: Uploads node adverts to map.meshcore.dev with signed data authentication\r\n- **Weather Service**: Scheduled weather forecasts, NOAA alert monitoring, and regional lightning detection via MQTT\r\n- **Discord Bridge**: New service plugin to post channel messages to Discord with message queuing and rate limiting for webhook posts\r\n- **Command Enable/Disable**: Individual commands can now be enabled/disabled via configuration\r\n- **Sports Data Clients**: Added ESPN and TheSportsDB API clients for sports command functionality\r\n- **System Health Monitoring**: New `/api/system-health` endpoint for system status reporting\r\n- **Minimal Configuration**: New `config.ini.minimal-example` for users who only need core testing commands\r\n- **Announcements Command**: New command for admin triggered announcements\r\n- **Magic 8 Command**: Added magic 8-ball command for fun responses (thanks @lincomatic)\r\n- **Enhanced Packet Decoding**: Web viewer packet stream now supports packet analysis using `meshcore-decoder`\r\n- **Nix/NixOS Support**: Added Nix flake infrastructure with NixOS module for declarative system-wide deployments (thanks @tbaumann)\r\n- **Web Viewer NixOS Option**: Added `services.meshcore-bot.webviewer.enable` option for NixOS deployments (thanks @tbaumann)\r\n\r\n## Bug Fixes\r\n\r\n- **Segfault Prevention**: Fixed potential segfaults by deep copying event payloads in ChannelManager and service plugins\r\n- **Path Decoding**: Fixed path decoding logic to better handle single nodes and hex values\r\n- **Weather Emoji Truncation**: Improved weather string handling to prevent emoji truncation\r\n- **Database Connections**: Fixed database connection handling and timeout issues\r\n- **Keyword Reporting**: Fixed keyword reporting to web viewer\r\n- **Error Handling**: Improved error handling and logging across multiple modules\r\n\r\n## Improvements\r\n\r\n- **Python Packaging**: Migrated to `pyproject.toml` with proper entry points (`meshcore-bot`, `meshcore-viewer`) (thanks @tbaumann)\r\n- **Code Quality**: Added type hints and docstrings across modules\r\n- **Cooldown Management**: Refactored to centralized cooldown tracking system in BaseCommand\r\n- **Location Resolution**: Improved location name resolution from database using public keys\r\n- **Weather Data**: Improved weather forecast formatting and data retrieval in international weather command\r\n- **Async Handling**: Improved asyncio event loop handling to prevent deadlocks\r\n- **Internet Connectivity**: Implemented thread-safe caching for internet connectivity status\r\n- **MQTT Handling**: Improved non-blocking MQTT connection handling in service plugins\r\n- **Logging**: Added rotating file handlers and improved error reporting\r\n- **Web Viewer**: Improved stability by logging stdout/stderr to files instead of PIPE\r\n- **Database Management**: Optimized database cleanup with smaller batch deletions to reduce lock contention\r\n- **Message Processing**: Improved message content processing by stripping trailing whitespace\r\n- **Help Command**: Added dynamic command list based on usage statistics\r\n\r\n## Configuration Changes\r\n\r\n- Added `--config` parameter support for both main bot and web viewer\r\n- New service plugin configuration sections: `[PacketCapture]`, `[MapUploader]`, `[Weather_Service]`, `[Discord_Bridge]`\r\n- Added `db_path` configuration options for web viewer\r\n- Updated JWT renewal interval to 24 hours\r\n- Added command-specific enable/disable options\r\n\r\n## Dependencies\r\n\r\n- Added: `urllib3>=2.0.0`, `paho-mqtt>=1.6.0`, `cryptography>=41.0.0`, `pynacl>=1.5.0`\r\n- Updated Python dependencies across the board\r\n\r\n## New Contributors\r\n* @lincomatic made their first contribution in https://github.com/agessaman/meshcor\n…"
+  - version: v0.6.1
+    name: v0.6.1
+    datetime: '2025-12-20T23:17:28Z'
+    url: https://github.com/agessaman/meshcore-bot/releases/tag/v0.6.1
+    prerelease: false
+    notes: "- Improved security and enhanced warnings of insecure elements. Thanks @eddieoz!\r\n- Improved path guessing algorithm.\r\n- Added dark mode.\r\n- Improved service installation and added upgrade mode to update existing service integrations.\r\n- Improvements to WebViewer stats and mobile accessibility, introduced limited channel management tool\r\n- Improved sports command logic for game selection.\r\n- Added path length placeholder options for test command.\r\n- Improved reliability of NOAA weather reports."
+  - version: v0.6
+    name: v0.6
+    datetime: '2025-12-03T04:12:04Z'
+    url: https://github.com/agessaman/meshcore-bot/releases/tag/v0.6
+    prerelease: false
+    notes: "This version adds these new features:\r\n\r\n- calculation of packet hashes for deduplication of nodes\r\n- the addition of an automated greeter command with an onboarding period to avoid spamming existing active members\r\n- improved localization of bot commands\r\n- commands have a generic per-channel configuration, instead of requiring custom code to work outside of the standard channels, this allows per-command channels\r\n\r\nThis version adds the following improvements:\r\n\r\n- the weather command now has better hourly updates\r\n- improvements to score extraction in the sports command\r\n- better installation scripts\r\n- WebViewer UI improvements\r\n  - delete contacts from the contacts database\r\n  - override the path guessing weighting for key infrastructure nodes\r\n  - cleaned up dashboard to make stats more useful\r\n- improve multi-test command response format"
+  - version: v0.5
+    name: v0.5
+    datetime: '2025-11-22T03:39:05Z'
+    url: https://github.com/agessaman/meshcore-bot/releases/tag/v0.5
+    prerelease: false
+    notes: "Added localization to all commands.\r\n\r\nUsed machine translation of strings into German, British English, Spanish, French Canadian, Dutch, Portuguese and Brazilian Portuguese. Any assistance with native-speaker localization would be appreciated.\r\n\r\nAdded wx <location> tomorrow and wx <location> #day commands.\r\n\r\nImplemented a globally accessible weather API using OpenMeteo, currently running as gwx. Command structure is the same as wx command.\r\n\r\nAdded command overrides. If you want to make modifications to a command, you can duplicate the file into ./modules/commands/alternatives and they will override existing commands with the same name field. If you change `name = \"gwx\"` to `name = \"wx\"` the example global weather command will unload the  standard wx command in favor of your replacement.\r\n\r\nUsed path guessing logic to estimate path lengths in test messages. New placeholders are {path_distance} for the estimated total path traveled, and {firstlast_distance} for the distance between the first and last known repeater.\r\n\r\nFixed an issue where we weren't initiating the packet_stream table for the WebViewer integration.\r\n\r\nSeveral bug fixes, and sadly probably several more bugs. This is a work in progress."
+  - version: v0.4
+    name: v0.4
+    datetime: '2025-10-22T05:13:35Z'
+    url: https://github.com/agessaman/meshcore-bot/releases/tag/v0.4
+    prerelease: false
+    notes: "This version does some internal clean-up on the databases. A new contact database will be populated when you launch this version for the first time.\r\n\r\n- Added processing of all adverts and discovery events. All contact data is stored information in database\r\n- Added repeater geolocation data in the prefix command\r\n- Added logic in the path command to try to deconflict prefixes in path based on distance and node advert age\r\n- Significantly speeds up channel loading during bot startup. Detects all channels now, regardless of empty slots.\r\n- Add web viewer with dashboard that runs in a separate process and provides stats, contact information and \r\n- Various code structure and import improvements to core bot and command modules to support integration\r\n- Add ACL support to restrict access to sensitive commands to DMs from known public keys\r\n- Updated example config.ini files—to use some of the new features, you will need to update your config.ini. The Web_Viewer, Path_Command, Prefix_Command, and Admin_ACL sections have been added, and are necessary for full functionality of the bot."
+  - version: v0.3
+    name: v0.3
+    datetime: '2025-10-10T04:17:05Z'
+    url: https://github.com/agessaman/meshcore-bot/releases/tag/v0.3
+    prerelease: false
+    notes: "- Added channels command to share common hashtag channels, configurable in config.ini\r\n- Added option to geolocate repeaters in output of the prefix command\r\n- Cleaned up config.ini.example to reflect recent changes\r\n- Revised path command to improve consistency of decoding and output.\r\n- Improved ZIP code handling for aqi command\r\n- Added responses for emoji greetings\r\n- Improved sports command to format soccer home/away properly\r\n- Added dice and roll commands for increased randomness\r\n- Improved plugin architecture so command configuration is handled in config.ini and commands code is held in individual files"
+  - version: v0.2
+    name: v0.2
+    datetime: '2025-09-08T02:55:53Z'
+    url: https://github.com/agessaman/meshcore-bot/releases/tag/v0.2
+    prerelease: false
+    notes: "#### **Enhanced DM Reliability with meshcore-2.1.6**\r\n- **NEW**: Implemented `send_msg_with_retry` for Direct Messages using meshcore-2.1.6\r\n- **NEW**: Automatic ACK confirmation for all DM sends\r\n- **NEW**: Configurable retry parameters with intelligent fallback\r\n- **NEW**: Path optimization and flood mode fallback for failed deliveries\r\n- **NEW**: Enhanced DM logging with success/failure indicators\r\n\r\n#### **Advanced Prefix Command System**\r\n- **NEW**: `prefix <XX>` command to query repeater prefixes via API\r\n- **NEW**: `prefix refresh` subcommand to manually refresh API cache\r\n- **NEW**: `prefix free` command to list available (unused) prefixes\r\n- **NEW**: SQLite database fallback when API is unavailable\r\n- **NEW**: 1-hour in-memory caching for API responses\r\n- **NEW**: Dynamic API source detection in responses\r\n- **NEW**: Random selection of free prefixes for better distribution\r\n\r\n#### **Command Matching Precision**\r\n- **FIXED**: `prefix` command now only matches at the beginning of messages\r\n- **FIXED**: `t_phrase` command restricted to beginning of message (`t ` or `T `)\r\n- **FIXED**: `@` command no longer triggers on \"at\" in middle of messages\r\n- **FIXED**: `repeater` command restricted to DM-only and beginning of message\r\n- **IMPROVED**: All commands now use precise keyword matching"
+  - version: v0.1.1
+    name: v0.1.1
+    datetime: '2025-09-06T19:14:04Z'
+    url: https://github.com/agessaman/meshcore-bot/releases/tag/v0.1.1
+    prerelease: false
+    notes: Some additional cleanup to remove test files, etc.
+  - version: v0.1
+    name: v0.1 Initial Release
+    datetime: '2025-09-06T19:05:12Z'
+    url: https://github.com/agessaman/meshcore-bot/releases/tag/v0.1
+    prerelease: false
+    notes: It wasn't a bot, then it was... forgive my hacking.
