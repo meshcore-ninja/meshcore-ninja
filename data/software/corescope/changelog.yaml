@@ -1,7 +1,87 @@
 source: github
 repo: Kpa-clawbot/CoreScope
-updatedAt: '2026-10-08T23:04:08.210Z'
+updatedAt: '2026-10-22T23:02:19.570Z'
 releases:
+  - version: v3.15.0
+    name: v3.15.0
+    datetime: '2026-10-22T20:18:19Z'
+    url: https://github.com/Kpa-clawbot/CoreScope/releases/tag/v3.15.0
+    prerelease: false
+    notes: |-
+      # v3.15.0
+
+      77 commits since v3.14.0: 27 fix, 23 perf, 19 feat, 3 test, 2 ci, 2 docs (one of them
+      these notes), 1 chore. Nineteen feats, so minor not patch.
+
+      The main change is how CoreScope decides that a repeater is alive. Until now a
+      repeater could stay green for days after it went silent, because traffic from
+      another repeater with the same short prefix was counted for it. That is fixed, and
+      it changes the status of some of your nodes after the upgrade. The rest of the
+      release is optional features (LoRa settings per node, observer airtime, companion
+      linking, smarter offline mails) and a lot of memory and speed work on the server.
+
+      ## Read this before upgrading
+
+      ### Some repeaters change from Active to Uncertain or Stale
+
+      A repeater in a path is only known by the first 1, 2 or 3 bytes of its key. With
+      1-byte paths, dozens of repeaters share the same prefix, and CoreScope counted a
+      hop like that as "heard" for whichever repeater it picked. A repeater that had been
+      off for days could stay Active on traffic that was really another one.
+
+      Since #2261 (closes #2260), a node only counts as heard on evidence that can only
+      be that node: its own packets, or a relay hop whose prefix no other repeater has.
+      Adverts with an invalid signature no longer count either.
+
+      What you will see after the upgrade:
+
+      - **A new grey status, Uncertain**, for a repeater or room that sent nothing certain
+        in its silent window, while its shared prefix still shows up in paths. It may be
+        that repeater, or another one with the same prefix. The nodes list and the map have
+        a filter button for it, and the map dims these nodes like stale ones.
+      - **Last Heard can be older than before** for repeaters that are only heard through a
+        shared prefix.
+      - **Offline mails for watched nodes** now go out for repeaters that a namesake kept
+        green before. The mail says when the node is uncertain rather than gone.
+      - **Node analytics** split the activity chart into certain and uncertain traffic, and
+        Availability and Longest Silence use only the certain part (#2262).
+
+      On a staging instance with 1,682 repeaters and rooms, on the day of the change: 1,497
+      Active, 117 Uncertain, 68 Stale. We did not count the same instance before the change.
+
+      Right after a restart, fewer nodes show Uncertain and more show Stale. The first load
+      skips ambiguous relay hops (#1643), so they come back as live traffic arrives. Give
+      it a few hours before you judge a node.
+
+      Nothing to configure. A node's own packets, such as its adverts, always count, so a
+      repeater that adverts within its silent window stays Active. If a node you know is
+      on the air shows Uncertain or Stale, its prefix is shared with another repeater and
+      its last advert is older than that window.
+
+      ### With user accounts on: back up `users.db` first
+
+      `users.db` is migrated to schema version 6 at the first start (#2174). A v3.14
+      binary refuses to open it after that. To roll back, you need the copy from before
+      the upgrade: the daily backups in `backups/` next to `users.db`, or your own. Without
+      user accounts nothing changes.
+
+      ### The ingestor fills in channel and scope names in the background
+
+      When you add a channel key or a region key, packets stored before that keep showing
+      as an encrypted channel or an unknown scope. From this release the ingestor goes back
+      over those rows and fills in the name (#2133). It runs at every start and again when
+      keys are added, and creates three small tables to keep track. The server picks up
+      the result without a restart. There is no measured duration for a large database
+      yet.
+
+      ### Some answers are a few seconds or minutes older, in return for speed
+
+      - The **nodes list** is shared between identical requests for up to 15 seconds
+        (#2165). A geo-filter or blacklist change clears it at once.
+      - The **neighbor graph** is rebuilt in the background every 5 minutes
+        (`neighborGraph.cacheRecomputeIntervalSeconds`, default 300) instead of while a
+        page waits (#2222). One rebuild took about 11 seconds before, on a p
+      …
   - version: v3.14.0
     name: v3.14.0
     datetime: '2026-10-08T21:41:38Z'
@@ -1526,108 +1606,3 @@ releases:
       On your own instanc
 
       …
-  - version: v3.4.1
-    name: v3.4.1 — Server-Side Hop Resolution & Performance
-    datetime: '2026-04-04T08:36:55Z'
-    url: https://github.com/Kpa-clawbot/CoreScope/releases/tag/v3.4.1
-    prerelease: false
-    notes: >-
-      ## v3.4.1 — Server-Side Hop Resolution & Performance
-
-
-      ### ⭐ Headline: Resolved Paths
-
-
-      Hop prefixes are now resolved to full node identities **at ingest time** using a persisted
-      neighbor affinity graph. No more guessing — the server knows which "D6" is which.
-
-
-      - **Persisted neighbor graph** (`neighbor_edges` table) — builds automatically on first run,
-      loads instantly on restart. 4-tier resolution: affinity → geo → GPS → first match.
-
-      - **`resolved_path` on every observation** — full 64-char pubkeys stored alongside raw
-      `path_json`. Ambiguous prefixes that the old client-side resolver got wrong are now correct.
-
-      - **Frontend prefers server-resolved paths** — packets page, live map, Show Route, packet
-      detail all use `resolved_path` with automatic fallback for old data.
-
-      - **Zero-cost on subsequent startups** — edges and resolved paths persist in SQLite. First run
-      does a one-time backfill.
-
-
-      ### 🚀 Performance
-
-
-      - **Distance index rebuild debounced** — was triggering on every ingest cycle, now at most
-      every 30s. Eliminates CPU hot loop on busy meshes.
-
-      - **Neighbor graph build optimized** — cached `strings.ToLower`, cached JSON parsing via
-      `sync.Once`, TTL bumped 60s → 5min. Cuts cold start time.
-
-      - **O(n²) observation dedup → O(n)** — map-based replacement.
-
-      - **O(n²) selection sort → sort.Slice** — standard library sort.
-
-      - **Parallelized expanded group fetches** — hashIndex Map lookup instead of linear scan.
-
-      - **Advert pubkey tracking incremental** — eliminates per-request JSON parsing.
-
-      - **Rate-limited cache invalidation** — prevents 0% hit rate under sustained ingest.
-
-      - **VCR replay chunked** — prevents UI freezes on large replays.
-
-
-      ### 🐛 Fixes
-
-
-      - **`hasResolvedPath` flag race** — `detectSchema()` ran before column was added, causing full
-      re-backfill on every restart. Fixed.
-
-      - **`resolved_path` missing from grouped packets** — `groupByHash=true` response wasn't
-      including resolved paths. Fixed.
-
-      - **Memory leak in `pruneStaleNodes`** — `nodeActivity` map entries never cleaned up. Fixed.
-
-      - **iOS tap-to-scroll broken** — scroll container restructured for status bar tap.
-
-      - **Observer filter dropped groups** — grouped packets view lost groups when observer filter
-      was active. Fixed.
-
-      - **Null crash on ADVERT detail** — `pathHops` null guard added.
-
-      - **Mobile filter dropdown** — CSS specificity prevented expansion. Fixed.
-
-      - **Hash collision analysis** — now only counts repeaters, not all nodes.
-
-      - **Virtual scroll height** — accounts for expanded group rows.
-
-
-      ### 🔧 Infra
-
-
-      - CI build and deploy jobs pinned to `meshcore-vm` runner.
-
-      - Deep linking rule added to AGENTS.md.
-
-
-      ### ⚠️ Known Issues / Heads Up
-
-
-      - **First restart after upgrade takes ~4 minutes on large DBs** — The server builds the
-      neighbor graph (~40s), then backfills `resolved_path` for all existing observations (~2 min),
-      plus normal data load (~35s). With 1M+ observations, expect heavy CPU and SQLite locking
-      during this window. MQTT ingest may disconnect and reconnect. **This is a one-time cost** —
-      subsequent restarts load from SQLite in ~15s. Do not restart the server during this process or
-      it will start over.
-
-
-      ### 📊 By the Numbers
-
-
-      - 22 commits, 13 files changed
-
-      - 1.1M observations backfilled with resolved paths
-
-      - 408K neighbor edges persisted
-
-      - Cold start: ~4 min first run → ~15s subsequent
