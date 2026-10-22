@@ -1,7 +1,105 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-10-20T19:54:13.229Z'
+updatedAt: '2026-10-22T03:48:06.544Z'
 releases:
+  - version: v4.17.1-rc9
+    name: v4.17.1-rc9
+    datetime: '2026-10-22T00:37:29Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.1-rc9
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.17.1-rc9
+
+
+      > ⚠️ **Pre-release.** This is a release candidate for testing. Use a stable release in
+      production.
+
+
+      This release candidate adds an overlay for tropospheric ducting on the Map tab and the
+      Dashboard map. It also round-trips the firmware's waypoint geofence fields (radius, bounding
+      box and enter/exit alerts). You can draw and edit them in the waypoint editor, and the map
+      shows them. Auto-Responder triggers now have a Pattern or Regex match mode on both Meshtastic
+      and MeshCore, and both source types share one matcher. Triggers now accept emoji and any
+      printable Unicode text. MeshCore pattern triggers gain `{param}` capture and
+      lookalike-character normalisation. The MeshCore Virtual Node sends a firmware-v3 DeviceInfo
+      frame, so MeshCore One and other apps read its capacities correctly. MeshCore traces to
+      direct-neighbour repeaters now route through the repeater's own hash. The Configuration tab
+      now refetches channels after Reload Config on Device. A node's channel is now recorded only
+      from its own key-decoded traffic, not from PKI, spoofed or replayed packets.
+
+
+      ## Features
+
+      - feat(map): tropospheric ducting overlay UI on the Map tab and Dashboard map (#5913)
+
+      - feat(waypoints): round-trip firmware waypoint geofence fields (#5925)
+
+      - feat(automation): one Auto-Responder trigger syntax for Meshtastic and MeshCore (#5930)
+
+
+      ## Bug Fixes
+
+      - fix(meshcore): trace direct-neighbour repeaters through their own hash (#5915)
+
+      - fix(meshcore): send a firmware-v3 DeviceInfo from the Virtual Node (#5917)
+
+      - fix(config): refetch channels after Reload Config on Device (#5920)
+
+      - fix(nodes): record a node's channel only from its own key-decoded traffic (#5926)
+
+
+      ## Chores
+
+      - chore: bump version to 4.17.1-rc9 (#5932)
+
+
+      ## Issues Resolved
+
+      #5734, #5914, #5916, #5919, #5922, #5923, #5924
+
+
+      ## Upgrade notes
+
+      - Migration 216 adds the waypoint geofence columns. It runs automatically.
+
+      - Forwarding-rule and MeshCore Auto-Acknowledge regexes now accept emoji and other non-ASCII
+      printable text. They still reject control characters, and the 100-character cap and ReDoS
+      checks still apply.
+
+
+      **Full Changelog**: https://github.com/Yeraze/meshmonitor/compare/v4.17.1-rc8...v4.17.1-rc9
+
+
+      ## 🚀 MeshMonitor v4.17.1-rc9
+
+
+      ### 📦 Installation
+
+
+      **Docker (recommended):**
+
+      ```bash
+
+      docker run -d \
+        --name meshmonitor \
+        -p 8080:3001 \
+        -v meshmonitor-data:/data \
+        ghcr.io/Yeraze/meshmonitor:4.17.1-rc9
+      ```
+
+
+      ### 🧪 Testing
+
+      ✅ All tests passed
+
+      ✅ TypeScript checks passed
+
+      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
+
+
+      ### 📋 Changes
+
+      See commit history for detailed changes.
   - version: v4.17.1-rc8
     name: v4.17.1-rc8
     datetime: '2026-10-20T15:46:47Z'
@@ -2253,90 +2351,5 @@ releases:
       - feat(coverage): saved surveys, Phase 4b (#5277) (#5353)
 
       - feat(coverage): gaps, summary, grid, export and deep links, Phase 4a (#5277) (#5348
-
-      …
-  - version: v4.16.2-rc6
-    name: v4.16.2-rc6
-    datetime: '2026-09-29T02:38:34Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.16.2-rc6
-    prerelease: true
-    notes: >-
-      # MeshMonitor v4.16.2-rc6
-
-
-      > ⚠️ **Pre-release.** This is a release candidate for testing. Back up your database before
-      upgrading.
-
-
-      ## Summary
-
-      rc6 adds simple per-source **Message Forwarding** next to the Auto-Responder on both
-      Meshtastic and MeshCore, with hard limits of 5 forwards per minute per rule and built-in loop
-      guards. MeshCore gains client-side **Ignore and Block** for nodes and text patterns, since the
-      firmware has none. The Automation Engine can now enable, disable or toggle another automation
-      with `action.setAutomationEnabled`, and the map picker adds CARTO vector basemaps plus a
-      bundled **CARTO Voyager Dark** style. MeshCore contacts corrupted by dropped serial bytes are
-      now rejected and their names cleaned, and Last Heard uses the companion's own clock. The
-      Packet Monitor no longer logs firmware 2.8's NodeDB replay burst as fresh receptions. A long
-      run of UI fixes makes the Automation, Configuration and Settings pages fit a phone, makes
-      Geofence fields commit on blur, and keeps embedded maps under the sticky nav. Server-side
-      timers driven by user settings are now clamped, so an oversized interval can no longer fire
-      every millisecond. This release adds migration 182.
-
-
-
-      ### Added
-
-      - **Message Forwarding**, per source, next to the Auto-Responder on both Meshtastic and
-      MeshCore. Each rule copies a matching incoming message (DM or channel, optionally filtered by
-      sender or regex) to one node or another channel on the same source, with an optional `{from}`
-      / `{channel}` prefix. Each rule is hard-capped at 5 forwards per 60 s, at most 20 rules per
-      source, sends never retry, and NodeDB replays are never forwarded. Channel targets show an
-      airtime warning; receive-only and MQTT sources show the rules read-only. (#5446, #5455)
-
-      - **MeshCore Ignore and Block**, for nodes and text patterns. MeshCore firmware has no block
-      or mute, so MeshMonitor filters in the client. Ignore stores the message but skips
-      notifications, automations, auto-ack, auto-responder, forwarding and Virtual Node relay, and
-      folds runs into an "N ignored messages" row; Block drops the message on receipt. Text rules
-      match exact, wildcard or regex against the sender name, body or both. Controls sit under the
-      contact detail panel and in two new sections of the MeshCore source's Settings, each with hit
-      counts. Migration 182. (#5408, #5469)
-
-      - **`action.setAutomationEnabled`** in the Automation Engine enables, disables or toggles an
-      automation by id (literal or `{{ }}` template), replacing the `runScript` + `curl` + API token
-      workaround. (#5445, #5454)
-
-      - **CARTO vector basemaps** (Voyager, Positron, Dark Matter) in 2D, plus a bundled **CARTO
-      Voyager Dark** style: a dark map that keeps land-use colour. A CARTO key, when set, is added
-      to CARTO requests only. 3D and raster-only views use each preset's matching raster tiles.
-      (#5448, #5453)
-
-
-      ### Changed
-
-      - **The dev tileserver is opt-in**, and `tiles/` is a real directory again. A symlink
-      committed by accident left fresh clones with a dangling `tiles` link and crash-looped the dev
-      tileserver; `lint:ci` now rejects tracked symlinks. (#5470)
-
-      - **MQTT docs and help text** say Meshtastic declined meshtastic/firmware#11994 (a per-packet
-      `ok_to_mqtt` override) by design, and name the workarounds. The bridge-side drop from #5418
-      stays the supported answer. (#5452)
-
-      - **Blog:** a One Year of MeshMonitor retrospective. (#5456)
-
-      - **Translations updated from Hosted Weblate** (Indonesian). (#5464)
-
-      - **Tests:** every react-i18next mock now returns a stable `t`, which ends a class of latent
-      flakes; the EmbedSettings dialog and MeshCore neighbours-config flakes are fixed; the MySQL
-      outlier batch-delete test gets 60 s. (#5461, #5473, #5474)
-
-      - 10 Dependabot updates, including `maplibre-gl` 6.11.2, `aedes` 1.2.0 (MQTT broker security
-      fixes), `@tanstack/react-query`, `lucide-react`, `jsdom`, `puppeteer`, `supertest`, the CodeQL
-      actions, and the production and development groups. (#5435–#5444)
-
-
-      ### Fixed
-
-      - **Packet Monitor** logged firmware 2
 
       …
