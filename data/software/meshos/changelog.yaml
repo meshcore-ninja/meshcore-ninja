@@ -1,7 +1,67 @@
 source: github
 repo: andymux/meshos-releases
-updatedAt: '2026-10-22T19:49:36.286Z'
+updatedAt: '2026-10-23T19:51:46.092Z'
 releases:
+  - version: v1.0.32
+    name: MeshOS v1.0.32
+    datetime: '2026-10-23T16:47:28Z'
+    url: https://github.com/andymux/meshos-releases/releases/tag/v1.0.32
+    prerelease: false
+    notes: >-
+      # MeshOS 1.0.32
+
+
+      ## Contact info
+
+      - Tap a contact's photo to open their info page, for both AirLink and LoRa contacts.
+
+      - The info page shows their key and, when it is known, their location with a button to open
+      the map. For LoRa contacts it also shows the path your messages take to reach them.
+
+      - Both LoRa and AirLink contacts now have a menu (the three dots) with the actions for that
+      contact, such as share, show on map, set a photo, and remove. The same actions are on the info
+      page.
+
+      - Resetting a LoRa contact's path now updates the path shown on their info page straight away.
+
+
+      ## Map
+
+      - Contacts with a known location now show a location button in the list. Tap it to see that
+      person on the map.
+
+      - Viewing someone on the map now goes straight to them, without the slow zoom-out, and no
+      longer jumps back to your own area.
+
+
+      ## New messages line
+
+      The button that jumps to new messages in a channel is smarter now. It only appears when the
+      new messages are off the screen, it takes you to the first new message, and it no longer
+      appears by mistake when the keyboard opens or just after you send a message.
+
+
+      ## Other
+
+      - Messages from a device whose clock is wrong now appear where they actually arrived, with
+      their time shown in red, instead of being hidden at the top of a chat or pushing a channel to
+      the bottom of the list.
+
+      - Smaller wording tidy-ups and fixes.
+
+
+      ## Downloads
+
+      - Android: MeshOS-v1.0.32.apk
+
+      - macOS: MeshOS-v1.0.32.dmg
+
+
+      SHA-256:
+
+      - MeshOS-v1.0.32.apk: a6a3b04dcc741a6a59525f7dc2ab883f57927665edf9c30826db0a1af679a18b
+
+      - MeshOS-v1.0.32.dmg: bd7ddf92786fcc703701a705e75383892777b2edc79c1c795600c64c9af33cbf
   - version: v1.0.31
     name: MeshOS v1.0.31
     datetime: '2026-10-21T16:40:02Z'
@@ -969,31 +1029,3 @@ releases:
       DMG SHA-256:
 
       `4cfd9280cdbe2a3afcee7f8bbcd93d0345aea09a53e5b78ddb52eec4fb06bc6f`
-  - version: fw-v1.7.3
-    name: MeshOS firmware v1.7.3
-    datetime: '2026-09-10T10:58:58Z'
-    url: https://github.com/andymux/meshos-releases/releases/tag/fw-v1.7.3
-    prerelease: false
-    notes: |-
-      MeshOS firmware v1.7.3
-
-      MeshOS app
-      - Fixes that improve reliability when using the radio with the MeshOS app.
-
-      T-Deck memory
-      - Around 80 KB of internal RAM freed by two fixes. With Bluetooth switched off, the
-        BLE stack is no longer started and torn down at every boot, and the notification
-        sound driver is now created only while a sound plays instead of holding 32 KB
-        permanently. Boot-time minimum free heap goes from under 10 KB to over 110 KB,
-        and companion (Bluetooth) mode has about five times the headroom it had.
-
-      Also
-      - /mem now reports the largest free block, and [HEAP] diagnostics are printed on the
-        serial console.
-
-      Device firmware for LilyGo T-Deck and ThinkNode M9.
-      Install via SD card (firmware.bin) or the in-firmware updater.
-
-      SHA-256:
-      - TDeck: 83ffeb343e430371b3913ebc4e9d39a9ca9e9eed8c2ab436e801c64d5d911978
-      - M9: c972a8206f6d6d62985ee9a31c6be033bc8af6d1e5c2d09c7d41344307aecbbf
