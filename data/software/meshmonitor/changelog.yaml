@@ -1,7 +1,122 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-10-23T03:52:30.274Z'
+updatedAt: '2026-10-23T22:57:45.192Z'
 releases:
+  - version: v4.17.1
+    name: v4.17.1
+    datetime: '2026-10-23T21:04:12Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.1
+    prerelease: false
+    notes: >-
+      # MeshMonitor v4.17.1
+
+
+      This release rolls up ten release candidates. MeshCore gains reactions, a native Companion
+      text CLI for firmware 1.18.0, saved remote-admin sessions, stored CLI history, and route hops
+      resolved from other sources. Auto Responder, Timer Triggers, Auto Acknowledge and channel
+      editing now share one workflow and one trigger syntax across Meshtastic and MeshCore, and
+      trigger patterns accept emoji. Local accounts can sign in with a passkey. The Map tab and
+      Dashboard map gain a tropospheric ducting overlay, waypoints round-trip the firmware's
+      geofence fields, and the ADS-B layer adds OpenSky as a feed. Meshtastic channels can use AEAD
+      (AES-CCM), and admins can set, clear and lock a node's channel by hand. Unified Telemetry
+      gains a cross-source dashboard, Node Details shows rename history, and node battery icons show
+      the charge level. Many MQTT fixes stop bridges from echoing each other, and the Packet Monitor
+      now drops firmware 2.8 NodeDB replays. A security fix scopes traceroute history and unified
+      telemetry to the sources a user may read. Database maintenance now runs on PostgreSQL and
+      MySQL, and the Docker image moves to Node.js 24.22.1.
+
+
+      ## Features
+
+
+      ### MeshCore
+
+      - **Reactions** (epic #5759): codec for the MeshCore One and meshcore-open formats (#5771),
+      inbound reaction chips (#5775), sending reactions and automation tapbacks (#5776), and chips
+      in Unified Messages plus CSV columns and an opt-in automation trigger (#5778)
+
+      - Companion text CLI on firmware 1.18.0: local console, quick-action catalog and remote CLI
+      (#5869)
+
+      - Remember and resume remote-admin sessions (#5798)
+
+      - Store CLI command history (#5897)
+
+      - Resolve unknown route hops from other sources (#5911)
+
+      - Radio contact list: auto-add mode and type filters, max hops, replace the oldest
+      non-favourite when full, and "Remove non-favourite contacts from the radio" (#5783)
+
+      - Override a contact's location (#5848)
+
+      - Edit the Observer in MeshCore Configuration; quick configure joins the save (#5840)
+
+      - Search and section buttons on MeshCore Configuration and Automations (#5855)
+
+
+      ### Automation and messaging
+
+      - One Auto-Responder trigger syntax for Meshtastic and MeshCore, with Pattern and Regex modes
+      and emoji support (#5930)
+
+      - One Auto Responder workflow for Meshtastic and MeshCore (#5811)
+
+      - One Timer Triggers workflow for Meshtastic and MeshCore (#5814)
+
+      - Same field groups for Auto Acknowledge and Auto Announce on both protocols (#5817)
+
+      - Shared config section shell for automation sections (#5809)
+
+      - Auto Acknowledge: nearer nodes answer a channel message first (#5789)
+
+      - Separate IP (MQTT/UDP) row in the Auto-Ack matrix (#5854)
+
+      - Choose the 0-hop and MQTT tapback glyphs (#5894)
+
+      - Draw SPIP1 pixel-image messages as images (#5945), thanks @maxhayim
+
+      - Unified Messages remembers the last selected channel per browser (#5793), thanks
+      @goodprogrammist
+
+      - Remember Show MQTT/Bridge Messages per source (#5844)
+
+      - Status Message: opt-in, per-source "Re-apply after a reboot" (#5784)
+
+
+      ### Maps, nodes and telemetry
+
+      - Tropospheric ducting overlay on the Map tab and Dashboard map (#5875, #5913)
+
+      - Round-trip firmware waypoint geofence fields (#5925)
+
+      - ADS-B: add OpenSky Network as a feed (#5906)
+
+      - ADS-B: re-check aircraft flight matches as the node moves (#5905)
+
+      - Set, clear and lock a node's channel by hand (#5941)
+
+      - Track node renames and show them in Node Details (#5865)
+
+      - Battery icons show the charge level (#5947)
+
+      - Cross-source Telemetry Dashboard on Unified Telemetry (#5907)
+
+
+      ### Channels, security and configuration
+
+      - Decrypt AEAD (AES-CCM) channels server-side (#5860) and edit AEAD on device channels (#5861)
+
+      - One channel editing model for Meshtastic and MeshCore (#5838)
+
+      - Passkey sign-in for local accounts (#5841): storage (#5849), sign-in (#5850), passkey-only
+      accounts, recovery codes and admin revoke (#5851), user guide (#5853) and design spec (#5847)
+
+      - Split the traceroute permission into Read and Write; MeshCore trace-path takes
+      traceroute:write (#5903)
+
+      - Describe t
+
+      …
   - version: v4.17.1-rc9
     name: v4.17.1-rc9
     datetime: '2026-10-22T00:37:29Z'
@@ -2229,121 +2344,3 @@ releases:
       ### 📋 Changes
 
       See commit history for detailed changes.
-  - version: v4.17.0-rc1
-    name: v4.17.0-rc1
-    datetime: '2026-09-30T23:05:41Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.0-rc1
-    prerelease: true
-    notes: >-
-      # MeshMonitor v4.17.0-rc1
-
-
-      > ⚠️ **Pre-release.** This is a release candidate for testing. It does not move the `:latest`
-      Docker tags.
-
-
-      4.17.0-rc1 is the first candidate for the 4.17 line. It adds **ack proof** ("Proven receipt")
-      in Delivery Details and **AEAD channel support, Phase 1**, both built on a protobufs bump to
-      Meshtastic's untagged `master` ahead of firmware 2.8.1. The Automation Engine can now
-      **broadcast waypoints**, and every waypoint gets an optional hop limit. MeshCore gains **Trace
-      Path auto return**, the **Pin sidebar** control Meshtastic already had, and a **map glyph of
-      its own for Repeaters**, so they stop looking identical to Meshtastic ROUTERs on the Unified
-      map. Web Push subscribe and unsubscribe are now **per source**. Slow API requests now get a
-      `504 REQUEST_TIMEOUT` reply instead of a dropped socket, which ends browsers silently
-      resending them (one Trace Path click used to put a trace on air every 30 s). Waypoints and
-      data requests now use the node's configured hop limit. Migrations 183–185 run on first boot.
-
-
-      ## Upgrade notes
-
-      - **Hop limits:** waypoint sends (fixed 3), position, NodeInfo and telemetry requests (3) and
-      NeighborInfo requests (7) now all use the node's configured LoRa hop limit. On a node set
-      above 3 these reach further; NeighborInfo requests stop flooding to 7 hops.
-
-      - **API clients:** a request still running at 30 s now gets `504 REQUEST_TIMEOUT` ("may still
-      complete in the background; check before retrying") instead of a closed socket. Known-slow
-      routes get a longer timeout.
-
-      - **Protobufs** now track Meshtastic's untagged `master` (`2542e06`).
-
-      - **Migrations 183–185** run automatically (waypoint hop limit + automation key,
-      `messages.ackProofStatus`, `channels.useAead`).
-
-      - Ack proof and AEAD only light up with firmware 2.8.1, which has no release yet.
-
-
-      ## What's Changed
-
-
-      ### Features
-
-      - feat(delivery): show Meshtastic ack proof "Proven receipt" (#5279) #5489
-
-      - feat(channels): store and preserve ChannelSettings.use_aead (#5248 Phase 1) #5492
-
-      - feat(automation): broadcast waypoints with a hop limit (#5482) #5484
-
-      - feat(meshcore): auto return path for Trace Path (#5485) #5490
-
-      - feat(nav): Pin sidebar on MeshCore sources, shared with Meshtastic (#5481) #5483
-
-      - feat(map): give MeshCore Repeaters their own glyph, apart from Meshtastic routers (#5491)
-      #5501
-
-
-      ### Bug Fixes
-
-      - fix(http): stop browsers resending slow requests (RF re-transmits every 30 s) #5494
-
-      - fix(push): scope Web Push subscribe state and unsubscribe to the source (#5493) #5495
-
-      - fix(meshcore): show a repeater's TX power, position and preset (#5496) #5497
-
-      - fix(telemetry): keep the time range selector when the window is empty (#5498) #5499
-
-      - fix(meshtastic): send data requests at the node's configured hop limit #5488
-
-
-      ### Dependencies / Maintenance
-
-      - chore(protobufs): bump to master 2542e06, and plan AEAD channels (#5248) and ack proof
-      (#5279) #5486
-
-      - chore(release): bump to 4.17.0-rc1, and write its changelog section #5504
-
-
-      ## Issues Resolved
-
-      - #5279 [Track] Firmware #11877: Routing.ack_proof HMAC-verified explicit acks for PKI DMs
-
-      - #5481 [FEAT] Add Pin sidebar control to MeshCore main nav (parity with Meshtastic sidebar)
-
-      - #5482 [FEAT] Automation Engine action to broadcast waypoints with configurable hop limit
-
-      - #5485 [FEAT] MeshCore Trace Path: mirror outbound as return leg to match MeshCore One's Auto
-      Return Path
-
-      - #5491 [FEAT] Distinguish Meshtastic ROUTER from MeshCore Repeater on the Unified map
-
-      - #5493 [BUG] Web Push subscription state leaks across sources (subscribe indicator +
-      unsubscribe delete)
-
-      - #5496 MeshCore repeater Configuration page shows defaults for TX power / preset /
-      coordinates
-
-      - #5498 [BUG] MeshCore telemetry duration selector hidden when current window has no data
-
-
-      Partially addressed: #5248 (AEAD channels): Phase 1 ships here; Phase 2 waits for a firmware
-      2.8.1 build.
-
-
-      **Full Changelog**: https://github.com/Yeraze/meshmonitor/compare/v4.16.2...v4.17.0-rc1
-
-
-      ## 🚀 MeshMonitor v4.17.0-rc1
-
-
-      ### 📦 Installa
-
-      …
