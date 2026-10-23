@@ -1,6 +1,6 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-10-22T19:49:35.947Z'
+updatedAt: '2026-10-23T03:52:30.274Z'
 releases:
   - version: v4.17.1-rc9
     name: v4.17.1-rc9
@@ -85,6 +85,104 @@ releases:
         -p 8080:3001 \
         -v meshmonitor-data:/data \
         ghcr.io/Yeraze/meshmonitor:4.17.1-rc9
+      ```
+
+
+      ### 🧪 Testing
+
+      ✅ All tests passed
+
+      ✅ TypeScript checks passed
+
+      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
+
+
+      ### 📋 Changes
+
+      See commit history for detailed changes.
+  - version: v4.17.1-rc10
+    name: v4.17.1-rc10
+    datetime: '2026-10-22T23:41:16Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.1-rc10
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.17.1-rc10
+
+
+      > ⚠️ **Pre-release.** This is a release candidate for testing. Use a stable release in
+      production.
+
+
+      Admins can now set, clear and lock a node's channel by hand from Node Details. A locked
+      channel stays put when new packets arrive. The MeshCore Virtual Node answers reads of empty
+      channel slots with an empty ChannelInfo, as real firmware does, so pipelined clients such as
+      MeshCore One no longer stall on each empty slot. The Virtual Node also sends MQTT uplink
+      frames only to the MQTT proxy client, not to other clients that connect after it. The MeshCore
+      Nodes list header now uses two rows, so the Discover button no longer gets clipped in the
+      320px pane. The Docker image moves to Node.js 24.22.1 for the October 21 security release.
+      This release also includes new Weblate translations.
+
+
+      ## Features
+
+      - feat(nodes): set, clear and lock a node's channel by hand (#5941)
+
+
+      ## Bug Fixes
+
+      - fix(meshcore): return empty channel info within advertised capacity (#5942), thanks @temalo
+
+      - fix(virtual-node): prefer MQTT proxy client as proxy delegate (#5928)
+
+      - fix(meshcore): split the Nodes list header into two rows (#5937)
+
+
+      ## Security
+
+      - security: bump Node.js base image to 24.22.1 (#5935)
+
+
+      ## Translations & Tests
+
+      - Translations update from Hosted Weblate (#5929)
+
+      - test(i18n): treat Weblate's empty-string keys as untranslated (#5938)
+
+
+      ## Chores
+
+      - chore: bump version to 4.17.1-rc10 (#5943)
+
+
+      ## Issues Resolved
+
+      #5923, #5927, #5933, #5934, #5936
+
+
+      ## Upgrade notes
+
+      - Migration 217 adds `nodes.channelLocked`. It runs automatically, and every existing node
+      starts unlocked.
+
+
+      **Full Changelog**: https://github.com/Yeraze/meshmonitor/compare/v4.17.1-rc9...v4.17.1-rc10
+
+
+      ## 🚀 MeshMonitor v4.17.1-rc10
+
+
+      ### 📦 Installation
+
+
+      **Docker (recommended):**
+
+      ```bash
+
+      docker run -d \
+        --name meshmonitor \
+        -p 8080:3001 \
+        -v meshmonitor-data:/data \
+        ghcr.io/Yeraze/meshmonitor:4.17.1-rc10
       ```
 
 
@@ -2247,109 +2345,5 @@ releases:
 
 
       ### 📦 Installa
-
-      …
-  - version: v4.16.2
-    name: v4.16.2
-    datetime: '2026-09-29T20:40:37Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.16.2
-    prerelease: false
-    notes: >-
-      # MeshMonitor v4.16.2
-
-
-      The full release of the 4.16.2 line, after six release candidates. It adds a passive
-      **Coverage Report** that replaces the Range Test module firmware 2.8 removed,
-      **likely-aircraft detection** with age-out, flight trails and optional ADS-B flight matching,
-      and **asset tracking** with full-history trails and timeline playback. Nodes, messages, route
-      records and traffic charts now split by transport (RF, UDP, MQTT), and a per-source option
-      corrects sign-flipped positions without changing stored data. Per-source **Message
-      Forwarding** sits next to the Auto-Responder, and MeshCore gains client-side Ignore and Block,
-      channel sorting and slot reordering, and remote logins that retry and can be cancelled. CARTO
-      vector basemaps, a quick age filter and Group by Role on the Nodes tab, and adding a node from
-      a contact URL round out the UI. Firmware OTA now runs on the selected source with its own TCP
-      port and a board map that matches Meshtastic's release names. A security fix stops an MQTT
-      broker source's Info and Device Config tabs from showing, or writing to, the primary TCP node.
-      Many MeshCore, MQTT, mobile and iOS 27 fixes land as well.
-
-
-      **Release post:** https://meshmonitor.org/blog/2026-09-29-v4.16.2-release
-
-
-      ## Upgrade notes
-
-
-      - **MeshCore adverts default to zero-hop**, and automated flood adverts are limited to one per
-      hour per source. Saved configs with no mode set keep flooding but fall under the hourly limit.
-
-      - **MQTT and MeshCore sources no longer use the primary Meshtastic radio.** Sends, device
-      config and remote admin from those sources are refused with `SOURCE_NOT_MESHTASTIC`.
-
-      - **Longest Active and Record Holder cards need `traceroute:read`** on the source, and Clear
-      Record needs `traceroute:write` (previously `info`).
-
-      - **Fifteen migrations run on first boot (168–182).** Migration 174 repairs PostgreSQL
-      installs that were restored from a backup.
-
-
-      ## What's Changed
-
-
-      ### Features
-
-
-      - feat(meshcore): client-side Ignore/Block for nodes and text patterns (#5408) (#5469)
-
-      - feat: simple per-source message Forwarding next to Auto-Responder (#5446) (#5455)
-
-      - feat(automations): add action.setAutomationEnabled (#5445) (#5454)
-
-      - feat(map): CARTO vector basemaps + bundled CARTO Voyager Dark (#5448) (#5453)
-
-      - feat: asset tracking Phase 3 — timeline playback (#5354) (#5422)
-
-      - feat(mqtt): drop automation-originated packets at the bridge uplink (#5414) (#5418)
-
-      - feat: asset tracking Phase 2 — full-history trail with shape-preserving thinning (#5354)
-      (#5419)
-
-      - feat: sign-flip follow-ups — geofences, traceroute snapshots, MeshCore (#5363) (#5412)
-
-      - feat: asset tracking Phase 1 — asset flag, per-asset retention, forced trail (#5354) (#5411)
-
-      - feat: detect and correct sign-flipped node positions (#5363) (#5409)
-
-      - feat(map): separate clustering toggle from the Map Click Zoom Gate (#5407)
-
-      - feat: ADS-B flight matching for likely aircraft (#5374) (#5410)
-
-      - feat(meshcore): retry remote logins, wait longer, show progress, allow cancel (#5400)
-      (#5405)
-
-      - feat(meshcore): reorder channel slots on the companion (#5379) (#5397)
-
-      - feat(unified-messages): show per-source hop count inline (#5366) (#5393)
-
-      - feat(nodes): quick age filter on the Nodes tab (#5387) (#5394)
-
-      - feat(meshcore): channel list sort dropdown and custom display order (#5385, #5379) (#5392)
-
-      - feat: per-source First Heard for Meshtastic and MeshCore nodes (#5390) (#5395)
-
-      - feat: likely-aircraft flight trails + MQTT position history, Phase 3 (#5364, #5365) (#5396)
-
-      - feat: likely-aircraft age-out and reclassify as fixed, Phase 2 (#5364, #5365) (#5391)
-
-      - feat: likely-aircraft detection, Phase 1 (#5364, #5365) (#5386)
-
-      - feat(ui): name the three node-age controls by role and show the active window (#5344)
-      (#5373)
-
-      - feat(automation): {{ trigger.packetHash }} for MeshCore messages; verify channel frames by
-      decryption (#5357) (#5359)
-
-      - feat(coverage): saved surveys, Phase 4b (#5277) (#5353)
-
-      - feat(coverage): gaps, summary, grid, export and deep links, Phase 4a (#5277) (#5348
 
       …
