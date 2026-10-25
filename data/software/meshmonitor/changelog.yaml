@@ -1,7 +1,84 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-10-23T22:57:45.192Z'
+updatedAt: '2026-10-25T00:05:01.417Z'
 releases:
+  - version: v4.17.2-rc1
+    name: v4.17.2-rc1
+    datetime: '2026-10-24T23:48:32Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.2-rc1
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.17.2-rc1
+
+
+      > [!WARNING]
+
+      > This is a pre-release for testing. Use it on production systems at your own risk.
+
+
+      MeshCore Companion sources gain Auto Ping: a contact who DMs `ping N` gets a run of pings back
+      and a summary. The limits match Meshtastic's Auto Ping, and it is off by default. MeshCore
+      Node Details gets a Show on Map button that opens the map on the node with its popup. On the
+      Unified Telemetry dashboard, a reading the node takes itself, such as battery or temperature,
+      now draws one line merged from every source. A Split by source toggle brings back the
+      per-source lines. In Link Profile, you can drag the endpoints, and panning the map no longer
+      drops a point. The Nodes list can filter nodes that are hidden from the map. The ducting
+      overlay now centres on your own nodes. Reticulum attach mode now works in Docker, and the
+      bridge recovers from a failed RNS start without a restart.
+
+
+      ## Features
+
+      - MeshCore: Auto Ping (`ping N` DM command) for Companion sources (#5962)
+
+      - MeshCore: Show on Map from Node Details (#5965)
+
+      - Unified Telemetry: merge objective telemetry across sources into one line, with a per-chart
+      Split by source toggle (#5966)
+
+      - Link Profile: draggable endpoints; panning never picks a point; hold Space to pan freely
+      (#5963)
+
+      - Nodes: Hidden from map filter in the Nodes list (#5958)
+
+
+      ## Bug Fixes
+
+      - Ducting: centre the default area on the busiest cluster and your local nodes (#5960)
+
+      - Reticulum: recover from a failed RNS start without a manual restart (#5957)
+
+      - Reticulum: attach mode puts MeshMonitor on host networking (#5956)
+
+
+      ## Documentation
+
+      - 4.17.1 documentation pass and release post (#5961)
+
+
+      ## CI/DevOps
+
+      - Version bump to 4.17.2-rc1 (#5967)
+
+
+      ## Issues Resolved
+
+      #5931, #5951, #5952, #5953, #5954, #5955, #5959, #5964
+
+
+      ## Upgrade notes
+
+      - **Reticulum attach mode (Docker):** the overlay now runs MeshMonitor with `network_mode:
+      host`, and the bridge runs as `${RNS_UID:-1000}:${RNS_GID:-1000}` with a read-write
+      `~/.reticulum` mount. If you use `docker-compose.reticulum.yml`, pull the new file, and set
+      `RNS_UID`/`RNS_GID` if your Reticulum config is not owned by UID 1000. Set `ALLOWED_ORIGINS`
+      if you open MeshMonitor anywhere other than `http://localhost:3001`. The overlay needs Docker
+      Compose 2.24.4 or later (`ports: !reset`). Helm adds `reticulum.securityContext`.
+
+      - **MeshCore Auto Ping** is off by default (Automation → Auto Ping on a Companion source).
+
+
+      **Full Changelog**: https://github.com/Yeraze/meshmonitor/compare/v4.17.1...v4.17.2-rc1
   - version: v4.17.1
     name: v4.17.1
     datetime: '2026-10-23T21:04:12Z'
@@ -2171,164 +2248,6 @@ releases:
         -p 8080:3001 \
         -v meshmonitor-data:/data \
         ghcr.io/Yeraze/meshmonitor:4.17.0-rc3
-      ```
-
-
-      ### 🧪 Testing
-
-      ✅ All tests passed
-
-      ✅ TypeScript checks passed
-
-      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
-
-
-      ### 📋 Changes
-
-      See commit history for detailed changes.
-  - version: v4.17.0-rc2
-    name: v4.17.0-rc2
-    datetime: '2026-10-02T21:32:28Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.0-rc2
-    prerelease: true
-    notes: >-
-      # MeshMonitor v4.17.0-rc2
-
-
-      > [!WARNING]
-
-      > This is a **pre-release** for testing. It is not tagged `latest`. Use it on a test install
-      or with a recent backup.
-
-
-      ## Summary
-
-
-      This release brings inline message translation, contributed by @Crim. Translations are cached,
-      so a phrase is sent to the provider once and every viewer sees the stored result. MeshCore
-      repeaters attached over USB or serial now fill in their Nodes list, Packet Monitor and local
-      health telemetry from the serial CLI. Automations gain working **Node discovered** triggers on
-      both protocols and MeshCore **Node updated** triggers, plus new `packetId` and `packetHash`
-      tokens. The MeshCore channel list adds message-count sorting and last-message times. Other
-      MeshCore additions:
-
-      - resend for channel messages that no repeater echoed
-
-      - Discover Path feedback
-
-      - favoriting from Node Details
-
-      - a clearer contact auto-add view
-
-
-      Other new features:
-
-      - a Traceroute Explorer report
-
-      - a filtered CSV export for messages
-
-      - a one-click shortcut from a node's Remote Admin badge into Admin Commands
-
-
-      Fixes cover channel mutes on multi-source installs, vector basemaps crashing with clustering,
-      MeshCore message search in the v1 API, and migrations on shared MySQL/PostgreSQL servers. The
-      main JS bundle is split into lazy-loaded routes, and a new CI budget keeps it from growing
-      back.
-
-
-      ## Features
-
-      - Inline translation of messages (#5480), by @Crim
-
-      - Translation cache + stored translations for every viewer (#5527)
-
-      - MeshCore: populate a repeater source's Nodes and Packet Monitor from its serial CLI (#5505)
-
-      - MeshCore: local telemetry for directly-attached repeaters (#5539)
-
-      - MeshCore: message count sort and last-message times in the channel list (#5506)
-
-      - MeshCore: Discover Path countdown and response / no-response feedback (#5509)
-
-      - MeshCore: favorite a node from Node Details (#5510)
-
-      - MeshCore: show auto-add state, push contacts to the radio, explain the mismatch (#5513)
-
-      - MeshCore: resend channel messages no repeater echoed (#5525)
-
-      - Automations: node discovered/updated triggers for both protocols + packet tokens (#5540)
-
-      - Reports: Traceroute Explorer report card (#5514)
-
-      - Messages: filtered CSV export + search fixes (#5523)
-
-      - Notifications: per-source channel mute fix + MeshCore channel mute (#5522)
-
-      - Nodes: remote admin shortcut from node details (#5541)
-
-
-      ## Bug Fixes
-
-      - Map: vector basemaps crash with node clustering (#5521)
-
-      - Notifications: partial preference saves so the Notifications tab can't drop mutes (#5528)
-
-      - API: v1 message search reads MeshCore history from the database (#5529)
-
-      - DB: scope migration information_schema checks to the current database (#5531)
-
-      - Messages: enforce the 2-character search minimum on the server (#5536)
-
-
-      ## Performance / Build / CI
-
-      - Split the main bundle (#5530)
-
-      - Raise service-worker precache cap to 6 MiB (#5524)
-
-      - Track JS bundle size budgets in CI (#5538)
-
-      - Bump version to 4.17.0-rc2 (#5542)
-
-
-      ## Issues Resolved
-
-      #5487, #5500, #5502, #5503, #5507, #5508, #5511, #5512, #5516, #5517, #5520, #5526, #5533,
-      #5534, #5535
-
-
-      ## New Contributors
-
-      Thank you, @Crim, for your first contribution: inline message translation (#5480)!
-
-
-      ## Upgrade Notes
-
-      - New migrations (186–188) run automatically on start: a channel-mute merge, a MeshCore
-      message sender timestamp, and the translation cache tables.
-
-      - Repeater local telemetry (#5539) has not yet been tested against a real USB-attached
-      repeater. Reports welcome.
-
-
-      **Full Changelog**: https://github.com/Yeraze/meshmonitor/compare/v4.17.0-rc1...v4.17.0-rc2
-
-
-      ## 🚀 MeshMonitor v4.17.0-rc2
-
-
-      ### 📦 Installation
-
-
-      **Docker (recommended):**
-
-      ```bash
-
-      docker run -d \
-        --name meshmonitor \
-        -p 8080:3001 \
-        -v meshmonitor-data:/data \
-        ghcr.io/Yeraze/meshmonitor:4.17.0-rc2
       ```
 
 
