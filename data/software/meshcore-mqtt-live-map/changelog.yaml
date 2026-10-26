@@ -1,7 +1,59 @@
 source: github
 repo: yellowcooln/meshcore-mqtt-live-map
-updatedAt: '2026-10-22T19:49:29.441Z'
+updatedAt: '2026-10-26T03:52:19.088Z'
 releases:
+  - version: v1.9.8
+    name: v1.9.8 - Curses Dependabot
+    datetime: '2026-10-26T00:45:02Z'
+    url: https://github.com/yellowcooln/meshcore-mqtt-live-map/releases/tag/v1.9.8
+    prerelease: false
+    notes: >-
+      ## Summary
+
+      - Consolidate the dependency proposals and audited updates: Python 3.15.1, official Node
+      24.22.1 LTS, FastAPI 0.162.0, Pillow 13.0.0 and development HTTPX2/httpcore2 2.16.0.
+
+      - Replace vulnerable MapLibre 5 with pinned MapLibre 6.15.0 ESM/worker assets served by the
+      application, with ordered renderer/Leaflet/application startup and complete map attribution.
+
+      - Add safe raster fallback for renderer, bridge, WebGL2 and context-loss failures; refresh PWA
+      caching and fix service-worker registration after asynchronous startup.
+
+      - Lock decoder/browser assets reproducibly and keep npm build-only. Run production-runtime
+      tests and amd64/arm64 Docker validation on GitHub-hosted Ubuntu, with no registry login or
+      image publication for PR builds. Add npm dependency monitoring and keep future Node-major
+      migrations under deliberate review.
+
+      - Preserve the existing map UI, tools, layers and separate Pillow preview-provider behavior.
+
+
+      ## Verification
+
+      - Production-runtime suite: **211 passed, 2 intentionally skipped**. The skips are the opt-in
+      external coverage-provider tests; real decoder/crypto tests ran.
+
+      - Production HTTP, authenticated WebSocket snapshots/live updates, QR generation, fixture
+      previews and a separate real-provider PNG preview passed.
+
+      - Real OpenFreeMap desktop/mobile rendering, same-origin workers, attribution, PWA
+      upgrade/offline asset retrieval, failure/context-loss fallback and prefix-proxied deployment
+      passed.
+
+      - Hosted pytest and Docker CI passed on the updated commit, including amd64/arm64 builds. The
+      PR build skipped registry login and ran Buildx without `--push`.
+
+      - Candidate package audits reported **zero findings** at validation; this is not a complete
+      OS/container CVE scan.
+
+
+      ## Compatibility notes
+
+      - Python 3.15 currently uses pure-Python PyYAML without LibYAML.
+
+      - Physical arm64 runtime, Safari/mobile hardware and physical RF transmission were not tested.
+
+      - The existing Pillow OSM/CARTO preview path is retained; the browser renderer migration is
+      not an OpenFreeMap preview redesign.
   - version: v1.9.7
     name: v1.9.7 - Keyless Dark Mode & Live Map Reliability Fixes
     datetime: '2026-10-07T16:40:52Z'
@@ -116,9 +168,3 @@ releases:
     url: https://github.com/yellowcooln/meshcore-mqtt-live-map/releases/tag/v.1.7.5
     prerelease: false
     notes: "This release improves Route Details, adds channel secret file support for decrypting sender names, and introduces optional packet analyzer links.\r\n\r\n### Changes\r\n\r\n- Added `CHANNEL_SECRETS_FILE` support for loading channel secrets from a file instead of a long environment variable\r\n- Added a shipped `channel_secrets.example.json` with example channel entries\r\n- Replaced per-packet Node decoder process spawning with a persistent decoder worker\r\n- Reused the loaded channel key store across packets to reduce decode overhead\r\n- Route Details can now show a display-only sender-name row as hop `0` when the packet includes a decrypted sender name but not a stable sender identity\r\n- Route Details now preserves companion endpoints more accurately, including non-spatial endpoint rows for companions without GPS coordinates\r\n- Route Details hop counts now match the visible rows when sender companion rows are present\r\n- Route Details now shows the full packet hash in the header instead of truncating it\r\n- Route Details now prefers the MQTT packet hash over a shorter decoder `messageHash`\r\n- Added optional `PACKET_ANALYZER_URL` so packet hashes in Route Details can link to an external analyzer\r\n- Fixed the production route payload so Route Details keeps the packet hash and sender name instead of falling back to the internal `hash:receiver` route ID\r\n- Made the node popup `Location:` line clickable to copy `Location: <lat>, <lon>` to the clipboard\r\n\r\n### New ENVs\r\n\r\n\r\nOptional channel secrets file (for decrypting sender names from supported group-text packets):\r\n\r\n```env\r\nCHANNEL_SECRETS_FILE=/data/channel_secrets.json\r\n```\r\n\r\nCopy `channel_secrets.example.json` to your chosen path and keep only the channels you want to ship.\r\n\r\nOptional packet analyzer link base (used for Route Details hashes):\r\n\r\n```env\r\nPACKET_ANALYZER_URL=https://analyzer.letsmesh.net/packets?packet_hash=\r\n```\r\n\r\n\r\n### Testing\r\n\r\n- Added channel secret decoder coverage\r\n- Added route identity regression coverage for packet hash preference and production payload behavior\r\n- Test suite passing:\r\n  - `76 passed, 2 skipped`"
-  - version: v1.7.0
-    name: v1.7.0 - MeshMapper Coverage Support and Safer Legacy Routing
-    datetime: '2026-03-20T17:28:30Z'
-    url: https://github.com/yellowcooln/meshcore-mqtt-live-map/releases/tag/v1.7.0
-    prerelease: false
-    notes: "## v1.7.0\r\n\r\nThis release adds MeshMapper coverage support, maintains legacy coverage map compatibility, and improves route accuracy on older 1-byte networks.\r\n\r\n### New in v1.7.0\r\n\r\nAll new ENV's in https://github.com/yellowcooln/meshcore-mqtt-live-map/blob/main/VERSIONS.md#v170-03-20-2026\r\n\r\n#### Coverage API support\r\n\r\n- Added support for two coverage providers:\r\n  - Legacy coverage maps using `/get-samples`\r\n  - MeshMapper using `https://meshmapper.net/coverage.php`\r\n- Legacy coverage map support remains unchanged and fully compatible\r\n- MeshMapper API documentation:\r\n  - https://wiki.meshmapper.net/coverage-api/\r\n  - Access requires a Coverage API key provisioned by a Master administrator\r\n  - Each key is scoped to a specific region or multiregion group and includes a daily rate limit\r\n- To avoid exhausting API limits:\r\n  - The server caches MeshMapper data hourly\r\n  - All user requests are served from the cached dataset instead of hitting the API directly\r\n\r\n#### MeshMapper server-side caching\r\n\r\n- Added server-side MeshMapper coverage sync\r\n- Coverage data is downloaded and stored locally on the server\r\n- Map requests now use the local cache instead of querying MeshMapper directly\r\n- Added cooldown handling for MeshMapper API rate limits\r\n- Added MeshMapper-specific configuration options:\r\n  - API key\r\n  - Cache file path\r\n  - Sync interval\r\n  - Rate-limit cooldown\r\n\r\n#### Coverage age filtering\r\n\r\n- Added `COVERAGE_MAX_AGE_DAYS`\r\n- Full MeshMapper dataset is cached locally\r\n- Only the most recent `N` days are served to the map\r\n- Default coverage window is `30` days\r\n\r\n#### Safer 1-byte route resolution\r\n\r\n- Tightened handling of ambiguous 1-byte route prefixes\r\n- Removed weak matching when multiple nodes share the same first byte\r\n- Ambiguous 1-byte hops now require stronger validation before rendering\r\n- Reduces false long-distance links on large 1-byte meshes\r\n\r\n#### Timing consistency fixes\r\n\r\n- Improved route expiry behavior after page load\r\n- Improved MQTT online indicator timing\r\n- Route and MQTT timing now align with server time instead of relying solely on the browser clock\r\n\r\n### Testing\r\n\r\n- Added coverage tests for:\r\n  - Legacy coverage maps\r\n  - MeshMapper integration\r\n  - Cache behavior\r\n  - Rate-limit cooldown handling\r\n  - Coverage age filtering\r\n- Added regression tests for ambiguous 1-byte route handling"
