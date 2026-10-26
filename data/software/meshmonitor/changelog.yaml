@@ -1,7 +1,103 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-10-25T07:23:11.024Z'
+updatedAt: '2026-10-26T22:25:13.251Z'
 releases:
+  - version: v4.17.2-rc2
+    name: v4.17.2-rc2
+    datetime: '2026-10-26T18:58:59Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.2-rc2
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.17.2-rc2
+
+
+      > [!WARNING]
+
+      > This is a pre-release for testing. Use it on production systems at your own risk.
+
+
+      The map can now show live packet traffic. Turn on **Live packet traffic** in Map Features, and
+      each packet a source hears flies as a dot to the node that heard it, then a ring pulses out
+      from that node. It works for Meshtastic, MQTT and MeshCore sources on the source Map tab, the
+      Dashboard and the MeshCore map. It needs Packet Monitor read access, works with packet logging
+      off, stores nothing and sends nothing on the mesh. A slider caps the dots per second, and a
+      readout counts the last minute's packets: received, drawn, skipped for no position, and over
+      the limit. Every source type now calls its map tab **Map**, and MeshCore opens on the map on
+      phones. This RC also takes a round of dependency updates, including i18next 26.5 with the type
+      fixes it needs.
+
+
+      ## Features
+
+      - Map: live packet traffic, with a per-viewer rate slider and a last-minute readout (#5971)
+
+      - Navigation: one **Map** tab across source types; MeshCore shows the map first on mobile
+      (#5969)
+
+
+      ## Dependencies
+
+      - i18next 26.5.6, with TFunction type fixes (#5989)
+
+      - maplibre-gl 6.15.0 (#5987)
+
+      - emoji-picker-react 5.1.0 (#5983)
+
+      - Production dependencies group, 6 updates (#5976)
+
+      - Rollup native binaries 4.65.0 (#5985, #5986)
+
+      - puppeteer 25.16.0 (#5978)
+
+      - eslint and typescript-eslint (#5975, #5977, #5981)
+
+
+      ## CI/DevOps
+
+      - actions/setup-python 7.1.0 (#5984), docker/login-action 4.7.0 (#5988), Swatinem/rust-cache
+      2.9.3 (#5982), codeql-action group (#5980)
+
+      - Version bump to 4.17.2-rc2 (#5990)
+
+
+      ## Issues Resolved
+
+      #4835, #5968
+
+
+      **Full Changelog**: https://github.com/Yeraze/meshmonitor/compare/v4.17.2-rc1...v4.17.2-rc2
+
+
+      ## 🚀 MeshMonitor v4.17.2-rc2
+
+
+      ### 📦 Installation
+
+
+      **Docker (recommended):**
+
+      ```bash
+
+      docker run -d \
+        --name meshmonitor \
+        -p 8080:3001 \
+        -v meshmonitor-data:/data \
+        ghcr.io/Yeraze/meshmonitor:4.17.2-rc2
+      ```
+
+
+      ### 🧪 Testing
+
+      ✅ All tests passed
+
+      ✅ TypeScript checks passed
+
+      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
+
+
+      ### 📋 Changes
+
+      See commit history for detailed changes.
   - version: v4.17.2-rc1
     name: v4.17.2-rc1
     datetime: '2026-10-24T23:48:32Z'
@@ -2177,121 +2273,3 @@ releases:
       settings 
 
       …
-  - version: v4.17.0-rc3
-    name: v4.17.0-rc3
-    datetime: '2026-10-03T20:08:40Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.0-rc3
-    prerelease: true
-    notes: >-
-      # MeshMonitor v4.17.0-rc3
-
-
-      > [!WARNING]
-
-      > This is a **pre-release** for testing. It is not tagged `latest`. Use it on a test install
-      or with a recent backup.
-
-
-      ## Summary
-
-
-      This release candidate adds cross-source correlation: when one of your radios is heard by
-      another of your sources, MeshMonitor now says so. The Unified Packet Monitor tags those
-      packets and can filter on them, the Coverage Report marks fixes sent by your own sources, and
-      both maps gain an opt-in **Show Cross-Source Links** layer. MeshCore repeaters attached over
-      serial now turn the adverts they hear into Nodes and decrypt channel messages with keys you
-      already hold; a message is shown only to users who can read a channel with that key. The
-      Channel Database stores MeshCore channel secrets next to Meshtastic keys, with a one-time
-      import from a MeshCore device. Message Forwarding gets a per-source master switch, a **FWD**
-      pill on the source card, and an automation action. A new **Live Mesh Activity** dashboard
-      widget lists the remote nodes a source heard in the last few minutes.
-
-
-      LoRa modem presets are corrected and extended: LONG_TURBO shows CR 4/8, the TINY presets and
-      new regions are listed, firmware 2.8 per-region preset rules are enforced, and a LongModTurbo
-      recipe is offered for custom settings. Fixes cover appearance settings changing on their own,
-      CARTO keys on report maps, the map repeating the world when zoomed out, 3-byte MeshCore Define
-      Path, and coverage survey conflicts.
-
-
-      ## Features
-
-      - Cross-source correlation: Unified Packet Monitor tags and filter, Coverage Report flags
-      (#5573)
-
-      - Map: cross-source "heard here" links layer on both maps (#5575)
-
-      - MeshCore: repeater RAW ingest — adverts to Nodes, channel messages to gated Messages (#5574)
-
-      - MeshCore: virtual channels in the Channel Database, with import from a device (#5576)
-
-      - Forwarding: source-level master switch, sidebar FWD pill, automation action (#5572)
-
-      - Dashboard: Live Mesh Activity widget (#5570)
-
-
-      ## Bug Fixes
-
-      - LoRa: correct modem preset tables, add TINY presets, firmware 2.8 region rules, LongModTurbo
-      recipe (#5571)
-
-      - Settings: appearance and UI preferences are global-only (#5569)
-
-      - MeshCore: 3-byte Define Path, shared telemetry labels, local-node favorites (#5566)
-
-      - Map: CARTO key on report maps, one-world clamp, coverage overlap chooser (#5565)
-
-      - Coverage: select the blocking live survey on `SURVEY_ALREADY_LIVE` (#5562)
-
-
-      ## Issues Resolved
-
-      #5537, #5543, #5544, #5546, #5547, #5548, #5549, #5550, #5551, #5552, #5553, #5554, #5555,
-      #5556, #5557, #5558, #5559, #5560, #5561
-
-
-      ## Upgrade Notes
-
-      - Migrations 189–193 run on first start. 189 removes per-source copies of appearance and UI
-      preferences; if a source held a value that differed from the global one, the promotion rule in
-      #5569 decides which is kept.
-
-      - Cross-source map links start filling after the upgrade; there is no backfill.
-
-      - New MeshCore entries in the Channel Database start with no user access. Grant it under
-      Users.
-
-
-      **Full changelog:** https://github.com/Yeraze/meshmonitor/compare/v4.17.0-rc2...v4.17.0-rc3
-
-
-      ## 🚀 MeshMonitor v4.17.0-rc3
-
-
-      ### 📦 Installation
-
-
-      **Docker (recommended):**
-
-      ```bash
-
-      docker run -d \
-        --name meshmonitor \
-        -p 8080:3001 \
-        -v meshmonitor-data:/data \
-        ghcr.io/Yeraze/meshmonitor:4.17.0-rc3
-      ```
-
-
-      ### 🧪 Testing
-
-      ✅ All tests passed
-
-      ✅ TypeScript checks passed
-
-      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
-
-
-      ### 📋 Changes
-
-      See commit history for detailed changes.
