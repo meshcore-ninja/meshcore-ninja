@@ -1,7 +1,96 @@
 source: github
 repo: ALLFATHER-BV/wadamesh
-updatedAt: '2026-10-22T19:49:16.439Z'
+updatedAt: '2026-10-26T16:38:02.868Z'
 releases:
+  - version: beta_100
+    name: wadamesh beta_100
+    datetime: '2026-10-26T14:54:25Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_100
+    prerelease: true
+    notes: >-
+      Test build, on top of beta_99. Stable stays **beta_85**.
+
+
+      Flash it at **[wadamesh.com](https://wadamesh.com/#install)** (switch the toggle to Beta), or
+      update on the device if you have "Get test builds (beta)" turned on.
+
+
+      Another big community round. **@MrYoshii** brought the T-LoRa Pager's own hardware to life
+      (vibration, charger and fuel gauge, real power-off, the motion sensor, a lock-screen
+      wallpaper), **@kremers** added map archives on the SD card, **@oumike** sent another stack of
+      fixes and features, and **@ItsNix**, **@SebRut** and **@JackCortines** added vibration on the
+      T-Display P4, a Wardrive update and a Space Invaders fix. Thank you all.
+
+
+      ## New
+
+
+      - **Maps from one file.** Put a raster PMTiles archive in `/maps` on the SD card and pick it
+      under Map options. Vector and JPEG archives are refused with the reason in the picker, and
+      "Zoom: map levels only" keeps the map inside the levels the file has (#759 by @kremers).
+
+      - **Contacts can delete themselves** when not heard from in a chosen number of days (Settings,
+      Contact Management, off by default). Favourites and the chat that is open are never deleted,
+      and nothing goes while the clock is not set (#731 by @oumike, #719).
+
+      - **Rooms filter** in Contacts (#740 by @oumike).
+
+      - **Backups listed by date**, or "Default", instead of the file name (#741 by @oumike); on the
+      P4 boards the date follows your time zone after a Wi-Fi sync (#756 by @oumike).
+
+      - **GPS speed: Auto.** The T-Deck and the ThinkNode M9 find their GPS's serial speed by
+      themselves; a speed you pick in Settings, GPS is used as it is.
+
+      - **Screensaver: "Keep north up"** stops the slow turn of the picture (#706, asked for by
+      @i-TomCZ).
+
+      - **Lua apps:** `wada.ui.input` takes an optional 4th argument, the longest text it accepts
+      (up to 2000 characters), and `caps().input_len` says the device has it.
+
+      - **Polish** is new in the Store's languages, translated by tom73god.
+
+
+      ## Fixes
+
+
+      - **Repeater admin: status, neighbours and access list stayed empty** after a telemetry poll
+      or a Home sensor widget asked a node that never answered: that request held the device's
+      single request slot until a reboot. It now lets go after 45 seconds.
+
+      - **Updating from the device resumes a dropped download** where it stopped, up to 3 times,
+      instead of failing with "short read" (#689, reported by @Hixsten).
+
+      - **Import backup showed an empty page** with two or more backups, and the time zone and Wi-Fi
+      scan pages could open blank: the page was measured before it was laid out (#738 by @oumike;
+      #757, #760, reported by @Ender436 and @Kb1hux).
+
+      - **Wi-Fi after a lost link:** the retry no longer races the Wi-Fi chip's own reconnect or
+      clears the saved network, slows down after a minute, and waking the screen tries once at once
+      (#685, reported by @william-stearns and @stephen-62). Wi-Fi switched on from the Home widget
+      or the control center joins straight away.
+
+      - **Time zone:** Settings, Clock & time keeps the "By hand" field in the zone you just picked,
+      and the CrowPanel P4 10.1 no longer resets the zone to UTC on a Wi-Fi time sync (#699,
+      reported by @zomgugoff).
+
+      - **Avatars never go blank:** a name starting with a flag or joined emoji took an invisible
+      character as its icon, and Initials now take whole letters (#674, reported by @neoemit).
+
+      - **T-Deck keyboards:** an older keyboard that typed a burst like "QERUOXV$ ZNMFJ" for one Q
+      is recognised and remembered; with Italian, Spanish or Romanian selected, Sym+W/E/R type 1 2 3
+      again (#747, reported by @QuakeRadio).
+
+      - **Save update bin to SD** downloads first and then writes, retrying the whole file (#734,
+      reported by @Jess-39).
+
+      - **A wallpaper in internal /lock/ survives a reboot:** the start-up cleanup of old map tiles
+      deleted every picture on internal storage.
+
+      - **Lua:** `wada.ui.input` returns the text on Enter, also from an external keyboard on a
+      touch board (the second Enter used to land on Cancel); `wada.sys.random(n)` gives 1 to n,
+      `random(1, 1)` gives 1, and a random over the full number range no 
+
+      …
   - version: beta_99
     name: wadamesh beta_99
     datetime: '2026-10-21T16:56:13Z'
@@ -1648,109 +1737,5 @@ releases:
 
       Bluetooth keyboards are new on every board. Worth reporting: which keyboard you used, whether
       it paired wit
-
-      …
-  - version: beta_80
-    name: wadamesh beta_80
-    datetime: '2026-09-16T10:36:32Z'
-    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_80
-    prerelease: true
-    notes: >-
-      Test build. Stable stays beta_65.
-
-
-      Flash it at **[flasher.wadamesh.com](https://flasher.wadamesh.com)** (switch the toggle to
-      Beta), or update on the device if you have "Get test builds (beta)" turned on.
-
-
-      > **Seeed Wio Tracker L2 owners: update this one from the website over USB, not from the
-      device.** Earlier builds looked for the wrong file when updating themselves and would have
-      installed the Heltec V4 firmware. This build fixes that, so on-device updates are safe from
-      here on.
-
-
-      This release is almost entirely @oumike's: 54 of its 61 changes, gathered into one
-      consolidated PR (#517) so they could be reviewed as a whole, including a new board. Thanks
-      also to @aigarslv for the Latvian keyboard and @tmetz1987 for Wardrive 1.2, and to @Buko84,
-      @Danie10, @DenRalle and @Colni777, whose reports drove most of the fixes.
-
-
-      ## New board: LilyGo T-Deck Pro (experimental)
-
-
-      The T-Deck Pro can now be flashed from the website, marked experimental. By @oumike (#469).
-      The e-paper display, keyboard, touch, radio, GPS, microSD and battery all work, but it has
-      been tested on a single v1.1 unit so far. The screen redraws the way e-paper does rather than
-      updating instantly. Any report helps, including which hardware revision you have.
-
-
-      ## Wio Tracker L2
-
-
-      - **Self-updates fetch the right firmware.** A board's update file is chosen from a per-board
-      table that used to fall back to the Heltec V4 when a board was missing from it. The Wio L2 was
-      missing, and nothing checks that a downloaded image belongs to the board installing it. Every
-      board is now listed explicitly, and a board that is not listed no longer compiles, so this
-      cannot happen quietly again.
-
-      - **Backups go to the SD card.** The SD path had been left out of this board's build, so they
-      never did before. By @oumike (#499, #501).
-
-
-      ## ThinkNode M9
-
-
-      - **The jump-to-latest arrow is back in conversations** (#490). beta_79 removed it as a
-      touchscreen-only control, but on the M9 it was the quickest way to the newest message.
-
-      - **Up and down walk a conversation one message at a time**, in order (#492).
-
-      - **Scrolling works** in message info (#482, #488), the admin log (#483, #494) and discovered
-      contacts (#481, #487), and the text cursor stays inside the field (#474, #479).
-
-      - **Navigation shortcuts work from anywhere** (#485, #493), the selection cursor is easier to
-      see (#478), System Information and Memory detail can be navigated (#476), purge confirmations
-      keep focus (#477), and a new channel puts the cursor in the message field (#508, #509).
-
-      - **The file list shows when each file was written**, so the latest crash report is obvious.
-      Requested by @DenRalle (#475, #495).
-
-      - **"Lock home to drawer"** keeps the Home key on the app drawer when the drawer is your home
-      screen. Requested by @Buko84 (#491, #497).
-
-
-      All by @oumike, most of them from @Buko84's reports.
-
-
-      ## Fixes for everyone
-
-
-      - **The battery life estimate works after a restart.** Samples logged before the clock was set
-      made a normal discharge look flat, so it read "charging / steady". By @oumike, reported by
-      @Danie10 (#480, #498).
-
-      - **The lock-screen notification no longer shows a direct message as 64 hops away.** By
-      @oumike, reported by @Buko84 (#484, #489).
-
-      - **Telemetry polling stops on its own**, after 10 requests by default, instead of flooding
-      the mesh until someone notices. By @oumike, reported by @Colni777 (#512).
-
-      - **Quick replies can be longer.** By @oumike, requested by @Danie10 (#425, #502).
-
-      - **A Lua app that clears its screen while showing a map no longer frees the map twice.** By
-      @oumike, reported by @tmetz1987 (#511, #513).
-
-      - **The About page shows microSD diagnostics**, so a card that will not mount says why. By
-      @oumike (#514).
-
-      - **The System Information page title is translated again.** Its key had been renamed in the
-      generated translation table but not in the language files it is built from, so every build put
-      the old name back.
-
-
-      ## Keyboards and apps
-
-
-      - **Latvian keyboard layout**, and Romanian no longer labels itself as E
 
       …

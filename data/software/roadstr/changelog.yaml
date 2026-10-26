@@ -1,13 +1,86 @@
 source: github
 repo: jooray/roadstr
-updatedAt: '2026-10-22T19:49:41.194Z'
+updatedAt: '2026-10-26T16:38:34.471Z'
 releases:
+  - version: v0.4.0
+    name: Roadbeacon 0.4.0
+    datetime: '2026-10-26T12:42:12Z'
+    url: https://github.com/jooray/roadbeacon/releases/tag/v0.4.0
+    prerelease: false
+    notes: >-
+      ## Roadbeacon 0.4.0 — renamed, and one shared event format
+
+
+      The app was **Roadstr**; it is now **Roadbeacon** (package `app.roadbeacon`) so it cannot be
+
+      confused with the independent [Roadstr navigation
+      app](https://github.com/roadstrapp/roadstr-app).
+
+      This is a new package: it installs **next to** the old app, does not share its data, and the
+      old
+
+      `com.roadstr` app can be uninstalled.
+
+
+      ### The road-event format changed
+
+
+      0.4.0 writes the same event layout as that navigation app, so both clients now publish and
+      read the
+
+      same bytes. The previous layout is deprecated and neither read nor written.
+
+
+      - **Reports** (kind 1315): `lat, lon, g, g, g, t, expiration[, maxspeed]`, six-decimal
+      coordinates,
+        no `alt` tag. The brand is no longer inside signed events.
+      - **Votes** (kind 1316): `e, status` only — no position, no expiration.
+
+      - **Retention**: `expiration = created_at + max(14 days, type lifetime)`, so confirmations can
+        extend a report instead of finding it deleted from relays.
+      - **Categories**: 15 now, including **police station** and **surveillance camera**.
+
+      - **Frames for mesh**: a report is 117–165 bytes (up to 48 bytes of comment); a vote is 134
+      bytes
+        and self-contained.
+
+      New events are readable by the Roadstr app and vice versa. Events published before 0.4.0
+      remain
+
+      valid on relays and expire on their own.
+
+
+      ### Also in this release
+
+
+      - Six-decimal coordinates are parsed and printed from integers: no locale-dependent commas, no
+        truncation (the old client produced unverifiable frames for ~12 % of reports).
+      - The frame encoder refuses anything that cannot be rebuilt byte for byte, and a published
+      vector
+        pins the bytes in the test suite.
+      - The app asks relays for the last 30 days instead of 24 hours, so long-lived reports (speed
+        cameras) are no longer hidden on a cold start.
+      - The web client verifies every event signature before display.
+
+
+      Web version: <https://cypherpunk.today/static/roadbeacon/>
+
+
+      Signed with the shared publisher key, certificate SHA-256
+
+      `79750fb49349ec3729be5a3e825507a15e47c6d987e854ae91d5d50a20b3a24d`.
   - version: v0.3.0
     name: v0.3.0
     datetime: '2026-06-24T18:06:17Z'
-    url: https://github.com/jooray/roadstr/releases/tag/v0.3.0
+    url: https://github.com/jooray/roadbeacon/releases/tag/v0.3.0
     prerelease: false
     notes: >-
+      > **Superseded by [Roadbeacon
+      0.4.0](https://github.com/jooray/roadbeacon/releases/tag/v0.4.0).** This APK still installs as
+      `com.roadstr`, the app's name until 0.4.0. The current release is a new package
+      (`app.roadbeacon`) with a new event format.
+
+
       ## What's new in 0.3.0
 
 
@@ -23,7 +96,7 @@ releases:
   - version: v0.2.0
     name: v0.2.0
     datetime: '2026-06-16T10:52:18Z'
-    url: https://github.com/jooray/roadstr/releases/tag/v0.2.0
+    url: https://github.com/jooray/roadbeacon/releases/tag/v0.2.0
     prerelease: false
     notes: |-
       First signed release of the Roadstr OsmAnd plugin.
@@ -38,6 +111,6 @@ releases:
   - version: v0.1.1
     name: Initial demo release
     datetime: '2026-03-09T11:51:07Z'
-    url: https://github.com/jooray/roadstr/releases/tag/v0.1.1
+    url: https://github.com/jooray/roadbeacon/releases/tag/v0.1.1
     prerelease: true
     notes: Initial demo release - debug
