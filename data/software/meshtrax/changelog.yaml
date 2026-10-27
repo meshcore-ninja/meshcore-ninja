@@ -1,7 +1,108 @@
 source: github
 repo: venamartin/meshtrax
-updatedAt: '2026-10-12T04:58:30.002Z'
+updatedAt: '2026-10-27T21:56:30.515Z'
 releases:
+  - version: v1.8.0
+    name: Release v1.8.0
+    datetime: '2026-10-27T18:17:12Z'
+    url: https://github.com/venamartin/meshtrax/releases/tag/v1.8.0
+    prerelease: false
+    notes: >-
+      ## What's Changed
+
+      * fix(reactions): explain parked reactions in the log; match room posts by server stamp by
+      @venamartin in https://github.com/venamartin/meshtrax/pull/154
+
+      * fix: six release hotfixes from the 2026-10-13 audit by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/156
+
+      * Pathfinder: graph-assisted DM routing by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/155
+
+      * feat(pathfinder): keep Pathfinder's route on the radio so ACKs follow it by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/163
+
+      * chore: bring traxmap (offline vector maps) into packages/traxmap by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/164
+
+      * docs(traxmap): history notes after the squash import by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/165
+
+      * docs: offline maps notebook for the traxmap integration by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/166
+
+      * feat: MeshCore firmware 1.18 support (umbrella) by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/157
+
+      * fix: request SENT no longer marks a queued DM sent; sensor telemetry groundwork by
+      @venamartin in https://github.com/venamartin/meshtrax/pull/168
+
+      * feat(pathfinder): Pathfinder on the move, moving repeaters, path discovery SENT by
+      @venamartin in https://github.com/venamartin/meshtrax/pull/170
+
+      * feat: structured messages (Location, SOS, Event, Notice), + tray, pinned bar by @venamartin
+      in https://github.com/venamartin/meshtrax/pull/171
+
+      * feat(messages): markdown formatting in message bubbles by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/172
+
+      * fix(channels): sends no longer sit on the timer icon forever by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/173
+
+      * feat(messages): rich message cards, meshcore:// link cards, multi-day events by @venamartin
+      in https://github.com/venamartin/meshtrax/pull/174
+
+      * fix(reactions): hash what MeshCore One stores — trimmed text, mention kept by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/175
+
+      * feat(scanner): show-all Bluetooth devices toggle, icon-only empty list by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/176
+
+      * perf: UI stall reporter and [Perf] timing lines (measurement only) by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/177
+
+      * perf: compute contact key hex once; probes for the 1 Hz stalls by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/178
+
+      * Offline vector maps: download screen, offline Node Map, layers sheet by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/169
+
+      * fix(traxmap): delete a pack a map has open on Windows by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/180
+
+      * fix(maps): keep offline maps out of iCloud and Time Machine backups by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/181
+
+      * feat(maps): chart symbols from sprite sheets by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/182
+
+      * feat(gps): My location from the radio's GPS; GPS icon; fresh radio position by @venamartin
+      in https://github.com/venamartin/meshtrax/pull/184
+
+      * feat(maps): area limits leave out the shore and cell edges by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/183
+
+      * fix(ui): no Node Map title; a plain Chats | Map bar by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/186
+
+      * perf(pathfinder): route lookup about 11x faster, same answers by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/187
+
+      * feat(maps): hill shading from terrain packs by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/185
+
+      * feat(maps): bundled world base map by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/188
+
+      * fix(maps): dashed limits for firing areas; anchors on point anchorages by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/189
+
+      * perf(map): pin scan reads only rows that could be pins by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/190
+
+      * diag(keyboard): log keyboard inset, focus and lifecycle to find the keybo
+
+      …
   - version: v1.7.50
     name: Release v1.7.50
     datetime: '2026-10-12T03:41:24Z'
