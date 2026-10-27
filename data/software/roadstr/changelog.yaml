@@ -1,7 +1,41 @@
 source: github
 repo: jooray/roadstr
-updatedAt: '2026-10-26T16:38:34.471Z'
+updatedAt: '2026-10-27T11:47:27.100Z'
 releases:
+  - version: v0.4.2
+    name: Roadbeacon 0.4.2
+    datetime: '2026-10-27T10:25:35Z'
+    url: https://github.com/jooray/roadbeacon/releases/tag/v0.4.2
+    prerelease: false
+    notes: >-
+      Includes the new launcher icon and a new status-bar notification icon (Roadbeacon warning
+      triangle, brand indigo accent) for the monitoring and alert notifications. Supersedes 0.4.1,
+      which was never published to Zapstore.
+
+
+      APK signing certificate SHA-256:
+      79750fb49349ec3729be5a3e825507a15e47c6d987e854ae91d5d50a20b3a24d
+  - version: v0.4.1
+    name: Roadbeacon 0.4.1
+    datetime: '2026-10-27T10:18:04Z'
+    url: https://github.com/jooray/roadbeacon/releases/tag/v0.4.1
+    prerelease: false
+    notes: >-
+      ## Roadbeacon 0.4.1 — new app icon
+
+
+      A proper icon at last: a road-warning triangle with broadcast arcs and a winding road. It
+      replaces the placeholder triangle for the Android launcher (adaptive, round and legacy), the
+      web client (favicon, home-screen icon, manifest, header logo) and the Zapstore listing. No
+      protocol changes.
+
+
+      Web version: <https://cypherpunk.today/static/roadbeacon/>
+
+
+      Signed with the shared publisher key, certificate SHA-256
+
+      `79750fb49349ec3729be5a3e825507a15e47c6d987e854ae91d5d50a20b3a24d`.
   - version: v0.4.0
     name: Roadbeacon 0.4.0
     datetime: '2026-10-26T12:42:12Z'
