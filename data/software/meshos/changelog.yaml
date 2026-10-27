@@ -1,7 +1,51 @@
 source: github
 repo: andymux/meshos-releases
-updatedAt: '2026-10-23T19:51:46.092Z'
+updatedAt: '2026-10-27T17:41:42.871Z'
 releases:
+  - version: fw-v1.7.9
+    name: MeshOS firmware v1.7.9
+    datetime: '2026-10-27T13:57:54Z'
+    url: https://github.com/andymux/meshos-releases/releases/tag/fw-v1.7.9
+    prerelease: false
+    notes: >-
+      MeshOS firmware v1.7.9
+
+
+      LilyGo T-Deck and ThinkNode M9
+
+
+      WiFi
+
+      - Open networks (no password) can now be joined. Pick the network from the scan and Save; the
+      password field says when a password is needed and when it is not.
+
+
+      Send Image
+
+      - A failed upload is retried once. If it still fails, the message says why (no connection,
+      send dropped, connection lost, no reply) instead of a bare "Upload failed".
+
+
+      CoreBrowser and images
+
+      - A page or image that arrives incomplete over a slow or patchy connection is fetched again
+      instead of being shown as unsupported, and slow connections get longer to finish.
+
+
+      Sound
+
+      - The Sound on/off switch (pull-down panel, Settings > Sound, Notifications) is now remembered
+      across restarts. With it off, the radio also starts up silently.
+
+
+      Install via SD card (firmware.bin) or the in-firmware updater.
+
+
+      SHA-256:
+
+      - TDeck: 1ef5b662e4d7d70edcf8dcada8212cea159b6389836f529d99d481bbdad2094f
+
+      - M9: 71bb0716f77a28a92e2391ad24099dc241b11fae1b510558939d7c66e7cd6cd8
   - version: v1.0.32
     name: MeshOS v1.0.32
     datetime: '2026-10-23T16:47:28Z'
@@ -946,86 +990,3 @@ releases:
 
       DMG SHA-256:
       `44017aa1873f3d97fa2737108593c4f058622e9ebb0243c32fadcaacbbc50053`
-  - version: v1.0.18
-    name: MeshOS v1.0.18
-    datetime: '2026-09-12T14:51:25Z'
-    url: https://github.com/andymux/meshos-releases/releases/tag/v1.0.18
-    prerelease: false
-    notes: >-
-      ## MeshOS Companion v1.0.18
-
-
-      **Superseded by [v1.0.19](https://github.com/andymux/meshos-releases/releases/tag/v1.0.19)**,
-      which adds one fix: profile pictures on channel messages that arrived over LoRa. Please
-      install v1.0.19 instead.
-
-
-      ### Chat
-
-      - Pinch to zoom in any chat. Text, pictures, voice messages and map previews
-        all scale together, and the app remembers your size. There is also a Chat
-        text size setting in Settings > App.
-      - Message text now follows your phone's system font size.
-
-
-      ### Profile pictures
-
-      - Your picture and name now sit at the top of Settings > App. Change or remove
-        the picture there, and tap your name to change it.
-      - Profile pictures now show on internet channels too, including in
-        notifications and the participants list, so people on the internet side of a
-        channel see the same picture AirLink users do. A changed picture reaches other
-        phones within a couple of minutes.
-      - Pictures are stored at higher quality, so your own picture looks sharp in the
-        app.
-      - Choose a picture from your photo library or browse files. Use Browse files if
-        your phone's photo picker misbehaves.
-
-      ### Radio connection
-
-      - The app now keeps a foreground connection to your radio while it is connected,
-        with a light keep-alive, so Android is less likely to drop the Bluetooth link
-        when the screen is off. A new Keep CPU awake option in Settings is there for
-        phones that still struggle.
-      - If Android has MeshOS set to Restricted battery use, the app now warns you and
-        offers to open the setting. Restricted mode cuts the radio link a few minutes
-        after you leave the app.
-      - New Connection log in Settings for troubleshooting connection drops, with copy
-        and share.
-
-      ### Channels
-
-      - Fixed AirLink and LoRa Public channels showing as one merged channel when one
-        side was switched off.
-
-      ### Settings
-
-      - Colour coded icons across Settings and Tools make the lists easier to scan.
-
-      - Internet Messaging shows a simpler Connected status.
-
-
-      ### Install
-
-      Download `MeshOS-v1.0.18.apk` and open it to install. Existing users upgrade in
-
-      place, keeping their messages and settings.
-
-
-      APK SHA-256:
-
-      `b5a043f82a70a2551b8507f97b9c1a97038564536ae07f191a454d008a8291a8`
-
-
-      ### macOS
-
-      Download `MeshOS-v1.0.18.dmg`, open it and drag MeshOS into Applications. Needs
-
-      macOS 11 or later. The app is not notarised, so the first time you run it
-
-      right-click MeshOS and choose Open, then Open again in the warning.
-
-
-      DMG SHA-256:
-
-      `4cfd9280cdbe2a3afcee7f8bbcd93d0345aea09a53e5b78ddb52eec4fb06bc6f`

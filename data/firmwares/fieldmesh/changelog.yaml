@@ -1,6 +1,6 @@
 source: github
 repo: TogeriX-hub/FieldMesh
-updatedAt: '2026-10-19T19:42:00.413Z'
+updatedAt: '2026-10-27T17:40:51.784Z'
 releases:
   - version: v6.0
     name: FieldMesh v6.0
@@ -27,7 +27,7 @@ releases:
     prerelease: false
     notes: "## [5.1] — Headless Device Support (T1000-E, RAK WiseMesh TAG)\r\n\r\n### New features\r\n- **Headless device support** — `ui-orig` now fully integrated into FieldMesh; devices with no display and a single button (Seeed T1000-E, RAK WiseMesh TAG) are supported as first-class citizens\r\n- **Off-Grid toggle via 5× click** — 5 presses on the single button toggles Off-Grid mode on/off; buzzer feedback is forced regardless of mute state (ascending tone = on, descending = off)\r\n- **SOS alarm via buzzer** — incoming `!SOS` messages trigger a continuous buzzer siren that overrides quiet mode and loops until acknowledged with a short press\r\n\r\n### Changes\r\n- All button actions (advert, GPS toggle, buzzer toggle, Off-Grid toggle) now produce forced buzzer feedback regardless of quiet mode — essential for display-less operation\r\n- Ascending tone (`c,e`) = feature enabled; descending tone (`e,c`) = feature disabled — consistent across all actions\r\n- `newMsg()` signature updated to include `is_favorite` parameter — compatible with V5 `AbstractUITask` interface\r\n- `refreshDisplay()` and `isOnRecentOrTrackingPage()` added as explicit no-op overrides — required for `MyMesh` compatibility\r\n\r\n### Button mapping (headless devices — single button)\r\n| Press | Action |\r\n|---|---|\r\n| 1× | Wake display / acknowledge SOS alarm |\r\n| 2× | Send advert |\r\n| 3× | Buzzer mute on/off |\r\n| 4× | GPS on/off |\r\n| 5× | Off-Grid mode on/off |\r\n| Long press (first 8 s) | CLI Rescue Mode |\r\n| Long press | Shutdown |\r\n\r\n### Technical notes\r\n- Changes confined to `ui-orig/Button.h`, `ui-orig/Button.cpp`, `ui-orig/UITask.h`, `ui-orig/UITask.cpp`\r\n- `ui-new` (ThinkNode M1, Wio Tracker L1) is completely unaffected\r\n- `_buzzer_restore_quiet` flag ensures non-blocking buzzer playback before quiet state is restored\r\n\r\n# Download latest build\r\n\r\n## EU Offgrid frequency\r\n[ThinkNode_M1_companion_radio_ble_FieldMeshv5.1.zip](https://github.com/user-attachments/files/26479266/ThinkNode_M1_companion_radio_ble_FieldMeshv5.1.zip)\r\n[WioTrackerL1_companion_radio_ble_FieldMeshv5.1.zip](https://github.com/user-attachments/files/26479268/WioTrackerL1_companion_radio_ble_FieldMeshv5.1.zip)\r\n[t1000e_companion_radio_ble_FieldMeshv5.1.zip](https://github.com/user-attachments/files/26479270/t1000e_companion_radio_ble_FieldMeshv5.1.zip)\r\n\r\n## US Offgrid frequency\r\n[ThinkNode_M1_companion_radio_ble_USFieldMeshv5.1.zip](https://github.com/user-attachments/files/26479519/ThinkNode_M1_companion_radio_ble_USFieldMeshv5.1.zip)\r\n[WioTrackerL1_companion_radio_ble_USFieldMeshv5.1.zip](https://github.com/user-attachments/files/26479520/WioTrackerL1_companion_radio_ble_USFieldMeshv5.1.zip)\r\n[t1000e_companion_radio_ble_USFieldMeshv5.1.zip](https://github.com/user-attachments/files/26479521/t1000e_companion_radio_ble_USFieldMeshv5.1.zip)"
   - version: v5.09
-    name: Release v5.09 — Message History & Text Input
+    name: 'Release v5.09 '
     datetime: '2026-04-03T12:35:15Z'
     url: https://github.com/TogeriX-hub/FieldMesh/releases/tag/v5.09
     prerelease: false
