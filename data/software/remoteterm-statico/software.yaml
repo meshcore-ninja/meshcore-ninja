@@ -1,0 +1,111 @@
+# Source: https://github.com/statico/remoteterm-meshcore (verified 2026-10-27)
+# Source: fork of https://github.com/jkingsman/Remote-Terminal-for-MeshCore
+name: RemoteTerm (statico fork)
+short_name: RemoteTerm
+kind: monitoring
+status: active
+maturity: stable
+description: >-
+  Actively maintained fork of RemoteTerm for MeshCore while upstream is on a
+  development pause, with the goal of merging back. Adds MeshCore One emoji
+  reactions, room server auto-login and background re-sync, a mentions inbox,
+  outgoing message pacing, richer bot hooks, and repeater battery and
+  temperature in the sidebar.
+
+maintainers:
+  - name: Ian Langworth
+    url: https://github.com/statico
+
+repository: https://github.com/statico/remoteterm-meshcore
+license: MIT
+
+languages:
+  - python
+  - typescript
+
+latest_version: 3.26.2
+released: 2026-10-27
+
+platforms:
+  - docker
+  - linux
+  - macos
+  - windows
+  - web
+interfaces:
+  - web
+  - api
+  - headless
+connections:
+  - ble
+  - serial
+  - usb
+  - tcp
+  - mqtt
+  - http
+node_roles:
+  - companion
+  - repeater
+  - room-server
+capabilities:
+  - messaging
+  - contacts
+  - channels
+  - node-configuration
+  - remote-administration
+  - monitoring
+  - telemetry
+  - packet-analysis
+  - mapping
+  - automation
+  - notifications
+  - bridging
+  - key-management
+
+install:
+  - type: bare-metal
+    package: Python 3.11+ / uv
+    url: https://github.com/statico/remoteterm-meshcore#option-1-clone-and-build
+    command: uv sync
+  - type: docker-compose
+    package: ghcr.io/statico/remoteterm-meshcore
+    url: https://github.com/statico/remoteterm-meshcore#option-2-docker
+    command: docker compose up -d
+  - type: source
+    package: remoteterm-meshcore-statico (PKGBUILD)
+    url: https://github.com/statico/remoteterm-meshcore/tree/main/pkg/aur
+    command: makepkg -si
+  - type: github-release
+    url: https://github.com/statico/remoteterm-meshcore/releases
+  - type: source
+    url: https://github.com/statico/remoteterm-meshcore
+
+popularity:
+  githubStars: 7
+  githubForks: 0
+  githubWatchers: 2
+  githubOpenIssues: 1
+  githubContributors: 1
+  lastChecked: 2026-10-27
+
+verification:
+  sourceAvailable: true
+  releasesAvailable: true
+  signedReleases: false
+  ciBuilds: true
+  hasDocumentation: true
+  lastChecked: 2026-10-27
+  notes:
+    - Community fork of RemoteTerm for MeshCore by Josh Kingsman; upstream is listed separately.
+    - Intended for trusted networks; its bot system can execute arbitrary Python and must not be exposed publicly without stronger access controls.
+
+tags:
+  - remote-terminal
+  - packet-capture
+  - bots
+  - home-assistant
+  - mqtt
+  - self-hosted
+  - remoteterm
+
+last_reviewed: 2026-10-27
