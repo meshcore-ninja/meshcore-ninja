@@ -1,7 +1,90 @@
 source: github
 repo: ALLFATHER-BV/wadamesh
-updatedAt: '2026-10-26T16:38:02.868Z'
+updatedAt: '2026-10-28T16:29:08.130Z'
 releases:
+  - version: beta_101
+    name: wadamesh beta_101
+    datetime: '2026-10-28T13:56:46Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_101
+    prerelease: true
+    notes: >-
+      Test build, on top of beta_100. Stable stays **beta_85**.
+
+
+      Flash it at **[wadamesh.com](https://wadamesh.com/#install)** (switch the toggle to Beta), or
+      update on the device if you have "Get test builds (beta)" turned on.
+
+
+      **@MrYoshii** gave the T-LoRa Pager a UI made for its 480x222 panel and its knob, a faster GPS
+      first fix, German for the new strings and a Pager simulator for the web build (#753, #754,
+      #755, #758). Thank you! The rest of this round is about what you told us after beta_100:
+      language downloads, saving update bins to SD, the T-Deck Pro, keypad navigation on the
+      ThinkNode M9, and a stack of requests from Discord. Thanks to everyone who sent logs and
+      ideas, in particular **@Jess-39**, **@william-stearns**, **@oumike**, **@oz1kfy**,
+      **@mrickey** and **@Eddie-Feher-at-TT** here, and benanderson, zomgugoff, gadgeteerza,
+      161ct006 and Ender436 on Discord.
+
+
+      ## New
+
+
+      - **Offline maps fill the gaps.** When a tile is missing and Wi-Fi is not connected, the map
+      cuts the matching square out of the tile one to three zoom levels up and scales it into the
+      gap, so you see a blocky but correct map instead of an empty square. The zoom buttons go up to
+      three levels past what you have saved (asked for by benanderson).
+
+      - **25 more time zones**, from Central, South, East and West Africa, Egypt and Moscow to
+      Singapore, Perth, Korea, Adelaide, New Zealand, Argentina, Mexico City and Newfoundland. The
+      list now runs west to east, and a Custom offset you already set stays as it is (asked for by
+      gadgeteerza).
+
+      - **Adjustable picture and wallpaper dimming:** Settings, Theme, Background, Picture dimming,
+      and Settings, Lock screen, Wallpaper dimming, each Off, Light, Medium or Strong. Strong is the
+      default and the look you have today (asked for by zomgugoff and benanderson).
+
+      - **Key guides** for the ThinkNode M9, the T-Deck keyboard and the Tanmatsu on the [docs
+      page](https://wadamesh.com/docs.html).
+
+
+      ## Fixes
+
+
+      - **Languages from the Store download on every board again.** The file is saved as it arrives
+      instead of being held in one big block of memory first, which the 2 MB Heltec V4 and boards
+      low on memory could not spare once the language files grew (reported by 161ct006). A file that
+      is truly too large now says so instead of blaming the server.
+
+      - **Save update bin to SD works again.** Every download reached 100% and then failed with "SD
+      write failed", because the size check ran on the still-open file, which the card's file system
+      reports as 0 bytes until it is closed. The file is now closed, opened again and checked on the
+      card (#734, reported by @Jess-39 and @william-stearns).
+
+      - **The clock no longer falls back by half an hour with GPS battery saving on:** after a rest
+      the GPS still held its last report from before the rest, and the 30-minute clock sync took
+      that old time. Every internet time sync now also reaches the clock chip on boards that have
+      one (the ThinkNode M9), and with Wi-Fi on "Sync clock" asks the time server right away
+      (reported by gadgeteerza).
+
+      - **Accented letters** are the size of the text around them at the Large and Huge text sizes,
+      and Romanian ș and ț are drawn instead of an empty box. Settings, Language names a language
+      added from the Store (Polish showed as English), and nineteen settings and messages that had
+      no translation row now translate.
+
+      - **Contacts: Peers lists people only**, now that rooms have their own filter (asked for by
+      benanderson).
+
+      - **Keypad navigation scrolls past text and charts:** Up and Down move the page a step at a
+      time when the next control is further away than the screen shows, so a long description or a
+      chart between two buttons is on screen before the cursor moves on (asked for by benanderson
+      and zomgugoff).
+
+      - **Chat list with the keys:** when a new message rebuilt the list, the cursor fell onto the
+      "..." button, so OK opened the Chats menu instead of the chat. The cursor now stays on the
+      same chat (ThinkNode M9, T-Deck trackball, T-LoRa Pager, Tanmatsu).
+
+      - **Telemetry:** the Request butto
+
+      …
   - version: beta_100
     name: wadamesh beta_100
     datetime: '2026-10-26T14:54:25Z'
@@ -1641,101 +1724,3 @@ releases:
 
       SD Scan and the removal are tested on a T-Deck. M9 owners: worth reporting whether the scan,
       the removal and the startup warning all work with the M9's keys.
-  - version: beta_81
-    name: wadamesh beta_81
-    datetime: '2026-09-17T20:12:24Z'
-    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_81
-    prerelease: true
-    notes: >-
-      Test build. Stable stays beta_65.
-
-
-      Flash it at **[flasher.wadamesh.com](https://flasher.wadamesh.com)** (switch the toggle to
-      Beta), or update on the device if you have "Get test builds (beta)" turned on.
-
-
-      Half of this drop is @oumike's again, gathered into one reviewable PR (#523), and most of the
-      rest came out of reports from @PD0RCM, @jesshampshire, @Steve8677 and @Buko84. Thanks also to
-      @comraderachel, @B0N3-GD and @wpawelczyk-wq, whose reports drove the PR.
-
-
-      ## Bluetooth keyboards, on every board with Bluetooth
-
-
-      Bluetooth now serves either the phone app or a keyboard, and Settings, Bluetooth is where you
-      choose. Pairing lists the keyboards that are in pairing mode and pairs with a code or without
-      one; the keyboard you paired reconnects by itself after that.
-
-
-      - **Keys are read from the keyboard's own report map**, the way a phone or a computer reads
-      them, so media keys and touchpads are left alone and the boot protocol is only a fallback.
-
-      - **Layouts**: US, UK, German, French and Belgian, including AltGr and the dead keys for
-      accents.
-
-      - **Touchscreen boards keep the on-screen keyboard down** while a keyboard is connected, and a
-      second tap on a field brings it up anyway.
-
-      - **The whole interface works from the keyboard**: arrows, Tab, Enter and Page Up/Down drive
-      the highlight, and the letter hotkeys over the tab bar switch pages.
-
-      - **Esc is the back button**, and for keyboards whose Esc key types a character instead, the
-      Back key setting captures whichever key you press and uses that.
-
-      - **Command tapped on its own** opens the emoji picker while you are writing, and the status
-      bar shows a keyboard instead of the Bluetooth glyph while one is connected.
-
-
-      Not on the Tanmatsu or the T-Display P4, which have no Bluetooth of their own. Both ESP32-P4
-      targets still build and ship as usual.
-
-
-      ## From @oumike's PR #523
-
-
-      - **T-Lora Pager: the microSD card mounts again** after the card has been read on a computer,
-      and powering off unmounts and powers it down. Reported by @comraderachel (#522).
-
-      - **At a glance: emoji render as emoji** instead of squares. Reported by @B0N3-GD (#521).
-
-      - **Transfer page: upload a folder of offline OSM tiles** straight to the SD card, with strict
-      path checks and resumable, atomic writes. Requested by @wpawelczyk-wq (#515).
-
-      - **LilyGo T-Deck Pro**: touch releases are debounced, holding a chat row is timed in
-      hardware, and typing a space no longer starts the screen lock.
-
-      - **Heltec V4 with the original Expansion Kit**: the IO button goes back on a tap and home on
-      a hold, larger keys with a magnified preview, and bigger status-bar targets. Reported by
-      @jesshampshire (#525).
-
-
-      ## Fixes for everyone
-
-
-      - **The web interface can unlock the screen again.** A locked screen absorbs every tap on
-      purpose, and unlocking on the device means holding the trackball or the button, so a browser
-      had no way back from a screen it had locked itself. The page now shows an Unlock button
-      whenever the device is locked. Reported by @PD0RCM (#506).
-
-      - **Console mode can be left without typing**: hold a finger on the screen for three seconds.
-      It also applies the "Older keyboard protocol" setting now, which it was ignoring, so a T-Deck
-      that needs that setting no longer types garbage in the console with no way out. A touch wakes
-      a dark console screen again as well, on the boards that have no keyboard. Reported by
-      @jesshampshire (#507).
-
-      - **Pasting a key takes the key out of the message**: the channel-secret and public-key fields
-      lift a 32 or 64 hex digit key out of whatever you copied instead of filling up with the words
-      around it. Reported by @Steve8677 (#526).
-
-      - **ThinkNode M9 shows a waiting firmware update** in its own notice row, next to the message
-      and contact notices. That board never had an update signal at all. Requested by @Buko84
-      (#443). The Settings tile in the app drawer carries the same mark on every board.
-
-
-      ## For testers
-
-
-      Bluetooth keyboards are new on every board. Worth reporting: which keyboard you used, whether
-      it paired wit
-
-      …
