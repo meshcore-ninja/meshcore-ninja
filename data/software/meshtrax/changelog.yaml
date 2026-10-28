@@ -1,7 +1,24 @@
 source: github
 repo: venamartin/meshtrax
-updatedAt: '2026-10-27T21:56:30.515Z'
+updatedAt: '2026-10-28T08:01:24.506Z'
 releases:
+  - version: v1.8.1
+    name: Release v1.8.1
+    datetime: '2026-10-28T04:04:23Z'
+    url: https://github.com/venamartin/meshtrax/releases/tag/v1.8.1
+    prerelease: false
+    notes: >-
+      ## What's Changed
+
+      * docs: what's new page, full message format reference; release.sh opens a whatsnew PR by
+      @venamartin in https://github.com/venamartin/meshtrax/pull/214
+
+      * fix(db): the v8 upgrade survives an interrupted first launch; 1.8.1+143 by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/215
+
+
+
+      **Full Changelog**: https://github.com/venamartin/meshtrax/compare/v1.8.0...v1.8.1
   - version: v1.8.0
     name: Release v1.8.0
     datetime: '2026-10-27T18:17:12Z'

@@ -1,7 +1,121 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-10-26T22:25:13.251Z'
+updatedAt: '2026-10-28T08:01:22.661Z'
 releases:
+  - version: v4.17.2-rc3
+    name: v4.17.2-rc3
+    datetime: '2026-10-28T01:27:20Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.2-rc3
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.17.2-rc3
+
+
+      > [!WARNING]
+
+      > This is a pre-release for testing. Use it on production systems at your own risk.
+
+
+      Headless installs can now be set up from env vars on first boot. `ADMIN_PASSWORD` sets the
+      first admin's password, `ENABLE_VIRTUAL_NODE` and `VIRTUAL_NODE_PORT` turn on the Virtual Node
+      for the Meshtastic default source, and the new `MESHCORE_*` vars create a MeshCore default
+      source over TCP or serial, with its own optional Virtual Node. These vars apply only when the
+      default sources are first created. MeshCore channels now list every repeater that relayed a
+      message, with its hop count, and switching channels lands on the newest messages. MeshCore DMs
+      and channel messages are ordered by when they arrived, and show the sender's clock offset.
+      Embed maps now show MeshCore nodes, and the per-source MeshCore map gains the ducting overlay.
+      A passive Meshtastic reconnect now asks only for config, and MeshMonitor warns when another
+      client holds the node's TCP slot.
+
+
+      ## Features
+
+      - First-boot env vars for headless installs: `ADMIN_PASSWORD`, `ENABLE_VIRTUAL_NODE`,
+      `VIRTUAL_NODE_PORT` (#5998)
+
+      - MeshCore default source from `MESHCORE_*` env vars; the default-password warning honours
+      `ADMIN_USERNAME`; docs on the Default source corrected (#6004)
+
+      - MeshCore: order and show DMs and channel messages by receipt time, with the sender's clock
+      offset (#5996)
+
+      - MeshCore: clear Trace SNR history per contact (#5995)
+
+      - MeshCore: ducting overlay on the per-source MeshCore map (#5993)
+
+
+      ## Bug Fixes
+
+      - MeshCore: heard repeaters lists every relaying repeater, with hop count (#6001)
+
+      - MeshCore: land on newest messages when switching channels (#6002)
+
+      - Embed maps show MeshCore nodes (#6003)
+
+      - Meshtastic: passive reconnect asks for config only; warn on TCP slot contention (#5994)
+
+
+      ## Documentation
+
+      - Funk-Itzehoe added to the Site Gallery (#5992)
+
+
+      ## Translations
+
+      - Hosted Weblate update (#5940)
+
+
+      ## CI/DevOps
+
+      - Version bump to 4.17.2-rc3 (#6006)
+
+
+      ## Upgrade notes
+
+      - Migration 218 adds a nullable `hops` column to `meshcore_heard_repeaters`.
+
+      - The new env vars act only on first boot. Adding them to an install that already has sources
+      creates nothing.
+
+
+      ## Issues Resolved
+
+      #5874, #5970, #5972, #5973, #5991, #5999, #6000
+
+
+      **Full Changelog**: https://github.com/Yeraze/meshmonitor/compare/v4.17.2-rc2...v4.17.2-rc3
+
+
+      ## 🚀 MeshMonitor v4.17.2-rc3
+
+
+      ### 📦 Installation
+
+
+      **Docker (recommended):**
+
+      ```bash
+
+      docker run -d \
+        --name meshmonitor \
+        -p 8080:3001 \
+        -v meshmonitor-data:/data \
+        ghcr.io/Yeraze/meshmonitor:4.17.2-rc3
+      ```
+
+
+      ### 🧪 Testing
+
+      ✅ All tests passed
+
+      ✅ TypeScript checks passed
+
+      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
+
+
+      ### 📋 Changes
+
+      See commit history for detailed changes.
   - version: v4.17.2-rc2
     name: v4.17.2-rc2
     datetime: '2026-10-26T18:58:59Z'
@@ -2152,124 +2266,5 @@ releases:
 
 
       ### 📦 
-
-      …
-  - version: v4.17.0-rc4
-    name: v4.17.0-rc4
-    datetime: '2026-10-05T02:35:43Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.0-rc4
-    prerelease: true
-    notes: >-
-      # MeshMonitor v4.17.0-rc4
-
-
-      > [!WARNING]
-
-      > This is a **pre-release** for testing. It is not tagged `latest`. Use it on a test install
-      or with a recent backup.
-
-
-      ## Summary
-
-
-      This release candidate fixes the Windows desktop app, whose landing page loaded white on a
-      cold start: the Windows build shipped without its theme styles. System backups now cover every
-      table and stream the export, so large databases back up again; a backup is now a secret and
-      its download is admin-only. Message notifications get a user-set format with the source shown
-      once, each source keeps its own notification settings, and the Notifications page follows the
-      light theme. MeshCore gains plaintext for channel packets in the Packet Monitor, split or
-      truncated long auto-acknowledge replies, a serial health probe for repeaters, a faster-failing
-      Trace Path, and merged rows in Unified Messages when several sources hear one message.
-      Translation providers each keep their own API key, and OpenAI-compatible base URLs resolve
-      correctly. Traceroutes now read the same way everywhere, and source connection details no
-      longer reach viewers who lack the right grant.
-
-
-      ## Features
-
-      - MeshCore: decrypt GRP_TXT / GRP_DATA in the Packet Decode modal (#5583)
-
-      - MeshCore: split or truncate long Auto-Acknowledge replies (#5584)
-
-      - MeshCore: map toggle to hide nodes whose latest advert had no position (#5585)
-
-      - MeshCore: role, hops and last-heard tokens on node triggers (#5603)
-
-      - Map: traceroute-confirmed reciprocal links on the cross-source layer (#5586)
-
-      - Unified Messages: one row for a MeshCore message heard by several sources (#5590)
-
-      - Notifications: user-set message format and a lighter default (#5605)
-
-      - Translation: each provider owns its config fields; one API key per provider (#5600)
-
-      - Lint: guardrail against hardcoded colours in inline styles and CSS (#5606)
-
-
-      ## Bug Fixes
-
-      - Build: Windows desktop app ships its theme CSS again (#5599)
-
-      - Backup: back up every table, stream the export, allowlist restore on all backends (#5618)
-
-      - Sources: tighter config redaction for non-admins (#5619)
-
-      - Notifications: a source with no saved preferences uses built-in defaults, not another
-      source's (#5609)
-
-      - Notifications: page colours come from theme tokens (#5604)
-
-      - Traceroute: every reader gets requester-first rows (#5611)
-
-      - MQTT bridge: stop retrying a rejected broker login, per client (#5610)
-
-      - MeshCore MQTT ingest: stop login retries after 5 rejections; back up Observer keys; clear
-      key rows on source delete (#5602)
-
-      - MeshCore: repeater serial health probe and auto-reconnect (#5581)
-
-      - MeshCore: Trace Path waits per the firmware's suggested timeout (#5589)
-
-      - MeshCore: Virtual Node relays STATUS and TELEMETRY binary requests (#5598)
-
-      - MeshCore: Virtual Node sends the packed path length (#5608)
-
-      - MeshCore: ingest page header shows region and broker again (#5607)
-
-      - Packet Monitor: "Hide Own Packets" keeps TX rows and shows a hidden count (#5582)
-
-      - Translation: endpoint URL resolution for custom and versioned base URLs (#5545), by @Crim
-
-
-      ## Docs and Tests
-
-      - Coverage Report: "Why a survey looks sparse" (#5601)
-
-      - Tests: wall-clock and module-load cost taken out of flaky tests (#5617)
-
-
-      ## Issues Resolved
-
-      #5518, #5519, #5558, #5563, #5564, #5567, #5568, #5578, #5579, #5580, #5587, #5588, #5591,
-      #5592, #5593, #5594, #5595, #5597
-
-
-      ## Upgrade Notes
-
-      - **Migrations 194–197** run on first start.
-
-      - **Translation API keys:** the stored key moves to the active provider only. Enter keys for
-      any other provider again.
-
-      - **Translation URLs:** a custom URL with a sub-path and no version (for example
-      `http://host/libre`) is now used as written; earlier candidates appended the provider path to
-      it.
-
-      - **Backups:** a system backup now holds every table, including channel keys in the clear,
-      tokens and encrypted credentials. Store it like a secret. Download is admin-only; new backup
-      files are readable only by the server's user.
-
-      - **Notifications:** each source uses its own saved settings. A source you never saved
-      settings 
 
       …
