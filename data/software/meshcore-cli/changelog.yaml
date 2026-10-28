@@ -1,7 +1,13 @@
 source: github
 repo: meshcore-dev/meshcore-cli
-updatedAt: '2026-10-27T21:56:18.267Z'
+updatedAt: '2026-10-28T22:19:47.487Z'
 releases:
+  - version: v1.6.8
+    name: v1.6.8
+    datetime: '2026-10-28T18:13:04Z'
+    url: https://github.com/meshcore-dev/meshcore-cli/releases/tag/v1.6.8
+    prerelease: false
+    notes: "New `list_discovered` and `add_discovered` commands to automatically add discovered nodes ;)\r\n\r\n**Full Changelog**: https://github.com/meshcore-dev/meshcore-cli/compare/v1.6.7...v1.6.8"
   - version: v1.6.7
     name: v1.6.7
     datetime: '2026-10-27T20:25:23Z'
@@ -116,11 +122,3 @@ releases:
     url: https://github.com/meshcore-dev/meshcore-cli/releases/tag/v1.0.0rc1
     prerelease: false
     notes: "This is the first release candidate for meshcore-cli v 1.0\r\n\r\nv1 will be tagged when no changes have been made in the github for a week (not counting this last version number change ;) )"
-  - version: v0.6.20
-    name: v0.6.20
-    datetime: '2025-04-26T15:30:45Z'
-    url: https://github.com/meshcore-dev/meshcore-cli/releases/tag/v0.6.20
-    prerelease: false
-    notes: >-
-      This is the last update to the 0.6 line as I plan to change the interactive mode behavior in
-      0.7

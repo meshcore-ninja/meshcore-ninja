@@ -1,7 +1,117 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-10-28T08:01:22.661Z'
+updatedAt: '2026-10-28T22:19:59.234Z'
 releases:
+  - version: v4.17.2-rc4
+    name: v4.17.2-rc4
+    datetime: '2026-10-28T20:52:30Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.2-rc4
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.17.2-rc4
+
+
+      > [!WARNING]
+
+      > This is a pre-release for testing. Use it on production systems at your own risk.
+
+
+      Maps now mark node roles. ROUTER_LATE and CLIENT_BASE get their own infrastructure markers,
+      and small corner badges show trackers, Lost & Found, sensors, TAK and Client Mute nodes; the
+      map legends list them all. Reticulum sources can set an LXMF display name that persists across
+      restarts, announce on demand (once a minute at most), or announce on a 1-24 hour schedule that
+      is off by default. The airtime cutoff can now average infrastructure nodes you pick by hand,
+      takes 3-5 samples, ignores nodes heard over MQTT, and uses local Channel Utilization when it
+      reads higher than too few qualifying routers. A new Global Settings option picks the default
+      Meshtastic source for requests that name no source. MeshCore Trace SNR history now clears one
+      link at a time, and MeshCore channels no longer show as unread right after you read them. The
+      Reticulum radio configuration Apply button works again.
+
+
+      ## Features
+
+      - Map: distinct markers and corner badges for each node role, with legend entries (#6014)
+
+      - Reticulum: persisted LXMF display name, Announce now, and periodic announce (#6016)
+
+      - Automation: airtime cutoff manual infrastructure picks, 3-5 samples, MQTT-heard nodes
+      excluded (#6018)
+
+      - Sources: configurable default Meshtastic source (#6021)
+
+
+      ## Bug Fixes
+
+      - MeshCore: clear Trace SNR history per link instead of per contact (#6015)
+
+      - MeshCore: keep unread markers on one receipt clock (#6019), thanks @temalo
+
+      - Reticulum: radio config Apply uses PUT, leaves out blank fields, and sends Radio on as a
+      boolean (#6017)
+
+
+      ## Translations
+
+      - Hosted Weblate update (#5997)
+
+
+      ## CI/DevOps
+
+      - Version bump to 4.17.2-rc4 (#6022)
+
+
+      ## Upgrade notes
+
+      - **Airtime cutoff** can pause automations sooner than before: MQTT-heard nodes no longer
+      count, and when fewer routers qualify than the sample count it uses the higher of local ChUtil
+      and the router average. With no qualifying routers it now uses local ChUtil instead of never
+      tripping. Existing installs stay in Auto mode with 3 samples.
+
+      - **Reticulum display name** changes now need `configuration:write` on the source instead of
+      `messages:write`.
+
+      - **Trace SNR history**: the contact-wide clear button and its `DELETE ?publicKey=` route from
+      rc3 are replaced by a per-link clear (`DELETE /api/sources/:id/meshcore/hop-snr?from=&to=`).
+
+
+      ## Issues Resolved
+
+      #5245, #5970, #6007, #6008, #6011, #6013
+
+
+      **Full Changelog**: https://github.com/Yeraze/meshmonitor/compare/v4.17.2-rc3...v4.17.2-rc4
+
+
+      ## 🚀 MeshMonitor v4.17.2-rc4
+
+
+      ### 📦 Installation
+
+
+      **Docker (recommended):**
+
+      ```bash
+
+      docker run -d \
+        --name meshmonitor \
+        -p 8080:3001 \
+        -v meshmonitor-data:/data \
+        ghcr.io/Yeraze/meshmonitor:4.17.2-rc4
+      ```
+
+
+      ### 🧪 Testing
+
+      ✅ All tests passed
+
+      ✅ TypeScript checks passed
+
+      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
+
+
+      ### 📋 Changes
+
+      See commit history for detailed changes.
   - version: v4.17.2-rc3
     name: v4.17.2-rc3
     datetime: '2026-10-28T01:27:20Z'
@@ -2158,113 +2268,4 @@ releases:
         - `GET /api/status` no longer returns install-wide `statistics` without an admin login; `connection.localNode` needs `nodes:read` on the primary source. `connection.connected` still needs no login.
         - The poll returns traceroutes only with `traceroute:read` on the source. Grant it to the anonymous account if a public map should draw route lines.
         - Embeds leave out a node that has a private position override, is hidden from the map, or reports its position on a channel outside the profil
-      …
-  - version: v4.17.0-rc5
-    name: v4.17.0-rc5
-    datetime: '2026-10-05T23:06:57Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.0-rc5
-    prerelease: true
-    notes: >-
-      # MeshMonitor v4.17.0-rc5
-
-
-      > [!WARNING]
-
-      > This is a **pre-release** for testing. It is not tagged `latest`. Use it on a test install
-      or with a recent backup.
-
-
-      ## Summary
-
-
-      This release candidate adds four admin features and closes several gaps found after rc4. Admin
-      Commands gains a **Power and reset** block: Shut down, Reboot into DFU mode, and two factory
-      resets labelled by what survives, each written to the audit log. Security settings gain a
-      **Protection Level** picker for the firmware 2.8 packet signature policy (Compatible,
-      Balanced, Strict), on local and remote nodes. A **status pill** in the header sets the node's
-      status message from a short list of presets. Automations can pass a script's result to later
-      steps in the same run with `{{ steps.<name>.output }}`, with no variable to define, and a send
-      whose text renders empty is now held back. On the fix side, saving Security settings on a
-      local node no longer resets its packet signature policy, non-admin source editors no longer
-      see stored credentials, MeshCore Repeater nodes open in Node Details and stay on the map, and
-      traceroutes store their position snapshot on every path.
-
-
-      ## Features
-
-      - Admin: Shut down, Reboot into DFU mode and two factory resets, with audit log (#5638)
-
-      - Security: Protection Level picker for `packet_signature_policy` (#5642)
-
-      - Status: quick-access status message pill with presets (#5639)
-
-      - Automation: run-scoped step outputs, the empty-send rule, and two variable-store fixes
-      (#5640)
-
-
-      ## Bug Fixes
-
-      - Security: a local Security save keeps the node's packet signature policy (#5637)
-
-      - Sources: mask credentials in source config for non-admin editors (#5635)
-
-      - MeshCore: Repeater-source nodes open in Node Details and stay on the map (#5634)
-
-      - Traceroute: write the position snapshot on every path; the auto-traceroute picker counts
-      either stored form (#5633)
-
-
-      ## Dependencies
-
-      - re2 1.27.0 (#5625), @tanstack/react-query 5.104.0 (#5629), lucide-react 1.49.0 (#5628),
-      production group (#5624), vitest group (#5622), development group (#5623), @typescript-eslint
-      parser and plugin (#5631, #5627), globals 17.13.0 (#5626), react-query-devtools (#5630)
-
-
-      ## Issues Resolved
-
-      #5612, #5614, #5615, #5616, #5632, #5636
-
-
-      ## Upgrade Notes
-
-      - **No new migrations.**
-
-      - **Power and reset:** Reboot into DFU and both factory resets work on the node MeshMonitor is
-      connected to only. Shut down also works on a remote node, with a typed confirm. Each action
-      sends one admin packet and cannot be undone from MeshMonitor. DFU works on nRF52, RP2040 and
-      STM32 boards; ESP32 ignores it.
-
-      - **Protection Level:** shown for firmware 2.8.0 and later. For a remote node, run Retrieve
-      Device Metadata first so MeshMonitor knows its firmware. Strict drops every packet that is
-      neither signed nor PKI-encrypted, which can cut a node off from peers older than 2.8; it needs
-      a typed confirm. Saving reboots the node. Each change is written to the audit log.
-
-      - **Status pill:** needs `configuration:write` on the source. The status text limit is 79
-      bytes. Firmware rebroadcasts the status about every 12 hours.
-
-      - **Automations:** a Send a message, tapback or notification whose text renders empty is now
-      skipped and logged, in every automation. A script step that cannot store its result in the
-      chosen variable now fails the step, so some runs that read "completed" before will read
-      "failed". Node-scoped variables now save on MeshCore triggers.
-
-      - **Security saves:** a local Security save reads the node's config first. If the node does
-      not answer (for example while it reboots after the last save), the save returns an error and
-      sends nothing; try again.
-
-      - **Source config:** a non-admin with edit rights sees credential fields masked; leaving a
-      masked field alone keeps the stored value.
-
-      - **Node list:** MeshCore rows returned by `/api/nodes` now pass the same permission check as
-      Meshtastic rows.
-
-
-      **Full changelog:** https://github.com/Yeraze/meshmonitor/compare/v4.17.0-rc4...v4.17.0-rc5
-
-
-      ## 🚀 MeshMonitor v4.17.0-rc5
-
-
-      ### 📦 
-
       …
