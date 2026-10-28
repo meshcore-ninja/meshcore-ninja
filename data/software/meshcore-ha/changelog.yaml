@@ -1,7 +1,52 @@
 source: github
 repo: meshcore-dev/meshcore-ha
-updatedAt: '2026-10-22T19:49:27.291Z'
+updatedAt: '2026-10-28T01:03:14.553Z'
 releases:
+  - version: v3.0.4
+    name: v3.0.4
+    datetime: '2026-10-27T23:35:50Z'
+    url: https://github.com/meshcore-dev/meshcore-ha/releases/tag/v3.0.4
+    prerelease: false
+    notes: >-
+      ## Features
+
+
+      - **Cut over-long channel messages instead of refusing them.** `send_channel_message` takes a
+      new `truncate` option. With it set, text over the companion's byte budget is cut to fit and
+      sent; without it, the send still fails with `channel_message_too_long` as in 3.0.2. The cut is
+      made on a character boundary, so a multi-byte character is dropped whole rather than split the
+      way the firmware's own cut does it, and `meshcore_message_sent` carries `truncated: true` when
+      it happened. Templates whose output length varies no longer have to guarantee a length to
+      avoid failing the automation. (#376)
+
+
+      ## Fixes
+
+
+      - **A direct message over the radio's limit now says so.** The firmware refuses an over-long
+      direct message rather than cutting it, and reports it as `ERR_CODE_TABLE_FULL`, which reads as
+      a full contact table. `send_message` checks the length first and raises
+      `direct_message_too_long` with the size and the limit. There is no `truncate` for direct
+      messages, because the radio has no truncating behaviour to opt into. (#376)
+
+      - The MQTT uploader stops cleanly when the entry is unloaded while a broker connect is still
+      pending. Clients created during that connect could outlive the unload.
+
+
+      ## Notes
+
+
+      - The message text entity still caps at 200 characters while the budget is a byte count around
+      147, so it accepts input that cannot be sent whole. Use the `truncate` option from an
+      automation in the meantime. (#376)
+
+      - Tests now also run against the current Home Assistant release, alongside the pinned test
+      harness.
+
+      - Validation: 466 integration tests and 373 unit tests pass, ruff clean.
+
+
+      **Full changelog:** https://github.com/meshcore-dev/meshcore-ha/compare/v3.0.3...v3.0.4
   - version: v3.0.3
     name: v3.0.3
     datetime: '2026-10-16T16:14:44Z'
@@ -671,9 +716,3 @@ releases:
     url: https://github.com/meshcore-dev/meshcore-ha/releases/tag/v2.2.0
     prerelease: false
     notes: "# MeshCore Home Assistant Integration - Version 2.2.0\r\n\r\n  ## 🚀 Major Features\r\n\r\n  ### Token Bucket Rate Limiting\r\n  - **New**: Intelligent rate limiting to protect mesh network from excessive traffic\r\n  - **Configuration**: 20 token burst capacity, 1 token refills every 3 minutes\r\n  - **Impact**: Sustains ~20 requests per hour across all tracked devices\r\n  - **Sensor**: Exposes a sensor to track the rate limiting bucket capacity overtime\r\n  - **Behavior**: Requests are skipped (not queued) when tokens depleted, logged as debug messages\r\n  - **Documentation**: Comprehensive rate limiting guide in remote device tracking docs\r\n\r\n  ### Device Disabling\r\n  - **New**: Temporarily disable repeaters or clients without removing them\r\n  - **Access**: Available in config flow → Manage Monitored Devices → Edit\r\n  - **Use Cases**:\r\n    - Maintenance windows\r\n    - Reducing network traffic\r\n    - Testing network performance\r\n    - Isolating problematic devices\r\n  - **Result**: All status, telemetry, and login requests stopped while entities remain\r\n\r\n  ### Manual Contact Management Mode\r\n  - **New**: Automatic manual contact mode on startup\r\n  - **Discovered Contacts**: New select entity for contacts not yet added to node\r\n  - **Added Contacts**: Separate select entity for contacts already on your node\r\n  - **Persistence**: Discovered contacts saved to `.storage/meshcore.<entry_id>.discovered_contacts`\r\n  - **Services**:\r\n    - `meshcore.add_selected_contact` - Add discovered contacts via UI\r\n    - `meshcore.remove_selected_contact` - Remove contacts via UI\r\n    - `meshcore.cleanup_unavailable_contacts` - Remove all unavailable contact sensors\r\n  - **Immediate Updates**: Contact list refreshes immediately on add/remove operations\r\n\r\n  ## ✨ Enhancements\r\n\r\n  ### Channel Improvements\r\n  - **Channel Select Entity**: Now displays actual channel names instead of \"Channel 0\"\r\n  - **Format**: \"Name (idx)\" e.g., \"#pdx (1)\", \"work (2)\"\r\n  - **Unused Channels**: Display as \"(unused) (idx)\" when not configured\r\n  - **Auto-Update**: Channel info refreshes immediately after `set_channel` commands\r\n  - **Documentation**: Complete guide on hash-based channel encryption and configuration UI\r\n\r\n  ### Channel Message Service\r\n  - **Fix**: Now correctly reads `channel_idx` from channel select entity attributes\r\n  - **Previous Issue**: Tried to parse channel index from display string\r\n  - **Result**: Works with new channel name format\r\n\r\n  ## 🐛 Bug Fixes\r\n\r\n  ### Reduced Login Packets\r\n  - **Fix**: Reduced excessive login attempts to repeaters\r\n  - **Reason**: Login is rarely the failure case in established sessions\r\n  - **Impact**: Reduces unnecessary mesh network traffic\r\n\r\n  ### Special Characters in Contact Names\r\n  - **Fix**: Handles names with parentheses correctly (e.g., \"Queen Anne (Soon)\")\r\n  - **Method**: Regex-based parsing extracts rightmost parentheses content\r\n  - **Centralized**: New `extract_pubkey_from_selection()` utility function\r\n\r\n  ## 🔄 Migration Notes\r\n\r\n  No breaking changes - all new features are additive. Existing configurations will continue to work without modification."
-  - version: v2.1.12
-    name: v2.1.12
-    datetime: '2025-10-22T20:05:36Z'
-    url: https://github.com/meshcore-dev/meshcore-ha/releases/tag/v2.1.12
-    prerelease: false
-    notes: "Add more decimal places to battery sensors\r\nAdd delay on server startup to avoid corrupting connections\r\nFix bug with repeater settings not persisting"
