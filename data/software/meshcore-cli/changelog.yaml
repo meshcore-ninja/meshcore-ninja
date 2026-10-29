@@ -1,7 +1,13 @@
 source: github
 repo: meshcore-dev/meshcore-cli
-updatedAt: '2026-10-28T22:19:47.487Z'
+updatedAt: '2026-10-29T19:27:18.776Z'
 releases:
+  - version: v1.6.9
+    name: v1.6.9
+    datetime: '2026-10-29T14:55:43Z'
+    url: https://github.com/meshcore-dev/meshcore-cli/releases/tag/v1.6.9
+    prerelease: false
+    notes: "fix bug in getting contacts\r\n\r\n**Full Changelog**: https://github.com/meshcore-dev/meshcore-cli/compare/v1.6.8...v1.6.9"
   - version: v1.6.8
     name: v1.6.8
     datetime: '2026-10-28T18:13:04Z'
@@ -116,9 +122,3 @@ releases:
     url: https://github.com/meshcore-dev/meshcore-cli/releases/tag/v1.0.0
     prerelease: false
     notes: "This is v1.0 of meshcore-cli.\r\n\r\nNo changes since 0.8.4, but lots of changes from the start four month ago !\r\n\r\nRead https://digitalsober.wordpress.com/2025/05/29/the-odyssey-of-meshcore-cli/ for the history of this software that bridges my passion for Linux and my involvment in MeshCore.\r\n\r\nThanks to all MeshCore contributors and users, you've all contributed to this ... And special thanks to Awol with its refactoring of the lib that unleashed the second stage of the rocket !"
-  - version: v1.0.0rc1
-    name: v1.0.0rc1
-    datetime: '2025-05-01T09:41:02Z'
-    url: https://github.com/meshcore-dev/meshcore-cli/releases/tag/v1.0.0rc1
-    prerelease: false
-    notes: "This is the first release candidate for meshcore-cli v 1.0\r\n\r\nv1 will be tagged when no changes have been made in the github for a week (not counting this last version number change ;) )"
