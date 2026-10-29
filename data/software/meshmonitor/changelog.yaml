@@ -1,7 +1,145 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-10-28T22:19:59.234Z'
+updatedAt: '2026-10-29T23:50:23.765Z'
 releases:
+  - version: v4.17.2-rc5
+    name: v4.17.2-rc5
+    datetime: '2026-10-29T21:07:49Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.2-rc5
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.17.2-rc5
+
+
+      > [!WARNING]
+
+      > This is a **pre-release** for testing. Don't run it in production unless you're ready to
+      report issues.
+
+
+      ## Summary
+
+
+      This release is a performance pass: the app, and the frontend most of all, felt slow, and the
+      cause was mostly data volume. The dashboard used to download its node data twice per visit,
+      uncompressed, about 35 MB each time. It now downloads it once, compressed, at about 0.23 MB.
+      Every tab's code used to load up front; now each tab loads its code when you open it. The
+      server no longer loads every node to answer small questions like unread counts. Background
+      polling sends only what changed since the last poll, and MQTT node updates now come over the
+      live socket. Typing a message no longer redraws the whole app, and long MeshCore lists draw
+      only the rows on screen. This release also fixes telemetry automation triggers, which never
+      fired before. They now fire, with a per-node hourly limit and a guard against loops.
+      Automation cooldowns and rate limits are now kept across restarts and saves.
+
+
+      ## Measured: rc4 vs rc5
+
+
+      Both builds were measured one after the other on the same server and database (8 sources, ~930
+      Meshtastic and ~300 MeshCore nodes). "Phone" means a phone-sized screen with the CPU slowed
+      4×. Page loads and the Info tab are the median of 3 runs; API times are the median of 5.
+
+
+      ### Network
+
+
+      | | rc4 | rc5 | change |
+
+      |---|---:|---:|---:|
+
+      | Dashboard page, first load | 75.3 MB | 1.56 MB | −98% |
+
+      | Nodes page, first load | 7.7 MB | 1.5 MB | −80% |
+
+      | Messages page, first load | 7.6 MB | 1.1 MB | −85% |
+
+      | Info page, first load | 8.6 MB | 1.3 MB | −85% |
+
+      | JavaScript on first load (Nodes page) | 5.1 MB | 0.96 MB | −81% |
+
+      | Dashboard data on the wire | 35.6 MB ×2 | 0.23 MB ×1 | −99.7% |
+
+      | Idle page, data per minute | 1,867 KB | 12.9 KB | −99.3% |
+
+      | `/api/poll`, steady state | 924 KB | 0.2 KB | −99.9% |
+
+
+      ### Server
+
+
+      | | rc4 | rc5 | change |
+
+      |---|---:|---:|---:|
+
+      | Dashboard response time (p50) | 611 ms | 209 ms | −66% |
+
+      | Dashboard requests served in 20 s | 32 | 96 | +200% |
+
+      | Health-check p95 while dashboard is busy | 630 ms | 158 ms | −75% |
+
+      | Unread counts (p50) | 88 ms | 6.6 ms | −93% |
+
+      | First unread (p50) | 87 ms | 6.0 ms | −93% |
+
+      | Unified messages (p50) | 255 ms | 31 ms | −88% |
+
+      | Aircraft trails (p50) | 320 ms | 96 ms | −70% |
+
+
+      ### Browser (desktop / phone)
+
+
+      | | rc4 | rc5 | change |
+
+      |---|---:|---:|---:|
+
+      | Dashboard: total blocking time | 1,299 / 2,981 ms | 252 / 1,187 ms | −81% / −60% |
+
+      | Dashboard: first map marker | 3.7 / 4.8 s | 1.0 / 2.2 s | −72% / −54% |
+
+      | Nodes: total blocking time | 451 / 594 ms | 111 / 421 ms | −75% / −29% |
+
+      | Info tab: all charts drawn | 1.9 / 6.2 s | 0.7 / 2.0 s | −64% / −68% |
+
+      | Info tab: total blocking time | 1,535 / 5,786 ms | 446 / 2,310 ms | −71% / −60% |
+
+      | Typing 20 characters: components redrawn | 74,920 / 4,310 | 120 / 120 | −99.8% / −97% |
+
+      | Typing 20 characters: script time | 645 / 550 ms | 59 / 68 ms | −91% / −88% |
+
+      | Map pan ×5: components redrawn | 7,553 / 2,230 | 2,418 / 7 | −68% / −99.7% |
+
+      | MeshCore node list (297 nodes): page elements | 7,869 | 1,768 | −78% |
+
+      | MeshCore contacts list: page elements | 3,463 | 545 | −84% |
+
+
+      **Trade-offs we know about:**
+
+      - Opening a tab for the first time can take 15–75 ms longer, because that tab's code now
+      downloads on first open. After that the browser serves it from cache.
+
+      - An idle page redraws a little more often (about 36 a minute, up from 27), because live
+      socket updates now replace the heavy polling.
+
+      - The `/api/poll` change saves bytes, not server time: each poll still takes about 140 ms on
+      the server.
+
+
+      ## What changed
+
+
+      ### Network and caching
+
+      - **Compressed responses and long-lived caching of built files** (#6025). API JSON is now
+      gzip-compressed, and hashed JS/CSS files are cached for good.
+
+      - **Dashboard loads its data once** (#6026). It waits for login to finish instead of fetching
+      once before and once after.
+
+      - **Smaller dashboard data** (#6028). The 37 node fields the dashboard n
+
+      …
   - version: v4.17.2-rc4
     name: v4.17.2-rc4
     datetime: '2026-10-28T20:52:30Z'
@@ -2161,111 +2299,4 @@ releases:
 
       - **
 
-      …
-  - version: v4.17.0-rc6
-    name: v4.17.0-rc6
-    datetime: '2026-10-07T23:46:32Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.0-rc6
-    prerelease: true
-    notes: >-
-      # MeshMonitor v4.17.0-rc6
-
-
-      > [!WARNING]
-
-      > This is a **pre-release** for testing. It is not tagged `latest`. Use it on a test install
-      or with a recent backup.
-
-
-      ## Summary
-
-
-      This release candidate is mostly a permissions release. Until now, many routes checked a
-      per-source permission on *any* source, so a grant on one source could read, change or transmit
-      on another. Every such route now checks the source it acts on: device configuration, mesh
-      requests, messages, channels, nodes, settings, the poll, the v1 API, public embeds and the
-      live WebSocket feed. Admins are unaffected apart from a few replies that now name one source
-      instead of all of them; users with limited grants will see less than before, by design. On the
-      feature side, every number field can now be cleared while editing, the sender's name in a
-      channel or DM opens the node popup with its status, TAK team and role are configurable, and
-      the Reticulum source page works on phones. Saving a config section no longer turns a node's
-      "firmware default" position interval into a 32-second broadcast.
-
-
-      ## Features
-
-      - UI: number fields can be cleared; blank is outlined and blocks Save (#5652)
-
-      - Chat: sender name opens the node popup with status; status emoji badge on the avatar (#5651)
-
-      - Config: TAK team and role module settings (#5641)
-
-      - MQTT: source-card warning when client proxy has no linked broker (#5663)
-
-
-      ## Bug Fixes
-
-      - Permissions: device-config routes check the target source (#5655)
-
-      - Permissions: nodes, settings and message routes check the target source (#5656)
-
-      - Permissions: mesh-request, announce, connection and channel routes check the target source
-      (#5657)
-
-      - Permissions: optional-`sourceId` reads limited to the caller's sources; install-wide jobs
-      are admin only (#5658)
-
-      - Permissions: private positions checked per source; telemetry reads and `/api/status` scoped;
-      one rule for a source's address (#5660)
-
-      - Permissions: every section of `GET /api/poll` gated on its own source (#5661)
-
-      - Permissions: embeds and the v1 API scoped per source; MeshCore telemetry ids; restart is
-      admin only (#5664)
-
-      - Permissions: WebSocket events filtered per source and per grant (#5665)
-
-      - Config: a stored 0 interval is sent as 0; one channel read-back; dead desktop Virtual Node
-      checkboxes removed (#5662)
-
-      - Admin: a stored 0 is explained; one request per Owner/Channels Load; dead Virtual Node env
-      vars removed (#5659)
-
-      - Admin: per-section Load for Status Message, Traffic Management and MeshBeacon, local and
-      remote (#5644)
-
-      - Reticulum: phone tab bar docks under the content (#5648)
-
-
-      ## Docs
-
-      - MQTT: "Why don't I see MQTT traffic?" (#5663)
-
-      - Add-ons: Virtual Node sidecars and REST API clients described separately (#5653)
-
-      - Add-ons: Mesh Screensaver and Mesh Widget (Zebar) listed (#5650)
-
-
-      ## Issues Resolved
-
-      #5613, #5645, #5646, #5647, #5649
-
-
-      ## Upgrade Notes
-
-      - **No new migrations.**
-
-      - **Permissions are now enforced per source everywhere.** A user needs the grant on the source
-      a request acts on; with no `sourceId`, on the primary source. If a non-admin loses access
-      after upgrading, grant the permission on that source under Users.
-        - A request naming an unknown `sourceId` returns 404; it used to act on the primary source.
-        - A request with different `sourceId` values in the query and body returns 400.
-        - Lists read with no `sourceId` return only the sources the caller may read.
-      - **Admin only now:** the Auto-Enrichment and Position Estimation "run now" jobs, and Restart
-      Container.
-
-      - **Public and anonymous access:**
-        - `GET /api/status` no longer returns install-wide `statistics` without an admin login; `connection.localNode` needs `nodes:read` on the primary source. `connection.connected` still needs no login.
-        - The poll returns traceroutes only with `traceroute:read` on the source. Grant it to the anonymous account if a public map should draw route lines.
-        - Embeds leave out a node that has a private position override, is hidden from the map, or reports its position on a channel outside the profil
       …

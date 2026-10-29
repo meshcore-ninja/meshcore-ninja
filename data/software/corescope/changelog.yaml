@@ -1,7 +1,85 @@
 source: github
 repo: Kpa-clawbot/CoreScope
-updatedAt: '2026-10-22T23:02:19.570Z'
+updatedAt: '2026-10-29T23:50:07.027Z'
 releases:
+  - version: v3.16.0
+    name: v3.16.0
+    datetime: '2026-10-29T22:47:01Z'
+    url: https://github.com/Kpa-clawbot/CoreScope/releases/tag/v3.16.0
+    prerelease: false
+    notes: |-
+      # v3.16.0
+
+      47 commits since v3.15.0: 23 fix, 9 feat, 6 docs, 2 test, 2 perf, 2 ci, 1 ui, 1 deps,
+      1 chore. Nine feats, so minor not patch.
+
+      This release finishes the liveness work of v3.15.0. There, the server stopped
+      counting a relay hop as "heard" when its short prefix is shared with other
+      repeaters. The ingestor still did that for the stored last-seen time, and now it no
+      longer does, so some repeaters keep an older Last Heard after the upgrade. The new
+      features are optional: personal MQTT logins for observers, each observer's latest
+      neighbour report, and the radio setting a packet was heard on. The rest is mostly
+      pages that could show an older answer or a wrong number.
+
+      ## Read this before upgrading
+
+      ### Repeaters that are only heard in paths keep an older Last Heard
+
+      A node's Last Heard also follows the last-seen time the ingestor stores for it. The
+      ingestor refreshed that time from relay hops by a weaker rule than the server uses
+      since v3.15.0, so a repeater could still look heard on traffic that was really
+      another one. Three changes close that:
+
+      - A relay hop only refreshes a node when its prefix belongs to that node alone
+        (#2334, closes #2329). Before, when a prefix matched several nodes, the ingestor
+        picked the one that neighbours the previous hop.
+      - Only hops a packet has already passed count, which means flood packets (#2308,
+        closes #2307). In a direct packet the hops in the path are still to come, and in a
+        trace they are the route that was asked for. Tracing or messaging a switched-off
+        repeater kept it looking heard.
+      - On the server, relay evidence has to come from the path of the same observation,
+        not from another observation of the same packet (#2298, closes #2266).
+
+      What you will see after the upgrade:
+
+      - **On a mesh with 1-byte paths, relay hops practically stop refreshing Last
+        Heard.** In a sample from a production database (the last 200,000 observations,
+        about 24 hours, 1,818 nodes), none of the 506,545 one-byte hop instances had a
+        prefix of its own. A repeater on such a mesh stays Active on its own packets, such
+        as its adverts.
+      - **In the same sample, 2.0% of resolved hops no longer count** (12,894 of 652,074).
+        7 of the 1,053 nodes that relay hops refreshed lost all of those refreshes in that
+        window; 1 of those 7 sent no advert in it either.
+      - **The green "actively relaying" mark** on a repeater's Last Relayed row now needs
+        certain relay evidence within `healthThresholds.relayActiveHours` (#2336, closes
+        #2331). Forwarding another node's advert counts, sending its own advert does not.
+        The yellow "alive (idle)" mark is gone: no mark does not mean the repeater is idle
+        or off. The Last Relayed time itself still includes shared prefixes.
+
+      Nothing to configure. As in v3.15.0: if a repeater you know is on the air shows
+      Uncertain or Stale, its prefix is shared and its last advert is older than its
+      silent window.
+
+      ### With user accounts on: back up `users.db` first
+
+      `users.db` is migrated from schema version 6 to 8 at the first start (#2306,
+      #2348), also when you do not turn on observer logins. A v3.15 binary refuses it after
+      that ("database schema version 8 is newer than this binary supports"). To roll back,
+      you need the copy from before the upgrade: the daily backups in `backups/` next to
+      `users.db`, or your own. Without user accounts nothing changes.
+
+      ### Building from source needs Go 1.26, and the image moves to Alpine 3.24
+
+      #2297 updates the Go dependencies after a scan of the published image found 19 high
+      and 20 medium advisories in them, and moves the runtime image from Alpine 3.20, which
+      is out of support, to Alpine 3.24.
+
+      - The `go.mod` files of the server, the ingestor and `internal/users` now ask for Go
+        1.26.0 (was 1.22). The Docker build and CI already use 1.27. If you build the
+        binaries yourself with an older Go, it downloads a newer toolchain, or refuses to
+        build with `GOTOOLCHAIN=local`.
+      - In Docker, the bundled mosquitto, Caddy and supervisor now come from Alpine 3.
+      …
   - version: v3.15.0
     name: v3.15.0
     datetime: '2026-10-22T20:18:19Z'
@@ -1423,186 +1501,3 @@ releases:
       docker pull ghcr.io/kpa-clawbot/corescope:v3.5.2
 
       ```
-  - version: v3.5.0
-    name: CoreScope v3.5.0 🚀
-    datetime: '2026-04-08T07:27:29Z'
-    url: https://github.com/Kpa-clawbot/CoreScope/releases/tag/v3.5.0
-    prerelease: false
-    notes: >-
-      # CoreScope v3.5.0 🚀
-
-
-      The "stop building from source and start analyzing your mesh" release. 95 commits.
-
-
-      ---
-
-
-      ## 🐳 Pre-built Docker Images
-
-
-      CoreScope now ships as a ready-to-run Docker image on GitHub Container Registry. No cloning,
-      no building, no dependencies — just pull and run.
-
-
-      ```bash
-
-      docker run -d --name corescope -p 80:80 -p 443:443 -p 1883:1883 \
-        -v corescope-data:/app/data \
-        ghcr.io/kpa-clawbot/corescope:v3.5.0
-      ```
-
-
-      **Using HTTPS with a custom domain?** Mount your Caddyfile and certs directory:
-
-      ```bash
-
-      docker run -d --name corescope -p 80:80 -p 443:443 -p 1883:1883 \
-        -v /your/data:/app/data \
-        -v /your/Caddyfile:/etc/caddy/Caddyfile:ro \
-        -v /your/caddy-data:/data/caddy \
-        ghcr.io/kpa-clawbot/corescope:v3.5.0
-      ```
-
-      Caddy auto-provisions Let's Encrypt certs. Your Caddyfile just needs:
-
-      ```
-
-      yourdomain.example.com {
-          reverse_proxy localhost:3000
-      }
-
-      ```
-
-
-      That's it. Zero config required — MQTT broker, Caddy HTTPS, and SQLite are built in.
-
-
-      **Already running CoreScope?**
-
-      ```bash
-
-      # 1. Find your running container name
-
-      docker ps --format '{{.Names}}'
-
-
-      # 2. Stop and remove it
-
-      docker stop <container-name> && docker rm <container-name>
-
-
-      # 3. Pull the pre-built image
-
-      docker pull ghcr.io/kpa-clawbot/corescope:v3.5.0
-
-
-      # 4. Run with your existing data directory
-
-      docker run -d --name corescope -p 80:80 -p 443:443 -p 1883:1883 \
-        -v /your/data:/app/data \
-        -v /your/Caddyfile:/etc/caddy/Caddyfile:ro \
-        -v /your/caddy-data:/data/caddy \
-        ghcr.io/kpa-clawbot/corescope:v3.5.0
-      ```
-
-      Your data volume stays. Nothing to migrate.
-
-
-      Tags: `v3.5.0` (this release) · `latest` (latest tagged release) · `edge` (master tip, for
-      testing). Env: `DISABLE_CADDY=true` / `DISABLE_MOSQUITTO=true` if you bring your own.
-
-
-      ---
-
-
-      ## ⚡ 83% Faster
-
-
-      35 performance commits. Packets endpoint p50 dropped from 16.7ms → 2.7ms. Server now serves
-      HTTP within 2 minutes on *any* DB size — async background backfill means you're never staring
-      at a loading screen. N+1 API calls killed everywhere. Prefix map memory cut 10x. WebSocket
-      renders batched via rAF.
-
-
-      ---
-
-
-      ## 🔬 RF Health Dashboard
-
-
-      New Analytics tab. Per-observer noise floor as color-coded columns (green/yellow/red), airtime
-      utilization, error rates, battery levels. Click any observer for the full breakdown.
-      Region-filterable. This is the beginning of making CoreScope more than just a packet viewer.
-
-
-      ---
-
-
-      ## 🗺️ See Where Traces Actually Go
-
-
-      Send a trace → watch it on the live map. Solid animated line shows how far it got. Dashed
-      ghost shows where it didn't reach. Finally know *where* your trace failed, not just *that* it
-      failed.
-
-
-      ---
-
-
-      ## 📊 Things That Were Lying To You
-
-
-      - "By Repeaters" was counting companions. Fixed.
-
-      - Zero-hop adverts claimed "1 byte hash" when the hash size was unknowable. Fixed.
-
-      - "Packets through this node" showed packets through a *different* node with the same prefix.
-      Fixed — now uses the neighbor affinity graph.
-
-      - Table sorting on nodes/neighbors/observers silently did nothing. Fixed.
-
-
-      ---
-
-
-      ## 🔗 Deep Links · 🎨 Channel Colors · 📱 Mobile · 🔑 Security
-
-
-      **Deep links** — every page state goes in the URL. Share a link to a specific node, filter, or
-      analytics tab.
-
-
-      **Channel colors** — click the color dot next to any channel, pick from 8 colors, see it
-      highlighted across the feed. Persists in localStorage.
-
-
-      **Distance units** — km, miles, or auto-detect from locale. Customizer → Display.
-
-
-      **Mobile** — 44px touch targets, ARIA labels, responsive breakpoints.
-
-
-      **Security** — weak API keys rejected at startup. License: GPL v3.
-
-
-      ---
-
-
-      ## 📡 Full API Documentation
-
-
-      Every endpoint is now documented with an auto-generated OpenAPI 3.0 spec — always in sync with
-      the running server.
-
-
-      - **Interactive Swagger UI:** [analyzer.00id.net/api/docs](https://analyzer.00id.net/api/docs)
-      — browse and test all 40+ endpoints
-
-      - **Machine-readable spec:** [analyzer.00id.net/api/spec](https://analyzer.00id.net/api/spec)
-      — import into Postman, Insomnia, or use for bot/integration development
-
-
-      On your own instanc
-
-      …
