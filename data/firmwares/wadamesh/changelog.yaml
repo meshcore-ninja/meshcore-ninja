@@ -1,88 +1,88 @@
 source: github
 repo: ALLFATHER-BV/wadamesh
-updatedAt: '2026-10-28T16:29:08.130Z'
+updatedAt: '2026-10-31T16:58:58.472Z'
 releases:
   - version: beta_101
     name: wadamesh beta_101
     datetime: '2026-10-28T13:56:46Z'
     url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_101
-    prerelease: true
+    prerelease: false
     notes: >-
-      Test build, on top of beta_100. Stable stays **beta_85**.
+      **Stable.** This is the same build as the beta_101 test release, promoted unchanged, and it
+      replaces beta_85 as the recommended version.
 
 
-      Flash it at **[wadamesh.com](https://wadamesh.com/#install)** (switch the toggle to Beta), or
-      update on the device if you have "Get test builds (beta)" turned on.
+      Flash it at **[flasher.wadamesh.com](https://flasher.wadamesh.com)**, or update on the device.
 
 
-      **@MrYoshii** gave the T-LoRa Pager a UI made for its 480x222 panel and its knob, a faster GPS
-      first fix, German for the new strings and a Pager simulator for the web build (#753, #754,
-      #755, #758). Thank you! The rest of this round is about what you told us after beta_100:
-      language downloads, saving update bins to SD, the T-Deck Pro, keypad navigation on the
-      ThinkNode M9, and a stack of requests from Discord. Thanks to everyone who sent logs and
-      ideas, in particular **@Jess-39**, **@william-stearns**, **@oumike**, **@oz1kfy**,
-      **@mrickey** and **@Eddie-Feher-at-TT** here, and benanderson, zomgugoff, gadgeteerza,
-      161ct006 and Ender436 on Discord.
+      Sixteen builds went into this one, beta_86 through beta_101, and everything below is in it. It
+      is the biggest step wadamesh has taken: a new interface, colour themes, a Home made of
+      widgets, MeshCore 1.18, a repeater admin app, the whole UI in a browser, and a long list of
+      fixes, many of them from the community.
 
 
-      ## New
+      Much of it is community work: **@oumike** sent more than thirty pull requests across nearly
+      every board, **@MrYoshii** brought the T-LoRa Pager to life, and **@TerryTel93**,
+      **@samuelcoustet**, **@jcyrio**, **@Confituurke** and many others added features, apps, boards
+      and translations. The full thank-you is at the end.
 
 
-      - **Offline maps fill the gaps.** When a tile is missing and Wi-Fi is not connected, the map
-      cuts the matching square out of the tile one to three zoom levels up and scales it into the
-      gap, so you see a blocky but correct map instead of an empty square. The zoom buttons go up to
-      three levels past what you have saved (asked for by benanderson).
-
-      - **25 more time zones**, from Central, South, East and West Africa, Egypt and Moscow to
-      Singapore, Perth, Korea, Adelaide, New Zealand, Argentina, Mexico City and Newfoundland. The
-      list now runs west to east, and a Custom offset you already set stays as it is (asked for by
-      gadgeteerza).
-
-      - **Adjustable picture and wallpaper dimming:** Settings, Theme, Background, Picture dimming,
-      and Settings, Lock screen, Wallpaper dimming, each Off, Light, Medium or Strong. Strong is the
-      default and the look you have today (asked for by zomgugoff and benanderson).
-
-      - **Key guides** for the ThinkNode M9, the T-Deck keyboard and the Tanmatsu on the [docs
-      page](https://wadamesh.com/docs.html).
+      ## Read this first if you are coming from beta_85
 
 
-      ## Fixes
+      - **The whole interface is redesigned**, and many things have moved: the status bar, Chats,
+      the conversation screen, the lock screen, the screensaver, Home, Settings and notifications.
+      The sections below say where things went.
+
+      - **Home is made of widgets now**, and Glance is the layout you get after the update. Your old
+      Home is still there as the **Commander** preset, in Settings > Display > Home.
+
+      - **Colour settings moved to a new Theme page.** Appearance, High contrast, the accent colour,
+      Colourful chat bubbles and Compact messages are no longer under Display. MORE COLORS! is
+      switched on for everyone in its Regular style, and an aurora in your accent colour sits behind
+      every screen; turn either off on the Theme page for a calmer look.
+
+      - **Make a fresh settings backup after updating.** Backups made with beta_85 or earlier were
+      written as invalid JSON and cannot be imported again. New ones are valid, carry the screen and
+      app preferences the old ones were missing, and are named `meshcore-backup-<date>`.
+
+      - **Chat history on a busy device could stop saving without a word.** Once the history reached
+      its 24 files, a reboot left every new message in memory only, gone at the next restart. Full
+      files are now merged to make room, a new file is opened when they cannot be merged, and no
+      message is ever dropped to keep saving. Messages lost that way before the update cannot be
+      recovered.
+
+      - **T-Deck trackball: Scroll is the default now**, and a trackball set to Cursor is moved to
+      Scroll once by the update. Hold the trackball still for about half a second to switch.
+
+      - **The screensaver also runs on battery**, for 15 seconds after the screen timeout by default
+      (Settings > Display > On battery, show it for). The old "Only while charging" option is gone.
+
+      - **Boards without a GPS take up to 5 seconds longer to boot**, because MeshCore 1.18 waits
+      longer for a GPS to answer. A device with no clock source starts from 1 March 2026 instead of
+      May 2024.
+
+      - **Heltec V4:** to make room for everything else, Snake is its only built-in game (2048,
+      Tetris and Breakout are not built in), and it has no picture background.
+
+      - **Wio Tracker L2:** the screen starts in landscape once after this update, now that it can
+      rotate. The Orientation setting turns it back.
+
+      - **A failed SD card no longer costs your node its key.** The device keeps a copy of the key
+      in its own memory, and a device that keeps its data on the card and starts without it says so
+      and offers to try the card again, instead of opening first-time setup.
 
 
-      - **Languages from the Store download on every board again.** The file is saved as it arrives
-      instead of being held in one big block of memory first, which the 2 MB Heltec V4 and boards
-      low on memory could not spare once the language files grew (reported by 161ct006). A file that
-      is truly too large now says so instead of blaming the server.
+      ## Read this first if you have a T-Display P4
 
-      - **Save update bin to SD works again.** Every download reached 100% and then failed with "SD
-      write failed", because the size check ran on the still-open file, which the card's file system
-      reports as 0 bytes until it is closed. The file is now closed, opened again and checked on the
-      card (#734, reported by @Jess-39 and @william-stearns).
 
-      - **The clock no longer falls back by half an hour with GPS battery saving on:** after a rest
-      the GPS still held its last report from before the rest, and the 30-minute clock sync took
-      that old time. Every internet time sync now also reaches the clock chip on boards that have
-      one (the ThinkNode M9), and with Wi-Fi on "Sync clock" asks the time server right away
-      (reported by gadgeteerza).
+      - **Landscape works.** If beta_85 left your screen stuck in landscape with the controls out of
+      reach, flash this build **over USB** from the flasher. Taps were being rotated twice, once by
+      the touch driver and once by the interface.
 
-      - **Accented letters** are the size of the text around them at the Large and Huge text sizes,
-      and Romanian ș and ț are drawn instead of an empty box. Settings, Language names a language
-      added from the Store (Polish showed as English), and nineteen settings and messages that had
-      no translation row now translate.
-
-      - **Contacts: Peers lists people only**, now that rooms have their own filter (asked for by
-      benanderson).
-
-      - **Keypad navigation scrolls past text and charts:** Up and Down move the page a step at a
-      time when the next control is further away than the screen shows, so a long description or a
-      chart between two buttons is on screen before the cursor moves on (asked for by benanderson
-      and zomgugoff).
-
-      - **Chat list with the keys:** when a new message rebuilt the list, the cursor fell onto the
-      "..." button, so OK opened the Chats menu instead of the chat. The cursor now stays on the
-      same chat (ThinkNode M9, T-Deck trackball, T-LoRa Pager, Tanmatsu).
-
-      - **Telemetry:** the Request butto
+      - **If Wi-Fi never connects**, your unit's Wi-Fi chip still runs LilyGo's factory firmware:
+      pick the **"factory Wi-Fi chip"** image in the flasher (#612; thanks @jalevdev for spotting
+      the missing choice in #619). If the board crashes with Wi-Fi on, within a minute of star
 
       …
   - version: beta_100
