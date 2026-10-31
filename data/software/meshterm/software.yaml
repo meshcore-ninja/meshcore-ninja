@@ -1,0 +1,69 @@
+# Source: https://github.com/jpmartineau/MeshTerm (verified 2026-10-07)
+# Source: https://meshterm.net/
+name: MeshTerm
+kind: client
+status: active
+maturity: beta
+description: >-
+  Full-featured TUI MeshCore client for desktop terminals and for handhelds like
+  the ClockworkPi PicoCalc and uConsole. Chat, room servers, a live dashboard,
+  an offline map, per-hop route traces, and a long-term SQLite record of every
+  packet heard, with a scriptable CLI that prints JSON.
+
+maintainers:
+  - name: jpmartineau
+    url: https://github.com/jpmartineau
+
+repository: https://github.com/jpmartineau/MeshTerm
+website: https://meshterm.net/
+license: Apache-2.0
+license_type: open-source
+
+languages:
+  - python
+
+latest_version: "0.10.3"
+released: 2026-10-07
+
+platforms:
+  - linux
+  - macos
+  - windows
+
+interfaces:
+  - tui
+  - cli
+
+connections:
+  - serial
+  - ble
+  - tcp
+  - spi
+
+node_roles:
+  - companion
+  - repeater
+  - room-server
+
+capabilities:
+  - messaging
+  - contacts
+  - channels
+  - node-configuration
+  - remote-administration
+  - monitoring
+  - telemetry
+  - packet-analysis
+  - mapping
+
+install:
+  - type: github-release
+    url: https://github.com/jpmartineau/MeshTerm/releases/latest
+
+tags:
+  - tui
+  - terminal
+  - picocalc
+  - uconsole
+
+last_reviewed: 2026-10-07
