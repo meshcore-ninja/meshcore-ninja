@@ -1,7 +1,44 @@
 source: github
 repo: MeshCore-Beacon/beacon-server
-updatedAt: '2026-10-29T19:27:18.444Z'
+updatedAt: '2026-10-31T21:10:28.997Z'
 releases:
+  - version: v2.1.1
+    name: v2.1.1
+    datetime: '2026-10-31T20:01:47Z'
+    url: https://github.com/MeshCore-Beacon/beacon-server/releases/tag/v2.1.1
+    prerelease: false
+    notes: >-
+      # Beacon Server 2.1.1
+
+
+      Pair this release with [Beacon Web
+      2.1.1](https://github.com/MeshCore-Beacon/beacon-web/releases/tag/v2.1.1) and BEACON Mobile
+      2.1.1. Client floors are unchanged: server 2.1.1 still works with Beacon Web 2.1 and BEACON
+      Mobile 2.1.
+
+
+      Operators need no config change. Every new setting has a safe default, and there are no
+      migrations.
+
+
+      ## New
+
+      - Each `/ws` connection gets a send budget, set by `websocket.max_send_bytes_per_second` and
+      `websocket.send_burst_bytes` (defaults 128 KiB/s and 2 MiB). A client that falls behind skips
+      live events and gets a lagged notice, at most every 30 s, telling it to refresh over REST.
+
+      - Optional `websocket.require_origin`, off by default. When on, a `/ws` upgrade without an
+      Origin header needs a ticket from the new `GET /api/v1/ws-ticket`, sent in `X-Beacon-Ticket`.
+      Turning it on raises the minimum app version to BEACON Mobile 2.1.1, the first release that
+      sends tickets. Tickets are signed per server process, so run one process per public host.
+
+      - Node list rows carry `lastSeen`, and `/nodes` can sort oldest heard first.
+
+
+      ## Fixes
+
+      - The per-IP `/ws` connection cap counts an IPv6 /64 as one address, matching the connect-rate
+      budget.
   - version: v2.1.0
     name: v2.1.0
     datetime: '2026-10-29T16:45:18Z'
@@ -349,9 +386,3 @@ releases:
     url: https://github.com/MeshCore-Beacon/beacon-server/releases/tag/v1.0.2
     prerelease: false
     notes: "## [v1.0.2] — 2026-06-09\r\n\r\n### Features\r\n- **Traces: raw path hashes included in responses** — trace responses now include raw (unresolved) path hashes alongside the resolved node data, giving clients access to the full hop information even when nodes aren't known to the observer.\r\n\r\n### Bug Fixes\r\n- Fixed typo in `subscribeScope` struct that could cause unexpected subscription behaviour.\r\n- Fixed missing Swagger annotation for the traces `rawPath` field.\r\n\r\n### Documentation\r\n- Updated schema migration notes.\r\n\r\n\r\n**Full Changelog**: https://github.com/MeshCore-Beacon/beacon-server/compare/v1.0.1...v1.0.2"
-  - version: v1.0.0
-    name: v1.0.0
-    datetime: '2026-06-08T23:16:46Z'
-    url: https://github.com/MeshCore-Beacon/beacon-server/releases/tag/v1.0.0
-    prerelease: false
-    notes: "## v1.0.0\r\n\r\nThis is the first public release of Beacon, a MeshCore network observation backend built by [MeshCore Canada](https://meshcore.ca).\r\n\r\n### What is Beacon\r\n\r\nBeacon connects to one or more MeshCore MQTT brokers, ingests LoRa packet traffic in real time, stores it in PostgreSQL, and serves it via a REST API and WebSocket stream. It is designed to be the data backbone for MeshCore network monitoring frontends and tools.\r\n\r\n### Features\r\n\r\n**Packet ingestion and storage**\r\n- Subscribes to multiple MeshCore MQTT brokers simultaneously\r\n- Decodes all MeshCore packet types using meshcore-go\r\n- Deduplicates observations across brokers — the same packet heard by multiple brokers produces one observation per observer\r\n- Stores packets, observations, nodes, observers, traces, known routes, neighbors, and channel messages in PostgreSQL\r\n- Configurable retention for packets and telemetry\r\n\r\n**Node and observer tracking**\r\n- Upserts nodes from advert payloads with name, type, location, and radio settings\r\n- Tracks observers from /status messages including hardware model, firmware version, battery level, uptime, and radio configuration\r\n- Detects multibyte path and trace firmware capability from path hash sizes\r\n- Records node neighbors from forwarded adverts\r\n- Builds and maintains known routes — fully resolved multi-hop paths where all nodes are identified with high confidence\r\n- Observer telemetry snapshots with configurable resolution and bucketed query support (1h, 6h, 24h intervals)\r\n\r\n**Channel messages**\r\n- Decrypts group text messages for configured channel keys\r\n- Supports hashtag-derived PSKs (`SHA256(\"#tag\")[:16]`) and explicit hex keys\r\n- Records channel hash observations even for unknown channels\r\n\r\n**Transport scopes**\r\n- Matches `TRANSPORT_FLOOD` and `TRANSPORT_DIRECT` packets to configured scope keys\r\n- Tags nodes and observers with their default scope\r\n- Scope-filtered queries across packets, nodes, observers, channels, and traces\r\n\r\n**Geographic filtering**\r\n- Optional ingest filter by country or continent using a compiled-in IATA → country/continent database sourced from OurAirports\r\n- Regions group IATAs for display and filtering\r\n\r\n**REST API**\r\n- Full paginated REST API with cursor-based pagination across all resources\r\n- Endpoints for packets, observations, nodes, observers, channels, messages, traces, routes, regions, IATAs, scopes, and stats\r\n- Cross-IATA route search\r\n- Observer telemetry with bucketed aggregation\r\n- Swagger UI at `/swagger/index.html`\r\n\r\n**WebSocket**\r\n- Real-time event stream with per-connection subscription filtering by IATA, region slug, region ID, payload type, channel hash, and event type\r\n- Events: `packetObservation`, `observerStatus`, `nodeUpdate`, `channelMessage`\r\n- Backpressure handling with `lagged` notifications and REST backfill support\r\n- Per-IP connection limits\r\n\r\n**Path resolution**\r\n- Resolves path hash prefixes to node UUIDs using `node_short_ids`\r\n- Confidence levels: `high` (unambiguous), `ambiguous` (hash collision), `none` (unknown)\r\n- Resolved hop nodes included in packet observations, traces, and known routes\r\n\r\n### Project\r\n\r\n- AGPL-3.0-or-later license\r\n- Contributor Covenant code of conduct\r\n- Full contributing guide including database change, API change, and testing requirements\r\n- GitHub Actions CI with build, format, vet, test, and swagger doc checks\r\n- Docker image published to GitHub Container Registry on every push to `main` and `dev`"

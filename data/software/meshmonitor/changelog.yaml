@@ -1,7 +1,126 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-10-31T04:38:59.331Z'
+updatedAt: '2026-10-31T21:10:41.425Z'
 releases:
+  - version: v4.17.2-rc7
+    name: v4.17.2-rc7
+    datetime: '2026-10-31T18:15:29Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.2-rc7
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.17.2-rc7
+
+
+      > ⚠️ **Pre-release.** This is a release candidate for testing. Do not run it against
+      production systems.
+
+
+      This RC bundles the first batch of issue fixes merged after rc6 — ten PRs across MeshCore,
+      telemetry, aircraft detection, and docs. MeshCore gains a scheduled-telemetry retry burst with
+      cooldown (per-source settings, with the same policy applied to the Meshtastic scheduler), a
+      Channels landing pane with click-to-deselect, a "purge non-favourite nodes" action in device
+      config, aligned node-list header controls, and own outbound channel reactions that now fold
+      into chips instead of showing as raw text. Virtual-node default-key MQTT-proxy traffic now
+      lands on Primary #0 (plus a new purge button for virtual channels). Replayed firmware-2.8
+      NodeDB telemetry and position frames no longer fire false reboot, power-change, or
+      became-likely-aircraft events. A manual aircraft mark can now apply across every source that
+      sees a node (opt-in). And the archived-MeshManager references were removed from the docs and
+      the script gallery. No security changes here — those shipped in rc6.
+
+
+      ## Features
+
+
+      - MeshCore scheduled telemetry: retry burst (90s × 5) then a 30-min cooldown after a
+      missed/timed-out pull, exposed as per-source settings and applied to the Meshtastic scheduler
+      too; retry state is DB-persisted so a restart or settings save never re-arms it — #6113
+      (#6033)
+
+      - MeshCore Channels: no channel auto-selected on open, a "Select a channel" landing pane, and
+      click-the-selected-channel to deselect (desktop) — #6112 (#6049)
+
+      - Optional all-sources manual aircraft mark — apply `aircraft` / `not_aircraft` / `clear` to
+      every source that sees the node, skipping sources you can't write to — #6111 (#6046)
+
+      - Purge non-favourite MeshCore nodes from the device configuration tab — #6110 (#6041)
+
+
+      ## Bug Fixes
+
+
+      - Fold own outbound MeshCore channel reactions into chips instead of raw text bubbles
+      (receive-side parser now accepts the space-separated hash form) — #6108 (#6039)
+
+      - Skip reboot / power-change / became-likely-aircraft detectors on replayed telemetry and
+      position frames — #6107 (#6045, #6099)
+
+      - Match default-key primary MQTT-proxy traffic to Primary #0 via the modem-preset name instead
+      of splitting it onto a virtual "LongFast #101" channel — #6109 (#6044)
+
+      - Add a "Purge all messages" button to the virtual channel info modal — #6106 (#6044)
+
+      - Align the MeshCore node-list header controls into a clean toolbar grid — #6105 (#6040)
+
+
+      ## Docs
+
+
+      - Remove user-facing MeshManager references and the stale solar-forecast gallery script
+      (MeshMonitor covers it natively) — #6104 (#6048)
+
+
+      ## Issues Resolved
+
+
+      Closes #6033, #6039, #6040, #6041, #6044, #6045, #6046, #6048, #6049, #6099.
+
+
+      ## Upgrade notes
+
+
+      - No breaking changes. The new per-source telemetry-retry settings default to 90s / 5 attempts
+      / 30-min cooldown.
+
+      - Purging non-favourite MeshCore nodes is admin / `nodes:write`-gated and only removes stored
+      nodes from MeshMonitor — the radio's own contact list is not touched.
+
+      - The all-sources aircraft mark is opt-in (a checkbox on the mark menu); the default stays
+      single-source.
+
+
+      **Full changelog:** https://github.com/Yeraze/meshmonitor/compare/v4.17.2-rc6...v4.17.2-rc7
+
+
+      ## 🚀 MeshMonitor v4.17.2-rc7
+
+
+      ### 📦 Installation
+
+
+      **Docker (recommended):**
+
+      ```bash
+
+      docker run -d \
+        --name meshmonitor \
+        -p 8080:3001 \
+        -v meshmonitor-data:/data \
+        ghcr.io/Yeraze/meshmonitor:4.17.2-rc7
+      ```
+
+
+      ### 🧪 Testing
+
+      ✅ All tests passed
+
+      ✅ TypeScript checks passed
+
+      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
+
+
+      ### 📋 Changes
+
+      See commit history for detailed changes.
   - version: v4.17.2-rc6
     name: v4.17.2-rc6
     datetime: '2026-10-31T02:31:48Z'
@@ -2189,104 +2308,3 @@ releases:
       ### 📋 Changes
 
       See commit history for detailed changes.
-  - version: v4.17.0-rc8
-    name: v4.17.0-rc8
-    datetime: '2026-10-10T14:48:33Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.0-rc8
-    prerelease: true
-    notes: >-
-      # MeshMonitor v4.17.0-rc8
-
-
-      > [!WARNING]
-
-      > This is a **pre-release** for testing. It is not tagged `latest`. Use it on a test install
-      or with a recent backup.
-
-
-      ## Summary
-
-
-      This release candidate changes how the Docker image runs: every process inside the container
-      now runs as the unprivileged `node` user, the image no longer ships development packages
-      (about 0.5 GB smaller), and the base images are patched. Existing installs upgrade in place;
-      the first start fixes the ownership of `/data` once. New features: **Reliable PKI** (off by
-      default) sends a node your node info before an encrypted request when the last one failed,
-      **local map markers** let you plan on the map without sending anything to the mesh, and MQTT
-      settings gain a **broker preset** for the official Meshtastic broker. Several MQTT saves no
-      longer turn off fields they did not show, automations warn when a step would send nothing, and
-      the Site Planner and Map Analysis work on phones.
-
-
-      ## Features
-
-      - PKI: Reliable PKI — send node info first when a node stops answering encrypted requests, at
-      most once an hour per node and 10 an hour per source (#5702)
-
-      - Map: local map markers, per source, never transmitted (#5717)
-
-      - MQTT: broker preset chooser with the official Meshtastic broker, plain and TLS (#5700)
-
-
-      ## Bug Fixes
-
-      - Docker: prune dev dependencies, run every process as `node`, bump base images, patch runtime
-      CVEs (#5701)
-
-      - Automations: "Use suggested template", a warning when a step sends nothing, and "nothing
-      sent" in Runs and Trace (#5716)
-
-      - Admin: a remote MQTT save keeps client proxy, map reporting and TLS, and reads encryption
-      correctly (#5707)
-
-      - Config: a local MQTT save keeps location consent and map report settings; a precision of 0
-      stays 0 (#5713)
-
-      - Config: every config save updates the right cache, so a reload shows what you saved (#5714)
-
-      - Site Planner: folds after Predict on phones so the ring shows (#5698); clears the old ring
-      on a new origin and sits beside the map controls (#5706)
-
-      - Map Analysis: tool panels stay clear of the map controls and survive a phone/desktop switch
-      (#5710); the detail pane and time slider fit phones (#5712)
-
-
-      ## CI
-
-      - Fix the `onUserConsoleLog` teardown flake that failed rc7's pipeline (#5703)
-
-      - Pull test database images from `mirror.gcr.io` (#5705)
-
-
-      ## Issues Resolved
-
-      #5686, #5687, #5689, #5690, #5691, #5692, #5697
-
-
-      ## Upgrade Notes
-
-      - **Two new migrations:** 198 (`pki_exchange_state`) and 199 (`map_markers`). Both create
-      empty tables.
-
-      - **Docker runs as `node` (uid/gid 1000, or your `PUID`/`PGID`).**
-        - The first start after upgrading fixes the ownership of `/data` once and records it; later starts only check the top level. On a large volume the first start takes longer. `MESHMONITOR_FORCE_CHOWN=true` re-runs the pass.
-        - **USB serial devices:** the entrypoint grants `node` the group of each mapped `/dev/ttyUSB*` / `/dev/ttyACM*` automatically. If you start the container with `user:`, add the device's group with `group_add` instead.
-        - `cap_drop: [ALL]` now needs `user:` as well.
-        - `RUN_AS_ROOT=true` restores the old behaviour while you troubleshoot.
-        - Helm: `runAsGroup` and `fsGroupChangePolicy: OnRootMismatch` are set. The LXC template is unchanged.
-        - See *Upgrading to 4.17* in the Updating docs.
-      - **Reliable PKI is off.** Turn it on under Global Settings → Security, or per source under
-      that source's Settings. Each priming NodeInfo uses airtime: at most one per node per hour, and
-      at most 10 per source per hour.
-
-      - **Automations:** saving an automation whose message, notification or tapback is empty now
-      asks "Save anyway?". Saved automations are not changed. The API's create, update and import
-      responses carry a `warnings` list.
-
-      - **MQTT saves:** a remote-admin MQTT save is disabled until that node's MQTT config is
-      loaded. Saves from Device Configuration and Admin Commands now send client proxy, map
-      reporting, map report settings and location consent instead of resetting them.
-
-      - **Local markers** use the source's Waypoints
-
-      …
