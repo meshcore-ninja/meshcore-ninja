@@ -1,7 +1,103 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-10-29T23:50:23.765Z'
+updatedAt: '2026-10-31T04:38:59.331Z'
 releases:
+  - version: v4.17.2-rc6
+    name: v4.17.2-rc6
+    datetime: '2026-10-31T02:31:48Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.2-rc6
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.17.2-rc6
+
+
+      > ⚠️ **Pre-release.** This is a release candidate for testing. Do not run it against
+      production systems.
+
+
+      This RC is a security-hardening release. It ships the full remediation of an automated
+      penetration test (Shannon by Keygraph) run against a MeshMonitor instance: **34 proven
+      findings fixed across 12 PRs**, spanning authenticated RCE, cross-site request forgery, path
+      traversal, secret exposure, stored XSS, SSRF, and broken authorization, plus auth/session
+      hardening and a content-security-policy rewrite. Every fix landed with regression tests and
+      green CI. The headline items: the script engine can no longer be used for code execution by a
+      non-admin or across sources, and its child processes no longer inherit server secrets; the
+      CSRF exemption now requires a validated API token instead of any bearer header; backup
+      download/delete paths are confined to the backup directory; full channel PSKs are no longer
+      handed to read-only users; GeoJSON and analytics inputs are context-encoded against stored
+      XSS; the SSRF guard's IPv4-mapped-IPv6 bypass is closed and outbound settings URLs are
+      guarded; several routes that checked a permission on *any* source now check the *right*
+      source; password changes and resets invalidate other sessions; MFA backup codes can no longer
+      be double-spent; and production now serves a nonce-based CSP with no
+      `unsafe-inline`/`unsafe-eval` in `script-src`. Three latent issues uncovered during
+      remediation (a remote argv-injection vector, an ungated automation-enable path, and the
+      always-on CSP weakness) were also fixed. No functional features were removed; a few actions
+      were tightened to admin-only or properly source-scoped — see Upgrade notes.
+
+
+      ## Security
+
+
+      - Script-engine RCE: require execute permission equal to upload, strip secrets from the child
+      env, add `--ignore-scripts`, block Python stdlib shadowing, and fix argv injection — #6089
+
+      - Remote argv injection via over-the-air node names in the meshtastic script runners — #6101
+
+      - CSRF bypass: validate the API token before skipping CSRF instead of trusting any
+      `Authorization: Bearer` header — #6088
+
+      - Backup path traversal + authorization: confine read/delete to the backup directory,
+      admin-gate system backups, source-scope device backups — #6094
+
+      - Channel PSK exposure: gate PSK export/encode behind write, mask the anonymous preview, add
+      channel-db ownership checks — #6093
+
+      - Stored XSS in analytics settings: context-correct encoding + admin-gate the provider config
+      — #6092
+
+      - Stored XSS in GeoJSON popups/tooltips: HTML-escape feature properties before Leaflet renders
+      them — #6091
+
+      - SSRF: close the IPv4-mapped-IPv6 guard bypass, guard outbound
+      Apprise/translation/MeshCore-connect URLs, admin-gate global-only settings — #6098
+
+      - Authorization: enforce per-source permission at automation run-now, and at automation enable
+      / `PUT {enabled:true}` — #6095, #6100
+
+      - Auth/session/DB hardening: invalidate sessions on password change/reset, constant-time
+      login, atomic MFA backup-code consume, gate health/default-password disclosure, validate
+      news-status input — #6097
+
+      - Nonce-based CSP: drop `unsafe-inline`/`unsafe-eval` from `script-src` in production
+      (previously only strict when `COOKIE_SECURE=true`, which defaults false) — #6102
+
+
+      ## Issues Resolved
+
+
+      Closes the 38 findings from the Shannon assessment (GHSA-5jrc-pmm4-wxc6) plus three follow-ups
+      uncovered during remediation. 34 findings were fixed; 3 were verified as working-as-designed
+      and closed; 1 (the CSP weakness) was fixed here.
+
+
+      ## Upgrade notes
+
+
+      A few operations were tightened as part of the authorization fixes. These affect non-admin
+      users only; admins are unaffected:
+
+
+      - Script management and execution are now admin-only.
+
+      - Creating/listing/deleting system backups requires admin; device backups require the
+      permission on the primary (or named) source.
+
+      - Exporting a full channel PSK (`/channels/:id/export`, `/channels/encode-url`) now requires
+      write, not read.
+
+      - Global-only settings can only b
+
+      …
   - version: v4.17.2-rc5
     name: v4.17.2-rc5
     datetime: '2026-10-29T21:07:49Z'
@@ -2192,111 +2288,5 @@ releases:
       reporting, map report settings and location consent instead of resetting them.
 
       - **Local markers** use the source's Waypoints
-
-      …
-  - version: v4.17.0-rc7
-    name: v4.17.0-rc7
-    datetime: '2026-10-09T19:12:30Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.0-rc7
-    prerelease: true
-    notes: >-
-      # MeshMonitor v4.17.0-rc7
-
-
-      > [!WARNING]
-
-      > This is a **pre-release** for testing. It is not tagged `latest`. Use it on a test install
-      or with a recent backup.
-
-
-      ## Summary
-
-
-      This release candidate fixes a map bug present in rc6: vector maps drew without roads, water
-      or labels on pages that only use the 2D map. It also stops the whole app going blank in a
-      browser with no WebGL; a standard map is shown instead. Navigation is now the same on every
-      source type: **Device Configuration** (satellite icon) for settings that live on the device,
-      and **Settings** (gear) for MeshMonitor's own behaviour, with each control moved to the page
-      its name promises. Auto-Acknowledge now waits 5 to 30 seconds before answering a channel
-      message and stays quiet when enough other nodes have already answered. New this round: a
-      read-only estimate of what tighter Traffic Management settings would drop, a card that
-      explains hardware MeshMonitor cannot flash, Analyzer Observer presets for meshcore.ca and RF
-      Lab, and a "Sent to radio" mark on MeshCore channel sends. Three MeshCore permission gaps are
-      closed.
-
-
-      ## Features
-
-      - Auto-Acknowledge: wait 5-30 s and stay quiet when enough nodes have already answered (#5695)
-
-      - Traffic Management: read-only replay for position dedup and rate limit, and corrected docs
-      (#5681)
-
-      - Firmware: explain hardware that cannot be updated, in place of the update UI (#5680)
-
-      - Automations: `trigger.ageMinutes` on MeshCore node triggers (#5679)
-
-      - MeshCore: meshcore.ca and RF Lab presets for the Analyzer Observer (#5678)
-
-
-      ## Bug Fixes
-
-      - Map: 2D vector maps load their worker again, and a browser with no WebGL2 gets a raster map
-      instead of a blank app (#5688)
-
-      - Settings: each per-source control is on the page its name promises (#5694)
-
-      - Nav: one icon and one label for Device Configuration and Settings on every source type
-      (#5684)
-
-      - MeshCore: unrelayed channel sends are marked "Sent to radio" (#5693)
-
-      - MeshCore: per-section `/snapshot` grants, anonymous neighbour reads, and tabs that follow
-      their grant (#5674)
-
-
-      ## CI and Translations
-
-      - CI: bound the ClamAV install step and add job timeouts (#5673)
-
-      - Translations update from Hosted Weblate (#5475)
-
-
-      ## Issues Resolved
-
-      #5666, #5667, #5668, #5671, #5672, #5675, #5677, #5683
-
-
-      ## Upgrade Notes
-
-      - **No new migrations.**
-
-      - **Auto-Acknowledge now waits.** An acknowledgement to a channel message arrives 5 to 30
-      seconds after the message (about 17 on average), not at once. If two other nodes have already
-      replied or sent a tapback by then, MeshMonitor sends nothing. Change the count under
-      Automation → Auto Acknowledge → "Maximum number of responses" (0 = no limit). Direct messages
-      are answered as before. A Pre-Send Delay longer than 5 seconds adds to the wait. MeshCore
-      auto-acknowledge is unchanged.
-
-      - **Where things moved:**
-        - *Meshtastic:* Firmware update is now under Device Configuration; PKI DM decryption is under Settings.
-        - *MeshCore:* default path hash size, default region/scope, the radio contact list, and Refresh contacts / Advert / Discover are under Device Configuration.
-        - *MQTT bridge:* the bridge setup is the first section of that source's Settings; its separate nav entry is gone and old links redirect.
-        - *Reticulum:* the destination retention cap is under Global Settings.
-        - A pointer sits where each control used to be.
-      - **Labels:** the per-source entry that read "Device" (Meshtastic) or "Configuration"
-      (MeshCore, Reticulum) now reads "Device Configuration"; the dashboard gear reads "Global
-      Settings". Other languages show the English label until translated.
-
-      - **Maps:** a browser without WebGL2 shows a standard (raster) map and a note; the saved
-      tileset is not changed.
-
-      - **Firmware Updates pane:** nodes MeshMonitor cannot flash over Wi-Fi (meshtasticd, nRF52,
-      RP2040 and STM32 boards, and models with no mapped build) now show an explanation in place of
-      the update controls. The server answers such a request with a 400 and a code, not a 500.
-
-      - **Config saves:** unchanged from rc6.
-
-      - **
 
       …
