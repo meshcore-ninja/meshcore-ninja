@@ -1,7 +1,39 @@
 source: github
 repo: jooray/roadstr
-updatedAt: '2026-10-27T11:47:27.100Z'
+updatedAt: '2026-11-01T16:38:24.039Z'
 releases:
+  - version: v0.5.1
+    name: Roadbeacon 0.5.1
+    datetime: '2026-11-01T12:43:24Z'
+    url: https://github.com/jooray/roadbeacon/releases/tag/v0.5.1
+    prerelease: false
+    notes: >-
+      MeshCore, through MeshCore Open's local API:
+
+
+      - Follows the radio: when MeshCore Open loses the radio, Roadbeacon says so and waits, and it
+      picks up again on its own when the radio is back. Before, a refused subscription stayed stuck
+      until the connection dropped.
+
+      - Says why it isn't receiving: no radio connected, no `#roadstr` channel on the radio, or
+      MeshCore Open refused (with the error code).
+
+      - Asks MeshCore Open to add the `#roadstr` channel when the radio doesn't have it. You confirm
+      it there.
+
+      - New "Open MeshCore Open" button in *Settings → MeshCore*.
+
+      - Listens on data type `0x0150`, requested from MeshCore's registry for Road Events, as well
+      as on the development value `0xFF52`, which it still uses for sending until the registration
+      is merged.
+
+      - Optional "Flood region" setting. When it's empty, the radio's own flood scope applies.
+
+
+      The event format and frame bytes are unchanged.
+
+
+      Certificate SHA-256: `79750fb49349ec3729be5a3e825507a15e47c6d987e854ae91d5d50a20b3a24d`
   - version: v0.4.2
     name: Roadbeacon 0.4.2
     datetime: '2026-10-27T10:25:35Z'

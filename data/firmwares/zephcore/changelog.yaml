@@ -1,7 +1,93 @@
 source: github
 repo: liquidraver/ZephCore
-updatedAt: '2026-10-22T19:49:18.041Z'
+updatedAt: '2026-11-01T16:37:59.244Z'
 releases:
+  - version: 1.18.2-zephcore
+    name: Firmware 1.18.2-zephcore
+    datetime: '2026-11-01T12:42:46Z'
+    url: https://github.com/liquidraver/ZephCore/releases/tag/1.18.2-zephcore
+    prerelease: false
+    notes: >-
+      # ZephCore 1.18.2-zephcore
+
+
+      Firmware updates over Bluetooth for ESP32 companions, and packets the radio never checked are
+      no
+
+      longer repeated.
+
+
+      > [!NOTE]
+
+      > A normal upgrade keeps your identity, settings, contacts and phone pairing.
+
+
+      ---
+
+
+      ## Bluetooth updates for ESP32 companions
+
+
+      ESP32 companions can now be updated from a phone over Bluetooth, the way nRF companions
+      already
+
+      can. Send `start ota` (or pick DFU / BLE OTA on the device's screen menu): the node opens an
+
+      update window for 10 minutes and keeps running. Then, in **nRF Connect Device Manager** (iOS
+      and
+
+      Android), connect to the node, pair with its PIN if asked, and upload the `<board>-update.bin`
+
+      from the release (choose "Confirm only"). The node restarts on the new firmware by itself and
+
+      keeps your identity, settings, contacts and pairing. An update takes about a minute from a
+      phone.
+
+
+      - Use the `-update.bin`, not the `-merged.bin`: the merged file is for flashing over USB.
+
+      - The Nordic DFU app used for nRF boards does not work here; use nRF Connect Device Manager.
+
+      - The first update to this version still goes over USB or the web flasher. From then on,
+      updates
+        can go over Bluetooth.
+      - `stop ota` closes the window early. Only a phone paired with the node's PIN can upload.
+
+      - Available on the Heltec V4, V4.3, V4 R8 and Wireless Tracker V2, LilyGo T3S3, Meshnology
+      W12,
+        Station G2, and the XIAO ESP32-S3 and ESP32-C3. The Heltec V3, Heltec Wireless Tracker, LilyGo
+        T-Lora C6 and XIAO ESP32-C6 do not have the memory for it next to their WiFi companion, and the
+        classic ESP32 boards (T-Beam) cannot boot an update this way; they update over USB as before.
+
+      On boards without an over-the-air update, `start ota` used to answer as if it was rebooting
+      into
+
+      an update mode and then did nothing; it now says that the build has no OTA. Selecting DFU on
+      the
+
+      screen menu of an ESP32 board no longer blanks the screen and leaves the node in an undefined
+
+      state.
+
+
+      ## Other changes
+
+
+      - **Packets the radio never checked are no longer repeated.** A LoRa header can say a packet
+        carries no CRC, and the radio then passes it on without checking it. MeshCore always sends a CRC,
+        so such a packet is a misread header or noise; it is now dropped like a packet with a bad CRC, on
+        every radio type. It is rare (one in about 48 000 receptions on a busy repeater) and it does not
+        explain the damaged packet copies seen on map.meshcore.hu.
+      - **Companions ignore empty contact slots.** A temporary contact slot that had been cleared
+      could
+        still be matched as a sender with no key, so a crafted message could be taken as coming from it.
+        Such slots are now skipped everywhere a contact is looked up (from upstream MeshCore).
+      - **Repeater and room server duplicate counters stop at 65535** in the stats the app shows,
+      instead
+        of starting again from 0 on a busy node (from upstream MeshCore).
+
+      - **Zephyr updated to a newer main.** The base system moves forward by about 1,100 upstream
+      commits, including Bluetooth host fixes. Nothing changes in how the nodes are used.
   - version: 1.18.1-zephcore
     name: Firmware 1.18.1-zephcore
     datetime: '2026-10-22T15:21:14Z'
@@ -1217,9 +1303,3 @@ releases:
     url: https://github.com/liquidraver/ZephCore/releases/tag/v20260616.202853
     prerelease: false
     notes: "# ZephCore v1.16.2-zephyr\r\n\r\n> [!IMPORTANT]\r\n> ## Before you upgrade — please read\r\n>\r\n> This release changes where devices store their BLE pairing data. The change affects **all platforms**, but the upgrade steps differ:\r\n>\r\n> **All boards (nRF52 *and* ESP32): you must re-bond.** Existing phone/desktop pairings will not carry over. After flashing, remove the old pairing from your device's Bluetooth settings (and from the ZephCore app), then pair again from scratch.\r\n>\r\n> nRF **should** update cleanly, but I recommend doing a flash erase + flash fw + import backup to be absolutely sure. Formatters can be found in the repo's [formatter folder](https://github.com/liquidraver/ZephCore/tree/master/formatter). Check your softdevice version before using one.\r\n\r\n---\r\n\r\n## Highlights\r\n\r\n### Critical fix: ESP32 Bluetooth pairing restored\r\nOn the updated Zephyr 4.4.1 base, ESP32 boards could advertise but **never completed pairing** — the Espressif Bluetooth controller would assert the moment a phone began to pair. This release restores the controller's link-layer encryption so pairing works again. If you have an ESP32-based node (Heltec, XIAO, Station G2, T-Beam, etc.), this is the fix you've been waiting for.\r\n\r\nAdditionally, **Android \"connect from app\" now works on ESP32.** Advertising now always exposes the stable identity address, so the Android companion app's in-app connect flow succeeds while iOS pairing continues to work.\r\n\r\n### BLE pairing data moved to its own storage area\r\nBluetooth bonds previously shared the same filesystem as your identity, preferences, and contacts. They now live in a dedicated, isolated storage partition (NVS) on **both nRF52 and ESP32**. This means a busy pairing store can no longer corrupt your contacts or settings, and pairing writes never touch your user data.\r\n\r\nA factory reset (`erase`) now also clears stored BLE bonds, then reboots automatically so everything comes back up clean — previously bonds could survive an erase.\r\n\r\n### New board: Heltec Wireless Tracker V1.1 (ESP32-S3 + SX1262), thanks to @seagull9000\r\nFull support for the Heltec Wireless Tracker V1.1 companion (ESP32-S3 + SX1262 radio + ST7735R TFT + UC6580 GPS), including:\r\n- Correct battery ADC routing (avoids a wiring conflict in the upstream board definition that otherwise broke all LoRa SPI reads)\r\n- Battery voltage/percentage readings\r\n- Onboard GNSS\r\n- Status-LED heartbeat\r\n- OLED/TFT display and BLE companion transport\r\n\r\n\r\n### New board: LilyGo T-Beam v1.2 (SX1262)\r\nFull support for the classic-ESP32 LilyGo T-Beam v1.2 with the SX1262 radio, including:\r\n- AXP2101 power management (LoRa + GPS rails brought up automatically at boot)\r\n- **Battery fuel-gauge readings** over I2C — accurate battery voltage and percentage, even though this board has no battery ADC\r\n- Onboard GNSS (NEO-6M / NEO-M8N)\r\n- The user button wired up (short press = page/select, long press = action)\r\n- OLED display, BLE companion transport, and CLI-based repeater mode\r\n\r\n> Note: classic-ESP32 repeaters (e.g. T-Beam) run CLI-only and do not include WiFi-AP OTA — the WiFi driver buffers plus OTA heap don't fit the classic ESP32's RAM. ESP32-S3 / C-series repeaters keep WiFi OTA.\r\n\r\n### E-paper anti-ghosting\r\nE-paper displays now perform a periodic full refresh (every 8 partial updates by default) to clear the faint \"ghost\" images that build up where text changes most often, like the status bar. The interval is configurable build-time, and the feature is automatically ignored on OLED/TFT screens that don't ghost.\r\n\r\n### More reliable companion connection (Linux / native transport)\r\nThe native TCP transport now applies the same congestion control already used over Bluetooth. Instead of silently dropping data when the connection is briefly saturated (for example, an incoming message arriving during a large contact/channel import), it now back-pressures and retries, and important protocol responses are never dropped. A stalled peer that stops reading is cleanly dis\n…"
-  - version: v20260613.205222
-    name: Firmware v20260613.205222
-    datetime: '2026-06-13T20:52:38Z'
-    url: https://github.com/liquidraver/ZephCore/releases/tag/v20260613.205222
-    prerelease: false
-    notes: "DO NOT DOWNLOAD THIS RELEASE JUST TO UPDATE, YOU NEED A FLASH ERASE FOR IT TO WORK PROPERLY.\r\nI'LL RE-RELEASE IT SOON AS I CATCH THE BUG!\r\n(it seems devices with multiple bondings are affected only)\r\n\r\nSo if something is broken: delete bond, erase flash and try again.\r\n\r\n\r\n\r\n\r\n\r\n## What's New\r\n\r\n- **RX duty cycle (power saving) reworked** — now properly tested against the datasheet, gives ~40-55% radio-off time with no packet loss on up-to-date nodes. Toggle with `set rxduty on/off`. (Mixed old/new meshes: keep it off on infra nodes for now. Needs preamble 32 on adjacent nodes)\r\n- **Joystick UI now shows accented characters** (Hungarian/Slovak/Czech/Polish/etc. names display correctly), emojis are stripped instead of showing garbage. Unlock gesture changed to Left -> OK -> Right (easier/faster than the old Back-OK-Back).\r\n- `set rxduty` / `set radio.rxgain` now also accept `on` / `off`, not just `1`/`0`.\r\n\r\n## Fixes\r\n\r\n- WisMesh Tag battery percentage was reading high — calibration corrected.\r\n- RTC clock could get permanently stuck blank after battery loss — now recovers and re-syncs.\r\n- Clock source indicator (GPS/App/Local) and display now update correctly/immediately.\r\n- Auto-shutdown no longer triggers on a brief voltage dip during transmit (needs 3 low readings in a row now).\r\n- Fixed a race in MQTT \"online\" status reporting on repeaters/observers.\r\n- Several small crash/overflow hardening fixes from ongoing code audit (no user-visible behavior change)."
