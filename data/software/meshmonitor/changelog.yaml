@@ -1,7 +1,129 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-10-31T21:10:41.425Z'
+updatedAt: '2026-11-02T20:02:31.817Z'
 releases:
+  - version: v4.17.2-rc8
+    name: v4.17.2-rc8
+    datetime: '2026-11-02T18:16:00Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.2-rc8
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.17.2-rc8
+
+
+      > ⚠️ **Pre-release (release candidate).** For testing only — do not point a production
+      deployment at this build. Please report anything that looks off.
+
+
+      This eighth release candidate for 4.17.2 adds a few MeshCore and Reticulum conveniences on top
+      of the security and reliability work from the earlier RCs. MeshCore repeaters get a one-click
+      **discover.neighbors** button in Remote Admin (repeater-only, receive-only gated). The
+      Automation Engine can now **send and reply over Reticulum (LXMF)**, including replying to the
+      triggering message, with clear skips where a send doesn't apply. A **TX-safety regression is
+      fixed**: a receive-only radio no longer reads as transmit-enabled after a reconnect, so a LoRa
+      save can't silently re-enable TX. Proxy-signed-in users are now recognized on the very first
+      auth-status request. MeshCore no longer crashes on room posts arriving from serial or TCP
+      radios. Reticulum also gains an RNode interface-status panel, a position-free Connections
+      topology view, a Pin sidebar control, and the Unified map can now colour node markers by
+      source. Rounded out with the usual translation and dependency updates (including croner 11).
+
+
+      ## Features
+
+      - **MeshCore:** `discover.neighbors` quick-action button in Remote Admin for repeaters (#6146,
+      closes #3351)
+
+      - **Reticulum:** send and reply over Reticulum (LXMF) from the Automation Engine (#6145,
+      closes #6143)
+
+      - **Reticulum:** RNode interface status on the Info page + battery/Ch/Air in the header
+      (#6131, closes #6120)
+
+      - **Reticulum:** position-free Connections topology view on the Map page (#6130, closes #6119)
+
+      - **Reticulum:** Pin sidebar control in the main nav (#6126, closes #6118)
+
+      - **Map:** colour node markers by source on the Unified / Map Analysis map (#6129, closes
+      #6125)
+
+
+      ## Bug Fixes
+
+      - **meshtastic:** default `lora.txEnabled` to false when a device config omits it — fixes a
+      receive-only radio reading as TX-enabled and a LoRa save re-enabling TX (#6144, closes #6142)
+
+      - **auth:** recognize proxy-signed-in users on the first `/auth/status` request (#6031)
+
+      - **meshcore:** stop crashing on room posts delivered from serial and TCP radios (#6122)
+
+      - **messages:** unread DMs sort to top of the conversation dropdown, stable while open; fixes
+      iOS scroll jump (#6128, closes #6115, #6116)
+
+      - **meshcore:** channel auto-scroll to new messages + scroll expanded repeater list into view
+      (#6127, closes #6124)
+
+
+      ## Docs
+
+      - Blog post previewing the 4.17.2 security hardening and reliability fixes (#6117)
+
+
+      ## Dependencies
+
+      - croner 10 → 11 (#6141), react-i18next (#6139), lucide-react (#6138), maplibre-gl (#6137),
+      @tanstack/react-query (#6135) + devtools (#6140), rollup platform binaries (#6134, #6136),
+      @types/node (#6132), production-dependencies group — 8 updates (#6133)
+
+
+      ## Translations
+
+      - Hosted Weblate update (#6020)
+
+
+      ## Issues Resolved
+
+      #3351, #6143, #6142, #6125, #6124, #6120, #6119, #6118, #6116, #6115
+
+
+      ## Contributors
+
+      Thanks to external contributors this cycle: @enricolorenzoni59 (first contribution — #6122)
+      and @geirgp (#6031).
+
+
+      **Full changelog:** https://github.com/Yeraze/meshmonitor/compare/v4.17.2-rc7...v4.17.2-rc8
+
+
+      ## 🚀 MeshMonitor v4.17.2-rc8
+
+
+      ### 📦 Installation
+
+
+      **Docker (recommended):**
+
+      ```bash
+
+      docker run -d \
+        --name meshmonitor \
+        -p 8080:3001 \
+        -v meshmonitor-data:/data \
+        ghcr.io/Yeraze/meshmonitor:4.17.2-rc8
+      ```
+
+
+      ### 🧪 Testing
+
+      ✅ All tests passed
+
+      ✅ TypeScript checks passed
+
+      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
+
+
+      ### 📋 Changes
+
+      See commit history for detailed changes.
   - version: v4.17.2-rc7
     name: v4.17.2-rc7
     datetime: '2026-10-31T18:15:29Z'
@@ -2187,124 +2309,3 @@ releases:
       - mqtt: per-bridge skip raise, text in the
 
       …
-  - version: v4.17.0-rc9
-    name: v4.17.0-rc9
-    datetime: '2026-10-11T01:44:01Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.0-rc9
-    prerelease: true
-    notes: >-
-      # MeshMonitor v4.17.0-rc9
-
-
-      > [!WARNING]
-
-      > This is a **pre-release** for testing. It is not tagged `latest`. Use it on a test install
-      or with a recent backup.
-
-
-      ## Summary
-
-
-      This release candidate adds an **All Channels** view to Unified Messages, records every
-      MeshCore **TRACE** the radio hears with per-hop SNR history, and lets an automation **trace
-      MeshCore paths on a schedule**. **Avoid PKI** mode sends telemetry and neighbor requests
-      channel-encrypted instead of PKI-encrypted. Aircraft handling gains manual marks and an opt-in
-      position request. Map Analysis can add on-air waypoints, MQTT hop-raise has finer controls,
-      and several sources hearing one packet now raise one notification. Two migrations run on first
-      start (200, 201).
-
-
-      ## Features
-
-      - Unified Messages: **All Channels** view with a channel tag on each message; no DMs, pages
-      back through full history (#5736, builds on #5654)
-
-      - MeshCore: capture every TRACE the radio hears and keep per-hop SNR history, with a card
-      showing each link's trend (#5733)
-
-      - Automations: trace MeshCore paths on a schedule, each path on its own interval (#5735)
-
-      - PKI: **Avoid PKI** mode: telemetry, LocalStats and neighbor requests go channel-encrypted;
-      DMs are untouched (#5724)
-
-      - Aircraft: mark a node as aircraft or not aircraft by hand (#5725)
-
-      - Aircraft: ask a newly flagged aircraft for its position, opt-in (#5727)
-
-      - Map Analysis: add on-air waypoints, with a per-source picker (#5732)
-
-      - MQTT: per-bridge skip raise, text messages in the raise picker, subscription-scoped handling
-      (#5726)
-
-      - Notifications: one notification when several sources hear the same packet (#5731)
-
-
-      ## Bug Fixes
-
-      - MeshCore: own DMs and room posts show their real delivery state (#5730)
-
-      - Notifications: turning Emoji Reactions off also mutes protocol tapbacks and keycap emoji
-      (#5721)
-
-
-      ## Upgrade Notes
-
-      - **Migrations 200 and 201** run on first start: a manual aircraft mark on nodes, and the
-      `meshcore_hop_snr` table.
-
-      - **Scheduled traces transmit.** Limits: at least 10 minutes between traces of one path, at
-      most 12 traces per source per hour, at most 20 paths per action. The last-run times are
-      stored, so a restart or a save does not fire a burst.
-
-      - **Aircraft position requests are off.** When on, a newly flagged aircraft gets 3 requests
-      over 4 minutes, and at most 2 such sequences start per source per hour.
-
-      - **Avoid PKI is off** and has had no live radio check yet. Test it on a spare node before you
-      rely on it.
-
-      - **Trace history** is kept for 90 days and read with the source's Traceroute read permission.
-
-      - **Manual aircraft marks** need Nodes write on the source.
-
-      - **All Channels** follows the same permissions as a single channel: Messages read on a source
-      opens all of its channels; otherwise each channel needs its own read grant.
-
-
-      ## Thanks
-
-      Thanks to @Cryptoteep for the All Channels view (#5654).
-
-
-      **Full changelog:** https://github.com/Yeraze/meshmonitor/compare/v4.17.0-rc8...v4.17.0-rc9
-
-
-      ## 🚀 MeshMonitor v4.17.0-rc9
-
-
-      ### 📦 Installation
-
-
-      **Docker (recommended):**
-
-      ```bash
-
-      docker run -d \
-        --name meshmonitor \
-        -p 8080:3001 \
-        -v meshmonitor-data:/data \
-        ghcr.io/Yeraze/meshmonitor:4.17.0-rc9
-      ```
-
-
-      ### 🧪 Testing
-
-      ✅ All tests passed
-
-      ✅ TypeScript checks passed
-
-      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
-
-
-      ### 📋 Changes
-
-      See commit history for detailed changes.

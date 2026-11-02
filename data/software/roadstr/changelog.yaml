@@ -1,7 +1,27 @@
 source: github
 repo: jooray/roadstr
-updatedAt: '2026-11-01T16:38:24.039Z'
+updatedAt: '2026-11-02T20:02:38.767Z'
 releases:
+  - version: v0.5.2
+    name: Roadbeacon 0.5.2
+    datetime: '2026-11-02T09:22:55Z'
+    url: https://github.com/jooray/roadbeacon/releases/tag/v0.5.2
+    prerelease: false
+    notes: >-
+      MeshCore: road events now use their own data type, `0x0150` "Road Events", which MeshCore has
+      registered ([meshcore-dev/MeshCore#3750](https://github.com/meshcore-dev/MeshCore/pull/3750)).
+
+
+      Roadbeacon sends and accepts only `0x0150`. The development value `0xFF52` used by 0.5.1 and
+      the earlier test builds is no longer sent or accepted, so update every phone you test with:
+      Roadbeacon to 0.5.2, and Roadstr to the road-test build from
+      [localapi-test-3](https://github.com/jooray/meshcore-open/releases/tag/localapi-test-3).
+
+
+      The event format and frame bytes are unchanged.
+
+
+      Certificate SHA-256: `79750fb49349ec3729be5a3e825507a15e47c6d987e854ae91d5d50a20b3a24d`
   - version: v0.5.1
     name: Roadbeacon 0.5.1
     datetime: '2026-11-01T12:43:24Z'
