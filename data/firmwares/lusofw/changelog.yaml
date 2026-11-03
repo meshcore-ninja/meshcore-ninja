@@ -1,16 +1,7 @@
 source: github
 repo: Meshcore-Portugal/lusofw
-updatedAt: '2026-11-02T20:01:49.952Z'
+updatedAt: '2026-11-03T03:21:04.447Z'
 releases:
-  - version: v2026.9.3-rc1-32e4e0e
-    name: v2026.9.3-rc1-32e4e0e
-    datetime: '2026-11-02T19:43:04Z'
-    url: https://github.com/Meshcore-Portugal/lusofw/releases/tag/v2026.9.3-rc1-32e4e0e
-    prerelease: true
-    notes: |-
-      Automated dev prerelease of dev@32e4e0e for v2026.9.3-rc1.
-
-      No UNRELEASED changelog entries found.
   - version: v2026.9.2
     name: v2026.9.2
     datetime: '2026-09-26T13:22:46Z'
@@ -1103,3 +1094,9 @@ releases:
     url: https://github.com/Meshcore-Portugal/lusofw/releases/tag/v0.0.5
     prerelease: true
     notes: '**Full Changelog**: https://github.com/Meshcore-Portugal/lusofw/compare/v0.0.4...v0.0.5'
+  - version: v0.0.4
+    name: v0.0.4
+    datetime: '2026-02-23T12:30:49Z'
+    url: https://github.com/Meshcore-Portugal/lusofw/releases/tag/v0.0.4
+    prerelease: true
+    notes: '**Full Changelog**: https://github.com/Meshcore-Portugal/lusofw/compare/v0.0.3...v0.0.4'
