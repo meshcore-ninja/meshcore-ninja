@@ -1,7 +1,110 @@
 source: github
 repo: andymux/meshos-releases
-updatedAt: '2026-11-02T20:02:32.231Z'
+updatedAt: '2026-11-04T17:50:22.723Z'
 releases:
+  - version: fw-v1.7.10
+    name: MeshOS firmware v1.7.10
+    datetime: '2026-11-04T12:50:47Z'
+    url: https://github.com/andymux/meshos-releases/releases/tag/fw-v1.7.10
+    prerelease: false
+    notes: >-
+      MeshOS firmware v1.7.10
+
+
+      LilyGo T-Deck and ThinkNode M9
+
+
+      Spam Blocker
+
+      - The radio now reports the route of every message to the MeshOS app, including the long
+      messages that were left out before, so the app's Spam Blocker can block spam by the route it
+      travelled. Needs MeshOS app 1.0.34 or later; older apps simply ignore the extra report.
+
+
+      Install via SD card (firmware.bin) or the in-firmware updater.
+
+
+      SHA-256:
+
+      - TDeck: 81d09b11a126986055a810ad87f480dc2044344acce0c27714e479e7ae58daf3
+
+      - M9: 6d878daea8404d546d8ffb001b9cebe9d9e56a4a0b62354dee2080b8a7015184
+  - version: v1.0.34
+    name: MeshOS v1.0.34
+    datetime: '2026-11-04T12:43:44Z'
+    url: https://github.com/andymux/meshos-releases/releases/tag/v1.0.34
+    prerelease: false
+    notes: >-
+      # MeshOS 1.0.34
+
+
+      ## Spam Blocker
+
+      - New automatic Spam Blocker. Switch it on in Settings > Spam Blocker and the app fetches the
+      routes the Mesh status service sees the current spam coming in through, for your country,
+      every hour within minutes of each report. Those routes are blocked while the spam lasts and
+      removed again 12 hours after it stops. Routes you add yourself are never touched, and a
+      suggested route you remove stays off until that spam episode ends.
+
+      - The Spam Blocker page shows the report's spam map: the area the spam starts in and every
+      route out of it, red where blocked, green where not.
+
+      - With a MeshOS radio on firmware 2.3 (1.7.10 on the T-Deck and M9) the app now gets the route
+      of every message, including the long messages that were left out before, so most spam can be
+      blocked by the route it travelled. A red notice on the Spam Blocker page and under its
+      Settings entry says when the connected radio cannot report routes, with a link to the
+      configurator.
+
+      - Spam caught by a route rule is no longer passed on over AirLink by a phone that bridges.
+
+      - Spam arriving over AirLink is judged on its whole LoRa route when its first hop cannot be
+      told apart from an AirLink phone.
+
+      - A message no longer borrows another packet's route when its own route report is missing,
+      which could have hidden an innocent message.
+
+
+      ## Delivery reports
+
+      - Long-press one of your messages to see who heard it: MeshOS app users and MeshOS repeaters
+      as name pills, with the hop count beside each and the time on the right. Tap a name for its
+      route and signal.
+
+
+      ## Map
+
+      - MeshOS observers, the repeaters that report what they hear, are shown on the map in both the
+      AirLink and LoRa views, with a button to hide them and a legend entry. Tap one for its name,
+      firmware, position and when it was last heard.
+
+      - The map buttons sit centred on the left edge and show their label when pressed. The pause
+      button is gone, and the scan button only appears in the LoRa view with a radio connected.
+
+
+      ## Channels
+
+      - The Public channel has its Path Hash Size and Region Scope settings back in its menu and in
+      Channel info.
+
+      - Message Path now shows the right transport and hops for a message opened from the merged
+      Public channel. A LoRa message could be shown as if it had arrived over AirLink.
+
+      - Your radio's own spam control setting has moved under the MeshCore tab's Repeater heading
+      and is available when Act as repeater is on.
+
+
+      ## Downloads
+
+      - Android: MeshOS-v1.0.34.apk
+
+      - macOS: MeshOS-v1.0.34.dmg
+
+
+      SHA-256:
+
+      - MeshOS-v1.0.34.apk: 426d43cabfaba76a0119715e4160c6369449ee50aa7858b0fb023a3533dcf6ec
+
+      - MeshOS-v1.0.34.dmg: f50e2420d0b7b0cf34ed58954660e515c95c029819f264dd3a74f47bdc8019ce
   - version: v1.0.33
     name: MeshOS v1.0.33
     datetime: '2026-11-02T11:44:00Z'
@@ -930,66 +1033,3 @@ releases:
       SHA-256:
       - TDeck: 2e2c2e1be1012bfe0f8978c0a58968aa1304ce94eb9bce439857416b23a8ede1
       - M9: 3ca4aadde29f179bbd2e02598d9303e8bb2cc26487691be1f50be0bf2b74139e
-  - version: v1.0.21
-    name: MeshOS v1.0.21
-    datetime: '2026-09-17T22:15:57Z'
-    url: https://github.com/andymux/meshos-releases/releases/tag/v1.0.21
-    prerelease: false
-    notes: |-
-      # MeshOS app 1.0.21
-
-      - Message delivery reliability and bug fixes for internet enabled channels.
-  - version: v1.0.20
-    name: MeshOS v1.0.20
-    datetime: '2026-09-16T11:06:45Z'
-    url: https://github.com/andymux/meshos-releases/releases/tag/v1.0.20
-    prerelease: false
-    notes: >-
-      # MeshOS app 1.0.20
-
-
-      ## Messages
-
-      - Press and hold a message to select it. The top bar then offers Reply, Copy, Path and Delete,
-      with Delete kept clear of the other buttons.
-
-      - Replies show a quote block with the person's name in their colour and the message you
-      replied to. Replies from other apps show the same block, and a reply that tags several people
-      lists them all.
-
-      - Return on the on-screen keyboard now starts a new line. Send is always the send button.
-
-
-      ## Delivery reports for LoRa channels
-
-      - Your own message bubbles now show how many repeaters you heard repeating your message and
-      how many MeshOS app users received it over LoRa.
-
-      - Tap Path on one of your own messages for the full picture: the repeaters that carried it,
-      other repeaters the copies passed through, and who heard it with their route and signal
-      strength.
-
-      - Reports travel over the internet link on bridged channels, and on Public Chat whenever
-      internet messaging is on, without putting Public messages themselves online.
-
-
-      ## Chat list and map
-
-      - No notifications while you are looking at the chat list.
-
-      - The map reopens where you left it.
-
-      - Hashtag channels can be given a nickname from the channel menu.
-
-
-      ## AirLink
-
-      - AirLink improvements and bug fixes.
-
-
-      ## Reliability
-
-      - A more reliable connection to the internet messaging service.
-
-      - Fixes that improve reliability when using the radio with the MeshOS app, including battery
-      use after closing the map and leaving the scan screen.
