@@ -1,7 +1,113 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-11-02T20:02:31.817Z'
+updatedAt: '2026-11-04T00:28:11.302Z'
 releases:
+  - version: v4.17.2
+    name: v4.17.2
+    datetime: '2026-11-03T21:58:32Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.2
+    prerelease: false
+    notes: >-
+      # MeshMonitor v4.17.2
+
+
+      MeshMonitor 4.17.2 is a large reliability-and-security release that promotes the 4.17.2 RC
+      series (rc1–rc8) plus a handful of follow-ups. The headline is a full security-hardening pass
+      (findings C1–C9 and more): script-engine RCE holes closed, remote argv-injection via OTA node
+      names blocked, SSRF holes closed with admin-gated global settings, a nonce-based CSP that
+      drops `unsafe-inline`/`unsafe-eval`, channel-PSK and backup authorization tightened,
+      per-source authorization enforced on automation run-now, and stored-XSS escaped in map popups.
+      It adds first-class **Reticulum (LXMF)** support — automation send/reply, an RNode
+      interface-status panel, a position-free Connections topology view, a Pin sidebar control, and
+      persisted announce. MeshCore gains Rooms sort/custom-order, a `discover.neighbors` repeater
+      button, a ducting overlay, receipt-time message ordering, and a room-post crash fix.
+      Meshtastic gains a free-form remote-admin CLI console, `DeviceMetadata.ble_address`
+      decode/display, an `add_contact`-before-`set_favorite_node` fix for remote favorites, a
+      receive-only TX-safety fix, and first-request proxy auth. The map picks up live packet
+      traffic, per-source and per-role markers, and a unified Map tab, alongside a 13-PR performance
+      sweep (delta polls, socket coalescing, on-demand bundle loading, response compression).
+      Rounded out with dependency updates (including croner 11) and translations.
+
+
+      ## Security
+
+      - Close script-engine RCE holes — C1 (#6089)
+
+      - Prevent remote argv injection via OTA node names in script runner (#6090)
+
+      - Nonce-based CSP; drop `unsafe-inline`/`unsafe-eval` from `script-src` (#6092)
+
+      - Close SSRF holes and admin-gate global settings — C7 (#6098)
+
+      - Harden auth/session/DB surfaces — C9 (#6097)
+
+      - Enforce per-source authz on automation run-now — C8/AUTHZ-07 (#6095)
+
+      - Gate channel PSK exposure + channel-db ownership — C4 (#6093)
+
+      - Confine backup file paths and tighten backup authz — C3 (#6094)
+
+      - Gate per-source forwarding toggle on automation enable (#6096)
+
+      - Escape GeoJSON popup/tooltip HTML to kill stored XSS (#6065)
+
+      - Context-encode analytics values and admin-gate analytics settings (#6091)
+
+      - Validate API token before skipping CSRF (#6088)
+
+
+      ## Features
+
+      - **Reticulum:** send and reply over Reticulum (LXMF) from the Automation Engine (#6145)
+
+      - **Reticulum:** RNode interface status on the Info page + battery/Ch/Air header (#6131)
+
+      - **Reticulum:** position-free Connections topology view on the Map page (#6130)
+
+      - **Reticulum:** Pin sidebar control in the main nav (#6126)
+
+      - **Reticulum:** persisted LXMF display name, Announce now, periodic announce (#6013)
+
+      - **Virtual Node:** replay missed text messages when a client reconnects, so an Android app
+      that was backgrounded no longer shows a gap (#6171, closes #6160) — opt-in
+
+      - **Meshtastic:** free-form remote-admin CLI console (#6156)
+
+      - **Meshtastic:** decode and show `DeviceMetadata.ble_address` (#6158)
+
+      - **Meshtastic:** send `add_contact` before `set_favorite_node` so remote favorites stick
+      (#6155)
+
+      - **Meshtastic:** configurable default source (#6021)
+
+      - **MeshCore:** Rooms list sort dropdown + custom order, and click-to-deselect (#6152)
+
+      - **MeshCore:** `discover.neighbors` quick-action button for repeaters (#6146)
+
+      - **MeshCore:** ducting overlay on the per-source map (#5993)
+
+      - **MeshCore:** order DMs/channel messages by receipt time (#5994)
+
+      - **MeshCore:** purge non-favourite nodes from device config (#6110)
+
+      - **MeshCore:** clear Trace SNR history per contact (#5995)
+
+      - **MeshCore:** Auto Ping for Companion sources (#5962)
+
+      - **Map:** live packet traffic on the map (#5971)
+
+      - **Map:** colour node markers by source on the Unified map (#6129)
+
+      - **Map:** distinct markers and badges per node role (#6014)
+
+      - **Nav:** one Map tab across source types; MeshCore shows the map first on mobile (#5969)
+
+      - **Telemetry:** retry burst + cooldown for missed scheduled pulls (#6042); merge objective
+      telemetry across sources (#5966)
+
+      - **Automation:** airtime-cutoff
+
+      …
   - version: v4.17.2-rc8
     name: v4.17.2-rc8
     datetime: '2026-11-02T18:16:00Z'
@@ -2208,104 +2314,5 @@ releases:
 
       - **Rooms**: posts stored before this release keep their corrupted author key. They show the
       contact's name when it can be matched safely, and "Unkno
-
-      …
-  - version: v4.17.0
-    name: v4.17.0
-    datetime: '2026-10-13T00:20:08Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.0
-    prerelease: false
-    notes: >-
-      # MeshMonitor v4.17.0
-
-
-      ## Summary
-
-
-      v4.17.0 is the full release after nine release candidates: 64 features and 64 fixes since
-      v4.16.2. MeshMonitor now works out when several of your sources heard the same packet, and
-      uses that for "heard here" map edges, merged rows and an **All Channels** view in Unified
-      Messages, and one notification per packet. MeshCore gains **Trace SNR history** with full
-      charts, a **Mentions** notification, a server-side channel database, and Repeater sources that
-      fill Nodes, Packet Monitor and channel Messages. Scheduled automations can carry a start, an
-      end and a time zone, with a five-minute minimum interval. **Reliable PKI**, **Avoid PKI**,
-      "Proven receipt" and a Protection Level picker extend key handling. The **Docker image is
-      hardened**: every process runs as `node`, development packages no longer ship, and the image
-      is a third smaller. **Per-source permissions are now checked on every route**, and system
-      backup download is admin only. Migrations 183 to 202 run on first start.
-
-
-      Read more: [release post](https://meshmonitor.org/blog/2026-10-12-v4.17.0-release) · [security
-      post](https://meshmonitor.org/blog/2026-10-12-docker-image-hardening) ·
-      [CHANGELOG](https://github.com/Yeraze/meshmonitor/blob/main/CHANGELOG.md)
-
-
-      ## Upgrade Notes
-
-
-      - **Back up first.** Migrations 183 to 202 run on first start.
-
-      - **Docker.** The first start fixes the ownership of `/data` once. A root start with
-      `cap_drop: [ALL]` now fails: set `user: "1000:1000"` as well. With `user:`, serial devices
-      need `group_add`. `RUN_AS_ROOT=true` restores the old process users for troubleshooting.
-
-      - **Non-admin users may lose access.** A user needs the grant on the source a request acts on.
-      Grant it on that source under Users. For a public map with route lines, grant
-      `traceroute:read` to the anonymous account.
-
-      - **Backups** now hold channel keys and password hashes. Only an admin can download one.
-
-      - **Notifications.** A source you never saved settings for notifies for direct messages only,
-      with Apprise off until you add URLs. New-node and traceroute alerts default to off.
-
-      - **Automations.** A scheduled rule faster than every 5 minutes keeps running but must be
-      slowed before it can be saved again (scheduled MeshCore path traces are exempt). A send whose
-      text renders empty is skipped.
-
-      - **Auto-Acknowledge** on a channel answers 5 to 30 seconds late, and not at all once two
-      other nodes have answered.
-
-      - **API clients.** An unknown `sourceId` returns 404; differing `sourceId` values in query and
-      body return 400. `fromNodeNum` in every traceroute response is the requester. A non-admin
-      WebSocket client must join a source.
-
-      - **Number fields.** Blank no longer means 0; type 0 where 0 means off.
-
-      - **MeshCore repeater capture** (Packet Monitor, adverts, Trace SNR) needs a firmware build
-      with `MESH_PACKET_LOGGING`.
-
-      - Scheduled traces, aircraft position requests and Reliable PKI transmit, and all are off
-      until you turn them on.
-
-
-      ## Features
-
-      - meshcore: full-size Trace SNR charts per link direction (#5767)
-
-      - messages: show the mesh protocol on message borders (#5768)
-
-      - meshcore: store TRACE hop SNRs heard by Repeater sources (#5766)
-
-      - automation: timed events: start, end and time zone on scheduled automations (#5743)
-
-      - metrics: export each node's last position time (#5699)
-
-      - meshcore: Mentions notification when a message names the source's own node (#5741)
-
-      - unified: All Channels view on Unified Messages, with channel tags (#5736)
-
-      - automation: trace MeshCore paths on a schedule, each path on its own interval (#5735)
-
-      - meshcore: capture every TRACE the radio hears and keep per-hop SNR history (#5733)
-
-      - map-analysis: add on-air waypoints from Map Analysis, with a per-source picker (#5732)
-
-      - notifications: one notification when several sources hear the same packet (#5731)
-
-      - pki: Avoid PKI mode — channel-encrypted data requests, DMs untouched (#5724)
-
-      - aircraft: mark a node as not aircraft / aircraft by hand (#5725)
-
-      - mqtt: per-bridge skip raise, text in the
 
       …

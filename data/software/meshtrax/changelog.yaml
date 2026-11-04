@@ -1,7 +1,65 @@
 source: github
 repo: venamartin/meshtrax
-updatedAt: '2026-10-28T08:01:24.506Z'
+updatedAt: '2026-11-04T00:28:12.758Z'
 releases:
+  - version: v1.9.5
+    name: Release v1.9.5
+    datetime: '2026-11-03T20:16:19Z'
+    url: https://github.com/venamartin/meshtrax/releases/tag/v1.9.5
+    prerelease: false
+    notes: >-
+      ## What's Changed
+
+      * Bug report and feature request forms; Report a bug in Settings by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/217
+
+      * docs: what's new in v1.8.1 by @venamartin in https://github.com/venamartin/meshtrax/pull/216
+
+      * fix: sends no longer stuck on the clock; color emoji on Linux; 1.8.2+144 by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/218
+
+      * fix: missed messages stay unread with a divider; chat follow past 200 rows; 1.8.3+145 by
+      @venamartin in https://github.com/venamartin/meshtrax/pull/219
+
+      * fix(pathfinder): failed sends fade instead of shutting a link out for good; 1.8.4+146 by
+      @venamartin in https://github.com/venamartin/meshtrax/pull/220
+
+      * fix(map): guessed locations land between their anchors; contact data stays current;
+      1.8.7+149 by @venamartin in https://github.com/venamartin/meshtrax/pull/222
+
+      * feat: health check in Settings by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/221
+
+      * docs: plain pages in docs/, detail moved to docs/technical/ by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/223
+
+      * fix(l10n): Pathfinder help no longer says the radio floods by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/224
+
+      * docs(pathfinder): how receipts find their way back by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/225
+
+      * fix: reply quote tap, contact sync and held messages; 1.8.10+152 by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/226
+
+      * feat: a base map down to towns; online map tiles removed; 1.9.0+153 by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/227
+
+      * feat: drawings in messages, over a map too; room posts hold 150 bytes; 1.9.2+155 by
+      @venamartin in https://github.com/venamartin/meshtrax/pull/228
+
+      * fix: contact cards, DM repeats and resends, Select text, notification taps, dates follow the
+      system by @venamartin in https://github.com/venamartin/meshtrax/pull/229
+
+      * test(maps): the tile cache test passes on Windows by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/230
+
+      * chore: bump version to 1.9.5+159 for release by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/231
+
+
+
+      **Full Changelog**: https://github.com/venamartin/meshtrax/compare/v1.8.1...v1.9.5
   - version: v1.8.1
     name: Release v1.8.1
     datetime: '2026-10-28T04:04:23Z'

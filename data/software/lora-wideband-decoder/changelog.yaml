@@ -1,4 +1,10 @@
 source: github
 repo: persistentcache/Lora-Wideband-Decoder
-updatedAt: '2026-07-05T17:14:32.789Z'
-releases: []
+updatedAt: '2026-11-04T00:27:56.938Z'
+releases:
+  - version: v3.0.0
+    name: v3.0.0
+    datetime: '2026-11-03T21:59:08Z'
+    url: https://github.com/persistentcache/Lora-Wideband-Decoder/releases/tag/v3.0.0
+    prerelease: false
+    notes: "### **Version 3.0 is faster, catches more, and does it with far less machine.** \r\n\r\n- **Uses 70% less processing time and 60% less memory compared to previous versions.**\r\n- Improved UI for both desktop and mobile devices.\r\n- Installer can now register a systemd service that brings the web UI and the configured SDR up on boot with the saved settings, retrying until the radio is healthy, so a headless receiver with auto-save on records sessions unattended from the moment it has power. \r\n\r\n<hr>\r\n\r\n\r\nNerdy details (v2 vs v3 improvements):\r\n\r\n- Decode wall time per recording fell from a median of 1.37s to 1.13s and the worst case from 33.9s to 13.7s (40% cut in total processing) while recovering 94.5% of tested packets (~1% increase over v2.0). \r\n- This improvement alone will be the most notable on low-core machines and SBCs.\r\n- On 80 noise-and-drift impairment captures, it recovers 79/80 targets vs 78/80, with 15 % speed improvement.\r\n- In a live comparison test, v2.0 decoded 10/13 messages (losing three SF12/62.5 kHz frames) while v3.0 decoded 13/13, every one faster, with RF-to-decode latency of 1.6-3.7s against 3.6-13.5 s. \r\n- Behind that, the new gate pipeline ran 114 decode jobs totaling 307s where v2.0 ran 219 jobs totaling 1048s, used 1651s of CPU instead of 2593s, peaked at 9.9 GiB of RAM instead of 25.7 GiB, kept the decode queue at a maximum of 5 instead of 58, and logged zero worker errors, crop-queue stalls or slow gaps where 2.0 logged up to 51.\r\n- On a Raspberry Pi (4 core system) the difference is starkest: v2.0 missed 2/4 test recordings outright and took up to 128s to publish an SF12/250 kHz message, while 3.0 published every message in 13-47 s with zero sample loss, because frame-exact capture with header checkpoints now scales its memory budget to the host instead of assuming a workstation. Every gate decision is written to a JSON-lines ledger so a missed transmission can be explained after the fact."
