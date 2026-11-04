@@ -1,7 +1,41 @@
 source: github
 repo: persistentcache/Lora-Wideband-Decoder
-updatedAt: '2026-11-04T00:27:56.938Z'
+updatedAt: '2026-11-04T08:45:47.886Z'
 releases:
+  - version: v3.1.0
+    name: v3.1.0
+    datetime: '2026-11-04T03:08:44Z'
+    url: https://github.com/persistentcache/Lora-Wideband-Decoder/releases/tag/v3.1.0
+    prerelease: false
+    notes: >-
+      ### **Version 3.1 decodes every frame once.**
+
+
+      - **Roughly half the decode time and 30% less peak memory than 3.0, with the same packets
+      recovered.**
+
+      - The decode pool no longer decodes a frame it has already published: duplicate crops of one
+      transmission, and full-length crops of a frame whose early crop already failed every retry,
+      are skipped instead of each taking a worker.
+
+      - No changes to the gate, the decoder or the UI, so results are identical to 3.0 on every
+      stored recording.
+
+
+      <hr>
+
+
+      Nerdy details (v3.0 vs v3.1):
+
+
+      - Same-evening live comparison, same radios: both decoded 13/13; v3.1 ran 64 decode jobs
+      totaling 120s vs 102 jobs and 279s, peaking at 7.6 GiB of RAM instead of 10.9 GiB.
+
+      - Stored recordings replayed: identical packets, 33 jobs and 266s vs 50 jobs and 421s.
+      Identical packets and zero sample loss on the 4-core Pi-class emulation.
+
+      - Six decode-pool rules, each from a measured pattern, including one parser fix that also
+      removed stray re-decodes present in 3.0.
   - version: v3.0.0
     name: v3.0.0
     datetime: '2026-11-03T21:59:08Z'
