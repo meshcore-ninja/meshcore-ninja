@@ -1,7 +1,89 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-11-04T23:22:04.281Z'
+updatedAt: '2026-11-05T21:49:38.618Z'
 releases:
+  - version: v4.17.3-rc2
+    name: v4.17.3-rc2
+    datetime: '2026-11-05T18:30:57Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.3-rc2
+    prerelease: true
+    notes: >-
+      ## MeshMonitor v4.17.3-rc2
+
+
+      > ⚠️ **Pre-release (Release Candidate 2).** For testing ahead of the 4.17.3 release. Docker
+      images are tagged `4.17.3-rc2` only — `:latest` is unchanged.
+
+
+      Second release candidate for 4.17.3. Adds MeshCore Public Key sort on node and DM lists,
+      resolves the MeshCore Packet Decode relay chain per hop (shared with Message Route), fixes
+      Virtual Node hop reporting and Reticulum interface pruning, retires the reachable prod
+      high-severity dependency advisories, and refreshes translations and the user-script gallery.
+      Seven PRs since v4.17.3-rc1.
+
+
+      ## Features
+
+      - **MeshCore:** resolve the Packet Decode relay chain per hop, shared with Message Route
+      (#6190)
+
+      - **MeshCore:** add Public Key sort to the node and DM lists (#6185)
+
+
+      ## Bug Fixes
+
+      - **Virtual Node:** pass `hopStart` and `viaMqtt` through the message replay, so the app shows
+      the real hop count and MQTT origin (#6189)
+
+      - **Reticulum:** prune interfaces absent from the latest stats snapshot, so disabled
+      interfaces drop from the list and count (#6121)
+
+
+      ## Security / Dependencies
+
+      - **deps:** `npm audit fix` — retire the reachable prod high-severity advisories (ws,
+      body-parser, socket.io-parser, ip-address); lockfile-only, no major bumps (#6198)
+
+
+      ## Other
+
+      - Translations update from Hosted Weblate (#6173)
+
+      - **Gallery:** add the Orbit and Launch Alert user script (#6199)
+
+
+      **Full changelog:** https://github.com/Yeraze/meshmonitor/compare/v4.17.3-rc1...v4.17.3-rc2
+
+      ## 🚀 MeshMonitor v4.17.3-rc2
+
+
+      ### 📦 Installation
+
+
+      **Docker (recommended):**
+
+      ```bash
+
+      docker run -d \
+        --name meshmonitor \
+        -p 8080:3001 \
+        -v meshmonitor-data:/data \
+        ghcr.io/Yeraze/meshmonitor:4.17.3-rc2
+      ```
+
+
+      ### 🧪 Testing
+
+      ✅ All tests passed
+
+      ✅ TypeScript checks passed
+
+      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
+
+
+      ### 📋 Changes
+
+      See commit history for detailed changes.
   - version: v4.17.3-rc1
     name: v4.17.3-rc1
     datetime: '2026-11-04T19:00:48Z'
@@ -2158,136 +2240,6 @@ releases:
         -p 8080:3001 \
         -v meshmonitor-data:/data \
         ghcr.io/Yeraze/meshmonitor:4.17.1-rc3
-      ```
-
-
-      ### 🧪 Testing
-
-      ✅ All tests passed
-
-      ✅ TypeScript checks passed
-
-      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
-
-
-      ### 📋 Changes
-
-      See commit history for detailed changes.
-  - version: v4.17.1-rc2
-    name: v4.17.1-rc2
-    datetime: '2026-10-14T18:52:35Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.1-rc2
-    prerelease: true
-    notes: >-
-      # MeshMonitor v4.17.1-rc2
-
-
-      > [!WARNING]
-
-      > This is a **pre-release** for testing. It is not tagged `latest`. Use it on a test system
-      first.
-
-
-      ## Summary
-
-
-      This release candidate is mostly about MQTT. Two bridges attached to one embedded broker no
-      longer relay each other's upstream traffic. Before, upstream A's packets were published to
-      upstream B, and two upstreams that already shared traffic could pass a packet back and forth
-      without end. A new per-bridge option, **Relay traffic from other bridges** (off by default),
-      keeps that relaying for anyone who wants it. A bridge also no longer sends its own downlinked
-      packet back upstream. The broker's **Raise hop count for backhaul** now works on encrypted
-      uplinks from a phone's MQTT client proxy, so a "raise text messages" policy finally matches a
-      phone's text. **Don't uplink MeshMonitor automation traffic** now also covers a node linked
-      straight to a bridge. A new [MQTT Setup Guide](https://meshmonitor.org/features/mqtt-setups)
-      walks through the common broker and bridge layouts, and the MQTT settings pages link to it.
-      MeshCore remote admin now remembers admin logins, so the console can resume a session with
-      nothing sent over the air, and scheduled clock syncs drop from 4 packets to 2. Auto
-      Acknowledge channel replies now come first from MeshMonitor instances nearer the sender.
-
-
-      ## Features
-
-
-      - **MeshCore: remember and resume remote-admin sessions** (#5798, closes #5785). Admin logins
-      are stored per source and survive a restart. The console offers **Resume session** and **Log
-      out**, and scheduled jobs reuse the session, with one fresh login and one retry if the
-      repeater has dropped it.
-
-      - **Auto Acknowledge: nearer nodes answer a channel message first** (#5789, closes #5788)
-
-
-      ## Bug Fixes
-
-
-      - **MQTT: bridges stop relaying each other's upstream; close the echo race** (#5799, refs
-      #5013)
-
-      - **MQTT: raise encrypted uplinks by their real portnum** (#5795, closes #5791)
-
-      - **MQTT: drop automation uplinks on the client-proxy path too** (#5787, refs #5414)
-
-      - **Docker: the BLE bridge health check follows the BLE link, not the TCP port** (#5802). It
-      works with the bridge's new `HEALTH_FILE` (meshtastic-ble-bridge#20) in the Docker
-      Configurator and `docker-compose.ble.yml`.
-
-
-      ## Documentation
-
-
-      - **MQTT Setup Guide**, linked from the app (#5800, refs #5013)
-
-
-      ## CI/DevOps
-
-
-      - Version bump to 4.17.1-rc2 (#5801)
-
-
-      ## Issues Resolved
-
-
-      - #5785 MeshCore: Resume Admin Session
-
-      - #5788 Hop-weighted bias on Auto-Ack channel-reply delay
-
-      - #5791 Raise hop limit for text messages does not work on MQTT source
-
-
-      ## Upgrade Notes
-
-
-      - **Several bridges on one broker:** if you relied on one upstream being relayed into another
-      through MeshMonitor, tick **Relay traffic from other bridges** on the bridge that should carry
-      it. Everything that starts locally is uplinked as before.
-
-      - **BLE bridge users:** pull the latest `meshtastic-ble-bridge` image and add
-      `HEALTH_FILE=/tmp/ble-bridge.health` plus the new health check (or regenerate your compose
-      file with the [Docker Configurator](https://meshmonitor.org/configurator)). MeshMonitor now
-      depends on the bridge with `service_started`, so it starts even while the node is out of
-      range.
-
-      - **Migration 204** adds the `meshcore_admin_sessions` table on SQLite, PostgreSQL and MySQL.
-
-
-      **Full changelog:** https://github.com/Yeraze/meshmonitor/compare/v4.17.1-rc1...v4.17.1-rc2
-
-
-      ## 🚀 MeshMonitor v4.17.1-rc2
-
-
-      ### 📦 Installation
-
-
-      **Docker (recommended):**
-
-      ```bash
-
-      docker run -d \
-        --name meshmonitor \
-        -p 8080:3001 \
-        -v meshmonitor-data:/data \
-        ghcr.io/Yeraze/meshmonitor:4.17.1-rc2
       ```
 
 
