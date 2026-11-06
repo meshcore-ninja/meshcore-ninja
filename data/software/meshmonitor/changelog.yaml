@@ -1,7 +1,98 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-11-05T21:49:38.618Z'
+updatedAt: '2026-11-06T23:59:43.855Z'
 releases:
+  - version: v4.17.3-rc3
+    name: v4.17.3-rc3
+    datetime: '2026-11-06T20:51:56Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.3-rc3
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.17.3-rc3
+
+
+      > ⚠️ **Pre-release (release candidate).** For testing; not tagged `latest`.
+
+
+      Third release candidate for 4.17.3. Builds on rc2 with MeshCore heard-by/relay-confirmation
+      work, a new encrypted device-key store, several UI parity fixes, and an automation safety fix.
+
+
+      ## Features
+
+      - **MeshCore: colour map nodes by gateway** for MQTT sources (#6205, #6175)
+
+      - **MeshCore: Required Repeaters list** with ANY/ALL mode + shared heard-by bubble (#6206,
+      #6193)
+
+      - **MeshCore: heard repeaters for sent DMs** (#6209, #6194)
+
+      - **MeshCore: store device private key encrypted** + server-side DM decrypt, Phase 1 (#6218,
+      #6195)
+
+      - **MeshCore: inline Script Management panel** in the Auto Responder (#6227, #6223)
+
+      - **UI: relative-time tooltip** on message timestamp hover (#6215, #6214)
+
+
+      ## Bug Fixes
+
+      - **Automation: cut Meshtastic sends to 200 bytes** so long relayed/script bodies actually
+      deliver (#6203, #6202)
+
+      - **MeshCore: preserve channel relay confirmations** across stale updates, incl. the DM-view
+      follow-up (#6212, #6225)
+
+      - **MeshCore: record heard hop count** for repeater-ingested adverts; stop drawing far
+      repeaters as direct (#6221, #6220)
+
+      - **UI: landscape section-nav rail** for every SectionNav page, not just Device Config (#6216,
+      #6211)
+
+      - **UI: sentence auto-capitalization** in chat inputs (#6217)
+
+      - **Apprise:** allow up to 30 s for a notification to send (#6207)
+
+
+      ## Docs
+
+      - README & website screenshots refreshed from the live demo (#6208)
+
+      - Automation: Meshtastic ↔ Reticulum DM relay recipe (#6204)
+
+
+      **Full changelog:** https://github.com/Yeraze/meshmonitor/compare/v4.17.3-rc2...v4.17.3-rc3
+
+      ## 🚀 MeshMonitor v4.17.3-rc3
+
+
+      ### 📦 Installation
+
+
+      **Docker (recommended):**
+
+      ```bash
+
+      docker run -d \
+        --name meshmonitor \
+        -p 8080:3001 \
+        -v meshmonitor-data:/data \
+        ghcr.io/Yeraze/meshmonitor:4.17.3-rc3
+      ```
+
+
+      ### 🧪 Testing
+
+      ✅ All tests passed
+
+      ✅ TypeScript checks passed
+
+      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
+
+
+      ### 📋 Changes
+
+      See commit history for detailed changes.
   - version: v4.17.3-rc2
     name: v4.17.3-rc2
     datetime: '2026-11-05T18:30:57Z'
@@ -2171,87 +2262,3 @@ releases:
         -v meshmonitor-data:/data \
         ghc
       …
-  - version: v4.17.1-rc3
-    name: v4.17.1-rc3
-    datetime: '2026-10-15T03:04:14Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.1-rc3
-    prerelease: true
-    notes: >-
-      # MeshMonitor v4.17.1-rc3
-
-
-      > [!WARNING]
-
-      > This is a **pre-release** for testing. It is not tagged `latest`. Use it on a test system
-      first.
-
-
-      ## Summary
-
-
-      rc3 replaces rc2, whose Docker build ran past its 40-minute limit three times and never
-      published images. It carries all of rc2 (see the [rc2
-      notes](https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.1-rc2)) plus two changes. The
-      Packet Monitor and packet counters now spot firmware 2.8 NodeDB replays by their packet id, so
-      the burst of fake "LoRa" rows on each reconnect is gone again, even for nodes heard a minute
-      ago. The Docker release build now has 70 minutes to finish.
-
-
-      ## Bug Fixes
-
-
-      - **Packet Monitor: recognise firmware 2.8 NodeDB replays by packet id** (#5803, refs #5426).
-      Firmware 2.8.0+ stamps a replay with the node's last-heard time, so an age check let it
-      through. MeshMonitor now recomputes the firmware's replay id from the sender and `rx_time`,
-      and also drops RF rows that carry neither RSSI nor a usable `rx_time`.
-
-
-      ## CI/DevOps
-
-
-      - **Docker: raise the amd64/arm64 release build timeout to 70 minutes** (#5804)
-
-      - Version bump to 4.17.1-rc3 (#5806)
-
-
-      ## Upgrade Notes
-
-
-      - Everything in the [rc2 upgrade
-      notes](https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.1-rc2) applies, including
-      migration 204 and the BLE bridge health check.
-
-
-      **Full changelog:** https://github.com/Yeraze/meshmonitor/compare/v4.17.1-rc2...v4.17.1-rc3
-
-
-      ## 🚀 MeshMonitor v4.17.1-rc3
-
-
-      ### 📦 Installation
-
-
-      **Docker (recommended):**
-
-      ```bash
-
-      docker run -d \
-        --name meshmonitor \
-        -p 8080:3001 \
-        -v meshmonitor-data:/data \
-        ghcr.io/Yeraze/meshmonitor:4.17.1-rc3
-      ```
-
-
-      ### 🧪 Testing
-
-      ✅ All tests passed
-
-      ✅ TypeScript checks passed
-
-      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
-
-
-      ### 📋 Changes
-
-      See commit history for detailed changes.

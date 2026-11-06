@@ -1,7 +1,82 @@
 source: github
 repo: venamartin/meshtrax
-updatedAt: '2026-11-04T00:28:12.758Z'
+updatedAt: '2026-11-06T23:59:45.059Z'
 releases:
+  - version: v1.10.0
+    name: Release v1.10.0
+    datetime: '2026-11-06T23:37:04Z'
+    url: https://github.com/venamartin/meshtrax/releases/tag/v1.10.0
+    prerelease: false
+    notes: >-
+      ## What's Changed
+
+      * docs: what's new in v1.9.5 by @venamartin in https://github.com/venamartin/meshtrax/pull/232
+
+      * fix(maps): Windows map downloads land in the maps folder by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/234
+
+      * chore: bump version to 1.9.8+162 for release by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/235
+
+      * docs: what's new in v1.9.8 by @venamartin in https://github.com/venamartin/meshtrax/pull/236
+
+      * perf(pathfinder): one route search per contact in the stored-route check, a frame between
+      contacts by @venamartin in https://github.com/venamartin/meshtrax/pull/237
+
+      * chore(maps): map renderer 2.11, checked against every style layer by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/239
+
+      * feat(maps): layer sheet pictures that show what each layer is by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/241
+
+      * fix: channel datagrams no longer stall the message download; Off-Grid Repeat uses an allowed
+      frequency by @venamartin in https://github.com/venamartin/meshtrax/pull/243
+
+      * chore(macos): sign for the Mac App Store by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/233
+
+      * chore(apple): set the encryption flag so builds skip the compliance questions by @venamartin
+      in https://github.com/venamartin/meshtrax/pull/244
+
+      * docs(privacy): add macOS (Mac App Store) by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/246
+
+      * fix(chat): channel chats order by the time they show by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/247
+
+      * Offline routing and points of interest (Linux, Android, iOS) by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/210
+
+      * chore: version 1.10.0+170 by @venamartin in https://github.com/venamartin/meshtrax/pull/248
+
+      * fix(routing): deleting a region waits behind a routing install by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/249
+
+      * fix(places): an address not in the data offers its street by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/250
+
+      * fix(macos): the sandbox allows USB serial ports and the Open and Save dialogs by @venamartin
+      in https://github.com/venamartin/meshtrax/pull/251
+
+      * docs(privacy): the macOS table follows the sandbox from #251 by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/253
+
+      * chore: version 1.10.0+171 by @venamartin in https://github.com/venamartin/meshtrax/pull/252
+
+      * fix(places): the street fallback waits for a close match by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/254
+
+      * fix(windows): GPX export saves to a file instead of freezing the app by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/255
+
+      * chore: version 1.10.0+172 by @venamartin in https://github.com/venamartin/meshtrax/pull/256
+
+      * ci: drop the Android build; APKs are built locally by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/257
+
+
+
+      **Full Changelog**: https://github.com/venamartin/meshtrax/compare/v1.9.5...v1.10.0
   - version: v1.9.5
     name: Release v1.9.5
     datetime: '2026-11-03T20:16:19Z'
