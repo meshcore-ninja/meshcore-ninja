@@ -1,7 +1,56 @@
 source: github
 repo: andymux/meshos-releases
-updatedAt: '2026-11-04T17:50:22.723Z'
+updatedAt: '2026-11-06T19:02:13.827Z'
 releases:
+  - version: v1.0.35
+    name: MeshOS v1.0.35
+    datetime: '2026-11-06T12:34:47Z'
+    url: https://github.com/andymux/meshos-releases/releases/tag/v1.0.35
+    prerelease: false
+    notes: >-
+      # MeshOS 1.0.35
+
+
+      ## Spam Blocker
+
+      - Known spam is now hidden by its text as well as its route, so it stays hidden whichever way
+      it reaches you. The list refreshes every 10 minutes.
+
+      - Your phone also spots new spam for itself: the same message arriving under several different
+      one-off names is hidden before the list has it. A greeting shared by people who also chat
+      stays visible.
+
+      - A new Hidden by text section on the Spam Blocker page shows what was hidden this way. Tap
+      Allow on anything that is not spam and it shows again.
+
+      - Suggested routes you remove are easy to get back. Update tells you how many are off, Re-add
+      puts them all back at once, the new Removed by you list lets you pick them one at a time, and
+      removing a route now offers Undo.
+
+
+      ## AirLink
+
+      - Android phones no longer stop linking to new AirLink peers once they have several links.
+
+
+      ## Display
+
+      - On phones with on-screen back, home and recent buttons, pages no longer run underneath them,
+      so the last row of a list can always be read and tapped.
+
+
+      ## Downloads
+
+      - Android: MeshOS-v1.0.35.apk
+
+      - macOS: MeshOS-v1.0.35.dmg
+
+
+      SHA-256:
+
+      - MeshOS-v1.0.35.apk: 50264287e2ccd4e02cc6615879f4b54eb2392d9b1eb56329f001a65360f8422e
+
+      - MeshOS-v1.0.35.dmg: 3a7787951c2a09238db40aa9a3d56da2b56ea7c10697aa8e85cbc3226e65277f
   - version: fw-v1.7.10
     name: MeshOS firmware v1.7.10
     datetime: '2026-11-04T12:50:47Z'
@@ -992,44 +1041,3 @@ releases:
       SHA-256:
       - TDeck: c456640ba0b5477a441e6dd613dc2330b66efb87cf1b117e407a944d6ccee1b3
       - M9: a1fdbf984d474fe242af4c155214a1ee7375af69cba53498ae5f2c3cde0a5ed8
-  - version: fw-v1.7.4
-    name: MeshOS firmware v1.7.4
-    datetime: '2026-09-19T11:43:30Z'
-    url: https://github.com/andymux/meshos-releases/releases/tag/fw-v1.7.4
-    prerelease: false
-    notes: |-
-      MeshOS firmware v1.7.4
-
-      Storage
-      - New Tools > Storage screen: SD card type, size and free space, plus a malware scan
-        for the Windows autorun worm found on some factory-loaded ThinkNode M9 map cards
-        (it cannot run on the radio, only on a Windows PC). The clean-up removes only the
-        files the scan flags, after a confirmation, so map tiles and MeshOS data stay put.
-        Elecrow's explanation of the affected cards:
-        https://www.elecrow.com/Thinknode-M9-Security-Advisory-SD-Card-Malware-Risk.html
-      - Format SD card writes a fresh FAT32 file system. This erases everything on the
-        card, including maps.
-
-      Messages
-      - A long channel message no longer restarts the radio; the composer stops at the
-        160-byte LoRa limit.
-      - Room servers: posts are no longer duplicated when the radio logs in again, and
-        sync resumes from the last message.
-
-      M9 battery
-      - Correct percentage for the M9 cell, with steady readings while charging and
-        after unplugging.
-
-      Also
-      - The Contacts badge counts only current contacts, accented letters in names are
-        shown, and the clock is set from the internet when WiFi is connected.
-      - SD card writes tolerate slow cards better: the radio now waits out a card that
-        stalls during a write instead of giving up, and a card the driver lost is remounted
-        on its own.
-
-      Device firmware for LilyGo T-Deck and ThinkNode M9.
-      Install via SD card (firmware.bin) or the in-firmware updater.
-
-      SHA-256:
-      - TDeck: 2e2c2e1be1012bfe0f8978c0a58968aa1304ce94eb9bce439857416b23a8ede1
-      - M9: 3ca4aadde29f179bbd2e02598d9303e8bb2cc26487691be1f50be0bf2b74139e
