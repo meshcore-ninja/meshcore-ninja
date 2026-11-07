@@ -1,7 +1,13 @@
 source: github
 repo: PhilMo6/meshpunk
-updatedAt: '2026-09-19T17:03:13.139Z'
+updatedAt: '2026-11-07T23:29:48.597Z'
 releases:
+  - version: v0.5.0
+    name: v0.5.0 Wio Tracker L2
+    datetime: '2026-11-07T22:45:21Z'
+    url: https://github.com/PhilMo6/meshpunk/releases/tag/v0.5.0
+    prerelease: false
+    notes: "## MeshPunk v0.5.0\r\n\r\nFirst stable release for the Seeed Wio Tracker L2, a firmware update channel, and a shared file picker across the apps.\r\n\r\n### Devices\r\n- **Wio Tracker L2** joins the T-Deck and Heltec V4: display and touch, GPS, SD card, the ES8311 audio codec, standby/off/wake on the WAKE button, and USB host mode that powers the accessory from the device's own USB-C port (keyboard, gamepad, drive or audio adapter without external power).\r\n- **Launcher images** (bmorcelli Launcher) for the T-Deck and now the Wio Tracker L2. Files are named per board: `meshpunk-tdeck-v0.5.0-launcher.bin` and `meshpunk-wio_l2-v0.5.0-launcher.bin`. The old `meshpunk-v0.5.0-launcher.bin` is included once more while the LauncherHub entry switches names.\r\n- **Portrait orientation**: Settings > Device > Orientation turns the display a quarter turn at a time; the UI and the bundled apps follow.\r\n- The guide and app help pages describe your device: USB power, buttons and audio differ per board and the pages say so.\r\n\r\n### Firmware updates\r\n- Settings > Firmware has a **release channel**: stable (default) or dev. The page checks the chosen channel over WiFi and offers the update, a reinstall, or the way back from a dev build to stable.\r\n\r\n### New\r\n- **Flasher** (Tools): flash ESP32 firmware onto another device over a USB cable with no PC: MeshPunk, MeshCore, Meshtastic or any image, with partition backup and restore.\r\n- **File picker**: one shared file and folder browser for every app that opens files.\r\n- **Themes from the App Library**: Settings > Theme > Get downloads more themes. PNG wallpapers scale to the screen.\r\n- WiFi: password prompt when connecting to a network.\r\n\r\n### Fixes and changes\r\n- Apps installed on the SD card load their own helper files (the Web browser and IRC need this).\r\n- Downloads with chunked transfer encoding work (the PICO-8 BBS browser needs this).\r\n- Messenger: reply fix; messages show day-based time tags.\r\n- Map: memory fix.\r\n- MeshCore protocol package and BLE companion updated.\r\n- USB: the `espserial` driver replaces the old `tdeck` driver for the T-Deck peer link and the Flasher; install it from the App Library.\r\n- Settings clean-ups and small fixes (Sound, Device, Power), plus a memory fix.\r\n\r\n### App Library\r\nUpdates that showed \"Needs FW\" on v0.4.3 install now: the emulator launchers with the file picker (Doom, NES, SNES, Game Boy, Genesis, Sega 8-bit, Neo Geo Pocket, DOS, Jet 3D), PICO-8 with the BBS browser, Web browser, IRC, Code Editor and Map. New in the library since the last stable release: the Pyxel player with the Mesh Siege game.\r\n\r\n### Installing\r\n- **Update**: Settings > Firmware on the device, or copy this device's `-firmware.bin` to the SD card and pick it there. Settings, messages and contacts are kept; the first boot unpacks the bundled files.\r\n- **Fresh install**: the web flasher at https://philmo6.github.io/meshpunk, or `-merged.bin` at 0x0 (erases the device).\r\n- **Launcher users**: MeshPunk in LauncherHub for the T-Deck and the Wio Tracker L2, or copy the `-launcher.bin` to the SD card."
   - version: v0.4.3
     name: v0.4.3 network update
     datetime: '2026-09-19T16:28:22Z'
@@ -118,9 +124,3 @@ releases:
     url: https://github.com/PhilMo6/meshpunk/releases/tag/v0.2.3
     prerelease: false
     notes: "Gameboy emulator! put your roms on the sd card and you should be good to play!\r\nAdded a new file manager to tools.\r\nArchived contacts have better management but also have a compaction function you can run if it has repeats for some reason.\r\nAlso did general fixes and hardening."
-  - version: v0.2.2
-    name: v0.2.2 alpha
-    datetime: '2026-07-02T20:56:52Z'
-    url: https://github.com/PhilMo6/meshpunk/releases/tag/v0.2.2
-    prerelease: false
-    notes: "This release focused on memory fragmentation fixes and getting the launcher.bin to actually work!\r\nThe filesystem is now packed and included in the firmware. it is then unpacked and added on the first launch. if any updates are needed to the filesystem it will update based on the tag version being installed. \r\nNotifications are now on the c side so they work when lua is shut down and an elf app is running.\r\nChannel notifications are now set per channel in the notification settings. they can be set to mentions only, all, or off.\r\nThemes have been improved with 4 new themes as well as additional theme settings."

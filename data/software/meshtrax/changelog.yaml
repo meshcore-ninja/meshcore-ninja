@@ -1,7 +1,34 @@
 source: github
 repo: venamartin/meshtrax
-updatedAt: '2026-11-06T23:59:45.059Z'
+updatedAt: '2026-11-07T23:30:09.590Z'
 releases:
+  - version: v1.10.1
+    name: Release v1.10.1
+    datetime: '2026-11-07T21:05:11Z'
+    url: https://github.com/venamartin/meshtrax/releases/tag/v1.10.1
+    prerelease: false
+    notes: >-
+      ## What's Changed
+
+      * ci: drop the Android build; APKs are built locally by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/257
+
+      * docs: what's new in v1.10.0 by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/258
+
+      * fix(chat): channel unread after #247: the NEW MESSAGES line, the Chats preview, my own
+      repeats by @venamartin in https://github.com/venamartin/meshtrax/pull/259
+
+      * chore: version 1.10.1+173 by @venamartin in https://github.com/venamartin/meshtrax/pull/260
+
+      * fix(places): an exact name is no longer cut when many names share the word by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/262
+
+      * chore: version 1.10.1+174 by @venamartin in https://github.com/venamartin/meshtrax/pull/263
+
+
+
+      **Full Changelog**: https://github.com/venamartin/meshtrax/compare/v1.10.0...v1.10.1
   - version: v1.10.0
     name: Release v1.10.0
     datetime: '2026-11-06T23:37:04Z'
