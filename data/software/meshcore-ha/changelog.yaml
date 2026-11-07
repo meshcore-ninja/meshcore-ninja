@@ -1,7 +1,71 @@
 source: github
 repo: meshcore-dev/meshcore-ha
-updatedAt: '2026-10-28T01:03:14.553Z'
+updatedAt: '2026-11-07T05:46:55.554Z'
 releases:
+  - version: v3.0.5
+    name: v3.0.5
+    datetime: '2026-11-07T00:09:20Z'
+    url: https://github.com/meshcore-dev/meshcore-ha/releases/tag/v3.0.5
+    prerelease: false
+    notes: >-
+      ## Features
+
+
+      - **Firmware update entities.** Each companion and each tracked repeater or room server gets
+      an `update` entity that compares the firmware the node reported with the newest stable
+      MeshCore release for its role. They show in **Settings > Updates** with the release notes and
+      a link to the release. The integration checks GitHub every 12 hours, one check for all
+      entries, and uses no mesh airtime. There is no install action; nodes are flashed over USB or
+      the web flasher. A repeater that has not reported a version shows no update until you press
+      **Refresh firmware version**. See [Firmware
+      updates](https://meshcore-dev.github.io/meshcore-ha/docs/ha/sensors#firmware-updates). Thanks
+      @TheOriginal92. (#409)
+
+      - **Six MQTT brokers** instead of four. This also fixes the uploader loading only slots 1 to
+      4, so a stored slot 5 or 6 was silently skipped. Thanks @beaugunderson. (#402)
+
+      - **WebSocket Path per MQTT broker.** LetsMesh and MeshMapper serve MQTT at `/`, which was
+      hardcoded; Mosquitto, EMQX and meshview.dk use `/mqtt`. The new field defaults to `/`, so
+      existing brokers are unchanged. Thanks @bplein for the original PR and @Fywqdk for the
+      meshview.dk report. (#400, #307, #399)
+
+
+      ## Fixes
+
+
+      - **Governed policy: a tracked node that advertises is polled again.** A node that had failed
+      a few polls kept doubling its backoff, up to 24 hours and across restarts, even after the
+      companion heard it advertise. Hearing it now makes its next poll due at once and clears the
+      failure counters, as already happened for auto-disabled nodes. A manual `req_status_sync` that
+      gets a status now also marks the node online instead of leaving the Online sensor `unknown`
+      until the next scheduled poll. Thanks @prusuino. (#401, #390)
+
+      - **An MQTT broker whose first connect fails now retries.** A connect that failed with
+      anything but a timeout, for example a refused WebSocket handshake at startup, left the broker
+      disconnected until the entry reloaded. Thanks @michalsiman. (#410, #408)
+
+      - **Neighbor SNR sensors no longer write a state every few seconds.** Their `secs_ago` and
+      `last_seen` attributes were computed from the clock, so every coordinator update stored a new
+      state and attribute row for every neighbor, 1.8 GB in 10 days on one install. Both attributes
+      are removed. `last_updated` is a fixed timestamp with the same information; in a template,
+      `now() - last_updated` is the age. Thanks @michalsiman. (#410, #407)
+
+
+      ## Notes
+
+
+      - If you read `secs_ago` or `last_seen` from a neighbor sensor in a template or card, switch
+      to `last_updated`.
+
+      - The recorder stores every `meshcore_raw_event` by default.
+      [Events](https://meshcore-dev.github.io/meshcore-ha/docs/ha/events#meshcore_raw_event) shows
+      how to exclude them if you do not use them.
+
+      - Validation: 489 integration tests on the pinned harness (HA 2026.2.3) and on current Home
+      Assistant with Python 3.14, 396 unit tests, ruff clean.
+
+
+      **Full changelog:** https://github.com/meshcore-dev/meshcore-ha/compare/v3.0.4...v3.0.5
   - version: v3.0.4
     name: v3.0.4
     datetime: '2026-10-27T23:35:50Z'
@@ -710,9 +774,3 @@ releases:
     url: https://github.com/meshcore-dev/meshcore-ha/releases/tag/v2.2.1
     prerelease: false
     notes: "#### New Features\r\n\r\n  **RX_LOG Correlation**\r\n\r\n  - Automatic RX_LOG parsing and decryption - RX_LOG_DATA events are now automatically parsed and decrypted when\r\n  GroupText payloads are detected\r\n  - Multi-reception correlation - meshcore_message events now include rx_log_data with radio metrics (SNR, RSSI) and path\r\n   information from all mesh receptions\r\n  - Path visualization - See which routes your messages took through the mesh network\r\n\r\n  Example rx_log_data includes:\r\n  - Signal quality (SNR/RSSI)\r\n  - Mesh path (hop nodes)\r\n  - Channel hash\r\n  - Multiple receptions from different routes\r\n\r\n  **Contact Management**\r\n\r\n  - Remove discovered contact service - New service to clean up discovered contacts from Home Assistant without removing from \r\n  node\r\n  - Disable contact discovery toggle - New global setting to disable automatic contact sensor creation for large networks (500+ \r\n  contacts)\r\n\r\n  #### Improvements\r\n\r\n  **Performance & Reliability**\r\n\r\n  - Rate limiting - Token bucket refill rate reduced from 180s to 120s (2 minutes instead of 3)\r\n  - Auto-disable inactive devices - Tracked repeaters/clients automatically disable after 5 days without successful\r\n  requests (120 hours)\r\n  - Increased sensor timeout tolerance - Sensors now wait 3x the update interval before marking unavailable (previously\r\n  1.5x)\r\n  - Event-driven contact updates - Removed contact refresh interval setting in favor of real-time NEW_CONTACT event handling\r\n\r\n  **Bug Fixes**\r\n\r\n  - Fixed service parameter types for change_contact_path and change_contact_flags methods"
-  - version: v2.2.0
-    name: v2.2.0
-    datetime: '2025-10-29T05:04:29Z'
-    url: https://github.com/meshcore-dev/meshcore-ha/releases/tag/v2.2.0
-    prerelease: false
-    notes: "# MeshCore Home Assistant Integration - Version 2.2.0\r\n\r\n  ## 🚀 Major Features\r\n\r\n  ### Token Bucket Rate Limiting\r\n  - **New**: Intelligent rate limiting to protect mesh network from excessive traffic\r\n  - **Configuration**: 20 token burst capacity, 1 token refills every 3 minutes\r\n  - **Impact**: Sustains ~20 requests per hour across all tracked devices\r\n  - **Sensor**: Exposes a sensor to track the rate limiting bucket capacity overtime\r\n  - **Behavior**: Requests are skipped (not queued) when tokens depleted, logged as debug messages\r\n  - **Documentation**: Comprehensive rate limiting guide in remote device tracking docs\r\n\r\n  ### Device Disabling\r\n  - **New**: Temporarily disable repeaters or clients without removing them\r\n  - **Access**: Available in config flow → Manage Monitored Devices → Edit\r\n  - **Use Cases**:\r\n    - Maintenance windows\r\n    - Reducing network traffic\r\n    - Testing network performance\r\n    - Isolating problematic devices\r\n  - **Result**: All status, telemetry, and login requests stopped while entities remain\r\n\r\n  ### Manual Contact Management Mode\r\n  - **New**: Automatic manual contact mode on startup\r\n  - **Discovered Contacts**: New select entity for contacts not yet added to node\r\n  - **Added Contacts**: Separate select entity for contacts already on your node\r\n  - **Persistence**: Discovered contacts saved to `.storage/meshcore.<entry_id>.discovered_contacts`\r\n  - **Services**:\r\n    - `meshcore.add_selected_contact` - Add discovered contacts via UI\r\n    - `meshcore.remove_selected_contact` - Remove contacts via UI\r\n    - `meshcore.cleanup_unavailable_contacts` - Remove all unavailable contact sensors\r\n  - **Immediate Updates**: Contact list refreshes immediately on add/remove operations\r\n\r\n  ## ✨ Enhancements\r\n\r\n  ### Channel Improvements\r\n  - **Channel Select Entity**: Now displays actual channel names instead of \"Channel 0\"\r\n  - **Format**: \"Name (idx)\" e.g., \"#pdx (1)\", \"work (2)\"\r\n  - **Unused Channels**: Display as \"(unused) (idx)\" when not configured\r\n  - **Auto-Update**: Channel info refreshes immediately after `set_channel` commands\r\n  - **Documentation**: Complete guide on hash-based channel encryption and configuration UI\r\n\r\n  ### Channel Message Service\r\n  - **Fix**: Now correctly reads `channel_idx` from channel select entity attributes\r\n  - **Previous Issue**: Tried to parse channel index from display string\r\n  - **Result**: Works with new channel name format\r\n\r\n  ## 🐛 Bug Fixes\r\n\r\n  ### Reduced Login Packets\r\n  - **Fix**: Reduced excessive login attempts to repeaters\r\n  - **Reason**: Login is rarely the failure case in established sessions\r\n  - **Impact**: Reduces unnecessary mesh network traffic\r\n\r\n  ### Special Characters in Contact Names\r\n  - **Fix**: Handles names with parentheses correctly (e.g., \"Queen Anne (Soon)\")\r\n  - **Method**: Regex-based parsing extracts rightmost parentheses content\r\n  - **Centralized**: New `extract_pubkey_from_selection()` utility function\r\n\r\n  ## 🔄 Migration Notes\r\n\r\n  No breaking changes - all new features are additive. Existing configurations will continue to work without modification."
