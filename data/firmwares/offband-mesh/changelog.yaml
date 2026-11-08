@@ -1,7 +1,120 @@
 source: github
 repo: OffbandMesh/meshcore-firmware
-updatedAt: '2026-10-22T19:49:14.116Z'
+updatedAt: '2026-11-08T23:28:38.391Z'
 releases:
+  - version: offband-v1.7.0
+    name: Offband offband-v1.7.0
+    datetime: '2026-11-08T21:52:52Z'
+    url: https://github.com/OffbandMesh/meshcore-firmware/releases/tag/offband-v1.7.0
+    prerelease: false
+    notes: >-
+      Offband 1.7.0 is the first stable release since **1.4.0** (2026-08-13). It supersedes the
+
+      `1.5.0-beta1`–`beta7` and `1.6.0-beta1` pre-release lines, neither of which reached a stable
+      tag.
+
+      If you have been running stable, this one release carries three months of work.
+
+
+      Built on the **MeshCore 1.17.0** base.
+
+
+      ## Read this before you upgrade
+
+
+      Four defaults changed. None of them breaks an existing install, but all four are visible.
+
+
+      - **The root default radio preset is now the US standard — 910.525 MHz, 62.5 kHz, SF7** (was
+        869.618 MHz, SF8). This is the compiled-in default, so it reaches a node only when that node has
+        no saved radio settings — a fresh flash, or one whose settings were erased. **An existing node
+        keeps the settings it has.** The QCC badge is unaffected either way: it carries its own
+        919.5 MHz / 500 kHz / SF7 variant setting.
+      - **Every role now defaults to 2-byte path hashes.** Previously each role set this for itself.
+
+      - **Channel notifications default to Self, and the Inherit scope is gone.** `Inherit` was a
+      mode
+        whose meaning depended on another setting; each channel now carries its own notification mode.
+      - **Diagnostic build filenames changed: `_testdiag` → `_diag`.** If you script downloads,
+      update
+        the pattern.
+
+      **Your settings, contacts and channels are preserved across the upgrade.** Stock MeshCore
+      clients
+
+      and existing Offband clients keep working — see *Compatibility* below.
+
+
+      ## New hardware
+
+
+      - **Queen City Con 0x4 badge** — a new board, with Offband messaging on it. Preflashed
+      channels,
+        a badge that names itself on first boot, single-button navigation, a message LED, buzzer and
+        tunes, optional GPS, and a low-battery hold that recovers by itself. There is a
+        [user guide](https://docs.offband.org/firmware/guides/qcc-badge/) with board diagrams for both
+        the pyramid and supporter builds.
+      - **Heltec RadioCore RC52** (nRF52840) and **RC32** (ESP32-S3) — binaries published, displays
+        brought up, GPS and strapping-pin hazards corrected.
+      - **Heltec Vision Master E290** — companion BLE and USB on the first e-ink board.
+
+      - **Heltec V4 TFT and V4-R8 TFT** — the color GUI boards. Images are published with releases.
+
+      - **SenseCAP T1000-E** — brought to parity: every sound through the shared tune engine, a send
+        tone, GPS power save and the message-waiting LED.
+      - **ESP-NOW boards compile again**, and an ESP-NOW environment is in CI so the board class
+      cannot
+        rot unnoticed.
+
+      ## The on-device GUI
+
+
+      The color touch boards now run a full Offband interface rather than a status screen.
+
+
+      - **Chats and channels** — compose with the on-screen keyboard, per-channel notifications,
+      start a
+        conversation from an empty Chats screen, add a channel as Public, hashtag or private, read a
+        private channel's key and leave a channel from its menu.
+      - **Nodes** — the node list, with search by keyboard or letter wheel matching anywhere in the
+      name.
+
+      - **Map** — a radar view.
+
+      - **Settings and boot** — settings persisted in flash, and the color Offband lockup on every
+      color
+        display.
+      - **Message store** — persisted to flash without stalling the interface.
+
+      - **SD card** — on the panel's SPI bus, with an archive that counts what it holds.
+
+      - **Sound** — Settings > Tones with a picker that auditions a tone before you keep it, custom
+        tune slots, and per-channel tunes.
+      - **LVGL's memory moved to PSRAM**, so the interface stops filling internal RAM.
+
+
+      **The T-Deck GUI image is not published in this release.** The code is in and the environment
+
+      builds; the image is not shipped yet.
+
+
+      ## Your client can now ask a device what it can do
+
+
+      Offband's own fields have left upstream's device-info frame and moved to a `0xC5 0x1C`
+      capability
+
+      advert carrying tag / length / value records.
+
+
+      **Why this matters:** every Offband field used to be announced by incrementing *upstream's*
+
+      firmware version code. The moment upstream shipped a field of their own, the same number would
+      mean
+
+      two different things and every deployed client's byte offsets would shi
+
+      …
   - version: offband-v1.6.0-beta1
     name: Offband offband-v1.6.0-beta1
     datetime: '2026-10-22T15:20:44Z'
@@ -1404,79 +1517,3 @@ releases:
       | `*.bin` (ESP32) | **App only** — flashed at the app offset (`0x10000`); the bootloader m
 
       …
-  - version: offband-v1.0.0
-    name: Offband offband-v1.0.0
-    datetime: '2026-06-18T00:46:24Z'
-    url: https://github.com/OffbandMesh/meshcore-firmware/releases/tag/offband-v1.0.0
-    prerelease: false
-    notes: >-
-      First production-stable Offband release — companion, observer, and repeater roles
-
-      all working and hardware-verified. Built on the **MeshCore 1.16.0** base.
-
-
-      ### Base
-
-      - **MeshCore 1.16.0 base-update** (#126) — the fork is rebased onto upstream MeshCore
-        1.16.0, smoke-verified across all three active roles (Companion, Observer, Repeater)
-        on Heltec V3/V4 + RAK3401.
-
-      ### Added
-
-      - **RAK3401 (WisMesh 1W) GPS** (#104) — the RAK12500 (u-blox ZOE-M8Q) I²C GPS now works
-        in Slot D. Companion and repeater acquire a position fix. (Position only; the I²C
-        path does not sync the clock.)
-      - **Display always-on toggle** (#141) — `display always on` keeps a USB/mains-powered
-        observer's screen lit; `display normal` restores the 15 s timeout. Persists across
-        reboots, applies immediately. Heltec V3, V4 OLED, V4 TFT observers.
-      - **Display rotation (0/180)** (#148) — `display rotate 0/180` / `display flip` over the
-        `_sys` channel; persists, applies immediately. **Verified on the OLED observers
-        (Heltec V3, V4 OLED).** Displays without a verified rotation driver (the V4 TFT)
-        report `rotation not supported on this display` rather than silently no-op'ing; TFT
-        rotation is tracked separately.
-
-      ### Known issues
-
-      - **Heltec V4 observer GPS position unverified** (#149) — an attached UART GPS doesn't
-        yet surface a position on the V4 observer (reads 0,0). Observer time (NTP/SNTP) and all
-        other function are unaffected; GPS only adds the device's own map-position dot.
-
-
-      ---
-
-
-      ### Which file do I download?
-
-
-      | File | What it is | When to use it |
-
-      |---|---|---|
-
-      | `*-merged.bin` (ESP32 — Heltec V3/V4, XIAO) | **Full image** — bootloader + partition table
-      + app in one, flashed at `0x0` after a chip erase. Self-contained, works on a blank chip. |
-      **First install / clean setup.** In a web flasher this is the **"Full Firmware"** option. |
-
-      | `*.bin` (ESP32) | **App only** — flashed at the app offset (`0x10000`); the bootloader must
-      already be on the chip. | **Updating** an existing node — OTA / **"Update Only."** Keeps the
-      device identity + WiFi/MQTT config. |
-
-      | `*.uf2` (nRF52 — RAK, T-Echo, XIAO nRF52) | Complete self-contained image. | **First install
-      *and* updates** — double-tap reset, then drag-drop onto the USB drive. (nRF52 has no
-      merged/app split.) |
-
-
-      > ⚠️ **ESP32:** the app-only `*.bin` will **not boot** if flashed at `0x0` — use
-      `*-merged.bin` for a fresh install. A full erase / "Full Firmware" wipes the device's identity
-      + saved config, so use it only for a first install or recovery, **never** a routine update.
-
-
-
-      ## What's Changed
-
-      * epic(#126): MeshCore 1.16.0 base-update (integration) by @Strycher in
-      https://github.com/OffbandMesh/meshcore-firmware/pull/134
-
-
-
-      **Full Changelog**:
-      https://github.com/OffbandMesh/meshcore-firmware/compare/offband-v0.18.1...offband-v1.0.0

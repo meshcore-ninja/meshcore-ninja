@@ -1,4 +1,71 @@
 source: github
 repo: mikecarper/meshfirmware
-updatedAt: '2026-06-23T20:38:36.992Z'
-releases: []
+updatedAt: '2026-11-08T23:29:00.665Z'
+releases:
+  - version: esp32-recovery-v1.1
+    name: ESP32 USB recovery tools v1.1
+    datetime: '2026-11-08T22:30:25Z'
+    url: https://github.com/mikecarper/meshfirmware/releases/tag/esp32-recovery-v1.1
+    prerelease: false
+    notes: >-
+      USB recovery for boot-looping ESP32 boards, including classic ESP32, S2, S3, C3 and C6.
+
+
+      - Choose your exact board and firmware from the catalog, or use a local merged USB BIN.
+
+      - Keep settings when the partition layout matches. Factory erase is a separate, explicit
+      choice.
+
+      - Clears old boot-slot selection after factory recovery so the verified application starts.
+
+      - Supports automatic reset, manual BOOT entry and reset-only recovery. Checks the chip, flash
+      capacity, image integrity and written data.
+
+
+      Extract the ZIP and run `recover-esp32.cmd` on Windows or `sh recover-esp32.sh` on
+      Linux/macOS. Python 3.10+ is required. The same wizard is in the normal flasher's **Recover
+      boot-looping ESP32** menu.
+
+
+      [Instructions](https://github.com/mikecarper/meshfirmware/blob/main/ESP32-RECOVERY.md) |
+      [Validation and hardware
+      limits](https://github.com/mikecarper/meshfirmware/blob/main/docs/test-results/esp32-recovery-2026-11-08.md)
+
+
+      This package contains recovery tools, not board firmware. New chip paths have automated
+      coverage; no additional physical radios were flashed for this extension.
+  - version: esp32-recovery-v1
+    name: ESP32 USB recovery tools v1
+    datetime: '2026-11-08T22:27:11Z'
+    url: https://github.com/mikecarper/meshfirmware/releases/tag/esp32-recovery-v1
+    prerelease: false
+    notes: >-
+      Use [ESP32 recovery
+      v1.1](https://github.com/mikecarper/meshfirmware/releases/tag/esp32-recovery-v1.1). It also
+      clears old boot-slot selections after factory recovery.
+
+
+      USB recovery for boot-looping ESP32 boards, including classic ESP32, S2, S3, C3 and C6.
+
+
+      - Choose your exact board and firmware from the catalog, or use a local merged USB BIN.
+
+      - Keep settings when the partition layout matches. Factory erase is a separate, explicit
+      choice.
+
+      - Supports automatic reset, manual BOOT entry and reset-only recovery. Checks the chip, flash
+      capacity, image integrity and written data.
+
+
+      Extract the ZIP and run `recover-esp32.cmd` on Windows or `sh recover-esp32.sh` on
+      Linux/macOS. Python 3.10+ is required. The same wizard is in the normal flasher's **Recover
+      boot-looping ESP32** menu.
+
+
+      [Instructions](https://github.com/mikecarper/meshfirmware/blob/main/ESP32-RECOVERY.md) |
+      [Validation and hardware
+      limits](https://github.com/mikecarper/meshfirmware/blob/main/docs/test-results/esp32-recovery-2026-11-08.md)
+
+
+      This package contains recovery tools, not board firmware. New chip paths have automated
+      coverage; no additional physical radios were flashed for this extension.
