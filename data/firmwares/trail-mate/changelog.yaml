@@ -1,7 +1,76 @@
 source: github
 repo: vicliu624/trail-mate
-updatedAt: '2026-10-17T03:29:58.842Z'
+updatedAt: '2026-11-09T05:13:49.888Z'
 releases:
+  - version: v1.1.0
+    name: v1.1.0
+    datetime: '2026-11-09T00:02:35Z'
+    url: https://github.com/vicliu624/trail-mate/releases/tag/v1.1.0
+    prerelease: false
+    notes: |-
+      ## [1.1.0] - 2026-11-09
+
+      This minor release adds installable Cardputer Zero and T-Display-CM0 Linux
+      packages and expands their device workflows without changing existing storage
+      formats or requiring new radio identities. Hardware qualification remains
+      target-specific; see the linked acceptance records below.
+
+      ### Added
+
+      - Cardputer Zero ARM64 Debian package with APPLaunch integration, framebuffer
+        rendering, physical keyboard navigation, hardware permissions, Cap LoRa/GNSS
+        detection, heading integration and the shared launcher/widget screens.
+      - Cardputer Zero access to the shared music player, including its compact
+        now-playing layout and launcher-widget controls.
+      - A dedicated Cardputer Zero keyboard profile: F/Z/X/C navigation outside
+        editors, context-specific 4–8 actions, Shift+Tab, Fn+H help, native Home/End
+        cursor movement and Ctrl+Enter chat submission.
+      - T-Display-CM0 Raspbian ARMHF application and matching native 1seg backend
+        packages, preserving the target's GCC 14 C++ ABI and ARMv7 receive contract.
+        CM0 also gains the LR2021 FM/1seg views, OFDM learning workbench and receiver
+        diagnostics developed since 1.0.1.
+      - Online TMAP creation with global administrative-area search, optional manual
+        bounds, source/layer choices, review, progress, cancellation and a direct
+        transition to the generated map. Linux release packages include the pinned
+        self-contained Center producer and its source/license/hash manifest.
+      - Linux LoRa Reticulum discovery through signed local Announce and path replies,
+        and sleep-only private-message automatic replies through a shared observer.
+      - Release-time builds and validation of both Linux device packages, their
+        architectures, bundled producer files and accompanying 1seg backend.
+
+      ### Fixed
+
+      - Shared keypad text editors reject non-text control characters, and Escape
+        cancels the Music playlist-name editor without appending an invisible byte.
+      - English IME input, touch tokens and Backspace respect the current text cursor;
+        Calculator preserves expression arrows and offers explicit Tab-based button
+        navigation on Zero. Consumed shortcuts refresh the display's activity timer.
+      - Linux Canvas shutdown closes the active page before releasing its providers
+        and LVGL, preventing Map timers and marker bindings from outliving their owners.
+      - Linux production modes no longer expose the synthetic Team pairing transport.
+        Devices without a real pairing service show disabled pairing actions and an
+        availability hint; existing team data remains accessible and Escape works.
+      - Contacts leaves the page on Escape after closing its filter menu instead of
+        reopening the menu from the focused node card.
+      - Route action/navigation dialogs and Map menus support directional keyboard
+        focus while retaining map panning, text editing and submenu back actions.
+      - Fn+H reaches existing page-specific help handlers, including Contacts, while
+        preserving the matching key release and the current text editor's draft.
+      - Zero dialog titles retain a visible height before their first flex layout;
+        shared map truncation uses punctuation supported by built-in ASCII fonts.
+      - Holding Home for 1.5 seconds in the Cardputer Zero framebuffer application
+        exits cleanly to APPLaunch, alongside the existing Esc exit gesture.
+      - Native CM0 packaging checks every required application/producer ELF while
+        keeping CoreCLR's optional LTTng tracing provider optional; clean builders
+        also verify the pinned producer can start before compiling the application.
+      - Linux Reticulum retains the original private message until an IP delivery
+        finishes, allowing one policy-permitted LoRa retry after a transport failure
+        with the same message ID, timestamp and full destination identity.
+      - Reticulum solicited cached path responses restore verified peer keys after
+        directory recovery, preserving current metadata and the existing route's age.
+      - Recent Activity rows open their exact conversation by touch or A/D and Enter,
+        using Chat's
+      …
   - version: v1.0.1
     name: v1.0.1
     datetime: '2026-10-17T02:22:24Z'
@@ -284,9 +353,3 @@ releases:
     url: https://github.com/vicliu624/trail-mate/releases/tag/v0.1.36-alpha
     prerelease: true
     notes: "## [0.1.36-alpha] - 2026-07-04\n### Changed / 变更\n- Restricted offline map tile layers to PNG tiles and removed the stale JPEG tile path so map source cache and documentation follow one supported tile format. / 将离线地图瓦片图层收口为 PNG 瓦片，并移除陈旧的 JPEG 瓦片路径，使地图源缓存与文档遵循单一受支持格式。\n- Updated Pager shutdown and battery handling with an explicit power-off confirmation flow, translated shutdown notices, and more stable board ADC sampling for battery reporting. / 更新 Pager 关机与电量处理：新增明确的关机确认流程、补齐关机提示翻译，并改进板级 ADC 采样以提升电量显示稳定性。\n- Made shared two-pane side filter panels vertically scrollable by default so Settings, Extensions, Contacts, Chat, and similar left-filter layouts remain reachable on small screens. / 将共享两栏布局的左侧 filter 面板默认改为可垂直滚动，使 Settings、Extensions、Contacts、Chat 等小屏左侧分类入口不会被底部遮住。\r\n- Updated the promotional poster to show both supported Pager and T-Deck devices with the current Trail Mate UI instead of misleading generated hardware or screens. / 更新宣传海报，同时展示受支持的 Pager 与 T-Deck 设备，并使用当前 Trail Mate 界面，避免生成式硬件外观或伪界面误导用户。\n\n### Fixed / 修复\n- Fixed Pager power-off failure handling so USB-connected or PMU-unavailable shutdown attempts show an explicit failure notice instead of falling back to BOOT-only deep sleep. / 修复 Pager 关机失败处理：USB 已连接或 PMU 不可用时显示明确失败提示，不再回退到只能由 BOOT 唤醒的 deep sleep。\n- Fixed a Pager shutdown build regression caused by the board library depending on the UI i18n header. / 修复 Pager shutdown 构建回归：移除 board 库对 UI i18n 头文件的错误依赖。\n- Fixed system notification font fallback and UTF-8 truncation so translated notifications and runtime notices can render CJK text without missing glyphs or split UTF-8 characters. / 修复系统 notification 的字体 fallback 与 UTF-8 裁剪，使翻译后的通知和运行时提示能正确显示中文等 CJK 文本，不再因缺字或截断字符产生乱码。\r\n- Fixed the Pager BOOT long-press interaction so deep sleep starts as soon as the hold threshold is reached instead of waiting for button release. / 修复 Pager BOOT 长按交互：达到长按阈值后立即进入 deep sleep，不再等到松开按键才触发。\n\n\n\n## What's Changed\n* 0.1.36-alpha by @vicliu624 in https://github.com/vicliu624/trail-mate/pull/72\n\n\n**Full Changelog**: https://github.com/vicliu624/trail-mate/compare/v0.1.35-alpha...v0.1.36-alpha"
-  - version: v0.1.35-alpha
-    name: v0.1.35-alpha
-    datetime: '2026-07-04T00:40:01Z'
-    url: https://github.com/vicliu624/trail-mate/releases/tag/v0.1.35-alpha
-    prerelease: true
-    notes: "## [0.1.35-alpha] - 2026-07-03\n### Added / 新增\n- Added a Meshtastic memory model specification covering stable BLE `FromRadio` slots, bounded queues, priority backpressure, MQTT downlink ownership, and hot-path allocation rules across nRF52, ESP32, and Linux. / 新增 Meshtastic 内存模型规格，覆盖稳定 BLE `FromRadio` 发布槽、有界队列、优先级背压、MQTT 下行所有权，以及 nRF52、ESP32、Linux 共享的热路径分配规则。\n\n### Changed / 变更\n- Reworked Meshtastic BLE/MQTT bridge ownership around fixed published slots, fixed retransmit/pending tables, and shared backpressure rules so high-traffic BLE, MQTT, NodeInfo, and status flows no longer depend on unbounded dynamic containers. / 围绕固定发布槽、固定 retransmit/pending 表和共享背压规则重做 Meshtastic BLE/MQTT 桥接所有权，使高流量 BLE、MQTT、NodeInfo 与状态流不再依赖无界动态容器。\n- Updated GitHub Pages device copy for the 0.1.35-alpha nRF52 stabilization lane while keeping firmware download metadata generated by the Release/Pages workflows. / 更新 GitHub Pages 中 0.1.35-alpha nRF52 稳定化发布线的设备说明，同时继续保持固件下载 metadata 由 Release/Pages workflow 生成。\n\n### Fixed / 修复\n- Stabilized nRF52 Meshtastic BLE connection and reconnect behavior by aligning `FromRadio` notify/read liveness, stale-consume recovery, disconnect handling, and phone-visible session state with the app protocol flow. / 稳定 nRF52 Meshtastic BLE 连接与重连行为，使 `FromRadio` 通知/读取活性、陈旧消费恢复、断开处理和手机端可见会话状态与 App 协议流程对齐。\n- Restored nRF52 MQTT proxy and downlink behavior under the new memory model, keeping MQTT incoming/outgoing traffic, node metadata projection, and LoRa downlink policy functional under bounded pressure. / 在新的内存模型下恢复 nRF52 MQTT proxy 与下行行为，使 MQTT 收发、节点元数据投影和 LoRa 下行策略在有界压力下保持可用。\n- Fixed T-Echo Lite GPS memory-corruption exposure by moving GPS/input runtime ownership out of runtime heap and removing transient peer-key vector allocation from the hot PKI/NodeInfo persistence path. / 修复 T-Echo Lite GPS 内存损坏暴露点：将 GPS/input runtime 所有权移出运行期 heap，并从 PKI/NodeInfo 持久化热路径移除临时 peer-key vector 分配。\n- Fixed resource-pack font loading so package update/reinstall paths refresh installed Chinese font resources correctly after pack operations. / 修复资源包字体加载，使包更新/重装后已安装中文字体资源能正确刷新。\r\n\r\n\n\n## What's Changed\n* Fix ble by @vicliu624 in https://github.com/vicliu624/trail-mate/pull/70\n\n\n**Full Changelog**: https://github.com/vicliu624/trail-mate/compare/v0.1.34-alpha...v0.1.35-alpha"
