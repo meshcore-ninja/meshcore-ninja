@@ -1,7 +1,13 @@
 source: github
 repo: zjs81/meshcore-open
-updatedAt: '2026-10-31T21:10:35.807Z'
+updatedAt: '2026-11-10T07:04:37.397Z'
 releases:
+  - version: BETA-99.0.3
+    name: BETA-99.0.3
+    datetime: '2026-11-10T05:43:50Z'
+    url: https://github.com/zjs81/meshcore-open/releases/tag/BETA-99.0.3
+    prerelease: false
+    notes: "## What's Changed\r\n* Merge Dev into main by @zjs81 in https://github.com/zjs81/meshcore-open/pull/473\r\n* Merge Dev into main by @zjs81 in https://github.com/zjs81/meshcore-open/pull/474\r\n* Fix iOS App Store upload (ITMS-90208) and development installs by @ahalekelly in https://github.com/zjs81/meshcore-open/pull/633\r\n* Add AppImage building process by @mavericm1 in https://github.com/zjs81/meshcore-open/pull/632\r\n* Main by @zjs81 in https://github.com/zjs81/meshcore-open/pull/635\r\n* Add online map filtering by @ericszimmermann in https://github.com/zjs81/meshcore-open/pull/629\r\n* Implements Issue #622: Add ability to reset routing algorithm settings to factory defaults. by @wared2003 in https://github.com/zjs81/meshcore-open/pull/623\r\n* Upgrade to Flutter 3.47.9 and require it for all builds by @zjs81 in https://github.com/zjs81/meshcore-open/pull/641\r\n* Add channel message filter for spam and repeated messages by @zjs81 in https://github.com/zjs81/meshcore-open/pull/640\r\n* Address tester feedback; verify advert signatures by @zjs81 in https://github.com/zjs81/meshcore-open/pull/642\r\n* Bundle and audit AppImage runtime dependencies by @mavericm1 in https://github.com/zjs81/meshcore-open/pull/644\r\n* Add blog with MeshOS claims post (GitHub Pages) by @zjs81 in https://github.com/zjs81/meshcore-open/pull/645\r\n* Add Czech, in-chat search, typed-hash path trace and contact sharing by @zjs81 in https://github.com/zjs81/meshcore-open/pull/647\r\n* Fix false repeat flags, add repeat-sends setting, limit holiday animations by @zjs81 in https://github.com/zjs81/meshcore-open/pull/648\r\n* Tester feedback: routing, bulk select, notifications, map crash by @zjs81 in https://github.com/zjs81/meshcore-open/pull/650\r\n* Backup and Restore functionality by @ericszimmermann in https://github.com/zjs81/meshcore-open/pull/646\r\n* Tester feedback: offline mode, pt-PT, menus, layout and translations by @zjs81 in https://github.com/zjs81/meshcore-open/pull/652\r\n* Store histories and the tile index in SQLite by @zjs81 in https://github.com/zjs81/meshcore-open/pull/653\r\n\r\n## New Contributors\r\n* @ahalekelly made their first contribution in https://github.com/zjs81/meshcore-open/pull/633\r\n\r\n**Full Changelog**: https://github.com/zjs81/meshcore-open/compare/BETA-99.0.1...PRE-BETA-9.5.3"
   - version: BETA-99.0.1
     name: BETA-99.0.1
     datetime: '2026-10-31T21:10:00Z'

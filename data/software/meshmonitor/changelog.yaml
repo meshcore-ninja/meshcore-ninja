@@ -1,7 +1,91 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-11-06T23:59:43.855Z'
+updatedAt: '2026-11-10T07:04:43.520Z'
 releases:
+  - version: v4.17.3-rc4
+    name: v4.17.3-rc4
+    datetime: '2026-11-10T00:48:41Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.3-rc4
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.17.3-rc4
+
+
+      > [!WARNING]
+
+      > This is a **pre-release** for testing. It adds three database migrations (225–227) and
+      several permission and notification changes, listed under **Upgrade notes**. Back up your
+      database before upgrading.
+
+
+      This release brings MeshCore up to parity with Meshtastic across most of the app, using one
+      shared implementation for both protocols wherever they overlap. MeshCore gains Repeater and
+      Room Server settings forms (local and remote), message, server-event and trace notifications,
+      a Security view with packet-rate and clock-offset checks, per-source device-config backups,
+      and MeshCore traces in the Traceroute Explorer. Mesh Issues gains node-health rules (stale, no
+      position, low battery, bad position) for both protocols, and MeshCore MQTT region feeds get
+      their own Notifications tab with broker-link alerts. Settings, messaging, node and DM lists,
+      the Packet Monitor, maps, dashboard widgets, the v1 API and Prometheus now cover MeshCore too.
+      It also closes a security hole where a user with configuration read access on one source could
+      download another source's device backup (including channel keys), and writes backup files
+      readable only by the server. Notifications now honour per-DM mutes for push and Apprise on
+      Meshtastic as well, and desktop-only installs receive message alerts.
+
+
+      ## Upgrade notes
+
+      - **Migrations 225–227** run on start (MeshCore trace attempt log, per-source backup history,
+      MeshCore security flags) on SQLite, PostgreSQL and MySQL.
+
+      - **Device backups:** downloading or creating a backup now needs `configuration:write` on the
+      source (was read). Backups and their schedule are per source; the old global schedule moves to
+      the primary Meshtastic source and other sources start with backups off. Pre-upgrade files go
+      to the only Meshtastic source if there is exactly one, otherwise they are admin-only. Files
+      are now saved with mode 0600 (existing files are tightened on first start) and named `mt-…` /
+      `mc-…` in UTC.
+
+      - **Meshtastic backups no longer include the node's private key.** Older backup files are
+      unchanged; delete them if that matters to you.
+
+      - **Security digests:** the digest settings saved in the Security tab were never read before,
+      so the digest reported "No Apprise URL configured". They are now saved per source with a
+      fallback to the global value, so **installs with a global Apprise URL start receiving MeshCore
+      security digests** (one per MeshCore source per day, only when there are issues).
+
+      - **Security permissions:** the Security issues, export and key-mismatch reads now need
+      `nodes:read` on the source, for Meshtastic too.
+
+      - **v1 API:** for MeshCore Companion sources, `/api/v1/traceroutes` (and `/network`,
+      `/network/topology`) reported `toNodeId` equal to `fromNodeId`. Traces are now a round trip:
+      `fromNode*` is your radio, `toNode*` is the target or turnaround hop, and
+      `routeBack`/`snrBack` hold the return leg.
+
+      - **MeshCore DM alerts:** saved MeshCore notification settings already had "Direct messages"
+      on (the control was hidden), so existing MeshCore push subscribers start receiving DM and
+      room-post alerts. Turn **Direct messages and room posts** off on that source's Notifications
+      tab if you don't want them.
+
+      - **Repeater new-node alerts:** Repeater sources whose "Newly Found Nodes" toggle was saved as
+      on start alerting after a 48 h learning period (an existing Repeater that has logged longer
+      alerts from the first new node), capped at 10 per hour per source.
+
+      - **Meshtastic DM mute:** muting a DM now also silences its push and Apprise alerts (it
+      previously only affected the unread badge).
+
+
+      ## Features
+
+      - MeshCore Security P7b: packet rates, clock offset, scanner, digest, export, draft
+      notification DM (#6281) #6314
+
+      - Per-source, protocol-aware device backups (Meshtastic and MeshCore Companion) (#6285) #6313
+
+      - Notifications tab for MeshCore MQTT region feeds, broker-link alerts for MeshCore MQTT and
+      Meshtastic MQTT bridges (#6307) #6312
+
+      - MeshCore traces in the Traceroute Exp
+
+      …
   - version: v4.17.3-rc3
     name: v4.17.3-rc3
     datetime: '2026-11-06T20:51:56Z'
@@ -2126,139 +2210,3 @@ releases:
       ### 📋 Changes
 
       See commit history for detailed changes.
-  - version: v4.17.1-rc4
-    name: v4.17.1-rc4
-    datetime: '2026-10-15T20:27:34Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.1-rc4
-    prerelease: true
-    notes: >-
-      # MeshMonitor v4.17.1-rc4
-
-
-      > [!WARNING]
-
-      > This is a **pre-release** for testing. Do not use it in production.
-
-
-      ## Summary
-
-
-      This RC brings the Meshtastic and MeshCore configuration screens onto one shared layout
-      (#5797). Auto Responder, Timer Triggers, Auto Acknowledge and Auto Announce now use the same
-      cards, field groups and test boxes on both protocols. Device Configuration uses the same
-      section shell, puts the danger zone at the bottom, asks for in-app confirmation, and goes
-      read-only without `configuration:write`. Saves that reboot the node now show the reboot
-      dialog; saves that only sometimes reboot say "may restart". Channels share one editing model,
-      with per-channel "Save to device" and a key field you can show, copy, generate or clear.
-      MeshCore Observer brokers are edited in MeshCore Configuration and each broker keeps its own
-      credentials. Meshtastic MQTT quick configure now waits for Save. Every password field gets a
-      show/hide toggle. Fixes include timers losing their last-run time on save, geofence results
-      written to the wrong source, and Observer credential clears wiping every broker.
-
-
-      ## Features
-
-      - feat(ui): shared config section shell for automation sections (#5809)
-
-      - feat(ui): one Auto Responder workflow for Meshtastic and MeshCore (#5811)
-
-      - feat(ui): one Timer Triggers workflow for Meshtastic and MeshCore (#5814)
-
-      - feat(ui): same field groups for Auto Acknowledge and Auto Announce on both protocols (#5817)
-
-      - feat(ui): Device Configuration pages on the shared section shell (#5819)
-
-      - feat(ui): shared password field with show/hide (#5837)
-
-      - feat(ui): one channel editing model for Meshtastic and MeshCore (#5838)
-
-      - feat(ui): danger zone last, in-app confirms, write gating on Device Configuration (#5839)
-
-      - feat(ui): edit the Observer in MeshCore Configuration; quick configure joins the save
-      (#5840)
-
-
-      ## Bug Fixes
-
-      - fix(channels): send sourceId with channel export (#5810)
-
-      - fix(config): SaveBar baselines follow successful saves and reloads (#5813)
-
-      - fix(mqtt): gate the device MQTT form on configuration:write (#5820)
-
-      - fix(meshcore): per-node schedule toggles roll back on a failed save and ignore stale replies
-      (#5822)
-
-      - fix(timers): keep the server's run state on save; one name, Timer Triggers (#5832)
-
-      - fix(geofence): record trigger results on the source's own key (#5833)
-
-      - fix(meshcore): Observer credentials are set and cleared per broker (#5834)
-
-      - fix(channels): clearable PSK, meshcore_mqtt guard, MeshCore Public slot, missing strings
-      (#5835)
-
-      - fix(config): expect the reboot that most Device Configuration saves cause (#5836)
-
-
-      ## Chores
-
-      - chore: bump version to 4.17.1-rc4 (#5843)
-
-
-      ## Issues Resolved
-
-      - #5807 Shared config section shell for automation sections
-
-      - #5808 Converge Auto Responder workflow across Meshtastic and MeshCore
-
-      - #5812 Converge Timer Triggers workflow across Meshtastic and MeshCore
-
-      - #5816 Align Auto Acknowledge and Auto Announce layouts
-
-      - #5818 Device Configuration pages on the shared section shell
-
-      - #5823 Device Configuration: most saves reboot the node, but the UI assumes they don't
-
-      - #5825 MeshCore Observer: per-broker credentials
-
-      - #5826 Channels: fix four existing bugs before the redesign
-
-      - #5827 Timer Triggers: keep the server's lastRun on save; one name across protocols
-
-      - #5828 Shared password field with show/hide
-
-      - #5829 Channels: one editing model on both protocols
-
-      - #5830 Device actions: danger zone at the bottom, in-app confirms, client gating
-
-      - #5831 MQTT / Observer: one place to edit, quick configure in the SaveBar, shared preset look
-
-
-      ## Upgrade Notes
-
-      - The MeshCore Observer's single credential block becomes per-broker credentials. Existing
-      credentials keep working.
-
-      - "Timed Events" is now "Timer Triggers" on Meshtastic.
-
-
-      **Full Changelog**: https://github.com/Yeraze/meshmonitor/compare/v4.17.1-rc3...v4.17.1-rc4
-
-
-      ## 🚀 MeshMonitor v4.17.1-rc4
-
-
-      ### 📦 Installation
-
-
-      **Docker (recommended):**
-
-      ```bash
-
-      docker run -d \
-        --name meshmonitor \
-        -p 8080:3001 \
-        -v meshmonitor-data:/data \
-        ghc
-      …

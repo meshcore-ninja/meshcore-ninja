@@ -1,7 +1,41 @@
 source: github
 repo: vicliu624/trail-mate
-updatedAt: '2026-11-09T05:13:49.888Z'
+updatedAt: '2026-11-10T07:04:20.595Z'
 releases:
+  - version: v1.2.0
+    name: v1.2.0
+    datetime: '2026-11-10T06:14:48Z'
+    url: https://github.com/vicliu624/trail-mate/releases/tag/v1.2.0
+    prerelease: false
+    notes: "> **Cardputer Zero Store packaging notice:** The 1.2.0 Store submission was rejected because TMAP development files were left in a Debian multiarch library directory. A 1.2.1 packaging fix is being prepared. The application and font tests passed; the published assets remain unchanged.\r\n\r\n## [1.2.0] - 2026-11-10\r\n\r\n### Added\r\n\r\n- Optional `trailmate-linux-fonts` package for native Linux LVGL applications on\r\n  Cardputer Zero and T-Display-CM0. It provides complete Noto CJK/Latin sources,\r\n  a compact OFL color-emoji derivative and the released Simplified Chinese\r\n  display language. English remains available without the package.\r\n- Linux FreeType font loading with bounded glyph caches, system resource\r\n  discovery and user-pack precedence. CJK source fonts expose 44,810 Unicode\r\n  mappings each; individual color emoji render at compact text sizes.\r\n- Source localization checks cover direct translation calls and declarative\r\n  menu labels, with parser regressions for comments, raw strings, nested calls\r\n  and formatted text. See [the Linux font guide](docs/engineering/linux-font-pack.md).\r\n\r\n### Fixed\r\n\r\n- Filled 56 missing Simplified Chinese interface entries across shared menus,\r\n  navigation, Chat shortcuts, TMAP creation, Walkie Talkie and widgets. Other\r\n  language tables retain their review status. Chinese binfont coverage is\r\n  synchronized for ESP users as well as Linux.\r\n- Linux UI teardown releases resource fonts, bindings and deferred work before\r\n  LVGL ends, allowing clean reinitialization. Color emoji precede monochrome\r\n  fallbacks; compact menu shortcuts use localized text and font fallback.\r\n- Website dependencies use the canonical npm registry with their existing pinned\r\n  versions and integrity hashes, avoiding a third-party mirror timeout during\r\n  release-page deployment.\r\n- Cardputer Zero Store submissions require an already published stable release\r\n  in the TrailMate repository, successful tagged CI and device builds, matching\r\n  source and listing versions, and a release-owned package with verified SHA256.\r\n  Drafts, pending/failed builds and local or unrelated artifacts block submission.\r\n  Linux release packaging now includes the Store DEB before publishing our release.\r\n- Linux framebuffer initialization closes its device descriptor and mapping\r\n  when screen-info queries, pixel-depth validation, mapping or buffer allocation\r\n  fail. Framebuffer and keyboard descriptors also close on exec instead of being\r\n  inherited by unrelated helper programs; reopening the keyboard retains one\r\n  owned descriptor.\r\n- Wayland initialization releases its display connection, protocol objects and\r\n  any allocated buffers when a compositor is incomplete or setup fails."
+  - version: v1.1.1
+    name: v1.1.1
+    datetime: '2026-11-10T03:19:19Z'
+    url: https://github.com/vicliu624/trail-mate/releases/tag/v1.1.1
+    prerelease: false
+    notes: >-
+      ## Fixed
+
+
+      - Cardputer Zero APPLaunch honors the launcher's physical framebuffer and explicit framebuffer
+      settings before an inherited Wayland session. Clean Store installations display on the
+      built-in screen instead of leaving APPLaunch on Loading while rendering into a headless
+      compositor.
+
+      - Explicit Wayland selection and desktop Wayland auto-detection remain available.
+
+
+      ## Added
+
+
+      - A reproducible CardputerZero Store package adapter and Store listing, including the
+      Reticulum-centered product description, project links and six native Zero screenshots.
+
+
+      The `trailmate_1.1.1_arm64.deb` asset is the Store package. Its exact checksum and
+      source/build receipt are in `STORE_SHA256SUMS` and `STORE_BUILD_PROVENANCE.json`. Original
+      device packages and firmware assets are produced by the tagged release workflow. Installation
+      preserves existing device identity and user data.
   - version: v1.1.0
     name: v1.1.0
     datetime: '2026-11-09T00:02:35Z'
@@ -320,36 +354,3 @@ releases:
     url: https://github.com/vicliu624/trail-mate/releases/tag/v0.1.38-alpha
     prerelease: true
     notes: "## [0.1.38-alpha] - 2026-07-14\r\n### Breaking Changes / 破坏性变更\r\n- **BLE connections to Meshtastic and MeshCore apps are no longer supported.** In `0.1.38-alpha`, Meshtastic and MeshCore companion apps can no longer connect to Trail Mate over BLE. If you need to keep using either app over BLE, **do not upgrade to this version**. This does not remove Trail Mate's on-device Meshtastic or MeshCore protocol modes. / **不再支持通过 BLE 连接 Meshtastic 与 MeshCore App。** 从 `0.1.38-alpha` 开始，Meshtastic 与 MeshCore 配套 App 无法再通过 BLE 连接 Trail Mate；如果仍需要这种使用方式，**请不要升级到此版本**。Trail Mate 设备端的 Meshtastic 与 MeshCore 协议模式并未因此移除。\r\n\r\n### Added / 新增\r\n- Added route-photo completion and preview for KML files exported by 2bulu (两步路). / 新增对两步路导出的 KML 路线文件进行图片补全与预览的能力。\r\n- Significantly expanded Reticulum support with LXMF message sending and Reticulum calls, together with an initial subset of Nomad Network page-browsing capabilities. / 大幅推进 Reticulum 支持：现在可以发送 LXMF 消息和进行 Reticulum call，并具备初步的 Nomad Network 页面浏览能力。\r\n- Added direct on-device configuration for MQTT and Meshtastic/MeshCore channel settings, without depending on a companion app for setup. / 新增直接在设备上配置 MQTT 以及 Meshtastic/MeshCore 频道的能力，无需依赖配套 App 完成设置。\r\n- Added configurable automatic replies for private Meshtastic, MeshCore, and Reticulum text messages: while the display is asleep, Trail Mate can immediately reply through the originating conversation using the user-defined message. Broadcast/group traffic, unverified Reticulum sources, and self-originated messages are excluded. / 新增可配置的私聊自动回复：屏幕处于息屏状态时，Trail Mate 可对 Meshtastic、MeshCore 与 Reticulum 的私聊文本消息立即按原会话回复用户设定的内容；广播/群组消息、未验证的 Reticulum 来源以及本机发出的消息均不会触发回复。\r\n\r\n### Changed / 变更\r\n- Reworked the built-in Emoji picker into a curated 324-item, nine-category catalogue for outdoor, radio, survival, rescue, people, and animal communication. The picker now uses fixed reusable controls with category selection and pagination instead of creating every emoji button at once; T-LoRa Pager uses text-only category cards plus wider keycap-style `B`/`N` paging and `C`/`Q` actions. The full-screen picker is also attached to the active screen so an Alt double-press screenshot captures the visible picker. / 重做内置 Emoji 选择器：现为面向户外、无线电、生存、救援、人员与动物交流的 324 项九分类目录。选择器改为固定复用控件，提供分类和分页，不再一次性创建全部 emoji 按钮；T-LoRa Pager 使用纯文字分类卡，以及更宽的键帽式 `B`/`N` 翻页和 `C`/`Q` 操作提示。全屏选择器也改挂在 active screen 上，双击 Alt 截图会捕获当前可见的选择器。\r\n\r\n### Project Direction / 项目方向\r\n- Trail Mate is moving toward fully phone-independent operation so devices can work on their own, and `0.1.38-alpha` is another step in that direction. Feedback on this direction, and on workflows that still require a phone, is welcome. / Trail Mate 正在朝着完全脱离手机依赖、让设备能够独立工作的方向推进，`0.1.38-alpha` 是这一方向上的又一步。欢迎大家对这一方向提出意见，也欢迎指出目前仍必须依赖手机的使用场景。\r\n\r\n\n\n## What's Changed\n* release: verify 0.1.38-alpha targets and CI by @vicliu624 in https://github.com/vicliu624/trail-mate/pull/75\n* Reticulum by @vicliu624 in https://github.com/vicliu624/trail-mate/pull/76\n\n\n**Full Changelog**: https://github.com/vicliu624/trail-mate/compare/v0.1.37-alpha...v0.1.38-alpha"
-  - version: v0.1.37-alpha
-    name: v0.1.37-alpha
-    datetime: '2026-07-04T10:34:25Z'
-    url: https://github.com/vicliu624/trail-mate/releases/tag/v0.1.37-alpha
-    prerelease: true
-    notes: >-
-      ## [0.1.37-alpha] - 2026-07-04
-
-      ### Changed / 变更
-
-      - Reworked the Settings Date/Time dialog into a bounded six-column datetime picker for year,
-      month, day, hour, minute, and second, replacing free text input with scroll-only selection,
-      explicit keyboard focus traversal, and automatic day-range clamping. / 将 Settings
-      的日期时间弹窗重做为有界六列 datetime picker（年、月、日、时、分、秒），用滚动选择替代自由文本输入，补上明确的键盘焦点移动顺序，并自动收口当月合法日期范围。
-
-
-      ### Fixed / 修复
-
-      - Fixed Shutdown confirmation dialog CJK rendering by routing translated labels through the
-      shared localized font fallback instead of forcing the ASCII Montserrat font. / 修复 Shutdown
-      确认弹窗的中文显示：翻译文本改走共享 localized font fallback，不再强制使用只覆盖 ASCII 的 Montserrat 字体。
-
-
-
-
-      **Full Changelog**:
-      https://github.com/vicliu624/trail-mate/compare/v0.1.36-alpha...v0.1.37-alpha
-  - version: v0.1.36-alpha
-    name: v0.1.36-alpha
-    datetime: '2026-07-04T09:04:07Z'
-    url: https://github.com/vicliu624/trail-mate/releases/tag/v0.1.36-alpha
-    prerelease: true
-    notes: "## [0.1.36-alpha] - 2026-07-04\n### Changed / 变更\n- Restricted offline map tile layers to PNG tiles and removed the stale JPEG tile path so map source cache and documentation follow one supported tile format. / 将离线地图瓦片图层收口为 PNG 瓦片，并移除陈旧的 JPEG 瓦片路径，使地图源缓存与文档遵循单一受支持格式。\n- Updated Pager shutdown and battery handling with an explicit power-off confirmation flow, translated shutdown notices, and more stable board ADC sampling for battery reporting. / 更新 Pager 关机与电量处理：新增明确的关机确认流程、补齐关机提示翻译，并改进板级 ADC 采样以提升电量显示稳定性。\n- Made shared two-pane side filter panels vertically scrollable by default so Settings, Extensions, Contacts, Chat, and similar left-filter layouts remain reachable on small screens. / 将共享两栏布局的左侧 filter 面板默认改为可垂直滚动，使 Settings、Extensions、Contacts、Chat 等小屏左侧分类入口不会被底部遮住。\r\n- Updated the promotional poster to show both supported Pager and T-Deck devices with the current Trail Mate UI instead of misleading generated hardware or screens. / 更新宣传海报，同时展示受支持的 Pager 与 T-Deck 设备，并使用当前 Trail Mate 界面，避免生成式硬件外观或伪界面误导用户。\n\n### Fixed / 修复\n- Fixed Pager power-off failure handling so USB-connected or PMU-unavailable shutdown attempts show an explicit failure notice instead of falling back to BOOT-only deep sleep. / 修复 Pager 关机失败处理：USB 已连接或 PMU 不可用时显示明确失败提示，不再回退到只能由 BOOT 唤醒的 deep sleep。\n- Fixed a Pager shutdown build regression caused by the board library depending on the UI i18n header. / 修复 Pager shutdown 构建回归：移除 board 库对 UI i18n 头文件的错误依赖。\n- Fixed system notification font fallback and UTF-8 truncation so translated notifications and runtime notices can render CJK text without missing glyphs or split UTF-8 characters. / 修复系统 notification 的字体 fallback 与 UTF-8 裁剪，使翻译后的通知和运行时提示能正确显示中文等 CJK 文本，不再因缺字或截断字符产生乱码。\r\n- Fixed the Pager BOOT long-press interaction so deep sleep starts as soon as the hold threshold is reached instead of waiting for button release. / 修复 Pager BOOT 长按交互：达到长按阈值后立即进入 deep sleep，不再等到松开按键才触发。\n\n\n\n## What's Changed\n* 0.1.36-alpha by @vicliu624 in https://github.com/vicliu624/trail-mate/pull/72\n\n\n**Full Changelog**: https://github.com/vicliu624/trail-mate/compare/v0.1.35-alpha...v0.1.36-alpha"
