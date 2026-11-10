@@ -1,7 +1,95 @@
 source: github
 repo: ALLFATHER-BV/wadamesh
-updatedAt: '2026-10-31T16:58:58.472Z'
+updatedAt: '2026-11-10T22:57:38.187Z'
 releases:
+  - version: beta_102
+    name: wadamesh beta_102
+    datetime: '2026-11-10T18:09:21Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_102
+    prerelease: true
+    notes: >-
+      Test build, on top of beta_101. Stable stays **beta_101**.
+
+
+      Flash it at **[wadamesh.com](https://wadamesh.com/#install)** (switch the toggle to Beta), or
+      update on the device if you have "Get test builds (beta)" turned on.
+
+
+      Another community round. **@oumike** sent another stack of fixes and features, from emoji
+      reactions to a calm new look and a big pass over the T-Deck Pro. **@MrYoshii** kept polishing
+      the T-LoRa Pager, **@CarpeNoctem** tightened the browser features and wrote an Ebook app,
+      **@jcyrio** and **@denmojo** fixed up the ThinkNode M9 and keypad navigation, and
+      **@Ender436** improved the T-Deck Pro and ProTreck. Thanks also to jadestarwatcher for the
+      MediaMesh and TAK text rules.
+
+
+      ### New
+
+
+      **Hide MediaMesh and TAK texts.** MeshCore Open TAK and Wadamesh TAK send photos, voice and
+      team tracking as ordinary texts with machine-readable headers, which read as gibberish here.
+      With the new switch in Settings > Radio & Mesh, messages between apps disappear with no badge
+      or sound, and photos, voice and encrypted texts become a short line such as "Photo: Look at
+      this". It is off by default, and a connected phone app still gets every message. The
+      recognition rules are by jadestarwatcher, and it was asked for by @zomgugoff.
+
+
+      **Mute colours and animations.** A new switch for a calm, flat look with muted tones, a plain
+      screensaver face and no animation. By **@oumike** (#798).
+
+
+      **Emoji reactions read as reactions.** MeshCore Open and MeshCore One send reactions as plain
+      text, so they used to land as raw bubbles like `r:6801:02`. They now show as a reaction,
+      naming the message they answer when it is still here. By **@oumike** (#795), reported by
+      @DenRalle (#791).
+
+
+      **Browser features share one code.** File Transfer, the Remote terminal and VNC all ask for
+      the same code shown on the device, and a browser that does not give it within 30 seconds is
+      dropped. By **@CarpeNoctem** (#793).
+
+
+      **Eight more emoji display**: ice cube, the red, yellow, green and blue circles, oncoming car,
+      hiking boot and the police light, used by a popular channel bot. Asked for by jadestarwatcher.
+
+
+      Chat icons take their initials from the first letters of the first and last word (**@oumike**,
+      #796, asked for by @big-edd). The web flasher offers the last 25 builds under Version, and an
+      older test build picked on the Stable side no longer fails to download.
+
+
+      ### Fixes
+
+
+      **GPS that stayed silent on the T-Deck.** Since beta_100 the T-Deck tells its receiver to stop
+      and start, and at boot those commands go out close together, so a receiver could end up
+      stopped with nothing to wake it. The firmware now watches for as long as the GPS is on and
+      starts it again when sentences stop. Under the GPS or battery saver the first search gets ten
+      minutes instead of three, and Settings > GPS says either "Receiver is talking at 38400" or "No
+      data from the receiver". Reported by @johntofflemire-alt (#778).
+
+
+      **Ping on a repeater with no guest access.** Ping logs in as a guest first, and such a
+      repeater refuses it and never answers. When a repeater stays silent, Ping now falls back to a
+      trace, which needs no login. Reported by @Myrlhyn (#780). The guest logins behind Ping and
+      Telemetry also flood at 1-byte hashes, like Admin (**@oumike**, #783).
+
+
+      **Traces.** Single-hop traces in 3-byte path mode send 4-byte hops, matching what the packet
+      declares; found by @Ve2mrx (#818). Trace route now works past the first repeater: it goes out
+      along the path, through the target and back the same way, because a trace ends at whoever
+      hears its last forwarder. Before, a path with 2 or 3-byte hashes fell back to one hop and a
+      longer route never came back. Each node on the way reports its own reading.
+
+
+      **Contacts added from Discovered after a restart** learn their route, so direct messages to
+      them go out properly (**@oumike**, #781, reported by @EricMW61).
+
+
+      The web client's Peers filter leaves out rooms, and Rooms has its own filter (**@oumike**,
+      #779). A long list of screens now translate (**@oumike**
+
+      …
   - version: beta_101
     name: wadamesh beta_101
     datetime: '2026-10-28T13:56:46Z'
@@ -1664,63 +1752,3 @@ releases:
       **SD Scan**, in the Store. It looks through the SD card for Windows programs, scripts, shortc
 
       …
-  - version: beta_82
-    name: wadamesh beta_82
-    datetime: '2026-09-18T11:47:01Z'
-    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_82
-    prerelease: true
-    notes: >-
-      Test build. Stable stays beta_65.
-
-
-      Flash it at **[flasher.wadamesh.com](https://flasher.wadamesh.com)** (switch the toggle to
-      Beta), or update on the device if you have "Get test builds (beta)" turned on.
-
-
-      ## ThinkNode M9 SD cards: Windows malware
-
-
-      Some ThinkNode M9 cards shipped with a Windows worm on them ([Elecrow security
-      advisory](https://www.elecrow.com/Thinknode-M9-Security-Advisory-SD-Card-Malware-Risk.html),
-      September 2026). It cannot run on the radio, but it runs on the first Windows PC the card is
-      plugged into, which is exactly where you take the card to copy map tiles onto it.
-
-
-      On the infected cards seen so far it is a hidden `autorun.inf` in the top folder of the card
-      that launches a program called `xlfqf.pif` on open, explore and autoplay, with lines of random
-      junk in between to throw off simple scanners. That matches the pattern of the long-known
-      Sality worm, which disables antivirus software, steals credentials and infects other programs
-      on the PC.
-
-
-      - **New in the Store: SD Scan.** It looks through the SD card for Windows programs, scripts,
-      shortcuts and autorun files, shows what it found and why, and removes it after you confirm. A
-      mesh radio never uses any of these files, and nothing else on the card is touched. A quick
-      scan skips the deep map-tile folders; a full scan reads everything.
-
-      - **SD Scan only removes files it recognises.** If a card may be infected, the safest fix is
-      to copy off what you need and format it completely: in Files, hold the SD card row.
-
-      - **A startup warning.** When a card with Windows malware in its top folder is in the radio at
-      startup, or is inserted, wadamesh warns you and offers to open SD Scan.
-
-      - **Already used the card in a Windows PC?** Run a full virus scan on that PC as well.
-
-
-      ## For app authors
-
-
-      `wada.sd.check(path)` and `wada.sd.remove(path)` find and delete Windows malware on the card.
-      What counts is decided in firmware (`SdThreat.h`): `autorun.inf`, Windows program, script and
-      shortcut extensions, or a real Windows program header under any name. `remove` refuses
-      everything else, so no app can use it to delete map tiles, backups or chat history.
-      `wada.sd.list(path, start, max)` pages through big folders, and `caps().sd_clean` says whether
-      a board has all three. Documented at
-      [wadamesh.com/sdk.html](https://wadamesh.com/sdk.html#sd).
-
-
-      ## For testers
-
-
-      SD Scan and the removal are tested on a T-Deck. M9 owners: worth reporting whether the scan,
-      the removal and the startup warning all work with the M9's keys.

@@ -1,7 +1,15 @@
 source: github
 repo: smikme/meshapp
-updatedAt: '2026-11-10T16:13:31.348Z'
+updatedAt: '2026-11-10T22:57:45.679Z'
 releases:
+  - version: v2.4.0-unstable.8
+    name: MeshApp v2.4.0-unstable.8
+    datetime: '2026-11-10T22:23:33Z'
+    url: https://github.com/smikme/meshapp/releases/tag/v2.4.0-unstable.8
+    prerelease: true
+    notes: >-
+      **Full Changelog**:
+      https://github.com/smikme/meshapp/compare/v2.4.0-unstable.6...v2.4.0-unstable.8
   - version: v2.4.0-unstable.6
     name: MeshApp v2.4.0-unstable.6
     datetime: '2026-11-10T11:59:01Z'
@@ -24,12 +32,6 @@ releases:
       - Dont exit if tray activate covox/meshapp#633
       - Unnecessary boundaries
       - localization
-  - version: v2.4.0-unstable.3
-    name: MeshApp 2.4.0 unstable.3
-    datetime: '2026-11-09T22:02:43Z'
-    url: https://github.com/smikme/meshapp/releases/tag/v2.4.0-unstable.3
-    prerelease: true
-    notes: "Pre-release build of MeshApp 2.4.0 for testing.\r\n\r\nPackages are available for Linux x86_64, Windows x86_64, macOS Apple Silicon, and macOS Intel. Each platform also includes a self-update archive. Use the installer for your operating system; the self-update ZIP is intended for the application's updater.\r\n\r\n- Linux: DEB, AppImage, or Flatpak bundle. The Flatpak bundle uses the `unstable` branch and requires Freedesktop Platform 25.08 from Flathub.\r\n- Windows: MSI installer.\r\n- macOS: choose the aarch64 DMG for Apple Silicon or x86_64 DMG for Intel. Builds use ad-hoc signing and are not notarized; macOS may require explicit permission to open the application.\r\n\r\nThis is the first build of the new GitHub distribution cycle and must be installed manually. It does not replace the latest stable release or change the stable update feed. The Lua catalog and stable update feed will become available when Pages content is deployed with the first stable release.\r\n\r\nThe build includes library and protobuf updates, MeshCore changes, and tray fixes. \r\nSHA-256 checksums are provided in `SHA256SUMS`; `release.json` records the source commit, platform inventory, sizes, and hashes. Automated tests and package validation passed for all four build targets. Hardware access, installation, and upgrades should be tested before production use.\r\n\r\n**Full Changelog**: https://github.com/smikme/meshapp/compare/v2.3.1...v2.4.0-unstable.3"
   - version: v2.3.10
     name: MeshApp v2.3.10
     datetime: '2026-07-28T22:18:42Z'
