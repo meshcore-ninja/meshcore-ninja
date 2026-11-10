@@ -1,7 +1,13 @@
 source: github
 repo: Meshcore-Portugal/lusofw
-updatedAt: '2026-11-03T03:21:04.447Z'
+updatedAt: '2026-11-10T16:13:00.223Z'
 releases:
+  - version: v2026.11.1-rc1-cf85ec1
+    name: v2026.11.1-rc1-cf85ec1
+    datetime: '2026-11-10T12:34:08Z'
+    url: https://github.com/Meshcore-Portugal/lusofw/releases/tag/v2026.11.1-rc1-cf85ec1
+    prerelease: true
+    notes: "Automated dev prerelease of dev@cf85ec1 for v2026.11.1-rc1.\r\n\r\n### Funcionalidades\r\n\r\n- NRF52: Com a flag de build `LUSOFW_OTA_DIRECT` (ativa no Heltec T114) e um bootloader cuja versão começa por `gdfu-`, `start ota` reinicia diretamente para o bootloader em vez de iniciar o serviço BLE DFU. Com qualquer outro bootloader, ou sem a flag, mantém-se o comportamento anterior.\r\n\r\n### Correções\r\n\r\n- LILYGO T-LORA V2.1-1.6: Removido o botão de utilizador (`PIN_USER_BTN`, GPIO0), inexistente nesta placa. Um GPIO0 flutuante podia ser lido como pressão longa e desligar o repetidor (`Powering Off`) logo após o arranque.\r\n- CLIENTE: Migração do limiar de interferência RSSI para modo automático (`AUTO`) ao carregar preferências com valor `0` quando `LUSOFW_RADIO_AUTO_THRESH` está ativo.\r\n\r\n#### Build e Configuração\r\n\r\n- BUILD: Removidos os nomes de advert específicos de cada variant. Repeaters, room servers e sensores usam `lusofw-<FIRMWARE_VERSION>` como nome inicial.\r\n- BUILD: Adicionado o ambiente `heltec_v4_r8_repeater_bridge_espnow` para o repetidor Heltec V4 R8 com ponte ESP-NOW.\r\n- DEVCONTAINER: Adicionados GitHub CLI e extensão C/C++; atualizadas a configuração e as extensões do Claude Code."
   - version: v2026.9.2
     name: v2026.9.2
     datetime: '2026-09-26T13:22:46Z'
@@ -1094,9 +1100,3 @@ releases:
     url: https://github.com/Meshcore-Portugal/lusofw/releases/tag/v0.0.5
     prerelease: true
     notes: '**Full Changelog**: https://github.com/Meshcore-Portugal/lusofw/compare/v0.0.4...v0.0.5'
-  - version: v0.0.4
-    name: v0.0.4
-    datetime: '2026-02-23T12:30:49Z'
-    url: https://github.com/Meshcore-Portugal/lusofw/releases/tag/v0.0.4
-    prerelease: true
-    notes: '**Full Changelog**: https://github.com/Meshcore-Portugal/lusofw/compare/v0.0.3...v0.0.4'

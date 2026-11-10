@@ -1,7 +1,139 @@
 source: github
 repo: OffbandMesh/meshcore-firmware
-updatedAt: '2026-11-08T23:28:38.391Z'
+updatedAt: '2026-11-10T16:13:18.327Z'
 releases:
+  - version: offband-v1.7.1
+    name: Offband offband-v1.7.1
+    datetime: '2026-11-10T08:09:29Z'
+    url: https://github.com/OffbandMesh/meshcore-firmware/releases/tag/offband-v1.7.1
+    prerelease: false
+    notes: >-
+      Offband 1.7.1 is a patch release on top of **1.7.0** (2026-11-08). It fixes indicator control:
+
+      radios that reported display and LED control they could not honor, and a transmit LED that
+      could
+
+      not be switched off on any board but two.
+
+
+      **Nothing else changed.** No default moved, no new board image is published, and the upgrade
+      is an
+
+      ordinary one from 1.7.0. If you are coming from an older release, read the
+
+      [1.7.0 notes](https://github.com/OffbandMesh/meshcore-firmware/releases/tag/offband-v1.7.0)
+      first —
+
+      the four changed defaults are described there.
+
+
+      Built on the **MeshCore 1.17.0** base.
+
+
+      ## What was wrong
+
+
+      If you set the status LED off from a client and got *"the device doesn't support that"*, this
+
+      release is why it happened.
+
+
+      One capability flag answered two separate questions — can this board control its display, and
+      can
+
+      it control its LED — and it was decided at compile time from whether a display class was
+      present in
+
+      the build. Fifteen boards satisfy that test with a placeholder display driver that reports no
+
+      display at all. So those boards advertised both controls, your client offered both, and the
+      write
+
+      was refused by the firmware that had just claimed to support it. It was reproduced on a Heltec
+
+      T096, a SenseCAP T1000-E and a QCC badge.
+
+
+      Separately, changing the display mode on a board with no screen was accepted, saved and read
+      back
+
+      as though it had worked.
+
+
+      ## What this release does
+
+
+      - **A radio reports display control and LED control separately, and only when it has them.**
+      Both
+        are now decided while the board is running — from whether a display actually came up, and whether
+        the board can drive its LED — rather than from how the firmware was compiled. A board can report
+        one without the other.
+      - **A display change on a screenless board is refused**, rather than saved and echoed back.
+
+      - **The transmit and heartbeat LED can be switched off on boards where it previously could
+      not.**
+        Sixty-three boards have a transmit LED; two of them honored the setting. The state now lives in
+        the shared board code, so most of the fleet gains it at once — including sixteen nRF52 boards with
+        a heartbeat LED, among them the **SenseCAP T1000-E**, the **RAK4631**, the **ThinkNode** boards
+        and the **XIAO nRF52**. Verified on hardware on a T1000-E.
+      - **A board that cannot control its LED now says the LED is on**, whatever you asked, because
+      the
+        LED is working normally. "I can't switch this" is not the same answer as "it's off".
+      - **The Queen City Con badge keeps its LED behavior on purpose.** It is the one deliberate
+        exception, and it is declared in the badge's own board configuration rather than hidden in shared
+        code.
+
+      ## Still to come
+
+
+      Some boards drive their LED from their own transmit code rather than through the shared path,
+      and
+
+      on those the switch does not take effect yet. That is tracked as
+
+      [#2075](https://github.com/OffbandMesh/meshcore-firmware/issues/2075) and is not in this
+      release.
+
+
+      ## Compatibility
+
+
+      - **Upgrading from 1.7.0 keeps your settings, contacts and channels.**
+
+      - **Older radios still work with a new client.** The original single capability flag is kept
+      as the
+        coarse answer for firmware released before this one, so a client that understands the new
+        per-indicator records still reads an older radio correctly. Where the new records are present,
+        they are what counts.
+      - **Stock MeshCore clients are unaffected.** No byte upstream reads has changed.
+
+      - A client has to ask for the new records to use them. Until your client does, it falls back
+      to the
+        single flag, which behaves exactly as it did in 1.7.0.
+
+      ## Images
+
+
+      The published image set is unchanged from 1.7.0. T-Deck Pro work in this release is diagnostic
+      only
+
+      and ships no image.
+
+
+      ---
+
+
+      ### Which file do I download?
+
+
+      | File | What it is | When to use it |
+
+      |---|---|---|
+
+      | `*-merged.bin` (ESP32 — Heltec V3/V4, XIAO) | **Full image** — bootloader + partition table
+      + app in one, flashed at `0x0` after a chip erase. Self-contained, works on a blank chip. |
+
+      …
   - version: offband-v1.7.0
     name: Offband offband-v1.7.0
     datetime: '2026-11-08T21:52:52Z'
@@ -1350,92 +1482,6 @@ releases:
     datetime: '2026-06-24T04:41:17Z'
     url: https://github.com/OffbandMesh/meshcore-firmware/releases/tag/offband-v1.1.0
     prerelease: false
-    notes: >-
-      The headline is **Epic F: the companion-API config command** — a WiFi observer can now be
-
-      configured entirely from the app (WiFi, the full MQTT broker pool, display) over BLE —
-
-      plus the observer config/NVS-layer hardening that came out of bench-validating it. Still
-
-      on the **MeshCore 1.16.0** base.
-
-
-      ### Added
-
-      - **Companion-API config command (Epic F, #159)** — configure a WiFi observer from the
-        MeshCore/Offband app over BLE: WiFi credentials, the full MQTT broker pool (per-slot
-        url / port / transport / auth / JWT claims / CA-cert / topic-prefix / IATA),
-        enable / disable / clear a slot, and display settings. Wholly observer-gated and surfaced
-        behind a new `WIFI_OBSERVER_SUPPORT` capability bit + `FIRMWARE_VER_CODE 14`, so stock
-        companions are unaffected. (#160–#169)
-      - **Per-broker live state in the broker read** (#172) — each slot now reports its live
-        connection state (`connecting` / `up` / `backoff` / `held` …) + last-error class, so the
-        app shows whether a broker actually connected, not just that it's enabled.
-      - **Resolved-default hints** (#173, #186) — when `jwt_owner` / `iata_override` are unset,
-        the read shows the value the device will actually use at connect (its own pubkey / the
-        global IATA) as a placeholder instead of a confusing blank — in both the pool dump and
-        the per-field read.
-
-      ### Changed
-
-      - **Honest observer config writes (SAFELANE §6, #181)** — the config / NVS write path used
-        to silently swallow failures (a broker disable could ACK success while nothing changed).
-        Every writer, the live-reload path, and the crash logger itself now surface + log
-        failures with context. This is what root-caused #179.
-      - **Compact broker config storage + seamless migration** (#182) — broker config is stored
-        as small per-key entries (no blank fields) rather than one ~1 KB blob, so writes fit a
-        near-full NVS; a one-time **invisible boot migration** reclaims space on upgrade, so the
-        operator never sees a transient write error.
-      - **CoreScope (okimesh) default broker** → `mqtt://mqtt1.okimesh.org:1883` (#170).
-
-      - **Offband tell in MQTT** (#174) — observer nodes append a 📡 to their display name in
-        MQTT payloads, so feeds / maps can flag Offband observers.
-
-      ### Fixed
-
-      - **#179** — a broker disable ACK'd success while the dump still reported `enabled=1`.
-        Root-caused as a near-full-NVS write failure the old code lied about; fixed by #181
-        (honest write) + #182 (storage that fits). Verified on hardware.
-      - **Observer capped at 1 concurrent TLS broker** (#171) — a heap guard stops the OOM reboot
-        when a 2nd TLS/wss broker's ~60 KB mbedTLS context exhausts the Heltec V3 heap. Measured
-        on hardware (1 wss ≈ 63 KB free, 2 wss ≈ crash).
-      - **BLE connect survives the client's reconnect-thrash** (#178) — a deeper ESP32 BLE frame
-        queue (4 → 12) + stream terminators on reconnect, so a mid-stream reconnect can't leave
-        the app's contact / settings sync hung. Affects companion **and** observer. (The root —
-        the client's uncapped reconnect retry — is paced client-side in meshcore-client.)
-      - **Crash log reliable for the whole boot** (#183) — the 1 Hz heartbeat was flooding the
-        4 KB RTC crash-ring (wrapped in ~50 s) and evicting real crash diagnostics; the heartbeat
-        now writes the ring every 30 s / on a sharp heap drop, so a post-reboot dump keeps the
-        evidence that explains a crash past boot+50 s.
-
-      ### CI / build
-
-      - **Heltec T114** (nRF52) companion added to the CI matrix (#185) — first nRF52-companion
-        build coverage (complements the existing RAK4631 repeater).
-
-
-      ---
-
-
-      ### Which file do I download?
-
-
-      | File | What it is | When to use it |
-
-      |---|---|---|
-
-      | `*-merged.bin` (ESP32 — Heltec V3/V4, XIAO) | **Full image** — bootloader + partition table
-      + app in one, flashed at `0x0` after a chip erase. Self-contained, works on a blank chip. |
-      **First install / clean setup.** In a web flasher this is the **"Full Firmware"** option. |
-
-      | `*.bin` (ESP32) | **App only** — flashed at the app offset (`0x10000`); the bootloader m
-
-      …
-  - version: offband-v1.1.0-rc1
-    name: Offband offband-v1.1.0-rc1
-    datetime: '2026-06-24T04:24:07Z'
-    url: https://github.com/OffbandMesh/meshcore-firmware/releases/tag/offband-v1.1.0-rc1
-    prerelease: true
     notes: >-
       The headline is **Epic F: the companion-API config command** — a WiFi observer can now be
 
