@@ -1,7 +1,111 @@
 source: github
 repo: ALLFATHER-BV/wadamesh
-updatedAt: '2026-11-10T22:57:38.187Z'
+updatedAt: '2026-11-11T21:06:48.538Z'
 releases:
+  - version: beta_103
+    name: wadamesh beta_103
+    datetime: '2026-11-11T18:10:29Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_103
+    prerelease: true
+    notes: >-
+      Test build, on top of beta_102. Stable stays **beta_101**.
+
+
+      Flash it at **[wadamesh.com](https://wadamesh.com/#install)** (switch the toggle to Beta), or
+      update on the device if you have "Get test builds (beta)" turned on.
+
+
+      Another community round. **@oumike** added an unread filter to Chats and opened Lua apps up to
+      the web with a new Cyberspace app, **@zmiguel** made exFAT cards work, **@TerryTel93** brought
+      nearly the full emoji set in from the SD card, and **@TinkeringDao** reworked a long list of
+      ThinkNode M9 hardware details.
+
+
+      ### New
+
+
+      **Unread chats only.** The new U chip in the Chats header hides every thread without unread
+      messages, and it works together with the filter, so U plus Channels lists unread channels
+      only. All, Channels and Direct now sit in one dropdown, and both choices are kept over a
+      restart. By **@oumike** (#825), asked for by **@SP4RT4N3R** (#824).
+
+
+      **exFAT microSD cards.** Cards of 64 GB and up come formatted as exFAT, and none of them could
+      be read before, because every board's file system had exFAT switched off. They now work for
+      data, maps, music and files without reformatting to FAT32. By **@zmiguel** (#812).
+
+
+      **Emoji pack from the SD card.** With a pack at `emoji/emoji.pack` on the card, the emoji
+      picker gets category tabs (Smileys, People, Nature, Food and more), a Recent tab, flags and
+      nearly the full emoji set. Without a pack it stays as it was. On the boards with an SD card
+      and 8 MB PSRAM, except the T-LoRa Pager, which has no flash space left for it. By
+      **@TerryTel93** (#616).
+
+
+      **File Transfer progress.** A progress bar, the share done and the time left while a file
+      moves, instead of only the byte counts. Asked for by benanderson.
+
+
+      **Heltec V4-R8 rotation.** Settings > Display > Orientation is back, landscape included. The
+      first start in a landscape asks "Keep this orientation?" and goes back to portrait by itself
+      after 15 seconds without a tap, so a screen whose touch does not line up can never leave the
+      device stuck. Asked for by e4m7g6.
+
+
+      ### Fixes
+
+
+      **Apps that load data from the internet** could wait forever after a restart: their requests
+      queued for the network worker, which only started once the Store or the map had run. Each
+      request now starts it. A web request from an app also answers at once with an error when Wi-Fi
+      is not connected, or when a secure connection would leave too little memory, instead of
+      hanging.
+
+
+      ### ThinkNode M9
+
+
+      All by **@TinkeringDao** (#826):
+
+
+      - The battery reads the charger's own state, so it tells charging from charged, and readings
+      no longer jump while Wi-Fi is busy.
+
+      - Settings > Battery > Low battery warning warns at 20 and 10 percent and puts the device to
+      sleep at 3 percent so the cell is never run flat. It is on by default.
+
+      - Settings > Display > Wake when picked up and Settings > Sound > Quiet when face down now
+      work, using its motion sensor.
+
+      - The microSD card runs at 20 MHz, the GPS is switched off cleanly with its lines released so
+      it draws nothing while off, Wi-Fi sleeps deeper while the screen is dark, and the clock chip's
+      unused output is off.
+
+      - The radio calibrates from the right standby mode at start, accepts 150 to 960 MHz, and the
+      RX boosted gain switch now takes effect.
+
+      - The compass heading is corrected, and Bluetooth no longer uses extended advertising, which
+      could upset the radio controller when a phone reconnected quickly.
+
+
+      ### Apps and the Lua SDK
+
+
+      **Cyberspace**, a new app in the Store: a client for cyberspace.online with its cIRC rooms,
+      C-Mail and the Feed, over https with your own account. It needs a board with 8 MB PSRAM, and
+      not the P4 boards. By **@oumike** (#788).
+
+
+      - `wada.net.request` sends GET, POST and other requests with headers and a body over http or
+      https, and https checks the certificate. Also `wada.json.encode` and `decode`,
+      `label:on_press`, and `caps().request` and `caps().https` to check for them (#788).
+
+      - **GPS Compass 1.1**: on the ThinkNode M9 the heading held level now matches the
+      tilt-corrected one (#826).
+
+      - The lan
+
+      …
   - version: beta_102
     name: wadamesh beta_102
     datetime: '2026-11-10T18:09:21Z'
@@ -1671,84 +1775,3 @@ releases:
 
       Region discovery is new on-air traffic and has not been tested on a live mesh yet. Worth
       reporting whether a scan finds your repeaters' regions.
-  - version: beta_83
-    name: wadamesh beta_83
-    datetime: '2026-09-19T10:30:08Z'
-    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_83
-    prerelease: false
-    notes: >-
-      **Stable.** This is the same build as the beta_83 test release, promoted unchanged after
-      testing, and it replaces beta_65 as the recommended version.
-
-
-      Flash it at **[flasher.wadamesh.com](https://flasher.wadamesh.com)**, or update on the device.
-
-
-      Eighteen test builds went into this one, beta_66 through beta_83. Everything below is in it.
-
-
-      ## Read this first if you are coming from beta_65
-
-
-      - **If you keep an offline map pack on an SD card, older firmware was deleting tiles out of
-      it.** Every tile it wanted as a `.jpg` erased the `.png` sitting next to it. That is fixed,
-      but the deletions already made cannot be undone: check whether areas of your pack are missing
-      and re-copy them. Found and fixed by [@cvhviz](https://github.com/cvhviz) on a ThinkNode M9.
-
-      - **ThinkNode M9 owners: some of the SD cards Elecrow shipped carry a Windows worm** (their
-      advisory, September 2026). It cannot run on the radio, but it runs on the first Windows PC the
-      card is put into, which is exactly where you take it to copy map tiles. This firmware warns
-      you when such a card is in the device at startup or is inserted, and offers SD Scan. If your
-      card has already been in a PC, run a virus scan on that PC too.
-
-      - **Bluetooth now serves either the phone app or a Bluetooth keyboard**, and you choose which
-      under Settings, Bluetooth. The phone app stays the default.
-
-      - Changing the theme, rotating the screen or switching remote mode restarts the device. All
-      three now say why before they do it.
-
-
-      ## Two new boards
-
-
-      - **Seeed Wio Tracker L2.** Display, touch, GPS, microSD, battery and buttons brought up on
-      real hardware by [@oumike](https://github.com/oumike), who owns the board and maintains it.
-
-      - **LilyGo T-Deck Pro**, marked experimental. E-paper screen, keyboard and touch, with radio,
-      GPS, microSD and battery working. The screen redraws the way e-paper does rather than updating
-      instantly. By [@oumike](https://github.com/oumike), tested on one unit.
-
-
-      ## New things you can do
-
-
-      **USB Files**, on the T-Deck and the Heltec V4. Open it from the app drawer, connect the
-      device with a USB cable and go to [files.wadamesh.com](https://files.wadamesh.com) in Chrome
-      or Edge. Browse the SD card, internal storage and the map tiles, upload files and whole
-      folders, download, rename and delete. The device carries out every operation itself, so what
-      it relies on stays safe: identity, contacts, settings and chat history can be downloaded but
-      not changed or deleted. Files that SD Scan would flag show in red, and the device checks a
-      file's first bytes, so a Windows program under a harmless name is caught too. Your files go
-      straight from the device to your computer over the cable; nothing passes through our server.
-
-
-      **Files on and off the device over Wi-Fi**, by [@oumike](https://github.com/oumike). A browser
-      copies files to and from the card, protected by a six digit code shown on screen, with uploads
-      verified by checksum and committed atomically so an interrupted transfer cannot leave a half
-      written file. The page also lists crash reports, settings backups and screenshots, filters
-      them and can delete them, and it warns you that a settings backup contains your private key. A
-      folder of offline OSM tiles can be uploaded straight to the card, with resumable writes.
-
-
-      **Bluetooth keyboards on every board with Bluetooth.** Pairing lists keyboards in pairing mode
-      and pairs with a code or without one. Keys are read from the keyboard's own report map, the
-      way a phone or computer reads them, with US, UK, German, French and Belgian layouts including
-      AltGr and dead keys. The arrows, Tab, Enter and Page Up and Down drive the highlight, so the
-      whole interface works without touching the screen. Esc is back, and because some keyboards
-      type a character instead of sending Esc, the Back key setting captures whichever key you
-      press. Not on the Tanmatsu or the T-Display P4, which have no Bluetooth of their own.
-
-
-      **SD Scan**, in the Store. It looks through the SD card for Windows programs, scripts, shortc
-
-      …

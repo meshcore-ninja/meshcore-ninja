@@ -1,7 +1,119 @@
 source: github
 repo: andymux/meshos-releases
-updatedAt: '2026-11-06T19:02:13.827Z'
+updatedAt: '2026-11-11T21:07:11.066Z'
 releases:
+  - version: v1.0.36
+    name: MeshOS v1.0.36
+    datetime: '2026-11-11T15:11:49Z'
+    url: https://github.com/andymux/meshos-releases/releases/tag/v1.0.36
+    prerelease: false
+    notes: >-
+      # MeshOS 1.0.36
+
+
+      ## Public 2, the new secure way to chat on the Mesh!
+
+      - A new public channel where every message is signed with the sender's own key, so a name on
+      it is always that person. The radio carries it over LoRa and phones carry it over AirLink.
+
+      - Only your contacts appear in the chat. Anyone else waits in a bar above it: add them as a
+      contact and their messages move in, show an ID anyway while it cannot be checked, or block a
+      key for good. Clear empties the bar when it gets busy.
+
+      - Send LoRa advert and Send AirLink advert from the chat menu, so other radios and phones hold
+      your key. Add contact works from a verified signature even before an advert has reached you.
+
+      - Messages are compressed with Huffman coding, each character coded in the light of the one
+      before it, with a byte counter under the composer. Delivery reports, heard reports and the
+      message path work as on Public, and Sent message names the repeater that put a message on
+      LoRa.
+
+      - With a radio connected, Path Hash Size and Region Scope are in the channel menu, as on
+      Public.
+
+      - Public 2 over LoRa needs MeshOS 2.4 on the radio, or 1.7.11 on a T-Deck or M9. An older
+      MeshOS radio still shows what it hears but cannot send; the app says so in the chat and in
+      Settings, with the way to update.
+
+      - In the chat list, Public 2 moves up when messages are waiting in its bar and the preview
+      says so, so you can see the channel is in use before anyone you know has posted.
+
+
+      ## Heard list and map
+
+      - Radios heard over the internet are listed under LoRa radios, where they belong.
+
+      - Connecting a radio no longer clears what the phone learned by itself; its own heard list is
+      merged in.
+
+      - The map's LoRa view shows every LoRa radio the app knows, however its advert reached you.
+
+      - The app is ready for the coming repeater update that carries LoRa adverts and Public 2
+      across a repeater's AirLink bridge: those radios appear in the Heard list and on the map as
+      LoRa radios, and bridges in range are named in Channel info.
+
+
+      ## Contacts and signed channels
+
+      - A LoRa contact can be removed with no radio connected; the change is applied when the radio
+      next connects.
+
+      - In a signed channel, Add contact is on the badge of a verified sender you have an advert
+      for.
+
+
+      ## Downloads
+
+      - Android: MeshOS-v1.0.36.apk
+
+      - macOS: MeshOS-v1.0.36.dmg
+
+
+      SHA-256:
+
+      - MeshOS-v1.0.36.apk: ea13493def378e5017683d3ba710e33b0627b94236727ac7cd2fbd6c3fa50e49
+
+      - MeshOS-v1.0.36.dmg: f1961cc465fb589cf1dae759df4fdacbfd9f72afdfbc3d3c9b511c2f0f03fe7d
+  - version: fw-v1.7.11
+    name: MeshOS firmware v1.7.11
+    datetime: '2026-11-11T15:10:28Z'
+    url: https://github.com/andymux/meshos-releases/releases/tag/fw-v1.7.11
+    prerelease: false
+    notes: >-
+      MeshOS firmware v1.7.11
+
+
+      LilyGo T-Deck and ThinkNode M9
+
+
+      Public 2, the MeshOS app's signed channel
+
+      - Now on the radio's channel list by default, like Public (found by its key, never duplicated;
+      removing it only lasts until the next boot).
+
+      - The radio sends it for the app, keeps what arrives while the phone is away (queued like any
+      channel message), and shows a message in its own chat when the sender is one of the radio's
+      contacts and the signature checks out. The radio can post there itself too: its message is
+      packed and signed with the radio's own key in the app's format, so apps and other radios that
+      hold its advert show it. Needs MeshOS app 1.0.35 or later for Public 2 itself.
+
+      - Anyone not in your contacts waits in a bar above the compose box, as in the app: add them as
+      a contact when their advert is held, show them anyway while they cannot be checked, or block
+      their key. The channel menu's Unblock and Hide rows undo those, and the participants list
+      lists blocked IDs for unblocking one at a time.
+
+      - Everything from 1.7.10: the route of every message is reported to the app's Spam Blocker,
+      long messages included.
+
+
+      Install via SD card (firmware.bin) or the in-firmware updater.
+
+
+      SHA-256:
+
+      - TDeck: aa63ea5f683f60bbd9cef5b7c3fcca6e9dc645f607c5037c7b5ef9df8aad6138
+
+      - M9: f344fb9c26c500d97d76d722cb910e29b9e0f15df1b2a8bc5b93148bced5af96
   - version: v1.0.35
     name: MeshOS v1.0.35
     datetime: '2026-11-06T12:34:47Z'
@@ -979,65 +1091,3 @@ releases:
       - TDeck: a7150b93f5aa23d2855c5ec70036cf77faec0670e616a19a81b04bb7757b6e28
 
       - M9: a0195a3f5db3307014d09f9e7405e096553dd4a988f442570d3f53ad2a13b582
-  - version: v1.0.22
-    name: MeshOS v1.0.22
-    datetime: '2026-09-26T10:17:24Z'
-    url: https://github.com/andymux/meshos-releases/releases/tag/v1.0.22
-    prerelease: false
-    notes: >-
-      # MeshOS app 1.0.22
-
-
-      ## Repeaters over Bluetooth
-
-      - Tools > Manage a repeater opens a MeshOS repeater's own settings page inside the app over
-      Bluetooth, so a repeater can be set up with nothing but your phone. It runs the first-time
-      setup wizard, shows the nearby nodes list and path trace, and switches the repeater between
-      Bluetooth and WiFi.
-
-      - Update a repeater's firmware over Bluetooth. The app fetches the release, checks it, sends
-      it to the repeater and reconnects once the repeater has restarted. Needs MeshOS repeater
-      firmware 1.5.2 or later.
-
-
-      ## Scan for Nodes
-
-      - Tools > Scan for Nodes lists the nearby repeaters and sensors that answer, and offers to add
-      one as a contact, or to add it and open its management screen over LoRa straight away.
-
-
-      ## Direct messages
-
-      - Optional automatic retry for direct messages that are not delivered. Turn on Direct Message
-      Retry in Settings.
-
-      - A message that was not delivered shows a red cross in the chat list instead of a tick.
-
-
-      ## Reliability
-
-      - Scanning for repeaters while connected to a radio no longer drops the connection.
-
-      - Fixes that improve reliability when using the radio with the MeshOS app.
-  - version: fw-v1.7.5
-    name: MeshOS firmware v1.7.5
-    datetime: '2026-09-20T07:28:59Z'
-    url: https://github.com/andymux/meshos-releases/releases/tag/fw-v1.7.5
-    prerelease: false
-    notes: |-
-      MeshOS firmware v1.7.5
-
-      Storage
-      - The malware clean-up now removes files with long names. On some factory map cards
-        the worm's shortcut files carry long Chinese names, and 1.7.4 cut those names short
-        when it listed them, so they could be found but not removed. A scan now lists up
-        to 256 items per pass and says when more remain, so scan again after removing.
-      - If 1.7.4 left files behind on your card, update and run the scan once more.
-        Formatting the card is still the quickest way to a clean card if you prefer.
-
-      Device firmware for LilyGo T-Deck and ThinkNode M9.
-      Install via SD card (firmware.bin) or the in-firmware updater.
-
-      SHA-256:
-      - TDeck: c456640ba0b5477a441e6dd613dc2330b66efb87cf1b117e407a944d6ccee1b3
-      - M9: a1fdbf984d474fe242af4c155214a1ee7375af69cba53498ae5f2c3cde0a5ed8

@@ -1,7 +1,13 @@
 source: github
 repo: meshcore-dev/meshcore-cli
-updatedAt: '2026-10-29T19:27:18.776Z'
+updatedAt: '2026-11-11T21:06:57.899Z'
 releases:
+  - version: v1.6.10
+    name: v1.6.10
+    datetime: '2026-11-11T19:06:19Z'
+    url: https://github.com/meshcore-dev/meshcore-cli/releases/tag/v1.6.10
+    prerelease: false
+    notes: "Mainly an update of cli commands\r\n\r\n**Full Changelog**: https://github.com/meshcore-dev/meshcore-cli/compare/v1.6.9...v1.6.10"
   - version: v1.6.9
     name: v1.6.9
     datetime: '2026-10-29T14:55:43Z'
@@ -116,9 +122,3 @@ releases:
     url: https://github.com/meshcore-dev/meshcore-cli/releases/tag/v1.1.0
     prerelease: false
     notes: "Decided to draft 1.1 with the upcoming of sensor nodes, this one should evolve a lot but 1.1 is the one with sensors support ...\r\n\r\nMain improvements in 1.1 are :\r\n* better connection handling\r\n* better contact management (there is now a pending list when manual_add_contacts is set to True)\r\n* initial support for sensors\r\n* possibility to display incoming adverts and path changes\r\n\r\nAnd some improvements that were in 1.0.x branch but not advertised\r\n* `get fstats` command\r\n* get/set chanel information"
-  - version: v1.0.0
-    name: v1.0.0
-    datetime: '2025-05-29T16:24:11Z'
-    url: https://github.com/meshcore-dev/meshcore-cli/releases/tag/v1.0.0
-    prerelease: false
-    notes: "This is v1.0 of meshcore-cli.\r\n\r\nNo changes since 0.8.4, but lots of changes from the start four month ago !\r\n\r\nRead https://digitalsober.wordpress.com/2025/05/29/the-odyssey-of-meshcore-cli/ for the history of this software that bridges my passion for Linux and my involvment in MeshCore.\r\n\r\nThanks to all MeshCore contributors and users, you've all contributed to this ... And special thanks to Awol with its refactoring of the lib that unleashed the second stage of the rocket !"
