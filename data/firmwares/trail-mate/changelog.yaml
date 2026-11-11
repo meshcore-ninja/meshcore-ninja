@@ -1,7 +1,51 @@
 source: github
 repo: vicliu624/trail-mate
-updatedAt: '2026-11-11T05:13:48.006Z'
+updatedAt: '2026-11-11T13:45:53.864Z'
 releases:
+  - version: v1.2.3
+    name: v1.2.3
+    datetime: '2026-11-11T06:19:15Z'
+    url: https://github.com/vicliu624/trail-mate/releases/tag/v1.2.3
+    prerelease: false
+    notes: |-
+      ## [1.2.3] - 2026-11-11
+
+      ### Added
+
+      - Native ESP-NOW Team enrollment on T-Display-CM0 and M5Stack Cardputer Zero,
+        compatible with existing ESP32 TrailMate teams. The privileged Linux helper
+        has an independent, durable Wi-Fi recovery lease and systemd watchdog. See
+        [installation and recovery requirements](https://github.com/vicliu624/trail-mate/blob/v1.2.3/docs/engineering/linux-espnow-team.md).
+      - Cardputer Zero footer actions align with physical keys 4 through 8 while
+        retaining the existing letter shortcuts. Node ID is available in Settings /
+        Device, and text editors retain normal numeric input.
+
+      ### Fixed
+
+      - Linux Team credentials survive application restarts and elapsed time without
+        forcing members to leave or pair again. Team encryption uses the shared
+        ESP-compatible key derivation and authenticated message format.
+      - Shared Linux application-data scheduling waits for receive and relay activity
+        before transmitting, with bounded contention backoff and queue expiry. The
+        receiver and UI remain active while a send waits for the channel.
+      - SX1262 enters standby before updating the TX FIFO, restores receive IRQs
+        after transmission, and rejects CRC/header errors even when RX_DONE is also
+        asserted. Damaged frames no longer enter delivery or relay processing.
+      - Contacts retains the Team filter and opens the authenticated Team
+        conversation. Team group activation no longer opens ordinary broadcast chat.
+      - Bounded Meshtastic relay and application deduplication suppress repeated
+        delivery, while Team map projection retains each member's newest position.
+      - MeshCore AppData respects explicit V1/V2 identity hashes, including a valid
+        zero hash byte, and rejects oversized envelopes instead of truncating them.
+      - Zero footer shortcuts remain usable when focus is on the page's Back button.
+
+      ### Changed
+
+      - Linux Meshtastic uses the same wire codec and nonce implementation as ESP32,
+        with an in-place OpenSSL backend on Linux. Linux MeshCore group and private
+        AppData use the shared protocol strategy. ESP allocation and buffer capacities
+        remain unchanged; protocol ownership and compiler footprint checks are
+        documented in the [integration guide](https://github.com/vicliu624/trail-mate/blob/v1.2.3/docs/engineering/linux-espnow-team.md#shared-protocol-ownership).
   - version: v1.2.2
     name: v1.2.2
     datetime: '2026-11-11T02:23:02Z'
@@ -373,9 +417,3 @@ releases:
     url: https://github.com/vicliu624/trail-mate/releases/tag/v0.1.41-alpha
     prerelease: true
     notes: "## [0.1.41-alpha] - 2026-08-24\n\n### Added\n\n- Added an SD-editable `/trailmate/config.tms` working configuration. Valid settings on the\n  card take priority at startup; when it is absent, existing NVS settings are used and can\n  be materialized to the card.\n- Added a show/hide control to masked on-device Settings fields, so PSKs and other long\n  secrets can be verified before saving while masking remains the default (#82).\n\n### Changed\n\n- Made the SD working configuration the portable, primary source for all supported\n  settings, including protocol and network options, radio channels, device preferences,\n  Wi-Fi profiles, and cellular settings. Existing installations retain their saved\n  settings during the first upgrade to this release.\n- USB Disk now gives the host exclusive SD-card access and temporarily pauses competing\n  application, radio, Wi-Fi, GPS, and display activity without changing the user's saved\n  settings.\n\n### Fixed\n\n- Fixed USB Disk transfers that could report absent media or drop during access by holding\n  SD ownership stable for the whole host session and preventing competing shared-SPI\n  activity (#83).\r\n\r\n\n\n## What's Changed\n* Codex/config persistence by @vicliu624 in https://github.com/vicliu624/trail-mate/pull/84\n\n\n**Full Changelog**: https://github.com/vicliu624/trail-mate/compare/v0.1.40-alpha...v0.1.41-alpha"
-  - version: v0.1.40-alpha
-    name: v0.1.40-alpha
-    datetime: '2026-08-14T08:37:42Z'
-    url: https://github.com/vicliu624/trail-mate/releases/tag/v0.1.40-alpha
-    prerelease: true
-    notes: "## [0.1.40-alpha] - 2026-08-14\r\n### Added / 新增\r\n- Added bounded VMP voice messages for T-LoRa Pager chat. The compose microphone records up to five seconds of Codec2 audio; LR1121 uses the active Sub-GHz settings only for private control/receiver-ready negotiation, then sends the compact voice train over its 2.4 GHz radio. Private voice is end-to-end encrypted, while broadcast voice is intentionally public. Received VMP objects are never flooded, relayed, retransmitted, or injected into a radio mesh. / 为 T-LoRa Pager 聊天新增有界 VMP 语音消息：聊天输入框麦克风最多录制五秒 Codec2 音频；LR1121 仅使用当前 Sub-GHz 参数完成私聊控制与接收方就绪协商，随后通过 2.4 GHz 无线发送紧凑语音分片。私聊语音端到端加密，广播语音明确为公开内容；接收到的 VMP 对象绝不会被洪泛、转发、重传或注入无线网状网络。\r\n- Added carrier and storage safeguards for VMP voice: SX1262 Pager can record/send only through an enabled MT MQTT uplink and never enters VMP RF, 2.4 GHz, or LXMF paths; received voice is stored in a bounded PSRAM/SD attachment inbox with integrity checks and backup recovery, appears in the conversation after durable storage succeeds, and can be tapped to play. / 为 VMP 语音新增承载与存储保护：SX1262 Pager 仅在 MT MQTT 上行已启用时才能录制和发送，且绝不会进入 VMP RF、2.4 GHz 或 LXMF 路径；收到的语音保存在带完整性校验和备份恢复的有界 PSRAM/SD 附件收件箱中，持久化成功后才显示在会话里，用户可点击播放。\r\n\r\n- Replaced generic Energy Sweep with Protocol Probe, which uses protocol-specific evidence to discover and verify complete LoRa profiles instead of treating RSSI or a quiet spectrum as a usable channel. / 以协议包探测（Protocol Probe）取代通用 Energy Sweep，使用协议专属证据发现并验证完整 LoRa 配置，而不是将 RSSI 或安静频谱视为可用信道。\r\n- Added the T-Deck Pro-only 240×320 monochrome text UI and A7682E cellular workflow. / 新增仅限 T-Deck Pro 的 240×320 黑白文本界面与 A7682E 蜂窝工作流。\r\n\r\n### Changed / 变更\r\n- Reduced T-LoRa Pager /T-Deck internal static RAM from 140,592 B to 106,544 B (33.25 KiB reclaimed) by making external locale/font resources lazy and PSRAM-only, moving non-real-time UI/page state and cold Reticulum configuration scratch storage to strict PSRAM allocation, and removing permanent static worker-stack baselines. Wi-Fi/DNS state, DMA/I²S audio buffers, and other real-time synchronization state remain in internal RAM by design. / 通过将外部语言/字体资源改为按需加载且仅使用 PSRAM、将非实时 UI/页面状态和冷路径 Reticulum 配置暂存区迁移为严格 PSRAM 分配，并移除永久静态工作任务栈基线，T-LoRa Pager /T-Deck的内部静态 RAM 从 140,592 B 降至 106,544 B（释放 33.25 KiB）。Wi-Fi/DNS 状态、DMA/I²S 音频缓冲以及其他实时同步状态按设计继续保留在内部 RAM。\r\n\r\n- Split T-Deck and T-LoRa Pager USB maintenance profiles: release builds remove application USB CDC, DFU Runtime, and full TinyUSB DFU (use BOOT + RESET for flashing), while `*_debug` builds retain CDC logs and full DFU. Reticulum Call audio queues now allocate only when media starts and prefer PSRAM, reclaiming 4,436 B of always-resident internal RAM without moving Wi-Fi/DNS state. / 拆分 T-Deck 与 T-LoRa Pager 的 USB 维护配置：正式版移除应用 USB CDC、DFU Runtime 与完整 TinyUSB DFU（通过 BOOT + RESET 刷机），`*_debug` 保留 CDC 日志与完整 DFU。Reticulum Call 音频队列仅在媒体启动时申请并优先使用 PSRAM，回收 4,436 B 常驻内部 RAM，且不迁移 Wi-Fi/DNS 状态。\n\n### Fixed / 修复\n- Fixed ESP Team and normal Wi-Fi from each attempting to create the same default Wi-Fi STA netif. Both startup paths now adopt the existing ESP-IDF netif, and active ESP-NOW pairing reserves the radio so Settings cannot start normal Wi-Fi until pairing ends. / 修复 ESP Team 与普通 Wi-Fi 分别重复创建同一个默认 Wi-Fi STA netif 的问题。两个启动路径现都会接管已有的 ESP-IDF netif；ESP-NOW 配对进行中会预留无线电，设置页无法在配对结束前启动普通 Wi-Fi。\r\n- Fixed saved Wi-Fi profile cycling: up to ten SSID/password pairs are retained and the Wi-Fi runtime now schedules the next saved profile after a failed connection instead of depending on an external network client to retry. / 修复已保存 Wi-Fi 配置的轮询连接：最多保留十组 SSID/password；连接失败后由 Wi-Fi 运行时自行调度下一组配置重试，不再依赖外部网络客户端再次发起连接。\r\n\r\n\n\n## What's Changed\n* Codex/spi by @vicliu624 in https://github.com/vicliu624/trail-mate/pull/81\n\n\n**Full Changelog**: https://github.com/vicliu624/trail-mate/compare/v0.1.39-alpha...v0.1.40-alpha"

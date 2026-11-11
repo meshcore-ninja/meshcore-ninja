@@ -1,7 +1,15 @@
 source: github
 repo: smikme/meshapp
-updatedAt: '2026-11-10T22:57:45.679Z'
+updatedAt: '2026-11-11T13:46:03.645Z'
 releases:
+  - version: v2.4.0-unstable.10
+    name: MeshApp v2.4.0-unstable.10
+    datetime: '2026-11-11T10:30:42Z'
+    url: https://github.com/smikme/meshapp/releases/tag/v2.4.0-unstable.10
+    prerelease: true
+    notes: >-
+      **Full Changelog**:
+      https://github.com/smikme/meshapp/compare/v2.4.0-unstable.9...v2.4.0-unstable.10
   - version: v2.4.0-unstable.8
     name: MeshApp v2.4.0-unstable.8
     datetime: '2026-11-10T22:23:33Z'
