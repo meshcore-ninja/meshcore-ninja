@@ -1,7 +1,27 @@
 source: github
 repo: vicliu624/trail-mate
-updatedAt: '2026-11-10T16:13:20.541Z'
+updatedAt: '2026-11-11T05:13:48.006Z'
 releases:
+  - version: v1.2.2
+    name: v1.2.2
+    datetime: '2026-11-11T02:23:02Z'
+    url: https://github.com/vicliu624/trail-mate/releases/tag/v1.2.2
+    prerelease: false
+    notes: |-
+      ## [1.2.2] - 2026-11-11
+
+      ### Fixed
+
+      - Meshtastic applies radio settings and starts reception through the shared
+        `LoraBoard` interface without a board-name macro whitelist. Wio Tracker L2
+        and other implementations now receive the selected frequency, bandwidth,
+        spreading factor and framing settings instead of retaining boot defaults.
+      - Failed hardware configuration leaves the Meshtastic adapter unavailable and
+        preserves the last applied radio parameters. A rejected request is no longer
+        reported as a ready adapter with the requested frequency.
+      - Native regression coverage exercises the production configuration and receive
+        methods with no board identity macros, including CN / LongFast derivation,
+        rejected settings, offline hardware and receive restart failures.
   - version: v1.2.1
     name: v1.2.1
     datetime: '2026-11-10T07:49:17Z'
@@ -359,9 +379,3 @@ releases:
     url: https://github.com/vicliu624/trail-mate/releases/tag/v0.1.40-alpha
     prerelease: true
     notes: "## [0.1.40-alpha] - 2026-08-14\r\n### Added / 新增\r\n- Added bounded VMP voice messages for T-LoRa Pager chat. The compose microphone records up to five seconds of Codec2 audio; LR1121 uses the active Sub-GHz settings only for private control/receiver-ready negotiation, then sends the compact voice train over its 2.4 GHz radio. Private voice is end-to-end encrypted, while broadcast voice is intentionally public. Received VMP objects are never flooded, relayed, retransmitted, or injected into a radio mesh. / 为 T-LoRa Pager 聊天新增有界 VMP 语音消息：聊天输入框麦克风最多录制五秒 Codec2 音频；LR1121 仅使用当前 Sub-GHz 参数完成私聊控制与接收方就绪协商，随后通过 2.4 GHz 无线发送紧凑语音分片。私聊语音端到端加密，广播语音明确为公开内容；接收到的 VMP 对象绝不会被洪泛、转发、重传或注入无线网状网络。\r\n- Added carrier and storage safeguards for VMP voice: SX1262 Pager can record/send only through an enabled MT MQTT uplink and never enters VMP RF, 2.4 GHz, or LXMF paths; received voice is stored in a bounded PSRAM/SD attachment inbox with integrity checks and backup recovery, appears in the conversation after durable storage succeeds, and can be tapped to play. / 为 VMP 语音新增承载与存储保护：SX1262 Pager 仅在 MT MQTT 上行已启用时才能录制和发送，且绝不会进入 VMP RF、2.4 GHz 或 LXMF 路径；收到的语音保存在带完整性校验和备份恢复的有界 PSRAM/SD 附件收件箱中，持久化成功后才显示在会话里，用户可点击播放。\r\n\r\n- Replaced generic Energy Sweep with Protocol Probe, which uses protocol-specific evidence to discover and verify complete LoRa profiles instead of treating RSSI or a quiet spectrum as a usable channel. / 以协议包探测（Protocol Probe）取代通用 Energy Sweep，使用协议专属证据发现并验证完整 LoRa 配置，而不是将 RSSI 或安静频谱视为可用信道。\r\n- Added the T-Deck Pro-only 240×320 monochrome text UI and A7682E cellular workflow. / 新增仅限 T-Deck Pro 的 240×320 黑白文本界面与 A7682E 蜂窝工作流。\r\n\r\n### Changed / 变更\r\n- Reduced T-LoRa Pager /T-Deck internal static RAM from 140,592 B to 106,544 B (33.25 KiB reclaimed) by making external locale/font resources lazy and PSRAM-only, moving non-real-time UI/page state and cold Reticulum configuration scratch storage to strict PSRAM allocation, and removing permanent static worker-stack baselines. Wi-Fi/DNS state, DMA/I²S audio buffers, and other real-time synchronization state remain in internal RAM by design. / 通过将外部语言/字体资源改为按需加载且仅使用 PSRAM、将非实时 UI/页面状态和冷路径 Reticulum 配置暂存区迁移为严格 PSRAM 分配，并移除永久静态工作任务栈基线，T-LoRa Pager /T-Deck的内部静态 RAM 从 140,592 B 降至 106,544 B（释放 33.25 KiB）。Wi-Fi/DNS 状态、DMA/I²S 音频缓冲以及其他实时同步状态按设计继续保留在内部 RAM。\r\n\r\n- Split T-Deck and T-LoRa Pager USB maintenance profiles: release builds remove application USB CDC, DFU Runtime, and full TinyUSB DFU (use BOOT + RESET for flashing), while `*_debug` builds retain CDC logs and full DFU. Reticulum Call audio queues now allocate only when media starts and prefer PSRAM, reclaiming 4,436 B of always-resident internal RAM without moving Wi-Fi/DNS state. / 拆分 T-Deck 与 T-LoRa Pager 的 USB 维护配置：正式版移除应用 USB CDC、DFU Runtime 与完整 TinyUSB DFU（通过 BOOT + RESET 刷机），`*_debug` 保留 CDC 日志与完整 DFU。Reticulum Call 音频队列仅在媒体启动时申请并优先使用 PSRAM，回收 4,436 B 常驻内部 RAM，且不迁移 Wi-Fi/DNS 状态。\n\n### Fixed / 修复\n- Fixed ESP Team and normal Wi-Fi from each attempting to create the same default Wi-Fi STA netif. Both startup paths now adopt the existing ESP-IDF netif, and active ESP-NOW pairing reserves the radio so Settings cannot start normal Wi-Fi until pairing ends. / 修复 ESP Team 与普通 Wi-Fi 分别重复创建同一个默认 Wi-Fi STA netif 的问题。两个启动路径现都会接管已有的 ESP-IDF netif；ESP-NOW 配对进行中会预留无线电，设置页无法在配对结束前启动普通 Wi-Fi。\r\n- Fixed saved Wi-Fi profile cycling: up to ten SSID/password pairs are retained and the Wi-Fi runtime now schedules the next saved profile after a failed connection instead of depending on an external network client to retry. / 修复已保存 Wi-Fi 配置的轮询连接：最多保留十组 SSID/password；连接失败后由 Wi-Fi 运行时自行调度下一组配置重试，不再依赖外部网络客户端再次发起连接。\r\n\r\n\n\n## What's Changed\n* Codex/spi by @vicliu624 in https://github.com/vicliu624/trail-mate/pull/81\n\n\n**Full Changelog**: https://github.com/vicliu624/trail-mate/compare/v0.1.39-alpha...v0.1.40-alpha"
-  - version: v0.1.39-alpha
-    name: v0.1.39-alpha
-    datetime: '2026-07-31T09:33:02Z'
-    url: https://github.com/vicliu624/trail-mate/releases/tag/v0.1.39-alpha
-    prerelease: true
-    notes: "## [0.1.39-alpha] - 2026-07-31\r\n### Fixed / 修复\r\n- Stabilized the ESP Meshtastic MQTT session so connection, subscription, and keepalive progress are tracked explicitly through CONNACK, SUBACK, and PINGRESP deadlines; reconnects use bounded exponential backoff, control-plane replies cannot be starved by ordinary Wi-Fi traffic budgets, and inbound QoS 1 publishes are acknowledged with PUBACK. Transient publish failures now retain the in-flight uplink for retry, while a full bounded uplink queue rejects low-priority NodeInfo, position, telemetry, and traceroute reports before they can displace text, control, or encrypted traffic. / 稳定 ESP 端 Meshtastic MQTT 会话：显式跟踪 CONNACK、SUBACK 与 PINGRESP 的连接、订阅和保活时限；重连采用有界指数退避，控制面响应不会再被普通 Wi-Fi 流量预算饿死，入站 QoS 1 发布会正确回复 PUBACK。临时发布失败会保留正在发送的上行消息以便重试；有界上行队列满时，NodeInfo、位置、遥测和 traceroute 等低优先级上报会先被拒绝，不再挤掉文本、控制或加密流量。\r\n\r\n\n\n**Full Changelog**: https://github.com/vicliu624/trail-mate/compare/v0.1.38-alpha...v0.1.39-alpha"

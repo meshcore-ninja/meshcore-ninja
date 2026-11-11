@@ -1,7 +1,38 @@
 source: github
 repo: MeshCore-Beacon/beacon-server
-updatedAt: '2026-11-01T00:47:01.644Z'
+updatedAt: '2026-11-11T05:13:56.368Z'
 releases:
+  - version: v2.2.0
+    name: v2.2.0
+    datetime: '2026-11-11T01:44:34Z'
+    url: https://github.com/MeshCore-Beacon/beacon-server/releases/tag/v2.2.0
+    prerelease: false
+    notes: >-
+      # Beacon Server 2.2.0
+
+
+      Pair this release with [Beacon Web
+      2.2.0](https://github.com/MeshCore-Beacon/beacon-web/releases/tag/v2.2.0) and BEACON Mobile
+      2.2.0. Client floors are unchanged: server 2.2.0 still works with Beacon Web 2.1 and BEACON
+      Mobile 2.1.
+
+
+      Operators need no config change. Two migrations run on start (062, 063): they add one table
+      and queue the last three days of rolled hours for a re-roll, so node activity fills in over
+      the first few minutes.
+
+
+      ## New
+
+      - `GET /api/v1/nodes/{id}/activity` returns hourly observations, signal and hops for a node.
+      It reads an hourly rollup, so a busy node is counted in full. This is what the Atlas node
+      cards in Beacon Web 2.2.0 and BEACON Mobile 2.2.0 use.
+
+
+      ## Improvements
+
+      - `/nodes/{id}/observations` pages from the node's packets and is much faster on busy nodes.
+      Rows are ordered by packet first heard, then observation id.
   - version: v2.1.1
     name: v2.1.1
     datetime: '2026-10-31T21:16:23Z'
@@ -391,9 +422,3 @@ releases:
     url: https://github.com/MeshCore-Beacon/beacon-server/releases/tag/v1.0.4
     prerelease: false
     notes: "## [v1.0.4] — 2026-06-09\r\n\r\n### Security\r\nFix no bounds check on region IDs.\r\n\r\n**Full Changelog**: https://github.com/MeshCore-Beacon/beacon-server/compare/v1.0.3...v1.0.4"
-  - version: v1.0.2
-    name: v1.0.2
-    datetime: '2026-06-09T15:42:40Z'
-    url: https://github.com/MeshCore-Beacon/beacon-server/releases/tag/v1.0.2
-    prerelease: false
-    notes: "## [v1.0.2] — 2026-06-09\r\n\r\n### Features\r\n- **Traces: raw path hashes included in responses** — trace responses now include raw (unresolved) path hashes alongside the resolved node data, giving clients access to the full hop information even when nodes aren't known to the observer.\r\n\r\n### Bug Fixes\r\n- Fixed typo in `subscribeScope` struct that could cause unexpected subscription behaviour.\r\n- Fixed missing Swagger annotation for the traces `rawPath` field.\r\n\r\n### Documentation\r\n- Updated schema migration notes.\r\n\r\n\r\n**Full Changelog**: https://github.com/MeshCore-Beacon/beacon-server/compare/v1.0.1...v1.0.2"

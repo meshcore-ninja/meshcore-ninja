@@ -1,7 +1,160 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-11-10T07:04:43.520Z'
+updatedAt: '2026-11-11T05:14:07.987Z'
 releases:
+  - version: v4.17.3-rc5
+    name: v4.17.3-rc5
+    datetime: '2026-11-11T01:35:25Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.3-rc5
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.17.3-rc5
+
+
+      > [!WARNING]
+
+      > This is a pre-release for testing. Do not use it in production.
+
+
+      ## Summary
+
+
+      This RC finishes the Meshtastic ↔ MeshCore parity audit (#6226). Auto Responder, Timer
+      Triggers, Auto Announce and automations now split long MeshCore messages, and Meshtastic uses
+      the same splitter. MeshCore message length caps now match firmware. A new MQTT root topic
+      finder samples a broker (subscribe-only) and suggests roots near you. It names your state and
+      city offline, can find MeshCore IATA regions, and admins can opt in to a daily refresh of the
+      community topic list. The server now rejects an invalid MQTT root topic when you change it.
+      New MeshCore alerts cover a repeater clock out of sync and a confirmed new neighbour. API
+      callers can send MeshCore channel messages under an allowed sender name. Rooms show stored
+      posts read-only without a live login, and you can change a room's Auto-sync without logging
+      in. Notification services get a configurable message text length.
+
+
+      ## Features
+
+      - MeshCore: split long messages in Auto Responder, Timer Triggers, Auto Announce and
+      automations (#6316) #6329
+
+      - Automation: Meshtastic long-message split through the shared splitter (#6330) #6339
+
+      - MQTT: root topic finder, a subscribe-only broker sample (#6287) #6328
+
+      - MeshCore: IATA region finder for MeshCore MQTT ingest (#6335) #6343
+
+      - MQTT: offline geocoder for root finder state and city rows (#6336) #6345
+
+      - MQTT: opt-in live refresh of the root finder's community directory (#6337) #6346
+
+      - MeshCore: clock-out-of-sync alert from passive advert sampling (#6273) #6327
+
+      - Automation: MeshCore confirmed new-neighbour alert (#6274) #6334
+
+      - MeshCore: optional senderName for API channel sends, per-source allowlist (#6282) #6331
+
+      - MeshCore: show stored room posts read-only without a live login (#6332) #6333
+
+      - Notifications: configurable message text length per service (#6278) #6326
+
+      - MeshCore: Packet Monitor origin column never guesses, gates names on nodes:read, adds a
+      TX/RX marker (#6265) #6324
+
+
+      ## Bug Fixes
+
+      - MQTT: reject invalid MQTT root topics server-side on save (#6338) #6344
+
+      - MeshCore: message length caps match firmware (#6303, #6304) #6323
+
+      - MeshCore: change room Auto-sync from the login card without logging in (#6267) #6320
+
+      - Automations: Template Gallery node picker and multi-automation naming (#6271, #6272) #6322
+
+      - MeshCore: key-gate MQTT feed channel messages by filing them under their key (#6308) #6318
+
+
+      ## CI/DevOps
+
+      - Desktop: macOS x64 release build on macos-latest #6317
+
+
+      ## Translations
+
+      - Translations update from Hosted Weblate #6222
+
+
+      ## Dependencies
+
+      - i18next 26.5.11 → 27.0.0 #6298
+
+      - @noble/curves 1.9.7 → 2.4.0 #6300
+
+      - leaflet.heat 0.2.0 → 1.0.0 #6296
+
+      - vitest group #6291
+
+      - otplib 13.5.0 → 13.6.0 #6295
+
+      - node-notifier 11.0.0 → 12.1.0 #6297
+
+      - production-dependencies group (8 updates) #6325
+
+      - jsdom 30.1.3 → 31.0.0 #6294
+
+      - i18next-browser-languagedetector 8.2.3 → 8.3.0 #6299
+
+      - @tanstack/react-query 5.105.0 → 5.107.1 #6301
+
+      - docker/login-action 4.7.0 → 4.8.0 #6290
+
+
+      ## Issues Resolved
+
+      #6226, #6265, #6267, #6271, #6272, #6273, #6274, #6278, #6282, #6287, #6303, #6304, #6308,
+      #6316, #6319, #6330, #6332, #6335, #6336, #6337, #6338
+
+
+      ## Upgrade Notes
+
+      - Migrations 230 and 231 run on first start.
+
+      - Saving a changed MQTT root topic that fails validation now returns HTTP 400
+      (`INVALID_MQTT_ROOT`). Unchanged roots and restores still save.
+
+
+      **Full Changelog**: https://github.com/Yeraze/meshmonitor/compare/v4.17.3-rc4...v4.17.3-rc5
+
+
+      ## 🚀 MeshMonitor v4.17.3-rc5
+
+
+      ### 📦 Installation
+
+
+      **Docker (recommended):**
+
+      ```bash
+
+      docker run -d \
+        --name meshmonitor \
+        -p 8080:3001 \
+        -v meshmonitor-data:/data \
+        ghcr.io/Yeraze/meshmonitor:4.17.3-rc5
+      ```
+
+
+      ### 🧪 Testing
+
+      ✅ All tests passed
+
+      ✅ TypeScript checks passed
+
+      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
+
+
+      ### 📋 Changes
+
+      See commit history for detailed changes.
   - version: v4.17.3-rc4
     name: v4.17.3-rc4
     datetime: '2026-11-10T00:48:41Z'
@@ -2068,133 +2221,6 @@ releases:
         -p 8080:3001 \
         -v meshmonitor-data:/data \
         ghcr.io/Yeraze/meshmonitor:4.17.1-rc6
-      ```
-
-
-      ### 🧪 Testing
-
-      ✅ All tests passed
-
-      ✅ TypeScript checks passed
-
-      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
-
-
-      ### 📋 Changes
-
-      See commit history for detailed changes.
-  - version: v4.17.1-rc5
-    name: v4.17.1-rc5
-    datetime: '2026-10-16T17:35:47Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.1-rc5
-    prerelease: true
-    notes: >-
-      # MeshMonitor v4.17.1-rc5
-
-
-      > [!WARNING]
-
-      > This is a **pre-release** for testing. Use it on a test install before you upgrade
-      production.
-
-
-      ## Summary
-
-
-      This release candidate adds **passkey sign-in** for local accounts. You can sign in with a
-      device fingerprint, face or PIN, turn password sign-in off for a passkey-only account, and get
-      back in with one-time recovery codes. Admins can see and revoke a user's passkeys from the
-      Users page. Passkeys need HTTPS (or `http://localhost`) and bind to the hostname where you add
-      them; the optional `WEBAUTHN_RP_ID` and `WEBAUTHN_ORIGINS` settings cover reverse proxies and
-      multiple hostnames. Auto-Acknowledge gains a separate **IP (MQTT / UDP)** row, so messages
-      that arrived over the internet no longer use the 0-hop or multi-hop settings; the new row
-      starts **off**. MeshCore contacts can now take a manual location override, as Meshtastic nodes
-      already could. The MeshCore Configuration and Automations pages get the same search box and
-      section buttons as the Meshtastic pages. Show MQTT/Bridge Messages is now remembered per
-      source, and tapping a node in Traceroute mode draws its newest answered run again.
-
-
-      ## Upgrade notes
-
-
-      - **Auto-Acknowledge:** messages received over MQTT or multicast UDP now fall into the new IP
-      row, which starts off on every install. If you relied on the multi-hop (or 0-hop) row to
-      answer MQTT/UDP messages, turn on the IP row under Automation → Auto Acknowledge.
-
-      - **Passkeys** are optional. Nothing changes until a user adds one. See the [Passkeys
-      guide](https://meshmonitor.org/features/passkeys).
-
-
-      ## Features
-
-
-      - Passkey sign-in for local accounts (#5841):
-        - Passkey storage (#5849)
-        - Sign in with a passkey (#5850)
-        - Passkey-only accounts, recovery codes, admin revoke (#5851)
-        - Passkeys user guide (#5853)
-        - Design spec (#5847)
-      - Separate IP (MQTT/UDP) row in the Auto-Ack matrix (#5854)
-
-      - Override a MeshCore contact's location (#5848)
-
-      - Remember Show MQTT/Bridge Messages per source (#5844)
-
-      - Search and section buttons on MeshCore Configuration and Automations (#5855)
-
-
-      ## Bug Fixes
-
-
-      - Tapping a node in Traceroute mode draws its newest answered run (#5845)
-
-      - MeshCore Notifications section bar sits flush with the top of the pane (#5856)
-
-
-      ## Release
-
-
-      - Version bump to 4.17.1-rc5 (#5857)
-
-
-      ## Dependencies
-
-
-      - engine.io 6.6.11 and a single mysql2 for express-mysql-session (#5846)
-
-
-      ## Issues Resolved
-
-
-      - #5841 WebAuthn/passkey login as alternative to password (local auth)
-
-      - #5796 Auto-Ack for MQTT Messages
-
-      - #5842 MeshCore: override contact location (parity with Meshtastic)
-
-      - #5824 Make Show MQTT/Bridge Messages toggle per-source
-
-      - #5821 Per-source map: Show Traceroute toggle engages but clicking a node does nothing
-
-
-      **Full Changelog**: https://github.com/Yeraze/meshmonitor/compare/v4.17.1-rc4...v4.17.1-rc5
-
-
-      ## 🚀 MeshMonitor v4.17.1-rc5
-
-
-      ### 📦 Installation
-
-
-      **Docker (recommended):**
-
-      ```bash
-
-      docker run -d \
-        --name meshmonitor \
-        -p 8080:3001 \
-        -v meshmonitor-data:/data \
-        ghcr.io/Yeraze/meshmonitor:4.17.1-rc5
       ```
 
 
