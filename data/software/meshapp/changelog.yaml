@@ -1,7 +1,36 @@
 source: github
 repo: smikme/meshapp
-updatedAt: '2026-11-12T12:19:30.119Z'
+updatedAt: '2026-11-12T21:21:15.468Z'
 releases:
+  - version: v2.4.0-unstable.17
+    name: MeshApp v2.4.0-unstable.17
+    datetime: '2026-11-12T18:42:35Z'
+    url: https://github.com/smikme/meshapp/releases/tag/v2.4.0-unstable.17
+    prerelease: true
+    notes: >-
+      ## What's Changed
+
+      * Fix notifications when the window is hidden or minimized by @smikme in
+      https://github.com/smikme/meshapp/pull/23
+
+
+
+      **Full Changelog**:
+      https://github.com/smikme/meshapp/compare/v2.4.0-unstable.16...v2.4.0-unstable.17
+  - version: v2.4.0-unstable.16
+    name: MeshApp v2.4.0-unstable.16
+    datetime: '2026-11-12T15:30:42Z'
+    url: https://github.com/smikme/meshapp/releases/tag/v2.4.0-unstable.16
+    prerelease: true
+    notes: >-
+      ## What's Changed
+
+      * Paste images from clipboard in chat by @smikme in https://github.com/smikme/meshapp/pull/22
+
+
+
+      **Full Changelog**:
+      https://github.com/smikme/meshapp/compare/v2.4.0-unstable.15...v2.4.0-unstable.16
   - version: v2.4.0-unstable.15
     name: MeshApp v2.4.0-unstable.15
     datetime: '2026-11-12T12:12:25Z'

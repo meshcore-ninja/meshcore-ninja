@@ -1,7 +1,119 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-11-11T05:14:07.987Z'
+updatedAt: '2026-11-12T21:21:29.614Z'
 releases:
+  - version: v4.17.3-rc6
+    name: v4.17.3-rc6
+    datetime: '2026-11-12T19:08:36Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.3-rc6
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.17.3-rc6
+
+
+      > ⚠️ **Pre-release.** This is a release candidate for testing. Do not run it on a production
+      install you can't roll back.
+
+
+      ## Summary
+
+
+      This RC is the result of a full pre-release review of the 4.17.3 work: code review across the
+      backend and frontend, plus live UI passes on desktop, phone portrait and phone landscape. The
+      most important fix is security: the v1 API no longer returns MeshCore channel secrets to
+      callers without write access to that channel, and deleting a source now removes its channel
+      secrets. The poll endpoint no longer blanks the node and channel lists when one section fails.
+      MeshCore automated senders got tighter limits: the Auto Welcome hourly cap is now enforced
+      under concurrent arrivals, multi-channel timers wait 10 s between channels and send to at most
+      4, and duplicate split sequences are dropped. Opening a MeshCore Room Server no longer logs in
+      automatically; use the new Login button. MeshCore pages now work in phone landscape, and many
+      dialogs, rails, headers and tables were fixed for small screens. Unconnected MeshCore sources
+      show a clear "not connected" notice instead of raw errors. Dashboard telemetry charts gain a
+      fixed Y-axis min/max per widget. System restore no longer fails on legacy backup columns, the
+      MySQL backup list loads again, and no longer purges an old backup's telemetry on the first
+      boot.
+
+
+      ## Features
+
+      - Dashboard: per-widget fixed Y-axis min/max on telemetry charts #6349
+
+
+      ## Security
+
+      - Channel PSKs in the v1 API, source-delete secrets, gateway membership (review P1) #6359
+
+      - Bridge: bump msgpack to 1.2.3 (CVE-2026-114613) #6355
+
+
+      ## Bug Fixes
+
+      - Poll: one failing section no longer blanks nodes and channels; slow retry while down; error
+      notice (review P2) #6358
+
+      - MeshCore senders: Auto Welcome cap race, MeshWars hop count, split-timer floor (review P3)
+      #6360
+
+      - MeshCore policies: automatic-trace alerts toggle, split queue, timer channels, explicit room
+      login, gate retry pause, NeighborInfo age, combined digest (review P6) #6363
+
+      - Layout: MeshCore in phone landscape, dialogs, section rails, themes (review P4) #6361
+
+      - Copy and polish: i18n keys, icons, tooltips, danger buttons (review P5) #6362
+
+      - MeshCore not-connected state, danger button, header status, icons (review P7b) #6366
+
+      - Layout: source page titles, landscape channel menu, Reticulum tables, modal overlay,
+      sidebar, connection banner (review P7a) #6367
+
+      - Restore: skip startup retention purges on the boot that restores a backup #6357
+
+      - Dashboard: connection banner names the viewed source's host:port #6356
+
+      - Backup: skip backup columns the target table lacks on restore #6351
+
+      - Backup: MySQL backup list no longer fails with a collation error #6372
+
+
+      ## CI/DevOps
+
+      - Fix the MeshCore timer multi-channel test hang on slow CI #6364
+
+      - Bump version to 4.17.3-rc6 #6371
+
+
+      ## Issues Resolved
+
+      - #6348 Dashboard chart widget: user-set Y-axis min/max
+
+      - #6350 System restore fails on backup columns the target table lacks
+
+      - #6352 Bump msgpack to 1.2.3 in bridge (CVE-2026-114613)
+
+      - #6353 Connection Error banner shows the env placeholder IP, not the source's host
+
+      - #6354 Restoring an old backup purges all its telemetry on first boot
+
+
+      ## Upgrade notes
+
+      - **MeshCore Room Servers:** selecting a room no longer logs in. Saved posts show read-only;
+      press **Login** to log in. Scheduled room auto-sync is unchanged.
+
+      - **Automatic-trace notifications:** a new "notify on automatic traces" toggle defaults to
+      **off**. Traces you start yourself still notify under the existing traceroute setting.
+
+      - **MeshCore multi-channel timers:** at most 4 channels per timer, 10 s apart. Extra channels
+      are skipped with a log warning.
+
+      - **Security digest:** `POST /api/security/digest/send` now needs a `sourceId` and
+      `nodes:read` on that source. The UI "Send Now" button and the daily scheduled digest are
+      unchanged. When per-source digest URLs fall back to the global URL, you now get one combined
+      daily digest instead of one per source.
+
+      - **Automations:** existing 
+
+      …
   - version: v4.17.3-rc5
     name: v4.17.3-rc5
     datetime: '2026-11-11T01:35:25Z'
@@ -2090,137 +2202,6 @@ releases:
         -p 8080:3001 \
         -v meshmonitor-data:/data \
         ghcr.io/Yeraze/meshmonitor:4.17.1-rc7
-      ```
-
-
-      ### 🧪 Testing
-
-      ✅ All tests passed
-
-      ✅ TypeScript checks passed
-
-      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
-
-
-      ### 📋 Changes
-
-      See commit history for detailed changes.
-  - version: v4.17.1-rc6
-    name: v4.17.1-rc6
-    datetime: '2026-10-18T00:24:12Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.1-rc6
-    prerelease: true
-    notes: >-
-      # MeshMonitor v4.17.1-rc6
-
-
-      > [!WARNING]
-
-      > This is a **pre-release** for testing. Do not use it in production unless you want to help
-      test.
-
-
-      ## Summary
-
-
-      This RC fixes slow PostgreSQL and MySQL instances. Database Maintenance now shows and runs on
-      every backend, not just SQLite. It now prunes `audit_log` (90 days by default), and a new
-      migration adds a channel-list index and tunes Postgres autovacuum. MeshCore Companions on
-      firmware 1.18.0 gain a real text CLI: the local console uses the radio's native CLI, the
-      quick-action catalog grows, and you can run commands on a remote Companion and grant or revoke
-      its remote-CLI permission. Channels now support AEAD (AES-CCM): the server decrypts them, and
-      you can edit AEAD on device channels. Node Details shows a node's name history. Unified
-      Messages remembers your last channel. MQTT forwarders now show their own uplinked packets, and
-      push subscriptions renew correctly after rotation.
-
-
-      ## Features
-
-      - feat(meshcore): Companion text CLI on fw 1.18.0 (local, catalog, remote) (#5866, #5867,
-      #5868) #5869
-
-      - feat(nodes): track node renames and show them in Node Details (#5862) #5865
-
-      - feat(channels): decrypt AEAD (AES-CCM) channels server-side (#5248 Phase 2a) #5860
-
-      - feat(channels): edit AEAD on device channels (#5248 Phase 2b) #5861
-
-      - feat(unified-messages): remember the last selected channel per browser #5793
-      (@goodprogrammist)
-
-
-      ## Bug Fixes
-
-      - fix(db): run maintenance on PostgreSQL/MySQL, prune audit_log, tune PG (#5870) #5871
-
-      - fix(push): renew a rotated push subscription on its sources (#5863) #5864
-
-      - fix(mqtt): show a forwarder's own uplinked packets on its source (#5858) #5859
-
-
-      ## Translations
-
-      - Translations update from Hosted Weblate #5676
-
-
-      ## Issues Resolved
-
-      - #5870 Production DB performance: unused indexes, index bloat, no audit_log retention,
-      autovacuum lag
-
-      - #5868 MeshCore Local Console: expand Companion quick-action catalog for fw ≥ 1.18.0
-
-      - #5867 MeshCore Companion: UI for remote-CLI permission bit (fw ≥ 1.18.0)
-
-      - #5866 MeshCore Companion native CLI (fw ≥ 1.18.0)
-
-      - #5863 Service worker pushsubscriptionchange renewal silently fails: missing sourceId
-
-      - #5862 Track node name history with a log view in node details
-
-      - #5858 MQTT forwarder source does not display user's own outbound messages
-
-      - #5792 Unified Messages: configurable default channel
-
-      - #5013 MQTT Channel Messages Not Received Unless Relayed by Nearby LoRa Node
-
-
-      ## New Contributors
-
-      Thanks to @goodprogrammist for their first contribution (#5793)!
-
-
-      ## Upgrade Notes
-
-      - **PostgreSQL/MySQL users:** Database Maintenance is now visible on your backend but stays
-      off until you enable it. Open **Settings → Database Maintenance**, turn it on, and click **Run
-      Maintenance Now**. The first run may take a while on a large database.
-
-      - Large Postgres instances should also run the one-off `REINDEX TABLE CONCURRENTLY` / `VACUUM
-      (ANALYZE)` steps and review the memory settings in `docs/development/database.md`.
-
-      - Migration 210 runs on startup: it adds an index on `messages(sourceId, channel, timestamp)`
-      and, on Postgres, sets per-table autovacuum thresholds.
-
-
-      **Full Changelog**: https://github.com/Yeraze/meshmonitor/compare/v4.17.1-rc5...v4.17.1-rc6
-
-
-      ## 🚀 MeshMonitor v4.17.1-rc6
-
-
-      ### 📦 Installation
-
-
-      **Docker (recommended):**
-
-      ```bash
-
-      docker run -d \
-        --name meshmonitor \
-        -p 8080:3001 \
-        -v meshmonitor-data:/data \
-        ghcr.io/Yeraze/meshmonitor:4.17.1-rc6
       ```
 
 
