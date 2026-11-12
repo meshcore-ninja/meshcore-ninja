@@ -1,7 +1,13 @@
 source: github
 repo: smikme/meshapp
-updatedAt: '2026-11-11T13:46:03.645Z'
+updatedAt: '2026-11-12T02:45:03.213Z'
 releases:
+  - version: v2.4.0-unstable.12
+    name: MeshApp v2.4.0-unstable.12
+    datetime: '2026-11-11T21:55:55Z'
+    url: https://github.com/smikme/meshapp/releases/tag/v2.4.0-unstable.12
+    prerelease: true
+    notes: "## What's Changed\r\n* Unstable/2.4.0 by @smikme in https://github.com/smikme/meshapp/pull/10\r\n* Unstable/2.4.0 by @smikme in https://github.com/smikme/meshapp/pull/11\r\n* Feature/meshpic by @smikme in https://github.com/smikme/meshapp/pull/12\r\n* Keep Windows BLE callbacks off the protocol reader by @smikme in https://github.com/smikme/meshapp/pull/13\r\n* Feature/input bubble by @smikme in https://github.com/smikme/meshapp/pull/14\r\n* Add MeshAppStore scripts by @smikme in https://github.com/smikme/meshapp/pull/16\r\n* Load Lua scripts from the main repository by @smikme in https://github.com/smikme/meshapp/pull/18\r\n\r\n\r\n**Full Changelog**: https://github.com/smikme/meshapp/compare/v2.4.0-unstable.10...v2.4.0-unstable.12"
   - version: v2.4.0-unstable.10
     name: MeshApp v2.4.0-unstable.10
     datetime: '2026-11-11T10:30:42Z'
