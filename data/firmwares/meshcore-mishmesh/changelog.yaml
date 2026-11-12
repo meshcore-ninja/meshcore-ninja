@@ -1,7 +1,32 @@
 source: github
 repo: burakcan/MeshCore-mishmesh
-updatedAt: '2026-10-12T14:45:23.090Z'
+updatedAt: '2026-11-12T12:19:12.250Z'
 releases:
+  - version: mishmesh-v1.7.0
+    name: mishmesh Firmware v1.7.0
+    datetime: '2026-11-12T12:11:04Z'
+    url: https://github.com/burakcan/MeshCore-mishmesh/releases/tag/mishmesh-v1.7.0
+    prerelease: false
+    notes: >-
+      **Now built on meshcore v1.18.0** (was v1.17.1)
+
+
+      - GAT562 30S Mesh Kit: Transmit power now shows the real output behind the amplifier, and the
+      chip setting stops at 15, where the output already reaches 30 dBm (#37).
+
+      - Fix: the GAT562 30S could sit at the boot screen for minutes when many direct messages were
+      never acknowledged (#38).
+
+      - Fix: on boards without the extra flash chip (GAT562 30S), message history could fill the
+      storage and contacts could be lost. History now leaves room for them.
+
+      - Fix: the quick replies picker looked frozen when no quick replies were saved.
+
+
+
+
+      **Full Changelog**:
+      https://github.com/burakcan/MeshCore-mishmesh/compare/mishmesh-v1.6.1...mishmesh-v1.7.0
   - version: mishmesh-v1.6.1
     name: mishmesh Firmware v1.6.1
     datetime: '2026-10-12T12:30:00Z'
