@@ -1,7 +1,44 @@
 source: github
 repo: smikme/meshapp
-updatedAt: '2026-11-12T21:21:15.468Z'
+updatedAt: '2026-11-13T02:28:19.832Z'
 releases:
+  - version: v2.4.0-unstable.23
+    name: MeshApp v2.4.0-unstable.23
+    datetime: '2026-11-13T00:42:12Z'
+    url: https://github.com/smikme/meshapp/releases/tag/v2.4.0-unstable.23
+    prerelease: true
+    notes: >-
+      ## What's Changed
+
+      * Fix Linux ARM64 builds and Lua callback races by @smikme in
+      https://github.com/smikme/meshapp/pull/28
+
+      * https://github.com/smikme/meshapp/issues/21#issue-6350780275 by @smikme in
+      https://github.com/smikme/meshapp/pull/29
+
+
+
+      **Full Changelog**:
+      https://github.com/smikme/meshapp/compare/v2.4.0-unstable.22...v2.4.0-unstable.23
+  - version: v2.4.0-unstable.22
+    name: MeshApp v2.4.0-unstable.22
+    datetime: '2026-11-12T23:15:24Z'
+    url: https://github.com/smikme/meshapp/releases/tag/v2.4.0-unstable.22
+    prerelease: true
+    notes: >-
+      ## What's Changed
+
+      * Improve chat autocomplete and isolate Lua node picker requests by @smikme in
+      https://github.com/smikme/meshapp/pull/24
+
+      * Add new docs by @smikme in https://github.com/smikme/meshapp/pull/25
+
+      * Linux ARM64 support by @smikme in https://github.com/smikme/meshapp/pull/26
+
+
+
+      **Full Changelog**:
+      https://github.com/smikme/meshapp/compare/v2.4.0-unstable.17...v2.4.0-unstable.22
   - version: v2.4.0-unstable.17
     name: MeshApp v2.4.0-unstable.17
     datetime: '2026-11-12T18:42:35Z'
@@ -154,9 +191,3 @@ releases:
     url: https://github.com/smikme/meshapp/releases/tag/v2.1.10
     prerelease: false
     notes: Fixed a memory leak in the node detail telemetry listener.
-  - version: v2.1.9
-    name: MeshApp v2.1.9
-    datetime: '2026-06-03T09:33:29Z'
-    url: https://github.com/smikme/meshapp/releases/tag/v2.1.9
-    prerelease: false
-    notes: "# MeshApp 2.1.9 Release Notes\r\n\r\n## Highlights\r\n\r\nThis release series includes major improvements across scripting, automation, traceroute, localization, connection handling, chat, terminal mode, and overall stability.\r\n\r\n## What's New\r\n\r\n- Added the MeshApp IDE with Lua script editing, execution, debugging, autocomplete, script storage, import/export, and persistent per-script KV storage.\r\n- Added Lua automation APIs for chat, UI actions, HTTP requests, traceroute, node info, canvas drawing, and sandboxed script execution.\r\n- Added support for Lua script metadata, including author, description, versioning, icons, GUIDs, parameters, and JSON import/export.\r\n- Added a Lua Canvas API and floating canvas window for custom script-driven UI and drawing.\r\n- Rebuilt traceroute functionality with saved trace history, node-level trace views, map integration, and database migrations.\r\n- Added `@tracebot` and `@infobot` workflows with faster bot access from chat.\r\n- Added connection profile autoconnect on application startup.\r\n- Added terminal mode updates, battery percentage display, and updated Meshtastic protobuf definitions.\r\n- Added full localization infrastructure with English fallback and localized UI coverage for chat, nodes, maps, telemetry, connections, logs, LoRa monitoring, Mesh IDE, main window, emoji panel, and settings.\r\n- Added HTTP/URL parsing improvements in chat messages.\r\n\r\n## Improvements\r\n\r\n- Improved USB-UART handling for CP210x, CH9102, and related adapters by avoiding unnecessary ESP32 resets and adding manual DTR/RTS line configuration.\r\n- Improved BLE discovery behavior and connection reliability.\r\n- Improved memory usage and raised runtime memory limits where needed.\r\n- Improved chat message handling, including replies split by node ID and better message update propagation.\r\n- Improved predictive text input behavior.\r\n- Improved logger behavior so emoji-only rows are displayed correctly.\r\n- Improved settings layout, right-side font sizing, and connection form design.\r\n- Updated H2 database engine to `2.4.240`.\r\n- Expanded Lua API documentation and README coverage.\r\n\r\n## Fixes\r\n\r\n- Fixed crash log reporting so clean application states are not reported as crashes.\r\n- Fixed database migration issues introduced by new Lua, trace, and message features.\r\n- Fixed reaction/message lookup logic for stored message reactions.\r\n- Fixed Lua canvas window behavior and related UI details.\r\n- Fixed English localization fallback behavior."
