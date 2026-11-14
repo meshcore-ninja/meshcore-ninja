@@ -1,7 +1,21 @@
 source: github
 repo: smikme/meshapp
-updatedAt: '2026-11-14T16:26:04.733Z'
+updatedAt: '2026-11-14T22:05:39.786Z'
 releases:
+  - version: v2.4.2-unstable.28
+    name: MeshApp v2.4.2-unstable.28
+    datetime: '2026-11-14T17:41:08Z'
+    url: https://github.com/smikme/meshapp/releases/tag/v2.4.2-unstable.28
+    prerelease: true
+    notes: >-
+      ## What's Changed
+
+      * Feature/stable unstable by @smikme in https://github.com/smikme/meshapp/pull/31
+
+
+
+      **Full Changelog**:
+      https://github.com/smikme/meshapp/compare/v2.4.0-unstable.23...v2.4.2-unstable.28
   - version: v2.4.1+build.25
     name: MeshApp v2.4.1+build.25
     datetime: '2026-11-14T14:44:41Z'
@@ -190,9 +204,3 @@ releases:
     url: https://github.com/smikme/meshapp/releases/tag/v2.2.2
     prerelease: false
     notes: "## What's Changed\r\n\r\n### New\r\n- Select multiple nodes and apply one action to all of them: add to favorites, add to ignored, or delete.\r\n- Select multiple chat messages and delete them locally, only on this device.\r\n- MeshApp now shows which fields need to be fixed when creating or editing a connection.\r\n\r\n### Fixed\r\n- Fixed an issue where a newly created direct chat could disappear from the chat list.\r\n- Configuration help popups now display correctly in the light theme.\r\n- Improved Flatpak installation and updates.\r\n\r\n### Documentation\r\n- Added and updated installation instructions for macOS, Windows, Debian/Ubuntu, AppImage, and Flatpak."
-  - version: v2.2.0
-    name: MeshApp v2.2.0
-    datetime: '2026-06-13T20:46:51Z'
-    url: https://github.com/smikme/meshapp/releases/tag/v2.2.0
-    prerelease: false
-    notes: "## Release notes v2.2.0\r\n\r\n### Device settings\r\n\r\nThe device configuration screen now has contextual help for Meshtastic settings. Help is available next to configuration fields and explains what the setting does, when it is useful, what values are expected, and whether the option is deprecated or list-based.\r\n\r\nSaving configuration is also more robust. MeshApp now detects modules that are not available in the device firmware before sending changes, and handles reconnects more reliably when a setting causes the device to reboot.\r\n\r\n### Remote administration\r\n\r\nMeshApp can now administer remote Meshtastic nodes when this client’s public key is present in the remote node’s Admin Key.\r\n\r\nFrom a node’s details screen, you can load the remote configuration over the mesh network, search and edit settings, and save changes back to the node. The loading process shows which sections were requested, received, or failed.\r\n\r\nRemote administration also includes commands for reboot, shutdown, time sync, connection status refresh, backup and restore from Flash or SD, backup removal, NodeDB reset, configuration reset, factory reset, and DFU mode.\r\n\r\n### Firmware updates\r\n\r\nA new Firmware tab is available in Settings. It shows the active connection, device information, and current firmware version. Firmware files can be selected as `.bin`, `.uf2`, or `.zip`; MeshApp validates the file and shows its SHA-256 hash before starting.\r\n\r\nFor ESP32 devices connected over TCP, MeshApp can perform Wi-Fi OTA upload: it requests OTA mode, waits for the bootloader, connects to it, and uploads the firmware.\r\n\r\nBLE OTA and DFU/UF2 modes are recognized and validated, but full firmware upload through those modes is not yet handled by MeshApp.\r\n\r\n### Application updates\r\n\r\nThe About dialog now includes manual update checking.\r\n\r\nOn supported non-Flatpak installations, MeshApp can prepare application updates from inside the app: it downloads the update archive, verifies it, stages the new version, and applies it after restart. If automatic installation is not available or fails, the update dialog falls back to manual download.\r\n\r\nFlatpak installations are not updated directly by MeshApp; the dialog shows the `flatpak update app.privatepractice.meshapp` command instead.\r\n\r\n### Application settings\r\n\r\nA memory limit setting was added for the Java heap size. The value is configured in megabytes and takes effect after restarting the application.\r\n\r\n### Fixes\r\n\r\n- Fixed a memory leak in telemetry charts.\r\n- Fixed Store & Forward handling.\r\n- Fixed version display in the About dialog.\r\n- Fixed version detection for installations launched through the self-update mechanism.\r\n- Fixed several issues in update preparation, archive verification, restart handling, and update manifest publication.\r\n- Long dialogs and modal windows now scroll instead of cutting off content."

@@ -1,7 +1,94 @@
 source: github
 repo: agessaman/meshcore-bot
-updatedAt: '2026-10-22T19:49:18.361Z'
+updatedAt: '2026-11-14T22:05:35.064Z'
 releases:
+  - version: v1.2.0
+    name: v1.2.0
+    datetime: '2026-11-14T18:07:12Z'
+    url: https://github.com/agessaman/meshcore-bot/releases/tag/v1.2.0
+    prerelease: false
+    notes: >-
+      v1.2.0 builds on v1.1.0. Nothing was removed or renamed, so your existing `config.ini` keeps
+      working.
+
+
+      ## Before you upgrade
+
+
+      **With `web_viewer_password` set, part of the web viewer is now public.** The Dashboard,
+      Contacts, Mesh Graph and Multibyte pages are readable without logging in. Real-time, Radio,
+      Config, Logs, the settings pages and every API that changes something still need an admin
+      login. If node names, positions and the mesh graph shouldn't be public on your network, keep
+      the viewer off the internet or put it behind your own proxy authentication.
+
+
+      **Only one bot runs against a database.** A second bot with the same `db_path` exits with
+      status 1 and names the PID of the one already running. A bot started from a terminal now stops
+      when that terminal closes; run it as a service, or under `nohup` or `tmux`, if you start it
+      over SSH. The systemd unit waits for a running instance instead of failing, but
+      `install-service.sh` only replaces an existing unit with `--upgrade`.
+
+
+      **The Docker healthcheck tracks the bot's event loop** through a heartbeat file beside the
+      database, instead of only checking that PID 1 exists. An offline radio stays healthy. A
+      healthcheck defined in your compose file overrides the image's.
+
+
+      **A few defaults change what goes on air:** channel messages are sized to 155 bytes, region
+      warnings follow the channel's flood scope, an unacknowledged DM takes at least 24 seconds to
+      report failure, and `last-fri` in a schedule key now means the last Friday. No dependency
+      changes and no database migrations this time.
+
+
+      `docs/upgrade.md` has the full list.
+
+
+      ## What's new
+
+
+      **An official Home Assistant add-on.** Add `https://github.com/agessaman/meshcore-bot` as an
+      add-on repository, and the bot runs under the Supervisor with the web viewer in the sidebar
+      through ingress. The radio connection, bot name, log level and viewer password are add-on
+      options; everything else stays in `config.ini`. The add-on image is 64-bit (amd64 and
+      aarch64); the regular Docker image keeps its 32-bit ARM build.
+
+
+      Thanks to **@bigmac5753** for asking for it (#366), and to **@vipje**, whose own add-on (#305)
+      showed the way.
+
+
+      **Repeater watch.** Pick the repeaters you look after on **Settings → Repeater Watch**, and
+      the bot tells you when one goes quiet and when it's heard again, on channels, DMs, Discord or
+      Telegram. It only judges silence it was listening for, so a fault on the bot's own radio isn't
+      reported as every repeater going down. Thanks to **@xoma4ok** for the request (#353).
+
+
+      **Schedules that match how nets actually run.** `[Scheduled_Messages]` keys take `last-fri`,
+      `4th-tue` and similar, values take `start=` / `end=` dates and `week=*/2` for every other
+      week, and the web viewer's schedule editor has matching **One day a month** and **Weeks**
+      options.
+
+
+      **A web viewer that tells you what's going on.** Real-time is one tape of what the radio
+      heard, with each packet, the message decrypted from it and any command it triggered on one
+      row, and older rows fetch their packet on demand. Recovery notices say when the radio came
+      back and how long it was gone. A fresh install shows what the station is doing instead of a
+      grid of empty boxes. Every front-end library is served by the viewer itself, so it works on a
+      LAN with no internet, and the Plugins page now covers every plugin setting, with a placeholder
+      reference on every template field.
+
+
+      **Weather.** `wx` can fall back to Open-Meteo outside NWS coverage, follows your temperature
+      and wind units, and `gwx` gains `hourly`. A long run of fixes makes both read NOAA and
+      Open-Meteo more faithfully: gusts, wind directions, Tonight and Tomorrow, places on the
+      equator, forecasts dated by the location, and replies that fit in one message.
+
+
+      **Smaller additions.** The `{path_names}` placeholder shows a route as short repeater names
+      (`BlackHls▸KalamaSum▸KelsoG3`), naming only hops it's confident about. Packet capture status
+      messages carry the radio's packet counters, and the guide has a working waev.
+
+      …
   - version: v1.1.0
     name: v1.1.0
     datetime: '2026-09-20T19:56:42Z'
@@ -198,9 +285,3 @@ releases:
     url: https://github.com/agessaman/meshcore-bot/releases/tag/v0.1.1
     prerelease: false
     notes: Some additional cleanup to remove test files, etc.
-  - version: v0.1
-    name: v0.1 Initial Release
-    datetime: '2025-09-06T19:05:12Z'
-    url: https://github.com/agessaman/meshcore-bot/releases/tag/v0.1
-    prerelease: false
-    notes: It wasn't a bot, then it was... forgive my hacking.
