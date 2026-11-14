@@ -1,7 +1,108 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-11-12T21:21:29.614Z'
+updatedAt: '2026-11-14T00:45:56.500Z'
 releases:
+  - version: v4.17.3
+    name: v4.17.3
+    datetime: '2026-11-13T20:15:40Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.3
+    prerelease: false
+    notes: >-
+      # MeshMonitor v4.17.3
+
+
+      ## Summary
+
+
+      MeshMonitor 4.17.3 brings MeshCore close to Meshtastic across most of the app, built on one
+      shared implementation where the two protocols overlap: maps, Packet Monitor, node and DM
+      lists, messaging, settings, notifications, automations, Mesh Issues, dashboard widgets, the v1
+      API and Prometheus. MeshCore also gains a Security tab, Repeater and Room Server settings
+      forms, per-source device backups, traces in the Traceroute Explorer and MeshCore One contact
+      tokens. New for both protocols: multi-channel timer triggers, long-message splitting, an MQTT
+      root topic finder, a fixed Y-axis range on dashboard charts, and an opt-in node-name anti-spam
+      filter that strips invite links from node names on every source, MQTT included. The security
+      fixes close a MeshCore channel-secret leak in the v1 API, a cross-source device backup read,
+      and a Repeater secret in the debug log, and deleting a source now removes its channel secrets.
+      Selecting a MeshCore Room Server no longer logs in; press Login instead. Queued channel sends
+      no longer report a false ACK timeout, and one failing poll section no longer blanks the node
+      and channel lists. Restore is more robust, and the MySQL backup list loads again. Upgrading
+      runs migrations 223 to 232 automatically; read the upgrade notes below first.
+
+
+      ## Features
+
+      - feat(meshcore): import/export MeshCore One contact-share tokens #6375
+
+      - feat(dashboard): per-widget fixed Y-axis min/max on telemetry charts #6349
+
+      - feat(mqtt): opt-in live refresh of the root finder's community directory #6346
+
+      - feat(mqtt): offline geocoder for root finder subdivision and city rows #6345
+
+      - feat(meshcore): IATA region finder for MeshCore MQTT ingest #6343
+
+      - feat(automation): Meshtastic long-message split through the shared splitter #6339
+
+      - feat(meshcore): optional senderName for API channel sends, per-source allowlist #6331
+
+      - feat(automation): MeshCore confirmed new-neighbour alert #6334
+
+      - feat(meshcore): show stored room posts read-only without a live login #6333
+
+      - feat(meshcore): clock-out-of-sync alert from passive advert sampling #6327
+
+      - feat(mqtt): root topic finder — subscribe-only broker sample #6328
+
+      - feat(meshcore): split long messages in Auto Responder, Timer Triggers, Auto Announce and
+      automations #6329
+
+      - feat(notifications): configurable message text length per service #6326
+
+      - feat(meshcore): Packet Monitor origin column never guesses, gates names on nodes:read, adds
+      TX/RX marker #6324
+
+      - feat(meshcore): Security rates, clock offset, scanner, digest, export, draft notification DM
+      #6314
+
+      - feat(backup): per-source, protocol-aware device backups; fix cross-source backup access
+      #6313
+
+      - feat(meshcore): Notifications tab for MQTT region feeds, broker-link alerts #6312
+
+      - feat(meshcore): MeshCore traces in the Traceroute Explorer, trace attempt log #6311
+
+      - feat(meshcore): Mesh Issues node-health rules A6-A9 for both protocols #6310
+
+      - feat(meshcore): Repeater new-node alerts behind a learning window and hourly cap #6309
+
+      - feat(meshcore): message, server-event and trace notifications #6305
+
+      - feat(meshcore): remote structured settings for Repeaters and Room Servers #6302
+
+      - feat(meshcore): Repeater structured settings, power-off and key restore; fix secret log leak
+      and prv.key guard #6288
+
+      - feat(meshcore): Companion BLE PIN, multi-ACKs, factory reset and channel share/import #6286
+
+      - feat(meshcore): Security tab on MeshCore — dead contacts, path-hash collisions, advert
+      signatures, own-key change #6283
+
+      - feat(meshcore): MeshCore in v1 API, Prometheus, Dashboard widgets, Mesh Issues and embed
+      maps #6280
+
+      - feat(meshcore): map parity — shared map layers, trace on map, Map Analysis, estimated
+      positions #6277
+
+      - feat(meshcore): Packet Monitor + contact graph parity — paging, search, filters,
+      distribution, link history #6275
+
+      - feat(nodes): shared node/DM list tools for Meshtastic and MeshCore — sort, filters,
+      grouping, export, DM filters #6270
+
+      - feat(messages): MeshCore messaging parity — room unread, DM/room 
+
+      …
   - version: v4.17.3-rc6
     name: v4.17.3-rc6
     datetime: '2026-11-12T19:08:36Z'
@@ -2057,151 +2158,6 @@ releases:
         -p 8080:3001 \
         -v meshmonitor-data:/data \
         ghcr.io/Yeraze/meshmonitor:4.17.1-rc8
-      ```
-
-
-      ### 🧪 Testing
-
-      ✅ All tests passed
-
-      ✅ TypeScript checks passed
-
-      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
-
-
-      ### 📋 Changes
-
-      See commit history for detailed changes.
-  - version: v4.17.1-rc7
-    name: v4.17.1-rc7
-    datetime: '2026-10-19T19:29:25Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.1-rc7
-    prerelease: true
-    notes: >-
-      # MeshMonitor v4.17.1-rc7
-
-
-      > [!WARNING]
-
-      > This is a **pre-release** for testing. It is not tagged `latest`. Please report problems on
-      GitHub before the final 4.17.1 release.
-
-
-      ## Summary
-
-
-      This release candidate adds saved MQTT broker presets that every MQTT form can reuse (#5794
-      Phase 1). It also adds a stored, searchable history of MeshCore CLI commands, with a panel on
-      each console and a "MeshCore CLI activity" tab on the Audit Log page. CLI passwords and keys
-      are now masked before they are stored, which also stops them leaking into the audit log in
-      plain text. Auto Acknowledge can now send a 0-hop tapback other than `*️⃣` (for example
-      `0️⃣`), and a separate tapback for messages that came over MQTT; automations use the same
-      choices. Baremetal installs now honor `DATA_DIR` for every data path, including backups, the
-      access log, Apprise and map data, so the documented hardened systemd unit works. An
-      experimental, admin-only endpoint computes a tropospheric ducting forecast from NOAA GFS data
-      (backend spike for #5734; no UI yet). The rest is dependency updates, including Express 5.3,
-      emoji-picker-react 5 (Apple emoji style kept) and MapLibre GL 6.14.
-
-
-      ## Features
-
-      - feat(mqtt): saved broker presets, reusable across MQTT forms (#5794 Phase 1) (#5873)
-
-      - feat(meshcore): store CLI command history (#5892) (#5897)
-
-      - feat(autoack): choose the 0-hop and MQTT tapback glyphs (#5890) (#5894)
-
-      - feat(ducting): spike GFS tropospheric ducting forecast endpoint (#5734) (#5875)
-
-
-      ## Bug Fixes
-
-      - fix(config): honor DATA_DIR for every data path (#5889) (#5895)
-
-
-      ## Security
-
-      - MeshCore CLI command text and replies are redacted (passwords, `*.key`, `*.psk`, secrets)
-      before storage, in both the new CLI history and the existing audit log (#5897)
-
-
-      ## Dependencies
-
-      - build(deps): bump emoji-picker-react from 4.22.3 to 5.0.0 (#5887)
-
-      - build(deps): bump maplibre-gl from 6.13.0 to 6.14.0 (#5884)
-
-      - build(deps): bump node-notifier from 10.0.1 to 11.0.0 (#5888)
-
-      - build(deps): bump lucide-react from 1.54.0 to 1.57.0 (#5885)
-
-      - build(deps): bump express from 5.2.1 to 5.3.0 (#5886)
-
-      - build(deps): bump the production-dependencies group across 1 directory with 18 updates
-      (#5882)
-
-      - build(deps): bump the react group with 2 updates (#5879)
-
-      - build(deps-dev): bump puppeteer from 25.13.0 to 25.14.0 (#5883)
-
-      - build(deps-dev): bump the vitest group with 3 updates (#5878)
-
-      - build(deps-dev): bump the development-dependencies group with 2 updates (#5880)
-
-
-      ## CI/DevOps
-
-      - build(deps): bump the codeql-action group with 4 updates (#5881)
-
-      - chore: bump version to 4.17.1-rc7 (#5899)
-
-
-      ## Issues Resolved
-
-      - #5889 Baremetal - no DATA_DIR env
-
-      - #5890 Change Auto Ack tapback for direct channel messages
-
-      - #5892 Store full history of MeshCore CLI commands with timestamps
-      (Companion/Repeater/Remote)
-
-
-      Progress on #5794 (MQTT broker presets, Phase 1 of 3) and #5734 (tropospheric ducting, backend
-      spike).
-
-
-      ## Upgrade Notes
-
-      - **Database migration 212** adds the `meshcore_cli_history` table. It runs automatically on
-      all three backends.
-
-      - **Baremetal:** you can now set `DATA_DIR=/var/lib/meshmonitor/data` in the `.env` named by
-      your systemd unit (`EnvironmentFile=`), and every data path follows it. Explicit
-      `DATABASE_PATH`, `BACKUP_DIR`, `SYSTEM_BACKUP_DIR`, `ACCESS_LOG_PATH` and `APPRISE_CONFIG_DIR`
-      still win. Docker installs are unchanged.
-
-      - New setting: MeshCore CLI history retention (default 90 days, 7–365), next to Audit Log
-      Retention.
-
-
-      **Full Changelog**: https://github.com/Yeraze/meshmonitor/compare/v4.17.1-rc6...v4.17.1-rc7
-
-
-      ## 🚀 MeshMonitor v4.17.1-rc7
-
-
-      ### 📦 Installation
-
-
-      **Docker (recommended):**
-
-      ```bash
-
-      docker run -d \
-        --name meshmonitor \
-        -p 8080:3001 \
-        -v meshmonitor-data:/data \
-        ghcr.io/Yeraze/meshmonitor:4.17.1-rc7
       ```
 
 
