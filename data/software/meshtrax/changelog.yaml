@@ -1,7 +1,74 @@
 source: github
 repo: venamartin/meshtrax
-updatedAt: '2026-11-07T23:30:09.590Z'
+updatedAt: '2026-11-14T08:44:08.520Z'
 releases:
+  - version: v1.10.2
+    name: Release v1.10.2
+    datetime: '2026-11-14T02:36:42Z'
+    url: https://github.com/venamartin/meshtrax/releases/tag/v1.10.2
+    prerelease: false
+    notes: >-
+      ## What's Changed
+
+      * docs: what's new in v1.10.1 by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/264
+
+      * chore(build): move to Flutter 3.50 and the material_ui package by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/272
+
+      * test(pathfinder): the swipe test no longer fails by the time of day by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/270
+
+      * test(pathfinder): the export test no longer fails by the clock by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/273
+
+      * feat(usb): reconnect to the last USB radio at startup and after a drop by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/275
+
+      * fix(android): QR scanning works again in release builds by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/274
+
+      * chore(deps): commit pubspec.lock and take the newest allowed versions by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/276
+
+      * fix(places): own word similarity instead of the GPL fuzzywuzzy by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/277
+
+      * fix(chat): a chat opens showing its messages, and on the oldest unread past 200 rows by
+      @venamartin in https://github.com/venamartin/meshtrax/pull/279
+
+      * chore(deps): flutter_blue_plus 2.3.15, Windows plugin on upstream 0.0.23 by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/278
+
+      * fix(login): a login waits a round trip, follows Pathfinder's plan by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/267
+
+      * feat(maps): the route is a sheet that slides between a bar, open and the directions by
+      @venamartin in https://github.com/venamartin/meshtrax/pull/271
+
+      * fix(android): USB host is optional again; flserial without its unused Android plugin by
+      @venamartin in https://github.com/venamartin/meshtrax/pull/281
+
+      * fix(chat): the tray stays on offer while the box holds only a mention by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/280
+
+      * chore(android): built-in Kotlin; flutter_foreground_task 11 and file_saver 0.7 by
+      @venamartin in https://github.com/venamartin/meshtrax/pull/282
+
+      * feat(repeaters): Manage repeaters keeps its filter and sort, and shows them by @venamartin
+      in https://github.com/venamartin/meshtrax/pull/283
+
+      * fix(linux): run on XWayland where there is one by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/284
+
+      * fix(ios): restores can pick a file; radio backup and database export save by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/285
+
+      * chore: version 1.10.2+184 by @venamartin in https://github.com/venamartin/meshtrax/pull/286
+
+
+
+      **Full Changelog**: https://github.com/venamartin/meshtrax/compare/v1.10.1...v1.10.2
   - version: v1.10.1
     name: Release v1.10.1
     datetime: '2026-11-07T21:05:11Z'
