@@ -1,7 +1,29 @@
 source: github
 repo: smikme/meshapp
-updatedAt: '2026-11-13T02:28:19.832Z'
+updatedAt: '2026-11-14T16:26:04.733Z'
 releases:
+  - version: v2.4.1+build.25
+    name: MeshApp v2.4.1+build.25
+    datetime: '2026-11-14T14:44:41Z'
+    url: https://github.com/smikme/meshapp/releases/tag/v2.4.1%2Bbuild.25
+    prerelease: false
+    notes: >-
+      ## What's Changed
+
+      * Feature/stable unstable by @smikme in https://github.com/smikme/meshapp/pull/31
+
+      * Develop by @smikme in https://github.com/smikme/meshapp/pull/32
+
+
+
+      **Full Changelog**:
+      https://github.com/smikme/meshapp/compare/v2.4.0+build.24...v2.4.1+build.25
+  - version: v2.4.0+build.24
+    name: MeshApp v2.4.0+build.24
+    datetime: '2026-11-14T10:00:28Z'
+    url: https://github.com/smikme/meshapp/releases/tag/v2.4.0%2Bbuild.24
+    prerelease: false
+    notes: "# MeshApp v2.4.0+build.24\r\n\r\nChanges since **v2.3.10**, the previous stable release.\r\n\r\n- **Expanded MeshCore Companion support.** You can now edit radio settings, manage contacts and channels, share links and QR codes, request telemetry, and run remote commands. Synchronization, message history, delivery acknowledgements, and retries have also been reworked.\r\n- **Updated MeshCore KISS mode.** Added radio and transmit power settings, raw packet transmission, and handling of transmission results.\r\n- **Updated Meshtastic support to the 2.8.2 Alpha protocol definitions.** Added AES-CCM channel settings, authentication checks for MQTT packets, and a separate status for cryptographically verified delivery acknowledgements. AES-CCM requires firmware 2.8.1 or later.\r\n- **More telemetry data.** Added readings from eight ADC channels and eight 1-Wire sensors, lightning data, particulate sensor status, and soil and water measurements. The new data is available in the telemetry log, through RPC, and in Lua.\r\n- **Improved Mesh Beacon support.** Beacon messages now appear in chat. Updated frequency slot settings and validation for the 60-byte UTF-8 message limit.\r\n- **Reworked chat history loading.** Messages load in batches for better performance in long conversations. Fixed scroll jumps, restored scroll positions, and handling of delayed responses when switching chats.\r\n- **Better message editing.** Added undo and redo, plus offline spell checking for Russian, English, and German. Fixed text selection, pasting, and scrolling.\r\n- **Updated chat suggestions.** Type `@` to find a node by name or address, or `/` at the start of a message to browse bot commands.\r\n- **Images now upload through Meshpic.** You can paste images directly from the clipboard. Supported formats are JPG, PNG, GIF, and WebP, up to 10 MiB. Chat now shows image expiration times and upload errors. Images are stored for 24 hours by default.\r\n- **Optional byte savings for Cyrillic text.** A new setting replaces some Russian letters with similar-looking Latin characters, leaving room for more text in a message. It is off by default; substitutions can affect searching and copying text.\r\n- **Updated MeshAppStore.** Scripts now load from the main GitHub repository without an account. Added Battleship for two players over a direct mesh chat.\r\n- **Improved MeshApp IDE.** Added standard editing commands and plain-text pasting. Fixed Lua scripts ending too early when a device responds quickly, and stale node selections being handled after a bot restarts.\r\n- **Fixed notifications and system tray behavior.** Notifications now work correctly when the window is hidden or minimized. Fixed closing, minimizing, and restoring the window.\r\n- **Fixed node information exchange.** Information requests no longer send empty user data that could erase your node’s name on another device. Also fixed RPC timeout handling and BLE event processing on Windows.\r\n- **Added Linux ARM64 builds:** DEB, AppImage, and Flatpak. The DEB and AppImage builds require glibc 2.38 or later, such as Ubuntu 24.04.\r\n- **Updated releases and app updates.** Packages have moved to GitHub Releases, with separate stable and unstable update channels. The updater now tracks build numbers and supports updates between builds of the same version. Diagnostic reports are saved locally so you can attach them to a GitHub issue yourself.\r\n\r\n**Upgrading from v2.3.10 requires a manual installation from [GitHub Releases](https://github.com/smikme/meshapp/releases).** Older clients use the previous update URL and signing key. Flatpak installations also need to be installed and updated using the downloaded `.flatpak` file.\r\n\r\nMeshCore support targets Companion protocol 14; full testing on physical radios is still pending. Custom TCP/Serial bridges that send bare payloads need to switch to the official framing format.\r\n\r\n[Full changelog](https://github.com/smikme/meshapp/compare/v2.3.10...v2.4.0%2Bbuild.24)"
   - version: v2.4.0-unstable.23
     name: MeshApp v2.4.0-unstable.23
     datetime: '2026-11-13T00:42:12Z'
@@ -174,20 +196,3 @@ releases:
     url: https://github.com/smikme/meshapp/releases/tag/v2.2.0
     prerelease: false
     notes: "## Release notes v2.2.0\r\n\r\n### Device settings\r\n\r\nThe device configuration screen now has contextual help for Meshtastic settings. Help is available next to configuration fields and explains what the setting does, when it is useful, what values are expected, and whether the option is deprecated or list-based.\r\n\r\nSaving configuration is also more robust. MeshApp now detects modules that are not available in the device firmware before sending changes, and handles reconnects more reliably when a setting causes the device to reboot.\r\n\r\n### Remote administration\r\n\r\nMeshApp can now administer remote Meshtastic nodes when this client’s public key is present in the remote node’s Admin Key.\r\n\r\nFrom a node’s details screen, you can load the remote configuration over the mesh network, search and edit settings, and save changes back to the node. The loading process shows which sections were requested, received, or failed.\r\n\r\nRemote administration also includes commands for reboot, shutdown, time sync, connection status refresh, backup and restore from Flash or SD, backup removal, NodeDB reset, configuration reset, factory reset, and DFU mode.\r\n\r\n### Firmware updates\r\n\r\nA new Firmware tab is available in Settings. It shows the active connection, device information, and current firmware version. Firmware files can be selected as `.bin`, `.uf2`, or `.zip`; MeshApp validates the file and shows its SHA-256 hash before starting.\r\n\r\nFor ESP32 devices connected over TCP, MeshApp can perform Wi-Fi OTA upload: it requests OTA mode, waits for the bootloader, connects to it, and uploads the firmware.\r\n\r\nBLE OTA and DFU/UF2 modes are recognized and validated, but full firmware upload through those modes is not yet handled by MeshApp.\r\n\r\n### Application updates\r\n\r\nThe About dialog now includes manual update checking.\r\n\r\nOn supported non-Flatpak installations, MeshApp can prepare application updates from inside the app: it downloads the update archive, verifies it, stages the new version, and applies it after restart. If automatic installation is not available or fails, the update dialog falls back to manual download.\r\n\r\nFlatpak installations are not updated directly by MeshApp; the dialog shows the `flatpak update app.privatepractice.meshapp` command instead.\r\n\r\n### Application settings\r\n\r\nA memory limit setting was added for the Java heap size. The value is configured in megabytes and takes effect after restarting the application.\r\n\r\n### Fixes\r\n\r\n- Fixed a memory leak in telemetry charts.\r\n- Fixed Store & Forward handling.\r\n- Fixed version display in the About dialog.\r\n- Fixed version detection for installations launched through the self-update mechanism.\r\n- Fixed several issues in update preparation, archive verification, restart handling, and update manifest publication.\r\n- Long dialogs and modal windows now scroll instead of cutting off content."
-  - version: v2.1.14
-    name: MeshApp v2.1.14 (unstable)
-    datetime: '2026-06-07T21:03:18Z'
-    url: https://github.com/smikme/meshapp/releases/tag/v2.1.14
-    prerelease: true
-    notes: |-
-      - Merge pull request 'Feature/config help' (#494) from feature/config-help into develop
-      - FormSetting refactoring
-      -     Migrated the help system content to the database.
-      -     Added inline documentation to the settings
-      - update app.privatepractice.meshapp.yml and add scrollbar
-  - version: v2.1.10
-    name: MeshApp v2.1.10
-    datetime: '2026-06-05T14:45:56Z'
-    url: https://github.com/smikme/meshapp/releases/tag/v2.1.10
-    prerelease: false
-    notes: Fixed a memory leak in the node detail telemetry listener.
