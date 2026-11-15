@@ -1,7 +1,22 @@
 source: github
 repo: smikme/meshapp
-updatedAt: '2026-11-14T22:05:39.786Z'
+updatedAt: '2026-11-15T23:50:48.481Z'
 releases:
+  - version: v2.4.2-unstable.29
+    name: MeshApp v2.4.2-unstable.29
+    datetime: '2026-11-15T20:13:58Z'
+    url: https://github.com/smikme/meshapp/releases/tag/v2.4.2-unstable.29
+    prerelease: true
+    notes: >-
+      ## What's Changed
+
+      * Customize themes and chat backgrounds by @smikme in
+      https://github.com/smikme/meshapp/pull/33
+
+
+
+      **Full Changelog**:
+      https://github.com/smikme/meshapp/compare/v2.4.2-unstable.28...v2.4.2-unstable.29
   - version: v2.4.2-unstable.28
     name: MeshApp v2.4.2-unstable.28
     datetime: '2026-11-14T17:41:08Z'
@@ -198,9 +213,3 @@ releases:
     url: https://github.com/smikme/meshapp/releases/tag/v2.2.3
     prerelease: false
     notes: "# MeshApp v2.2.3\r\n\r\nThis update makes MeshApp more convenient for scripts, gentler on the mesh network, and more reliable if the local database is damaged.\r\n\r\n## What’s New\r\n\r\n- The Script Store now follows the app language: Russian users see the Russian catalog, while other languages use the English catalog.\r\n- A new Lua script type is available: extensions. Extensions can add their own sections to the left toolbar and behave like a built-in part of MeshApp.\r\n- Remote admin is now more careful with network traffic. MeshApp no longer loads the full configuration immediately; you can request only the sections you need.\r\n- MeshApp can now automatically recover from a damaged local database. If a problem is detected at startup, the app tries to save the damaged file, extract recoverable data, and move it into a new database.\r\n- Lua authors get new tools: embedded forms, form events, and remote admin APIs.\r\n\r\n## Improvements\r\n\r\n- Remote admin confirmations and status messages are clearer.\r\n- The IDE now lets you show or hide extensions in the left toolbar.\r\n- Lua API and remote admin documentation has been expanded."
-  - version: v2.2.2
-    name: MeshApp v2.2.2
-    datetime: '2026-06-14T20:59:47Z'
-    url: https://github.com/smikme/meshapp/releases/tag/v2.2.2
-    prerelease: false
-    notes: "## What's Changed\r\n\r\n### New\r\n- Select multiple nodes and apply one action to all of them: add to favorites, add to ignored, or delete.\r\n- Select multiple chat messages and delete them locally, only on this device.\r\n- MeshApp now shows which fields need to be fixed when creating or editing a connection.\r\n\r\n### Fixed\r\n- Fixed an issue where a newly created direct chat could disappear from the chat list.\r\n- Configuration help popups now display correctly in the light theme.\r\n- Improved Flatpak installation and updates.\r\n\r\n### Documentation\r\n- Added and updated installation instructions for macOS, Windows, Debian/Ubuntu, AppImage, and Flatpak."
