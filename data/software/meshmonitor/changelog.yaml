@@ -1,7 +1,135 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-11-14T00:45:56.500Z'
+updatedAt: '2026-11-15T05:27:37.295Z'
 releases:
+  - version: v4.18.0-rc1
+    name: v4.18.0-rc1
+    datetime: '2026-11-15T01:36:35Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.18.0-rc1
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.18.0-rc1
+
+
+      > [!WARNING]
+
+      > This is a **pre-release** for testing. It adds database migrations (235, 236). Back up your
+      database before upgrading, and don't run it in production unless you are helping test.
+
+
+      ## Summary
+
+
+      4.18.0 adds two new ways to connect without a radio. A new **MeshCore MQTT broker** source
+      runs an MQTT broker inside MeshMonitor. MeshCore observers connect to it with token auth and
+      an allowlist, and you can opt in to forwarding traffic upstream. Meshtastic sources can now
+      **send messages over MQTT with no radio attached**, and a PKI nonce fix restores server-side
+      decryption of PKI DMs. Notifications gain **mesh-wide defaults with per-source overrides**,
+      and the same event heard on several sources now notifies you only once. A new **Direct RF
+      Contacts** history lists nodes heard at 0 hops over RF, for both Meshtastic and MeshCore.
+      Anonymous viewers no longer see nodes that have not consented to MQTT. Smaller additions: a
+      warning when LoRa transparent mode is on, the nRF52 bootloader version, and gateway names on
+      the map. Fixes cover position requests, which now carry an empty Position. They also cover
+      MeshCore Cayenne-LPP telemetry losing sensors after an altitude record, and neighbor info
+      mixing data across sources.
+
+
+      ## Features
+
+      - Embedded MeshCore MQTT broker source with upstream forwarding (#6400)
+
+      - Send Meshtastic messages over MQTT with no radio; fix PKI nonce layout (#6395)
+
+      - Mesh-wide notification defaults, per-source overrides, cross-source dedup (#6394)
+
+      - Hide no-MQTT-consent nodes from anonymous viewers (#6393)
+
+      - Warn on LoRa transparent mode; show nRF52 bootloader version (#6392)
+
+      - Direct RF Contacts history for Meshtastic and MeshCore (#6388)
+
+      - Gateway names in the map's gateway legend and popup chips (#6387)
+
+
+      ## Bug Fixes
+
+      - Scope neighbor info by source before picking the latest per pair (#6396)
+
+      - Send position requests with an empty Position (#6391)
+
+      - Decode Cayenne-LPP telemetry locally so altitude no longer truncates sensors (#6390)
+
+
+      ## Tests
+
+      - Scale the reverse-geocode timing budget under coverage (#6385)
+
+
+      ## Issues Resolved
+
+      - #6197 Embedded MeshCore MQTT broker
+
+      - #4305 MQTT-native ("nodeless") outbound send path
+
+      - #5729 Unified mesh-scoped notifications with cross-source dedup
+
+      - #6210 Direct RF Contacts history
+
+      - #6181 Detect and warn on LoRaConfig.transparent_mode
+
+      - #6321 DeviceMetadata.bootloader_version
+
+      - #6386 Gateway name in map popups and legend
+
+      - #6047 Position exchange unanswered when the request carries coordinates
+
+      - #6389 MeshCore remote telemetry sensors missing after an altitude record
+
+
+      ## Upgrade Notes
+
+      - Migration 235 merges per-source push subscriptions into one per user and endpoint. Existing
+      per-source notification settings become overrides of a new mesh-wide default.
+
+      - Migration 236 adds the `mqtt_native_identities` table.
+
+      - The MeshCore MQTT broker listens on port 1884 by default. Docker and Helm do not expose that
+      port yet, so map it yourself if you use the broker.
+
+
+      **Full Changelog**: https://github.com/Yeraze/meshmonitor/compare/v4.17.3...v4.18.0-rc1
+
+
+      ## 🚀 MeshMonitor v4.18.0-rc1
+
+
+      ### 📦 Installation
+
+
+      **Docker (recommended):**
+
+      ```bash
+
+      docker run -d \
+        --name meshmonitor \
+        -p 8080:3001 \
+        -v meshmonitor-data:/data \
+        ghcr.io/Yeraze/meshmonitor:4.18.0-rc1
+      ```
+
+
+      ### 🧪 Testing
+
+      ✅ All tests passed
+
+      ✅ TypeScript checks passed
+
+      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
+
+
+      ### 📋 Changes
+
+      See commit history for detailed changes.
   - version: v4.17.3
     name: v4.17.3
     datetime: '2026-11-13T20:15:40Z'
@@ -2026,138 +2154,6 @@ releases:
         -p 8080:3001 \
         -v meshmonitor-data:/data \
         ghcr.io/Yeraze/meshmonitor:4.17.1-rc10
-      ```
-
-
-      ### 🧪 Testing
-
-      ✅ All tests passed
-
-      ✅ TypeScript checks passed
-
-      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
-
-
-      ### 📋 Changes
-
-      See commit history for detailed changes.
-  - version: v4.17.1-rc8
-    name: v4.17.1-rc8
-    datetime: '2026-10-20T15:46:47Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.1-rc8
-    prerelease: true
-    notes: >-
-      # MeshMonitor v4.17.1-rc8
-
-
-      > [!WARNING]
-
-      > This is a **pre-release** for testing. It is not tagged `latest`. Back up your data before
-      upgrading.
-
-
-      ## Summary
-
-      This RC closes two cross-source read leaks: traceroute history and unified telemetry now
-      return only sources the viewer may read. The Unified Telemetry page is now a cross-source
-      dashboard: one chart per favorited series, with one line per source and a Latest tab for
-      current values. The ADS-B features gain OpenSky Network as a feed (OAuth2 client credentials
-      required, honours its rate-limit pause). Aircraft matches are re-checked as a node moves, up
-      to six times per flagging. The traceroute permission is split into Read and Write, and
-      MeshCore trace-path now needs `traceroute:write`; a migration grants it to existing holders of
-      `nodes:write` on MeshCore sources. The position estimator now counts each anchor once, so a
-      node heard through one anchor no longer reports a false 50 m confidence, and Node Details
-      explains how an estimate was made. MeshCore can now name unknown route hops from other sources
-      you can read, including `meshcore_mqtt` feeds; this is off by default. The MQTT bridge gains
-      an optional `!hex` client ID for single mode, stops after repeated evictions, and counts
-      uplinks dropped while disconnected.
-
-
-      ## Features
-
-      - feat(meshcore): resolve unknown route hops from other sources (#5909) (#5911)
-
-      - feat(telemetry): cross-source Telemetry Dashboard on Unified Telemetry (#5896) (#5907)
-
-      - feat(adsb): add OpenSky Network as an ADS-B feed (#5877) (#5906)
-
-      - feat(adsb): re-check aircraft flight matches as the node moves (#5876) (#5905)
-
-      - feat(permissions): split traceroute into Read/Write; MeshCore trace-path takes
-      traceroute:write (#5898) (#5903)
-
-
-      ## Bug Fixes
-
-      - fix(estimator): count unique anchor positions; explain estimates on Node Details (#5900)
-      (#5904)
-
-      - fix(mqtt-bridge): single-mode client ID, eviction stop, uplink drop count (#5893) (#5902)
-
-
-      ## Security
-
-      - fix(security): scope traceroute history and unified telemetry to permitted sources (#5901)
-
-
-      ## Documentation
-
-      - docs(add-ons): list ShackScreen under REST API clients (#5908) (#5910)
-
-
-      ## Chores
-
-      - chore: bump version to 4.17.1-rc8 (#5912)
-
-
-      ## Issues Resolved
-
-      - #5909 MeshCore: resolve unknown path hops using nodes from other sources
-
-      - #5908 Community Add-on Submission: ShackScreen
-
-      - #5900 Position estimator: repeat observations from one anchor inflate nEff
-
-      - #5898 Split traceroute permission into read/write
-
-      - #5896 Rewrite Unified Telemetry page as a cross-source Telemetry Dashboard
-
-      - #5877 Add OpenSky Network as an additional ADS-B source
-
-      - #5876 Re-evaluate aircraft flight match when node position diverges
-
-
-      ## Upgrade Notes
-
-      - **Migrations 213–215** run on first boot: a `traceroute:write` backfill for MeshCore
-      sources, re-check columns on aircraft flight matches, and
-      `meshcore_nodes.advertSignatureVerified`.
-
-      - **Some estimated pins may disappear from the map.** Stale estimates are deleted, and
-      single-anchor estimates (5 km) are wider than the map's 2 km display limit.
-
-      - **Cross-source hop names** are off by default: Settings → MeshCore Messaging. MQTT nodes
-      become usable as each sends its next advert after you turn it on.
-
-
-      **Full Changelog**: https://github.com/Yeraze/meshmonitor/compare/v4.17.1-rc7...v4.17.1-rc8
-
-
-      ## 🚀 MeshMonitor v4.17.1-rc8
-
-
-      ### 📦 Installation
-
-
-      **Docker (recommended):**
-
-      ```bash
-
-      docker run -d \
-        --name meshmonitor \
-        -p 8080:3001 \
-        -v meshmonitor-data:/data \
-        ghcr.io/Yeraze/meshmonitor:4.17.1-rc8
       ```
 
 
