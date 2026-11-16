@@ -1,7 +1,31 @@
 source: github
 repo: smikme/meshapp
-updatedAt: '2026-11-15T23:50:48.481Z'
+updatedAt: '2026-11-16T05:25:28.573Z'
 releases:
+  - version: v2.4.2-unstable.30
+    name: MeshApp v2.4.2-unstable.30
+    datetime: '2026-11-15T23:57:10Z'
+    url: https://github.com/smikme/meshapp/releases/tag/v2.4.2-unstable.30
+    prerelease: true
+    notes: >-
+      ## What's Changed
+
+      * Expand firmware updates with BLE DFU and serial support by @smikme in
+      https://github.com/smikme/meshapp/pull/34
+
+      * Fix OTA upload cancellation with interruptible sockets by @smikme in
+      https://github.com/smikme/meshapp/pull/35
+
+      * Make Wi-Fi OTA cancellation resilient to native signal interference by @smikme in
+      https://github.com/smikme/meshapp/pull/36
+
+      * Isolate blocking signal control from OTA cancellation probe by @smikme in
+      https://github.com/smikme/meshapp/pull/37
+
+
+
+      **Full Changelog**:
+      https://github.com/smikme/meshapp/compare/v2.4.2-unstable.29...v2.4.2-unstable.30
   - version: v2.4.2-unstable.29
     name: MeshApp v2.4.2-unstable.29
     datetime: '2026-11-15T20:13:58Z'
@@ -207,9 +231,3 @@ releases:
     url: https://github.com/smikme/meshapp/releases/tag/v2.2.4
     prerelease: false
     notes: "# MeshApp v2.2.4\r\n\r\nThis release improves telemetry, chat, and Lua scripting, and adds full German localization.\r\n\r\n## What’s New\r\n\r\n- The interface, help, and documentation are now available in German.\r\n- The telemetry dashboard is more flexible: charts can be arranged more conveniently, and the layout can be reset to the default at any time.\r\n- New dedicated charts are available for temperature, humidity, pressure, and radiation.\r\n- Chats now support image sharing through MeshFiles: choose a file manually or drag and drop it into the chat window.\r\n- Images in messages are shown as previews; click a preview to open the full-size image.\r\n- Mesh IDE is more convenient for Lua development, with a function outline, find and replace, KV refresh, and improved suggestions.\r\n\r\n## Telemetry\r\n\r\n- Added a new 2-hour viewing period.\r\n- Telemetry history now stores more data when devices provide it, including air quality, power, health metrics, host metrics, traffic statistics, OneWire sensors, and other extended values.\r\n\r\n## Lua Scripts\r\n\r\n- The Lua API now supports JSON, timers, local time, and access to telemetry history.\r\n- Scripts can work with device data more easily and support more advanced automation.\r\n\r\n## Fixes\r\n\r\n- Favorite and ignored nodes are now correctly separated between different connections and owners.\r\n- Favorite and ignored filters work better with saved offline nodes.\r\n- Fixed an issue where bots could interfere with sending regular chat messages.\r\n- Deleting a node no longer affects telemetry that belongs to other nodes.\r\n- Message sending is more reliable when the device queue is full: MeshApp now retries instead of failing immediately."
-  - version: v2.2.3
-    name: MeshApp v2.2.3
-    datetime: '2026-06-16T13:38:42Z'
-    url: https://github.com/smikme/meshapp/releases/tag/v2.2.3
-    prerelease: false
-    notes: "# MeshApp v2.2.3\r\n\r\nThis update makes MeshApp more convenient for scripts, gentler on the mesh network, and more reliable if the local database is damaged.\r\n\r\n## What’s New\r\n\r\n- The Script Store now follows the app language: Russian users see the Russian catalog, while other languages use the English catalog.\r\n- A new Lua script type is available: extensions. Extensions can add their own sections to the left toolbar and behave like a built-in part of MeshApp.\r\n- Remote admin is now more careful with network traffic. MeshApp no longer loads the full configuration immediately; you can request only the sections you need.\r\n- MeshApp can now automatically recover from a damaged local database. If a problem is detected at startup, the app tries to save the damaged file, extract recoverable data, and move it into a new database.\r\n- Lua authors get new tools: embedded forms, form events, and remote admin APIs.\r\n\r\n## Improvements\r\n\r\n- Remote admin confirmations and status messages are clearer.\r\n- The IDE now lets you show or hide extensions in the left toolbar.\r\n- Lua API and remote admin documentation has been expanded."
