@@ -1,7 +1,96 @@
 source: github
 repo: ALLFATHER-BV/wadamesh
-updatedAt: '2026-11-14T16:25:58.238Z'
+updatedAt: '2026-11-16T15:09:35.720Z'
 releases:
+  - version: beta_106
+    name: wadamesh beta_106
+    datetime: '2026-11-16T11:37:29Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_106
+    prerelease: true
+    notes: >-
+      Test build, on top of beta_105. Stable stays **beta_101**.
+
+
+      Flash it at **[wadamesh.com](https://wadamesh.com/#install)** (switch the toggle to Beta), or
+      update on the device if you have "Get test builds (beta)" turned on.
+
+
+      A big community round. **@oumike** built a whole web console with on-device approval, map
+      traffic pulses and a standalone Tanmatsu image, **@kkazakov** taught Bluetooth keyboards
+      Bulgarian and fixed Cyrillic in settings, **@CarpeNoctem** gave Lua apps pictures,
+      **@Languskhan** sent a city locator as a first PR, and **@halflive-743** brought Texas Hold'em
+      to the Store.
+
+
+      ### New
+
+
+      **Web console.** The browser pages on the Wi-Fi address are one console now: Mesh, Screen,
+      Files, Settings and Dashboard tabs, plus a settings page for every Lua app that declares
+      settings. A new browser gets in by tapping Allow on the device instead of typing a code, and
+      the card shows its IP address. Sensitive actions from the browser (factory reset, backups,
+      firmware) ask on the device first, and the Screen tab cannot answer those questions itself.
+      Requests from other websites are refused, and pages are sent without holding up the radio. On
+      the T-LoRa Pager the Settings and Dashboard tabs are left out for space; the rest of the
+      console also frees about 27 KB there, since its pages are stored compressed. By **@oumike**
+      (#857, #854).
+
+
+      **Traffic on the map.** While the Map tab is open, short pulses show messages and ACKs: a
+      message you send runs blue along the line to the contact, one you receive runs green and an
+      ACK yellow back to you, and channel traffic spreads as a ring from your own marker. Mute
+      colours and animations turns them off. By **@oumike** (#859, #827). Not on the T-LoRa Pager.
+
+
+      **Pictures in Lua apps.** `wada.ui.image` draws a PNG, JPEG or BMP from the app's own files,
+      within firmware-side size limits. `caps().image` tells an app whether the board has it. By
+      **@CarpeNoctem** (#865). Not on the T-LoRa Pager.
+
+
+      **City locator.** With a `cities.bin` boundary file on the SD card (built from public-domain
+      Census data, see `CITY_LOCATOR.md`), crossing into a new US city or town shows "Now in
+      <city>". **Settings > GPS > City on Home** shows the city on Home instead of the node name; it
+      is off by default. The file is read in small pieces so nothing stalls, and nothing is
+      transmitted. By **@Languskhan** (#858), a first PR.
+
+
+      **Bulgarian on Bluetooth keyboards.** While the keyboard language is Bulgarian, a Bluetooth
+      keyboard types the Bulgarian phonetic layout, and Ctrl+Shift switches the keyboard language
+      like the on-screen language key. The layout printed on your keys stays what you picked, so UK
+      and Belgian decks keep their symbols. By **@kkazakov** (#855). Not on the T-LoRa Pager.
+
+
+      ### Fixes
+
+
+      - **EN/BG tag** in a chat no longer covers the GPS icon. By **@kkazakov** (#860).
+
+      - **Cyrillic in settings fields** shows instead of empty boxes. By **@kkazakov** (#864).
+
+      - **Battery calibration** refuses to run while USB is plugged in. The charger's voltage was
+      being stored as "full", so a full battery then read about 60%. A calibration taken that way is
+      ignored and the default curve comes back. Reported by sonicblue7 and rausimous on the T-Deck
+      Pro.
+
+
+      ### Boards
+
+
+      - **Tanmatsu:** a standalone image that replaces the badge.team launcher can be installed from
+      wadamesh.com (Beta), next to the app store install. Identity, contacts and chats are kept;
+      settings start fresh. By **@oumike** (#809, #806).
+
+      - **Tanmatsu:** Enter in a chat sends, arrows leave the text box at its ends, Enter picks
+      options in the setup wizard, the Wi-Fi scan waits for the radio to finish, F1 and F4 only wake
+      a dark screen, and a radio preset no longer turns back into Custom. By **@oumike** (#809).
+
+      - **Tanmatsu:** larger tab icons with their F-key shape beside them, F-key hints beside the
+      chat buttons, and a two-column repeater admin layout. By **@oumike** (#862).
+
+      - **CrowPanel 3.5:** touch works after a restart from Settings. The touch chip can come back
+      on its second
+
+      …
   - version: beta_105
     name: wadamesh beta_105
     datetime: '2026-11-14T15:59:17Z'
@@ -1581,115 +1670,3 @@ releases:
 
 
       Documented at [wadamesh.com/sdk.html](https://wadamesh.com/sdk.html).
-  - version: beta_86
-    name: wadamesh beta_86
-    datetime: '2026-10-03T17:11:27Z'
-    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_86
-    prerelease: true
-    notes: >-
-      Test build. Stable is now **beta_85**.
-
-
-      Flash it at **[flasher.wadamesh.com](https://flasher.wadamesh.com)** (switch the toggle to
-      Beta), or update on the device if you have "Get test builds (beta)" turned on.
-
-
-      Most of this is [@oumike](https://github.com/oumike)'s: a 50-commit set covering the T-Display
-      P4, the T-Deck Pro, the M9 and the shared UI, plus a new board. The five new Store apps are
-      [@samuelcoustet](https://github.com/samuelcoustet)'s, and the trackball fix is
-      [@samdems](https://github.com/samdems)'.
-
-
-      ## If you have a T-Display P4, this is the one to take
-
-
-      **Landscape works.** In beta_85 switching to landscape left the touch screen rotated and
-      offset, which meant the control to switch back could not be hit and the only way out was
-      reflashing over USB. Taps were being rotated twice, once by the touch driver and once by the
-      interface. If beta_85 left you stuck in landscape, this build is the way out.
-
-
-      The P4 also gains the **LR2021 radio variants** (#504), a clip-on keyboard, GPS that starts
-      reliably, Wi-Fi through the C6 coprocessor, and a clock that syncs over saved Wi-Fi on a cold
-      boot. Several screens that were cut off or overlapping in portrait are laid out properly, and
-      the Remote UI placeholder is drawn on the real panel.
-
-
-      ## A new board: Elecrow CrowPanel Advance 3.5"
-
-
-      ESP32-S3, ILI9488 display, GT911 touch (#561). Experimental, and new enough that anything you
-      report is useful.
-
-
-      ## T-Deck Pro owners: pick your hardware revision
-
-
-      There are now separate **v1.0** and **v1.1** builds. The touchscreen that did nothing on some
-      Pros was simply the wrong touch driver for that revision (#568). If you do not know which you
-      have, try v1.1: it is what the single Pro build always was, and updating from the device keeps
-      working without you choosing anything.
-
-
-      ## Fixes
-
-
-      - **#562** the terminal on the Pro and Max drew black text on a black background.
-
-      - **#563** compact chat messages ran into each other on the Pro and Max. The gap added in
-      beta_85 was measured in one place and drawn in another.
-
-      - **#132** the screen lock now holds the trackball as well as touch, so the map no longer pans
-      under a locked screen.
-
-      - **#574** a crash when tapping the accent popup after its text box had closed.
-
-      - **#570** leaving a profile field you did not edit no longer claims it saved, and scrolling
-      no longer says "saved" on every row.
-
-      - **#564** M9 back button. **#569** mark all chats and channels read. **#576** the map's side
-      buttons show which is selected. **#571** Wardrive naming. **#579** the lock screen shows the
-      battery, on every panel.
-
-      - Settings backups were exported as **invalid JSON**, so they could not be imported again.
-      They now also carry the screen and app preferences they were missing.
-
-      - ThinkNode M9: the battery percentage no longer overlaps the signal bars at the larger text
-      sizes added in beta_85.
-
-
-      ## Five new apps in the Store, by @samuelcoustet
-
-
-      **Tetris**, **Breakout**, **Trip Odometer**, **Ping** and **ProTreck**. Tetris, Breakout and
-      Ping are built into the boards that cannot reach the Store; Trip Odometer and ProTreck need
-      GPS and sensors, so they stay a download rather than spending flash on boards that cannot use
-      them.
-
-
-      ## Emoji in any text field
-
-
-      Long-press a field and the picker is there beside Cut, Copy, Paste and Sym. That includes the
-      text entry a Lua app opens with `wada.ui.input()`.
-
-
-      ## For people writing Lua apps
-
-
-      Two things that were asked for already existed and are now documented: **`wada.sys.epoch()`
-      and `wada.sys.datetime()`** give you the device clock, and the field `wada.ui.input()` opens
-      is the firmware's own, so it already has Cut, Copy, Paste, Sym and now Emoji on a long press.
-
-
-      The SDK page also had **the wrong path** for side-loading: on a device with an SD card it is
-      `/meshcomod/apps/`, not `/apps/` at the root of the card. Following the old wording silently
-      did nothing, which cost at least one person an evening.
-
-
-      ## For testers
-
-
-      The P4 landscape fix and the CrowPanel 3.5 are what want eyes. When
-
-      …
