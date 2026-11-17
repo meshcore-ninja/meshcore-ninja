@@ -1,7 +1,149 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-11-15T05:27:37.295Z'
+updatedAt: '2026-11-17T00:02:42.248Z'
 releases:
+  - version: v4.18.0-rc2
+    name: v4.18.0-rc2
+    datetime: '2026-11-16T23:56:47Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.18.0-rc2
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.18.0-rc2
+
+
+      > [!WARNING]
+
+      > This is a **pre-release** for testing. Don't run it on a deployment you can't roll back.
+
+
+      ## Summary
+
+
+      This RC adds **public-instance mode** (#5156). It is one global setting that limits what
+      signed-out visitors and embed maps can see:
+
+      - Positions are snapped to a grid of about 1.5 km.
+
+      - Distances, bearings and altitudes are rounded.
+
+      - Raw packet data and file exports are blocked.
+
+      - Separate admin toggles hide long names, public keys, exact times and message text.
+
+
+      A new audit test calls every API route while signed out and fails the build if exact data
+      leaks.
+
+
+      Meshtastic admin config saves can now be verified by reading the setting back, and MQTT saves
+      report when the node refuses them.
+
+
+      MeshCore gets several fixes:
+
+      - `source-connected` and `source-disconnected` automation events now fire.
+
+      - Companion sources now get a 60 s heartbeat by default.
+
+      - Room Sync rooms re-join with a blank-password login.
+
+      - Neighbour directions on the map are fixed.
+
+      - MeshMonitor's own channel sends no longer show "63 hops" in the app.
+
+
+      On the Virtual Node, apps now see each other's messages, and Android 2.8 shows the correct
+      lock and link status. Several dependencies moved to new major versions, including `web-push` 4
+      and `rotating-file-stream` 4.
+
+
+      ## Features
+
+      - Public-instance mode, phase 1: settings, redactor and middleware (#5156) — #6433
+
+      - Public-instance mode, phase 2: sentinel audit of every route a signed-out viewer can reach
+      (#5156) — #6434
+
+      - Public-instance mode, phase 3: UI for redacted views, plus docs (#5156) — #6435
+
+      - Verified remote config saves that read the setting back (#4487) — #6417
+
+      - MeshCore: re-join Room Sync rooms with a blank-password ACL login (#6408) — #6415
+
+      - Auto-Responder: per-trigger enable/disable for Meshtastic (#6405) — #6413
+
+      - MeshCore: pass HOPS, ROUTE, ROUTE_NAMES, HASH_SIZE and SCOPE to Auto-Responder scripts
+      (#6402) — #6412
+
+
+      ## Bug Fixes
+
+      - MeshCore: `source-connected` and `source-disconnected` automation events now fire. Companion
+      sources get a 60 s heartbeat by default, and the automation editor recommends a cooldown on
+      these rules (#6437) — #6446
+
+      - Report when the node refuses an MQTT config save, instead of showing "saved" (#6439) — #6448
+
+      - Embed maps now follow public-instance mode (#5156) — #6445
+
+      - Settings: checkbox settings now sit inline with their labels — #6444
+
+      - MeshCore Virtual Node: MeshMonitor's own channel sends show as 0 hops, not "63 hops, 4-byte"
+      (#6441) — #6443
+
+      - Frontend: fixed a blank page caused by a server constant loading in the browser — #6447
+
+      - Virtual Node: stopped blocking waypoints from apps; only admin packets are blocked — #6442
+
+      - Virtual Node: text messages from one app now reach the other connected apps (#6436) — #6438
+
+      - Virtual Node: forward the radio's NodeDB flags, so Android 2.8 shows the right lock and no
+      "unheard" badge (#5921) — #6416
+
+      - Automation: the MT↔MC bridge now relays the operator's own MeshCore channel posts (#6409) —
+      #6410
+
+      - MeshCore: show the stock "hello" guest password on room logins (#6407) — #6414
+
+      - MeshCore: Remote Telemetry and Time Sync automation sections now send PATCH (#6399) — #6411
+
+      - MeshCore: pair neighbour directions by freshness on the maps (#6403) — #6404
+
+      - Automation: MeshCore telemetry triggers now carry node name, key and role (#6397) — #6398
+
+      - MeshCore: parse the repeater `get name` replies the console actually sends — #6431 (@vitska)
+
+
+      ## Refactoring
+
+      - Use `PortNum` constants for port numbers, and ban bare ones in lint — #6440
+
+
+      ## Documentation
+
+      - Update CardMesh links after its GitHub rename — #6419 (@maxhayim)
+
+
+      ## Translations
+
+      - Translations update from Hosted Weblate (Italian) — #6340
+
+
+      ## Dependencies
+
+      - `web-push` 3.6.7 → 4.0.0. It is now ESM-only; the import was updated to match — #6424
+
+      - `rotating-file-stream` 3.2.10 → 4.0.0 — #6423
+
+      - `maplibre-gl` 6.16.0 → 6.18.0 — #6426
+
+      - `satellite.js` 7.1.0 → 7.2.0 — #6429
+
+      - `@rollup/rollup-linux-arm64-musl` 4.66.0 → 4.68.2 — #6428
+
+      - production-dependencies g
+
+      …
   - version: v4.18.0-rc1
     name: v4.18.0-rc1
     datetime: '2026-11-15T01:36:35Z'
@@ -2056,104 +2198,6 @@ releases:
         -p 8080:3001 \
         -v meshmonitor-data:/data \
         ghcr.io/Yeraze/meshmonitor:4.17.1-rc9
-      ```
-
-
-      ### 🧪 Testing
-
-      ✅ All tests passed
-
-      ✅ TypeScript checks passed
-
-      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
-
-
-      ### 📋 Changes
-
-      See commit history for detailed changes.
-  - version: v4.17.1-rc10
-    name: v4.17.1-rc10
-    datetime: '2026-10-22T23:41:16Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.1-rc10
-    prerelease: true
-    notes: >-
-      # MeshMonitor v4.17.1-rc10
-
-
-      > ⚠️ **Pre-release.** This is a release candidate for testing. Use a stable release in
-      production.
-
-
-      Admins can now set, clear and lock a node's channel by hand from Node Details. A locked
-      channel stays put when new packets arrive. The MeshCore Virtual Node answers reads of empty
-      channel slots with an empty ChannelInfo, as real firmware does, so pipelined clients such as
-      MeshCore One no longer stall on each empty slot. The Virtual Node also sends MQTT uplink
-      frames only to the MQTT proxy client, not to other clients that connect after it. The MeshCore
-      Nodes list header now uses two rows, so the Discover button no longer gets clipped in the
-      320px pane. The Docker image moves to Node.js 24.22.1 for the October 21 security release.
-      This release also includes new Weblate translations.
-
-
-      ## Features
-
-      - feat(nodes): set, clear and lock a node's channel by hand (#5941)
-
-
-      ## Bug Fixes
-
-      - fix(meshcore): return empty channel info within advertised capacity (#5942), thanks @temalo
-
-      - fix(virtual-node): prefer MQTT proxy client as proxy delegate (#5928)
-
-      - fix(meshcore): split the Nodes list header into two rows (#5937)
-
-
-      ## Security
-
-      - security: bump Node.js base image to 24.22.1 (#5935)
-
-
-      ## Translations & Tests
-
-      - Translations update from Hosted Weblate (#5929)
-
-      - test(i18n): treat Weblate's empty-string keys as untranslated (#5938)
-
-
-      ## Chores
-
-      - chore: bump version to 4.17.1-rc10 (#5943)
-
-
-      ## Issues Resolved
-
-      #5923, #5927, #5933, #5934, #5936
-
-
-      ## Upgrade notes
-
-      - Migration 217 adds `nodes.channelLocked`. It runs automatically, and every existing node
-      starts unlocked.
-
-
-      **Full Changelog**: https://github.com/Yeraze/meshmonitor/compare/v4.17.1-rc9...v4.17.1-rc10
-
-
-      ## 🚀 MeshMonitor v4.17.1-rc10
-
-
-      ### 📦 Installation
-
-
-      **Docker (recommended):**
-
-      ```bash
-
-      docker run -d \
-        --name meshmonitor \
-        -p 8080:3001 \
-        -v meshmonitor-data:/data \
-        ghcr.io/Yeraze/meshmonitor:4.17.1-rc10
       ```
 
 
