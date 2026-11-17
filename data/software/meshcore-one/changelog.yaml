@@ -1,9 +1,9 @@
 source: github
 repo: Avi0n/MeshCoreOne
-updatedAt: '2026-11-16T05:25:35.328Z'
+updatedAt: '2026-11-17T10:21:02.717Z'
 releases:
   - version: v1.7.0
-    name: MeshCore One 1.7.0
+    name: 1.7.0
     datetime: '2026-11-16T01:26:34Z'
     url: https://github.com/Avi0n/MeshCoreOne/releases/tag/v1.7.0
     prerelease: false

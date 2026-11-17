@@ -1,7 +1,68 @@
 source: github
 repo: MarekZegare4/MeshCore-Solo
-updatedAt: '2026-11-12T12:19:14.894Z'
+updatedAt: '2026-11-17T10:20:37.273Z'
 releases:
+  - version: v2.3.0
+    name: Solo v2.3.0
+    datetime: '2026-11-17T08:05:19Z'
+    url: https://github.com/MarekZegare4/MeshCore-Solo/releases/tag/v2.3.0
+    prerelease: false
+    notes: >-
+      ## Solo v2.3.0
+
+
+      **New**
+
+      - **Planned routes.** Plan a route on a computer in any planner that saves GPX, put it on the
+      device, and follow it:
+        - The navigation view points to the next bend and shows the distance left and the time to the end.
+        - **Off route** plays a tune when you stray more than 50 m. **Back on route** tells you when you're on it again, and **Route finished** at the end.
+        - Follow it either way round. It keeps going on any screen and through a restart, and picks up where you were, even after a detour.
+        - Home's map draws it, and the compass marks the next bend.
+        - The device keeps 8 routes of up to 4,000 points. Send them from the [configurator](https://solo.marekzegarek.com/configure.html) or with `tools/route.py`. On the device: Tools > Trail, hold Enter, **Routes...**
+        - On the Wio Tracker L1 (OLED and e-ink), the L2, the Watch13, the Heltec V3/V4 and the Cardputer.
+      - **Track back.** Your trail, followed back to where you began, the same way as a route: **Off
+      route**, corners you cut are skipped, the time to the start, on any screen and through a
+      restart.
+
+      - **One button.** The whole interface from a single button:
+        - The Heltec V3/V4 have new `-button` firmware files that run on the PRG button alone, with nothing wired up. On the GAT562 Watch13 the second button is Back.
+        - **Click** goes to the next row, **double click** goes back, **hold** is OK. Hold **2 s** for the menu or to unlock, **5 s** for SOS.
+        - Text is typed by letter groups, a PIN on a combination lock, and the ringtone editor works too. See [One button](https://github.com/MarekZegare4/MeshCore-Solo/blob/main/docs/solo/one-button.md).
+      - **Configurator.** A web page that sets up the device over USB from Chrome or Edge on a
+      computer:
+      [solo.marekzegarek.com/configure.html](https://solo.marekzegarek.com/configure.html).
+        - Every setting, Home's pages, quick messages, the two melodies (paste a ringtone, hear it, send it), routes and the trail, waypoints, screenshots and the console.
+        - A backup to a file and back, also to set up a second device the same way.
+        - The same works without a browser: `tools/config.py`, `tools/route.py` and `tools/console.py`.
+      - **Set the clock by hand (#59).** **Settings > Clock**, before Time zone:
+        - Setting it more than 5 minutes back asks first. Other nodes keep the newest time they've had from this one, so for that long they ignore its adverts and its logins to repeaters and rooms. Messages go as usual.
+        - **Time from GPS** can be turned off, for a GPS that gives a wrong time. It's on by default.
+        - The phone app may now set the clock up to an hour back, to correct a clock that ran ahead.
+      - **Radio power save is back.** **Settings > Radio > Power save**:
+        - **On** hears every node and the radio sleeps about a third of the time.
+        - **Max** sleeps about two thirds of the time at SF8 and below, but misses nodes on firmware older than companion v1.16.
+        - It's off by default, off while repeating, and SX1262 radios only. The radio also wakes faster from each sleep.
+      - **Waypoints:** **+ Mark here** at the end of the list. With a target set, Locator offers
+      **Navigate**.
+
+
+      **L2**
+
+      - **Coverage map (MatterMap)**, voluntary and off by default. **Settings > Coverage map**
+      records where the mesh is heard as you walk: every packet with your position and its signal,
+      saved to the SD card and uploaded to [MatterMap](https://mattermeshos.com/coverage/), the
+      coverage map by Andrea Quartararo ([MatterMesh OS](https://mattermeshos.com)), over your saved
+      WiFi.
+        - Nothing is recorded inside your **home zone**. Setting the zone also takes out points already recorded there.
+        - **Delete recorded points** removes everything on the card.
+        - See [Coverage map](https://github.com/MarekZegare4/MeshCore-Solo/blob/main/docs/solo/coverage-map.md).
+      - **GPX routes from the SD card:** Map tools > Route > **Import** reads a `.gpx` from
+      `/routes` or the card's top folder. The Gallery has a **Routes** tab.
+
+      - **Map:**
+        - Lines are easier
+      …
   - version: v2.2.1
     name: Solo v2.2.1
     datetime: '2026-11-12T11:02:07Z'
@@ -333,9 +394,3 @@ releases:
     url: https://github.com/MarekZegare4/MeshCore-Solo/releases/tag/v1.21-rc2
     prerelease: true
     notes: "## MeshCore Solo Companion Firmware v1.21 Release candidate 2\r\n\r\n### What's new\r\n\r\n- **Live Location Sharing** — broadcast your position over the mesh as `[LOC]` messages, **movement-gated**, to a channel or a single contact. Others who share theirs show up as pins on the map with live **distance/bearing in Nearby Nodes**, and a **status-bar indicator** appears while your own share is active. `[LOC]` is parsed in DMs, channel messages **and room messages**; DM shares name the sender.\r\n- **Locator** (geofence) — arm a geofence around a **target** — a saved waypoint *or* a person (their live `[LOC]` or last-known position) — and get an alert when you **arrive/leave** or they get **near/far**, with an optional **homing beeper** that ticks faster the closer you get (and overrides a muted buzzer). Arm it from **Tools › Locator** or straight from **Nearby Nodes** / **Waypoints**; pick the target from a list (favourites first, then any contact), and clear it via a **\"None\"** entry. The active target is drawn as a **flag** on the map.\r\n- **One active target across Locator / Navigate / Map** — a single **\"Set as target\"** action everywhere, backed by a shared resolver that prefers a live `[LOC]` share over the last-advertised GPS, so the three features always agree on where you're headed.\r\n- **Follow live contacts** — **Navigate** to a contact who is live-sharing and the view **follows them as they move**, adding an **ETA** line. **Quick-share** your own position straight from the Map.\r\n- **Map & status-bar upgrades** — the home mini-map gains a **north marker** and a **scale tick**; the status line shows the tracked-node count and, with a fix, an **arrow + distance to the nearest tracked contact** (e.g. `Track:3 →120m`); a **GPS fix icon** sits in the top status bar (boxed once a fix is valid, plain while searching), shown only on GPS boards while **GPS** is enabled in Settings.\r\n- **Trail auto-pause** — recording **freezes on stops** (banking elapsed time and breaking the map line across the idle gap) and **resumes on movement** without ending the session; the home-screen blink keeps going while paused.\r\n- **Collapsible Tools** — tools are grouped into fold-in-place **Location / Comms / System** sections, the same model as Settings (Tools always opens folded to the section list), and the home carousel now uses **page-indicator icons** instead of dots.\r\n- **Waypoint coordinate editor** — add a waypoint by scroll-editing its latitude/longitude digit by digit.\r\n- **On-device room login with saved passwords** — log in to a room server straight from the device (no phone app): pick the room and the password prompt appears automatically (a blank password works for open rooms), or re-login any time via the room's **context-menu \"Login…\"**. The password is **remembered across reboots**, so a room you've used before logs back in without retyping; a failed login (e.g. the server's password changed) forgets the stale password so the next attempt prompts again. Saved passwords are written with the same atomic, crash-safe persistence as contacts and channels.\r\n\r\n\r\n### Fixes\r\n\r\n- **Critical — low-heap hang and contact loss on RAM-tight builds.** With `MAX_CONTACTS=350` and `OFFLINE_QUEUE_SIZE=256` the device ran with very little free heap; an allocation in the input/menu path could then fail and **hang the UI** (notably when entering Diagnostics), and a crash or reset mid-save could **wipe all contacts**. Fixed by two independent changes:\r\n  - **Right-sized message-history rings** — the on-device scrollback rings were halved (96→48 channel, 64→32 DM), recovering **~14 KB of free heap** (measured 3 → 17 KB). History is RAM-only, so the only cost is shorter on-device scrollback.\r\n  - **Atomic persistence** — contacts, channels and prefs are now written to a temp file and **atomically renamed** into place; an interrupted save (crash, reset, full flash) leaves the previous good file intact instead of truncating it.\r\n- **USB host stall** — `Serial.write\n…"
-  - version: v1.21-rc1
-    name: Solo v1.21-rc1
-    datetime: '2026-06-25T17:17:12Z'
-    url: https://github.com/MarekZegare4/MeshCore-Solo/releases/tag/v1.21-rc1
-    prerelease: true
-    notes: "## MeshCore Solo Companion Firmware v1.21 Release candidate 1\r\n\r\n### What's new\r\n\r\n- **Live Location Sharing** — broadcast your position over the mesh as `[LOC]` messages, **movement-gated**, to a channel or a single contact. Others who share theirs show up as pins on the map with live **distance/bearing in Nearby Nodes**, and a **status-bar indicator** appears while your own share is active. `[LOC]` is parsed in DMs, channel messages **and room messages**; DM shares name the sender.\r\n- **Locator** (geofence) — arm a geofence around a **target** — a saved waypoint *or* a person (their live `[LOC]` or last-known position) — and get an alert when you **arrive/leave** or they get **near/far**, with an optional **homing beeper** that ticks faster the closer you get (and overrides a muted buzzer). Arm it from **Tools › Locator** or straight from **Nearby Nodes** / **Waypoints**; pick the target from a list (favourites first, then any contact), and clear it via a **\"None\"** entry. The active target is drawn as a **flag** on the map.\r\n- **One active target across Locator / Navigate / Map** — a single **\"Set as target\"** action everywhere, backed by a shared resolver that prefers a live `[LOC]` share over the last-advertised GPS, so the three features always agree on where you're headed.\r\n- **Follow live contacts** — **Navigate** to a contact who is live-sharing and the view **follows them as they move**, adding an **ETA** line. **Quick-share** your own position straight from the Map.\r\n- **Map & status-bar upgrades** — the home mini-map gains a **north marker** and a **scale tick**; the status line shows the tracked-node count and, with a fix, an **arrow + distance to the nearest tracked contact** (e.g. `Track:3 →120m`); a **GPS fix icon** sits in the top status bar (boxed once a fix is valid, plain while searching), shown only on GPS boards while **GPS** is enabled in Settings.\r\n- **Trail auto-pause** — recording **freezes on stops** (banking elapsed time and breaking the map line across the idle gap) and **resumes on movement** without ending the session; the home-screen blink keeps going while paused.\r\n- **Collapsible Tools** — tools are grouped into fold-in-place **Location / Comms / System** sections, the same model as Settings (Tools always opens folded to the section list), and the home carousel now uses **page-indicator icons** instead of dots.\r\n- **Waypoint coordinate editor** — add a waypoint by scroll-editing its latitude/longitude digit by digit.\r\n\r\n### Fixes\r\n\r\n- **Critical — low-heap hang and contact loss on RAM-tight builds.** With `MAX_CONTACTS=350` and `OFFLINE_QUEUE_SIZE=256` the device ran with very little free heap; an allocation in the input/menu path could then fail and **hang the UI** (notably when entering Diagnostics), and a crash or reset mid-save could **wipe all contacts**. Fixed by two independent changes:\r\n  - **Right-sized message-history rings** — the on-device scrollback rings were halved (96→48 channel, 64→32 DM), recovering **~14 KB of free heap** (measured 3 → 17 KB). History is RAM-only, so the only cost is shorter on-device scrollback.\r\n  - **Atomic persistence** — contacts, channels and prefs are now written to a temp file and **atomically renamed** into place; an interrupted save (crash, reset, full flash) leaves the previous good file intact instead of truncating it.\r\n- **USB host stall** — `Serial.write()` is bounded so a stalled USB host can no longer hang the device indefinitely.\r\n\r\n### Under the hood\r\n\r\n- **Streaming trail simplification** — GPS points are simplified as they're recorded via a fixed-corridor (Reumann–Witkam) pass: straight runs collapse to their two endpoints while curves stay bounded to within the **Min dist** tolerance of the real track, so the 512-point buffer covers a far longer route than a flat point budget would suggest.\r\n- A UITask-decoupled active-target resolver (`resolvePersonPos` / `activeTargetPos`) replaces the duplicated target-resolution logic that lived sepa\n…"
