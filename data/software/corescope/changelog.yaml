@@ -1,7 +1,82 @@
 source: github
 repo: Kpa-clawbot/CoreScope
-updatedAt: '2026-11-11T05:13:51.371Z'
+updatedAt: '2026-11-17T20:36:00.453Z'
 releases:
+  - version: v3.18.0
+    name: v3.18.0
+    datetime: '2026-11-17T16:15:52Z'
+    url: https://github.com/Kpa-clawbot/CoreScope/releases/tag/v3.18.0
+    prerelease: false
+    notes: |-
+      # v3.18.0
+
+      11 commits since v3.17.0: 5 fix, 3 feat, 1 test, 1 refactor, 1 docs. Three feats, so
+      minor not patch.
+
+      A short release with three larger features. Two are optional tools: radio line of sight
+      on packet routes plus a repeater planner, and repeater details that registered users can
+      fill in. The third is a new way to deploy the UI: from its own web container or from a
+      static host such as Cloudflare Pages. An instance that keeps running the one container
+      it runs today needs no configuration change.
+
+      ## Read this before upgrading
+
+      ### With user accounts on, `users.db` moves to schema v9
+
+      With `userManagement.enabled`, the first start creates the tables for repeater claims and
+      details (#2415). A v3.17.x binary refuses the database afterwards ("database schema
+      version 9 is newer than this binary supports"), so keep a copy of `users.db` from before
+      the upgrade if you may want to roll back. The analyzer database is not touched. Without
+      user accounts nothing changes.
+
+      ### The live feed connects to `/ws`
+
+      The UI's WebSocket now goes to `/ws` instead of `/` (#2383). The server has answered on
+      `/ws` for a long time and still accepts `/`, so open browsers keep working. A reverse
+      proxy that forwards WebSocket upgrades only for an exact `/` must forward `/ws` too. The
+      nginx example in `docs/deployment.md` (`location /`) already covers it.
+
+      ### Map tile URLs you set in the config now win on every page
+
+      If your config sets a tile URL (`tiles.dark`, `tiles.light`, `map.tiles.darkUrl` or
+      `map.tiles.lightUrl`), the Map and Live pages now use it too (#2386). Before, a visitor's
+      tile pick in the customizer overrode it on those two pages, while the node pages, reach
+      map and analytics already followed your setting. Without those keys nothing changes.
+
+      ## Features
+
+      - **Radio line of sight on packet routes** (#2391). With `los.enabled`, every leg of a
+        packet route on the map gets a clear, marginal or blocked chip (first Fresnel zone,
+        k=4/3), obstructions are marked on the map, and a terrain profile panel lets viewers
+        change antenna height and frequency. Set `los.frequencyMhz` to your mesh's frequency:
+        the default 910.525 is the US one, use 869.618 for EU/UK.
+      - **Repeater planner** (#2391). With `planner.enabled`, `#/tools/planner` checks line of
+        sight along a chain of points, finds the best single relay between two points, and
+        suggests new repeater sites that join the existing backbone in an area of up to
+        100 by 100 km. Both features use SRTM terrain (about 90 m) fetched on demand from AWS
+        Open Data and kept in memory only; the server still writes nothing. Both are off by
+        default, and with them off nothing is fetched.
+      - **Repeater info and claims** (#2415, #2416, #2417). With user accounts on, registered
+        users can claim a repeater and record what the radio cannot advertise: antenna height
+        and gain, power source, whether it is active, in maintenance or decommissioned, and
+        notes. Everyone sees the details on the node page. A claimed repeater can be edited by
+        its claimers and by admins only; edits and claims show in the audit log, and admins can
+        remove a claim.
+      - **Three ways to deploy the UI** (#2383). Next to the all-in-one container you run
+        today, the UI can now come from a separate web container (Caddy, `Dockerfile.web` and
+        `docker-compose.split.yml`) that forwards the API, or from a static host or CDN against
+        your server on another origin. The static build has no logins; its account pages link
+        to the classic UI. `docs/deployment.md` has a "Deployment modes" section, and
+        `deploy/static/README.md` covers Cloudflare Pages and rollback.
+
+      ## Fixes
+
+      - **Memory after eviction** (#2327). Packets removed from memory were still held by some
+        secondary indexes, so memory use stayed higher than the data in it. In a synthetic test
+        with the same live data the retained heap went from 98 to 27 MiB.
+      - **Scope statistics** (#2368, closes #2364). `/api/scope-stats` counted flood and direct
+        traffic as unscoped but left
+      …
   - version: v3.17.0
     name: v3.17.0
     datetime: '2026-11-11T00:11:28Z'
@@ -1378,124 +1453,3 @@ releases:
 
       > ⚠️ **Docker image not available for this tag** (CI trigger issue). Use **v3.7.1** for the
       container image: `ghcr.io/kpa-clawbot/corescope:v3.7.1`
-  - version: v3.6.0
-    name: v3.6.0 - The Forensics
-    datetime: '2026-05-01T09:25:39Z'
-    url: https://github.com/Kpa-clawbot/CoreScope/releases/tag/v3.6.0
-    prerelease: false
-    notes: >-
-      # v3.6.0 - The Forensics
-
-
-      CoreScope just got eyes everywhere. This release drops **path inspection**, **color-by-hash
-      markers**, **clock skew detection**, **full channel encryption**, an **observer graph**, and a
-      pile of robustness fixes that make your mesh network feel like it's being watched by someone
-      who actually cares.
-
-
-      134 commits, 105 PRs merged, 18K+ lines added. Here's what shipped.
-
-
-      ---
-
-
-      ## 🚀 New Features
-
-
-      ### Path-Prefix Candidate Inspector (#944, #945)
-
-      The marquee feature. Click any path segment and CoreScope opens an interactive inspector
-      showing every candidate node that could match that hop prefix - plotted on a map with scoring
-      by neighbor-graph affinity and geographic centroid. Ambiguous hops? Now you can see *why*
-      they're ambiguous and pick the right one.
-
-
-      **Why you'll love it:** No more guessing which `0xA3` is the real repeater. The inspector lays
-      out every candidate, scores them, and lets you drill in visually.
-
-
-      ### Color-by-Hash Packet Markers (#948, #951)
-
-      Every packet type gets a vivid, hash-derived color - on the live feed, map polylines, and
-      flying-packet animations. Bright fill with dark outline for contrast. No more monochrome blobs
-      - you can visually track packet flows by color at a glance.
-
-
-      ### Node Filter on Live Page (#924, #771)
-
-      Filter the live packet stream to show only traffic flowing through a specific node. Pick a
-      repeater, see exactly what it's carrying. That simple.
-
-
-      ### Clock Skew Detection (#746, #752, #828, #850)
-
-      Full pipeline: backend computes drift using Theil-Sen regression with outlier rejection
-      (#828), the UI shows per-node badges, detail sparklines, and fleet-wide analytics (#752).
-      Bimodal clock severity (#850) surfaces flaky-RTC nodes that toggle between accurate and
-      drifted - instead of hiding them as "No Clock."
-
-
-      **Why you'll love it:** Nodes with bad clocks silently corrupt your timeline. Now they glow
-      red before they ruin your analysis.
-
-
-      ### Observer Graph (M1+M2) (#774)
-
-      Observers are now first-class graph citizens. CoreScope builds a neighbor graph from
-      observation overlaps, scores hop-resolver candidates by graph edges (#876), and uses
-      geographic centroid for tiebreaking. The observer topology is visible and queryable.
-
-
-      ### Channel Encryption - Full Stack (#726, #733, #750, #760)
-
-      Three milestones landed as one: DB-backed channel message history (#726), client-side PSK
-      decryption in the browser (#733), and PSK channel management with add/remove UX and message
-      caching (#750). Add a channel key in the UI, and CoreScope decrypts messages client-side - no
-      server-side key storage. The add-channel button (#760) makes it dead simple.
-
-
-      **Why you'll love it:** Encrypted channels are no longer black boxes. Add your PSK, see the
-      messages, search history - all without exposing keys to the server.
-
-
-      ### Hash Collision Inspector (#758)
-
-      The Hash Usage Matrix now shows collision details for all hash sizes. When two nodes share a
-      prefix, you see exactly who collides and at what size.
-
-
-      ### Geofilter Builder - In-App (#735, #900)
-
-      The geofilter polygon builder is now served directly from CoreScope with a full docs page
-      (#900). No more hunting for external tools. Link from the customizer, draw your polygon, done.
-
-
-      ### Node Blacklist (#742)
-
-      `nodeBlacklist` in config hides abusive or troll nodes from all views. They're gone.
-
-
-      ### Observer Retention (#764)
-
-      Stale observers are automatically pruned after a configurable number of days. Your observer
-      list stays clean without manual intervention.
-
-
-      ### Advert Signature Validation (#794)
-
-      Corrupt packets with invalid advert signatures are now rejected at ingest. Bad data never hits
-      your store.
-
-
-      ### Bounded Cold Load (#790)
-
-      `Load()` now respects a memory budget - no more OOM on cold start with a fat database.
-      Combined with retention-hours cutoff (#917), cold start is safe on constrained hardware.
-
-
-      ### Multi-Arch Docker Images (#869)
-
-      Official images now publish `amd64` + `arm64` in a single multi-arch manifest. Raspberry Pi
-      operators: pull and run. No specia
-
-      …

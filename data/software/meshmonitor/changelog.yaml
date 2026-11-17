@@ -1,7 +1,106 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-11-17T00:02:42.248Z'
+updatedAt: '2026-11-17T20:36:19.742Z'
 releases:
+  - version: v4.18.0
+    name: v4.18.0
+    datetime: '2026-11-17T16:59:46Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.18.0
+    prerelease: false
+    notes: >-
+      # MeshMonitor v4.18.0
+
+
+      MeshMonitor 4.18.0 adds support for Meshtastic's new **`is_automation`** flag. Every packet
+      MeshMonitor sends for an automation now sets bit 2 of `Data.bitfield`, and MeshMonitor reads
+      the flag from every other client. Flagged messages show a bot icon, and Packet Monitor shows
+      the flag in its own column. Auto-Ack and Auto-Responder ignore automated messages by default,
+      so two bots can't answer each other forever. Automation Engine message rules gain a **Sent
+      by** filter, and new rules start at "People only". The release also adds public-instance mode,
+      an embedded MeshCore MQTT broker source, Meshtastic sends over MQTT with no radio, mesh-wide
+      notification defaults, Direct RF Contacts history, verified remote config saves, a security
+      digest Preview, and owner/email claims for the Analyzer Observer. Fixes cover MeshCore
+      telemetry, maps and repeater names, the Virtual Node, the MT↔MC bridge, MQTT config saves and
+      server-side PKI DM decryption. Upgrading runs migrations 233 to 239 automatically. **Read the
+      upgrade notes below before you update.**
+
+
+      📰 **Read the blog post:** [Bots Now Say They Are
+      Bots](https://meshmonitor.org/blog/2026-11-17-v4.18.0-is-automation)
+
+
+      ## Upgrade notes
+
+      - **Migrations 233 to 239** run on start on SQLite, PostgreSQL and MySQL.
+
+      - **Auto-Ack and Auto-Responder skip automated messages by default.** A message flagged
+      `is_automation` gets no reply unless you tick **Respond to automated messages**. A MeshMonitor
+      bot that answered another bot will stop.
+
+      - **Automation sends set the `is_automation` bit.** There is no setting to turn it off.
+
+      - **New Automation Engine message rules** default to **People only**. Existing rules are
+      unchanged.
+
+      - **MeshCore Companion heartbeat:** existing Companion sources with no stored heartbeat get 60
+      seconds. That includes sources where you turned it off under the old form, which stored
+      nothing for off. Set it to 0 to turn it off again.
+
+      - **Notifications:** push subscriptions collapse to one per browser. Per-source settings keep
+      working until you edit them. Push rows with no user, and the anonymous account, get every
+      source the anonymous account can read. Apprise and desktop alerts arrive up to 5 seconds
+      later.
+
+      - **Public-instance mode, hide-declined-MQTT nodes, MQTT sends with no radio and broker
+      forwarding are all off by default.** With public-instance mode on, the CoT/TAK feed is not
+      trimmed; Settings warns about it.
+
+      - **The MeshCore MQTT broker** listens on 1884 by default. Docker and Helm do not expose it;
+      map the port yourself.
+
+      - **MQTT config saves** wait up to 5 seconds for a refusal. A refused MQTT restore now fails
+      instead of passing.
+
+      - **Exchange Position** no longer sends your position to the far node.
+
+      - **Room Sync:** rooms with auto-sync on that this radio logged in to before get one
+      blank-password login after each connect, at most one per source per minute, skipped when a
+      login ran in the last hour.
+
+
+      ## What's changed
+
+
+      ### Features
+
+      - feat(meshcore): owner/email claims in the Analyzer Observer token (#6454) (#6458)
+
+      - feat(security): preview the security digest before sending (#6453) (#6456)
+
+      - feat: support Meshtastic is_automation bit (#6449) (#6450)
+
+      - feat(privacy): public-instance mode phase 3 — UI for redacted views, docs (#5156) (#6435)
+
+      - feat(privacy): public-instance mode, phase 1: settings, redactor, middleware (#5156) (#6433)
+
+      - feat(admin): verified remote config saves that read the setting back (#4487) (#6417)
+
+      - feat(meshcore): re-join Room Sync rooms with a blank-password ACL login (#6408) (#6415)
+
+      - feat(auto-responder): per-trigger enable/disable for Meshtastic (#6405) (#6413)
+
+      - feat(meshcore): pass HOPS/ROUTE/ROUTE_NAMES/HASH_SIZE/SCOPE to Auto-Responder scripts
+      (#6402) (#6412)
+
+      - feat(meshcore): embedded MeshCore MQTT broker source with upstream forwarding (#6197)
+      (#6400)
+
+      - feat(mqtt): send Meshtastic messages over MQTT with no radio (#4305); fix PKI nonce layout
+      (#6395)
+
+      - feat(notifications): mesh-wide defaults, per-source overrid
+
+      …
   - version: v4.18.0-rc2
     name: v4.18.0-rc2
     datetime: '2026-11-16T23:56:47Z'
@@ -2115,101 +2214,3 @@ releases:
       - Describe t
 
       …
-  - version: v4.17.1-rc9
-    name: v4.17.1-rc9
-    datetime: '2026-10-22T00:37:29Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.1-rc9
-    prerelease: true
-    notes: >-
-      # MeshMonitor v4.17.1-rc9
-
-
-      > ⚠️ **Pre-release.** This is a release candidate for testing. Use a stable release in
-      production.
-
-
-      This release candidate adds an overlay for tropospheric ducting on the Map tab and the
-      Dashboard map. It also round-trips the firmware's waypoint geofence fields (radius, bounding
-      box and enter/exit alerts). You can draw and edit them in the waypoint editor, and the map
-      shows them. Auto-Responder triggers now have a Pattern or Regex match mode on both Meshtastic
-      and MeshCore, and both source types share one matcher. Triggers now accept emoji and any
-      printable Unicode text. MeshCore pattern triggers gain `{param}` capture and
-      lookalike-character normalisation. The MeshCore Virtual Node sends a firmware-v3 DeviceInfo
-      frame, so MeshCore One and other apps read its capacities correctly. MeshCore traces to
-      direct-neighbour repeaters now route through the repeater's own hash. The Configuration tab
-      now refetches channels after Reload Config on Device. A node's channel is now recorded only
-      from its own key-decoded traffic, not from PKI, spoofed or replayed packets.
-
-
-      ## Features
-
-      - feat(map): tropospheric ducting overlay UI on the Map tab and Dashboard map (#5913)
-
-      - feat(waypoints): round-trip firmware waypoint geofence fields (#5925)
-
-      - feat(automation): one Auto-Responder trigger syntax for Meshtastic and MeshCore (#5930)
-
-
-      ## Bug Fixes
-
-      - fix(meshcore): trace direct-neighbour repeaters through their own hash (#5915)
-
-      - fix(meshcore): send a firmware-v3 DeviceInfo from the Virtual Node (#5917)
-
-      - fix(config): refetch channels after Reload Config on Device (#5920)
-
-      - fix(nodes): record a node's channel only from its own key-decoded traffic (#5926)
-
-
-      ## Chores
-
-      - chore: bump version to 4.17.1-rc9 (#5932)
-
-
-      ## Issues Resolved
-
-      #5734, #5914, #5916, #5919, #5922, #5923, #5924
-
-
-      ## Upgrade notes
-
-      - Migration 216 adds the waypoint geofence columns. It runs automatically.
-
-      - Forwarding-rule and MeshCore Auto-Acknowledge regexes now accept emoji and other non-ASCII
-      printable text. They still reject control characters, and the 100-character cap and ReDoS
-      checks still apply.
-
-
-      **Full Changelog**: https://github.com/Yeraze/meshmonitor/compare/v4.17.1-rc8...v4.17.1-rc9
-
-
-      ## 🚀 MeshMonitor v4.17.1-rc9
-
-
-      ### 📦 Installation
-
-
-      **Docker (recommended):**
-
-      ```bash
-
-      docker run -d \
-        --name meshmonitor \
-        -p 8080:3001 \
-        -v meshmonitor-data:/data \
-        ghcr.io/Yeraze/meshmonitor:4.17.1-rc9
-      ```
-
-
-      ### 🧪 Testing
-
-      ✅ All tests passed
-
-      ✅ TypeScript checks passed
-
-      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
-
-
-      ### 📋 Changes
-
-      See commit history for detailed changes.
