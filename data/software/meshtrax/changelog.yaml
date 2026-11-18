@@ -1,7 +1,102 @@
 source: github
 repo: venamartin/meshtrax
-updatedAt: '2026-11-14T08:44:08.520Z'
+updatedAt: '2026-11-18T03:23:32.166Z'
 releases:
+  - version: v1.11.0
+    name: Release v1.11.0
+    datetime: '2026-11-17T23:25:19Z'
+    url: https://github.com/venamartin/meshtrax/releases/tag/v1.11.0
+    prerelease: false
+    notes: >-
+      ## What's Changed
+
+      * perf(linux): run Dart on its own thread under X11; no crash on close by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/287
+
+      * fix(macos): the Mac app icon is MeshTrax, not Flutter's placeholder by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/288
+
+      * fix(chats): Delete channel says its messages go with it by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/289
+
+      * fix(release): Play upload waits up to 10 minutes and retries 5xx by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/290
+
+      * refactor(maps): routing and places take the catalogue from MapPacksService by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/265
+
+      * feat(maps): install maps from a drive through the Offline maps screens by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/266
+
+      * feat: sort repeaters by hops, radio firmware in Settings, QR share, paste a channel link,
+      map for a manual position by @venamartin in https://github.com/venamartin/meshtrax/pull/293
+
+      * feat(map): keeps its view between screens; opens on your GPS position by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/291
+
+      * feat(search): the nearest places of a kind, and which way each result is by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/292
+
+      * feat(chat): day headings and the NEW MESSAGES line are drawn as a shallow wave by
+      @venamartin in https://github.com/venamartin/meshtrax/pull/294
+
+      * feat(chat): a contact posted as <key:type:name> shows as a contact card by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/295
+
+      * fix(map): result sheets leave the map clear and show the result above them by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/296
+
+      * feat(map): search is a map button, and the map has a full screen by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/297
+
+      * feat(release): --ios and --macos upload to App Store Connect by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/269
+
+      * fix(chat): a channel chat read above the newest message stays put when messages arrive by
+      @venamartin in https://github.com/venamartin/meshtrax/pull/300
+
+      * fix(chat): a reply quotes the words after a leading mention by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/299
+
+      * feat(map): the layers sheet's legend, filters and Offline maps sit by its X by @venamartin
+      in https://github.com/venamartin/meshtrax/pull/298
+
+      * feat(map): in full screen the map's buttons fade when left alone by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/301
+
+      * fix(chat): direct messages and rooms read above the newest message stay put when messages
+      arrive by @venamartin in https://github.com/venamartin/meshtrax/pull/302
+
+      * feat(chats): the Chats tab counts unread messages, so they show from the map by @venamartin
+      in https://github.com/venamartin/meshtrax/pull/303
+
+      * fix(chat): a reply that quotes a reply's quote line finds that reply by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/304
+
+      * feat(contacts): a nickname, a full name and a note for each contact by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/305
+
+      * fix(chat): another contact's ACK no longer marks a DM delivered by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/306
+
+      * fix(messages): a message drain that gives up tries again by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/307
+
+      * fix(links): short map links no longer go online to find their position by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/308
+
+      * feat(maps, repeaters): Offline maps opens on Maps; a Heard window in Manage repeaters by
+      @venamartin in https://github.com/venamartin/meshtrax/pull/309
+
+      * feat(maps): Navigate routes in MeshTrax; the route sheet hands a route to another app by
+      @venamartin in https://github.com/venamartin/meshtrax/pull/310
+
+      * fix(map): a map opened from a chat has the full-screen button too by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/311
+
+      * fix(pathfinder): a backup names 
+
+      …
   - version: v1.10.2
     name: Release v1.10.2
     datetime: '2026-11-14T02:36:42Z'
