@@ -1,7 +1,13 @@
 source: github
 repo: sosprz/Meshcore-Wio-Tracker-L1-Pro
-updatedAt: '2026-10-15T08:58:13.625Z'
+updatedAt: '2026-11-18T21:44:02.830Z'
 releases:
+  - version: v1.18.106
+    name: v1.18.106
+    datetime: '2026-11-18T18:58:41Z'
+    url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.18.106
+    prerelease: false
+    notes: "This is testing release. \r\n- Updated to MeshCore 1.18.0, including protocol v14 and upstream radio, GPS and board fixes.\r\n- Smaller Wio OLED firmware and corrected firmware size limit for reliable flashing.\r\n- Channel history keeps the latest 100 messages, with paged scrolling and corrected unread counters.\r\n- Only displayed messages are marked as read when leaving; a Saving screen shows while changes are stored.\r\n- Fixed opening older channel histories and improved recovery after interrupted saves.\r\n- Reduced memory use and unnecessary history scans, list rebuilds and filesystem checks.\r\n- Fixed navigation, contact/channel selection and remote response handling when data changes.\r\n- Improved GPS settings, update-rate selection and reporting of settings save failures.\r\n- Fixed outgoing DMs appearing as incoming in phone apps and reduced DM receive stack usage."
   - version: v1.17.104
     name: v1.17.104
     datetime: '2026-10-15T04:37:45Z'
@@ -126,9 +132,3 @@ releases:
     notes: >-
       - **Scheduled advert fix** - `Adverts -> Settings -> 0-hop rate` now schedules automatic
       zero-hop self-adverts at the selected interval.
-  - version: v1.16.84
-    name: v1.16.84
-    datetime: '2026-06-09T13:31:51Z'
-    url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.16.84
-    prerelease: false
-    notes: '- **Off-grid 869 Repeat menu fix**'

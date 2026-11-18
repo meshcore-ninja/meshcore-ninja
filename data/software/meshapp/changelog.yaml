@@ -1,7 +1,24 @@
 source: github
 repo: smikme/meshapp
-updatedAt: '2026-11-16T05:25:28.573Z'
+updatedAt: '2026-11-18T21:44:18.137Z'
 releases:
+  - version: v2.4.2-unstable.32
+    name: MeshApp v2.4.2-unstable.32
+    datetime: '2026-11-18T18:55:54Z'
+    url: https://github.com/smikme/meshapp/releases/tag/v2.4.2-unstable.32
+    prerelease: true
+    notes: >-
+      ## What's Changed
+
+      * Feature/rpc qr code by @smikme in https://github.com/smikme/meshapp/pull/38
+
+      * Share RPC connection settings by QR code by @smikme in
+      https://github.com/smikme/meshapp/pull/39
+
+
+
+      **Full Changelog**:
+      https://github.com/smikme/meshapp/compare/v2.4.2-unstable.30...v2.4.2-unstable.32
   - version: v2.4.2-unstable.30
     name: MeshApp v2.4.2-unstable.30
     datetime: '2026-11-15T23:57:10Z'
@@ -225,9 +242,3 @@ releases:
     url: https://github.com/smikme/meshapp/releases/tag/v2.3.0
     prerelease: false
     notes: "## New\r\n\r\n- Added remote access to MeshApp: the app can now be used through RPC, including remote host and standalone RPC server modes.\r\n- Remote mode now supports chats, nodes, settings, map, telemetry, LoRa monitoring, and traceroute.\r\n- Added MQTT filters to make it easier to show only the traffic you need.\r\n- MQTT traffic monitoring can now decrypt packets.\r\n- Added a Windows launcher and a separate helper process for BLE.\r\n- Expanded Lua scripting with chat reactions and tools for marking nodes as favorite or ignored.\r\n\r\n## Improved\r\n\r\n- Chat is more comfortable to use: the chat window now resizes more smoothly.\r\n- Chat history and direct message handling were improved.\r\n- Replies now work better when a user name contains emoji.\r\n- Nodes, settings, connections, map, and telemetry screens work better in both local and remote modes.\r\n- Signal reception quality calculation was improved.\r\n- Lua API and RPC documentation was updated.\r\n\r\n## Fixed\r\n\r\n- Fixed a possible memory leak in packet monitoring, chat, and logs.\r\n- Fixed macOS notifications.\r\n- Fixed the new message indicator.\r\n- Fixed direct message deletion so related saved data is removed correctly.\r\n- Fixed several Windows BLE issues, including device name handling and discovery quality.\r\n- Fixed the size of the dropdown in MQTT downlink filter settings.\r\n- Fixed smaller issues in the settings screen and multi-node selection."
-  - version: v2.2.4
-    name: MeshApp v2.2.4
-    datetime: '2026-06-19T23:51:43Z'
-    url: https://github.com/smikme/meshapp/releases/tag/v2.2.4
-    prerelease: false
-    notes: "# MeshApp v2.2.4\r\n\r\nThis release improves telemetry, chat, and Lua scripting, and adds full German localization.\r\n\r\n## What’s New\r\n\r\n- The interface, help, and documentation are now available in German.\r\n- The telemetry dashboard is more flexible: charts can be arranged more conveniently, and the layout can be reset to the default at any time.\r\n- New dedicated charts are available for temperature, humidity, pressure, and radiation.\r\n- Chats now support image sharing through MeshFiles: choose a file manually or drag and drop it into the chat window.\r\n- Images in messages are shown as previews; click a preview to open the full-size image.\r\n- Mesh IDE is more convenient for Lua development, with a function outline, find and replace, KV refresh, and improved suggestions.\r\n\r\n## Telemetry\r\n\r\n- Added a new 2-hour viewing period.\r\n- Telemetry history now stores more data when devices provide it, including air quality, power, health metrics, host metrics, traffic statistics, OneWire sensors, and other extended values.\r\n\r\n## Lua Scripts\r\n\r\n- The Lua API now supports JSON, timers, local time, and access to telemetry history.\r\n- Scripts can work with device data more easily and support more advanced automation.\r\n\r\n## Fixes\r\n\r\n- Favorite and ignored nodes are now correctly separated between different connections and owners.\r\n- Favorite and ignored filters work better with saved offline nodes.\r\n- Fixed an issue where bots could interfere with sending regular chat messages.\r\n- Deleting a node no longer affects telemetry that belongs to other nodes.\r\n- Message sending is more reliable when the device queue is full: MeshApp now retries instead of failing immediately."

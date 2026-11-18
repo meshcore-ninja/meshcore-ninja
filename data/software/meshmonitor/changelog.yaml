@@ -1,7 +1,155 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-11-17T20:36:19.742Z'
+updatedAt: '2026-11-18T21:44:32.843Z'
 releases:
+  - version: v4.18.1-rc1
+    name: v4.18.1-rc1
+    datetime: '2026-11-18T16:26:14Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.18.1-rc1
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.18.1-rc1
+
+
+      > ⚠️ **Pre-release.** This is a release candidate for testing. It is published to the `:dev`
+      image tag, not `:latest`. Run it on a test instance or back up first.
+
+
+      ## Summary
+
+
+      This release adds a Script Secrets store, so an admin can save API keys once and every user
+      script gets them as environment variables, encrypted at rest. The Automation Engine now
+      respects each source's airtime cutoff, and the built-in automations point users toward it.
+      Several schedulers no longer lose their timing when you save settings or restart. Auto
+      Traceroute and Auto Remote LocalStats no longer send an extra request on a save, reconnect or
+      restart. The remote admin scanner, Auto Time Sync and Auto Key Repair no longer get pushed
+      back by each save. Saving only a Time Sync interval no longer turns Time Sync off. The Helm
+      chart and Compose files no longer fill in a fake node IP. Swagger UI's "Try it out" now works
+      behind a public IP or domain. The documentation site was reviewed end to end, with
+      restructured MeshCore, automation and FAQ pages.
+
+
+      ## Upgrade notes
+
+
+      - **Helm / Docker Compose (#6467):** the chart and Compose files no longer set a placeholder
+      node IP, and the retired upgrade and TLS settings are gone. If you relied on the old default,
+      set `MESHTASTIC_NODE_IP` yourself, or add a source from the sidebar after first start.
+
+
+      ## Features
+
+
+      - Script Secrets store for user-script API keys (#6477)
+
+      - Automation Engine honors the per-source airtime cutoff (#6476)
+
+      - Built-in automations point users to the Automation Engine (#6475)
+
+      - Support LoRa `FEM_LNA_Mode` AUTO (3) and keep unknown values (#6461)
+
+
+      ## Bug Fixes
+
+
+      - Saves and restarts keep the Auto Traceroute interval (#6479)
+
+      - Treat an unsaved Auto Traceroute interval as off everywhere (#6474)
+
+      - Saves and restarts keep the Auto Remote LocalStats interval (#6482)
+
+      - Saves no longer re-time the remote admin scan, Time Sync and Key Repair (#6483)
+
+      - Stop leaking the local LocalStats first-request timer (#6484)
+
+      - An interval-only save no longer turns Time Sync off (#6485)
+
+      - Send `add_contact` before `set_favorite_node` from Admin Commands (#6460)
+
+      - Swagger UI derives its server URL from the request (#6463)
+
+      - Keep Script Secret names on one line (#6480)
+
+      - Helm and Compose: stop seeding a fake node IP; drop retired upgrade/TLS settings (#6467)
+
+      - Default the compose configurator to plain HTTP production mode (#6473)
+
+
+      ## Documentation
+
+
+      - Fix leaked internal pages, a broken logo, dead anchors and wrong claims (#6464)
+
+      - Fix login, backup, merge, permission and stale UI answers in the FAQ (#6465)
+
+      - Fix install and onboarding facts against the code (#6466)
+
+      - New "Choosing a database" page (#6468), linked from the FAQ (#6472)
+
+      - Split the MeshCore page into a hub and five task pages (#6469)
+
+      - Split the automation pages and lead with the Automation Engine (#6470)
+
+      - Restructure the FAQ into nine sections with short answers (#6471)
+
+      - Helm chart default node IP is now empty (#6478)
+
+
+      ## Tests
+
+
+      - Stop the public-instance sentinel audit flagging random tokens (#6481)
+
+
+      ## Translations
+
+
+      - Translations update from Hosted Weblate (#6457)
+
+
+      ## Issues Resolved
+
+
+      - #6462 Swagger UI server URL is hardcoded, breaking "Try it out" when accessed via public
+      IP/domain. Thanks to @dmitrym-web for the report.
+
+      - #6452 Support FEM_LNA_Mode AUTO (3) in LoRa config (firmware #12380)
+
+
+      **Full changelog:** https://github.com/Yeraze/meshmonitor/compare/v4.18.0...v4.18.1-rc1
+
+
+      ## 🚀 MeshMonitor v4.18.1-rc1
+
+
+      ### 📦 Installation
+
+
+      **Docker (recommended):**
+
+      ```bash
+
+      docker run -d \
+        --name meshmonitor \
+        -p 8080:3001 \
+        -v meshmonitor-data:/data \
+        ghcr.io/Yeraze/meshmonitor:4.18.1-rc1
+      ```
+
+
+      ### 🧪 Testing
+
+      ✅ All tests passed
+
+      ✅ TypeScript checks passed
+
+      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
+
+
+      ### 📋 Changes
+
+      See commit history for detailed changes.
   - version: v4.18.0
     name: v4.18.0
     datetime: '2026-11-17T16:59:46Z'
@@ -2099,118 +2247,3 @@ releases:
       ### 📋 Changes
 
       See commit history for detailed changes.
-  - version: v4.17.1
-    name: v4.17.1
-    datetime: '2026-10-23T21:04:12Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.1
-    prerelease: false
-    notes: >-
-      # MeshMonitor v4.17.1
-
-
-      This release rolls up ten release candidates. MeshCore gains reactions, a native Companion
-      text CLI for firmware 1.18.0, saved remote-admin sessions, stored CLI history, and route hops
-      resolved from other sources. Auto Responder, Timer Triggers, Auto Acknowledge and channel
-      editing now share one workflow and one trigger syntax across Meshtastic and MeshCore, and
-      trigger patterns accept emoji. Local accounts can sign in with a passkey. The Map tab and
-      Dashboard map gain a tropospheric ducting overlay, waypoints round-trip the firmware's
-      geofence fields, and the ADS-B layer adds OpenSky as a feed. Meshtastic channels can use AEAD
-      (AES-CCM), and admins can set, clear and lock a node's channel by hand. Unified Telemetry
-      gains a cross-source dashboard, Node Details shows rename history, and node battery icons show
-      the charge level. Many MQTT fixes stop bridges from echoing each other, and the Packet Monitor
-      now drops firmware 2.8 NodeDB replays. A security fix scopes traceroute history and unified
-      telemetry to the sources a user may read. Database maintenance now runs on PostgreSQL and
-      MySQL, and the Docker image moves to Node.js 24.22.1.
-
-
-      ## Features
-
-
-      ### MeshCore
-
-      - **Reactions** (epic #5759): codec for the MeshCore One and meshcore-open formats (#5771),
-      inbound reaction chips (#5775), sending reactions and automation tapbacks (#5776), and chips
-      in Unified Messages plus CSV columns and an opt-in automation trigger (#5778)
-
-      - Companion text CLI on firmware 1.18.0: local console, quick-action catalog and remote CLI
-      (#5869)
-
-      - Remember and resume remote-admin sessions (#5798)
-
-      - Store CLI command history (#5897)
-
-      - Resolve unknown route hops from other sources (#5911)
-
-      - Radio contact list: auto-add mode and type filters, max hops, replace the oldest
-      non-favourite when full, and "Remove non-favourite contacts from the radio" (#5783)
-
-      - Override a contact's location (#5848)
-
-      - Edit the Observer in MeshCore Configuration; quick configure joins the save (#5840)
-
-      - Search and section buttons on MeshCore Configuration and Automations (#5855)
-
-
-      ### Automation and messaging
-
-      - One Auto-Responder trigger syntax for Meshtastic and MeshCore, with Pattern and Regex modes
-      and emoji support (#5930)
-
-      - One Auto Responder workflow for Meshtastic and MeshCore (#5811)
-
-      - One Timer Triggers workflow for Meshtastic and MeshCore (#5814)
-
-      - Same field groups for Auto Acknowledge and Auto Announce on both protocols (#5817)
-
-      - Shared config section shell for automation sections (#5809)
-
-      - Auto Acknowledge: nearer nodes answer a channel message first (#5789)
-
-      - Separate IP (MQTT/UDP) row in the Auto-Ack matrix (#5854)
-
-      - Choose the 0-hop and MQTT tapback glyphs (#5894)
-
-      - Draw SPIP1 pixel-image messages as images (#5945), thanks @maxhayim
-
-      - Unified Messages remembers the last selected channel per browser (#5793), thanks
-      @goodprogrammist
-
-      - Remember Show MQTT/Bridge Messages per source (#5844)
-
-      - Status Message: opt-in, per-source "Re-apply after a reboot" (#5784)
-
-
-      ### Maps, nodes and telemetry
-
-      - Tropospheric ducting overlay on the Map tab and Dashboard map (#5875, #5913)
-
-      - Round-trip firmware waypoint geofence fields (#5925)
-
-      - ADS-B: add OpenSky Network as a feed (#5906)
-
-      - ADS-B: re-check aircraft flight matches as the node moves (#5905)
-
-      - Set, clear and lock a node's channel by hand (#5941)
-
-      - Track node renames and show them in Node Details (#5865)
-
-      - Battery icons show the charge level (#5947)
-
-      - Cross-source Telemetry Dashboard on Unified Telemetry (#5907)
-
-
-      ### Channels, security and configuration
-
-      - Decrypt AEAD (AES-CCM) channels server-side (#5860) and edit AEAD on device channels (#5861)
-
-      - One channel editing model for Meshtastic and MeshCore (#5838)
-
-      - Passkey sign-in for local accounts (#5841): storage (#5849), sign-in (#5850), passkey-only
-      accounts, recovery codes and admin revoke (#5851), user guide (#5853) and design spec (#5847)
-
-      - Split the traceroute permission into Read and Write; MeshCore trace-path takes
-      traceroute:write (#5903)
-
-      - Describe t
-
-      …
