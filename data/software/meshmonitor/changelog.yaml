@@ -1,7 +1,146 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-11-18T21:44:32.843Z'
+updatedAt: '2026-11-19T02:58:30.073Z'
 releases:
+  - version: v4.18.1-rc2
+    name: v4.18.1-rc2
+    datetime: '2026-11-19T01:48:10Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.18.1-rc2
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.18.1-rc2
+
+
+      > [!WARNING]
+
+      > This is a **pre-release** for testing. Do not use it in production unless you are helping
+      test it.
+
+
+      ## Summary
+
+
+      You can now send from the Unified Messages page. Pick a channel, pick one sending node, and
+      send, with replies, tapbacks and delivery status on Unified rows. Only nodes you hold send
+      permission for, that are connected, and that can transmit on that channel appear in the sender
+      list. Each send goes through one node, and the audit log records it without the message text.
+      MeshCore gains Auto Resend: a message is resent until the repeaters you require have heard it.
+      MeshCore channels and rooms can now be muted except for @mentions. Manual MeshCore actions
+      (Poll Status, neighbours, time sync, fetch) now wait for the next transmit slot with a
+      countdown instead of failing with "Too soon". Auto-pathfinding now waits for that slot too.
+      Anonymous sending now needs an explicit admin opt-in. French, Russian and Chinese (Simplified)
+      translations are back above 50%.
+
+
+      ## Upgrade notes
+
+
+      - **Anonymous sending is now off by default.** If you gave the anonymous account permission to
+      send messages, those sends now fail with `AUTH_REQUIRED` until an admin turns on **Allow
+      anonymous sending** in Settings. v1 API sends are now audited.
+
+      - **The Meshtastic send route now has a rate limit** (`messageLimiter`, 30 sends per minute
+      per IP in production). This also covers the existing Channels and DM tabs.
+
+      - **Reverse proxies:** manual MeshCore actions can now wait up to 180 s for a transmit slot.
+      If you run behind nginx, set `proxy_read_timeout` to 300 s (see the reverse-proxy docs).
+
+
+      ## Features
+
+
+      - Unified Messages send groundwork: rate limit, send audit and sender list (#3045 P1) by
+      @Yeraze in #6492
+
+      - Send composer on Unified Messages (#3045 P2) by @Yeraze in #6494
+
+      - Reply, tapback and delivery status on Unified Messages (#3045 P3) by @Yeraze in #6496
+
+      - MeshCore: Auto Resend until the required repeaters hear the message (#6240) by @Yeraze in
+      #6488
+
+      - Notifications: mute MeshCore channels and rooms except for @mentions (#6490) by @Yeraze in
+      #6491
+
+      - MeshCore: manual actions wait for the next transmit slot, with a countdown (#6493) by
+      @Yeraze in #6497
+
+
+      ## Bug fixes
+
+
+      - MeshCore: auto-pathfinding claims the transmit slot, and Unified replies keep the original
+      message's scope (#6500) by @Yeraze in #6501
+
+
+      ## Security
+
+
+      - Anonymous sending only by explicit opt-in, and v1 sends are now audited (#6499) by @Yeraze
+      in #6502
+
+
+      ## Docs and i18n
+
+
+      - MeshCore docs: Resend covers direct messages too, by @Yeraze in #6489
+
+      - Machine-translated top-up for fr, ru and zh_Hans, by @Yeraze in #6495
+
+
+      ## Issues resolved
+
+
+      - #3045 Unified Messaging: add Send capability with permissions and safeties
+
+      - #6240 MeshCore: Auto Resend until required repeaters heard
+
+      - #6490 Mute unless mentioned
+
+      - #6493 Make manual commands cut to the front of the queue
+
+      - #6499 Meshtastic send route: anonymous sending only by explicit opt-in; audit v1 sends
+
+      - #6500 MeshCore: auto-pathfinding ignores the 60 s TX floor; Unified replies lose the
+      parent's scope
+
+      - #6498 Unified channels list exposes source names to channel-database-only readers (closed as
+      intended, now documented)
+
+
+      **Full changelog:** https://github.com/Yeraze/meshmonitor/compare/v4.18.1-rc1...v4.18.1-rc2
+
+
+      ## 🚀 MeshMonitor v4.18.1-rc2
+
+
+      ### 📦 Installation
+
+
+      **Docker (recommended):**
+
+      ```bash
+
+      docker run -d \
+        --name meshmonitor \
+        -p 8080:3001 \
+        -v meshmonitor-data:/data \
+        ghcr.io/Yeraze/meshmonitor:4.18.1-rc2
+      ```
+
+
+      ### 🧪 Testing
+
+      ✅ All tests passed
+
+      ✅ TypeScript checks passed
+
+      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
+
+
+      ### 📋 Changes
+
+      See commit history for detailed changes.
   - version: v4.18.1-rc1
     name: v4.18.1-rc1
     datetime: '2026-11-18T16:26:14Z'
@@ -2123,115 +2262,6 @@ releases:
         -p 8080:3001 \
         -v meshmonitor-data:/data \
         ghcr.io/Yeraze/meshmonitor:4.17.2-rc2
-      ```
-
-
-      ### 🧪 Testing
-
-      ✅ All tests passed
-
-      ✅ TypeScript checks passed
-
-      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
-
-
-      ### 📋 Changes
-
-      See commit history for detailed changes.
-  - version: v4.17.2-rc1
-    name: v4.17.2-rc1
-    datetime: '2026-10-24T23:48:32Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.2-rc1
-    prerelease: true
-    notes: >-
-      # MeshMonitor v4.17.2-rc1
-
-
-      > [!WARNING]
-
-      > This is a pre-release for testing. Use it on production systems at your own risk.
-
-
-      MeshCore Companion sources gain Auto Ping: a contact who DMs `ping N` gets a run of pings back
-      and a summary. The limits match Meshtastic's Auto Ping, and it is off by default. MeshCore
-      Node Details gets a Show on Map button that opens the map on the node with its popup. On the
-      Unified Telemetry dashboard, a reading the node takes itself, such as battery or temperature,
-      now draws one line merged from every source. A Split by source toggle brings back the
-      per-source lines. In Link Profile, you can drag the endpoints, and panning the map no longer
-      drops a point. The Nodes list can filter nodes that are hidden from the map. The ducting
-      overlay now centres on your own nodes. Reticulum attach mode now works in Docker, and the
-      bridge recovers from a failed RNS start without a restart.
-
-
-      ## Features
-
-      - MeshCore: Auto Ping (`ping N` DM command) for Companion sources (#5962)
-
-      - MeshCore: Show on Map from Node Details (#5965)
-
-      - Unified Telemetry: merge objective telemetry across sources into one line, with a per-chart
-      Split by source toggle (#5966)
-
-      - Link Profile: draggable endpoints; panning never picks a point; hold Space to pan freely
-      (#5963)
-
-      - Nodes: Hidden from map filter in the Nodes list (#5958)
-
-
-      ## Bug Fixes
-
-      - Ducting: centre the default area on the busiest cluster and your local nodes (#5960)
-
-      - Reticulum: recover from a failed RNS start without a manual restart (#5957)
-
-      - Reticulum: attach mode puts MeshMonitor on host networking (#5956)
-
-
-      ## Documentation
-
-      - 4.17.1 documentation pass and release post (#5961)
-
-
-      ## CI/DevOps
-
-      - Version bump to 4.17.2-rc1 (#5967)
-
-
-      ## Issues Resolved
-
-      #5931, #5951, #5952, #5953, #5954, #5955, #5959, #5964
-
-
-      ## Upgrade notes
-
-      - **Reticulum attach mode (Docker):** the overlay now runs MeshMonitor with `network_mode:
-      host`, and the bridge runs as `${RNS_UID:-1000}:${RNS_GID:-1000}` with a read-write
-      `~/.reticulum` mount. If you use `docker-compose.reticulum.yml`, pull the new file, and set
-      `RNS_UID`/`RNS_GID` if your Reticulum config is not owned by UID 1000. Set `ALLOWED_ORIGINS`
-      if you open MeshMonitor anywhere other than `http://localhost:3001`. The overlay needs Docker
-      Compose 2.24.4 or later (`ports: !reset`). Helm adds `reticulum.securityContext`.
-
-      - **MeshCore Auto Ping** is off by default (Automation → Auto Ping on a Companion source).
-
-
-      **Full Changelog**: https://github.com/Yeraze/meshmonitor/compare/v4.17.1...v4.17.2-rc1
-
-
-      ## 🚀 MeshMonitor v4.17.2-rc1
-
-
-      ### 📦 Installation
-
-
-      **Docker (recommended):**
-
-      ```bash
-
-      docker run -d \
-        --name meshmonitor \
-        -p 8080:3001 \
-        -v meshmonitor-data:/data \
-        ghcr.io/Yeraze/meshmonitor:4.17.2-rc1
       ```
 
 
