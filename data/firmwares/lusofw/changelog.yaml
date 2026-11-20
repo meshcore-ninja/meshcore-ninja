@@ -1,7 +1,60 @@
 source: github
 repo: Meshcore-Portugal/lusofw
-updatedAt: '2026-11-10T16:13:00.223Z'
+updatedAt: '2026-11-20T21:42:30.244Z'
 releases:
+  - version: v2026.11.1-rc2-85eb123
+    name: v2026.11.1-rc2-85eb123
+    datetime: '2026-11-20T17:47:18Z'
+    url: https://github.com/Meshcore-Portugal/lusofw/releases/tag/v2026.11.1-rc2-85eb123
+    prerelease: true
+    notes: >-
+      Automated dev prerelease of dev@85eb123 for v2026.11.1-rc2.
+
+
+
+      Based on MeshCore v1.18.0
+
+      main@81dbae592ffad40b4212bc0b37e82b38da08f4bc
+
+
+      ### Funcionalidades
+
+
+      - UPSTREAM: Sincronizado com MeshCore v1.18.0 (companion/repeater/room-server). Os comandos de
+      rádio (`set/get af`, `dutycycle`, `tx`, `int.thresh`, `cad`, `rxdelay`, `txdelay`,
+      `direct.txdelay`, `agc.reset.interval`, `multi.acks`, `radio.rxgain`, `path.hash.mode`) passam
+      a ser tratados por `CommonRadioPrefs`; `set tx`, `set af` e `set dutycycle` continuam a
+      bloquear o AutoRegions (`radio_manual`).
+
+
+      - NRF52: Com a flag de build `LUSOFW_OTA_DIRECT` (ativa no Heltec T114) e um bootloader cuja
+      versão começa por `gdfu-`, `start ota` reinicia diretamente para o bootloader em vez de
+      iniciar o serviço BLE DFU. Com qualquer outro bootloader, ou sem a flag, mantém-se o
+      comportamento anterior.
+
+
+      ### Correções
+
+
+      - LILYGO T-LORA V2.1-1.6: Removido o botão de utilizador (`PIN_USER_BTN`, GPIO0), inexistente
+      nesta placa. Um GPIO0 flutuante podia ser lido como pressão longa e desligar o repetidor
+      (`Powering Off`) logo após o arranque.
+
+      - CLIENTE: Migração do limiar de interferência RSSI para modo automático (`AUTO`) ao carregar
+      preferências com valor `0` quando `LUSOFW_RADIO_AUTO_THRESH` está ativo.
+
+
+      #### Build e Configuração
+
+
+      - BUILD: Removidos os nomes de advert específicos de cada variant. Repeaters, room servers e
+      sensores usam `lusofw-<FIRMWARE_VERSION>` como nome inicial.
+
+      - BUILD: Adicionado o ambiente `heltec_v4_r8_repeater_bridge_espnow` para o repetidor Heltec
+      V4 R8 com ponte ESP-NOW.
+
+      - DEVCONTAINER: Adicionados GitHub CLI e extensão C/C++; atualizadas a configuração e as
+      extensões do Claude Code.
   - version: v2026.11.1-rc1-cf85ec1
     name: v2026.11.1-rc1-cf85ec1
     datetime: '2026-11-10T12:34:08Z'
@@ -1094,9 +1147,3 @@ releases:
     url: https://github.com/Meshcore-Portugal/lusofw/releases/tag/v0.0.6
     prerelease: true
     notes: "# Changelog\r\n\r\n## [v0.0.6] - 06/03/2026\r\n\r\nBased on MeshCore v1.14.0\r\ndev@3fe2dd7f48733fe77da7549cd24ef28bf07e1e5a\r\n\r\n### Features\r\n\r\n- Disable advert interval by default (was 2 minutes)\r\n- Disable flood advert interval by default (was 12 hours)\r\n- Enable listen before talk with interference threshold of 14\r\n- Refactor buildAdvertData to use prefs when no GPS support is enabled\r\n- Set default loop detection preference to minimal sensitivity\r\n- Add 0x01 to reserved identity hash prefixes\r\n\r\n------\r\n\r\n**Full Changelog**: https://github.com/Meshcore-Portugal/lusofw/compare/v0.0.5...v0.0.6"
-  - version: v0.0.5
-    name: v0.0.5
-    datetime: '2026-03-04T20:03:53Z'
-    url: https://github.com/Meshcore-Portugal/lusofw/releases/tag/v0.0.5
-    prerelease: true
-    notes: '**Full Changelog**: https://github.com/Meshcore-Portugal/lusofw/compare/v0.0.4...v0.0.5'
