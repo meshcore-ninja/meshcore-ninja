@@ -1,7 +1,98 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-11-19T02:58:30.073Z'
+updatedAt: '2026-11-20T03:00:35.831Z'
 releases:
+  - version: v4.18.1-rc3
+    name: v4.18.1-rc3
+    datetime: '2026-11-20T00:48:17Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.18.1-rc3
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.18.1-rc3
+
+
+      > ⚠️ **Pre-release.** This is a release candidate for testing. Don't run it in production
+      unless you're willing to report issues.
+
+
+      ## Summary
+
+
+      MQTT source cards now show an icon for the direction traffic flows: monitor only, uplink,
+      downlink, both ways, local only, or a node's client proxy. Hover the icon for a plain-language
+      explanation. The source unread badge can optionally count channel replies and tapbacks.
+      MeshMonitor now refuses to save an `mqtt_broker` source with a missing port, credentials or
+      gateway identity, because the broker would crash on start with that config. On SQLite, read
+      state is stored per user again, so one user reading a message no longer stops other users from
+      marking it read. The LXC `meshmonitor-update` script no longer leaves the app down when an
+      update fails, and its build now checks available memory.
+
+
+      ## Features
+
+      - MQTT source cards show a traffic-direction icon (#5794 Phase 2) #6510
+
+      - Unread indicator can count channel replies and tapbacks (#5254) #6504
+
+
+      ## Bug Fixes
+
+      - Refuse an `mqtt_broker` config the broker can't start with #6511
+
+      - SQLite read rows are per user, so one user's read no longer blocks others (#6505) #6508
+
+      - LXC: `meshmonitor-update` never leaves the app down; the build checks available memory #6503
+      (thanks @BeerMan81)
+
+
+      ## Documentation
+
+      - Add MeshRadio Online to the Site Gallery (#6506) #6507 #6509
+
+
+      ## Issues Resolved
+
+      - #6505 SQLite read_messages keyed by message_id alone: one user's read blocks every other
+      user's mark-read
+
+      - #5254 Unread indicator: optionally count channel replies and tapbacks
+
+      - #6506 Site Gallery Submission
+
+
+      **Full Changelog**: https://github.com/Yeraze/meshmonitor/compare/v4.18.1-rc2...v4.18.1-rc3
+
+
+      ## 🚀 MeshMonitor v4.18.1-rc3
+
+
+      ### 📦 Installation
+
+
+      **Docker (recommended):**
+
+      ```bash
+
+      docker run -d \
+        --name meshmonitor \
+        -p 8080:3001 \
+        -v meshmonitor-data:/data \
+        ghcr.io/Yeraze/meshmonitor:4.18.1-rc3
+      ```
+
+
+      ### 🧪 Testing
+
+      ✅ All tests passed
+
+      ✅ TypeScript checks passed
+
+      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
+
+
+      ### 📋 Changes
+
+      See commit history for detailed changes.
   - version: v4.18.1-rc2
     name: v4.18.1-rc2
     datetime: '2026-11-19T01:48:10Z'
@@ -2166,102 +2257,6 @@ releases:
         -p 8080:3001 \
         -v meshmonitor-data:/data \
         ghcr.io/Yeraze/meshmonitor:4.17.2-rc3
-      ```
-
-
-      ### 🧪 Testing
-
-      ✅ All tests passed
-
-      ✅ TypeScript checks passed
-
-      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
-
-
-      ### 📋 Changes
-
-      See commit history for detailed changes.
-  - version: v4.17.2-rc2
-    name: v4.17.2-rc2
-    datetime: '2026-10-26T18:58:59Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.2-rc2
-    prerelease: true
-    notes: >-
-      # MeshMonitor v4.17.2-rc2
-
-
-      > [!WARNING]
-
-      > This is a pre-release for testing. Use it on production systems at your own risk.
-
-
-      The map can now show live packet traffic. Turn on **Live packet traffic** in Map Features, and
-      each packet a source hears flies as a dot to the node that heard it, then a ring pulses out
-      from that node. It works for Meshtastic, MQTT and MeshCore sources on the source Map tab, the
-      Dashboard and the MeshCore map. It needs Packet Monitor read access, works with packet logging
-      off, stores nothing and sends nothing on the mesh. A slider caps the dots per second, and a
-      readout counts the last minute's packets: received, drawn, skipped for no position, and over
-      the limit. Every source type now calls its map tab **Map**, and MeshCore opens on the map on
-      phones. This RC also takes a round of dependency updates, including i18next 26.5 with the type
-      fixes it needs.
-
-
-      ## Features
-
-      - Map: live packet traffic, with a per-viewer rate slider and a last-minute readout (#5971)
-
-      - Navigation: one **Map** tab across source types; MeshCore shows the map first on mobile
-      (#5969)
-
-
-      ## Dependencies
-
-      - i18next 26.5.6, with TFunction type fixes (#5989)
-
-      - maplibre-gl 6.15.0 (#5987)
-
-      - emoji-picker-react 5.1.0 (#5983)
-
-      - Production dependencies group, 6 updates (#5976)
-
-      - Rollup native binaries 4.65.0 (#5985, #5986)
-
-      - puppeteer 25.16.0 (#5978)
-
-      - eslint and typescript-eslint (#5975, #5977, #5981)
-
-
-      ## CI/DevOps
-
-      - actions/setup-python 7.1.0 (#5984), docker/login-action 4.7.0 (#5988), Swatinem/rust-cache
-      2.9.3 (#5982), codeql-action group (#5980)
-
-      - Version bump to 4.17.2-rc2 (#5990)
-
-
-      ## Issues Resolved
-
-      #4835, #5968
-
-
-      **Full Changelog**: https://github.com/Yeraze/meshmonitor/compare/v4.17.2-rc1...v4.17.2-rc2
-
-
-      ## 🚀 MeshMonitor v4.17.2-rc2
-
-
-      ### 📦 Installation
-
-
-      **Docker (recommended):**
-
-      ```bash
-
-      docker run -d \
-        --name meshmonitor \
-        -p 8080:3001 \
-        -v meshmonitor-data:/data \
-        ghcr.io/Yeraze/meshmonitor:4.17.2-rc2
       ```
 
 
