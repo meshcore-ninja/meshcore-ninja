@@ -1,7 +1,44 @@
 source: github
 repo: jooray/roadstr
-updatedAt: '2026-11-02T20:02:38.767Z'
+updatedAt: '2026-11-21T20:24:36.432Z'
 releases:
+  - version: v0.6.0
+    name: Roadbeacon 0.6.0
+    datetime: '2026-11-21T15:17:44Z'
+    url: https://github.com/jooray/roadbeacon/releases/tag/v0.6.0
+    prerelease: false
+    notes: >-
+      MeshCore:
+
+
+      - Roadbeacon now reaches the radio through the shared [MeshCore Local
+      API](https://github.com/jooray/meshcore-local-api) client library (protocol 1). It needs
+      MeshCore Open test build
+      [localapi-test-10](https://github.com/jooray/meshcore-open/releases/tag/localapi-test-10) or
+      newer, or `meshcored`. Older MeshCore Open test builds speak an earlier draft of the API, and
+      Roadbeacon can't pair with them.
+
+      - The pairing key stays the same, so the fingerprint in *Settings → MeshCore* doesn't change.
+      If MeshCore Open asks, allow Roadbeacon again.
+
+      - Relays to radio: the bridge no longer puts signed relay reports or votes on the radio. When
+      someone nearby uses the radio, it sends a short unsigned summary of up to five relay reports,
+      at most once per area every 30 minutes and within 0.1 % of airtime. It sends only after
+      winning the area's claim over Nostr, so two bridges don't both answer.
+
+      - A summary goes zero-hop when MeshCore Open supports it and the request was heard directly,
+      otherwise only within a flood region (the one you set, or the one MeshCore Open resolves for
+      the spot). With no region, nothing is sent.
+
+      - Summaries from other bridges show as "from a bridge, unverified". You can't vote on them,
+      and they are never published to relays.
+
+
+      Signed reports and votes keep the same event format and frame bytes. Summaries are new frames
+      on the same data type `0x0150` (SPECIFICATION.md, sections 4.2 and 4.3).
+
+
+      Certificate SHA-256: `79750fb49349ec3729be5a3e825507a15e47c6d987e854ae91d5d50a20b3a24d`
   - version: v0.5.2
     name: Roadbeacon 0.5.2
     datetime: '2026-11-02T09:22:55Z'
