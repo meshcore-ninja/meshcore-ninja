@@ -1,7 +1,108 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-11-20T03:00:35.831Z'
+updatedAt: '2026-11-21T03:01:10.235Z'
 releases:
+  - version: v4.18.1-rc4
+    name: v4.18.1-rc4
+    datetime: '2026-11-21T00:51:25Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.18.1-rc4
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.18.1-rc4
+
+
+      > ⚠️ **Pre-release.** This is a release candidate for testing. Don't run it in production
+      unless you're ready to report problems.
+
+
+      This release candidate adds firmware tracking (#4943). Each source now has its own release
+      channel and custom URL. MeshCore sources may use stable or alpha only. A new admin-only
+      **Firmware Status** report under Analysis & Reports compares each radio's firmware with the
+      newest release, including MeshCore companion, repeater and room-server releases. MeshCore
+      repeaters and room servers get a guided **Start OTA mode** button in remote admin. It sends
+      `start ota` only after the typed-name confirmation, then explains the next steps for ESP32
+      (WiFi upload) or nRF52 (BLE DFU) boards. An MQTT bridge can now hold several topic rewrite
+      rules per direction. Muted conversations sort last and show grey names, and MeshCore room
+      servers use a door icon. MeshMonitor now picks up a MeshCore contact's new name after a rename
+      advert. Settings controls no longer hide behind the save bar.
+
+
+      ## Features
+
+      - feat(meshcore): guided 'start ota' for repeaters and room servers (#4943) #6529
+
+      - feat(firmware): read-only Firmware Status report with MeshCore release check (#4943) #6526
+
+      - feat(firmware): per-source release channel and custom URL (#4943) #6522
+
+      - feat(ui): muted conversations sort last and read grey (#6418) #6521
+
+      - feat(meshcore): door icon for the Room Server role (#6518) #6520
+
+      - feat(mqtt): several topic rewrite rules per direction on one bridge (#6516) #6517
+
+
+      ## Bug Fixes
+
+      - fix(meshcore): 'start ota' needs the danger confirmation #6528
+
+      - fix(ui): keep controls clear of the save bar; share stripTrailingSlashes #6519
+
+      - fix(meshcore): pick up a contact's new name after a rename advert (#6512) #6514
+
+
+      ## Issues Resolved
+
+      - #6518 MeshCore Room Server icon: door instead of house
+
+      - #6516 Support multiple topic rewrite rules per direction on a single MQTT bridge
+
+      - #6515 Question on mqtt_bridge: multiple topics in Upstream topics and Topic rewrites
+
+      - #6512 MeshCore: contact/room server name does not update after rename advert
+
+      - #6418 MeshCore Channels: sort muted channels last + grey out muted channel names
+
+
+      ## Upgrade notes
+
+      No breaking changes. Existing firmware channel settings still apply as the default for every
+      source until you pick a channel per source.
+
+
+      **Full Changelog**: https://github.com/Yeraze/meshmonitor/compare/v4.18.1-rc3...v4.18.1-rc4
+
+
+      ## 🚀 MeshMonitor v4.18.1-rc4
+
+
+      ### 📦 Installation
+
+
+      **Docker (recommended):**
+
+      ```bash
+
+      docker run -d \
+        --name meshmonitor \
+        -p 8080:3001 \
+        -v meshmonitor-data:/data \
+        ghcr.io/Yeraze/meshmonitor:4.18.1-rc4
+      ```
+
+
+      ### 🧪 Testing
+
+      ✅ All tests passed
+
+      ✅ TypeScript checks passed
+
+      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
+
+
+      ### 📋 Changes
+
+      See commit history for detailed changes.
   - version: v4.18.1-rc3
     name: v4.18.1-rc3
     datetime: '2026-11-20T00:48:17Z'
@@ -2143,120 +2244,6 @@ releases:
         -p 8080:3001 \
         -v meshmonitor-data:/data \
         ghcr.io/Yeraze/meshmonitor:4.17.2-rc4
-      ```
-
-
-      ### 🧪 Testing
-
-      ✅ All tests passed
-
-      ✅ TypeScript checks passed
-
-      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
-
-
-      ### 📋 Changes
-
-      See commit history for detailed changes.
-  - version: v4.17.2-rc3
-    name: v4.17.2-rc3
-    datetime: '2026-10-28T01:27:20Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.2-rc3
-    prerelease: true
-    notes: >-
-      # MeshMonitor v4.17.2-rc3
-
-
-      > [!WARNING]
-
-      > This is a pre-release for testing. Use it on production systems at your own risk.
-
-
-      Headless installs can now be set up from env vars on first boot. `ADMIN_PASSWORD` sets the
-      first admin's password, `ENABLE_VIRTUAL_NODE` and `VIRTUAL_NODE_PORT` turn on the Virtual Node
-      for the Meshtastic default source, and the new `MESHCORE_*` vars create a MeshCore default
-      source over TCP or serial, with its own optional Virtual Node. These vars apply only when the
-      default sources are first created. MeshCore channels now list every repeater that relayed a
-      message, with its hop count, and switching channels lands on the newest messages. MeshCore DMs
-      and channel messages are ordered by when they arrived, and show the sender's clock offset.
-      Embed maps now show MeshCore nodes, and the per-source MeshCore map gains the ducting overlay.
-      A passive Meshtastic reconnect now asks only for config, and MeshMonitor warns when another
-      client holds the node's TCP slot.
-
-
-      ## Features
-
-      - First-boot env vars for headless installs: `ADMIN_PASSWORD`, `ENABLE_VIRTUAL_NODE`,
-      `VIRTUAL_NODE_PORT` (#5998)
-
-      - MeshCore default source from `MESHCORE_*` env vars; the default-password warning honours
-      `ADMIN_USERNAME`; docs on the Default source corrected (#6004)
-
-      - MeshCore: order and show DMs and channel messages by receipt time, with the sender's clock
-      offset (#5996)
-
-      - MeshCore: clear Trace SNR history per contact (#5995)
-
-      - MeshCore: ducting overlay on the per-source MeshCore map (#5993)
-
-
-      ## Bug Fixes
-
-      - MeshCore: heard repeaters lists every relaying repeater, with hop count (#6001)
-
-      - MeshCore: land on newest messages when switching channels (#6002)
-
-      - Embed maps show MeshCore nodes (#6003)
-
-      - Meshtastic: passive reconnect asks for config only; warn on TCP slot contention (#5994)
-
-
-      ## Documentation
-
-      - Funk-Itzehoe added to the Site Gallery (#5992)
-
-
-      ## Translations
-
-      - Hosted Weblate update (#5940)
-
-
-      ## CI/DevOps
-
-      - Version bump to 4.17.2-rc3 (#6006)
-
-
-      ## Upgrade notes
-
-      - Migration 218 adds a nullable `hops` column to `meshcore_heard_repeaters`.
-
-      - The new env vars act only on first boot. Adding them to an install that already has sources
-      creates nothing.
-
-
-      ## Issues Resolved
-
-      #5874, #5970, #5972, #5973, #5991, #5999, #6000
-
-
-      **Full Changelog**: https://github.com/Yeraze/meshmonitor/compare/v4.17.2-rc2...v4.17.2-rc3
-
-
-      ## 🚀 MeshMonitor v4.17.2-rc3
-
-
-      ### 📦 Installation
-
-
-      **Docker (recommended):**
-
-      ```bash
-
-      docker run -d \
-        --name meshmonitor \
-        -p 8080:3001 \
-        -v meshmonitor-data:/data \
-        ghcr.io/Yeraze/meshmonitor:4.17.2-rc3
       ```
 
 
