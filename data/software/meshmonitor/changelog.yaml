@@ -1,7 +1,136 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-11-21T03:01:10.235Z'
+updatedAt: '2026-11-22T23:23:29.097Z'
 releases:
+  - version: v4.18.1-rc5
+    name: v4.18.1-rc5
+    datetime: '2026-11-22T21:52:02Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.18.1-rc5
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.18.1-rc5
+
+
+      > [!WARNING]
+
+      > This is a pre-release for testing. It may contain bugs; don't run it on a production
+      instance you can't roll back.
+
+
+      ## Summary
+
+
+      This RC finishes the MeshCore parity follow-ups (#6341) and adds two MQTT-observer features.
+      New-node alerts now cover MQTT feeds: Meshtastic MQTT bridge/broker sources (previously
+      uncapped) and MeshCore MQTT feeds both use the existing 48 h learning window and
+      10-alerts-per-hour cap, and MeshCore feeds alert only on adverts whose signature verifies.
+      Reticulum sources get a Notifications tab with DM mutes and click-through, capped
+      new-destination alerts and bridge connection-lost alerts. MeshCore "Send as" names now work on
+      timers, Auto Responder, Auto Announce, the Automation Engine and the channel composer.
+      Clock-out-of-sync detection now covers Meshtastic nodes (live LoRa packets) and MeshCore MQTT
+      feeds (when two observers agree). The device and MQTT paths for MeshCore channel messages now
+      share one store. On the fix side, a MeshCore channel reorder now carries notification
+      preferences with it, and MySQL databases could store only one notification-preference row per
+      user across all sources; migration 243 fixes that. MeshCore status-bar controls are hidden
+      from viewers without `connection:write`, and the MQTT ingest page scrolls again.
+
+
+      ## Features
+
+      - feat(notifications): gated new-node alerts for MQTT feeds (#6536)
+
+      - feat(reticulum): Notifications tab, bridge link alerts, gated new-destination alerts (#6537)
+
+      - feat(meshcore): 'Send as' on automated sends and the channel composer (#6538)
+
+      - feat(clock): out-of-sync samples for Meshtastic and MeshCore MQTT feeds (#6539)
+
+      - feat(meshcore-mqtt): observer battery/uptime history and location override for ingest
+      sources (#6533)
+
+      - feat(meshcore-mqtt): mark one observer as "My node" on an ingest/broker source (#6534)
+
+
+      ## Bug Fixes
+
+      - fix(meshcore): channel reorder moves notification prefs; MySQL per-source prefs (#6535)
+
+      - fix(meshcore): hide status-bar controls from viewers without connection:write (#6525)
+
+      - fix(meshcore): let the MQTT ingest source page scroll (#6530)
+
+
+      ## Refactoring
+
+      - refactor(meshcore): one channel-text store for device and MQTT feeds (#6540)
+
+
+      ## Issues Resolved
+
+      - #6341 MeshCore parity: deferred follow-ups from #6226
+
+      - #4943 OTA Firmware Manager for Meshtastic & MeshCore (phases 1 and 2 shipped in earlier RCs)
+
+      - #6532 MeshCore MQTT ingest/broker: mark one observer as "my node"
+
+      - #6531 MeshCore MQTT observers: battery telemetry history and a manual position
+
+      - #6527 MeshCore MQTT ingest source page: tabs cannot scroll vertically
+
+      - #6524 MeshCore action buttons visible to unauthenticated guests
+
+
+      ## Upgrade notes
+
+      - **New alerts after upgrade.** New-node alerts default on. Existing MeshCore MQTT feeds start
+      alerting on new keys right away (max 10/hour per source). Reticulum users whose mesh-wide
+      default has new-node alerts on start getting capped destination alerts. Turn either off per
+      source in the Notifications tab.
+
+      - **Meshtastic MQTT new-node alerts are now capped** at 10/hour per source; over-cap alerts
+      are dropped and the next one ends with "(+N more new nodes since the last alert)". Meshtastic
+      TCP sources are unchanged.
+
+      - **Automations on MeshCore MQTT feeds** now skip messages from this install's own radio names
+      or recent "Send as" names unless "include self" is on.
+
+      - **MySQL:** migration 243 drops a leftover single-column unique index on
+      `user_notification_preferences.userId`.
+
+
+      **Full Changelog**: https://github.com/Yeraze/meshmonitor/compare/v4.18.1-rc4...v4.18.1-rc5
+
+
+      ## 🚀 MeshMonitor v4.18.1-rc5
+
+
+      ### 📦 Installation
+
+
+      **Docker (recommended):**
+
+      ```bash
+
+      docker run -d \
+        --name meshmonitor \
+        -p 8080:3001 \
+        -v meshmonitor-data:/data \
+        ghcr.io/Yeraze/meshmonitor:4.18.1-rc5
+      ```
+
+
+      ### 🧪 Testing
+
+      ✅ All tests passed
+
+      ✅ TypeScript checks passed
+
+      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
+
+
+      ### 📋 Changes
+
+      See commit history for detailed changes.
   - version: v4.18.1-rc4
     name: v4.18.1-rc4
     datetime: '2026-11-21T00:51:25Z'
@@ -2149,113 +2278,3 @@ releases:
       - **Smaller dashboard data** (#6028). The 37 node fields the dashboard n
 
       …
-  - version: v4.17.2-rc4
-    name: v4.17.2-rc4
-    datetime: '2026-10-28T20:52:30Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.2-rc4
-    prerelease: true
-    notes: >-
-      # MeshMonitor v4.17.2-rc4
-
-
-      > [!WARNING]
-
-      > This is a pre-release for testing. Use it on production systems at your own risk.
-
-
-      Maps now mark node roles. ROUTER_LATE and CLIENT_BASE get their own infrastructure markers,
-      and small corner badges show trackers, Lost & Found, sensors, TAK and Client Mute nodes; the
-      map legends list them all. Reticulum sources can set an LXMF display name that persists across
-      restarts, announce on demand (once a minute at most), or announce on a 1-24 hour schedule that
-      is off by default. The airtime cutoff can now average infrastructure nodes you pick by hand,
-      takes 3-5 samples, ignores nodes heard over MQTT, and uses local Channel Utilization when it
-      reads higher than too few qualifying routers. A new Global Settings option picks the default
-      Meshtastic source for requests that name no source. MeshCore Trace SNR history now clears one
-      link at a time, and MeshCore channels no longer show as unread right after you read them. The
-      Reticulum radio configuration Apply button works again.
-
-
-      ## Features
-
-      - Map: distinct markers and corner badges for each node role, with legend entries (#6014)
-
-      - Reticulum: persisted LXMF display name, Announce now, and periodic announce (#6016)
-
-      - Automation: airtime cutoff manual infrastructure picks, 3-5 samples, MQTT-heard nodes
-      excluded (#6018)
-
-      - Sources: configurable default Meshtastic source (#6021)
-
-
-      ## Bug Fixes
-
-      - MeshCore: clear Trace SNR history per link instead of per contact (#6015)
-
-      - MeshCore: keep unread markers on one receipt clock (#6019), thanks @temalo
-
-      - Reticulum: radio config Apply uses PUT, leaves out blank fields, and sends Radio on as a
-      boolean (#6017)
-
-
-      ## Translations
-
-      - Hosted Weblate update (#5997)
-
-
-      ## CI/DevOps
-
-      - Version bump to 4.17.2-rc4 (#6022)
-
-
-      ## Upgrade notes
-
-      - **Airtime cutoff** can pause automations sooner than before: MQTT-heard nodes no longer
-      count, and when fewer routers qualify than the sample count it uses the higher of local ChUtil
-      and the router average. With no qualifying routers it now uses local ChUtil instead of never
-      tripping. Existing installs stay in Auto mode with 3 samples.
-
-      - **Reticulum display name** changes now need `configuration:write` on the source instead of
-      `messages:write`.
-
-      - **Trace SNR history**: the contact-wide clear button and its `DELETE ?publicKey=` route from
-      rc3 are replaced by a per-link clear (`DELETE /api/sources/:id/meshcore/hop-snr?from=&to=`).
-
-
-      ## Issues Resolved
-
-      #5245, #5970, #6007, #6008, #6011, #6013
-
-
-      **Full Changelog**: https://github.com/Yeraze/meshmonitor/compare/v4.17.2-rc3...v4.17.2-rc4
-
-
-      ## 🚀 MeshMonitor v4.17.2-rc4
-
-
-      ### 📦 Installation
-
-
-      **Docker (recommended):**
-
-      ```bash
-
-      docker run -d \
-        --name meshmonitor \
-        -p 8080:3001 \
-        -v meshmonitor-data:/data \
-        ghcr.io/Yeraze/meshmonitor:4.17.2-rc4
-      ```
-
-
-      ### 🧪 Testing
-
-      ✅ All tests passed
-
-      ✅ TypeScript checks passed
-
-      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
-
-
-      ### 📋 Changes
-
-      See commit history for detailed changes.

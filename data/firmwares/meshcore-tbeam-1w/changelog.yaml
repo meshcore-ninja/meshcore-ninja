@@ -1,7 +1,13 @@
 source: github
 repo: mintylinux/Meshcore-T-beam-1W-Firmware
-updatedAt: '2026-10-06T01:11:40.940Z'
+updatedAt: '2026-11-22T23:23:04.498Z'
 releases:
+  - version: '1.18'
+    name: Meshcore-T-Beam-1W-Firmware Ver 1.18
+    datetime: '2026-11-22T20:20:23Z'
+    url: https://github.com/mintylinux/Meshcore-T-beam-1W-Firmware/releases/tag/1.18
+    prerelease: false
+    notes: "T-Beam 1W SX1262 — v1.18.0\r\n\r\nUpdated to MeshCore v1.18.0, preserving the T-Beam 1W SX1262 customizations documented in UPGRADE_GUIDE.md.\r\n\r\nChanges\r\n•  Preserved temperature-based fan control:\r\n◦  Turns on at 45°C, off below 41°C.\r\n◦  Minimum 5-second runtime.\r\n◦  No transmission-triggered fan activation.\r\n•  Ensured the 1700µs PA ramp time is applied during initialization and after transmit-power changes.\r\n•  Preserved SX1262 boosted RX gain, current limit, maximum power, and noise-floor register patch.\r\n•  Enabled RadioLib control of the RX LNA on GPIO 21.\r\n•  Retained 16MB flash partitions, SH1106 OLED support, GPS configuration, and dual-cell battery monitoring.\r\n•  Updated USB companion interface and GPS/RTC integration for upstream compatibility.\r\n•  Corrected merged-image generation to preserve bootloader flash parameters.\r\n\r\nFirmware downloads\r\nAvailable for Repeater, Room Server, Companion USB, and Companion BLE:\r\n•  -merged.bin — complete image for flashing at 0x0.\r\n•  .bin — application-only image for flashing at 0x10000; requires compatible bootloader and partitions.\r\n•  Matching bootloader, partition table, and OTA initialization files are included in the repository’s release/ folders.\r\n•  SHA-256 checksums and flashing offsets are provided in T-Beam-1W-v1.18.0-manifest.json."
   - version: 1.17.1.1
     name: Meshcore-T-Beam-1W-Firmware Ver 1.17.1 (FIXED OFFSET)
     datetime: '2026-10-06T00:12:43Z'
