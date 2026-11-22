@@ -1,7 +1,13 @@
 source: github
 repo: eliahreeves/mesh-loader
-updatedAt: '2026-11-21T20:23:53.833Z'
+updatedAt: '2026-11-22T01:57:10.894Z'
 releases:
+  - version: v0.1.5
+    name: v0.1.5
+    datetime: '2026-11-21T22:26:03Z'
+    url: https://github.com/eliahreeves/mesh-loader/releases/tag/v0.1.5
+    prerelease: false
+    notes: '**Full Changelog**: https://github.com/eliahreeves/mesh-loader/compare/v0.1.3...v0.1.5'
   - version: v0.1.4
     name: v0.1.4
     datetime: '2026-11-21T19:45:53Z'
