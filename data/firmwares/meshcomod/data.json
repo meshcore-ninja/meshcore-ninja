@@ -3,17 +3,17 @@
   "popularity": {
     "githubStars": 102,
     "githubForks": 10,
-    "githubWatchers": 7,
-    "githubOpenIssues": 15,
+    "githubWatchers": 8,
+    "githubOpenIssues": 17,
     "githubContributors": 215,
-    "releaseDownloads": 679,
-    "latestReleaseDownloads": 196,
-    "lastChecked": "2026-11-22"
+    "releaseDownloads": 682,
+    "latestReleaseDownloads": 199,
+    "lastChecked": "2026-11-23"
   },
   "verification": {
     "sourceAvailable": true,
     "releasesAvailable": true,
     "ciBuilds": true,
-    "lastChecked": "2026-11-22"
+    "lastChecked": "2026-11-23"
   }
 }
