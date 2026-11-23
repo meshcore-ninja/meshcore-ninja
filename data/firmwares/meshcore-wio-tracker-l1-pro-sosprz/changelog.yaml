@@ -1,7 +1,13 @@
 source: github
 repo: sosprz/Meshcore-Wio-Tracker-L1-Pro
-updatedAt: '2026-11-18T21:44:02.830Z'
+updatedAt: '2026-11-23T19:56:53.007Z'
 releases:
+  - version: v1.18.107
+    name: v1.18.107
+    datetime: '2026-11-23T15:54:22Z'
+    url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.18.107
+    prerelease: false
+    notes: "- Reworked DM and channel unread badges into per-conversation RAM counters.\r\n- Added independent `System → UI` controls for channel-history row bands and Compact/Full message previews; defaults are bands OFF and Full."
   - version: v1.18.106
     name: v1.18.106
     datetime: '2026-11-18T18:58:41Z'
@@ -124,11 +130,3 @@ releases:
     url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.16.86
     prerelease: false
     notes: '- **EINK keyboard layout fix**'
-  - version: v1.16.85
-    name: v1.16.85
-    datetime: '2026-06-12T19:33:32Z'
-    url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.16.85
-    prerelease: false
-    notes: >-
-      - **Scheduled advert fix** - `Adverts -> Settings -> 0-hop rate` now schedules automatic
-      zero-hop self-adverts at the selected interval.
