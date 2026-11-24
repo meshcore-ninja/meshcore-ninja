@@ -4,16 +4,16 @@
     "githubStars": 201,
     "githubForks": 51,
     "githubWatchers": 9,
-    "githubOpenIssues": 26,
+    "githubOpenIssues": 27,
     "githubContributors": 18,
-    "releaseDownloads": 22027,
-    "latestReleaseDownloads": 1828,
-    "lastChecked": "2026-11-23"
+    "releaseDownloads": 22081,
+    "latestReleaseDownloads": 1882,
+    "lastChecked": "2026-11-24"
   },
   "verification": {
     "sourceAvailable": true,
     "releasesAvailable": true,
     "ciBuilds": true,
-    "lastChecked": "2026-11-23"
+    "lastChecked": "2026-11-24"
   }
 }

@@ -6,14 +6,14 @@
     "githubWatchers": 3,
     "githubOpenIssues": 31,
     "githubContributors": 2,
-    "releaseDownloads": 23932,
-    "latestReleaseDownloads": 970,
-    "lastChecked": "2026-11-23"
+    "releaseDownloads": 24009,
+    "latestReleaseDownloads": 1043,
+    "lastChecked": "2026-11-24"
   },
   "verification": {
     "sourceAvailable": true,
     "releasesAvailable": true,
     "ciBuilds": false,
-    "lastChecked": "2026-11-23"
+    "lastChecked": "2026-11-24"
   }
 }
