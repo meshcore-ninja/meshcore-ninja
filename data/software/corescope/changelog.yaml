@@ -1,7 +1,90 @@
 source: github
 repo: Kpa-clawbot/CoreScope
-updatedAt: '2026-11-17T20:36:00.453Z'
+updatedAt: '2026-11-24T17:09:40.291Z'
 releases:
+  - version: v3.19.0
+    name: v3.19.0
+    datetime: '2026-11-24T11:27:06Z'
+    url: https://github.com/Kpa-clawbot/CoreScope/releases/tag/v3.19.0
+    prerelease: false
+    notes: |-
+      # v3.19.0
+
+      32 commits since v3.18.0: 14 fix, 8 feat, 5 test, 2 ci, 2 docs, 1 refactor. Eight feats,
+      so minor not patch.
+
+      This release changes three things a running instance does without being asked. The
+      analyzer database gets a one-time rebuild of its observers table. An old content-hash
+      migration finally runs. And signal figures per node now come only from receptions of the
+      node itself, so many SNR numbers change. New features are all opt-in. They include a
+      Coverage tab in the repeater planner, more map providers, plain SMTP for account mail,
+      and repeater claims from mobile apps.
+
+      ## Read this before upgrading
+
+      ### The ingestor rebuilds the `observers` table once
+
+      On its first start the ingestor rebuilds `observers` in the analyzer database with an
+      explicit `idx INTEGER PRIMARY KEY` (#2407, #2445). Every observation stays linked to the
+      same observer. The table has one row per observer, so this takes a moment, not minutes.
+      Indexes, triggers and views you added yourself on `observers` are recreated afterwards.
+
+      The rebuild refuses rather than lose data in two cases:
+
+      - `observers` has a column CoreScope did not create. The rebuild would drop it.
+      - A row has a NULL `id`: `SELECT rowid, * FROM observers WHERE id IS NULL`.
+
+      When it refuses, the ingestor stops on every start. The server also refuses to start,
+      because it checks the schema at startup. The log line names the column or the row count
+      and what to do. Nothing has been changed at that point, and v3.18.0 still starts on the
+      same database. After a successful rebuild v3.18.0 keeps working too, so a rollback is
+      safe either way.
+
+      If you ever added a column to `observers` by hand, check before upgrading.
+
+      ### The content-hash migration from #787 now actually runs
+
+      Since #1283 this migration ran in the server on a read-only database handle, so it
+      changed nothing (#2409, closes #1856). It now runs in the ingestor in the background.
+
+      It only changes anything on installs that still hold transmissions from before #787 (April
+      18) and did not run a server between April 18 and May 18. For everyone else it is a
+      one-time scan that changes nothing. On a test with 1 million stale transmissions it took
+      4 minutes 38 seconds, and ingest never waited more than 199 ms on it.
+
+      When the pass changed rows, its summary log line asks you to restart the server. A
+      running server keeps the old hashes in memory until it restarts.
+
+      ### With user accounts on, `users.db` moves to schema v10
+
+      The first start adds a revision counter to repeater details (#2429). A v3.18.x binary
+      refuses the database afterwards, so keep a copy of `users.db` from before the upgrade if
+      you may want to roll back. Without user accounts nothing changes.
+
+      ### Signal per node now comes from direct receptions only
+
+      The SNR on an observation belongs to whichever node transmitted that copy last. Until
+      now, several pages averaged it over every packet a node was involved in, including
+      packets it only relayed or that were relayed to it. Those figures mostly measured the
+      last relay, not the node (#2451, #2452, #2453, #2454).
+
+      What you will see:
+
+      - **Avg SNR, Best Signal Quality, the home page "My Mesh" card and the node analytics
+        grade** use only receptions of the node itself. A node no observer heard directly now
+        shows no SNR instead of a misleading one. On a mesh with 1-byte hops that is more nodes
+        than before.
+      - **"Heard By, direct"** no longer credits a node from a 1-byte last hop, a TRACE, an
+        advert with an invalid signature, or a hop prefix a retired repeater shares.
+      - **The neighbour graph** no longer draws links from direct-route paths or TRACE
+        packets, which name nodes still to come rather than the one the observer heard.
+      - **The node analytics page** has a new "Heard by observers" card: per observer, how
+        often it heard the node and the median SNR.
+
+      For API users: `stats.avgSnr` on node health is `null` for nodes without direct
+      receptions. `topHops[].bestSnr`, `topHops[].medianSnr` (distance) and `hopsVsSnr`
+      (topology) 
+      …
   - version: v3.18.0
     name: v3.18.0
     datetime: '2026-11-17T16:15:52Z'
@@ -1369,87 +1452,3 @@ releases:
 
       See [v3.7.0 release notes](https://github.com/Kpa-clawbot/CoreScope/releases/tag/v3.7.0) for
       full changelog.
-  - version: v3.7.0
-    name: v3.7.0 — Operator's Toolkit
-    datetime: '2026-05-04T05:13:52Z'
-    url: https://github.com/Kpa-clawbot/CoreScope/releases/tag/v3.7.0
-    prerelease: false
-    notes: >-
-      # CoreScope v3.7.0 — "Operator's Toolkit"
-
-
-      50 commits · 30 issues closed · 95 files changed · +7,710 / -293 LOC
-
-
-      ---
-
-
-      ### Channel Decryption
-
-      Rebuilt from scratch. Pure-JS AES-128-ECB + SHA-256/HMAC — works on HTTP and HTTPS. PSK
-      channels: add by key, name them, delete them, see decrypt count. Live WebSocket auto-decrypt
-      with unread badges. Channel hash-byte dedup fixed.
-
-
-      ### Analytics
-
-      Selectable timeframes (1h/24h/7d/30d). Region attribution by repeater home, not observer.
-      "All" filter fixed. Topology dedup (no more triple-counted repeaters). Timestamp format
-      applied to chart axes.
-
-
-      ### New Surfaces
-
-      - `/#/roles` — role distribution + per-role clock-skew
-
-      - `/api/backup` — API-key gated SQLite export via VACUUM INTO
-
-      - `/api/healthz` — readiness probe
-
-
-      ### Packets & Filters
-
-      Transport route type filter (`transport == true`, `T_FLOOD`, `T_DIRECT`). Clear filters
-      button. Scroll position preserved. Null hash/timestamp packets cleaned. GRP_DATA type 6
-      support.
-
-
-      ### Map & Nodes
-
-      Short pubkey-prefix URLs (📡 Copy short URL). Multi-byte hash support indicator on markers.
-      Channel color picker fixed.
-
-
-      ### MQTT & Ingestor
-
-      Async path_json backfill (no more startup blocks). Per-source `region` field. MQTT startup
-      resilience (unreachable sources don't block). Configurable connect timeout. Observer IATA
-      whitelist + blacklist. Per-hop TRACE SNR extraction in ingestor.
-
-
-      ### Observer & Node
-
-      Flood/direct filter on comparison page. TRACE per-hop SNR in byte breakdown. Clock skew
-      evidence UI. Separate last-status vs last-packet timestamps. Soft-deleted observers excluded.
-      Export/import includes favorites.
-
-
-      ### Infra
-
-      CORS allowlist. RW SQLite connection cache. GeoFilter Builder draft save/load/download.
-      False-positive path exclusion.
-
-
-      ---
-
-
-      **Upgrade:** New config fields in `config.example.json`: `observerIATAWhitelist`,
-      `observerBlacklist`, per-source `region`/`connectTimeoutSec`, CORS `allowedOrigins`. One-time
-      DB migration runs async on startup.
-
-
-      ---
-
-
-      > ⚠️ **Docker image not available for this tag** (CI trigger issue). Use **v3.7.1** for the
-      container image: `ghcr.io/kpa-clawbot/corescope:v3.7.1`
