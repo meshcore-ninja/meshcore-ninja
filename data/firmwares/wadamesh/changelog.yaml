@@ -1,7 +1,129 @@
 source: github
 repo: ALLFATHER-BV/wadamesh
-updatedAt: '2026-11-16T15:09:35.720Z'
+updatedAt: '2026-11-25T21:16:58.005Z'
 releases:
+  - version: beta_108
+    name: wadamesh beta_108
+    datetime: '2026-11-25T17:01:07Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_108
+    prerelease: true
+    notes: >-
+      Test build, on top of beta_107. Stable stays **beta_101**. Everything in
+      [beta_107](https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_107) is in this build
+      too.
+
+
+      Flash it at **[wadamesh.com](https://wadamesh.com/#install)** (switch the toggle to Beta), or
+      update on the device if you have "Get test builds (beta)" turned on.
+
+
+      ### Fix
+
+
+      **Opening the Store no longer restarts the device.** The Store re-reads your installed apps
+      from the SD card on a background worker, and in beta_107 that worker's stack ran out under the
+      SD read, so tapping the Store tile restarted the device every time. Four rarely used jobs on
+      that worker (the Store catalog, the emoji pack download, language downloads and saving
+      firmware to SD) had been folded into its main loop, so their buffers took stack space under
+      every other job. They now only use it while they run, and the installed-app list moved off the
+      stack, which leaves about 1.5 KB more room there. Reported with a crash file by benanderson on
+      a ThinkNode M9.
+
+
+      All P4 variants are freshly built for this release.
+
+
+      Full notes: `release-notes/beta_108.txt`.
+  - version: beta_107
+    name: wadamesh beta_107
+    datetime: '2026-11-25T14:54:53Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_107
+    prerelease: true
+    notes: >-
+      Test build, on top of beta_106. Stable stays **beta_101**.
+
+
+      Flash it at **[wadamesh.com](https://wadamesh.com/#install)** (switch the toggle to Beta), or
+      update on the device if you have "Get test builds (beta)" turned on.
+
+
+      The biggest community round so far. **@oumike** found the web console Settings crash behind
+      the boot loops and sent spell suggestions, unreplied chats, Store search and a fixed browser
+      code, **@Kelfitas** ported the LilyGo T-Watch S3, **@Languskhan** brought the M5Stack
+      Cardputer Zero, **@CarpeNoctem** rebuilt the Ebook app and sorted the T-Deck Max,
+      **@TinkeringDao** made the mesh clock harder to fool, **@samdems** added reply quotes,
+      **@TerryTel93** contact cards and the emoji pack download, **@hamm-spec** a To-Do app, and
+      **@chmadkk** Danish.
+
+
+      ### Fixes
+
+
+      - **Web console Settings crash and boot loop.** Opening Settings read the installed apps'
+      settings into a buffer that did not exist yet, and an open browser tab asked for it again
+      after every restart, so the device kept restarting. After a restart or a dropped link,
+      Settings now shows its category list and waits for a click. By **@oumike** (#869), reported by
+      **@Danie10** (#867).
+
+      - **ThinkNode M9:** the first start after an erase no longer resets about 20 seconds in; the
+      SPIFFS format keeps the watchdog state as it was. By **@oumike** (#869) and **@RevEngOps**
+      (#891, #889).
+
+      - **Signal probe:** the automatic probe waits while the screen is off or locked and never
+      wakes the device to send, and after the screen comes on it waits a few seconds, so a glance at
+      the clock sends nothing. A new **Only when moving (GPS)** switch, on by default, probes again
+      only after you move about 250 m, or once an hour. It never probes when the airtime budget is
+      low, and new installs default to every 15 minutes instead of 5. Asked for by MC8 on Discord,
+      where a 10% duty cycle applies.
+
+      - **T-Deck Plus GPS:** the receiver rests in standby and its start is confirmed on every wake,
+      so one that kept "talking at 38400" without a fix finds one again. Reported by
+      **@johntofflemire-alt** (#778).
+
+      - **Map pulses** also show when your own node has no position: a message from or to a contact
+      with a position spreads a ring around that contact.
+
+      - **Wi-Fi:** when the network you last joined is not around, the device tries your other saved
+      Auto-Join networks in turn, and the one that joins becomes the default.
+
+      - **CrowPanel Advance 5.0 V1.2:** the backlight controller is found the way Elecrow's own code
+      finds it, with retries and a slower bus as a fallback, so these boards no longer stay dark.
+      Reported by **@funki47-alt** (#886).
+
+      - **T-Deck Pro and Max:** the text cursor stays steady instead of blinking; each blink was an
+      e-paper refresh. By **@chmadkk** (#878, #874).
+
+      - **T-Deck Max:** the fuel gauge is set to the fitted 1400 mAh pack instead of the factory
+      3000 mAh, and set again after the gauge resets (the T-LoRa Pager now does the same). The front
+      pads do nothing while the screen is locked, and the lock hint names the BOOT button. By
+      **@CarpeNoctem** (#892, #866).
+
+      - **Phone apps** are told the real contact limit. The number wrapped and said 464.
+
+      - **TLS buffers** live in PSRAM on boards that have it, so Lua apps using https keep working
+      with the web console on. By **@oumike** (#873, #870).
+
+      - **Web console Files:** downloads work in Firefox. By **@oumike** (#912), reported by
+      **@Ve2mrx** (#906).
+
+      - **USB Files:** Connect no longer restarts a T-Deck Plus; the page raises the serial lines
+      one at a time.
+
+      - **The VNC tile is gone**, Remote covers it, and a Home widget saved as VNC opens Remote. By
+      **@oumike** (#910), reported by **@maximusgrayVR** (#908).
+
+
+      ### New
+
+
+      **Spell suggestions.** When you finish an English word the word list does not know, up to
+      three corrections appear above the message box. **Settings > Keyboard > Spell suggestions**
+      turns it off. By **@oumike** (#578). Not on the Heltec V4 and the T-LoRa Pager.
+
+
+      **Reply quotes.** A message that answers someone with `@[Name]` shows a one
+
+      …
   - version: beta_106
     name: wadamesh beta_106
     datetime: '2026-11-16T11:37:29Z'
@@ -1515,158 +1637,3 @@ releases:
     url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_89
     prerelease: true
     notes: "Test build. Stable stays **beta_85**.\r\n\r\nFlash it at **[flasher.wadamesh.com](https://flasher.wadamesh.com)** (switch the toggle to Beta), or update on the device if you have \"Get test builds (beta)\" turned on.\r\n\r\n## The UI overhaul\r\n\r\nBig changes! Every screen has been redesigned, and many of the base features underneath were reworked to fit: the status bar, Chats, the conversation screen, the lock screen, the screensaver, Home, Settings, notifications and the way text scales on every board.\r\n\r\n**Only install this beta if you want to test.** If you rely on your device every day, stay on the stable build (beta_85) until this has had a few rounds of fixes. Things have moved, there will be rough edges, and some less used pages still have the old look. If you do install it, please tell us what you find, with \"Send a test report\" in Settings > About or an issue here. Every report goes straight into the next fixes.\r\n\r\nIt was built and run on a LilyGo T-Deck. Every other board builds, and every screen was checked at each board's resolution and text size, but it has not run on the other hardware yet. If you own one of those boards, you are exactly who this test needs.\r\n\r\nText that is new in this build shows in English for now. The translations follow once the wording has settled.\r\n\r\n## One design, everywhere\r\n\r\nThe firmware had grown one screen at a time, and it showed: a single text weight across more than 750 uses, over a hundred hard-coded colours, one outlined button style for everything, and white LVGL text fields, dropdowns and switch tracks on a black screen. All of that now comes from one design system: one dark palette, a clear type scale (a light clock, SemiBold names, quieter secondary and meta text), line icons everywhere, and one style for every switch, text field, dropdown, checkbox, slider, list and button. It is applied where LVGL creates each widget, so pages nobody has rebuilt yet still lose the white boxes. The main action on a page is a solid teal button with dark text.\r\n\r\n**The status bar** is calmer: the clock in the middle, signal and battery on the right, unread messages on the left, Wi-Fi and Bluetooth small and grey. The scrolling node name stays on the Home tab.\r\n\r\n**Chats** has a new header with All, Channels and Direct filters, a + to add a channel, and a menu with Mark all as read and Share my contact. Every chat gets an avatar drawn from its key, a square for a channel and a circle for a person, instead of coloured initials. The gear on every row is gone: hold a chat, or use the menu in the conversation header, and its options come up as a plain list of actions (mute messages, mute mentions, reset the chat icon, mark as read, delete history, delete the chat).\r\n\r\n**The conversation screen** has a header with the avatar and how the last message reached you: direct, a number of hops, or for a channel how many nodes it heard from today. Bubbles are neutral and the sender's colour is on the name only. Under each message is how many hops it came over; under your own channel posts, \"Heard by N repeaters\", counting the repeats as they come back. A direct message shows Sent and then Delivered, and one that was not delivered says so and resends with a tap. The composer is a pill with a teal send button.\r\n\r\n**The lock screen** is new: the wadamesh mark, a large light clock and the date, a line of the mesh activity over the last 24 hours with the number of packets heard, up to two unread conversations, and how to unlock along the bottom beside the battery. A wallpaper you chose still shows, dimmed behind it. The view moves a few pixels every minute so nothing burns into the panel, and Settings > Lock screen > Message text on lock screen hides the message text in the unread cards.\r\n\r\n**The screensaver** is new too. Constellation puts your node in the middle and the nodes you have heard around it. A ring appears wherever a packet actually came from, light runs along the routes of nodes heard in the last ten minutes, \n…"
-  - version: beta_88
-    name: wadamesh beta_88
-    datetime: '2026-10-05T12:05:30Z'
-    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_88
-    prerelease: true
-    notes: >-
-      Test build. Stable is **beta_85**.
-
-
-      Flash it at **[flasher.wadamesh.com](https://flasher.wadamesh.com)** (switch the toggle to
-      Beta), or update on the device if you have "Get test builds (beta)" turned on.
-
-
-      Most of this drop is [@oumike](https://github.com/oumike)'s, with two fixes from
-      [@jcyrio](https://github.com/jcyrio).
-
-
-      ## Read this if you own a T-Display P4
-
-
-      **beta_86 and beta_87 do not boot on older P4 units.** If yours has been dark and restarting
-      since you updated, this build fixes it, and you are not alone: three people hit it.
-
-
-      The P4 ships with one of two different firmwares on its C6 radio co-processor. Newer units run
-      esp-hosted, which is what beta_86 switched to; older units still carry the factory ESP-AT, and
-      on those the two sides could never agree. That alone should have cost you Wi-Fi. Instead the
-      co-processor driver rebooted the whole board about ten seconds into every boot, and the Wi-Fi
-      handshake sat in front of the display, so the screen never got as far as drawing.
-
-
-      Two things changed. The screen, touch and LoRa now come up before anything talks to the C6, so
-      a co-processor that cannot be reached can no longer take the device with it. And the driver no
-      longer restarts the board, or spins retrying, when the link is never going to work.
-
-
-      **If you have an older unit, there is now a build that matches it.** Look for the entries
-      marked "older unit, ESP-AT C6" in the flasher, or the `-at` files below. Those restore Wi-Fi
-      as well. If you are not sure which you have, flash the normal one: it will work, and you will
-      know by whether Wi-Fi does.
-
-
-      Thanks to [@jalevdev](https://github.com/jalevdev) for the report and a log that named the
-      cause (#600).
-
-
-      ## A channel message could go out on the public channel
-
-
-      If a channel went missing while you had its chat open, and you sent from the web interface,
-      the message did not fail. It went out on the first channel on the device, which is normally
-      the public one, with nothing on screen to say so.
-
-
-      The web path did look the channel up by name before sending. It then fell back to the thread's
-      remembered slot when that lookup failed, which is exactly the thing the lookup existed to
-      protect against: after a channel is added or removed the slots shift, so the remembered one
-      points at a different, still valid channel. It now refuses and says so, which is what the
-      on-device composer already did. The check also moved to the one point every sender passes
-      through.
-
-
-      Reported by [@TippyLion28](https://github.com/TippyLion28) (#588, #589).
-
-
-      ## Fixes
-
-
-      - **Deleting a chat's history no longer deletes the chat.** The confirmation always said the
-      chat would stay. It does now, and Delete chat is still how you remove it. By
-      [@jcyrio](https://github.com/jcyrio) (#587).
-
-      - **The T-LoRa Pager stops losing half an hour a day.** The clock ran off the processor's own
-      timer and drifted, while the accurate clock chip beside it was only read at boot. It is read
-      back hourly now. [@jcyrio](https://github.com/jcyrio) diagnosed this from the source before
-      filing it (#583).
-
-      - **The ThinkNode M9's bottom icons have stopped flashing.** They carry a count now and show
-      only when they mean something. The new-nodes one used to blink forever because it counted
-      every node ever heard rather than the ones you had not looked at.
-
-      - **"100%" is no longer hidden behind the signal bars** on the M9 and the Heltec V4-R8, at any
-      text size, and it no longer jumps back when you plug in a charger. Reported by buko84 and
-      jd1227.
-
-      - **The status-bar clock no longer sits under the Bluetooth icon**, which
-      [@DenRalle](https://github.com/DenRalle) spotted while asking about something else (#594).
-
-      - **Map tiles cache again on a P4 with no SD card.** The cache was pointed at a filesystem
-      nothing had mounted.
-
-      - **The Secondary keyboards page named a key the Pager does not have.** T-LoRa Pager, T-Deck
-      Pro and T-Deck Max were told to tap an on-screen language key; double-tap SPACE is what
-      actually switches layout there. By [@jcyrio](https://
-
-      …
-  - version: beta_87
-    name: wadamesh beta_87
-    datetime: '2026-10-03T18:04:57Z'
-    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_87
-    prerelease: true
-    notes: >-
-      Test build. Stable is **beta_85**.
-
-
-      Flash it at **[flasher.wadamesh.com](https://flasher.wadamesh.com)** (switch the toggle to
-      Beta), or update on the device if you have "Get test builds (beta)" turned on.
-
-
-      Two fixes for Lua apps and nothing else. **If you do not write or run apps, this is the same
-      firmware as beta_86** and there is no reason to rush.
-
-
-      ## A memory leak in Lua apps
-
-
-      Apps leaked memory every time they redrew a screen, and the more the screen had on it the
-      faster it went.
-
-
-      Clearing a page destroyed the buttons and list rows but kept the code attached to each one.
-      The callbacks live in a table keyed by the widget's address, and nothing removed the entries
-      when the widgets were freed, so an app rebuilding a list of twenty contacts left twenty
-      closures behind on every redraw, each holding whatever it had captured. Nothing ever took them
-      out, so an app ran until it could not allocate and then failed to build a screen.
-
-
-      Clearing a page now releases those callbacks along with the widgets they belong to. Every
-      entry in that table describes a widget that has just been destroyed, so there is nothing in it
-      worth keeping.
-
-
-      It could also have made a button do the wrong thing. Addresses get reused, so a new button
-      created with nothing attached to it could land on an address a dead one had left behind and
-      run that instead on the next tap. That cannot happen now that nothing is left behind.
-
-
-      Reported by Jade while writing a one-time-pad app. If you have seen an app get slower, or
-      start failing to draw, the longer it ran, this is why.
-
-
-      ## wada.ui.emoji(cb)
-
-
-      Opens the emoji picker and gives you the chosen glyph back as UTF-8, or `nil` if it was
-      dismissed.
-
-
-      This is for an app that draws its own text entry and keeps the buffer itself. If you use
-      `wada.ui.input()` you do not need it: beta_86 put the picker on that field's long-press menu
-      already, beside Cut, Copy, Paste and Sym. The distinction matters because an app with its own
-      composer has no textarea to long-press, which is exactly the case this was asked for.
-
-
-      Documented at [wadamesh.com/sdk.html](https://wadamesh.com/sdk.html).
