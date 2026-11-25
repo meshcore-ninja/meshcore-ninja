@@ -1,7 +1,13 @@
 source: github
 repo: sosprz/Meshcore-Wio-Tracker-L1-Pro
-updatedAt: '2026-11-23T19:56:53.007Z'
+updatedAt: '2026-11-25T11:08:34.885Z'
 releases:
+  - version: v1.18.108
+    name: v1.18.108
+    datetime: '2026-11-25T08:30:43Z'
+    url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.18.108
+    prerelease: false
+    notes: "- **Important:** This release may remove on-device channel messages if a channel-history problem is detected. Only the affected channel's older, incompatible, oversized or damaged history is replaced with an empty history; channel settings and other channels are unchanged.\r\n- Combined direct messages and channels in a single `Chats` list. Direct conversations use `@`, channels use `#`; select opens history and the existing action gesture opens the matching conversation/channel menu.\r\n- Replaced the former channel-list tab with `Join`, containing public/private channel join and private-channel creation.\r\n- `Join` now also contains the contact browser below its three channel actions; the separate Home Contacts tab was removed. Contact settings moved to `System → Contacts`.\r\n- `Join` hides the `favs` contact tab when there are no visible favourite contacts.\r\n- Channel-history headers now show the currently selected message's position in the retained history\r\n- The `Chats` DM action menu now exposes the per-conversation `Notify: All/Off` setting, matching channel actions and the existing full contact-actions screen.\r\n- Optimized `Chats`\r\n- Direct-message contact actions now provide `Notify: All/Off`, matching the per-conversation channel-notification workflow. `Off` mutes immediate and repeating alerts while retaining DM history and unread counts."
   - version: v1.18.107
     name: v1.18.107
     datetime: '2026-11-23T15:54:22Z'
@@ -124,9 +130,3 @@ releases:
     url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.16.87
     prerelease: false
     notes: "- **Radio path hash setting** - Added `Radio Settings -> Path hash` so companion-radio devices can switch outgoing flood path hashes between `1B`, `2B`, and `3B` directly from the device UI.\r\n- **Wio Tracker L1 EINK viewport fix** - The EINK companion build now reports the actual usable `128x90` logical viewport, so lists scroll when the visible rows are exhausted and text-entry keyboards stay within the visible screen area.\r\n- **Wio Tracker L1 EINK input reliability** - EINK joystick, menu, and enter presses are now interrupt-queued while the display is refreshing, reducing missed inputs caused by slow e-paper update cycles."
-  - version: v1.16.86
-    name: v1.16.86
-    datetime: '2026-06-21T15:48:50Z'
-    url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.16.86
-    prerelease: false
-    notes: '- **EINK keyboard layout fix**'
