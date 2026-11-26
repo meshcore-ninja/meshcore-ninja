@@ -1,7 +1,123 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-11-25T02:00:00.686Z'
+updatedAt: '2026-11-26T04:00:11.944Z'
 releases:
+  - version: v4.18.1-rc8
+    name: v4.18.1-rc8
+    datetime: '2026-11-26T03:13:30Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.18.1-rc8
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.18.1-rc8
+
+
+      > ⚠️ **Pre-release.** This is a release candidate for testing. Do not use it in production
+      without a backup.
+
+
+      This candidate adds **Walkabout coverage** (#5891).
+
+
+      **Walkabout capture and map**
+
+      - Carry the radio MeshMonitor is connected to, keep the web UI open on your phone, and the
+      phone's GPS becomes the receiver position.
+
+      - Every packet the radio hears is credited to the last-hop node.
+
+      - Sessions show on an H3 hex map, coloured by the best signal heard in each hex, with the
+      walker's track.
+
+      - Browser location needs HTTPS or localhost.
+
+
+      **Coverage import**
+
+      - The Coverage Report can now import its own CSV/GeoJSON exports into any source you can
+      write.
+
+      - Imports are deduplicated, shown dashed on the map, and kept until you delete them.
+
+
+      **Repeaters only chip**
+
+      - A new chip on all three maps hides everything but repeaters.
+
+
+      **Fixes**
+
+      - Direct RF Contacts no longer counts relayed packets as direct.
+
+      - `{LAST_HOP}` and the Packet Monitor no longer drop real repeaters from their relay guesses.
+
+      - Nodes with hwModel IDs 144–154 now show their hardware name.
+
+
+      **LXC template**
+
+      - Smaller, with a pre-built release mode and a configurable backup count.
+
+
+      Migrations 248 and 249 run on start.
+
+
+      ## Features
+
+      - feat(coverage): walkabout capture and storage (#5891 P1) #6570
+
+      - feat(coverage): walkabout H3 hex map (#5891 P2) #6572
+
+      - feat(coverage): import Coverage Report CSV/GeoJSON (#5891 P3) #6574
+
+      - feat(map): Repeaters only chip on all map panels (#5891 P4) #6576
+
+      - feat(lxc): release mode for meshmonitor-update with a pre-built runtime (#6558) #6565
+
+      - feat(lxc): prune build-only dependencies; configurable BACKUP_KEEP with free-space check
+      (#6558) #6564
+
+
+      ## Bug Fixes
+
+      - fix(direct-rf): don't count 0-hop relayed copies as direct contacts #6569
+
+      - fix(automation): treat role 1, not 4, as CLIENT_MUTE in last-hop resolution (also the Packet
+      Monitor) #6568
+
+      - fix(hardware): name hwModel IDs 144-154 (#6559) #6563
+
+
+      ## Translations
+
+      - Translations update from Hosted Weblate #6486
+
+
+      ## Release
+
+      - chore(release): v4.18.1-rc8 #6578
+
+
+      ## Issues Resolved
+
+      - #5891 Phone-position walkabout coverage + coverage data import
+
+      - #6558 Shrink/optimize required disk space
+
+      - #6559 hwModel map missing IDs 144-153 (incl. MESHNOLOGY_W15)
+
+
+      ## Upgrade notes
+
+      - **Database:** migrations 248 (walkabout tables) and 249 (`coverage_imports` plus
+      `coverage_receptions.importId`) run automatically on all three database backends.
+
+      - **HTTPS for walkabout:** the walkabout capture needs the web UI over HTTPS (or localhost) on
+      the phone.
+
+      - **Follow-ups:** #6571 (per-source SNR bands) and #6573 (walkabout session export/import).
+
+
+      **Full changelog:** https://github.com/Yeraze/meshmonitor/compare/v4.18.1-rc7...v4.18.1-rc8
   - version: v4.18.1-rc7
     name: v4.18.1-rc7
     datetime: '2026-11-24T18:34:18Z'
@@ -2190,99 +2306,3 @@ releases:
       ### 📋 Changes
 
       See commit history for detailed changes.
-  - version: v4.17.2-rc6
-    name: v4.17.2-rc6
-    datetime: '2026-10-31T02:31:48Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.2-rc6
-    prerelease: true
-    notes: >-
-      # MeshMonitor v4.17.2-rc6
-
-
-      > ⚠️ **Pre-release.** This is a release candidate for testing. Do not run it against
-      production systems.
-
-
-      This RC is a security-hardening release. It ships the full remediation of an automated
-      penetration test (Shannon by Keygraph) run against a MeshMonitor instance: **34 proven
-      findings fixed across 12 PRs**, spanning authenticated RCE, cross-site request forgery, path
-      traversal, secret exposure, stored XSS, SSRF, and broken authorization, plus auth/session
-      hardening and a content-security-policy rewrite. Every fix landed with regression tests and
-      green CI. The headline items: the script engine can no longer be used for code execution by a
-      non-admin or across sources, and its child processes no longer inherit server secrets; the
-      CSRF exemption now requires a validated API token instead of any bearer header; backup
-      download/delete paths are confined to the backup directory; full channel PSKs are no longer
-      handed to read-only users; GeoJSON and analytics inputs are context-encoded against stored
-      XSS; the SSRF guard's IPv4-mapped-IPv6 bypass is closed and outbound settings URLs are
-      guarded; several routes that checked a permission on *any* source now check the *right*
-      source; password changes and resets invalidate other sessions; MFA backup codes can no longer
-      be double-spent; and production now serves a nonce-based CSP with no
-      `unsafe-inline`/`unsafe-eval` in `script-src`. Three latent issues uncovered during
-      remediation (a remote argv-injection vector, an ungated automation-enable path, and the
-      always-on CSP weakness) were also fixed. No functional features were removed; a few actions
-      were tightened to admin-only or properly source-scoped — see Upgrade notes.
-
-
-      ## Security
-
-
-      - Script-engine RCE: require execute permission equal to upload, strip secrets from the child
-      env, add `--ignore-scripts`, block Python stdlib shadowing, and fix argv injection — #6089
-
-      - Remote argv injection via over-the-air node names in the meshtastic script runners — #6101
-
-      - CSRF bypass: validate the API token before skipping CSRF instead of trusting any
-      `Authorization: Bearer` header — #6088
-
-      - Backup path traversal + authorization: confine read/delete to the backup directory,
-      admin-gate system backups, source-scope device backups — #6094
-
-      - Channel PSK exposure: gate PSK export/encode behind write, mask the anonymous preview, add
-      channel-db ownership checks — #6093
-
-      - Stored XSS in analytics settings: context-correct encoding + admin-gate the provider config
-      — #6092
-
-      - Stored XSS in GeoJSON popups/tooltips: HTML-escape feature properties before Leaflet renders
-      them — #6091
-
-      - SSRF: close the IPv4-mapped-IPv6 guard bypass, guard outbound
-      Apprise/translation/MeshCore-connect URLs, admin-gate global-only settings — #6098
-
-      - Authorization: enforce per-source permission at automation run-now, and at automation enable
-      / `PUT {enabled:true}` — #6095, #6100
-
-      - Auth/session/DB hardening: invalidate sessions on password change/reset, constant-time
-      login, atomic MFA backup-code consume, gate health/default-password disclosure, validate
-      news-status input — #6097
-
-      - Nonce-based CSP: drop `unsafe-inline`/`unsafe-eval` from `script-src` in production
-      (previously only strict when `COOKIE_SECURE=true`, which defaults false) — #6102
-
-
-      ## Issues Resolved
-
-
-      Closes the 38 findings from the Shannon assessment (GHSA-5jrc-pmm4-wxc6) plus three follow-ups
-      uncovered during remediation. 34 findings were fixed; 3 were verified as working-as-designed
-      and closed; 1 (the CSP weakness) was fixed here.
-
-
-      ## Upgrade notes
-
-
-      A few operations were tightened as part of the authorization fixes. These affect non-admin
-      users only; admins are unaffected:
-
-
-      - Script management and execution are now admin-only.
-
-      - Creating/listing/deleting system backups requires admin; device backups require the
-      permission on the primary (or named) source.
-
-      - Exporting a full channel PSK (`/channels/:id/export`, `/channels/encode-url`) now requires
-      write, not read.
-
-      - Global-only settings can only b
-
-      …
