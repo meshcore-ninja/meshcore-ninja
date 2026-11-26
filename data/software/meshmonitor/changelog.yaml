@@ -1,7 +1,114 @@
 source: github
 repo: Yeraze/meshmonitor
-updatedAt: '2026-11-26T13:46:48.757Z'
+updatedAt: '2026-11-26T22:52:22.670Z'
 releases:
+  - version: v4.18.1-rc9
+    name: v4.18.1-rc9
+    datetime: '2026-11-26T21:28:44Z'
+    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.18.1-rc9
+    prerelease: true
+    notes: >-
+      # MeshMonitor v4.18.1-rc9
+
+
+      > ⚠️ **Pre-release.** This is a release candidate for testing. Don't use it in production
+      unless you're helping test.
+
+
+      ## Summary
+
+
+      This RC adds **AI channel summaries**: a new Automation Engine step reads one or more channels
+      over a time window and summarizes them with any OpenAI-compatible endpoint (OpenAI, Ollama, LM
+      Studio, vLLM). A Notify step can then send the summary, such as a morning digest of overnight
+      chat. Set the endpoint in Global Settings → AI channel summaries (admins only). The step sends
+      nothing over the mesh, and by default it skips automated messages. Walkabout coverage gets
+      per-source SNR bands for the hex map, plus export and import of walkabout sessions. MeshCore
+      Room Server sources can clear their stored posts and re-sync, with a faster purge query. A
+      Virtual Node fix forwards `is_licensed` / `is_unmessagable` on NodeInfo, so new DMs work in
+      HAM mode on Android 2.8.5.
+
+
+      ## Features
+
+      - feat(automations): AI channel summaries step (#6566) — #6584
+
+      - feat(coverage): per-source SNR bands for the walkabout hex map (#6571) — #6580
+
+      - feat(coverage): export and import walkabout sessions (#6573) — #6581
+
+      - feat(meshcore): clear stored room posts and re-sync (#6579) — #6582
+
+
+      ## Bug Fixes
+
+      - fix(virtual-node): forward is_licensed / is_unmessagable on NodeInfo User (#6575) — #6577
+
+
+      ## Performance
+
+      - perf(meshcore): narrow the room purge scan to room posts in SQL (#6579) — #6583
+
+
+      ## Release
+
+      - chore(release): v4.18.1-rc9 — #6585
+
+
+      ## Issues Resolved
+
+      - #6566 Scheduled AI Summaries of channel conversations
+
+      - #6579 MeshCore Room Server: clear stored posts and re-sync fresh
+
+      - #6575 Virtual Node drops `is_licensed` / `is_unmessagable` from NodeInfo
+
+      - #6573 Walkabout: export and import of walkabout sessions
+
+      - #6571 Walkabout: per-source or preset-aware SNR bands for the hex map
+
+      - #5891 Phone-position walkabout coverage + coverage data import
+
+
+      ## Upgrade Notes
+
+      No breaking changes. AI channel summaries send the chosen channels' messages, with sender
+      names, to the endpoint you configure. Use a local model if they must stay on your network.
+
+
+      **Full Changelog**: https://github.com/Yeraze/meshmonitor/compare/v4.18.1-rc8...v4.18.1-rc9
+
+
+      ## 🚀 MeshMonitor v4.18.1-rc9
+
+
+      ### 📦 Installation
+
+
+      **Docker (recommended):**
+
+      ```bash
+
+      docker run -d \
+        --name meshmonitor \
+        -p 8080:3001 \
+        -v meshmonitor-data:/data \
+        ghcr.io/Yeraze/meshmonitor:4.18.1-rc9
+      ```
+
+
+      ### 🧪 Testing
+
+      ✅ All tests passed
+
+      ✅ TypeScript checks passed
+
+      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
+
+
+      ### 📋 Changes
+
+      See commit history for detailed changes.
   - version: v4.18.1-rc8
     name: v4.18.1-rc8
     datetime: '2026-11-26T03:13:30Z'
@@ -2204,125 +2311,6 @@ releases:
         -p 8080:3001 \
         -v meshmonitor-data:/data \
         ghcr.io/Yeraze/meshmonitor:4.17.2-rc8
-      ```
-
-
-      ### 🧪 Testing
-
-      ✅ All tests passed
-
-      ✅ TypeScript checks passed
-
-      ✅ Docker images built for linux/amd64, linux/arm64, linux/arm/v7
-
-
-      ### 📋 Changes
-
-      See commit history for detailed changes.
-  - version: v4.17.2-rc7
-    name: v4.17.2-rc7
-    datetime: '2026-10-31T18:15:29Z'
-    url: https://github.com/Yeraze/meshmonitor/releases/tag/v4.17.2-rc7
-    prerelease: true
-    notes: >-
-      # MeshMonitor v4.17.2-rc7
-
-
-      > ⚠️ **Pre-release.** This is a release candidate for testing. Do not run it against
-      production systems.
-
-
-      This RC bundles the first batch of issue fixes merged after rc6 — ten PRs across MeshCore,
-      telemetry, aircraft detection, and docs. MeshCore gains a scheduled-telemetry retry burst with
-      cooldown (per-source settings, with the same policy applied to the Meshtastic scheduler), a
-      Channels landing pane with click-to-deselect, a "purge non-favourite nodes" action in device
-      config, aligned node-list header controls, and own outbound channel reactions that now fold
-      into chips instead of showing as raw text. Virtual-node default-key MQTT-proxy traffic now
-      lands on Primary #0 (plus a new purge button for virtual channels). Replayed firmware-2.8
-      NodeDB telemetry and position frames no longer fire false reboot, power-change, or
-      became-likely-aircraft events. A manual aircraft mark can now apply across every source that
-      sees a node (opt-in). And the archived-MeshManager references were removed from the docs and
-      the script gallery. No security changes here — those shipped in rc6.
-
-
-      ## Features
-
-
-      - MeshCore scheduled telemetry: retry burst (90s × 5) then a 30-min cooldown after a
-      missed/timed-out pull, exposed as per-source settings and applied to the Meshtastic scheduler
-      too; retry state is DB-persisted so a restart or settings save never re-arms it — #6113
-      (#6033)
-
-      - MeshCore Channels: no channel auto-selected on open, a "Select a channel" landing pane, and
-      click-the-selected-channel to deselect (desktop) — #6112 (#6049)
-
-      - Optional all-sources manual aircraft mark — apply `aircraft` / `not_aircraft` / `clear` to
-      every source that sees the node, skipping sources you can't write to — #6111 (#6046)
-
-      - Purge non-favourite MeshCore nodes from the device configuration tab — #6110 (#6041)
-
-
-      ## Bug Fixes
-
-
-      - Fold own outbound MeshCore channel reactions into chips instead of raw text bubbles
-      (receive-side parser now accepts the space-separated hash form) — #6108 (#6039)
-
-      - Skip reboot / power-change / became-likely-aircraft detectors on replayed telemetry and
-      position frames — #6107 (#6045, #6099)
-
-      - Match default-key primary MQTT-proxy traffic to Primary #0 via the modem-preset name instead
-      of splitting it onto a virtual "LongFast #101" channel — #6109 (#6044)
-
-      - Add a "Purge all messages" button to the virtual channel info modal — #6106 (#6044)
-
-      - Align the MeshCore node-list header controls into a clean toolbar grid — #6105 (#6040)
-
-
-      ## Docs
-
-
-      - Remove user-facing MeshManager references and the stale solar-forecast gallery script
-      (MeshMonitor covers it natively) — #6104 (#6048)
-
-
-      ## Issues Resolved
-
-
-      Closes #6033, #6039, #6040, #6041, #6044, #6045, #6046, #6048, #6049, #6099.
-
-
-      ## Upgrade notes
-
-
-      - No breaking changes. The new per-source telemetry-retry settings default to 90s / 5 attempts
-      / 30-min cooldown.
-
-      - Purging non-favourite MeshCore nodes is admin / `nodes:write`-gated and only removes stored
-      nodes from MeshMonitor — the radio's own contact list is not touched.
-
-      - The all-sources aircraft mark is opt-in (a checkbox on the mark menu); the default stays
-      single-source.
-
-
-      **Full changelog:** https://github.com/Yeraze/meshmonitor/compare/v4.17.2-rc6...v4.17.2-rc7
-
-
-      ## 🚀 MeshMonitor v4.17.2-rc7
-
-
-      ### 📦 Installation
-
-
-      **Docker (recommended):**
-
-      ```bash
-
-      docker run -d \
-        --name meshmonitor \
-        -p 8080:3001 \
-        -v meshmonitor-data:/data \
-        ghcr.io/Yeraze/meshmonitor:4.17.2-rc7
       ```
 
 

@@ -1,7 +1,13 @@
 source: github
 repo: sosprz/Meshcore-Wio-Tracker-L1-Pro
-updatedAt: '2026-11-25T11:08:34.885Z'
+updatedAt: '2026-11-26T22:51:56.883Z'
 releases:
+  - version: v1.18.109
+    name: v1.18.109
+    datetime: '2026-11-26T16:55:37Z'
+    url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.18.109
+    prerelease: false
+    notes: "- Renamed `Channel bands` to `Chat bands`; the one setting now applies alternating message bands to both channel and DM histories. Turning it OFF removes message bands in both views; DM retains right-aligned outgoing text. Existing saved preferences are retained.\r\n- DM headers now use `@name`, channel headers use `#name`, and sent DM entries show `YOU` beside their time.\r\n- The Join category row now uses a circular `+active > next` layout, keeping the selected category first\r\n- Fixed Ping bot handling for channel messages."
   - version: v1.18.108
     name: v1.18.108
     datetime: '2026-11-25T08:30:43Z'
@@ -124,9 +130,3 @@ releases:
     url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.16.88
     prerelease: false
     notes: "- **LoRaGotchi MVP** - Added `Tools -> LoRaGotchi` mesh pet that derives level, mood, stats, and five badges from existing local packet/contact counters.\r\n- **Sound mute/volume split** - Triple-back now only mutes or unmutes sound, while the Sound UI cycles the selected volume level separately."
-  - version: v1.16.87
-    name: v1.16.87
-    datetime: '2026-06-26T15:59:56Z'
-    url: https://github.com/sosprz/Meshcore-Wio-Tracker-L1-Pro/releases/tag/v1.16.87
-    prerelease: false
-    notes: "- **Radio path hash setting** - Added `Radio Settings -> Path hash` so companion-radio devices can switch outgoing flood path hashes between `1B`, `2B`, and `3B` directly from the device UI.\r\n- **Wio Tracker L1 EINK viewport fix** - The EINK companion build now reports the actual usable `128x90` logical viewport, so lists scroll when the visible rows are exhausted and text-entry keyboards stay within the visible screen area.\r\n- **Wio Tracker L1 EINK input reliability** - EINK joystick, menu, and enter presses are now interrupt-queued while the display is refreshing, reducing missed inputs caused by slow e-paper update cycles."
