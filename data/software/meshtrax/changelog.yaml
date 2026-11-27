@@ -1,7 +1,108 @@
 source: github
 repo: venamartin/meshtrax
-updatedAt: '2026-11-18T03:23:32.166Z'
+updatedAt: '2026-11-27T07:20:21.816Z'
 releases:
+  - version: v1.12.0
+    name: Release v1.12.0
+    datetime: '2026-11-27T00:21:10Z'
+    url: https://github.com/venamartin/meshtrax/releases/tag/v1.12.0
+    prerelease: false
+    notes: >-
+      ## What's Changed
+
+      * feat(linux): build the Linux x64 release zip in Docker; install on Ubuntu by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/331
+
+      * docs(readme): Linux builds for desktop PCs (x64) and Raspberry Pi (arm64) by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/330
+
+      * feat(map): paved paths, steps and cycleways draw as thin walkways from zoom 14 by
+      @venamartin in https://github.com/venamartin/meshtrax/pull/332
+
+      * docs(proposals): remove the firmware ACK proposal by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/334
+
+      * docs(proposals): weather alerts and reports (plan, future work) by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/333
+
+      * docs(roadmap): plan to share a line of sight or a radio reach by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/335
+
+      * docs(message-format): replies and reactions in a channel look past 48 hours by @venamartin
+      in https://github.com/venamartin/meshtrax/pull/336
+
+      * docs(message-format): replies are sent in channels and rooms only by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/337
+
+      * feat(trax): TRAX mode's radio part, one tap off the regular mesh and back by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/320
+
+      * feat(sos): an SOS repeats until cancelled, and always alerts by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/321
+
+      * feat(sos): in TRAX mode the SOS dialog says only TRAX radios hear it by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/338
+
+      * fix(channels): hashtag channels are made in lowercase by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/344
+
+      * feat(map): one Line of sight entry in the map menu by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/345
+
+      * feat(map): the radio reach list shows who can hear you first by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/346
+
+      * feat(markdown): bulleted lists by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/347
+
+      * fix(map): cut polygon holes by the even-odd rule by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/348
+
+      * fix(ui): tighter top bars, so a phone shows the radio's name by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/349
+
+      * fix(chat): say when no radio repeated your channel text, and that a DM reached their radio
+      by @venamartin in https://github.com/venamartin/meshtrax/pull/339
+
+      * fix(places): springs may be dry or unsafe, water taps may be off by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/340
+
+      * fix(routes): say what the data can't know, how old it is, and where a route really starts by
+      @venamartin in https://github.com/venamartin/meshtrax/pull/341
+
+      * feat(trax): Ask their radio, where it is even with their phone off by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/342
+
+      * fix(l10n): shorter TRAX, SOS, line-of-sight and map texts by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/343
+
+      * fix(heard): the server list shows each server's whole address by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/350
+
+      * feat(markdown): code text in JetBrains Mono, a little smaller by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/351
+
+      * feat(cards): a repeater status card by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/352
+
+      * feat(dm): open the routed DMs and room posts the radio drops by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/353
+
+      * feat(dm): the app sends the second ACK, on Pathfinder's other route by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/355
+
+      * feat(heard): one more send when only one repeater carried a channel message by @venamartin
+      in https://github.com/venamartin/meshtrax/pull/356
+
+      * feat(downloads): downloads that aren't maps by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/357
+
+      * fix(dm): a route learned while a DM waits is the one it is credited to by @venamartin in
+      https://github.com/venamartin/meshtrax/pull/363
+
+      * fix(dm): second ACK by the repeat
+
+      …
   - version: v1.11.0
     name: Release v1.11.0
     datetime: '2026-11-17T23:25:19Z'
