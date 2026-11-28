@@ -1,7 +1,89 @@
 source: github
 repo: MeshCore-Beacon/beacon-server
-updatedAt: '2026-11-11T05:13:56.368Z'
+updatedAt: '2026-11-28T18:00:19.668Z'
 releases:
+  - version: v2.3.0
+    name: v2.3.0
+    datetime: '2026-11-28T16:04:31Z'
+    url: https://github.com/MeshCore-Beacon/beacon-server/releases/tag/v2.3.0
+    prerelease: false
+    notes: >-
+      # Beacon Server 2.3.0
+
+
+      Pair this release with [Beacon Web
+      2.3.0](https://github.com/MeshCore-Beacon/beacon-web/releases/tag/v2.3.0) and BEACON Mobile
+      2.3.0. Both client floors rise to 2.3.0: older web builds show a reload screen and older apps
+      show an update screen.
+
+
+      Migrations 064 to 087 and 089 run on start and are quick (there is no 088). Every new feature
+      is off by default. See [Upgrading to 2.3.0 from
+      2.2.0](https://github.com/MeshCore-Beacon/beacon-docs/blob/main/docs/upgrading.md#upgrading-to-230-from-220).
+
+
+      ## New: repeater polling (beta)
+
+      Observers can ask nearby repeaters for battery, temperature, uptime, noise floor and packet
+      counters, and Beacon stores and serves the readings. Thanks to Herc for adding polling to the
+      MQTT observer firmware.
+
+
+      - Beacon picks one poller per repeater from the observers that hear it, with the others
+      standing by.
+
+      - `GET /api/v1/nodes/{nodeId}/poller` returns a poller's slots (used, own, requested, free of
+      8) and the repeaters it polls.
+
+      - Observers that poll carry `isPoller`, and `GET /nodes` takes `poller=true|false`.
+
+      - Turn it on with `polling.enabled: true` and `polling.mqtt_hosts`. See [Repeater
+      polling](https://github.com/MeshCore-Beacon/beacon-docs/blob/main/docs/repeater-polling.md).
+
+      - It needs the polling firmware from the observer flasher at https://observer.gessaman.com
+      (the version tagged `-poll`), for ESP32 boards with PSRAM. That firmware is still in testing.
+
+
+      ## New
+
+      - **Accounts.** Sign-up with email, sessions and password reset. Atlas syncs to the account.
+
+      - **Telemetry requests.** A signed-in user can ask for a repeater to be polled and give its
+      guest password. The password is sealed separately for each assigned observer with that
+      observer's public key, and stored encrypted on the server.
+
+      - **Alerts.** Rules per radio, delivered by email or by push through the push server at
+      https://push.meshcorebeacon.ca.
+
+      - Atlas accepts a 7 day range, a telemetry view and a poller view. The Atlas cap is
+      configurable, default 20.
+
+      - `ingest.allow_iatas` lets single IATA codes through the ingest filter.
+
+      - TRACE observations carry their on-air path bytes as `wirePathBytes`.
+
+
+      ## Improvements
+
+      - Observer telemetry is stored every 15 minutes by default instead of hourly, and a reboot is
+      stored at once. A `config.yaml` that still says `telemetry.resolution: 1h` keeps hourly:
+      change it to `15m`.
+
+      - New `polling.evidence_window` setting, default 7 days.
+
+      - The config example says what each polling, mail and accounts setting does.
+
+
+      ## Fixes
+
+      - A missing RSSI or SNR is stored as missing, not as 0.
+
+      - An empty region returns nothing instead of every region, and the message lists apply
+      `region` and `regionId`.
+
+      - Oversized MQTT messages and malformed neighbour reports are refused before processing.
+
+      - Clients are told when the live queue drops events.
   - version: v2.2.0
     name: v2.2.0
     datetime: '2026-11-11T01:44:34Z'
@@ -416,9 +498,3 @@ releases:
     url: https://github.com/MeshCore-Beacon/beacon-server/releases/tag/v1.1.0
     prerelease: false
     notes: "## v1.1.0 — Redis caching layer\r\n\r\nThis release adds an optional Redis-backed caching layer that reduces redundant\r\nPostgreSQL reads for read-heavy, slow-changing endpoints.\r\n\r\n### What's new\r\n\r\n- **Redis cache layer** (`internal/cache`) — a `CachedReader` wraps the database\r\n  store and transparently caches responses using a generic `getOrSet` helper with\r\n  graceful degradation. If Redis is unavailable, all reads fall through to\r\n  PostgreSQL with no impact on availability.\r\n- **Explicit cache invalidation** — node and observer cache entries are\r\n  invalidated immediately on upsert from the ingest path, keeping detail\r\n  responses accurate despite caching.\r\n- **TTL-based expiry** for stats and reference data, with a per-category\r\n  override system and a global fallback. Defaults to 1h, aligned with the\r\n  materialized view refresh cycle.\r\n- **Fully optional** — set `REDIS_ADDR` to enable. Unset, Beacon behaves\r\n  exactly as before.\r\n\r\n### Configuration\r\n\r\nAdd to `.env`:\r\n```env\r\nREDIS_ADDR=localhost:6379\r\nREDIS_PASSWORD=\r\nREDIS_DB=0\r\n```\r\n\r\nAdd to `config.yaml` (all optional, defaults to 1h):\r\n```yaml\r\ncache:\r\n  ttl: \"1h\"\r\n  ttls:\r\n    stats: \"1h\"\r\n    reference: \"1h\"\r\n    nodes: \"1h\"\r\n    observers: \"1h\"\r\n```"
-  - version: v1.0.4
-    name: v1.0.4
-    datetime: '2026-06-09T16:23:32Z'
-    url: https://github.com/MeshCore-Beacon/beacon-server/releases/tag/v1.0.4
-    prerelease: false
-    notes: "## [v1.0.4] — 2026-06-09\r\n\r\n### Security\r\nFix no bounds check on region IDs.\r\n\r\n**Full Changelog**: https://github.com/MeshCore-Beacon/beacon-server/compare/v1.0.3...v1.0.4"
