@@ -1,7 +1,91 @@
 source: github
 repo: ALLFATHER-BV/wadamesh
-updatedAt: '2026-11-25T21:16:58.005Z'
+updatedAt: '2026-11-28T01:14:12.501Z'
 releases:
+  - version: beta_109
+    name: wadamesh beta_109
+    datetime: '2026-11-27T20:46:18Z'
+    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_109
+    prerelease: true
+    notes: >-
+      Test build, on top of beta_108. Stable stays **beta_101**.
+
+
+      Flash it at **[wadamesh.com](https://wadamesh.com/#install)** (switch the toggle to Beta), or
+      update on the device if you have "Get test builds (beta)" turned on.
+
+
+      This round fixes the clock that kept dating messages 11 December, sends device DMs direct, and
+      makes map traffic easier to follow. **@oumike** sent the chat-list fix, the web console theme
+      switch, telemetry requests from the Mesh page and remote access on the Tanmatsu standalone
+      image, **@guilhem** a Fixed navigation layout for the Heltec V4-R8, **@kkazakov** a
+      phone-style keyboard for the T-Display P4, and **@Ve2mrx** the Ontario city locator fix and
+      generic sensor values in telemetry.
+
+
+      ### Fixes
+
+
+      - **Message dates after a clock fix.** A clock that had run ahead (seen as 11 December) came
+      back at every restart, and sent messages kept that date even after Wi-Fi, GPS or a manual set
+      had corrected the clock. A correction backwards now resets the send timestamps and the saved
+      clock floor. Reported by THE BUDDHA on Discord.
+
+      - **Direct messages from the device go direct** once the contact's path is known, like the
+      phone apps. Before, they always flooded. A resend still floods. Reported by la8wnatorarne on
+      Discord.
+
+      - **Trackball over the map.** With the trackball on scroll, Map options, the On map list and
+      the battery chart get the trackball when they are open over the map, instead of the hidden map
+      behind them. Reported by ge0rg on Discord.
+
+      - **Full chat list.** Opening a chat when the list is full takes over the DM chat idle longest
+      instead of doing nothing. By **@oumike** (#926), reported by **@zemj-czr** (#921).
+
+      - **CrowPanel Advance 5.0:** the panel runs at a 16 MHz pixel clock, which brings up the
+      panels that stayed white, and the "radio not found" message names the S1/S0 switch position.
+      Reported by David on Discord.
+
+      - **City locator** keeps same-named Ontario municipalities apart, such as the two Hamiltons.
+      By **@Ve2mrx** (#917).
+
+
+      ### New
+
+
+      **Map traffic you can follow.** The line lights up behind a pulse as it runs, and traffic you
+      only hear shows too: a lilac pulse along the line to the repeater your radio heard it from, or
+      to a contact whose advert you heard directly. Asked for by THE BUDDHA on Discord.
+
+
+      **Generic sensor values in telemetry**, such as a BME680's gas resistance. By **@Ve2mrx**
+      (#922).
+
+
+      **Fixed navigation on the Heltec V4-R8.** A Fixed layout groups the launcher and settings into
+      tappable sections with short status summaries, easier to reach on the small screen. Pick it in
+      Settings > Theme > Navigation > Layout; Scrolling stays the default. By **@guilhem** (#924).
+
+
+      **T-Display P4 keyboard.** A phone-style keyboard with OK, quick replies and emoji on the
+      keys, and a full-width text box. By **@kkazakov** (#916).
+
+
+      **Web console:** an Auto, Light and Dark theme switch, by **@oumike** (#918), asked for by
+      **@neilswann80** (#914); and a telemetry request in a contact's menu on the Mesh page, by
+      **@oumike** (#925, #923).
+
+
+      **Tanmatsu standalone image:** remote access. By **@oumike** (#920, #919).
+
+
+      ### Apps
+
+
+      - **Ebook 2.0.1:** a book too large for the app's memory says so instead of stopping with an
+      error. Reported by benanderson.
+
+      - **Language store v36:** this round's new strings are in every language.
   - version: beta_108
     name: wadamesh beta_108
     datetime: '2026-11-25T17:01:07Z'
@@ -1631,9 +1715,3 @@ releases:
       - Text that is new in this build shows in English for now. The translations fo
 
       …
-  - version: beta_89
-    name: wadamesh beta_89
-    datetime: '2026-10-06T22:13:18Z'
-    url: https://github.com/ALLFATHER-BV/wadamesh/releases/tag/beta_89
-    prerelease: true
-    notes: "Test build. Stable stays **beta_85**.\r\n\r\nFlash it at **[flasher.wadamesh.com](https://flasher.wadamesh.com)** (switch the toggle to Beta), or update on the device if you have \"Get test builds (beta)\" turned on.\r\n\r\n## The UI overhaul\r\n\r\nBig changes! Every screen has been redesigned, and many of the base features underneath were reworked to fit: the status bar, Chats, the conversation screen, the lock screen, the screensaver, Home, Settings, notifications and the way text scales on every board.\r\n\r\n**Only install this beta if you want to test.** If you rely on your device every day, stay on the stable build (beta_85) until this has had a few rounds of fixes. Things have moved, there will be rough edges, and some less used pages still have the old look. If you do install it, please tell us what you find, with \"Send a test report\" in Settings > About or an issue here. Every report goes straight into the next fixes.\r\n\r\nIt was built and run on a LilyGo T-Deck. Every other board builds, and every screen was checked at each board's resolution and text size, but it has not run on the other hardware yet. If you own one of those boards, you are exactly who this test needs.\r\n\r\nText that is new in this build shows in English for now. The translations follow once the wording has settled.\r\n\r\n## One design, everywhere\r\n\r\nThe firmware had grown one screen at a time, and it showed: a single text weight across more than 750 uses, over a hundred hard-coded colours, one outlined button style for everything, and white LVGL text fields, dropdowns and switch tracks on a black screen. All of that now comes from one design system: one dark palette, a clear type scale (a light clock, SemiBold names, quieter secondary and meta text), line icons everywhere, and one style for every switch, text field, dropdown, checkbox, slider, list and button. It is applied where LVGL creates each widget, so pages nobody has rebuilt yet still lose the white boxes. The main action on a page is a solid teal button with dark text.\r\n\r\n**The status bar** is calmer: the clock in the middle, signal and battery on the right, unread messages on the left, Wi-Fi and Bluetooth small and grey. The scrolling node name stays on the Home tab.\r\n\r\n**Chats** has a new header with All, Channels and Direct filters, a + to add a channel, and a menu with Mark all as read and Share my contact. Every chat gets an avatar drawn from its key, a square for a channel and a circle for a person, instead of coloured initials. The gear on every row is gone: hold a chat, or use the menu in the conversation header, and its options come up as a plain list of actions (mute messages, mute mentions, reset the chat icon, mark as read, delete history, delete the chat).\r\n\r\n**The conversation screen** has a header with the avatar and how the last message reached you: direct, a number of hops, or for a channel how many nodes it heard from today. Bubbles are neutral and the sender's colour is on the name only. Under each message is how many hops it came over; under your own channel posts, \"Heard by N repeaters\", counting the repeats as they come back. A direct message shows Sent and then Delivered, and one that was not delivered says so and resends with a tap. The composer is a pill with a teal send button.\r\n\r\n**The lock screen** is new: the wadamesh mark, a large light clock and the date, a line of the mesh activity over the last 24 hours with the number of packets heard, up to two unread conversations, and how to unlock along the bottom beside the battery. A wallpaper you chose still shows, dimmed behind it. The view moves a few pixels every minute so nothing burns into the panel, and Settings > Lock screen > Message text on lock screen hides the message text in the unread cards.\r\n\r\n**The screensaver** is new too. Constellation puts your node in the middle and the nodes you have heard around it. A ring appears wherever a packet actually came from, light runs along the routes of nodes heard in the last ten minutes, \n…"
